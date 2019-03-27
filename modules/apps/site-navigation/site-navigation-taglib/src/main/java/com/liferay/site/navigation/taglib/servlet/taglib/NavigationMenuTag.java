@@ -53,6 +53,42 @@ import javax.servlet.jsp.PageContext;
  */
 public class NavigationMenuTag extends IncludeTag {
 
+	public long getDdmTemplateGroupId() {
+		return _ddmTemplateGroupId;
+	}
+
+	public String getDdmTemplateKey() {
+		return _ddmTemplateKey;
+	}
+
+	public int getDisplayDepth() {
+		return _displayDepth;
+	}
+
+	public String getExpandedLevels() {
+		return _expandedLevels;
+	}
+
+	public String getRootItemId() {
+		return _rootItemId;
+	}
+
+	public int getRootItemLevel() {
+		return _rootItemLevel;
+	}
+
+	public String getRootItemType() {
+		return _rootItemType;
+	}
+
+	public long getSiteNavigationMenuId() {
+		return _siteNavigationMenuId;
+	}
+
+	public boolean isPreview() {
+		return _preview;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		PortletDisplayTemplate portletDisplayTemplate =

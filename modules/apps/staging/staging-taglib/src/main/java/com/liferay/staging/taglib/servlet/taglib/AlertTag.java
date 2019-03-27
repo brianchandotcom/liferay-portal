@@ -37,6 +37,14 @@ public class AlertTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public boolean isDismissible() {
+		return _dismissible;
+	}
+
+	public boolean isFluid() {
+		return _fluid;
+	}
+
 	public void setDismissible(boolean dismissible) {
 		_dismissible = dismissible;
 	}

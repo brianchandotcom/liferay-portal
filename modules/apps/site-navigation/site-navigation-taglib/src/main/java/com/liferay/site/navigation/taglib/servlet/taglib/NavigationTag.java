@@ -47,6 +47,38 @@ import javax.servlet.jsp.PageContext;
  */
 public class NavigationTag extends IncludeTag {
 
+	public long getDdmTemplateGroupId() {
+		return _ddmTemplateGroupId;
+	}
+
+	public String getDdmTemplateKey() {
+		return _ddmTemplateKey;
+	}
+
+	public int getDisplayDepth() {
+		return _displayDepth;
+	}
+
+	public String getIncludedLayouts() {
+		return _includedLayouts;
+	}
+
+	public int getRootLayoutLevel() {
+		return _rootLayoutLevel;
+	}
+
+	public String getRootLayoutType() {
+		return _rootLayoutType;
+	}
+
+	public String getRootLayoutUuid() {
+		return _rootLayoutUuid;
+	}
+
+	public boolean isPreview() {
+		return _preview;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		PortletDisplayTemplate portletDisplayTemplate =

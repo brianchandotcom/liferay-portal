@@ -25,6 +25,58 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputTimeTag extends IncludeTag {
 
+	public String getAmPmParam() {
+		return _amPmParam;
+	}
+
+	public int getAmPmValue() {
+		return _amPmValue;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDateParam() {
+		return _dateParam;
+	}
+
+	public Date getDateValue() {
+		return _dateValue;
+	}
+
+	public String getHourParam() {
+		return _hourParam;
+	}
+
+	public int getHourValue() {
+		return _hourValue;
+	}
+
+	public int getMinuteInterval() {
+		return _minuteInterval;
+	}
+
+	public String getMinuteParam() {
+		return _minuteParam;
+	}
+
+	public int getMinuteValue() {
+		return _minuteValue;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getTimeFormat() {
+		return _timeFormat;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
 	public void setAmPmParam(String amPmParam) {
 		_amPmParam = amPmParam;
 	}

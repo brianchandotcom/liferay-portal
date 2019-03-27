@@ -27,6 +27,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 
+	public DisplayTerms getSearchTerms() {
+		return _searchTerms;
+	}
+
+	public LinkedHashMap<String, Object> getUserGroupParams() {
+		return _userGroupParams;
+	}
+
 	public void setSearchTerms(DisplayTerms searchTerms) {
 		_searchTerms = searchTerms;
 	}

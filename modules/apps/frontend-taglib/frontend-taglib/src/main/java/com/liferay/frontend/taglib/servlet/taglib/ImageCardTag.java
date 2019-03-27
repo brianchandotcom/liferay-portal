@@ -27,6 +27,22 @@ import javax.servlet.jsp.PageContext;
  */
 public class ImageCardTag extends IncludeTag {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getImageCSSClass() {
+		return _imageCSSClass;
+	}
+
+	public String getImageUrl() {
+		return _imageUrl;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

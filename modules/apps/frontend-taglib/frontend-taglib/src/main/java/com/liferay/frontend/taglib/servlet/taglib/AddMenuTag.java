@@ -145,6 +145,18 @@ public class AddMenuTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public int getMaxItems() {
+		return _maxItems;
+	}
+
+	public String getViewMoreURL() {
+		return _viewMoreURL;
+	}
+
+	public boolean isInline() {
+		return _inline;
+	}
+
 	public void setAddMenuItems(List<AddMenuItem> addMenuItems) {
 		_addMenuItems = addMenuItems;
 	}

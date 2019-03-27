@@ -31,6 +31,26 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class PortletListTag extends IncludeTag {
 
+	public long getExportImportConfigurationId() {
+		return _exportImportConfigurationId;
+	}
+
+	public List<Portlet> getPortlets() {
+		return _portlets;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public boolean isDisableInputs() {
+		return _disableInputs;
+	}
+
+	public boolean isShowAllPortlets() {
+		return _showAllPortlets;
+	}
+
 	public void setDisableInputs(boolean disableInputs) {
 		_disableInputs = disableInputs;
 	}

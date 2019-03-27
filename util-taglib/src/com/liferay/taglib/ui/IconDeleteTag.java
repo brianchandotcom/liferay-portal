@@ -33,6 +33,18 @@ import java.util.ResourceBundle;
  */
 public class IconDeleteTag extends IconTag {
 
+	public String getConfirmation() {
+		return _confirmation;
+	}
+
+	public boolean isShowIcon() {
+		return _showIcon;
+	}
+
+	public boolean isTrash() {
+		return _trash;
+	}
+
 	public void setConfirmation(String confirmation) {
 		_confirmation = confirmation;
 	}

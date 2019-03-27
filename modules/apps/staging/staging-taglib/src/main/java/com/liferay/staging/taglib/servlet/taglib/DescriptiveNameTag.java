@@ -40,6 +40,10 @@ public class DescriptiveNameTag extends IncludeTag {
 		_group = null;
 	}
 
+	public Group getGroup() {
+		return _group;
+	}
+
 	public void setGroup(Group group) {
 		_group = group;
 	}

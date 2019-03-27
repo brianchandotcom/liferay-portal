@@ -45,6 +45,14 @@ public class SidebarPanelTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getResourceURL() {
+		return _resourceURL;
+	}
+
+	public String getSearchContainerId() {
+		return _searchContainerId;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

@@ -28,6 +28,10 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class IncompleteProcessMessageTag extends IncludeTag {
 
+	public boolean isLocalPublishing() {
+		return _localPublishing;
+	}
+
 	public void setLocalPublishing(boolean localPublishing) {
 		_localPublishing = localPublishing;
 	}

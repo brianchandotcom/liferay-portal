@@ -24,6 +24,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchFormTag<R> extends IncludeTag {
 
+	public SearchContainer<?> getSearchContainer() {
+		return _searchContainer;
+	}
+
+	public boolean isShowAddButton() {
+		return _showAddButton;
+	}
+
 	public void setSearchContainer(SearchContainer<?> searchContainer) {
 		_searchContainer = searchContainer;
 	}

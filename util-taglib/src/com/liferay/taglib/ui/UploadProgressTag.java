@@ -25,6 +25,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UploadProgressTag extends IncludeTag {
 
+	public int getHeight() {
+		return _height;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public Integer getUpdatePeriod() {
+		return _updatePeriod;
+	}
+
 	public void setHeight(int height) {
 		_height = height;
 	}

@@ -32,6 +32,38 @@ public class InputTimeZoneTag extends IncludeTag {
 		_value = timeZone.getID();
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public int getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isDaylight() {
+		return _daylight;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isNullable() {
+		return _nullable;
+	}
+
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
 	}

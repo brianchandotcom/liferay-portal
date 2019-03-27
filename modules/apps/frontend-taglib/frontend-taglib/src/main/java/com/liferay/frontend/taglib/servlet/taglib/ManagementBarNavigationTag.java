@@ -40,8 +40,24 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
 	public List<ManagementBarFilterItem> getManagementBarFilterItems() {
 		return _managementBarFilterItems;
+	}
+
+	public Map<String, String> getNavigationKeys() {
+		return _navigationKeys;
+	}
+
+	public String getNavigationParam() {
+		return _navigationParam;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
 	}
 
 	public void setDisabled(boolean disabled) {

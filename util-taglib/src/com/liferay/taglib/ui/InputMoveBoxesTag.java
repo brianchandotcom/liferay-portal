@@ -26,6 +26,50 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputMoveBoxesTag extends IncludeTag {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getLeftBoxName() {
+		return _leftBoxName;
+	}
+
+	public List<KeyValuePair> getLeftList() {
+		return _leftList;
+	}
+
+	public String getLeftOnChange() {
+		return _leftOnChange;
+	}
+
+	public String getLeftReorder() {
+		return _leftReorder;
+	}
+
+	public String getLeftTitle() {
+		return _leftTitle;
+	}
+
+	public String getRightBoxName() {
+		return _rightBoxName;
+	}
+
+	public List<KeyValuePair> getRightList() {
+		return _rightList;
+	}
+
+	public String getRightOnChange() {
+		return _rightOnChange;
+	}
+
+	public String getRightReorder() {
+		return _rightReorder;
+	}
+
+	public String getRightTitle() {
+		return _rightTitle;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

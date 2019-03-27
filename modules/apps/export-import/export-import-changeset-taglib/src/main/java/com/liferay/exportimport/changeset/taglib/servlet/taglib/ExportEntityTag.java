@@ -29,6 +29,22 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ExportEntityTag extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}

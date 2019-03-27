@@ -91,6 +91,10 @@ public class SectionTag extends IncludeTag {
 		}
 	}
 
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}

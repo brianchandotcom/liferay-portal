@@ -73,6 +73,30 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public String getFocusField() {
+		return _focusField;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getTargetNode() {
+		return _targetNode;
+	}
+
+	public boolean isEmbed() {
+		return _embed;
+	}
+
+	public boolean isTranslateMessage() {
+		return _translateMessage;
+	}
+
 	public void setEmbed(boolean embed) {
 		_embed = embed;
 	}

@@ -26,6 +26,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutTemplatesListTag extends IncludeTag {
 
+	public String getLayoutTemplateId() {
+		return _layoutTemplateId;
+	}
+
+	public String getLayoutTemplateIdPrefix() {
+		return _layoutTemplateIdPrefix;
+	}
+
+	public List<LayoutTemplate> getLayoutTemplates() {
+		return _layoutTemplates;
+	}
+
 	public void setLayoutTemplateId(String layoutTemplateId) {
 		_layoutTemplateId = layoutTemplateId;
 	}

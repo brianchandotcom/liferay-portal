@@ -91,6 +91,38 @@ public class ToggleAreaTag extends IncludeTag {
 		}
 	}
 
+	public String getAlign() {
+		return _align;
+	}
+
+	public String getHideImage() {
+		return _hideImage;
+	}
+
+	public String getHideMessage() {
+		return _hideMessage;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getShowImage() {
+		return _showImage;
+	}
+
+	public String getShowMessage() {
+		return _showMessage;
+	}
+
+	public String getStateVar() {
+		return _stateVar;
+	}
+
+	public boolean isDefaultShowContent() {
+		return _defaultShowContent;
+	}
+
 	public void setAlign(String align) {
 		_align = align;
 	}

@@ -46,8 +46,32 @@ public class ManagementBarButtonTag extends IncludeTag {
 		return _cssClass;
 	}
 
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getHref() {
+		return _href;
+	}
+
+	public String getIcon() {
+		return _icon;
+	}
+
+	public String getIconCssClass() {
+		return _iconCssClass;
+	}
+
 	public String getId() {
 		return _id;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public boolean isActive() {
+		return _active;
 	}
 
 	public void setActive(boolean active) {

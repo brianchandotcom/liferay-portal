@@ -27,9 +27,89 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputDateTag extends BaseValidatorTagSupport {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDateTogglerCheckboxLabel() {
+		return _dateTogglerCheckboxLabel;
+	}
+
+	public String getDayParam() {
+		return _dayParam;
+	}
+
+	public int getDayValue() {
+		return _dayValue;
+	}
+
+	public int getFirstDayOfWeek() {
+		return _firstDayOfWeek;
+	}
+
+	public Date getFirstEnabledDate() {
+		return _firstEnabledDate;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
 	@Override
 	public String getInputName() {
 		return _name;
+	}
+
+	public Date getLastEnabledDate() {
+		return _lastEnabledDate;
+	}
+
+	public String getMonthAndYearParam() {
+		return _monthAndYearParam;
+	}
+
+	public String getMonthParam() {
+		return _monthParam;
+	}
+
+	public int getMonthValue() {
+		return _monthValue;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getYearParam() {
+		return _yearParam;
+	}
+
+	public int getYearValue() {
+		return _yearValue;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isDisableNamespace() {
+		return _disableNamespace;
+	}
+
+	public boolean isNullable() {
+		return _nullable;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public boolean isShowDisableCheckbox() {
+		return _showDisableCheckbox;
 	}
 
 	public void setAutoFocus(boolean autoFocus) {

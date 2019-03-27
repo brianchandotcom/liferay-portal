@@ -28,6 +28,26 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class MenuTag extends IncludeTag {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public long getLayoutSetBranchId() {
+		return _layoutSetBranchId;
+	}
+
+	public long getSelPlid() {
+		return _selPlid;
+	}
+
+	public boolean isOnlyActions() {
+		return _onlyActions;
+	}
+
+	public boolean isShowManageBranches() {
+		return _showManageBranches;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

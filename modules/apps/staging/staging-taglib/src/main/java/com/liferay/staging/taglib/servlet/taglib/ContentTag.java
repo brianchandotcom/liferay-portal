@@ -28,6 +28,26 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ContentTag extends IncludeTag {
 
+	public String getCmd() {
+		return _cmd;
+	}
+
+	public long getExportImportConfigurationId() {
+		return _exportImportConfigurationId;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public boolean isDisableInputs() {
+		return _disableInputs;
+	}
+
+	public boolean isShowAllPortlets() {
+		return _showAllPortlets;
+	}
+
 	public void setCmd(String cmd) {
 		_cmd = cmd;
 	}

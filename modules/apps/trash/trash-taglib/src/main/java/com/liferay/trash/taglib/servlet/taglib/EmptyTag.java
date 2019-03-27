@@ -35,6 +35,22 @@ public class EmptyTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getConfirmMessage() {
+		return _confirmMessage;
+	}
+
+	public String getEmptyMessage() {
+		return _emptyMessage;
+	}
+
+	public String getInfoMessage() {
+		return _infoMessage;
+	}
+
+	public int getTotalEntries() {
+		return _totalEntries;
+	}
+
 	public void setConfirmMessage(String confirmMessage) {
 		_confirmMessage = confirmMessage;
 	}

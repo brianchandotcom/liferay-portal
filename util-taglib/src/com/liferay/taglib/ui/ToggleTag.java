@@ -139,6 +139,34 @@ public class ToggleTag extends IncludeTag {
 		}
 	}
 
+	public String getHideImage() {
+		return _hideImage;
+	}
+
+	public String getHideMessage() {
+		return _hideMessage;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getShowImage() {
+		return _showImage;
+	}
+
+	public String getShowMessage() {
+		return _showMessage;
+	}
+
+	public String getStateVar() {
+		return _stateVar;
+	}
+
+	public boolean isDefaultShowContent() {
+		return _defaultShowContent;
+	}
+
 	public void setDefaultShowContent(boolean defaultShowContent) {
 		_defaultShowContent = defaultShowContent;
 	}

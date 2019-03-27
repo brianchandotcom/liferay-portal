@@ -31,6 +31,18 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessDateTag extends IncludeTag {
 
+	public Date getDate() {
+		return _date;
+	}
+
+	public String getLabelKey() {
+		return _labelKey;
+	}
+
+	public boolean isListView() {
+		return _listView;
+	}
+
 	public void setDate(Date date) {
 		_date = date;
 	}

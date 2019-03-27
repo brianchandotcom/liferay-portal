@@ -31,6 +31,14 @@ public class HorizontalCardTag extends CardTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Map<String, Object> getLinkData() {
+		return _linkData;
+	}
+
+	public String getText() {
+		return _text;
+	}
+
 	public void setColHTML(String colHTML) {
 		_colHTML = colHTML;
 	}

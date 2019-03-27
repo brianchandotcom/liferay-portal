@@ -81,6 +81,10 @@ public class AssetLinksTag extends IncludeTag {
 		return _viewInContext;
 	}
 
+	public boolean isViewInContext() {
+		return _viewInContext;
+	}
+
 	public void setAssetEntryId(long assetEntryId) {
 		_assetEntryId = assetEntryId;
 	}

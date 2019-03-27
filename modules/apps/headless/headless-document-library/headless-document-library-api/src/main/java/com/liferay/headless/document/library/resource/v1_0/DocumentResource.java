@@ -35,12 +35,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DocumentResource {
 
-	public Page<Document> getContentSpaceTreeDocumentsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<Document> getContentSpaceDocumentsPage(
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Document postContentSpaceTreeDocument(
+	public Document postContentSpaceDocument(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception;
 

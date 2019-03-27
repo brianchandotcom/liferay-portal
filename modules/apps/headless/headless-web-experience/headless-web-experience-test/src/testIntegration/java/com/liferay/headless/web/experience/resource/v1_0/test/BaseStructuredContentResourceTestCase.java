@@ -949,12 +949,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceKeyStructuredContent() throws Exception {
+	public void testGetContentSpaceStructuredContentByKey() throws Exception {
 		StructuredContent postStructuredContent =
-			testGetContentSpaceKeyStructuredContent_addStructuredContent();
+			testGetContentSpaceStructuredContentByKey_addStructuredContent();
 
 		StructuredContent getStructuredContent =
-			invokeGetContentSpaceKeyStructuredContent(
+			invokeGetContentSpaceStructuredContentByKey(
 				postStructuredContent.getContentSpaceId(),
 				postStructuredContent.getKey());
 
@@ -963,14 +963,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent
-			testGetContentSpaceKeyStructuredContent_addStructuredContent()
+			testGetContentSpaceStructuredContentByKey_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent invokeGetContentSpaceKeyStructuredContent(
+	protected StructuredContent invokeGetContentSpaceStructuredContentByKey(
 			Long contentSpaceId, String key)
 		throws Exception {
 
@@ -979,7 +979,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/key-structured-contents/{key}",
+					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
 					contentSpaceId, key);
 
 		options.setLocation(location);
@@ -1001,7 +1001,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetContentSpaceKeyStructuredContentResponse(
+	protected Http.Response invokeGetContentSpaceStructuredContentByKeyResponse(
 			Long contentSpaceId, String key)
 		throws Exception {
 
@@ -1010,7 +1010,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/key-structured-contents/{key}",
+					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
 					contentSpaceId, key);
 
 		options.setLocation(location);
@@ -1021,12 +1021,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceUuidStructuredContent() throws Exception {
+	public void testGetContentSpaceStructuredContentByUuid() throws Exception {
 		StructuredContent postStructuredContent =
-			testGetContentSpaceUuidStructuredContent_addStructuredContent();
+			testGetContentSpaceStructuredContentByUuid_addStructuredContent();
 
 		StructuredContent getStructuredContent =
-			invokeGetContentSpaceUuidStructuredContent(
+			invokeGetContentSpaceStructuredContentByUuid(
 				postStructuredContent.getContentSpaceId(),
 				postStructuredContent.getUuid());
 
@@ -1035,14 +1035,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent
-			testGetContentSpaceUuidStructuredContent_addStructuredContent()
+			testGetContentSpaceStructuredContentByUuid_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent invokeGetContentSpaceUuidStructuredContent(
+	protected StructuredContent invokeGetContentSpaceStructuredContentByUuid(
 			Long contentSpaceId, String uuid)
 		throws Exception {
 
@@ -1051,7 +1051,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/uuid-structured-contents/{uuid}",
+					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
 					contentSpaceId, uuid);
 
 		options.setLocation(location);
@@ -1073,8 +1073,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetContentSpaceUuidStructuredContentResponse(
-			Long contentSpaceId, String uuid)
+	protected Http.Response
+			invokeGetContentSpaceStructuredContentByUuidResponse(
+				Long contentSpaceId, String uuid)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1082,7 +1083,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/uuid-structured-contents/{uuid}",
+					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
 					contentSpaceId, uuid);
 
 		options.setLocation(location);

@@ -52,6 +52,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -74,13 +75,13 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/tree-folders")
+	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Page<Folder> getContentSpaceTreeFoldersPage(
+	public Page<Folder> getContentSpaceFoldersPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -89,10 +90,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/tree-folders")
+	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Folder postContentSpaceTreeFolder(
+	public Folder postContentSpaceFolder(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			Folder folder)
 		throws Exception {

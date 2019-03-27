@@ -109,22 +109,20 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeKnowledgeBaseFoldersPage()
-		throws Exception {
-
+	public void testGetContentSpaceKnowledgeBaseFoldersPage() throws Exception {
 		Long contentSpaceId =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_getContentSpaceId();
+			testGetContentSpaceKnowledgeBaseFoldersPage_getContentSpaceId();
 		Long irrelevantContentSpaceId =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_getIrrelevantContentSpaceId();
+			testGetContentSpaceKnowledgeBaseFoldersPage_getIrrelevantContentSpaceId();
 
 		if ((irrelevantContentSpaceId != null)) {
 			KnowledgeBaseFolder irrelevantKnowledgeBaseFolder =
-				testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+				testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 					irrelevantContentSpaceId,
 					randomIrrelevantKnowledgeBaseFolder());
 
 			Page<KnowledgeBaseFolder> page =
-				invokeGetContentSpaceTreeKnowledgeBaseFoldersPage(
+				invokeGetContentSpaceKnowledgeBaseFoldersPage(
 					irrelevantContentSpaceId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -136,15 +134,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page =
-			invokeGetContentSpaceTreeKnowledgeBaseFoldersPage(
+			invokeGetContentSpaceKnowledgeBaseFoldersPage(
 				contentSpaceId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -156,26 +154,26 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeKnowledgeBaseFoldersPageWithPagination()
+	public void testGetContentSpaceKnowledgeBaseFoldersPageWithPagination()
 		throws Exception {
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_getContentSpaceId();
+			testGetContentSpaceKnowledgeBaseFoldersPage_getContentSpaceId();
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder3 =
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page1 =
-			invokeGetContentSpaceTreeKnowledgeBaseFoldersPage(
+			invokeGetContentSpaceKnowledgeBaseFoldersPage(
 				contentSpaceId, Pagination.of(1, 2));
 
 		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
@@ -185,7 +183,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			knowledgeBaseFolders1.toString(), 2, knowledgeBaseFolders1.size());
 
 		Page<KnowledgeBaseFolder> page2 =
-			invokeGetContentSpaceTreeKnowledgeBaseFoldersPage(
+			invokeGetContentSpaceKnowledgeBaseFoldersPage(
 				contentSpaceId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -209,7 +207,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
+			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -218,21 +216,21 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected Long
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_getContentSpaceId()
+			testGetContentSpaceKnowledgeBaseFoldersPage_getContentSpaceId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
 	protected Long
-			testGetContentSpaceTreeKnowledgeBaseFoldersPage_getIrrelevantContentSpaceId()
+			testGetContentSpaceKnowledgeBaseFoldersPage_getIrrelevantContentSpaceId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
 	protected Page<KnowledgeBaseFolder>
-			invokeGetContentSpaceTreeKnowledgeBaseFoldersPage(
+			invokeGetContentSpaceKnowledgeBaseFoldersPage(
 				Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -241,7 +239,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-knowledge-base-folders",
+					"/content-spaces/{content-space-id}/knowledge-base-folders",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -264,7 +262,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected Http.Response
-			invokeGetContentSpaceTreeKnowledgeBaseFoldersPageResponse(
+			invokeGetContentSpaceKnowledgeBaseFoldersPageResponse(
 				Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -273,7 +271,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-knowledge-base-folders",
+					"/content-spaces/{content-space-id}/knowledge-base-folders",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -289,12 +287,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceTreeKnowledgeBaseFolder() throws Exception {
+	public void testPostContentSpaceKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder randomKnowledgeBaseFolder =
 			randomKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPostContentSpaceTreeKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostContentSpaceKnowledgeBaseFolder_addKnowledgeBaseFolder(
 				randomKnowledgeBaseFolder);
 
 		assertEquals(randomKnowledgeBaseFolder, postKnowledgeBaseFolder);
@@ -302,7 +300,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPostContentSpaceTreeKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostContentSpaceKnowledgeBaseFolder_addKnowledgeBaseFolder(
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -310,7 +308,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected KnowledgeBaseFolder invokePostContentSpaceTreeKnowledgeBaseFolder(
+	protected KnowledgeBaseFolder invokePostContentSpaceKnowledgeBaseFolder(
 			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -323,7 +321,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-knowledge-base-folders",
+					"/content-spaces/{content-space-id}/knowledge-base-folders",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -347,9 +345,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 	}
 
-	protected Http.Response
-			invokePostContentSpaceTreeKnowledgeBaseFolderResponse(
-				Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
+	protected Http.Response invokePostContentSpaceKnowledgeBaseFolderResponse(
+			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -361,7 +358,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-knowledge-base-folders",
+					"/content-spaces/{content-space-id}/knowledge-base-folders",
 					contentSpaceId);
 
 		options.setLocation(location);

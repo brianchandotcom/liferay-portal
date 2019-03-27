@@ -125,10 +125,10 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
-	@Path("/content-spaces/{content-space-id}/key-structured-contents/{key}")
+	@Path("/content-spaces/{content-space-id}/structured-contents/by-key/{key}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
-	public StructuredContent getContentSpaceKeyStructuredContent(
+	public StructuredContent getContentSpaceStructuredContentByKey(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@NotNull @PathParam("key") String key)
 		throws Exception {
@@ -138,10 +138,12 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
-	@Path("/content-spaces/{content-space-id}/uuid-structured-contents/{uuid}")
+	@Path(
+		"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}"
+	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
-	public StructuredContent getContentSpaceUuidStructuredContent(
+	public StructuredContent getContentSpaceStructuredContentByUuid(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@NotNull @PathParam("uuid") String uuid)
 		throws Exception {

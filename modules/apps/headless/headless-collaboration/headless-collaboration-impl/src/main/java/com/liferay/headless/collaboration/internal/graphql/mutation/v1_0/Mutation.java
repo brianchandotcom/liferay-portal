@@ -567,23 +567,6 @@ public class Mutation {
 						contentSpaceId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public KnowledgeBaseArticle postContentSpaceTreeKnowledgeBaseArticle(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postContentSpaceTreeKnowledgeBaseArticle(
-						contentSpaceId, knowledgeBaseArticle));
-	}
-
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseArticle(
 			@GraphQLName("knowledge-base-article-id") Long
@@ -702,7 +685,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public KnowledgeBaseFolder postContentSpaceTreeKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -712,9 +695,8 @@ public class Mutation {
 			_knowledgeBaseFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.
-					postContentSpaceTreeKnowledgeBaseFolder(
-						contentSpaceId, knowledgeBaseFolder));
+				knowledgeBaseFolderResource.postContentSpaceKnowledgeBaseFolder(
+					contentSpaceId, knowledgeBaseFolder));
 	}
 
 	@GraphQLInvokeDetached

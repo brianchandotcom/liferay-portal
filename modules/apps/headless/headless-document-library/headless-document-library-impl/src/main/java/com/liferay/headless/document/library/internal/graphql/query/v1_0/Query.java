@@ -123,8 +123,9 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getContentSpaceTreeDocumentsPage(
+	public Collection<Document> getContentSpaceDocumentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("tree") Boolean tree,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -135,9 +136,9 @@ public class Query {
 			this::_populateResourceContext,
 			documentResource -> {
 				Page paginationPage =
-					documentResource.getContentSpaceTreeDocumentsPage(
-						contentSpaceId, filter, Pagination.of(pageSize, page),
-						sorts);
+					documentResource.getContentSpaceDocumentsPage(
+						contentSpaceId, tree, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -176,8 +177,9 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getContentSpaceTreeFoldersPage(
+	public Collection<Folder> getContentSpaceFoldersPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("tree") Boolean tree,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -187,10 +189,9 @@ public class Query {
 			_folderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			folderResource -> {
-				Page paginationPage =
-					folderResource.getContentSpaceTreeFoldersPage(
-						contentSpaceId, filter, Pagination.of(pageSize, page),
-						sorts);
+				Page paginationPage = folderResource.getContentSpaceFoldersPage(
+					contentSpaceId, tree, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});

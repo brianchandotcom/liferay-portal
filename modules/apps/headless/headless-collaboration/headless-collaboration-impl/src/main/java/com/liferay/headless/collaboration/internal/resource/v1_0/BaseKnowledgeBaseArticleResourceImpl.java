@@ -52,6 +52,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -80,8 +81,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -94,43 +95,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		return new KnowledgeBaseArticle();
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/content-spaces/{content-space-id}/tree-knowledge-base-articles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public Page<KnowledgeBaseArticle>
-			getContentSpaceTreeKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("content-space-id") Long contentSpaceId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/tree-knowledge-base-articles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public KnowledgeBaseArticle postContentSpaceTreeKnowledgeBaseArticle(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {

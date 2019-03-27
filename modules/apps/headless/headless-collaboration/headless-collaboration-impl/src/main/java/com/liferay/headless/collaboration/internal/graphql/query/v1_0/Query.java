@@ -517,6 +517,7 @@ public class Query {
 	public Collection<KnowledgeBaseArticle>
 			getContentSpaceKnowledgeBaseArticlesPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("tree") Boolean tree,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -530,32 +531,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getContentSpaceKnowledgeBaseArticlesPage(
-							contentSpaceId, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseArticle>
-			getContentSpaceTreeKnowledgeBaseArticlesPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource -> {
-				Page paginationPage =
-					knowledgeBaseArticleResource.
-						getContentSpaceTreeKnowledgeBaseArticlesPage(
-							contentSpaceId, filter,
+							contentSpaceId, tree, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -664,7 +640,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseFolder>
-			getContentSpaceTreeKnowledgeBaseFoldersPage(
+			getContentSpaceKnowledgeBaseFoldersPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -676,7 +652,7 @@ public class Query {
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
-						getContentSpaceTreeKnowledgeBaseFoldersPage(
+						getContentSpaceKnowledgeBaseFoldersPage(
 							contentSpaceId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();

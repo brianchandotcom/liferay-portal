@@ -34,12 +34,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FolderResource {
 
-	public Page<Folder> getContentSpaceTreeFoldersPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<Folder> getContentSpaceFoldersPage(
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Folder postContentSpaceTreeFolder(Long contentSpaceId, Folder folder)
+	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
 		throws Exception;
 
 	public void deleteFolder(Long folderId) throws Exception;

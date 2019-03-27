@@ -52,6 +52,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -74,13 +75,13 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/tree-documents")
+	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Page<Document> getContentSpaceTreeDocumentsPage(
+	public Page<Document> getContentSpaceDocumentsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -89,10 +90,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/content-spaces/{content-space-id}/tree-documents")
+	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Document postContentSpaceTreeDocument(
+	public Document postContentSpaceDocument(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {

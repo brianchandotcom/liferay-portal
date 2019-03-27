@@ -112,19 +112,19 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPage() throws Exception {
+	public void testGetContentSpaceFoldersPage() throws Exception {
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 		Long irrelevantContentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getIrrelevantContentSpaceId();
+			testGetContentSpaceFoldersPage_getIrrelevantContentSpaceId();
 
 		if ((irrelevantContentSpaceId != null)) {
-			Folder irrelevantFolder =
-				testGetContentSpaceTreeFoldersPage_addFolder(
-					irrelevantContentSpaceId, randomIrrelevantFolder());
+			Folder irrelevantFolder = testGetContentSpaceFoldersPage_addFolder(
+				irrelevantContentSpaceId, randomIrrelevantFolder());
 
-			Page<Folder> page = invokeGetContentSpaceTreeFoldersPage(
-				irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+			Page<Folder> page = invokeGetContentSpaceFoldersPage(
+				irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -133,14 +133,14 @@ public abstract class BaseFolderResourceTestCase {
 			assertValid(page);
 		}
 
-		Folder folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
-		Folder folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
-		Page<Folder> page = invokeGetContentSpaceTreeFoldersPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+		Page<Folder> page = invokeGetContentSpaceFoldersPage(
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -150,7 +150,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPageWithFilterDateTimeEquals()
+	public void testGetContentSpaceFoldersPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -161,7 +161,7 @@ public abstract class BaseFolderResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 
 		Folder folder1 = randomFolder();
 		Folder folder2 = randomFolder();
@@ -172,17 +172,18 @@ public abstract class BaseFolderResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder1);
 
 		Thread.sleep(1000);
 
-		folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Folder> page = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, getFilterString(entityField, "eq", folder1),
+			Page<Folder> page = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null,
+				getFilterString(entityField, "eq", folder1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -192,7 +193,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPageWithFilterStringEquals()
+	public void testGetContentSpaceFoldersPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -203,18 +204,19 @@ public abstract class BaseFolderResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 
-		Folder folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Folder folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
 		for (EntityField entityField : entityFields) {
-			Page<Folder> page = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, getFilterString(entityField, "eq", folder1),
+			Page<Folder> page = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null,
+				getFilterString(entityField, "eq", folder1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -224,30 +226,30 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPageWithPagination()
+	public void testGetContentSpaceFoldersPageWithPagination()
 		throws Exception {
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 
-		Folder folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
-		Folder folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
-		Folder folder3 = testGetContentSpaceTreeFoldersPage_addFolder(
+		Folder folder3 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
-		Page<Folder> page1 = invokeGetContentSpaceTreeFoldersPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+		Page<Folder> page1 = invokeGetContentSpaceFoldersPage(
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<Folder> folders1 = (List<Folder>)page1.getItems();
 
 		Assert.assertEquals(folders1.toString(), 2, folders1.size());
 
-		Page<Folder> page2 = invokeGetContentSpaceTreeFoldersPage(
-			contentSpaceId, null, Pagination.of(2, 2), null);
+		Page<Folder> page2 = invokeGetContentSpaceFoldersPage(
+			contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -266,7 +268,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPageWithSortDateTime()
+	public void testGetContentSpaceFoldersPageWithSortDateTime()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -277,7 +279,7 @@ public abstract class BaseFolderResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 
 		Folder folder1 = randomFolder();
 		Folder folder2 = randomFolder();
@@ -288,25 +290,25 @@ public abstract class BaseFolderResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder1);
 
 		Thread.sleep(1000);
 
-		folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Folder> ascPage = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(folder1, folder2),
 				(List<Folder>)ascPage.getItems());
 
-			Page<Folder> descPage = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -316,7 +318,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceTreeFoldersPageWithSortString()
+	public void testGetContentSpaceFoldersPageWithSortString()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -327,7 +329,7 @@ public abstract class BaseFolderResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceTreeFoldersPage_getContentSpaceId();
+			testGetContentSpaceFoldersPage_getContentSpaceId();
 
 		Folder folder1 = randomFolder();
 		Folder folder2 = randomFolder();
@@ -337,23 +339,23 @@ public abstract class BaseFolderResourceTestCase {
 			BeanUtils.setProperty(folder2, entityField.getName(), "Bbb");
 		}
 
-		folder1 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder1);
 
-		folder2 = testGetContentSpaceTreeFoldersPage_addFolder(
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Folder> ascPage = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(folder1, folder2),
 				(List<Folder>)ascPage.getItems());
 
-			Page<Folder> descPage = invokeGetContentSpaceTreeFoldersPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -362,7 +364,7 @@ public abstract class BaseFolderResourceTestCase {
 		}
 	}
 
-	protected Folder testGetContentSpaceTreeFoldersPage_addFolder(
+	protected Folder testGetContentSpaceFoldersPage_addFolder(
 			Long contentSpaceId, Folder folder)
 		throws Exception {
 
@@ -370,22 +372,21 @@ public abstract class BaseFolderResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceTreeFoldersPage_getContentSpaceId()
+	protected Long testGetContentSpaceFoldersPage_getContentSpaceId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
-	protected Long
-			testGetContentSpaceTreeFoldersPage_getIrrelevantContentSpaceId()
+	protected Long testGetContentSpaceFoldersPage_getIrrelevantContentSpaceId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<Folder> invokeGetContentSpaceTreeFoldersPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+	protected Page<Folder> invokeGetContentSpaceFoldersPage(
+			Long contentSpaceId, Boolean tree, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -393,7 +394,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-folders",
+					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -419,9 +420,9 @@ public abstract class BaseFolderResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetContentSpaceTreeFoldersPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
+			Long contentSpaceId, Boolean tree, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -429,7 +430,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-folders",
+					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -449,24 +450,23 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceTreeFolder() throws Exception {
+	public void testPostContentSpaceFolder() throws Exception {
 		Folder randomFolder = randomFolder();
 
-		Folder postFolder = testPostContentSpaceTreeFolder_addFolder(
-			randomFolder);
+		Folder postFolder = testPostContentSpaceFolder_addFolder(randomFolder);
 
 		assertEquals(randomFolder, postFolder);
 		assertValid(postFolder);
 	}
 
-	protected Folder testPostContentSpaceTreeFolder_addFolder(Folder folder)
+	protected Folder testPostContentSpaceFolder_addFolder(Folder folder)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Folder invokePostContentSpaceTreeFolder(
+	protected Folder invokePostContentSpaceFolder(
 			Long contentSpaceId, Folder folder)
 		throws Exception {
 
@@ -479,7 +479,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-folders",
+					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -502,7 +502,7 @@ public abstract class BaseFolderResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostContentSpaceTreeFolderResponse(
+	protected Http.Response invokePostContentSpaceFolderResponse(
 			Long contentSpaceId, Folder folder)
 		throws Exception {
 
@@ -515,7 +515,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/tree-folders",
+					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
 		options.setLocation(location);

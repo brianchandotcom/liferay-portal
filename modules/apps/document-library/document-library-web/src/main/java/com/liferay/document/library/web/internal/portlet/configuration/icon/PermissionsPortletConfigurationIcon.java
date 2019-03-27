@@ -94,7 +94,7 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 25;
+		return 130;
 	}
 
 	@Override

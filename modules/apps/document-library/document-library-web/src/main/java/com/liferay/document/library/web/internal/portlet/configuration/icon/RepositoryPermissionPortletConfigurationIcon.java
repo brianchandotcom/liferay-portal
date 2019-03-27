@@ -80,7 +80,7 @@ public class RepositoryPermissionPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 130;
 	}
 
 	@Override

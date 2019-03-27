@@ -144,7 +144,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 100;
+		return 120;
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class AccessFromDesktopPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 190;
 	}
 
 	@Override

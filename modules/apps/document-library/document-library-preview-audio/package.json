@@ -17,7 +17,7 @@
 	},
 	"name": "document-library-preview-audio",
 	"scripts": {
-		"build": "metalsoy --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
+		"build": "metalsoy --externalMsgFormat \"Liferay.Language.get('\\$2')\" --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/*.js src/**/*.soy",

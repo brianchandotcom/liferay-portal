@@ -77,7 +77,7 @@
 	},
 	"name": "frontend-js-web",
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
+		"build": "metalsoy --externalMsgFormat \"Liferay.Language.get('\\$2')\" && babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/liferay/**/*.js test/**/*.js test/**/**/*.js",

@@ -8,7 +8,9 @@
 	},
 	"name": "frontend-taglib-chart",
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler --bridge"
+		"build": "liferay-npm-scripts build --bundler --bridge",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "2.0.0"
 }

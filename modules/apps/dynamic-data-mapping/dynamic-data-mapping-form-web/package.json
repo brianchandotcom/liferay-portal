@@ -135,12 +135,9 @@
 		"modulePathIgnorePatterns": [
 			"/build/",
 			"/classes/",
-			"/__mock__/",
-			"/__fixtures__/"
+			"/__fixtures__/",
+			"/__mock__/"
 		],
-		"transform": {
-			".*": "<rootDir>/jest-preprocessor.js"
-		},
 		"setupFiles": [
 			"<rootDir>/test/metal/setup/setup.js",
 			"<rootDir>/test/metal/setup/setup_framework.js"
@@ -153,6 +150,9 @@
 		],
 		"testResultsProcessor": "liferay-jest-junit-reporter",
 		"testURL": "http://localhost",
+		"transform": {
+			".*": "<rootDir>/jest-preprocessor.js"
+		},
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]

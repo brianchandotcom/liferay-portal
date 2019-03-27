@@ -40,7 +40,9 @@
 	},
 	"name": "frontend-js-metal-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler --bridge"
+		"build": "liferay-npm-scripts build --bundler --bridge",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"
 }

@@ -34,8 +34,6 @@ if (Validator.isNotNull(servicePassword)) {
 %>
 
 <aui:fieldset>
-	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_ntlm") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ntlm" />
-
 	<aui:input label="enabled" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="domain-controller" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "domainController" %>' type="text" value="<%= domainController %>" />
@@ -49,16 +47,4 @@ if (Validator.isNotNull(servicePassword)) {
 	<aui:input cssClass="lfr-input-text-container" label="service-password" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "servicePassword" %>' type="password" value="<%= servicePassword %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="negotiate-flags" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "negotiateFlags" %>' type="text" value="<%= negotiateFlags %>" />
-
-	<aui:button-row>
-		<portlet:actionURL name="/portal_settings/ntlm_delete" var="resetValuesURL">
-			<portlet:param name="tabs1" value="ntlm" />
-		</portlet:actionURL>
-
-		<%
-		String taglibOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" value="reset-values" />
-	</aui:button-row>
 </aui:fieldset>

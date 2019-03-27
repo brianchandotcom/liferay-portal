@@ -46,6 +46,10 @@ public class CardTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
+	public void setCardCssClass(String cardCssClass) {
+		_cardCssClass = cardCssClass;
+	}
+
 	public void setCheckboxChecked(boolean checkboxChecked) {
 		_checkboxChecked = checkboxChecked;
 	}
@@ -123,6 +127,7 @@ public class CardTag extends IncludeTag {
 
 		_actionJsp = null;
 		_actionJspServletContext = null;
+		_cardCssClass = null;
 		_checkboxChecked = null;
 		_checkboxCSSClass = null;
 		_checkboxData = null;
@@ -154,6 +159,8 @@ public class CardTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:card:actionJspServletContext",
 			getActionJspServletContext());
+		request.setAttribute(
+			"liferay-frontend:card:cardCssClass", _cardCssClass);
 		request.setAttribute(
 			"liferay-frontend:card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
@@ -191,6 +198,7 @@ public class CardTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
+	private String _cardCssClass;
 	private Boolean _checkboxChecked;
 	private String _checkboxCSSClass;
 	private Map<String, Object> _checkboxData;

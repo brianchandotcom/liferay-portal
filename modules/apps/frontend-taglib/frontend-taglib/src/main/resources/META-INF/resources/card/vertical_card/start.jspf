@@ -15,7 +15,7 @@
 --%>
 
 <div class="card-type-asset <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "form-check form-check-card form-check-top-left" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-	<div class="card">
+	<div class="card <%= Validator.isNotNull(cardCssClass) ? cardCssClass : StringPool.BLANK %>">
 		<div class="aspect-ratio card-item-first <%= imageCSSClass %>">
 			<c:if test="<%= (rowChecker != null) && (resultRow != null) %>">
 				<liferay-util:buffer

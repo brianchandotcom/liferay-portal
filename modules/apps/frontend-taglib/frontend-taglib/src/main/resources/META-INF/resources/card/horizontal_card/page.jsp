@@ -34,7 +34,7 @@
 	</c:when>
 </c:choose>
 
-<div class="card card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+<div class="card card-horizontal <%= Validator.isNotNull(cardCssClass) ? cardCssClass : StringPool.BLANK %> <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 	<div class="card-body">
 		<div class="card-row">
 			<c:if test="<%= Validator.isNotNull(colHTML) %>">

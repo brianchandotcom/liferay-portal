@@ -114,6 +114,8 @@ definition {
 
 		Form.editFieldLabel(fieldValue = "Text Field Required");
 
+		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
+
 		FormFields.enableSwitcher(fieldName = "required");
 
 		Form.closeSidebar();
@@ -241,9 +243,9 @@ definition {
 
 		FormFields.viewTextLabel(fieldLabel = "表格文本", fieldName = "${fieldName2}");
 
-		FormFields.editText(fieldName = "${fieldName1}", fieldValue = "文本输入中文");
+		FormFields.editTextMultiline(fieldName = "${fieldName1}", fieldValue = "文本输入中文");
 
-		FormFields.editText(fieldName = "${fieldName2}", fieldValue = "文本再次输入中文");
+		FormFields.editTextMultiline(fieldName = "${fieldName2}", fieldValue = "文本再次输入中文");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "提交");
 

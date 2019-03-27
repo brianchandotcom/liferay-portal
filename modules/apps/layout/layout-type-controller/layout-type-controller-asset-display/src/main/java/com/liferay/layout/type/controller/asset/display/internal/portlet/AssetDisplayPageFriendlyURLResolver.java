@@ -182,30 +182,18 @@ public class AssetDisplayPageFriendlyURLResolver
 		return null;
 	}
 
-	private String _getAssetURLSeparator(String friendlyURL) {
-		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
-
-		String assetURLSeparator = paths.get(1);
-
-		if (Validator.isNumber(assetURLSeparator)) {
-			return StringPool.BLANK;
-		}
-
-		return assetURLSeparator;
-	}
-
 	private InfoDisplayContributor _getInfoDisplayContributor(
 			long groupId, String friendlyURL)
 		throws PortalException {
 
-		String assetURLSeparator = _getAssetURLSeparator(friendlyURL);
+		String urlSeparator = _getUrlSeparator(friendlyURL);
 
 		InfoDisplayContributor infoDisplayContributor = null;
 
-		if (Validator.isNotNull(assetURLSeparator)) {
+		if (Validator.isNotNull(urlSeparator)) {
 			infoDisplayContributor =
 				_infoDisplayContributorTracker.
-					getInfoDisplayContributorByURLSeparator(assetURLSeparator);
+					getInfoDisplayContributorByURLSeparator(urlSeparator);
 		}
 		else {
 			AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
@@ -217,10 +205,22 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		if (infoDisplayContributor == null) {
 			throw new PortalException(
-				"Display page is not available for " + assetURLSeparator);
+				"Display page is not available for " + urlSeparator);
 		}
 
 		return infoDisplayContributor;
+	}
+
+	private String _getUrlSeparator(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		String urlSeparator = paths.get(1);
+
+		if (Validator.isNumber(urlSeparator)) {
+			return StringPool.BLANK;
+		}
+
+		return urlSeparator;
 	}
 
 	private String _getUrlTitle(String friendlyURL) {

@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -29,9 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -57,10 +53,6 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 			renderRequest);
 
 		request.setAttribute(
-			WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-			_dlMimeTypeDisplayContext);
-
-		request.setAttribute(
 			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
 
 		return super.render(renderRequest, renderResponse);
@@ -77,13 +69,6 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 
 		_wikiEngineRenderer = wikiEngineRenderer;
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private Portal _portal;

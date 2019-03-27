@@ -203,6 +203,24 @@ components:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
             type: object
+        DataRecordCollectionPermission:
+            properties:
+                addDataRecordCollection:
+                    type: boolean
+                definePermissions:
+                    type: boolean
+                delete:
+                    type: boolean
+                update:
+                    type: boolean
+                view:
+                    type: boolean
+                roleNames:
+                    items:
+                        type: string
+                    type:
+                        array
+            type: object
         DataRecordValue:
             properties:
                 key:
@@ -330,6 +348,31 @@ paths:
                                 type: array
                     description: ""
             tags: ["DataLayout"]
+    "/content-spaces/{content-space-id}/data-record-collections/permissions":
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: operation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollectionPermission"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataRecordCollection"]
     "/content-spaces/{content-space-id}/data-record-collections":
         get:
             parameters:
@@ -569,6 +612,32 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
+    "/data-record-collections/{data-record-collection-id}/permissions":
+        post:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: operation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollectionPermission"
+                description: ""
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataRecordCollection"]
     "/data-record-collections/{data-record-collection-id}":
         delete:
             parameters:

@@ -14,12 +14,25 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.product.navigation.personal.menu.constants.PersonalMenuPortletKeys" %>
+<span class="user-avatar-link">
+	<liferay-util:buffer
+		var="userAvatar"
+	>
+		<c:if test="<%= themeDisplay.isImpersonated() %>">
+			<aui:icon image="asterisk" markupView="lexicon" />
+		</c:if>
 
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.ResourceURL" %>
+		<span class="user-avatar-image">
+			<liferay-ui:user-portrait
+				user="<%= user %>"
+			/>
+		</span>
+	</liferay-util:buffer>
+
+	<liferay-product-navigation:personal-menu
+		expanded="<%= true %>"
+		label="<%= userAvatar %>"
+	/>
+</span>

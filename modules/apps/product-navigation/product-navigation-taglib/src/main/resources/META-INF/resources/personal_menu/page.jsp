@@ -19,6 +19,8 @@
 <%
 boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
 String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
+
+String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 %>
 
 <style type="text/css">
@@ -27,16 +29,22 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 	}
 </style>
 
-<div id="personal_menu_dropdown">
-	<div id="personal_menu_dropdown_toggle" style="cursor: pointer;">
+<div id="<%= randomNamespace + "personal_menu_dropdown" %>">
+	<div id="<%= randomNamespace + "personal_menu_dropdown_toggle" %>" style="cursor: pointer;">
 		<%= label %>
 	</div>
 
-	<div id="clay_dropdown_portal"></div>
+	<div id="<%= randomNamespace + "clay_dropdown_portal" %>"></div>
 </div>
 
+<%
+ResourceURL resourceURL = PortletURLFactoryUtil.create(request, PersonalMenuPortletKeys.PERSONAL_MENU, PortletRequest.RESOURCE_PHASE);
+
+resourceURL.setResourceID("/get_personal_menu_items");
+%>
+
 <aui:script require="clay-dropdown/src/ClayDropdown as ClayDropdown,metal-dom/src/dom as dom">
-	var toggle = document.getElementById('personal_menu_dropdown_toggle');
+	var toggle = document.getElementById('<%= randomNamespace + "personal_menu_dropdown_toggle" %>');
 
 	if (toggle) {
 		dom.once(
@@ -44,7 +52,7 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 			'click',
 			function(event) {
 				fetch(
-					'<liferay-portlet:resourceURL id="/get_personal_menu_items" portletName="<%= PersonalMenuPortletKeys.PERSONAL_MENU %>" />',
+					'<%= resourceURL.toString() %>',
 					{
 						credentials: 'include',
 						method: 'GET'
@@ -57,7 +65,7 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 					function(personalMenuItems) {
 						new ClayDropdown.default(
 							{
-								element: '#personal_menu_dropdown_toggle',
+								element: '#<%= randomNamespace + "personal_menu_dropdown_toggle" %>',
 								events: {
 									'willAttach': function(event) {
 										if (<%= expanded %>) {
@@ -74,7 +82,7 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 								showToggleIcon: false,
 								spritemap: '<%= themeDisplay.getPathThemeImages().concat("/clay/icons.svg") %>'
 							},
-							'#personal_menu_dropdown'
+							'#<%= randomNamespace + "personal_menu_dropdown" %>'
 						);
 					}
 				);

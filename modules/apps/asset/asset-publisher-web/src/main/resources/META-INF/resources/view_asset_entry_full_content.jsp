@@ -70,7 +70,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
-	<div class="autofit-row autofit-row-center mb-3">
+	<div class="autofit-row autofit-row-center mb-4">
 		<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 			<div class="autofit-col">
 				<h4 class="asset-title component-title">
@@ -112,7 +112,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
 		%>
 
-		<div class="autofit-row mb-3 metadata-author">
+		<div class="autofit-row mb-4 metadata-author">
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
 					<span class="user-avatar-image">
@@ -188,7 +188,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		</div>
 	</c:if>
 
-	<div class="asset-content mb-3" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
+	<div class="asset-content mb-4" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
 		<liferay-asset:asset-display
 			assetEntry="<%= assetEntry %>"
 			assetRenderer="<%= assetRenderer %>"
@@ -219,7 +219,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 	</c:if>
 
 	<c:if test="<%= assetPublisherDisplayContext.isShowPriority() %>">
-		<div class="asset-priority mb-3 text-secondary">
+		<div class="asset-priority mb-4 text-secondary">
 			<liferay-ui:message key="priority" />: <%= assetEntry.getPriority() %>
 		</div>
 	</c:if>
@@ -236,11 +236,13 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		}
 		%>
 
-		<liferay-asset:asset-links
-			assetEntryId="<%= assetEntry.getEntryId() %>"
-			portletURL="<%= assetLingsURL %>"
-			viewInContext="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>"
-		/>
+		<div class="asset-links mb-4">
+			<liferay-asset:asset-links
+				assetEntryId="<%= assetEntry.getEntryId() %>"
+				portletURL="<%= assetLingsURL %>"
+				viewInContext="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>"
+			/>
+		</div>
 	</c:if>
 
 	<%
@@ -400,7 +402,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 	</c:if>
 
 	<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
-		<div class="col-md-12">
+		<div class="col-md-12 mt-4">
 			<liferay-comment:discussion
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK() %>"

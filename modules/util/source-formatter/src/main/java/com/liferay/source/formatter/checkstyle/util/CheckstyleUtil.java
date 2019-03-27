@@ -141,6 +141,9 @@ public class CheckstyleUtil {
 		}
 
 		configuration = _addAttribute(
+			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
+			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
+		configuration = _addAttribute(
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.AppendCheck",

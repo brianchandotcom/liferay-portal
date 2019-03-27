@@ -20,17 +20,29 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaSignature;
+import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -67,12 +79,16 @@ public class ChainingCheck extends BaseCheck {
 			StringUtil.split(allowedVariableTypeNames));
 	}
 
-	public void setRequiredChainingVariableTypeNames(
-		String requiredChainingVariableTypeNames) {
+	public void setBaseDirName(String baseDirName) {
+		_baseDirName = baseDirName;
+	}
 
-		_requiredChainingVariableTypeNames = ArrayUtil.append(
-			_requiredChainingVariableTypeNames,
-			StringUtil.split(requiredChainingVariableTypeNames));
+	public void setRequiredChainingClassFileNames(
+		String requiredChainingClassFileNames) {
+
+		_requiredChainingClassFileNames = ArrayUtil.append(
+			_requiredChainingClassFileNames,
+			StringUtil.split(requiredChainingClassFileNames));
 	}
 
 	@Override
@@ -107,11 +123,11 @@ public class ChainingCheck extends BaseCheck {
 
 			List<String> chain = _getChain(methodCallDetailAST);
 
+			_checkRequiredChaining(methodCallDetailAST, chain);
+
 			int chainSize = chain.size();
 
 			if (chainSize == 1) {
-				_checkRequiredChaining(methodCallDetailAST);
-
 				continue;
 			}
 
@@ -247,8 +263,51 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkRequiredChaining(DetailAST methodCallDetailAST) {
-		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+	private void _checkRequiredChaining(
+		DetailAST methodCallDetailAST, List<String> chain) {
+
+		String classOrVariableName = _getClassOrVariableName(
+			methodCallDetailAST);
+
+		if (classOrVariableName == null) {
+			return;
+		}
+
+		String variableTypeName = DetailASTUtil.getVariableTypeName(
+			methodCallDetailAST, classOrVariableName, false);
+
+		List<String> requiredChainingMethodNames =
+			_getRequiredChainingMethodNames(variableTypeName);
+
+		if (requiredChainingMethodNames == null) {
+			return;
+		}
+
+		String methodName = chain.get(chain.size() - 1);
+
+		if (!requiredChainingMethodNames.contains(methodName)) {
+			return;
+		}
+
+		DetailAST topLevelMethodCallDetailAST = methodCallDetailAST;
+
+		while (true) {
+			DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
+				break;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				break;
+			}
+
+			topLevelMethodCallDetailAST = parentDetailAST;
+		}
+
+		DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
 
 		if (parentDetailAST.getType() != TokenTypes.EXPR) {
 			return;
@@ -270,32 +329,20 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST firstChildDetailAST = nextSiblingDetailAST.getFirstChild();
+		DetailAST nextMethodCallDetailAST =
+			nextSiblingDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+		if (nextMethodCallDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return;
 		}
 
-		String classOrVariableName1 = _getClassOrVariableName(
-			methodCallDetailAST);
-		String classOrVariableName2 = _getClassOrVariableName(
-			firstChildDetailAST);
+		String nextClassOrVariableName = _getClassOrVariableName(
+			nextMethodCallDetailAST);
 
-		if ((classOrVariableName1 == null) ||
-			!Objects.equals(classOrVariableName1, classOrVariableName2)) {
-
-			return;
-		}
-
-		String variableTypeName = DetailASTUtil.getVariableTypeName(
-			methodCallDetailAST, classOrVariableName1, false);
-
-		if (ArrayUtil.contains(
-				_requiredChainingVariableTypeNames, variableTypeName)) {
-
+		if (Objects.equals(classOrVariableName, nextClassOrVariableName)) {
 			log(
 				methodCallDetailAST, _MSG_REQUIRED_CHAINING,
-				classOrVariableName1);
+				classOrVariableName + "." + methodName);
 		}
 	}
 
@@ -473,6 +520,65 @@ public class ChainingCheck extends BaseCheck {
 
 			detailAST = childDetailAST;
 		}
+	}
+
+	private List<String> _getRequiredChainingMethodNames(String className) {
+		if (_requiredChainingMethodNamesMap != null) {
+			return _requiredChainingMethodNamesMap.get(className);
+		}
+
+		_requiredChainingMethodNamesMap = new HashMap<>();
+
+		for (String requiredChainingClassFileName :
+				_requiredChainingClassFileNames) {
+
+			File file = SourceFormatterUtil.getFile(
+				_baseDirName, requiredChainingClassFileName,
+				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+			if (file == null) {
+				continue;
+			}
+
+			JavaClass javaClass = null;
+
+			try {
+				javaClass = JavaClassParser.parseJavaClass(
+					requiredChainingClassFileName, FileUtil.read(file));
+			}
+			catch (Exception e) {
+				continue;
+			}
+
+			List<String> requiredChainingMethodNames = new ArrayList<>();
+
+			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+				if (!(javaTerm instanceof JavaMethod)) {
+					continue;
+				}
+
+				JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+				if (javaMethod.getAccessModifier() !=
+						JavaTerm.ACCESS_MODIFIER_PUBLIC) {
+
+					continue;
+				}
+
+				JavaSignature javaSignature = javaMethod.getSignature();
+
+				if (Objects.equals(
+						javaClass.getName(), javaSignature.getReturnType())) {
+
+					requiredChainingMethodNames.add(javaMethod.getName());
+				}
+			}
+
+			_requiredChainingMethodNamesMap.put(
+				javaClass.getName(), requiredChainingMethodNames);
+		}
+
+		return _requiredChainingMethodNamesMap.get(className);
 	}
 
 	private String _getReturnType(
@@ -688,6 +794,8 @@ public class ChainingCheck extends BaseCheck {
 	private String[] _allowedMethodNames = new String[0];
 	private String[] _allowedMockitoMethodNames = new String[0];
 	private String[] _allowedVariableTypeNames = new String[0];
-	private String[] _requiredChainingVariableTypeNames = new String[0];
+	private String _baseDirName;
+	private String[] _requiredChainingClassFileNames = new String[0];
+	private Map<String, List<String>> _requiredChainingMethodNamesMap;
 
 }

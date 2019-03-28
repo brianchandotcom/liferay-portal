@@ -8,6 +8,7 @@
 	{@param type: string}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableFocus: any}
+	{@param? _highlighted: any}
 	{@param? _mapped: bool}
 	{@param? _mappedFieldLabel: string}
 	{@param? _translated: bool}
@@ -32,6 +33,10 @@
 
 		{if $hoveredItemId == $fragmentEntryLinkEditableId and $hoveredItemType == $itemTypes.editable}
 			{sp}fragments-editor__editable--hovered
+		{/if}
+
+		{if $_highlighted}
+			{sp}fragments-editor__editable--highlighted
 		{/if}
 
 		{if $languageId != $defaultLanguageId}

@@ -12,6 +12,7 @@ import {CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, 
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import {getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties, shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
@@ -31,6 +32,40 @@ const SAVE_CHANGES_DELAY = 1500;
  * FragmentEditableField
  */
 class FragmentEditableField extends PortletBase {
+
+	/**
+	 * Checks if the given editable should be highlighted
+	 * @param {string} activeItemId
+	 * @param {string} activeItemType
+	 * @param {string} hoveredItemId
+	 * @param {string} hoveredItemType
+	 * @param {object} structure
+	 * @private
+	 * @return {boolean}
+	 * @review
+	 */
+	static _isHighlighted(
+		activeItemId,
+		activeItemType,
+		fragmentEntryLinkId,
+		hoveredItemId,
+		hoveredItemType,
+		structure
+	) {
+		const fragmentInActivePath = itemIsInPath(
+			getItemPath(activeItemId, activeItemType, structure),
+			fragmentEntryLinkId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		) && activeItemType !== FRAGMENTS_EDITOR_ITEM_TYPES.editable;
+
+		const fragmentInHoveredPath = itemIsInPath(
+			getItemPath(hoveredItemId, hoveredItemType, structure),
+			fragmentEntryLinkId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
+
+		return (fragmentInActivePath || fragmentInHoveredPath);
+	}
 
 	/**
 	 * Checks if the given editable is mapped
@@ -135,11 +170,20 @@ class FragmentEditableField extends PortletBase {
 			)
 		);
 
-		let nextState = state;
-
 		const fragmentEntryLinkEditableId = `${this.fragmentEntryLinkId}-${this.editableId}`;
+		const highlighted = FragmentEditableField._isHighlighted(
+			state.activeItemId,
+			state.activeItemType,
+			state.fragmentEntryLinkId,
+			state.hoveredItemId,
+			state.hoveredItemType,
+			state.layoutData.structure
+		);
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
+		let nextState = state;
+
+		nextState = setIn(nextState, ['_highlighted'], highlighted);
 		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
@@ -745,6 +789,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'hoveredItemId',
 		'hoveredItemType',
 		'languageId',
+		'layoutData',
 		'mappingFieldsURL',
 		'portletNamespace',
 		'segmentsExperienceId',

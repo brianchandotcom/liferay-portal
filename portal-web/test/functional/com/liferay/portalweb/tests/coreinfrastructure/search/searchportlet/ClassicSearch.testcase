@@ -547,6 +547,8 @@ definition {
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 	}
 
+	// Ignoring test, see LRQA-47805
+	@ignore = "true"
 	@priority = "4"
 	test ViewSearchResultForLongURL {
 		ProductMenu.gotoPortlet(

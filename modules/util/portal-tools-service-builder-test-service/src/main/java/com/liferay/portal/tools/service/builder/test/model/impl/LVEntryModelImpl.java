@@ -71,7 +71,8 @@ public class LVEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"headId", Types.BIGINT}, {"head", Types.BOOLEAN},
 		{"defaultLanguageId", Types.VARCHAR}, {"lvEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"uniqueGroupKey", Types.VARCHAR}
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"uniqueGroupKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,12 +85,13 @@ public class LVEntryModelImpl
 		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
+		"create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,companyId LONG,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
 
@@ -122,17 +124,40 @@ public class LVEntryModelImpl
 				"value.object.column.bitmask.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntry"),
 		true);
 
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long HEAD_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
-	public static final long HEADID_COLUMN_BITMASK = 4L;
+	public static final long HEAD_COLUMN_BITMASK = 4L;
 
-	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 8L;
+	public static final long HEADID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 16L;
 
-	public static final long LVENTRYID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long LVENTRYID_COLUMN_BITMASK = 64L;
+
+	public static final String MAPPING_TABLE_LVENTRIES_BIGDECIMALENTRIES_NAME =
+		"LVEntries_BigDecimalEntries";
+
+	public static final Object[][]
+		MAPPING_TABLE_LVENTRIES_BIGDECIMALENTRIES_COLUMNS = {
+			{"companyId", Types.BIGINT}, {"bigDecimalEntryId", Types.BIGINT},
+			{"lvEntryId", Types.BIGINT}
+		};
+
+	public static final String
+		MAPPING_TABLE_LVENTRIES_BIGDECIMALENTRIES_SQL_CREATE =
+			"create table LVEntries_BigDecimalEntries (companyId LONG not null,bigDecimalEntryId LONG not null,lvEntryId LONG not null,primary key (bigDecimalEntryId, lvEntryId))";
+
+	public static final boolean
+		FINDER_CACHE_ENABLED_LVENTRIES_BIGDECIMALENTRIES =
+			GetterUtil.getBoolean(
+				com.liferay.portal.tools.service.builder.test.service.util.
+					ServiceProps.get(
+						"value.object.finder.cache.enabled.LVEntries_BigDecimalEntries"),
+				true);
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -334,6 +359,26 @@ public class LVEntryModelImpl
 				@Override
 				public void accept(LVEntry lvEntry, Object lvEntryId) {
 					lvEntry.setLvEntryId((Long)lvEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"companyId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getCompanyId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"companyId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object companyId) {
+					lvEntry.setCompanyId((Long)companyId);
 				}
 
 			});
@@ -556,6 +601,7 @@ public class LVEntryModelImpl
 	public void populateVersionModel(LVEntryVersion lvEntryVersion) {
 		lvEntryVersion.setUuid(getUuid());
 		lvEntryVersion.setDefaultLanguageId(getDefaultLanguageId());
+		lvEntryVersion.setCompanyId(getCompanyId());
 		lvEntryVersion.setGroupId(getGroupId());
 		lvEntryVersion.setUniqueGroupKey(getUniqueGroupKey());
 	}
@@ -650,6 +696,28 @@ public class LVEntryModelImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -703,7 +771,7 @@ public class LVEntryModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LVEntry.class.getName(), getPrimaryKey());
+			getCompanyId(), LVEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -733,6 +801,7 @@ public class LVEntryModelImpl
 		lvEntryImpl.setHeadId(getHeadId());
 		lvEntryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		lvEntryImpl.setLvEntryId(getLvEntryId());
+		lvEntryImpl.setCompanyId(getCompanyId());
 		lvEntryImpl.setGroupId(getGroupId());
 		lvEntryImpl.setUniqueGroupKey(getUniqueGroupKey());
 
@@ -807,6 +876,10 @@ public class LVEntryModelImpl
 
 		lvEntryModelImpl._setOriginalHead = false;
 
+		lvEntryModelImpl._originalCompanyId = lvEntryModelImpl._companyId;
+
+		lvEntryModelImpl._setOriginalCompanyId = false;
+
 		lvEntryModelImpl._originalGroupId = lvEntryModelImpl._groupId;
 
 		lvEntryModelImpl._setOriginalGroupId = false;
@@ -844,6 +917,8 @@ public class LVEntryModelImpl
 		}
 
 		lvEntryCacheModel.lvEntryId = getLvEntryId();
+
+		lvEntryCacheModel.companyId = getCompanyId();
 
 		lvEntryCacheModel.groupId = getGroupId();
 
@@ -938,6 +1013,9 @@ public class LVEntryModelImpl
 	private boolean _setOriginalHead;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

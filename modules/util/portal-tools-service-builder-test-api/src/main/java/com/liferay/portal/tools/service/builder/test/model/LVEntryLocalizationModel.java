@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.version.VersionedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -39,7 +40,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface LVEntryLocalizationModel
-	extends BaseModel<LVEntryLocalization>, MVCCModel,
+	extends BaseModel<LVEntryLocalization>, MVCCModel, ShardedModel,
 			VersionedModel<LVEntryLocalizationVersion> {
 
 	/*
@@ -109,6 +110,22 @@ public interface LVEntryLocalizationModel
 	 * @param lvEntryLocalizationId the lv entry localization ID of this lv entry localization
 	 */
 	public void setLvEntryLocalizationId(long lvEntryLocalizationId);
+
+	/**
+	 * Returns the company ID of this lv entry localization.
+	 *
+	 * @return the company ID of this lv entry localization
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this lv entry localization.
+	 *
+	 * @param companyId the company ID of this lv entry localization
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the lv entry ID of this lv entry localization.

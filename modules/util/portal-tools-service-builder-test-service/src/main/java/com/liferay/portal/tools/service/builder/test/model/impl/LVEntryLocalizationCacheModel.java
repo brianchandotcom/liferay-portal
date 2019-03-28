@@ -79,7 +79,7 @@ public class LVEntryLocalizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,6 +87,8 @@ public class LVEntryLocalizationCacheModel
 		sb.append(headId);
 		sb.append(", lvEntryLocalizationId=");
 		sb.append(lvEntryLocalizationId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", lvEntryId=");
 		sb.append(lvEntryId);
 		sb.append(", languageId=");
@@ -109,6 +111,7 @@ public class LVEntryLocalizationCacheModel
 		lvEntryLocalizationImpl.setHeadId(headId);
 		lvEntryLocalizationImpl.setHead(head);
 		lvEntryLocalizationImpl.setLvEntryLocalizationId(lvEntryLocalizationId);
+		lvEntryLocalizationImpl.setCompanyId(companyId);
 		lvEntryLocalizationImpl.setLvEntryId(lvEntryId);
 
 		if (languageId == null) {
@@ -147,6 +150,8 @@ public class LVEntryLocalizationCacheModel
 
 		lvEntryLocalizationId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		lvEntryId = objectInput.readLong();
 		languageId = objectInput.readUTF();
 		title = objectInput.readUTF();
@@ -162,6 +167,8 @@ public class LVEntryLocalizationCacheModel
 		objectOutput.writeBoolean(head);
 
 		objectOutput.writeLong(lvEntryLocalizationId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(lvEntryId);
 
@@ -191,6 +198,7 @@ public class LVEntryLocalizationCacheModel
 	public long headId;
 	public boolean head;
 	public long lvEntryLocalizationId;
+	public long companyId;
 	public long lvEntryId;
 	public String languageId;
 	public String title;

@@ -121,6 +121,8 @@ public class BigDecimalEntryPersistenceTest {
 
 		BigDecimalEntry newBigDecimalEntry = _persistence.create(pk);
 
+		newBigDecimalEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newBigDecimalEntry.setBigDecimalValue(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -132,6 +134,9 @@ public class BigDecimalEntryPersistenceTest {
 		Assert.assertEquals(
 			existingBigDecimalEntry.getBigDecimalEntryId(),
 			newBigDecimalEntry.getBigDecimalEntryId());
+		Assert.assertEquals(
+			existingBigDecimalEntry.getCompanyId(),
+			newBigDecimalEntry.getCompanyId());
 		Assert.assertEquals(
 			existingBigDecimalEntry.getBigDecimalValue(),
 			newBigDecimalEntry.getBigDecimalValue());
@@ -183,8 +188,8 @@ public class BigDecimalEntryPersistenceTest {
 
 	protected OrderByComparator<BigDecimalEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BigDecimalEntry", "bigDecimalEntryId", true, "bigDecimalValue",
-			true);
+			"BigDecimalEntry", "bigDecimalEntryId", true, "companyId", true,
+			"bigDecimalValue", true);
 	}
 
 	@Test
@@ -382,6 +387,8 @@ public class BigDecimalEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		BigDecimalEntry bigDecimalEntry = _persistence.create(pk);
+
+		bigDecimalEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		bigDecimalEntry.setBigDecimalValue(
 			new BigDecimal(RandomTestUtil.nextDouble()));

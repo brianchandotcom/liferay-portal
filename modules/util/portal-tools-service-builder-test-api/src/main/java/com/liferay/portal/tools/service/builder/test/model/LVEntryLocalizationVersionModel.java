@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.version.VersionModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -38,7 +39,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface LVEntryLocalizationVersionModel
-	extends BaseModel<LVEntryLocalizationVersion>,
+	extends BaseModel<LVEntryLocalizationVersion>, ShardedModel,
 			VersionModel<LVEntryLocalization> {
 
 	/*
@@ -107,6 +108,22 @@ public interface LVEntryLocalizationVersionModel
 	 * @param lvEntryLocalizationId the lv entry localization ID of this lv entry localization version
 	 */
 	public void setLvEntryLocalizationId(long lvEntryLocalizationId);
+
+	/**
+	 * Returns the company ID of this lv entry localization version.
+	 *
+	 * @return the company ID of this lv entry localization version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this lv entry localization version.
+	 *
+	 * @param companyId the company ID of this lv entry localization version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the lv entry ID of this lv entry localization version.

@@ -129,6 +129,8 @@ public class LVEntryVersionPersistenceTest {
 
 		newLVEntryVersion.setLvEntryId(RandomTestUtil.nextLong());
 
+		newLVEntryVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		newLVEntryVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newLVEntryVersion.setUniqueGroupKey(RandomTestUtil.randomString());
@@ -152,6 +154,9 @@ public class LVEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingLVEntryVersion.getLvEntryId(),
 			newLVEntryVersion.getLvEntryId());
+		Assert.assertEquals(
+			existingLVEntryVersion.getCompanyId(),
+			newLVEntryVersion.getCompanyId());
 		Assert.assertEquals(
 			existingLVEntryVersion.getGroupId(),
 			newLVEntryVersion.getGroupId());
@@ -210,6 +215,25 @@ public class LVEntryVersionPersistenceTest {
 		_persistence.countByUUID_G_Version("null", 0L, 0);
 
 		_persistence.countByUUID_G_Version((String)null, 0L, 0);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C_Version() throws Exception {
+		_persistence.countByUuid_C_Version(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByUuid_C_Version("null", 0L, 0);
+
+		_persistence.countByUuid_C_Version((String)null, 0L, 0);
 	}
 
 	@Test
@@ -272,8 +296,8 @@ public class LVEntryVersionPersistenceTest {
 	protected OrderByComparator<LVEntryVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LVEntryVersion", "lvEntryVersionId", true, "version", true, "uuid",
-			true, "defaultLanguageId", true, "lvEntryId", true, "groupId", true,
-			"uniqueGroupKey", true);
+			true, "defaultLanguageId", true, "lvEntryId", true, "companyId",
+			true, "groupId", true, "uniqueGroupKey", true);
 	}
 
 	@Test
@@ -528,6 +552,8 @@ public class LVEntryVersionPersistenceTest {
 		lvEntryVersion.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		lvEntryVersion.setLvEntryId(RandomTestUtil.nextLong());
+
+		lvEntryVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		lvEntryVersion.setGroupId(RandomTestUtil.nextLong());
 

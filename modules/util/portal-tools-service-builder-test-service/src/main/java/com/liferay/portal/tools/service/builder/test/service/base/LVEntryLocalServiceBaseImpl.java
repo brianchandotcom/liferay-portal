@@ -46,6 +46,7 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
 import com.liferay.portal.tools.service.builder.test.service.LVEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence;
@@ -356,6 +357,159 @@ public abstract class LVEntryLocalServiceBaseImpl
 		return updateDraft(draftLVEntry);
 	}
 
+	/**
+	 */
+	@Override
+	public void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		bigDecimalEntryPersistence.addLVEntry(bigDecimalEntryId, lvEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, LVEntry lvEntry) {
+
+		bigDecimalEntryPersistence.addLVEntry(bigDecimalEntryId, lvEntry);
+	}
+
+	/**
+	 */
+	@Override
+	public void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		bigDecimalEntryPersistence.addLVEntries(bigDecimalEntryId, lvEntryIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, List<LVEntry> lvEntries) {
+
+		bigDecimalEntryPersistence.addLVEntries(bigDecimalEntryId, lvEntries);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+		bigDecimalEntryPersistence.clearLVEntries(bigDecimalEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		bigDecimalEntryPersistence.removeLVEntry(bigDecimalEntryId, lvEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, LVEntry lvEntry) {
+
+		bigDecimalEntryPersistence.removeLVEntry(bigDecimalEntryId, lvEntry);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		bigDecimalEntryPersistence.removeLVEntries(
+			bigDecimalEntryId, lvEntryIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, List<LVEntry> lvEntries) {
+
+		bigDecimalEntryPersistence.removeLVEntries(
+			bigDecimalEntryId, lvEntries);
+	}
+
+	/**
+	 * Returns the bigDecimalEntryIds of the big decimal entries associated with the lv entry.
+	 *
+	 * @param lvEntryId the lvEntryId of the lv entry
+	 * @return long[] the bigDecimalEntryIds of big decimal entries associated with the lv entry
+	 */
+	@Override
+	public long[] getBigDecimalEntryPrimaryKeys(long lvEntryId) {
+		return lvEntryPersistence.getBigDecimalEntryPrimaryKeys(lvEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<LVEntry> getBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+		return bigDecimalEntryPersistence.getLVEntries(bigDecimalEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<LVEntry> getBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, int start, int end) {
+
+		return bigDecimalEntryPersistence.getLVEntries(
+			bigDecimalEntryId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<LVEntry> getBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, int start, int end,
+		OrderByComparator<LVEntry> orderByComparator) {
+
+		return bigDecimalEntryPersistence.getLVEntries(
+			bigDecimalEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getBigDecimalEntryLVEntriesCount(long bigDecimalEntryId) {
+		return bigDecimalEntryPersistence.getLVEntriesSize(bigDecimalEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		return bigDecimalEntryPersistence.containsLVEntry(
+			bigDecimalEntryId, lvEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+		return bigDecimalEntryPersistence.containsLVEntries(bigDecimalEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		bigDecimalEntryPersistence.setLVEntries(bigDecimalEntryId, lvEntryIds);
+	}
+
 	@Override
 	public LVEntryLocalization fetchLVEntryLocalization(
 		long lvEntryId, String languageId) {
@@ -461,6 +615,8 @@ public abstract class LVEntryLocalServiceBaseImpl
 				lvEntryLocalizationPersistence.remove(lvEntryLocalization);
 			}
 			else {
+				lvEntryLocalization.setCompanyId(draftLVEntry.getCompanyId());
+
 				lvEntryLocalization.setTitle(localizedValues[0]);
 				lvEntryLocalization.setContent(localizedValues[1]);
 
@@ -486,6 +642,7 @@ public abstract class LVEntryLocalServiceBaseImpl
 			lvEntryLocalization.setHeadId(lvEntryLocalization.getPrimaryKey());
 
 			lvEntryLocalization.setLvEntryId(draftLVEntry.getLvEntryId());
+			lvEntryLocalization.setCompanyId(draftLVEntry.getCompanyId());
 
 			lvEntryLocalization.setLanguageId(languageId);
 
@@ -516,6 +673,8 @@ public abstract class LVEntryLocalServiceBaseImpl
 		}
 
 		lvEntryLocalization.setHeadId(lvEntryLocalization.getPrimaryKey());
+
+		lvEntryLocalization.setCompanyId(draftLVEntry.getCompanyId());
 
 		lvEntryLocalization.setTitle(title);
 		lvEntryLocalization.setContent(content);
@@ -582,6 +741,26 @@ public abstract class LVEntryLocalServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the big decimal entry persistence.
+	 *
+	 * @return the big decimal entry persistence
+	 */
+	public BigDecimalEntryPersistence getBigDecimalEntryPersistence() {
+		return bigDecimalEntryPersistence;
+	}
+
+	/**
+	 * Sets the big decimal entry persistence.
+	 *
+	 * @param bigDecimalEntryPersistence the big decimal entry persistence
+	 */
+	public void setBigDecimalEntryPersistence(
+		BigDecimalEntryPersistence bigDecimalEntryPersistence) {
+
+		this.bigDecimalEntryPersistence = bigDecimalEntryPersistence;
 	}
 
 	/**
@@ -996,6 +1175,7 @@ public abstract class LVEntryLocalServiceBaseImpl
 		draftLVEntry.setHeadId(publishedLVEntry.getPrimaryKey());
 		draftLVEntry.setDefaultLanguageId(
 			publishedLVEntry.getDefaultLanguageId());
+		draftLVEntry.setCompanyId(publishedLVEntry.getCompanyId());
 		draftLVEntry.setGroupId(publishedLVEntry.getGroupId());
 		draftLVEntry.setUniqueGroupKey(publishedLVEntry.getUniqueGroupKey());
 
@@ -1062,6 +1242,9 @@ public abstract class LVEntryLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@BeanReference(type = BigDecimalEntryPersistence.class)
+	protected BigDecimalEntryPersistence bigDecimalEntryPersistence;
 
 	@BeanReference(type = LVEntryVersionPersistence.class)
 	protected LVEntryVersionPersistence lvEntryVersionPersistence;

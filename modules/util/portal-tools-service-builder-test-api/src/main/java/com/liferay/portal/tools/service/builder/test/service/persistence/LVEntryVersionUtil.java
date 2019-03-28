@@ -989,6 +989,401 @@ public class LVEntryVersionUtil {
 	}
 
 	/**
+	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @return the range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lv entry version
+	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lv entry version
+	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param lvEntryVersionId the primary key of the current lv entry version
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lv entry version
+	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
+	 */
+	public static LVEntryVersion[] findByUuid_C_PrevAndNext(
+			long lvEntryVersionId, String uuid, long companyId,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			lvEntryVersionId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of lv entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching lv entry versions
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @return the matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C_Version(
+		String uuid, long companyId, int version) {
+
+		return getPersistence().findByUuid_C_Version(uuid, companyId, version);
+	}
+
+	/**
+	 * Returns a range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @return the range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C_Version(
+		String uuid, long companyId, int version, int start, int end) {
+
+		return getPersistence().findByUuid_C_Version(
+			uuid, companyId, version, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C_Version(
+		String uuid, long companyId, int version, int start, int end,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().findByUuid_C_Version(
+			uuid, companyId, version, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching lv entry versions
+	 */
+	public static List<LVEntryVersion> findByUuid_C_Version(
+		String uuid, long companyId, int version, int start, int end,
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByUuid_C_Version(
+			uuid, companyId, version, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lv entry version
+	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion findByUuid_C_Version_First(
+			String uuid, long companyId, int version,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_Version_First(
+			uuid, companyId, version, orderByComparator);
+	}
+
+	/**
+	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion fetchByUuid_C_Version_First(
+		String uuid, long companyId, int version,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Version_First(
+			uuid, companyId, version, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lv entry version
+	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion findByUuid_C_Version_Last(
+			String uuid, long companyId, int version,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_Version_Last(
+			uuid, companyId, version, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
+	 */
+	public static LVEntryVersion fetchByUuid_C_Version_Last(
+		String uuid, long companyId, int version,
+		OrderByComparator<LVEntryVersion> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Version_Last(
+			uuid, companyId, version, orderByComparator);
+	}
+
+	/**
+	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param lvEntryVersionId the primary key of the current lv entry version
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lv entry version
+	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
+	 */
+	public static LVEntryVersion[] findByUuid_C_Version_PrevAndNext(
+			long lvEntryVersionId, String uuid, long companyId, int version,
+			OrderByComparator<LVEntryVersion> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchLVEntryVersionException {
+
+		return getPersistence().findByUuid_C_Version_PrevAndNext(
+			lvEntryVersionId, uuid, companyId, version, orderByComparator);
+	}
+
+	/**
+	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 */
+	public static void removeByUuid_C_Version(
+		String uuid, long companyId, int version) {
+
+		getPersistence().removeByUuid_C_Version(uuid, companyId, version);
+	}
+
+	/**
+	 * Returns the number of lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param version the version
+	 * @return the number of matching lv entry versions
+	 */
+	public static int countByUuid_C_Version(
+		String uuid, long companyId, int version) {
+
+		return getPersistence().countByUuid_C_Version(uuid, companyId, version);
+	}
+
+	/**
 	 * Returns all the lv entry versions where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1768,6 +2163,244 @@ public class LVEntryVersionUtil {
 	 */
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	/**
+	 * Returns the primaryKeys of big decimal entries associated with the lv entry version.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @return long[] of the primaryKeys of big decimal entries associated with the lv entry version
+	 */
+	public static long[] getBigDecimalEntryPrimaryKeys(long pk) {
+		return getPersistence().getBigDecimalEntryPrimaryKeys(pk);
+	}
+
+	/**
+	 * Returns all the big decimal entries associated with the lv entry version.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @return the big decimal entries associated with the lv entry version
+	 */
+	public static List
+		<com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry>
+			getBigDecimalEntries(long pk) {
+
+		return getPersistence().getBigDecimalEntries(pk);
+	}
+
+	/**
+	 * Returns a range of all the big decimal entries associated with the lv entry version.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @return the range of big decimal entries associated with the lv entry version
+	 */
+	public static List
+		<com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry>
+			getBigDecimalEntries(long pk, int start, int end) {
+
+		return getPersistence().getBigDecimalEntries(pk, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the big decimal entries associated with the lv entry version.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param start the lower bound of the range of lv entry versions
+	 * @param end the upper bound of the range of lv entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of big decimal entries associated with the lv entry version
+	 */
+	public static List
+		<com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry>
+			getBigDecimalEntries(
+				long pk, int start, int end,
+				OrderByComparator
+					<com.liferay.portal.tools.service.builder.test.model.
+						BigDecimalEntry> orderByComparator) {
+
+		return getPersistence().getBigDecimalEntries(
+			pk, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of big decimal entries associated with the lv entry version.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @return the number of big decimal entries associated with the lv entry version
+	 */
+	public static int getBigDecimalEntriesSize(long pk) {
+		return getPersistence().getBigDecimalEntriesSize(pk);
+	}
+
+	/**
+	 * Returns <code>true</code> if the big decimal entry is associated with the lv entry version.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 * @return <code>true</code> if the big decimal entry is associated with the lv entry version; <code>false</code> otherwise
+	 */
+	public static boolean containsBigDecimalEntry(
+		long pk, long bigDecimalEntryPK) {
+
+		return getPersistence().containsBigDecimalEntry(pk, bigDecimalEntryPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the lv entry version has any big decimal entries associated with it.
+	 *
+	 * @param pk the primary key of the lv entry version to check for associations with big decimal entries
+	 * @return <code>true</code> if the lv entry version has any big decimal entries associated with it; <code>false</code> otherwise
+	 */
+	public static boolean containsBigDecimalEntries(long pk) {
+		return getPersistence().containsBigDecimalEntries(pk);
+	}
+
+	/**
+	 * Adds an association between the lv entry version and the big decimal entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 */
+	public static void addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
+		getPersistence().addBigDecimalEntry(pk, bigDecimalEntryPK);
+	}
+
+	/**
+	 * Adds an association between the lv entry version and the big decimal entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntry the big decimal entry
+	 */
+	public static void addBigDecimalEntry(
+		long pk,
+		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
+			bigDecimalEntry) {
+
+		getPersistence().addBigDecimalEntry(pk, bigDecimalEntry);
+	}
+
+	/**
+	 * Adds an association between the lv entry version and the big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 */
+	public static void addBigDecimalEntries(
+		long pk, long[] bigDecimalEntryPKs) {
+
+		getPersistence().addBigDecimalEntries(pk, bigDecimalEntryPKs);
+	}
+
+	/**
+	 * Adds an association between the lv entry version and the big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntries the big decimal entries
+	 */
+	public static void addBigDecimalEntries(
+		long pk,
+		List
+			<com.liferay.portal.tools.service.builder.test.model.
+				BigDecimalEntry> bigDecimalEntries) {
+
+		getPersistence().addBigDecimalEntries(pk, bigDecimalEntries);
+	}
+
+	/**
+	 * Clears all associations between the lv entry version and its big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version to clear the associated big decimal entries from
+	 */
+	public static void clearBigDecimalEntries(long pk) {
+		getPersistence().clearBigDecimalEntries(pk);
+	}
+
+	/**
+	 * Removes the association between the lv entry version and the big decimal entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 */
+	public static void removeBigDecimalEntry(long pk, long bigDecimalEntryPK) {
+		getPersistence().removeBigDecimalEntry(pk, bigDecimalEntryPK);
+	}
+
+	/**
+	 * Removes the association between the lv entry version and the big decimal entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntry the big decimal entry
+	 */
+	public static void removeBigDecimalEntry(
+		long pk,
+		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
+			bigDecimalEntry) {
+
+		getPersistence().removeBigDecimalEntry(pk, bigDecimalEntry);
+	}
+
+	/**
+	 * Removes the association between the lv entry version and the big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 */
+	public static void removeBigDecimalEntries(
+		long pk, long[] bigDecimalEntryPKs) {
+
+		getPersistence().removeBigDecimalEntries(pk, bigDecimalEntryPKs);
+	}
+
+	/**
+	 * Removes the association between the lv entry version and the big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntries the big decimal entries
+	 */
+	public static void removeBigDecimalEntries(
+		long pk,
+		List
+			<com.liferay.portal.tools.service.builder.test.model.
+				BigDecimalEntry> bigDecimalEntries) {
+
+		getPersistence().removeBigDecimalEntries(pk, bigDecimalEntries);
+	}
+
+	/**
+	 * Sets the big decimal entries associated with the lv entry version, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries to be associated with the lv entry version
+	 */
+	public static void setBigDecimalEntries(
+		long pk, long[] bigDecimalEntryPKs) {
+
+		getPersistence().setBigDecimalEntries(pk, bigDecimalEntryPKs);
+	}
+
+	/**
+	 * Sets the big decimal entries associated with the lv entry version, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the lv entry version
+	 * @param bigDecimalEntries the big decimal entries to be associated with the lv entry version
+	 */
+	public static void setBigDecimalEntries(
+		long pk,
+		List
+			<com.liferay.portal.tools.service.builder.test.model.
+				BigDecimalEntry> bigDecimalEntries) {
+
+		getPersistence().setBigDecimalEntries(pk, bigDecimalEntries);
 	}
 
 	public static Set<String> getBadColumnNames() {

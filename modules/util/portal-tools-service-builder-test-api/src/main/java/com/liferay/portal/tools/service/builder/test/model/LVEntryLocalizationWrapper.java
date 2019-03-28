@@ -60,6 +60,7 @@ public class LVEntryLocalizationWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("headId", getHeadId());
 		attributes.put("lvEntryLocalizationId", getLvEntryLocalizationId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("lvEntryId", getLvEntryId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
@@ -87,6 +88,12 @@ public class LVEntryLocalizationWrapper
 
 		if (lvEntryLocalizationId != null) {
 			setLvEntryLocalizationId(lvEntryLocalizationId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long lvEntryId = (Long)attributes.get("lvEntryId");
@@ -123,6 +130,16 @@ public class LVEntryLocalizationWrapper
 	@Override
 	public int compareTo(LVEntryLocalization lvEntryLocalization) {
 		return _lvEntryLocalization.compareTo(lvEntryLocalization);
+	}
+
+	/**
+	 * Returns the company ID of this lv entry localization.
+	 *
+	 * @return the company ID of this lv entry localization
+	 */
+	@Override
+	public long getCompanyId() {
+		return _lvEntryLocalization.getCompanyId();
 	}
 
 	/**
@@ -238,6 +255,16 @@ public class LVEntryLocalizationWrapper
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_lvEntryLocalization.setCachedModel(cachedModel);
+	}
+
+	/**
+	 * Sets the company ID of this lv entry localization.
+	 *
+	 * @param companyId the company ID of this lv entry localization
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		_lvEntryLocalization.setCompanyId(companyId);
 	}
 
 	/**

@@ -1,6 +1,14 @@
 create table BigDecimalEntry (
 	bigDecimalEntryId LONG not null primary key,
+	companyId LONG,
 	bigDecimalValue DECIMAL(30, 16) null
+);
+
+create table LVEntries_BigDecimalEntries (
+	companyId LONG not null,
+	bigDecimalEntryId LONG not null,
+	lvEntryId LONG not null,
+	primary key (bigDecimalEntryId, lvEntryId)
 );
 
 create table LVEntry (
@@ -10,6 +18,7 @@ create table LVEntry (
 	head BOOLEAN,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG not null primary key,
+	companyId LONG,
 	groupId LONG,
 	uniqueGroupKey VARCHAR(75) null
 );
@@ -19,6 +28,7 @@ create table LVEntryLocalization (
 	headId LONG,
 	head BOOLEAN,
 	lvEntryLocalizationId LONG not null primary key,
+	companyId LONG,
 	lvEntryId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
@@ -29,6 +39,7 @@ create table LVEntryLocalizationVersion (
 	lvEntryLocalizationVersionId LONG not null primary key,
 	version INTEGER,
 	lvEntryLocalizationId LONG,
+	companyId LONG,
 	lvEntryId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
@@ -41,6 +52,7 @@ create table LVEntryVersion (
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG,
+	companyId LONG,
 	groupId LONG,
 	uniqueGroupKey VARCHAR(75) null
 );

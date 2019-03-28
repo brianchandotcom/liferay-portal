@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -25,9 +26,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
@@ -35,6 +43,7 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence;
 
 import java.io.Serializable;
 
@@ -1855,6 +1864,8 @@ public class BigDecimalEntryPersistenceImpl
 		bigDecimalEntry.setNew(true);
 		bigDecimalEntry.setPrimaryKey(bigDecimalEntryId);
 
+		bigDecimalEntry.setCompanyId(companyProvider.getCompanyId());
+
 		return bigDecimalEntry;
 	}
 
@@ -1915,6 +1926,9 @@ public class BigDecimalEntryPersistenceImpl
 
 	@Override
 	protected BigDecimalEntry removeImpl(BigDecimalEntry bigDecimalEntry) {
+		bigDecimalEntryToLVEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
+			bigDecimalEntry.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -2440,6 +2454,339 @@ public class BigDecimalEntryPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the primaryKeys of lv entries associated with the big decimal entry.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @return long[] of the primaryKeys of lv entries associated with the big decimal entry
+	 */
+	@Override
+	public long[] getLVEntryPrimaryKeys(long pk) {
+		long[] pks = bigDecimalEntryToLVEntryTableMapper.getRightPrimaryKeys(
+			pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the lv entries associated with the big decimal entry.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @return the lv entries associated with the big decimal entry
+	 */
+	@Override
+	public List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+		getLVEntries(long pk) {
+
+		return getLVEntries(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the lv entries associated with the big decimal entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param start the lower bound of the range of big decimal entries
+	 * @param end the upper bound of the range of big decimal entries (not inclusive)
+	 * @return the range of lv entries associated with the big decimal entry
+	 */
+	@Override
+	public List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+		getLVEntries(long pk, int start, int end) {
+
+		return getLVEntries(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the lv entries associated with the big decimal entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param start the lower bound of the range of big decimal entries
+	 * @param end the upper bound of the range of big decimal entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of lv entries associated with the big decimal entry
+	 */
+	@Override
+	public List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+		getLVEntries(
+			long pk, int start, int end,
+			OrderByComparator
+				<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+					orderByComparator) {
+
+		return bigDecimalEntryToLVEntryTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of lv entries associated with the big decimal entry.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @return the number of lv entries associated with the big decimal entry
+	 */
+	@Override
+	public int getLVEntriesSize(long pk) {
+		long[] pks = bigDecimalEntryToLVEntryTableMapper.getRightPrimaryKeys(
+			pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the lv entry is associated with the big decimal entry.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPK the primary key of the lv entry
+	 * @return <code>true</code> if the lv entry is associated with the big decimal entry; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsLVEntry(long pk, long lvEntryPK) {
+		return bigDecimalEntryToLVEntryTableMapper.containsTableMapping(
+			pk, lvEntryPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the big decimal entry has any lv entries associated with it.
+	 *
+	 * @param pk the primary key of the big decimal entry to check for associations with lv entries
+	 * @return <code>true</code> if the big decimal entry has any lv entries associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsLVEntries(long pk) {
+		if (getLVEntriesSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the big decimal entry and the lv entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPK the primary key of the lv entry
+	 */
+	@Override
+	public void addLVEntry(long pk, long lvEntryPK) {
+		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
+
+		if (bigDecimalEntry == null) {
+			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, lvEntryPK);
+		}
+		else {
+			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
+				bigDecimalEntry.getCompanyId(), pk, lvEntryPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the big decimal entry and the lv entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntry the lv entry
+	 */
+	@Override
+	public void addLVEntry(
+		long pk,
+		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
+
+		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
+
+		if (bigDecimalEntry == null) {
+			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, lvEntry.getPrimaryKey());
+		}
+		else {
+			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
+				bigDecimalEntry.getCompanyId(), pk, lvEntry.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the big decimal entry and the lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPKs the primary keys of the lv entries
+	 */
+	@Override
+	public void addLVEntries(long pk, long[] lvEntryPKs) {
+		long companyId = 0;
+
+		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
+
+		if (bigDecimalEntry == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = bigDecimalEntry.getCompanyId();
+		}
+
+		bigDecimalEntryToLVEntryTableMapper.addTableMappings(
+			companyId, pk, lvEntryPKs);
+	}
+
+	/**
+	 * Adds an association between the big decimal entry and the lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntries the lv entries
+	 */
+	@Override
+	public void addLVEntries(
+		long pk,
+		List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			lvEntries) {
+
+		addLVEntries(
+			pk,
+			ListUtil.toLongArray(
+				lvEntries,
+				com.liferay.portal.tools.service.builder.test.model.LVEntry.
+					LV_ENTRY_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the big decimal entry and its lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry to clear the associated lv entries from
+	 */
+	@Override
+	public void clearLVEntries(long pk) {
+		bigDecimalEntryToLVEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
+			pk);
+	}
+
+	/**
+	 * Removes the association between the big decimal entry and the lv entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPK the primary key of the lv entry
+	 */
+	@Override
+	public void removeLVEntry(long pk, long lvEntryPK) {
+		bigDecimalEntryToLVEntryTableMapper.deleteTableMapping(pk, lvEntryPK);
+	}
+
+	/**
+	 * Removes the association between the big decimal entry and the lv entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntry the lv entry
+	 */
+	@Override
+	public void removeLVEntry(
+		long pk,
+		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
+
+		bigDecimalEntryToLVEntryTableMapper.deleteTableMapping(
+			pk, lvEntry.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the big decimal entry and the lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPKs the primary keys of the lv entries
+	 */
+	@Override
+	public void removeLVEntries(long pk, long[] lvEntryPKs) {
+		bigDecimalEntryToLVEntryTableMapper.deleteTableMappings(pk, lvEntryPKs);
+	}
+
+	/**
+	 * Removes the association between the big decimal entry and the lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntries the lv entries
+	 */
+	@Override
+	public void removeLVEntries(
+		long pk,
+		List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			lvEntries) {
+
+		removeLVEntries(
+			pk,
+			ListUtil.toLongArray(
+				lvEntries,
+				com.liferay.portal.tools.service.builder.test.model.LVEntry.
+					LV_ENTRY_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the lv entries associated with the big decimal entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntryPKs the primary keys of the lv entries to be associated with the big decimal entry
+	 */
+	@Override
+	public void setLVEntries(long pk, long[] lvEntryPKs) {
+		Set<Long> newLVEntryPKsSet = SetUtil.fromArray(lvEntryPKs);
+		Set<Long> oldLVEntryPKsSet = SetUtil.fromArray(
+			bigDecimalEntryToLVEntryTableMapper.getRightPrimaryKeys(pk));
+
+		Set<Long> removeLVEntryPKsSet = new HashSet<Long>(oldLVEntryPKsSet);
+
+		removeLVEntryPKsSet.removeAll(newLVEntryPKsSet);
+
+		bigDecimalEntryToLVEntryTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeLVEntryPKsSet));
+
+		newLVEntryPKsSet.removeAll(oldLVEntryPKsSet);
+
+		long companyId = 0;
+
+		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
+
+		if (bigDecimalEntry == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = bigDecimalEntry.getCompanyId();
+		}
+
+		bigDecimalEntryToLVEntryTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newLVEntryPKsSet));
+	}
+
+	/**
+	 * Sets the lv entries associated with the big decimal entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the big decimal entry
+	 * @param lvEntries the lv entries to be associated with the big decimal entry
+	 */
+	@Override
+	public void setLVEntries(
+		long pk,
+		List<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			lvEntries) {
+
+		try {
+			long[] lvEntryPKs = new long[lvEntries.size()];
+
+			for (int i = 0; i < lvEntries.size(); i++) {
+				com.liferay.portal.tools.service.builder.test.model.LVEntry
+					lvEntry = lvEntries.get(i);
+
+				lvEntryPKs[i] = lvEntry.getPrimaryKey();
+			}
+
+			setLVEntries(pk, lvEntryPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BigDecimalEntryModelImpl.TABLE_COLUMNS_MAP;
@@ -2449,6 +2796,10 @@ public class BigDecimalEntryPersistenceImpl
 	 * Initializes the big decimal entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		bigDecimalEntryToLVEntryTableMapper = TableMapperFactory.getTableMapper(
+			"LVEntries_BigDecimalEntries", "companyId", "bigDecimalEntryId",
+			"lvEntryId", this, lvEntryPersistence);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -2530,13 +2881,26 @@ public class BigDecimalEntryPersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("LVEntries_BigDecimalEntries");
 	}
+
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
 
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	@BeanReference(type = LVEntryPersistence.class)
+	protected LVEntryPersistence lvEntryPersistence;
+
+	protected TableMapper
+		<BigDecimalEntry,
+		 com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			bigDecimalEntryToLVEntryTableMapper;
 
 	private static final String _SQL_SELECT_BIGDECIMALENTRY =
 		"SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry";

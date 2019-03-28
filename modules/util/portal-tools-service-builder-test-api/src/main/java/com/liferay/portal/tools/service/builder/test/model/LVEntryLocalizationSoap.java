@@ -38,6 +38,7 @@ public class LVEntryLocalizationSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setHeadId(model.getHeadId());
 		soapModel.setLvEntryLocalizationId(model.getLvEntryLocalizationId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setLvEntryId(model.getLvEntryId());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setTitle(model.getTitle());
@@ -128,6 +129,14 @@ public class LVEntryLocalizationSoap implements Serializable {
 		_lvEntryLocalizationId = lvEntryLocalizationId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getLvEntryId() {
 		return _lvEntryId;
 	}
@@ -163,6 +172,7 @@ public class LVEntryLocalizationSoap implements Serializable {
 	private long _mvccVersion;
 	private long _headId;
 	private long _lvEntryLocalizationId;
+	private long _companyId;
 	private long _lvEntryId;
 	private String _languageId;
 	private String _title;

@@ -65,10 +65,12 @@ public class BigDecimalEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{bigDecimalEntryId=");
 		sb.append(bigDecimalEntryId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", bigDecimalValue=");
 		sb.append(bigDecimalValue);
 		sb.append("}");
@@ -81,6 +83,7 @@ public class BigDecimalEntryCacheModel
 		BigDecimalEntryImpl bigDecimalEntryImpl = new BigDecimalEntryImpl();
 
 		bigDecimalEntryImpl.setBigDecimalEntryId(bigDecimalEntryId);
+		bigDecimalEntryImpl.setCompanyId(companyId);
 		bigDecimalEntryImpl.setBigDecimalValue(bigDecimalValue);
 
 		bigDecimalEntryImpl.resetOriginalValues();
@@ -93,16 +96,21 @@ public class BigDecimalEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		bigDecimalEntryId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 		bigDecimalValue = (BigDecimal)objectInput.readObject();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(bigDecimalEntryId);
+
+		objectOutput.writeLong(companyId);
 		objectOutput.writeObject(bigDecimalValue);
 	}
 
 	public long bigDecimalEntryId;
+	public long companyId;
 	public BigDecimal bigDecimalValue;
 
 }

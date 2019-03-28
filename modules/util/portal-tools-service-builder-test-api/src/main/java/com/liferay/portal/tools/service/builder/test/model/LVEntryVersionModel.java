@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.version.VersionModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -38,7 +39,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface LVEntryVersionModel
-	extends BaseModel<LVEntryVersion>, VersionModel<LVEntry> {
+	extends BaseModel<LVEntryVersion>, ShardedModel, VersionModel<LVEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -135,6 +136,22 @@ public interface LVEntryVersionModel
 	 * @param lvEntryId the lv entry ID of this lv entry version
 	 */
 	public void setLvEntryId(long lvEntryId);
+
+	/**
+	 * Returns the company ID of this lv entry version.
+	 *
+	 * @return the company ID of this lv entry version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this lv entry version.
+	 *
+	 * @param companyId the company ID of this lv entry version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this lv entry version.

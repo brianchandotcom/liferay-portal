@@ -36,6 +36,7 @@ public class BigDecimalEntrySoap implements Serializable {
 		BigDecimalEntrySoap soapModel = new BigDecimalEntrySoap();
 
 		soapModel.setBigDecimalEntryId(model.getBigDecimalEntryId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setBigDecimalValue(model.getBigDecimalValue());
 
 		return soapModel;
@@ -104,6 +105,14 @@ public class BigDecimalEntrySoap implements Serializable {
 		_bigDecimalEntryId = bigDecimalEntryId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public BigDecimal getBigDecimalValue() {
 		return _bigDecimalValue;
 	}
@@ -113,6 +122,7 @@ public class BigDecimalEntrySoap implements Serializable {
 	}
 
 	private long _bigDecimalEntryId;
+	private long _companyId;
 	private BigDecimal _bigDecimalValue;
 
 }

@@ -63,7 +63,7 @@ public class LVEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{lvEntryVersionId=");
 		sb.append(lvEntryVersionId);
@@ -75,6 +75,8 @@ public class LVEntryVersionCacheModel
 		sb.append(defaultLanguageId);
 		sb.append(", lvEntryId=");
 		sb.append(lvEntryId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", uniqueGroupKey=");
@@ -106,6 +108,7 @@ public class LVEntryVersionCacheModel
 		}
 
 		lvEntryVersionImpl.setLvEntryId(lvEntryId);
+		lvEntryVersionImpl.setCompanyId(companyId);
 		lvEntryVersionImpl.setGroupId(groupId);
 
 		if (uniqueGroupKey == null) {
@@ -129,6 +132,8 @@ public class LVEntryVersionCacheModel
 		defaultLanguageId = objectInput.readUTF();
 
 		lvEntryId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 		uniqueGroupKey = objectInput.readUTF();
@@ -156,6 +161,8 @@ public class LVEntryVersionCacheModel
 
 		objectOutput.writeLong(lvEntryId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(groupId);
 
 		if (uniqueGroupKey == null) {
@@ -171,6 +178,7 @@ public class LVEntryVersionCacheModel
 	public String uuid;
 	public String defaultLanguageId;
 	public long lvEntryId;
+	public long companyId;
 	public long groupId;
 	public String uniqueGroupKey;
 

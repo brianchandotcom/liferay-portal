@@ -60,6 +60,7 @@ public class BigDecimalEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("bigDecimalEntryId", getBigDecimalEntryId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("bigDecimalValue", getBigDecimalValue());
 
 		return attributes;
@@ -71,6 +72,12 @@ public class BigDecimalEntryWrapper
 
 		if (bigDecimalEntryId != null) {
 			setBigDecimalEntryId(bigDecimalEntryId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		BigDecimal bigDecimalValue = (BigDecimal)attributes.get(
@@ -110,6 +117,16 @@ public class BigDecimalEntryWrapper
 	@Override
 	public BigDecimal getBigDecimalValue() {
 		return _bigDecimalEntry.getBigDecimalValue();
+	}
+
+	/**
+	 * Returns the company ID of this big decimal entry.
+	 *
+	 * @return the company ID of this big decimal entry
+	 */
+	@Override
+	public long getCompanyId() {
+		return _bigDecimalEntry.getCompanyId();
 	}
 
 	@Override
@@ -175,6 +192,16 @@ public class BigDecimalEntryWrapper
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_bigDecimalEntry.setCachedModel(cachedModel);
+	}
+
+	/**
+	 * Sets the company ID of this big decimal entry.
+	 *
+	 * @param companyId the company ID of this big decimal entry
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		_bigDecimalEntry.setCompanyId(companyId);
 	}
 
 	@Override

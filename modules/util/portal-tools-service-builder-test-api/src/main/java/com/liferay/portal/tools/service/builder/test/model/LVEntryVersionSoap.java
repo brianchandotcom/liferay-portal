@@ -38,6 +38,7 @@ public class LVEntryVersionSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setLvEntryId(model.getLvEntryId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setUniqueGroupKey(model.getUniqueGroupKey());
 
@@ -138,6 +139,14 @@ public class LVEntryVersionSoap implements Serializable {
 		_lvEntryId = lvEntryId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -159,6 +168,7 @@ public class LVEntryVersionSoap implements Serializable {
 	private String _uuid;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
+	private long _companyId;
 	private long _groupId;
 	private String _uniqueGroupKey;
 

@@ -127,6 +127,8 @@ public class LVEntryLocalizationPersistenceTest {
 
 		newLVEntryLocalization.setHeadId(RandomTestUtil.nextLong());
 
+		newLVEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
+
 		newLVEntryLocalization.setLvEntryId(RandomTestUtil.nextLong());
 
 		newLVEntryLocalization.setLanguageId(RandomTestUtil.randomString());
@@ -150,6 +152,9 @@ public class LVEntryLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingLVEntryLocalization.getLvEntryLocalizationId(),
 			newLVEntryLocalization.getLvEntryLocalizationId());
+		Assert.assertEquals(
+			existingLVEntryLocalization.getCompanyId(),
+			newLVEntryLocalization.getCompanyId());
 		Assert.assertEquals(
 			existingLVEntryLocalization.getLvEntryId(),
 			newLVEntryLocalization.getLvEntryId());
@@ -215,8 +220,8 @@ public class LVEntryLocalizationPersistenceTest {
 	protected OrderByComparator<LVEntryLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LVEntryLocalization", "mvccVersion", true, "headId", true,
-			"lvEntryLocalizationId", true, "lvEntryId", true, "languageId",
-			true, "title", true, "content", true);
+			"lvEntryLocalizationId", true, "companyId", true, "lvEntryId", true,
+			"languageId", true, "title", true, "content", true);
 	}
 
 	@Test
@@ -454,6 +459,8 @@ public class LVEntryLocalizationPersistenceTest {
 		lvEntryLocalization.setMvccVersion(RandomTestUtil.nextLong());
 
 		lvEntryLocalization.setHeadId(RandomTestUtil.nextLong());
+
+		lvEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		lvEntryLocalization.setLvEntryId(RandomTestUtil.nextLong());
 

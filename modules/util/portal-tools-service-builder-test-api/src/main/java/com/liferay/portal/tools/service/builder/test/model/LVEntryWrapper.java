@@ -61,6 +61,7 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 		attributes.put("headId", getHeadId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("lvEntryId", getLvEntryId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("uniqueGroupKey", getUniqueGroupKey());
 
@@ -99,6 +100,12 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 			setLvEntryId(lvEntryId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
@@ -125,6 +132,16 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return _lvEntry.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the company ID of this lv entry.
+	 *
+	 * @return the company ID of this lv entry
+	 */
+	@Override
+	public long getCompanyId() {
+		return _lvEntry.getCompanyId();
 	}
 
 	@Override
@@ -295,6 +312,16 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_lvEntry.setCachedModel(cachedModel);
+	}
+
+	/**
+	 * Sets the company ID of this lv entry.
+	 *
+	 * @param companyId the company ID of this lv entry
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		_lvEntry.setCompanyId(companyId);
 	}
 
 	/**

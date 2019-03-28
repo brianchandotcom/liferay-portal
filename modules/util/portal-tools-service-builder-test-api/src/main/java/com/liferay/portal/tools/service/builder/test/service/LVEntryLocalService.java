@@ -74,6 +74,17 @@ public interface LVEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LVEntryLocalServiceUtil} to access the lv entry local service. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LVEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, List<LVEntry> lvEntries);
+
+	public void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds);
+
+	public void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId);
+
+	public void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, LVEntry lvEntry);
 
 	/**
 	 * Adds the lv entry to the database. Also notifies the appropriate model listeners.
@@ -89,6 +100,8 @@ public interface LVEntryLocalService
 	public LVEntry checkout(LVEntry publishedLVEntry, int version)
 		throws PortalException;
 
+	public void clearBigDecimalEntryLVEntries(long bigDecimalEntryId);
+
 	/**
 	 * Creates a new lv entry. Does not add the lv entry to the database.
 	 *
@@ -101,6 +114,18 @@ public interface LVEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LVEntry delete(LVEntry publishedLVEntry) throws PortalException;
+
+	public void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, List<LVEntry> lvEntries);
+
+	public void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds);
+
+	public void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId);
+
+	public void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, LVEntry lvEntry);
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -236,6 +261,30 @@ public interface LVEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LVEntry> getBigDecimalEntryLVEntries(long bigDecimalEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LVEntry> getBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LVEntry> getBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, int start, int end,
+		OrderByComparator<LVEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBigDecimalEntryLVEntriesCount(long bigDecimalEntryId);
+
+	/**
+	 * Returns the bigDecimalEntryIds of the big decimal entries associated with the lv entry.
+	 *
+	 * @param lvEntryId the lvEntryId of the lv entry
+	 * @return long[] the bigDecimalEntryIds of big decimal entries associated with the lv entry
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getBigDecimalEntryPrimaryKeys(long lvEntryId);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LVEntry getDraft(long primaryKey) throws PortalException;
@@ -317,6 +366,13 @@ public interface LVEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LVEntryVersion> getVersions(LVEntry lvEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasBigDecimalEntryLVEntries(long bigDecimalEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId);
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LVEntry publishDraft(LVEntry draftLVEntry) throws PortalException;
@@ -324,6 +380,9 @@ public interface LVEntryLocalService
 	@Override
 	public void registerListener(
 		VersionServiceListener<LVEntry, LVEntryVersion> versionServiceListener);
+
+	public void setBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds);
 
 	@Override
 	public void unregisterListener(

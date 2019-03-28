@@ -67,8 +67,9 @@ public class LVEntryLocalizationModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"headId", Types.BIGINT},
 		{"head", Types.BOOLEAN}, {"lvEntryLocalizationId", Types.BIGINT},
-		{"lvEntryId", Types.BIGINT}, {"languageId", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"content", Types.VARCHAR}
+		{"companyId", Types.BIGINT}, {"lvEntryId", Types.BIGINT},
+		{"languageId", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"content", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +80,7 @@ public class LVEntryLocalizationModelImpl
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lvEntryLocalizationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
@@ -86,7 +88,7 @@ public class LVEntryLocalizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LVEntryLocalization (mvccVersion LONG default 0 not null,headId LONG,head BOOLEAN,lvEntryLocalizationId LONG not null primary key,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
+		"create table LVEntryLocalization (mvccVersion LONG default 0 not null,headId LONG,head BOOLEAN,lvEntryLocalizationId LONG not null primary key,companyId LONG,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LVEntryLocalization";
@@ -308,6 +310,28 @@ public class LVEntryLocalizationModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"companyId",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getCompanyId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"companyId",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(
+					LVEntryLocalization lvEntryLocalization, Object companyId) {
+
+					lvEntryLocalization.setCompanyId((Long)companyId);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"lvEntryId",
 			new Function<LVEntryLocalization, Object>() {
 
@@ -432,6 +456,7 @@ public class LVEntryLocalizationModelImpl
 	public void populateVersionModel(
 		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 
+		lvEntryLocalizationVersion.setCompanyId(getCompanyId());
 		lvEntryLocalizationVersion.setLvEntryId(getLvEntryId());
 		lvEntryLocalizationVersion.setLanguageId(getLanguageId());
 		lvEntryLocalizationVersion.setTitle(getTitle());
@@ -485,6 +510,16 @@ public class LVEntryLocalizationModelImpl
 	@Override
 	public void setLvEntryLocalizationId(long lvEntryLocalizationId) {
 		_lvEntryLocalizationId = lvEntryLocalizationId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -571,7 +606,8 @@ public class LVEntryLocalizationModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LVEntryLocalization.class.getName(), getPrimaryKey());
+			getCompanyId(), LVEntryLocalization.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -601,6 +637,7 @@ public class LVEntryLocalizationModelImpl
 		lvEntryLocalizationImpl.setHeadId(getHeadId());
 		lvEntryLocalizationImpl.setLvEntryLocalizationId(
 			getLvEntryLocalizationId());
+		lvEntryLocalizationImpl.setCompanyId(getCompanyId());
 		lvEntryLocalizationImpl.setLvEntryId(getLvEntryId());
 		lvEntryLocalizationImpl.setLanguageId(getLanguageId());
 		lvEntryLocalizationImpl.setTitle(getTitle());
@@ -701,6 +738,8 @@ public class LVEntryLocalizationModelImpl
 
 		lvEntryLocalizationCacheModel.lvEntryLocalizationId =
 			getLvEntryLocalizationId();
+
+		lvEntryLocalizationCacheModel.companyId = getCompanyId();
 
 		lvEntryLocalizationCacheModel.lvEntryId = getLvEntryId();
 
@@ -808,6 +847,7 @@ public class LVEntryLocalizationModelImpl
 	private boolean _originalHead;
 	private boolean _setOriginalHead;
 	private long _lvEntryLocalizationId;
+	private long _companyId;
 	private long _lvEntryId;
 	private long _originalLvEntryId;
 	private boolean _setOriginalLvEntryId;

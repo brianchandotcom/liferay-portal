@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry">
 		<field name="bigDecimalEntryId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry">
@@ -23,6 +24,7 @@
 		<field name="headId" type="long" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
 	</model>
@@ -30,6 +32,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="headId" type="long" />
 		<field name="lvEntryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="lvEntryId" type="long" />
 		<field name="languageId" type="String" />
 		<field name="title" type="String" />
@@ -39,6 +42,7 @@
 		<field name="lvEntryLocalizationVersionId" type="long" />
 		<field name="version" type="int" />
 		<field name="lvEntryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="lvEntryId" type="long" />
 		<field name="languageId" type="String" />
 		<field name="title" type="String" />
@@ -50,6 +54,7 @@
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
 	</model>

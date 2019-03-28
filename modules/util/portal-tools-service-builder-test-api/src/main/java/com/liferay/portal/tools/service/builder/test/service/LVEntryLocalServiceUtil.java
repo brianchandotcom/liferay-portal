@@ -40,6 +40,33 @@ public class LVEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LVEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId,
+		java.util.List
+			<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+				lvEntries) {
+
+		getService().addBigDecimalEntryLVEntries(bigDecimalEntryId, lvEntries);
+	}
+
+	public static void addBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		getService().addBigDecimalEntryLVEntries(bigDecimalEntryId, lvEntryIds);
+	}
+
+	public static void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		getService().addBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntryId);
+	}
+
+	public static void addBigDecimalEntryLVEntry(
+		long bigDecimalEntryId,
+		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
+
+		getService().addBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntry);
+	}
 
 	/**
 	 * Adds the lv entry to the database. Also notifies the appropriate model listeners.
@@ -65,6 +92,10 @@ public class LVEntryLocalServiceUtil {
 		return getService().checkout(publishedLVEntry, version);
 	}
 
+	public static void clearBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+		getService().clearBigDecimalEntryLVEntries(bigDecimalEntryId);
+	}
+
 	/**
 	 * Creates a new lv entry. Does not add the lv entry to the database.
 	 *
@@ -83,6 +114,36 @@ public class LVEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().delete(publishedLVEntry);
+	}
+
+	public static void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId,
+		java.util.List
+			<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+				lvEntries) {
+
+		getService().deleteBigDecimalEntryLVEntries(
+			bigDecimalEntryId, lvEntries);
+	}
+
+	public static void deleteBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		getService().deleteBigDecimalEntryLVEntries(
+			bigDecimalEntryId, lvEntryIds);
+	}
+
+	public static void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		getService().deleteBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntryId);
+	}
+
+	public static void deleteBigDecimalEntryLVEntry(
+		long bigDecimalEntryId,
+		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
+
+		getService().deleteBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntry);
 	}
 
 	public static com.liferay.portal.tools.service.builder.test.model.LVEntry
@@ -292,6 +353,48 @@ public class LVEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			getBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+
+		return getService().getBigDecimalEntryLVEntries(bigDecimalEntryId);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			getBigDecimalEntryLVEntries(
+				long bigDecimalEntryId, int start, int end) {
+
+		return getService().getBigDecimalEntryLVEntries(
+			bigDecimalEntryId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			getBigDecimalEntryLVEntries(
+				long bigDecimalEntryId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.tools.service.builder.test.model.
+						LVEntry> orderByComparator) {
+
+		return getService().getBigDecimalEntryLVEntries(
+			bigDecimalEntryId, start, end, orderByComparator);
+	}
+
+	public static int getBigDecimalEntryLVEntriesCount(long bigDecimalEntryId) {
+		return getService().getBigDecimalEntryLVEntriesCount(bigDecimalEntryId);
+	}
+
+	/**
+	 * Returns the bigDecimalEntryIds of the big decimal entries associated with the lv entry.
+	 *
+	 * @param lvEntryId the lvEntryId of the lv entry
+	 * @return long[] the bigDecimalEntryIds of big decimal entries associated with the lv entry
+	 */
+	public static long[] getBigDecimalEntryPrimaryKeys(long lvEntryId) {
+		return getService().getBigDecimalEntryPrimaryKeys(lvEntryId);
+	}
+
 	public static com.liferay.portal.tools.service.builder.test.model.LVEntry
 			getDraft(long primaryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -425,6 +528,17 @@ public class LVEntryLocalServiceUtil {
 		return getService().getVersions(lvEntry);
 	}
 
+	public static boolean hasBigDecimalEntryLVEntries(long bigDecimalEntryId) {
+		return getService().hasBigDecimalEntryLVEntries(bigDecimalEntryId);
+	}
+
+	public static boolean hasBigDecimalEntryLVEntry(
+		long bigDecimalEntryId, long lvEntryId) {
+
+		return getService().hasBigDecimalEntryLVEntry(
+			bigDecimalEntryId, lvEntryId);
+	}
+
 	public static com.liferay.portal.tools.service.builder.test.model.LVEntry
 			publishDraft(
 				com.liferay.portal.tools.service.builder.test.model.LVEntry
@@ -441,6 +555,12 @@ public class LVEntryLocalServiceUtil {
 				versionServiceListener) {
 
 		getService().registerListener(versionServiceListener);
+	}
+
+	public static void setBigDecimalEntryLVEntries(
+		long bigDecimalEntryId, long[] lvEntryIds) {
+
+		getService().setBigDecimalEntryLVEntries(bigDecimalEntryId, lvEntryIds);
 	}
 
 	public static void unregisterListener(

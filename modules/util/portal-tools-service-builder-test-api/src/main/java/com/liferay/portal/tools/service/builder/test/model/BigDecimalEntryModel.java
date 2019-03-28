@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -37,7 +38,8 @@ import java.math.BigDecimal;
  * @generated
  */
 @ProviderType
-public interface BigDecimalEntryModel extends BaseModel<BigDecimalEntry> {
+public interface BigDecimalEntryModel
+	extends BaseModel<BigDecimalEntry>, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -72,6 +74,22 @@ public interface BigDecimalEntryModel extends BaseModel<BigDecimalEntry> {
 	 * @param bigDecimalEntryId the big decimal entry ID of this big decimal entry
 	 */
 	public void setBigDecimalEntryId(long bigDecimalEntryId);
+
+	/**
+	 * Returns the company ID of this big decimal entry.
+	 *
+	 * @return the company ID of this big decimal entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this big decimal entry.
+	 *
+	 * @param companyId the company ID of this big decimal entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the big decimal value of this big decimal entry.

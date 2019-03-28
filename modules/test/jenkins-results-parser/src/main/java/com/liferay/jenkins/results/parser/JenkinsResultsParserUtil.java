@@ -419,7 +419,7 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
 
-			Properties buildProperties = getBuildProperties();
+			Properties buildProperties = getBuildProperties(false);
 
 			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
 				buildProperties.getProperty("jenkins.admin.user.token"),
@@ -713,9 +713,17 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Properties getBuildProperties() throws IOException {
+		return getBuildProperties(true);
+	}
+
+	public static Properties getBuildProperties(boolean checkCache)
+		throws IOException {
+
 		Properties properties = new Properties();
 
-		if ((_buildProperties != null) && !_buildProperties.isEmpty()) {
+		if (checkCache && (_buildProperties != null) &&
+			!_buildProperties.isEmpty()) {
+
 			properties.putAll(_buildProperties);
 
 			return properties;
@@ -730,13 +738,18 @@ public class JenkinsResultsParserUtil {
 				new StringReader(toString(getLocalURL(url), false)));
 		}
 
+		_buildProperties = new Hashtable<>(properties.size());
+
+		_buildProperties.putAll(properties);
+
 		return properties;
 	}
 
-	public static List<String> getBuildPropertyAsList(String key)
+	public static List<String> getBuildPropertyAsList(
+			boolean checkCache, String key)
 		throws IOException {
 
-		Properties buildProperties = getBuildProperties();
+		Properties buildProperties = getBuildProperties(checkCache);
 
 		String propertyContent = buildProperties.getProperty(key);
 
@@ -1170,7 +1183,7 @@ public class JenkinsResultsParserUtil {
 			Properties buildProperties = null;
 
 			try {
-				buildProperties = getBuildProperties();
+				buildProperties = getBuildProperties(false);
 			}
 			catch (IOException ioe2) {
 				throw new RuntimeException(
@@ -1927,7 +1940,9 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static void setBuildProperties(Hashtable<?, ?> buildProperties) {
+	public static void setBuildProperties(
+		Hashtable<Object, Object> buildProperties) {
+
 		_buildPropertiesURLs = null;
 
 		_buildProperties = buildProperties;
@@ -2842,7 +2857,7 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _TO_STRING_CACHE_PREFIX = "toStringCache-";
 
-	private static Hashtable<?, ?> _buildProperties;
+	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");

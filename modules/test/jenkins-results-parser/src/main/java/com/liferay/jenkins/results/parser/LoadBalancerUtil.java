@@ -204,7 +204,7 @@ public class LoadBalancerUtil {
 		Properties properties = new Properties();
 
 		if (propertiesURL == null) {
-			properties = JenkinsResultsParserUtil.getBuildProperties();
+			properties = JenkinsResultsParserUtil.getBuildProperties(false);
 		}
 		else {
 			properties = new Properties();

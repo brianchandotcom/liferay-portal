@@ -58,7 +58,7 @@ public abstract class BaseHost implements Host {
 			String serviceNames = jenkinsProperties.getProperty(name);
 
 			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
+				JenkinsResultsParserUtil.getBuildProperties(false);
 
 			for (String serviceID : serviceNames.split(",")) {
 				String serviceCleanCommand = buildProperties.getProperty(

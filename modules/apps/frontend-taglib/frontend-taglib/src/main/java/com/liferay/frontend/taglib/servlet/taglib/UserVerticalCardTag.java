@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.LexiconUtil;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
@@ -68,73 +69,15 @@ public class UserVerticalCardTag extends VerticalCardTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		User user = getUser();
+		String cardCssClass = GetterUtil.getString(
+			request.getAttribute("liferay-frontend:card:cardCssClass"));
 
 		request.setAttribute(
-			"liferay-frontend:card:colorCssClass",
-			LexiconUtil.getUserColorCssClass(user));
+			"liferay-frontend:card:cardCssClass",
+			cardCssClass + StringPool.BLANK + "user-card");
 
-		if (user != null) {
-			if ((user.getPortraitId() > 0) ||
-				!_isImageDefaultUseInitials(user)) {
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				try {
-					request.setAttribute(
-						"liferay-frontend:card:portraitURL",
-						user.getPortraitURL(themeDisplay));
-				}
-				catch (PortalException pe) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
-					}
-				}
-			}
-		}
-
-		String initials = StringPool.BLANK;
-
-		if (user != null) {
-			initials = user.getInitials();
-		}
-
-		request.setAttribute("liferay-frontend:card:userInitials", initials);
+		request.setAttribute("liferay-frontend:card:user", getUser());
 	}
-
-	private boolean _isImageDefaultUseInitials(User user) {
-		boolean imageDefaultUseInitials = true;
-
-		try {
-			UserFileUploadsConfiguration userFileUploadsConfiguration =
-				ConfigurationProviderUtil.getSystemConfiguration(
-					UserFileUploadsConfiguration.class);
-
-			imageDefaultUseInitials =
-				userFileUploadsConfiguration.imageDefaultUseInitials();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		if (LanguageConstants.VALUE_IMAGE.equals(
-				LanguageUtil.get(
-					user.getLocale(),
-					LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
-					LanguageConstants.VALUE_INITIALS))) {
-
-			imageDefaultUseInitials = false;
-		}
-
-		return imageDefaultUseInitials;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserVerticalCardTag.class);
 
 	private long _userId;
 

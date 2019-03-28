@@ -38,10 +38,10 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AssertGuestCannotSeeEmptySearchWidgets {
-		// Ignoring test until LPS-92008 is resolved
+		// Workaround: Remove assertions for Suggestions, Sort, Search Results, and Modified Facet portlets until LPS-92008 is fixed
+
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
@@ -60,9 +60,15 @@ definition {
 
 		User.logoutPG();
 
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+
+		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Search Insights,Search Options,Site Facet,Tag Facet,Type Facet,User Facet") {
+			Portlet.viewNoSpecificPG(portletName = "${portletName}");
+		}
+
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
 
-		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
+		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
 		}
 	}

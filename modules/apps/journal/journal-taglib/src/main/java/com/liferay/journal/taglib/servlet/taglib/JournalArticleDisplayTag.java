@@ -26,18 +26,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class JournalArticleDisplayTag extends IncludeTag {
 
-	public JournalArticleDisplay getArticleDisplay() {
-		return _articleDisplay;
-	}
-
-	public String getWrapperCssClass() {
-		return _wrapperCssClass;
-	}
-
-	public boolean isShowTitle() {
-		return _showTitle;
-	}
-
 	public void setArticleDisplay(JournalArticleDisplay articleDisplay) {
 		_articleDisplay = articleDisplay;
 	}

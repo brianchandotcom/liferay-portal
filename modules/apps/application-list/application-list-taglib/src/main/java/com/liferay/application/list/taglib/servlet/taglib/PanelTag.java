@@ -36,10 +36,6 @@ public class PanelTag extends BasePanelTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public PanelCategory getPanelCategory() {
-		return _panelCategory;
-	}
-
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
 	}

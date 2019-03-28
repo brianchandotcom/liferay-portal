@@ -29,14 +29,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserNameFieldsTag extends IncludeTag {
 
-	public Object getBean() {
-		return _bean;
-	}
-
-	public Contact getContact() {
-		return _contact;
-	}
-
 	public void setBean(Object bean) {
 		_bean = bean;
 	}

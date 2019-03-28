@@ -23,10 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchSpeedTag<R> extends SearchFormTag<R> {
 
-	public Hits getHits() {
-		return _hits;
-	}
-
 	public void setHits(Hits hits) {
 		_hits = hits;
 	}

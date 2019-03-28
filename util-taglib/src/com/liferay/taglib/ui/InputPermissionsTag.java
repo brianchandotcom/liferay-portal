@@ -78,14 +78,6 @@ public class InputPermissionsTag extends IncludeTag {
 		}
 	}
 
-	public String getFormName() {
-		return _formName;
-	}
-
-	public String getModelName() {
-		return _modelName;
-	}
-
 	public void setFormName(String formName) {
 		_formName = formName;
 	}

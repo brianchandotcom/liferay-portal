@@ -28,14 +28,6 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessStatusTag extends IncludeTag {
 
-	public int getBackgroundTaskStatus() {
-		return _backgroundTaskStatus;
-	}
-
-	public String getBackgroundTaskStatusLabel() {
-		return _backgroundTaskStatusLabel;
-	}
-
 	public void setBackgroundTaskStatus(int backgroundTaskStatus) {
 		_backgroundTaskStatus = backgroundTaskStatus;
 	}

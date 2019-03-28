@@ -33,10 +33,6 @@ public class HorizontalCardIconTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getIcon() {
-		return _icon;
-	}
-
 	public void setIcon(String icon) {
 		_icon = icon;
 	}

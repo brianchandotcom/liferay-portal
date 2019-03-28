@@ -23,10 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DropHereInfoTag extends IncludeTag {
 
-	public String getMessage() {
-		return _message;
-	}
-
 	public void setMessage(String message) {
 		_message = message;
 	}

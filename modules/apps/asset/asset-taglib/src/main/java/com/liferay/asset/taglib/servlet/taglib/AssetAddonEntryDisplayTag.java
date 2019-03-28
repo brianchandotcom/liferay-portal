@@ -48,10 +48,6 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 		return super.doEndTag();
 	}
 
-	public List<? extends AssetAddonEntry> getAssetAddonEntries() {
-		return _assetAddonEntries;
-	}
-
 	public void setAssetAddonEntries(
 		List<? extends AssetAddonEntry> assetAddonEntries) {
 

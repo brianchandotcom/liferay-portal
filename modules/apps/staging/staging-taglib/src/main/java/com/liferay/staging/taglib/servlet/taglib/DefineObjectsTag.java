@@ -125,10 +125,6 @@ public class DefineObjectsTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
-	public String getPortletId() {
-		return _portletId;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

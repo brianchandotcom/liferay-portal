@@ -25,10 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class FlashTag extends IncludeTag {
 
-	public String getMovie() {
-		return _movie;
-	}
-
 	public void setAlign(String align) {
 		if (Validator.isNotNull(align)) {
 			_align = align;

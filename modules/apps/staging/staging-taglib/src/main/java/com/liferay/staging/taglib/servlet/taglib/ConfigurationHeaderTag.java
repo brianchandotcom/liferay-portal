@@ -29,14 +29,6 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ConfigurationHeaderTag extends IncludeTag {
 
-	public ExportImportConfiguration getExportImportConfiguration() {
-		return _exportImportConfiguration;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
 	public void setExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration) {
 

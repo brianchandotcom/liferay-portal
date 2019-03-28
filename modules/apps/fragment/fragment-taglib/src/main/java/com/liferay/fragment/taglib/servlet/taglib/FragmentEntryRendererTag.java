@@ -48,10 +48,6 @@ public class FragmentEntryRendererTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public long getFragmentEntryId() {
-		return _fragmentEntryId;
-	}
-
 	public void setFragmentEntryId(long fragmentEntryId) {
 		_fragmentEntryId = fragmentEntryId;
 	}

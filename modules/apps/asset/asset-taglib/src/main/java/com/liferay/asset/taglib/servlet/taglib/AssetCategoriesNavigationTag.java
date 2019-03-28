@@ -27,14 +27,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class AssetCategoriesNavigationTag extends IncludeTag {
 
-	public long[] getVocabularyIds() {
-		return _vocabularyIds;
-	}
-
-	public boolean isHidePortletWhenEmpty() {
-		return _hidePortletWhenEmpty;
-	}
-
 	public void setHidePortletWhenEmpty(boolean hidePortletWhenEmpty) {
 		_hidePortletWhenEmpty = hidePortletWhenEmpty;
 	}

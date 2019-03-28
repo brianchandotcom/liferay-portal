@@ -34,34 +34,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BreadcrumbTag extends IncludeTag {
 
-	public long getDdmTemplateGroupId() {
-		return _ddmTemplateGroupId;
-	}
-
-	public String getDdmTemplateKey() {
-		return _ddmTemplateKey;
-	}
-
-	public boolean isShowCurrentGroup() {
-		return _showCurrentGroup;
-	}
-
-	public boolean isShowGuestGroup() {
-		return _showGuestGroup;
-	}
-
-	public boolean isShowLayout() {
-		return _showLayout;
-	}
-
-	public boolean isShowParentGroups() {
-		return _showParentGroups;
-	}
-
-	public boolean isShowPortletBreadcrumb() {
-		return _showPortletBreadcrumb;
-	}
-
 	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
 		_ddmTemplateGroupId = ddmTemplateGroupId;
 	}

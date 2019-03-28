@@ -48,22 +48,6 @@ public class FormNavigatorTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public String getBackURL() {
-		return _backURL;
-	}
-
-	public Object getFormModelBean() {
-		return _formModelBean;
-	}
-
-	public String getId() {
-		return _id;
-	}
-
-	public boolean isShowButtons() {
-		return _showButtons;
-	}
-
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
 	}

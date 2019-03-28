@@ -25,18 +25,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class MapProviderSelectorTag extends IncludeTag {
 
-	public String getConfigurationPrefix() {
-		return _configurationPrefix;
-	}
-
-	public String getMapProviderKey() {
-		return _mapProviderKey;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
 	public void setConfigurationPrefix(String configurationPrefix) {
 		_configurationPrefix = configurationPrefix;
 	}

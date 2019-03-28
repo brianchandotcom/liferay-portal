@@ -31,10 +31,6 @@ public class InfoBarTag extends BaseBarTag {
 		return super.doEndTag();
 	}
 
-	public boolean isFixed() {
-		return _fixed;
-	}
-
 	public void setFixed(boolean fixed) {
 		_fixed = fixed;
 	}

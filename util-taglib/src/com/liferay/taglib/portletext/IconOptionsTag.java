@@ -39,10 +39,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class IconOptionsTag extends IconTag {
 
-	public String getDirection() {
-		return _direction;
-	}
-
 	public List<PortletConfigurationIcon> getPortletConfigurationIcons() {
 		if (_portletConfigurationIcons != null) {
 			return _portletConfigurationIcons;
@@ -54,10 +50,6 @@ public class IconOptionsTag extends IconTag {
 				PortletConfigurationIconComparator.INSTANCE);
 
 		return _portletConfigurationIcons;
-	}
-
-	public boolean isShowArrow() {
-		return _showArrow;
 	}
 
 	public void setDirection(String direction) {

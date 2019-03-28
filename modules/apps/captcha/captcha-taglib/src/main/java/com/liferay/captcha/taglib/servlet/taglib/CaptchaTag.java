@@ -25,10 +25,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class CaptchaTag extends IncludeTag {
 
-	public String getUrl() {
-		return _url;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

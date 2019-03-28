@@ -21,10 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ApplicationContentTag extends BasePanelTag {
 
-	public String getPortletId() {
-		return _portletId;
-	}
-
 	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;

@@ -28,18 +28,6 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class DeletionsTag extends IncludeTag {
 
-	public String getCmd() {
-		return _cmd;
-	}
-
-	public long getExportImportConfigurationId() {
-		return _exportImportConfigurationId;
-	}
-
-	public boolean isDisableInputs() {
-		return _disableInputs;
-	}
-
 	public void setCmd(String cmd) {
 		_cmd = cmd;
 	}

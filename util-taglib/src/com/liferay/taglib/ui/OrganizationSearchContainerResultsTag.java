@@ -27,18 +27,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
-	public LinkedHashMap<String, Object> getOrganizationParams() {
-		return _organizationParams;
-	}
-
-	public long getParentOrganizationId() {
-		return _parentOrganizationId;
-	}
-
-	public boolean isForceDatabase() {
-		return _forceDatabase;
-	}
-
 	public void setForceDatabase(boolean forceDatabase) {
 		_forceDatabase = forceDatabase;
 	}

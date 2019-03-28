@@ -24,10 +24,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputRepeatTag extends IncludeTag {
 
-	public String getCssClass() {
-		return _cssClass;
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

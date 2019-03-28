@@ -42,10 +42,6 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public LinkedHashMap<String, Object> getUserParams() {
-		return _userParams;
-	}
-
 	public void setUserParams(LinkedHashMap<String, Object> userParams) {
 		_userParams = userParams;
 	}

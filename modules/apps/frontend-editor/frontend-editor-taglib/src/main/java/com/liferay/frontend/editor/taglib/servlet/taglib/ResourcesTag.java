@@ -42,18 +42,6 @@ public class ResourcesTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getEditorName() {
-		return _editorName;
-	}
-
-	public String getInlineEditSaveURL() {
-		return _inlineEditSaveURL;
-	}
-
-	public boolean isInlineEdit() {
-		return _inlineEdit;
-	}
-
 	public void setEditorName(String editorName) {
 		_editorName = editorName;
 	}

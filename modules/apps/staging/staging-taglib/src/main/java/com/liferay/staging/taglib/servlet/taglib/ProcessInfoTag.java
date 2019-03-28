@@ -29,10 +29,6 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessInfoTag extends IncludeTag {
 
-	public BackgroundTask getBackgroundTask() {
-		return _backgroundTask;
-	}
-
 	public void setBackgroundTask(BackgroundTask backgroundTask) {
 		_backgroundTask = backgroundTask;
 	}

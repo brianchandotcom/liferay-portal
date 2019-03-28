@@ -29,10 +29,6 @@ public class ToolbarItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public ToolbarItem getToolbarItem() {
-		return _toolbarItem;
-	}
-
 	public void setToolbarItem(ToolbarItem toolbarItem) {
 		_toolbarItem = toolbarItem;
 	}

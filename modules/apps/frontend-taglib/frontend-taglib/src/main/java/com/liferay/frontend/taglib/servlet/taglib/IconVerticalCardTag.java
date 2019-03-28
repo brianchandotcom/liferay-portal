@@ -21,10 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconVerticalCardTag extends VerticalCardTag {
 
-	public String getIcon() {
-		return _icon;
-	}
-
 	public void setIcon(String icon) {
 		_icon = icon;
 	}

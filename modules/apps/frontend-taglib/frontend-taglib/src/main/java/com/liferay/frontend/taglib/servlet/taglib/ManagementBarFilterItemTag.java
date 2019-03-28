@@ -32,22 +32,6 @@ public class ManagementBarFilterItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public String getId() {
-		return _id;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public String getUrl() {
-		return _url;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
 	public void setActive(boolean active) {
 		_active = active;
 	}

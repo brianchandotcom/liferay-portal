@@ -27,14 +27,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class CategorizationFilterTag extends IncludeTag {
 
-	public String getAssetType() {
-		return _assetType;
-	}
-
-	public PortletURL getPortletURL() {
-		return _portletURL;
-	}
-
 	public void setAssetType(String assetType) {
 		_assetType = assetType;
 	}

@@ -38,18 +38,6 @@ public class ManagementBarDisplayButtonsTag
 		return super.doStartTag();
 	}
 
-	public String[] getDisplayViews() {
-		return _displayViews;
-	}
-
-	public PortletURL getPortletURL() {
-		return _portletURL;
-	}
-
-	public String getSelectedDisplayStyle() {
-		return _selectedDisplayStyle;
-	}
-
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}

@@ -24,14 +24,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ErrorMarkerTag extends IncludeTag {
 
-	public String getKey() {
-		return _key;
-	}
-
-	public String getValue() {
-		return _value;
-	}
-
 	public void setKey(String key) {
 		_key = key;
 	}

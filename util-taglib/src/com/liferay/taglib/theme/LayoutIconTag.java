@@ -124,10 +124,6 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 		return SKIP_BODY;
 	}
 
-	public Layout getLayout() {
-		return _layout;
-	}
-
 	public void setLayout(Layout layout) {
 		_layout = layout;
 	}

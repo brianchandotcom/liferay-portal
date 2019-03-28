@@ -118,6 +118,17 @@ components:
                                     type: string
                             type: object
                     type: object
+        ContentListElement:
+            description: https://www.schema.org/ContentListElement
+            properties:
+                content:
+                    type: object
+                contentType:
+                    type: string
+                order:
+                    type: number
+                title:
+                    type: string
         ContentStructure:
             description: https://www.schema.org/ContentStructure
             properties:
@@ -404,6 +415,33 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
+    "/content-lists/{content-list-id}/content-list-elements":
+        get:
+            parameters:
+                - in: path
+                  name: content-list-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentListElement"
+                                type: array
+                    description: ""
+            tags: ["ContentListElement"]
     "/content-spaces/{content-space-id}/content-structures":
         get:
             parameters:

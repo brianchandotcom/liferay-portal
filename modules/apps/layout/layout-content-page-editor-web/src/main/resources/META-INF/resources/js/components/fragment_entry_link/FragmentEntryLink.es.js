@@ -6,8 +6,9 @@ import './FragmentEntryLinkContent.es';
 import templates from './FragmentEntryLink.soy';
 import {REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
-import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {getItemMoveDirection, getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -23,10 +24,28 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		return setIn(
+		const hoveredPath = getItemPath(
+			state.hoveredItemId,
+			state.hoveredItemType,
+			state.layoutData.structure
+		);
+
+		const fragmentEntryLinkInHoveredPath = itemIsInPath(
+			hoveredPath,
+			state.fragmentEntryLinkId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
+
+		const nextState = setIn(
 			state,
 			['_fragmentsEditorItemTypes'],
 			FRAGMENTS_EDITOR_ITEM_TYPES
+		);
+
+		return setIn(
+			nextState,
+			['_hovered'],
+			fragmentEntryLinkInHoveredPath
 		);
 	}
 
@@ -144,6 +163,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 		'hoveredItemType',
 		'imageSelectorURL',
 		'languageId',
+		'layoutData',
 		'portletNamespace',
 		'selectedMappingTypes',
 		'spritemap'

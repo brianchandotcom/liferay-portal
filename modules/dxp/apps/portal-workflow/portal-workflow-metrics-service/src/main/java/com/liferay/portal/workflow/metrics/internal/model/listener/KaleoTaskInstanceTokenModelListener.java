@@ -14,12 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,43 +31,28 @@ public class KaleoTaskInstanceTokenModelListener
 	extends BaseModelListener<KaleoTaskInstanceToken> {
 
 	@Override
-	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws ModelListenerException {
-
-		try {
-			_tokenWorkflowMetricsIndexer.addDocument(kaleoTaskInstanceToken);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		_indexExecutor.execute(
+			() -> _tokenWorkflowMetricsIndexer.addDocument(
+				kaleoTaskInstanceToken));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws ModelListenerException {
-
-		try {
-			_tokenWorkflowMetricsIndexer.deleteDocument(kaleoTaskInstanceToken);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		_indexExecutor.execute(
+			() -> _tokenWorkflowMetricsIndexer.deleteDocument(
+				kaleoTaskInstanceToken));
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws ModelListenerException {
-
-		try {
-			_tokenWorkflowMetricsIndexer.updateDocument(kaleoTaskInstanceToken);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		_indexExecutor.execute(
+			() -> _tokenWorkflowMetricsIndexer.updateDocument(
+				kaleoTaskInstanceToken));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoTaskInstanceTokenModelListener.class);
+	@Reference
+	private IndexExecutor _indexExecutor;
 
 	@Reference
 	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;

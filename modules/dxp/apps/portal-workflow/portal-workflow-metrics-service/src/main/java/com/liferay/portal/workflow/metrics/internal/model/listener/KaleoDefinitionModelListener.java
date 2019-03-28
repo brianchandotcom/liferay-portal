@@ -15,11 +15,10 @@
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,40 +35,30 @@ public class KaleoDefinitionModelListener
 	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		try {
-			_processWorkflowMetricsIndexer.addDocument(kaleoDefinition);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		_indexExecutor.execute(
+			() -> _processWorkflowMetricsIndexer.addDocument(kaleoDefinition));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		try {
-			_processWorkflowMetricsIndexer.deleteDocument(kaleoDefinition);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		_indexExecutor.execute(
+			() -> _processWorkflowMetricsIndexer.deleteDocument(
+				kaleoDefinition));
 	}
 
 	@Override
 	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		try {
-			_processWorkflowMetricsIndexer.updateDocument(kaleoDefinition);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		_indexExecutor.execute(
+			() -> _processWorkflowMetricsIndexer.updateDocument(
+				kaleoDefinition));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoDefinitionModelListener.class);
+	@Reference
+	private IndexExecutor _indexExecutor;
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;

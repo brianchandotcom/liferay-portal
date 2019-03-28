@@ -14,12 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,43 +31,27 @@ public class KaleoInstanceModelListener
 	extends BaseModelListener<KaleoInstance> {
 
 	@Override
-	public void onAfterCreate(KaleoInstance kaleoInstance)
-		throws ModelListenerException {
-
-		try {
-			_instanceWorkflowMetricsIndexer.addDocument(kaleoInstance);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterCreate(KaleoInstance kaleoInstance) {
+		_indexExecutor.execute(
+			() -> _instanceWorkflowMetricsIndexer.addDocument(kaleoInstance));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoInstance kaleoInstance)
-		throws ModelListenerException {
-
-		try {
-			_instanceWorkflowMetricsIndexer.deleteDocument(kaleoInstance);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterRemove(KaleoInstance kaleoInstance) {
+		_indexExecutor.execute(
+			() -> _instanceWorkflowMetricsIndexer.deleteDocument(
+				kaleoInstance));
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoInstance kaleoInstance)
-		throws ModelListenerException {
-
-		try {
-			_instanceWorkflowMetricsIndexer.updateDocument(kaleoInstance);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterUpdate(KaleoInstance kaleoInstance) {
+		_indexExecutor.execute(
+			() -> _instanceWorkflowMetricsIndexer.updateDocument(
+				kaleoInstance));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoInstanceModelListener.class);
+	@Reference
+	private IndexExecutor _indexExecutor;
 
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;

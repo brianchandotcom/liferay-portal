@@ -14,12 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,31 +30,19 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 
 	@Override
-	public void onAfterCreate(KaleoTask kaleoTask)
-		throws ModelListenerException {
-
-		try {
-			_taskWorkflowMetricsIndexer.addDocument(kaleoTask);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterCreate(KaleoTask kaleoTask) {
+		_indexExecutor.execute(
+			() -> _taskWorkflowMetricsIndexer.addDocument(kaleoTask));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoTask kaleoTask)
-		throws ModelListenerException {
-
-		try {
-			_taskWorkflowMetricsIndexer.deleteDocument(kaleoTask);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void onAfterRemove(KaleoTask kaleoTask) {
+		_indexExecutor.execute(
+			() -> _taskWorkflowMetricsIndexer.deleteDocument(kaleoTask));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoTaskModelListener.class);
+	@Reference
+	private IndexExecutor _indexExecutor;
 
 	@Reference
 	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;

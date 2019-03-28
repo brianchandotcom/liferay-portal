@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
+	{@param? selectAll: bool}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
 
@@ -24,6 +25,7 @@
 						{param description: $description /}
 						{param multiple: $multiple /}
 						{param namespace: $namespace /}
+						{param selectAll: $selectAll /}
 						{param spritemap: $spritemap /}
 						{param _handleRadioChange: $_handleRadioChange /}
 					{/call}
@@ -63,7 +65,20 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
+	{@param? selectAll: bool}
 	{@param? _handleRadioChange: any}
+
+	{if $selectAll}
+		<div class="alert alert-info" role="alert">
+			<span class="alert-indicator">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use href="{$spritemap}#info-circle"></use>
+				</svg>
+			</span>
+
+			<strong class="lead"></strong>{msg desc=""}this-operation-will-not-be-applied-to-any-of-the-selected-folders{/msg}
+		</div>
+	{/if}
 
 	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-tags{/msg} {/if}</p>
 

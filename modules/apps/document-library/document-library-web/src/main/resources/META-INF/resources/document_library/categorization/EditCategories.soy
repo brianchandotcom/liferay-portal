@@ -13,6 +13,7 @@
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
+	{@param? selectAll: bool}
 	{@param? vocabularies: list<?>}
 
 	{if $showModal}
@@ -27,6 +28,7 @@
 						{param hiddenInput: $hiddenInput /}
 						{param multiple: $multiple /}
 						{param namespace: $namespace /}
+						{param selectAll: $selectAll /}
 						{param selectCategoriesUrl: $selectCategoriesUrl /}
 						{param spritemap: $spritemap /}
 						{param vocabularies: $vocabularies /}
@@ -72,7 +74,20 @@
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
+	{@param? selectAll: bool}
 	{@param? vocabularies: list<?>}
+
+	{if $selectAll}
+		<div class="alert alert-info" role="alert">
+			<span class="alert-indicator">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use href="{$spritemap}#info-circle"></use>
+				</svg>
+			</span>
+
+			<strong class="lead"></strong>{msg desc=""}this-operation-will-not-be-applied-to-any-of-the-selected-folders{/msg}
+		</div>
+	{/if}
 
 	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-categories{/msg} {/if}</p>
 

@@ -99,12 +99,13 @@ public class UpgradeContentImages extends UpgradeProcess {
 					continue;
 				}
 
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 				String alt = GetterUtil.getString(
 					dynamicContentEl.attributeValue("alt"));
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 				jsonObject.put("alt", alt);
+
 				jsonObject.put("groupId", fileEntry.getGroupId());
 				jsonObject.put("name", fileEntry.getFileName());
 				jsonObject.put("resourcePrimKey", resourcePrimKey);

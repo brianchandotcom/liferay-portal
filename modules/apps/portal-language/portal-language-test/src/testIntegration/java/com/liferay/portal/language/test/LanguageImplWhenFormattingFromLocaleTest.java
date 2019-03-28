@@ -15,17 +15,16 @@
 package com.liferay.portal.language.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.language.LanguageImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,18 +41,11 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		_languageImpl = (LanguageImpl)PortalBeanLocatorUtil.locate(
-			"com.liferay.portal.language.LanguageImpl");
-	}
-
 	@Test
 	public void testFormatWithKeyNull() {
 		Assert.assertEquals(
 			null,
-			_languageImpl.format(
-				LocaleThreadLocal.getDefaultLocale(), null, "31"));
+			_language.format(LocaleThreadLocal.getDefaultLocale(), null, "31"));
 	}
 
 	@Test
@@ -65,7 +57,7 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 		try {
 			Assert.assertEquals(
 				LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
-				_languageImpl.format(
+				_language.format(
 					nullableLocale,
 					LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT, "31"));
 		}
@@ -76,7 +68,7 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 
 	@Test
 	public void testFormatWithOneArgument() {
-		String value = _languageImpl.format(
+		String value = _language.format(
 			LocaleUtil.US, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			"31");
 
@@ -87,19 +79,19 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	public void testFormatWithOneNontranslatableAmericanArgument() {
 		Locale locale = LocaleUtil.US;
 
-		String value = _languageImpl.format(
+		String value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1,234,567,890 Hours", value);
 
-		value = _languageImpl.format(
+		value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1,234,567,890.12 Hours", value);
 
-		value = _languageImpl.format(
+		value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_FLOAT, false);
 
@@ -110,19 +102,19 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	public void testFormatWithOneNontranslatableSpanishArgument() {
 		Locale locale = LocaleUtil.SPAIN;
 
-		String value = _languageImpl.format(
+		String value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1.234.567.890 horas", value);
 
-		value = _languageImpl.format(
+		value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1.234.567.890,12 horas", value);
 
-		value = _languageImpl.format(
+		value = _language.format(
 			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			LanguageImplTestConstants.BIG_FLOAT, false);
 
@@ -131,13 +123,14 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 
 	@Test
 	public void testFormatWithTwoArguments() {
-		String value = _languageImpl.format(
+		String value = _language.format(
 			LocaleUtil.US, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
 			new Object[] {"A", "B"});
 
 		Assert.assertEquals("A has invited you to join B.", value);
 	}
 
-	private static LanguageImpl _languageImpl;
+	@Inject
+	private static Language _language;
 
 }

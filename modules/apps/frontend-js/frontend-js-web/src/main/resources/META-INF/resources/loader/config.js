@@ -21,7 +21,7 @@
 	__CONFIG__.modules = Liferay.MODULES;
 
 	__CONFIG__.paths = Liferay.PATHS;
-	
+
 	__CONFIG__.resolvePath = Liferay.RESOLVE_PATH;
 
 	__CONFIG__.namespace = 'Liferay';

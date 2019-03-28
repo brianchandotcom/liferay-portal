@@ -19,6 +19,8 @@ import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
+import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
@@ -363,7 +365,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			double version, String displayStyle, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Calendar calendar = calendarService.getCalendar(calendarId);
+		Calendar calendar = _calendarService.getCalendar(calendarId);
 
 		int[] statuses = {
 			WorkflowConstants.STATUS_APPROVED,
@@ -416,7 +418,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		stream = stream.filter(
 			calendarBooking -> {
 				try {
-					return !calendarLocalService.isStagingCalendar(
+					return !_calendarLocalService.isStagingCalendar(
 						calendarBooking.getCalendar());
 				}
 				catch (PortalException pe) {
@@ -1082,10 +1084,16 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingServiceImpl.class);
 
+	@Reference
+	private CalendarLocalService _calendarLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
 	)
 	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
+
+	@Reference
+	private CalendarService _calendarService;
 
 	@Reference
 	private Portal _portal;

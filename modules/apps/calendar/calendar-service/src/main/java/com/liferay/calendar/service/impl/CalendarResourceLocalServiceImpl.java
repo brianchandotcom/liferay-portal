@@ -20,6 +20,7 @@ import com.liferay.calendar.exception.CalendarResourceNameException;
 import com.liferay.calendar.exception.DuplicateCalendarResourceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.base.CalendarResourceLocalServiceBaseImpl;
 import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -45,6 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -127,7 +129,7 @@ public class CalendarResourceLocalServiceImpl
 			calendarServiceContext.setAddGroupPermissions(true);
 			calendarServiceContext.setAddGuestPermissions(true);
 
-			calendarLocalService.addCalendar(
+			_calendarLocalService.addCalendar(
 				userId, calendarResource.getGroupId(), calendarResourceId,
 				nameMap, descriptionMap, calendarResource.getTimeZoneId(),
 				CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT, true,
@@ -172,7 +174,7 @@ public class CalendarResourceLocalServiceImpl
 		for (Calendar calendar : calendars) {
 			calendar.setDefaultCalendar(false);
 
-			calendarLocalService.deleteCalendar(calendar);
+			_calendarLocalService.deleteCalendar(calendar);
 		}
 
 		return calendarResource;
@@ -363,5 +365,8 @@ public class CalendarResourceLocalServiceImpl
 			throw new CalendarResourceNameException();
 		}
 	}
+
+	@Reference
+	private CalendarLocalService _calendarLocalService;
 
 }

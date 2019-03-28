@@ -21,6 +21,7 @@ import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +47,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -139,7 +141,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		// Calendar notification templates
 
-		calendarNotificationTemplateLocalService.
+		_calendarNotificationTemplateLocalService.
 			deleteCalendarNotificationTemplates(calendar.getCalendarId());
 
 		return calendar;
@@ -428,5 +430,9 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarLocalServiceImpl.class);
+
+	@Reference
+	private CalendarNotificationTemplateLocalService
+		_calendarNotificationTemplateLocalService;
 
 }

@@ -6703,20 +6703,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, long[] newOrganizationIds, boolean indexingEnabled)
 		throws PortalException {
 
-		long[] existingOrganizationIds = getOrganizationPrimaryKeys(userId);
-		long[] oldOrganizationIds = {};
+		Set<Long> oldOrganizationIds = SetUtil.fromArray(
+			getOrganizationPrimaryKeys(userId));
 
-		for (long existingOrganizationId : existingOrganizationIds) {
-			if (!ArrayUtil.contains(
-					newOrganizationIds, existingOrganizationId)) {
+		oldOrganizationIds.removeAll(SetUtil.fromArray(newOrganizationIds));
 
-				oldOrganizationIds = ArrayUtil.append(
-					oldOrganizationIds, existingOrganizationId);
-			}
-		}
-
-		if (oldOrganizationIds.length > 0) {
-			unsetUserOrganizations(userId, oldOrganizationIds);
+		if (!oldOrganizationIds.isEmpty()) {
+			unsetUserOrganizations(
+				userId, ArrayUtil.toLongArray(oldOrganizationIds));
 		}
 
 		userPersistence.setOrganizations(userId, newOrganizationIds);

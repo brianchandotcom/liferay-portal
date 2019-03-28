@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.DiscussionForumPostingEntityModel;
@@ -53,6 +54,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Collections;
 
@@ -231,6 +233,9 @@ public class DiscussionThreadResourceImpl
 
 		return new DiscussionThread() {
 			{
+				aggregateRating = AggregateRatingUtil.toAggregateRating(
+					_ratingsStatsLocalService.fetchStats(
+						MBMessage.class.getName(), mbMessage.getMessageId()));
 				articleBody = mbMessage.getBody();
 				contentSpaceId = mbThread.getGroupId();
 				creator = CreatorUtil.toCreator(
@@ -307,6 +312,9 @@ public class DiscussionThreadResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
 	private UserService _userService;

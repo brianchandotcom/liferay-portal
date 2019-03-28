@@ -4010,22 +4010,22 @@ public class SegmentsEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2_SQL =
 		"segmentsEntry.active_ = ?";
 
-	private FinderPath _finderPathFetchByG_K;
-	private FinderPath _finderPathCountByG_K;
+	private FinderPath _finderPathFetchByG_S;
+	private FinderPath _finderPathCountByG_S;
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the matching segments entry
 	 * @throws NoSuchEntryException if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry findByG_K(long groupId, String key)
+	public SegmentsEntry findByG_S(long groupId, String segmentsEntryKey)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_K(groupId, key);
+		SegmentsEntry segmentsEntry = fetchByG_S(groupId, segmentsEntryKey);
 
 		if (segmentsEntry == null) {
 			StringBundler msg = new StringBundler(6);
@@ -4035,8 +4035,8 @@ public class SegmentsEntryPersistenceImpl
 			msg.append("groupId=");
 			msg.append(groupId);
 
-			msg.append(", key=");
-			msg.append(key);
+			msg.append(", segmentsEntryKey=");
+			msg.append(segmentsEntryKey);
 
 			msg.append("}");
 
@@ -4051,45 +4051,46 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry fetchByG_K(long groupId, String key) {
-		return fetchByG_K(groupId, key, true);
+	public SegmentsEntry fetchByG_S(long groupId, String segmentsEntryKey) {
+		return fetchByG_S(groupId, segmentsEntryKey, true);
 	}
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry fetchByG_K(
-		long groupId, String key, boolean retrieveFromCache) {
+	public SegmentsEntry fetchByG_S(
+		long groupId, String segmentsEntryKey, boolean retrieveFromCache) {
 
-		key = Objects.toString(key, "");
+		segmentsEntryKey = Objects.toString(segmentsEntryKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, key};
+		Object[] finderArgs = new Object[] {groupId, segmentsEntryKey};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_K, finderArgs, this);
+				_finderPathFetchByG_S, finderArgs, this);
 		}
 
 		if (result instanceof SegmentsEntry) {
 			SegmentsEntry segmentsEntry = (SegmentsEntry)result;
 
 			if ((groupId != segmentsEntry.getGroupId()) ||
-				!Objects.equals(key, segmentsEntry.getKey())) {
+				!Objects.equals(
+					segmentsEntryKey, segmentsEntry.getSegmentsEntryKey())) {
 
 				result = null;
 			}
@@ -4100,17 +4101,17 @@ public class SegmentsEntryPersistenceImpl
 
 			query.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
-			boolean bindKey = false;
+			boolean bindSegmentsEntryKey = false;
 
-			if (key.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			if (segmentsEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_3);
 			}
 			else {
-				bindKey = true;
+				bindSegmentsEntryKey = true;
 
-				query.append(_FINDER_COLUMN_G_K_KEY_2);
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_2);
 			}
 
 			String sql = query.toString();
@@ -4126,15 +4127,15 @@ public class SegmentsEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (bindKey) {
-					qPos.add(key);
+				if (bindSegmentsEntryKey) {
+					qPos.add(segmentsEntryKey);
 				}
 
 				List<SegmentsEntry> list = q.list();
 
 				if (list.isEmpty()) {
 					finderCache.putResult(
-						_finderPathFetchByG_K, finderArgs, list);
+						_finderPathFetchByG_S, finderArgs, list);
 				}
 				else {
 					SegmentsEntry segmentsEntry = list.get(0);
@@ -4145,7 +4146,7 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_K, finderArgs);
+				finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -4163,35 +4164,35 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the segments entry where groupId = &#63; and key = &#63; from the database.
+	 * Removes the segments entry where groupId = &#63; and segmentsEntryKey = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the segments entry that was removed
 	 */
 	@Override
-	public SegmentsEntry removeByG_K(long groupId, String key)
+	public SegmentsEntry removeByG_S(long groupId, String segmentsEntryKey)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = findByG_K(groupId, key);
+		SegmentsEntry segmentsEntry = findByG_S(groupId, segmentsEntryKey);
 
 		return remove(segmentsEntry);
 	}
 
 	/**
-	 * Returns the number of segments entries where groupId = &#63; and key = &#63;.
+	 * Returns the number of segments entries where groupId = &#63; and segmentsEntryKey = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the number of matching segments entries
 	 */
 	@Override
-	public int countByG_K(long groupId, String key) {
-		key = Objects.toString(key, "");
+	public int countByG_S(long groupId, String segmentsEntryKey) {
+		segmentsEntryKey = Objects.toString(segmentsEntryKey, "");
 
-		FinderPath finderPath = _finderPathCountByG_K;
+		FinderPath finderPath = _finderPathCountByG_S;
 
-		Object[] finderArgs = new Object[] {groupId, key};
+		Object[] finderArgs = new Object[] {groupId, segmentsEntryKey};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -4200,17 +4201,17 @@ public class SegmentsEntryPersistenceImpl
 
 			query.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
-			boolean bindKey = false;
+			boolean bindSegmentsEntryKey = false;
 
-			if (key.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			if (segmentsEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_3);
 			}
 			else {
-				bindKey = true;
+				bindSegmentsEntryKey = true;
 
-				query.append(_FINDER_COLUMN_G_K_KEY_2);
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_2);
 			}
 
 			String sql = query.toString();
@@ -4226,8 +4227,8 @@ public class SegmentsEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (bindKey) {
-					qPos.add(key);
+				if (bindSegmentsEntryKey) {
+					qPos.add(segmentsEntryKey);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4247,14 +4248,14 @@ public class SegmentsEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_K_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_S_GROUPID_2 =
 		"segmentsEntry.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_K_KEY_2 =
-		"segmentsEntry.key = ?";
+	private static final String _FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_2 =
+		"segmentsEntry.segmentsEntryKey = ?";
 
-	private static final String _FINDER_COLUMN_G_K_KEY_3 =
-		"(segmentsEntry.key IS NULL OR segmentsEntry.key = '')";
+	private static final String _FINDER_COLUMN_G_S_SEGMENTSENTRYKEY_3 =
+		"(segmentsEntry.segmentsEntryKey IS NULL OR segmentsEntry.segmentsEntryKey = '')";
 
 	private FinderPath _finderPathWithPaginationFindByA_T;
 	private FinderPath _finderPathWithoutPaginationFindByA_T;
@@ -6560,7 +6561,6 @@ public class SegmentsEntryPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
-		dbColumnNames.put("key", "key_");
 		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
@@ -6579,8 +6579,10 @@ public class SegmentsEntryPersistenceImpl
 			segmentsEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByG_K,
-			new Object[] {segmentsEntry.getGroupId(), segmentsEntry.getKey()},
+			_finderPathFetchByG_S,
+			new Object[] {
+				segmentsEntry.getGroupId(), segmentsEntry.getSegmentsEntryKey()
+			},
 			segmentsEntry);
 
 		segmentsEntry.resetOriginalValues();
@@ -6661,13 +6663,14 @@ public class SegmentsEntryPersistenceImpl
 		SegmentsEntryModelImpl segmentsEntryModelImpl) {
 
 		Object[] args = new Object[] {
-			segmentsEntryModelImpl.getGroupId(), segmentsEntryModelImpl.getKey()
+			segmentsEntryModelImpl.getGroupId(),
+			segmentsEntryModelImpl.getSegmentsEntryKey()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByG_K, args, Long.valueOf(1), false);
+			_finderPathCountByG_S, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByG_K, args, segmentsEntryModelImpl, false);
+			_finderPathFetchByG_S, args, segmentsEntryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -6676,23 +6679,23 @@ public class SegmentsEntryPersistenceImpl
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				segmentsEntryModelImpl.getGroupId(),
-				segmentsEntryModelImpl.getKey()
+				segmentsEntryModelImpl.getSegmentsEntryKey()
 			};
 
-			finderCache.removeResult(_finderPathCountByG_K, args);
-			finderCache.removeResult(_finderPathFetchByG_K, args);
+			finderCache.removeResult(_finderPathCountByG_S, args);
+			finderCache.removeResult(_finderPathFetchByG_S, args);
 		}
 
 		if ((segmentsEntryModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_K.getColumnBitmask()) != 0) {
+			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				segmentsEntryModelImpl.getOriginalGroupId(),
-				segmentsEntryModelImpl.getOriginalKey()
+				segmentsEntryModelImpl.getOriginalSegmentsEntryKey()
 			};
 
-			finderCache.removeResult(_finderPathCountByG_K, args);
-			finderCache.removeResult(_finderPathFetchByG_K, args);
+			finderCache.removeResult(_finderPathCountByG_S, args);
+			finderCache.removeResult(_finderPathFetchByG_S, args);
 		}
 	}
 
@@ -7470,18 +7473,18 @@ public class SegmentsEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
-		_finderPathFetchByG_K = new FinderPath(
+		_finderPathFetchByG_S = new FinderPath(
 			SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_K",
+			SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.KEY_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.SEGMENTSENTRYKEY_COLUMN_BITMASK);
 
-		_finderPathCountByG_K = new FinderPath(
+		_finderPathCountByG_S = new FinderPath(
 			SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByA_T = new FinderPath(
@@ -7618,6 +7621,6 @@ public class SegmentsEntryPersistenceImpl
 		SegmentsEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"active", "key", "type"});
+		new String[] {"active", "type"});
 
 }

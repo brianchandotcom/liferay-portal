@@ -41,16 +41,16 @@ public class SegmentsEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
+			String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type,
+			boolean active, String criteria, String source, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addSegmentsEntry(
-			nameMap, descriptionMap, active, criteria, key, source, type,
-			serviceContext);
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria, source,
+			type, serviceContext);
 	}
 
 	public static com.liferay.segments.model.SegmentsEntry deleteSegmentsEntry(
@@ -116,16 +116,16 @@ public class SegmentsEntryServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId,
+			long segmentsEntryId, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key,
+			boolean active, String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSegmentsEntry(
-			segmentsEntryId, nameMap, descriptionMap, active, criteria, key,
-			serviceContext);
+			segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap, active,
+			criteria, serviceContext);
 	}
 
 	public static SegmentsEntryService getService() {

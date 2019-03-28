@@ -66,9 +66,9 @@ public interface SegmentsEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryServiceUtil} to access the segments entry remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SegmentsEntry addSegmentsEntry(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type, ServiceContext serviceContext)
+			String segmentsEntryKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, String criteria,
+			String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)
@@ -106,9 +106,9 @@ public interface SegmentsEntryService extends BaseService {
 		throws PortalException;
 
 	public SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String key, ServiceContext serviceContext)
+			long segmentsEntryId, String segmentsEntryKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, String criteria, ServiceContext serviceContext)
 		throws PortalException;
 
 }

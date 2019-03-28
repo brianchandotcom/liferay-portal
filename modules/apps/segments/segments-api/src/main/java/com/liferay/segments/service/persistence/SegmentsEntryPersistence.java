@@ -1015,54 +1015,54 @@ public interface SegmentsEntryPersistence
 	public int filterCountByG_A(long[] groupIds, boolean active);
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the matching segments entry
 	 * @throws NoSuchEntryException if a matching segments entry could not be found
 	 */
-	public SegmentsEntry findByG_K(long groupId, String key)
+	public SegmentsEntry findByG_S(long groupId, String segmentsEntryKey)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
-	public SegmentsEntry fetchByG_K(long groupId, String key);
+	public SegmentsEntry fetchByG_S(long groupId, String segmentsEntryKey);
 
 	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
-	public SegmentsEntry fetchByG_K(
-		long groupId, String key, boolean retrieveFromCache);
+	public SegmentsEntry fetchByG_S(
+		long groupId, String segmentsEntryKey, boolean retrieveFromCache);
 
 	/**
-	 * Removes the segments entry where groupId = &#63; and key = &#63; from the database.
+	 * Removes the segments entry where groupId = &#63; and segmentsEntryKey = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the segments entry that was removed
 	 */
-	public SegmentsEntry removeByG_K(long groupId, String key)
+	public SegmentsEntry removeByG_S(long groupId, String segmentsEntryKey)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the number of segments entries where groupId = &#63; and key = &#63;.
+	 * Returns the number of segments entries where groupId = &#63; and segmentsEntryKey = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param key the key
+	 * @param segmentsEntryKey the segments entry key
 	 * @return the number of matching segments entries
 	 */
-	public int countByG_K(long groupId, String key);
+	public int countByG_S(long groupId, String segmentsEntryKey);
 
 	/**
 	 * Returns all the segments entries where active = &#63; and type = &#63;.

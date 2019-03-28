@@ -191,6 +191,21 @@ public interface SegmentsEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the segments entry key of this segments entry.
+	 *
+	 * @return the segments entry key of this segments entry
+	 */
+	@AutoEscape
+	public String getSegmentsEntryKey();
+
+	/**
+	 * Sets the segments entry key of this segments entry.
+	 *
+	 * @param segmentsEntryKey the segments entry key of this segments entry
+	 */
+	public void setSegmentsEntryKey(String segmentsEntryKey);
+
+	/**
 	 * Returns the name of this segments entry.
 	 *
 	 * @return the name of this segments entry
@@ -425,21 +440,6 @@ public interface SegmentsEntryModel
 	 * @param criteria the criteria of this segments entry
 	 */
 	public void setCriteria(String criteria);
-
-	/**
-	 * Returns the key of this segments entry.
-	 *
-	 * @return the key of this segments entry
-	 */
-	@AutoEscape
-	public String getKey();
-
-	/**
-	 * Sets the key of this segments entry.
-	 *
-	 * @param key the key of this segments entry
-	 */
-	public void setKey(String key);
 
 	/**
 	 * Returns the source of this segments entry.

@@ -52,11 +52,11 @@ public class SegmentsEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("segmentsEntryKey", getSegmentsEntryKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("active", isActive());
 		attributes.put("criteria", getCriteria());
-		attributes.put("key", getKey());
 		attributes.put("source", getSource());
 		attributes.put("type", getType());
 
@@ -107,6 +107,12 @@ public class SegmentsEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String segmentsEntryKey = (String)attributes.get("segmentsEntryKey");
+
+		if (segmentsEntryKey != null) {
+			setSegmentsEntryKey(segmentsEntryKey);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -129,12 +135,6 @@ public class SegmentsEntryWrapper
 
 		if (criteria != null) {
 			setCriteria(criteria);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
 		}
 
 		String source = (String)attributes.get("source");
@@ -292,16 +292,6 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns the key of this segments entry.
-	 *
-	 * @return the key of this segments entry
-	 */
-	@Override
-	public String getKey() {
-		return model.getKey();
-	}
-
-	/**
 	 * Returns the modified date of this segments entry.
 	 *
 	 * @return the modified date of this segments entry
@@ -405,6 +395,16 @@ public class SegmentsEntryWrapper
 	@Override
 	public long getSegmentsEntryId() {
 		return model.getSegmentsEntryId();
+	}
+
+	/**
+	 * Returns the segments entry key of this segments entry.
+	 *
+	 * @return the segments entry key of this segments entry
+	 */
+	@Override
+	public String getSegmentsEntryKey() {
+		return model.getSegmentsEntryKey();
 	}
 
 	/**
@@ -605,16 +605,6 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Sets the key of this segments entry.
-	 *
-	 * @param key the key of this segments entry
-	 */
-	@Override
-	public void setKey(String key) {
-		model.setKey(key);
-	}
-
-	/**
 	 * Sets the modified date of this segments entry.
 	 *
 	 * @param modifiedDate the modified date of this segments entry
@@ -705,6 +695,16 @@ public class SegmentsEntryWrapper
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
 		model.setSegmentsEntryId(segmentsEntryId);
+	}
+
+	/**
+	 * Sets the segments entry key of this segments entry.
+	 *
+	 * @param segmentsEntryKey the segments entry key of this segments entry
+	 */
+	@Override
+	public void setSegmentsEntryKey(String segmentsEntryKey) {
+		model.setSegmentsEntryKey(segmentsEntryKey);
 	}
 
 	/**

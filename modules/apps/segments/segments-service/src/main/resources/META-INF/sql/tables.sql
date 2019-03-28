@@ -6,11 +6,11 @@ create table SegmentsEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	segmentsEntryKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
 	active_ BOOLEAN,
 	criteria TEXT null,
-	key_ VARCHAR(75) null,
 	source VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

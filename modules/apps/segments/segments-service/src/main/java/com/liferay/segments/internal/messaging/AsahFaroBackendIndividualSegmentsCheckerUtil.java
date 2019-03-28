@@ -159,7 +159,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 		try {
 			individualResults = _asahFaroBackendClient.getIndividualResults(
-				segmentsEntry.getKey(), 1, _DELTA,
+				segmentsEntry.getSegmentsEntryKey(), 1, _DELTA,
 				Collections.singletonList(OrderByField.desc("dateModified")));
 
 			int totalElements = individualResults.getTotal();
@@ -168,7 +168,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				_log.debug(
 					totalElements +
 						" individuals found for individual segment " +
-							segmentsEntry.getKey());
+							segmentsEntry.getSegmentsEntryKey());
 			}
 
 			if (totalElements == 0) {
@@ -195,7 +195,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				}
 
 				individualResults = _asahFaroBackendClient.getIndividualResults(
-					segmentsEntry.getKey(), curPage, _DELTA,
+					segmentsEntry.getSegmentsEntryKey(), curPage, _DELTA,
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
 			}
@@ -203,7 +203,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		catch (RuntimeException re) {
 			_log.error(
 				"Unable to retrieve individuals for individual segment " +
-					segmentsEntry.getKey(),
+					segmentsEntry.getSegmentsEntryKey(),
 				re);
 		}
 	}

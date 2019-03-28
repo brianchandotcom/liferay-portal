@@ -65,8 +65,8 @@ public class SegmentsEntryLocalServiceImpl
 	@Override
 	public SegmentsEntry addSegmentsEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type, ServiceContext serviceContext)
+			boolean active, String criteria, String segmentsEntryKey,
+			String source, String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Segments entry
@@ -74,9 +74,10 @@ public class SegmentsEntryLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		segmentsEntryKey = FriendlyURLNormalizerUtil.normalize(
+			segmentsEntryKey);
 
-		validate(0, groupId, key);
+		validate(0, groupId, segmentsEntryKey);
 
 		long segmentsEntryId = counterLocalService.increment();
 
@@ -94,7 +95,7 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setKey(key);
+		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
 		if (Validator.isNull(source)) {
 			segmentsEntry.setSource(SegmentsConstants.SOURCE_DEFAULT);
@@ -185,10 +186,11 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public SegmentsEntry fetchSegmentsEntry(
-		long groupId, String key, boolean includeAncestorSegmentsEntries) {
+		long groupId, String segmentsEntryKey,
+		boolean includeAncestorSegmentsEntries) {
 
-		SegmentsEntry segmentsEntry = segmentsEntryPersistence.fetchByG_K(
-			groupId, key);
+		SegmentsEntry segmentsEntry = segmentsEntryPersistence.fetchByG_S(
+			groupId, segmentsEntryKey);
 
 		if (segmentsEntry != null) {
 			return segmentsEntry;
@@ -197,8 +199,8 @@ public class SegmentsEntryLocalServiceImpl
 		for (long ancestorSiteGroupId :
 				PortalUtil.getAncestorSiteGroupIds(groupId)) {
 
-			segmentsEntry = segmentsEntryPersistence.fetchByG_K(
-				ancestorSiteGroupId, key);
+			segmentsEntry = segmentsEntryPersistence.fetchByG_S(
+				ancestorSiteGroupId, segmentsEntryKey);
 
 			if (segmentsEntry != null) {
 				return segmentsEntry;
@@ -299,21 +301,22 @@ public class SegmentsEntryLocalServiceImpl
 	public SegmentsEntry updateSegmentsEntry(
 			long segmentsEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String key, ServiceContext serviceContext)
+			String segmentsEntryKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = segmentsEntryPersistence.findByPrimaryKey(
 			segmentsEntryId);
 
-		key = FriendlyURLNormalizerUtil.normalize(key);
+		segmentsEntryKey = FriendlyURLNormalizerUtil.normalize(
+			segmentsEntryKey);
 
-		validate(segmentsEntryId, segmentsEntry.getGroupId(), key);
+		validate(segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
 		segmentsEntry.setNameMap(nameMap);
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setKey(key);
+		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
 		return segmentsEntryPersistence.update(segmentsEntry);
 	}
@@ -398,10 +401,12 @@ public class SegmentsEntryLocalServiceImpl
 		return segmentsEntries;
 	}
 
-	protected void validate(long segmentsEntryId, long groupId, String key)
+	protected void validate(
+			long segmentsEntryId, long groupId, String segmentsEntryKey)
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = fetchSegmentsEntry(groupId, key, true);
+		SegmentsEntry segmentsEntry = fetchSegmentsEntry(
+			groupId, segmentsEntryKey, true);
 
 		if ((segmentsEntry != null) &&
 			(segmentsEntry.getSegmentsEntryId() != segmentsEntryId)) {

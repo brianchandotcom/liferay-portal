@@ -81,12 +81,11 @@ public class AmazonRankingsPortlet extends MVCPortlet {
 			AmazonRankingsConfiguration.class, properties);
 	}
 
+	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.amazon.rankings.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))"
 	)
 	private Release _release;
-
-
-	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
 
 }

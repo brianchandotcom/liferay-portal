@@ -35,11 +35,23 @@ public class CleanUpSubscriptionMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long groupId = (Long)message.get("groupId");
-		long[] userIds = (long[])message.get("userIds");
+		long[] groupIds = (long[])message.get("groupIds");
 
-		for (long userId : userIds) {
-			_subscriptionLocalService.deleteSubscriptions(userId, groupId);
+		if (groupIds == null) {
+			long[] userIds = (long[])message.get("userIds");
+
+			long groupId = (Long)message.get("groupId");
+
+			for (long userId : userIds) {
+				_subscriptionLocalService.deleteSubscriptions(userId, groupId);
+			}
+		}
+		else {
+			long userId = (Long)message.get("userId");
+
+			for (long groupId : groupIds) {
+				_subscriptionLocalService.deleteSubscriptions(userId, groupId);
+			}
 		}
 	}
 

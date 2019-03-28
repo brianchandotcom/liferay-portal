@@ -6656,7 +6656,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				message.put("userId", userId);
 
 				MessageBusUtil.sendMessage(
-					DestinationNames.USER_SUBSCRIPTION_CLEAN_UP, message);
+					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
 
 				return null;
 			});

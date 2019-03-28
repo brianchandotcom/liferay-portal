@@ -9,6 +9,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="segmentsEntryKey" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -17,7 +18,6 @@
 		<field name="criteria" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="key" type="String" />
 		<field name="source" type="String" />
 		<field name="type" type="String" />
 	</model>

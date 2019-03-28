@@ -55,11 +55,10 @@ import com.liferay.segments.service.SegmentsEntryServiceUtil;
 public class SegmentsEntryServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
-			HttpPrincipal httpPrincipal,
+			HttpPrincipal httpPrincipal, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type,
+			boolean active, String criteria, String source, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -69,8 +68,8 @@ public class SegmentsEntryServiceHttp {
 				_addSegmentsEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, nameMap, descriptionMap, active, criteria, key,
-				source, type, serviceContext);
+				methodKey, segmentsEntryKey, nameMap, descriptionMap, active,
+				criteria, source, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -319,9 +318,10 @@ public class SegmentsEntryServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsEntry updateSegmentsEntry(
 			HttpPrincipal httpPrincipal, long segmentsEntryId,
+			String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key,
+			boolean active, String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -331,8 +331,8 @@ public class SegmentsEntryServiceHttp {
 				_updateSegmentsEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, nameMap, descriptionMap, active,
-				criteria, key, serviceContext);
+				methodKey, segmentsEntryId, segmentsEntryKey, nameMap,
+				descriptionMap, active, criteria, serviceContext);
 
 			Object returnObj = null;
 
@@ -365,8 +365,8 @@ public class SegmentsEntryServiceHttp {
 
 	private static final Class<?>[] _addSegmentsEntryParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, java.util.Map.class, boolean.class,
-			String.class, String.class, String.class, String.class,
+			String.class, java.util.Map.class, java.util.Map.class,
+			boolean.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSegmentsEntryParameterTypes1 =
@@ -389,8 +389,8 @@ public class SegmentsEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateSegmentsEntryParameterTypes7 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
-			String.class, String.class,
+			long.class, String.class, java.util.Map.class, java.util.Map.class,
+			boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

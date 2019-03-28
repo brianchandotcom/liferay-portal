@@ -36,20 +36,6 @@ public class SegmentsEntryLocalServiceWrapper
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 	}
 
-	@Override
-	public com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsEntryLocalService.addSegmentsEntry(
-			nameMap, descriptionMap, active, criteria, key, source, type,
-			serviceContext);
-	}
-
 	/**
 	 * Adds the segments entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -61,6 +47,20 @@ public class SegmentsEntryLocalServiceWrapper
 		com.liferay.segments.model.SegmentsEntry segmentsEntry) {
 
 		return _segmentsEntryLocalService.addSegmentsEntry(segmentsEntry);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
+			String segmentsEntryKey,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			boolean active, String criteria, String source, String type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsEntryLocalService.addSegmentsEntry(
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria, source,
+			type, serviceContext);
 	}
 
 	/**
@@ -231,10 +231,11 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsEntry fetchSegmentsEntry(
-		long groupId, String key, boolean includeAncestorSegmentsEntries) {
+		long groupId, String segmentsEntryKey,
+		boolean includeAncestorSegmentsEntries) {
 
 		return _segmentsEntryLocalService.fetchSegmentsEntry(
-			groupId, key, includeAncestorSegmentsEntries);
+			groupId, segmentsEntryKey, includeAncestorSegmentsEntries);
 	}
 
 	@Override
@@ -379,16 +380,16 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId,
+			long segmentsEntryId, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key,
+			boolean active, String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsEntryLocalService.updateSegmentsEntry(
-			segmentsEntryId, nameMap, descriptionMap, active, criteria, key,
-			serviceContext);
+			segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap, active,
+			criteria, serviceContext);
 	}
 
 	/**

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,7 +48,8 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 
 				@Override
 				public String getImageURL() {
-					return _GOOGLE_DRIVE_LOGO_URL;
+					return _servletContext.getContextPath() +
+						"/img/google-drive-logo.png";
 				}
 
 				@Override
@@ -74,11 +77,12 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 		return null;
 	}
 
-	private static final String _GOOGLE_DRIVE_LOGO_URL =
-		"https://firebasestorage.googleapis.com/v0/b/drive-assets.google.com." +
-			"a.appspot.com/o/Asset%20-%20Drive%20Icon512.png?alt=media";
-
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.opener.google.drive.web)"
+	)
+	private ServletContext _servletContext;
 
 }

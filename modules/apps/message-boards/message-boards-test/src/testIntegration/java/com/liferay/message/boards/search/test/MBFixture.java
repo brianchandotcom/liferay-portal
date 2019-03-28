@@ -52,8 +52,18 @@ public class MBFixture {
 		_user = user;
 	}
 
+	public MBCategory createMBCategory() throws Exception {
+		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
+			getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), getServiceContext());
+
+		_mbCategories.add(mbCategory);
+
+		return mbCategory;
+	}
+
 	public MBMessage createMBMessage(long userId, long categoryId)
-		throws Exception, PortalException {
+		throws Exception {
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -75,11 +85,7 @@ public class MBFixture {
 	public MBMessage createMBMessageWithCategory(String title, long userId)
 		throws Exception {
 
-		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-			getUserId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), getServiceContext());
-
-		_mbCategories.add(mbCategory);
+		MBCategory mbCategory = createMBCategory();
 
 		MBMessage mbMessage = createMBMessage(
 			userId, mbCategory.getCategoryId());

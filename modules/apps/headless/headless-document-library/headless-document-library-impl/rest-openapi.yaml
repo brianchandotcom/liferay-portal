@@ -291,6 +291,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -302,10 +306,6 @@ paths:
                   name: sort
                   schema:
                       type: string
-                - in: query
-                  name: tree
-                  schema:
-                      type: boolean
             responses:
                 200:
                     content:
@@ -357,6 +357,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -368,10 +372,6 @@ paths:
                   name: sort
                   schema:
                       type: string
-                - in: query
-                  name: tree
-                  schema:
-                      type: boolean
             responses:
                 200:
                     content:

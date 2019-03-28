@@ -91,7 +91,7 @@ public class BeanPortletImpl implements BeanPortlet {
 		_portletDependencies = portletDependencies;
 
 		if (!asyncSupported) {
-			asyncSupported = _getAsyncSupported(beanMethodMap);
+			asyncSupported = _isAsyncSupported(beanMethodMap);
 		}
 
 		_asyncSupported = asyncSupported;
@@ -716,30 +716,6 @@ public class BeanPortletImpl implements BeanPortlet {
 		}
 	}
 
-	private boolean _getAsyncSupported(
-		Map<MethodType, List<BeanMethod>> beanMethodMap) {
-
-		List<BeanMethod> beanMethods = beanMethodMap.get(
-			MethodType.SERVE_RESOURCE);
-
-		if (beanMethods != null) {
-			for (BeanMethod beanMethod : beanMethods) {
-				Method method = beanMethod.getMethod();
-
-				ServeResourceMethod serveResourceMethod = method.getAnnotation(
-					ServeResourceMethod.class);
-
-				if ((serveResourceMethod != null) &&
-					serveResourceMethod.asyncSupported()) {
-
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private String _getPublicRenderParameterNamespaceURI(
 		BeanApp beanApp, String id) {
 
@@ -766,6 +742,30 @@ public class BeanPortletImpl implements BeanPortlet {
 		}
 
 		return namespaceURI;
+	}
+
+	private boolean _isAsyncSupported(
+		Map<MethodType, List<BeanMethod>> beanMethodMap) {
+
+		List<BeanMethod> beanMethods = beanMethodMap.get(
+			MethodType.SERVE_RESOURCE);
+
+		if (beanMethods != null) {
+			for (BeanMethod beanMethod : beanMethods) {
+				Method method = beanMethod.getMethod();
+
+				ServeResourceMethod serveResourceMethod = method.getAnnotation(
+					ServeResourceMethod.class);
+
+				if ((serveResourceMethod != null) &&
+					serveResourceMethod.asyncSupported()) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private String _toNameValuePair(String name, String value) {

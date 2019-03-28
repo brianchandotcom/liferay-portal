@@ -15,12 +15,14 @@
 package com.liferay.document.library.opener.google.drive.web.internal;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
@@ -136,6 +138,23 @@ public class OAuth2Manager {
 
 		googleAuthorizationCodeFlow.createAndStoreCredential(
 			googleTokenResponse, String.valueOf(userId));
+	}
+
+	public void revokeCredential(long companyId, long userId)
+		throws PortalException {
+
+		try {
+			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+				_getGoogleAuthorizationCodeFlow(companyId);
+
+			DataStore<StoredCredential> credentialDataStore =
+				googleAuthorizationCodeFlow.getCredentialDataStore();
+
+			credentialDataStore.delete(String.valueOf(userId));
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 	}
 
 	@Deactivate

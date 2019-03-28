@@ -202,6 +202,8 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Title1");
 	}
 
+	// Ignoring test, see LRQA-47803
+	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryCategory {
 		Navigator.openURL();
@@ -469,6 +471,8 @@ definition {
 		);
 	}
 
+	// Ignoring test, see LRQA-47803
+	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTag {
 		Navigator.openURL();
@@ -520,6 +524,8 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "name1");
 	}
 
+	// Ignoring test, see LRQA-47803
+	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTagQuotes {
 		Navigator.openURL();
@@ -796,6 +802,8 @@ definition {
 		);
 	}
 
+	// Ignoring test, see LRQA-47803
+	@ignore = "true"
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
 		property testray.component.names = "Training";

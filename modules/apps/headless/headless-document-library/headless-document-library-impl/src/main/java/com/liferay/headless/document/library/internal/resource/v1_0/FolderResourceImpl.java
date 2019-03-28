@@ -63,13 +63,13 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Long folderId = null;
 
-		if (GetterUtil.getBoolean(tree)) {
+		if (!GetterUtil.getBoolean(flatten)) {
 			folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 

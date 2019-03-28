@@ -83,13 +83,13 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
 			booleanQuery -> {
-				if (GetterUtil.getBoolean(tree)) {
+				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
@@ -145,10 +145,9 @@ public class KnowledgeBaseArticleResourceImpl
 			kbArticle.getGroupId(), filter, pagination, sorts);
 	}
 
-	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				Long knowledgeBaseFolderId, Boolean tree, Filter filter,
+				Long knowledgeBaseFolderId, Boolean flatten, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -165,7 +164,7 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbFolder.getKbFolderId())),
 					BooleanClauseOccur.MUST);
 
-				if (GetterUtil.getBoolean(tree)) {
+				if (!GetterUtil.getBoolean(flatten)) {
 					booleanFilter.add(
 						new TermFilter(
 							"parentMessageId",

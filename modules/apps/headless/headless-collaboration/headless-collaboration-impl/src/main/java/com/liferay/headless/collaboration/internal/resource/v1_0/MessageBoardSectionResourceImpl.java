@@ -66,13 +66,13 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getContentSpaceMessageBoardSectionsPage(
 			booleanQuery -> {
-				if (GetterUtil.getBoolean(tree)) {
+				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 

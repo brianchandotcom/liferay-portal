@@ -82,7 +82,7 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public Page<MessageBoardThread> getContentSpaceMessageBoardThreadsPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -91,7 +91,7 @@ public class MessageBoardThreadResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				if (GetterUtil.getBoolean(tree)) {
+				if (!GetterUtil.getBoolean(flatten)) {
 					booleanFilter.add(
 						new TermFilter(Field.CATEGORY_ID, "0"),
 						BooleanClauseOccur.MUST);

@@ -3595,7 +3595,7 @@ public class ServiceBuilder {
 						indexMetadata.getColumnNames());
 
 					for (String columnName : indexMetadata.getColumnNames()) {
-						EntityColumn entityColumn = _fetchEntityColumnDBName(
+						EntityColumn entityColumn = _fetchEntityColumnByDBName(
 							entity, columnName);
 
 						if (entityColumn == null) {
@@ -4152,7 +4152,7 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
 	}
 
-	private EntityColumn _fetchEntityColumnDBName(
+	private EntityColumn _fetchEntityColumnByDBName(
 		Entity entity, String columnDBName) {
 
 		for (EntityColumn entityColumn : entity.getFinderEntityColumns()) {
@@ -4343,7 +4343,7 @@ public class ServiceBuilder {
 		int[] columnLengths = new int[columnNames.length];
 
 		for (int i = 0; i < columnNames.length; i++) {
-			EntityColumn entityColumn = _getEntityColumnByColumnDBName(
+			EntityColumn entityColumn = _getEntityColumnByDBName(
 				entity, columnNames[i]);
 
 			String colType = entityColumn.getType();
@@ -4821,10 +4821,10 @@ public class ServiceBuilder {
 		return null;
 	}
 
-	private EntityColumn _getEntityColumnByColumnDBName(
+	private EntityColumn _getEntityColumnByDBName(
 		Entity entity, String columnDBName) {
 
-		EntityColumn entityColumn = _fetchEntityColumnDBName(
+		EntityColumn entityColumn = _fetchEntityColumnByDBName(
 			entity, columnDBName);
 
 		if (entityColumn != null) {

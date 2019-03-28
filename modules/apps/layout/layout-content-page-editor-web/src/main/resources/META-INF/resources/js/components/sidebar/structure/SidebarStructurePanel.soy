@@ -6,7 +6,7 @@
 {template .render}
 	{@param? _expandedNodes: ?}
 	{@param? _handleElementRemoveButtonClick: any}
-	{@param? _handleElementCollapseButtonClick: any}
+	{@param? _handleElementClick: any}
 	{@param? activeItemId: string}
 	{@param? hoveredItemId: string}
 	{@param? layoutData: ?}
@@ -18,7 +18,8 @@
 		expanded: bool,
 		hovered: bool,
 		key: string,
-		label: string
+		label: string,
+		removable: bool
 	]}
 	{@param? spritemap: string}
 
@@ -34,7 +35,7 @@
 				{if $spritemap and $structure}
 					{call .treeNode}
 						{param handleElementRemoveButtonClick: $_handleElementRemoveButtonClick /}
-						{param handleElementCollapseButtonClick: $_handleElementCollapseButtonClick /}
+						{param handleElementClick: $_handleElementClick /}
 						{param node: $structure /}
 						{param spritemap: $spritemap /}
 					{/call}
@@ -48,7 +49,7 @@
  * Tree root
  */
 {template .treeNode}
-	{@param? handleElementCollapseButtonClick: any}
+	{@param? handleElementClick: any}
 	{@param? handleElementRemoveButtonClick: any}
 	{@param node: [
 		active: bool,
@@ -58,7 +59,8 @@
 		expanded: bool,
 		hovered: bool,
 		key: string,
-		label: string
+		label: string,
+		removable: bool
 	]}
 	{@param spritemap: string}
 
@@ -82,19 +84,13 @@
 			{/let}
 
 			<div class="{$itemClasses}">
-				{if length($node.children) > 0}
-					{call .collapseIcon}
-						{param handleClick: $handleElementCollapseButtonClick /}
-						{param node: $node /}
-						{param spritemap: $spritemap /}
-					{/call}
-				{/if}
-
 				{call .itemName}
+					{param handleElementClick: $handleElementClick /}
 					{param node: $node /}
+					{param spritemap: $spritemap /}
 				{/call}
 
-				{if $node.elementId and $node.elementType}
+				{if $node.removable}
 					{call .removeIcon}
 						{param handleClick: $handleElementRemoveButtonClick /}
 						{param node: $node /}
@@ -103,7 +99,7 @@
 				{/if}
 			</div>
 
-			{if length($node.children) > 0}
+			{if $node.children and (length($node.children) > 0)}
 				{let $childrenClasses kind="text"}
 					collapse
 					{sp}pl-3
@@ -117,7 +113,7 @@
 					{foreach $nodeChild in $node.children}
 						{call .treeNode}
 							{param handleElementRemoveButtonClick: $handleElementRemoveButtonClick /}
-							{param handleElementCollapseButtonClick: $handleElementCollapseButtonClick /}
+							{param handleElementClick: $handleElementClick /}
 							{param key: $nodeChild.key /}
 							{param node: $nodeChild /}
 							{param spritemap: $spritemap /}
@@ -134,27 +130,11 @@
  */
 {template .collapseIcon}
 	{@param node: [
-		expanded: bool,
-		key: string
+		expanded: bool
 	]}
-	{@param spritemap: string}
-	{@param? handleClick: any}
+	{@param? spritemap: string}
 
-	{let $collapseIconAttributes kind="attributes"}
-		aria-controls="{$node.key}"
-		class="btn btn-sm btn-unstyled py-1"
-		data-node-key="{$node.key}"
-		data-onclick="{$handleClick}"
-		type="button"
-
-		{if $node.expanded}
-			aria-expanded="true"
-		{else}
-			aria-expanded="false"
-		{/if}
-	{/let}
-
-	<button {$collapseIconAttributes}>
+	<span class="btn btn-sm btn-unstyled py-1">
 		{let $angleDirection kind="text"}
 			{if $node.expanded}
 				down
@@ -166,7 +146,7 @@
 		<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
 			<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
 		</svg>
-	</button>
+	</span>
 {/template}
 
 {template .itemName}
@@ -174,8 +154,12 @@
 		children: list<?>,
 		elementId: string,
 		elementType: string,
+		expanded: bool,
+		key: string,
 		label: string
 	]}
+	{@param? handleElementClick: any}
+	{@param? spritemap: string}
 
 	{let $itemNameClasses kind="text"}
 		btn
@@ -188,24 +172,40 @@
 		{/if}
 	{/let}
 
-	{if $node.elementId and $node.elementType}
-		{let $itemNameButtonAttributes kind="attributes"}
-			class="{$itemNameClasses}"
+	{let $itemNameButtonAttributes kind="attributes"}
+		class="{$itemNameClasses}"
+		data-onclick="{$handleElementClick}"
+		type="button"
+
+		{if $node.elementId and $node.elementType}
 			data-element-id="{$node.elementId}"
 			data-element-type="{$node.elementType}"
 			data-fragments-editor-item-id="{$node.elementId}"
 			data-fragments-editor-item-type="{$node.elementType}"
-			type="button"
-		{/let}
+		{/if}
 
-		<button {$itemNameButtonAttributes}>
-			{$node.label}
-		</button>
-	{else}
-		<span class="{$itemNameClasses}">
-			{$node.label}
-		</span>
-	{/if}
+		{if $node.children and length($node.children) > 0}
+			aria-controls="{$node.key}"
+			data-node-key="{$node.key}"
+
+			{if $node.expanded}
+				aria-expanded="true"
+			{else}
+				aria-expanded="false"
+			{/if}
+		{/if}
+	{/let}
+
+	<button {$itemNameButtonAttributes}>
+		{if $node.children and length($node.children) > 0}
+			{call .collapseIcon}
+				{param node: $node /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{/if}
+
+		{$node.label}
+	</button>
 {/template}
 
 /**

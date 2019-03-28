@@ -115,7 +115,8 @@ class SidebarStructurePanel extends Component {
 				elementId: fragmentEntryLink.fragmentEntryLinkId,
 				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 				key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
-				label: fragmentEntryLink.name
+				label: fragmentEntryLink.name,
+				removable: true
 			}
 		);
 	}
@@ -143,7 +144,8 @@ class SidebarStructurePanel extends Component {
 				elementId: row.rowId,
 				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
 				key: `row-${row.rowId}`,
-				label: Liferay.Language.get('section')
+				label: Liferay.Language.get('section'),
+				removable: true
 			}
 		);
 	}
@@ -158,6 +160,7 @@ class SidebarStructurePanel extends Component {
 	 * @param {string} [data.elementId='']
 	 * @param {string} [data.elementType='']
 	 * @param {boolean} [data.expanded=false]
+	 * @param {boolean} [data.removable=false]
 	 * @private
 	 * @return {object}
 	 * @review
@@ -185,7 +188,8 @@ class SidebarStructurePanel extends Component {
 				state.hoveredItemType === data.elementType
 			),
 			key: data.key,
-			label: data.label
+			label: data.label,
+			removable: data.removable || false
 		};
 	}
 
@@ -210,15 +214,18 @@ class SidebarStructurePanel extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleElementCollapseButtonClick(event) {
+	_handleElementClick(event) {
 		const {nodeKey} = event.delegateTarget.dataset;
-		const nodeKeyIndex = this._expandedNodes.indexOf(nodeKey);
 
-		if (nodeKeyIndex === -1) {
-			this._expandedNodes = [...this._expandedNodes, nodeKey];
-		}
-		else {
-			this._expandedNodes.splice(nodeKeyIndex, 1);
+		if (nodeKey) {
+			const nodeKeyIndex = this._expandedNodes.indexOf(nodeKey);
+
+			if (nodeKeyIndex === -1) {
+				this._expandedNodes.push(nodeKey);
+			}
+			else {
+				this._expandedNodes.splice(nodeKeyIndex, 1);
+			}
 
 			this._expandedNodes = this._expandedNodes;
 		}

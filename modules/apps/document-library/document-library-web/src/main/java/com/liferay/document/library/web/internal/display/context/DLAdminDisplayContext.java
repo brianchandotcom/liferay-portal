@@ -411,10 +411,6 @@ public class DLAdminDisplayContext {
 			DLUtil.getRepositoryModelOrderByComparator(
 				orderByCol, orderByType, orderByModel);
 
-		if (navigation.equals("recent")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator();
-		}
-
 		dlSearchContainer.setOrderByCol(orderByCol);
 		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(orderByType);
@@ -535,10 +531,10 @@ public class DLAdminDisplayContext {
 								dlSearchContainer.getOrderByComparator());
 				}
 			}
-			else if (navigation.equals("mine") || navigation.equals("recent")) {
+			else if (navigation.equals("mine")) {
 				long groupFileEntriesUserId = 0;
 
-				if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
+				if (_themeDisplay.isSignedIn()) {
 					groupFileEntriesUserId = _themeDisplay.getUserId();
 
 					status = WorkflowConstants.STATUS_ANY;

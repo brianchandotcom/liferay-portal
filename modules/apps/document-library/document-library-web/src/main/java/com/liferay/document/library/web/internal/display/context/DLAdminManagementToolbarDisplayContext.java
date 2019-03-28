@@ -361,15 +361,13 @@ public class DLAdminManagementToolbarDisplayContext {
 							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
-				if (!_isNavigationRecent()) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								_getOrderByDropdownItems());
-							dropdownGroupItem.setLabel(
-								LanguageUtil.get(_request, "order-by"));
-						});
-				}
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
 			}
 		};
 	}
@@ -677,25 +675,6 @@ public class DLAdminManagementToolbarDisplayContext {
 							LanguageUtil.get(_request, "all"));
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(navigation.equals("recent"));
-
-						PortletURL viewRecentDocumentsURL =
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
-
-						viewRecentDocumentsURL.setParameter(
-							"mvcRenderCommandName", "/document_library/view");
-						viewRecentDocumentsURL.setParameter(
-							"navigation", "recent");
-
-						dropdownItem.setHref(viewRecentDocumentsURL);
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "recent"));
-					});
-
 				if (_themeDisplay.isSignedIn()) {
 					add(
 						dropdownItem -> {
@@ -843,14 +822,6 @@ public class DLAdminManagementToolbarDisplayContext {
 
 				return false;
 			});
-	}
-
-	private boolean _isNavigationRecent() {
-		if (Objects.equals(_getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isSearch() {

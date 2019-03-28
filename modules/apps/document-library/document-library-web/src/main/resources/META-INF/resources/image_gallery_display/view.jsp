@@ -234,12 +234,12 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			%>
 
 		</c:when>
-		<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
+		<c:when test='<%= topLink.equals("mine") %>'>
 
 			<%
 			long groupImagesUserId = 0;
 
-			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+			if (themeDisplay.isSignedIn()) {
 				groupImagesUserId = user.getUserId();
 			}
 

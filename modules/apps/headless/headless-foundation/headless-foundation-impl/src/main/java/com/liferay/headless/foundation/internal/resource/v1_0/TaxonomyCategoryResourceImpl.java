@@ -167,7 +167,7 @@ public class TaxonomyCategoryResourceImpl
 				StringBundler.concat(
 					"Unable to patch taxonomy category with language ",
 					contextAcceptLanguage.getPreferredLanguageId(),
-					" because it is only configured to support ",
+					"because it is only available in the following languages ",
 					Arrays.toString(assetCategory.getAvailableLanguageIds())));
 		}
 

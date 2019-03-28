@@ -9,9 +9,17 @@
 
 		<column name="bigDecimalEntryId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="bigDecimalValue" type="BigDecimal" />
+
+		<!-- Relationships -->
+
+		<column entity="LVEntry" mapping-table="LVEntries_BigDecimalEntries" name="lvEntries" type="Collection" />
 
 		<!-- Order -->
 
@@ -30,6 +38,10 @@
 		<finder name="LtBigDecimalValue" return-type="Collection">
 			<finder-column comparator="&lt;" name="bigDecimalValue" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="LVEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
 	<entity local-service="true" name="LocalizedEntry" remote-service="false">
 
@@ -50,6 +62,10 @@
 
 		<column name="lvEntryId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
@@ -57,6 +73,10 @@
 		<!-- Other fields -->
 
 		<column name="uniqueGroupKey" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="BigDecimalEntry" mapping-table="LVEntries_BigDecimalEntries" name="bigDecimalEntries" type="Collection" />
 
 		<!-- Localized entity -->
 
@@ -74,6 +94,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="uniqueGroupKey" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="BigDecimalEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
 	<entity local-service="true" name="NestedSetsTreeEntry" remote-service="false">
 

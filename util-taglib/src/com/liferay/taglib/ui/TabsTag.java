@@ -232,7 +232,11 @@ public class TabsTag extends IncludeTag {
 		return _formName;
 	}
 
-	public String[] getNames() {
+	public String getNames() {
+		return StringUtil.merge(_names);
+	}
+
+	public String[] getNamesArray() {
 		return _names;
 	}
 
@@ -266,7 +270,11 @@ public class TabsTag extends IncludeTag {
 		return false;
 	}
 
-	public String[] getTabsValues() {
+	public String getTabsValues() {
+		return StringUtil.merge(_tabsValues);
+	}
+
+	public String[] getTabsValuesArray() {
 		return _tabsValues;
 	}
 

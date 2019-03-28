@@ -34,7 +34,11 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 		return _displayStyle;
 	}
 
-	public String[] getTypes() {
+	public String getTypes() {
+		return StringUtil.merge(_types);
+	}
+
+	public String[] getTypesArray() {
 		return _types;
 	}
 

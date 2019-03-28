@@ -82,7 +82,11 @@ public class SocialBookmarksTag extends IncludeTag {
 		return _title;
 	}
 
-	public String[] getTypes() {
+	public String getTypes() {
+		return StringUtil.merge(_types);
+	}
+
+	public String[] getTypesArray() {
 		return _types;
 	}
 

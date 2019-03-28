@@ -6629,6 +6629,53 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		passwordTrackerLocalService.trackPassword(user.getUserId(), oldEncPwd);
 	}
 
+	protected void unsetUserGroups(long userId, long[] groupIds)
+		throws PortalException {
+
+		List<UserGroupRole> userGroupRoles =
+			userGroupRolePersistence.findByUserId(userId);
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			if (ArrayUtil.contains(groupIds, userGroupRole.getGroupId())) {
+				Role role = rolePersistence.findByPrimaryKey(
+					userGroupRole.getRoleId());
+
+				if (role.getType() == RoleConstants.TYPE_SITE) {
+					userGroupRolePersistence.remove(userGroupRole);
+				}
+			}
+		}
+
+		List<Team> oldTeams = userPersistence.getTeams(userId);
+
+		List<Team> removedFromTeams = new ArrayList<>();
+
+		for (Team team : oldTeams) {
+			if (ArrayUtil.contains(groupIds, team.getGroupId())) {
+				removedFromTeams.add(team);
+			}
+		}
+
+		if (!removedFromTeams.isEmpty()) {
+			userPersistence.removeTeams(userId, removedFromTeams);
+		}
+
+		userPersistence.removeGroups(userId, groupIds);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Message message = new Message();
+
+				message.put("groupIds", groupIds);
+				message.put("userId", userId);
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
+
+				return null;
+			});
+	}
+
 	protected void unsetUserOrganizations(long userId, long[] organizationIds)
 		throws PortalException {
 
@@ -6667,22 +6714,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			boolean indexingEnabled)
 		throws PortalException {
 
-		if (newGroupIds == null) {
-			return;
+		Set<Long> oldGroupIds = SetUtil.fromArray(getGroupPrimaryKeys(userId));
+
+		oldGroupIds.removeAll(SetUtil.fromArray(newGroupIds));
+
+		if (!oldGroupIds.isEmpty()) {
+			unsetUserGroups(userId, ArrayUtil.toLongArray(oldGroupIds));
 		}
 
-		long[] oldGroupIds = getGroupPrimaryKeys(userId);
+		userPersistence.setGroups(userId, newGroupIds);
 
-		for (long oldGroupId : oldGroupIds) {
-			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
-				userLocalService.unsetGroupUsers(
-					oldGroupId, new long[] {userId}, serviceContext);
-			}
-		}
-
-		for (long newGroupId : newGroupIds) {
-			if (!ArrayUtil.contains(oldGroupIds, newGroupId)) {
-				userLocalService.addGroupUsers(newGroupId, new long[] {userId});
+		if (newGroupIds != null) {
+			for (long newGroupId : newGroupIds) {
+				if (!oldGroupIds.contains(newGroupId)) {
+					addDefaultRolesAndTeams(newGroupId, new long[] {userId});
+				}
 			}
 		}
 

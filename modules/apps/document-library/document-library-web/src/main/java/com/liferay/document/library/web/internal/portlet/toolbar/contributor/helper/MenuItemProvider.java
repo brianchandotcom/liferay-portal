@@ -135,8 +135,7 @@ public class MenuItemProvider {
 
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				(folder != null) ? "subfolder" : "folder"));
+				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

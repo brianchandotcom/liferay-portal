@@ -26,7 +26,7 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 
 <div class="container-fluid-1280" id="<portlet:namespace />assetLists">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-asset-lists"
+		emptyResultsMessage="there-are-no-content-sets"
 		id="assetListEntries"
 		searchContainer="<%= selectAssetListDisplayContext.getSearchContainer() %>"
 	>

@@ -53,7 +53,7 @@ public class AssetListEntryExceptionRequestHandler {
 			errorMessage = "please-enter-a-valid-title";
 		}
 		else if (pe instanceof DuplicateAssetListEntryTitleException) {
-			errorMessage = "an-asset-list-with-that-title-already-exists";
+			errorMessage = "a-content-set-with-that-title-already-exists";
 		}
 
 		jsonObject.put(

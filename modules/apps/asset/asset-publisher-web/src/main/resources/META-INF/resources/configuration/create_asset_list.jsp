@@ -18,8 +18,8 @@
 
 <c:if test="<%= !assetPublisherDisplayContext.isSelectionStyleAssetList() %>">
 	<div class="mb-2">
-		<aui:a cssClass="create-asset-list-link" href="javascript:;">
-			<liferay-ui:message key="create-an-asset-list-from-this-configuration" />
+		<aui:a cssClass="create-content-set-link" href="javascript:;">
+			<liferay-ui:message key="create-a-content-set-from-this-configuration" />
 		</aui:a>
 	</div>
 </c:if>

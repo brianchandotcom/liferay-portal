@@ -59,7 +59,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 					},
 					eventName: '<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
 					id: '<portlet:namespace />selectAssetList',
-					title: '<liferay-ui:message key="select-asset-list" />',
+					title: '<liferay-ui:message key="select-content-set" />',
 					uri: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
 				},
 				function(event) {

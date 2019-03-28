@@ -126,7 +126,7 @@ public class AssetListManagementToolbarDisplayContext
 						dropdownItem.putData(
 							"title",
 							LanguageUtil.format(
-								request, "add-x-asset-list",
+								request, "add-x-content-set",
 								AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
 								true));
 						dropdownItem.setHref("#");
@@ -153,7 +153,7 @@ public class AssetListManagementToolbarDisplayContext
 						dropdownItem.putData(
 							"title",
 							LanguageUtil.format(
-								request, "add-x-asset-list",
+								request, "add-x-content-set",
 								AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
 								true));
 						dropdownItem.setHref("#");

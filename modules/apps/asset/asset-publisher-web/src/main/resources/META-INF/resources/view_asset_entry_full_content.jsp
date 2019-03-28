@@ -125,7 +125,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
 					<span class="user-avatar-image">
-						<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg <%= LexiconUtil.getUserColorCssClass(assetRendererUser) %> ">
+						<div class="sticker sticker-circle sticker-lg sticker-light user-icon user-icon-default user-icon-lg <%= LexiconUtil.getUserColorCssClass(assetRendererUser) %>">
 							<c:choose>
 								<c:when test="<%= assetRendererUser.getPortraitId() <= 0 %>">
 									<aui:icon image="user" markupView="lexicon" />

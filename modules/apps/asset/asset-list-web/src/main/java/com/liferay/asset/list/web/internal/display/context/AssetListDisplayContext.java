@@ -135,7 +135,7 @@ public class AssetListDisplayContext {
 
 		SearchContainer assetListEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-asset-lists");
+			"there-are-no-content-sets");
 
 		assetListEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -213,12 +213,12 @@ public class AssetListDisplayContext {
 		if (getAssetListEntryType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
-			title = "new-dynamic-asset-list";
+			title = "new-dynamic-content-set";
 		}
 		else if (getAssetListEntryType() ==
 					AssetListEntryTypeConstants.TYPE_MANUAL) {
 
-			title = "new-manual-asset-list";
+			title = "new-manual-content-set";
 		}
 
 		return LanguageUtil.get(_request, title);
@@ -374,7 +374,7 @@ public class AssetListDisplayContext {
 	}
 
 	private String _getAddAssetListTitle(String title) {
-		return LanguageUtil.format(_request, "add-x-asset-list", title, true);
+		return LanguageUtil.format(_request, "add-x-content-set", title, true);
 	}
 
 	private String _getKeywords() {

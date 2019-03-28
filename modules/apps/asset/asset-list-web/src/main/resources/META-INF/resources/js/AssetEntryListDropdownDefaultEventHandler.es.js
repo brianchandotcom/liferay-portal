@@ -20,7 +20,7 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 	renameAssetListEntry(itemData) {
 		OpenSimpleInputModal(
 			{
-				dialogTitle: Liferay.Language.get('rename-asset-list'),
+				dialogTitle: Liferay.Language.get('rename-content-set'),
 				formSubmitURL: itemData.renameAssetListEntryURL,
 				idFieldName: 'id',
 				idFieldValue: itemData.assetListEntryId,

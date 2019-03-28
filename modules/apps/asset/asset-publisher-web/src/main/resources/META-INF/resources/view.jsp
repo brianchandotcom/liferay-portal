@@ -111,7 +111,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 						</div>
 
 						<div>
-							<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-an-asset-list-to-make-it-visible" /></aui:a>
+							<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-a-content-set-to-make-it-visible" /></aui:a>
 						</div>
 					</c:when>
 					<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">

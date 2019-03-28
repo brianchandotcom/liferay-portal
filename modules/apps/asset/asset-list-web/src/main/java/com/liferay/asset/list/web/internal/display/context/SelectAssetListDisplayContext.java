@@ -78,7 +78,8 @@ public class SelectAssetListDisplayContext {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
-			portletRequest, _getPortletURL(), null, "there-are-no-asset-lists");
+			portletRequest, _getPortletURL(), null,
+			"there-are-no-content-sets");
 
 		OrderByComparator<AssetListEntry> orderByComparator =
 			AssetListPortletUtil.getAssetListEntryOrderByComparator(

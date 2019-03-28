@@ -192,6 +192,17 @@ public class SourceFormatter {
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
 
+			Set<String> recentChangesFileNames =
+				sourceFormatterArgs.getRecentChangesFileNames();
+
+			for (String recentChangesFileName : recentChangesFileNames) {
+				if (recentChangesFileName.endsWith("ci-merge")) {
+					includeSubrepositories = true;
+
+					break;
+				}
+			}
+
 			sourceFormatterArgs.setIncludeSubrepositories(
 				includeSubrepositories);
 

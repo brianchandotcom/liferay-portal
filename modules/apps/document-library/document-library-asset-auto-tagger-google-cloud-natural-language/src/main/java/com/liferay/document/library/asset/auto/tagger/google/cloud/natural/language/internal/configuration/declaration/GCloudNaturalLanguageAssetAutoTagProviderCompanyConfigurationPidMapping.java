@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,18 +25,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ConfigurationPidMapping.class)
 public class
-	GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfigurationPidMapping
+	GCloudNaturalLanguageAssetAutoTagProviderCompanyConfigurationPidMapping
 		implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class;
+		return GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+			class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.
-			SERVICE_NAME;
+		return GCloudNaturalLanguageAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 }

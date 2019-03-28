@@ -17,8 +17,8 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = FormNavigatorEntry.class)
 public class
-	GoogleCloudNaturalLanguageAssetAutoTagProviderCompanySettingsFormNavigatorEntry
+	GCloudNaturalLanguageAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 		extends BaseJSPFormNavigatorEntry<Company>
 		implements FormNavigatorEntry<Company> {
 
@@ -125,23 +125,23 @@ public class
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
 				_configurationProvider.getConfiguration(
-					GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
+					GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						themeDisplay.getCompanyId(),
-						GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.
+						GCloudNaturalLanguageAssetAutoTagProviderConstants.
 							SERVICE_NAME));
 
 		request.setAttribute(
-			GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				class.getName(),
-			googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration);
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class.
+				getName(),
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleCloudNaturalLanguageAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
+		GCloudNaturalLanguageAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
 
 	@Reference
 	private AssetAutoTaggerConfigurationFactory

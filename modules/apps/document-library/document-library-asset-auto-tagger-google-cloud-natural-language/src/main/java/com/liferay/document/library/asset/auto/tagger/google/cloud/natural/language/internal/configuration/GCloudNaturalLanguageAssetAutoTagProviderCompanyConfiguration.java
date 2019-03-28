@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
@@ -30,18 +30,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "google-cloud-natural-language-asset-auto-tag-provider-description",
-	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "google-cloud-natural-language-asset-auto-tag-provider-configuration-name"
 )
-public interface
-	GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration {
+public interface GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration {
 
 	/**
 	 * Sets the API key for the Google Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.API_KEY_DOCS_URL
+		descriptionArguments = GCloudNaturalLanguageAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false

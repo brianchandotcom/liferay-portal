@@ -39,7 +39,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Alicia García
  */
-public class GoogleCloudNaturalLanguageUtilTest {
+public class GCloudNaturalLanguageUtilTest {
 
 	@Before
 	public void setUp() {
@@ -71,10 +71,10 @@ public class GoogleCloudNaturalLanguageUtilTest {
 		);
 
 		Assert.assertEquals(
-			GoogleCloudNaturalLanguageUtil.getDocumentPayload(
+			GCloudNaturalLanguageUtil.getDocumentPayload(
 				randomString, StringPool.BLANK),
-			GoogleCloudNaturalLanguageUtil.getDocumentPayload(
-				GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.getDocumentPayload(
+				GCloudNaturalLanguageUtil.truncateToSize(
 					new String(
 						FileUtil.getBytes(
 							_fileVersion.getContentStream(false))),
@@ -86,13 +86,13 @@ public class GoogleCloudNaturalLanguageUtilTest {
 	public void testTruncateToSizeEmptyString() {
 		Assert.assertEquals(
 			StringPool.BLANK,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.truncateToSize(
 				StringPool.BLANK, RandomTestUtil.randomInt()));
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testTruncateToSizeNullString() {
-		GoogleCloudNaturalLanguageUtil.truncateToSize(
+		GCloudNaturalLanguageUtil.truncateToSize(
 			null, RandomTestUtil.randomInt());
 	}
 
@@ -103,7 +103,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 		String text = RandomTestUtil.randomString(size);
 
 		Assert.assertEquals(
-			text, GoogleCloudNaturalLanguageUtil.truncateToSize(text, size));
+			text, GCloudNaturalLanguageUtil.truncateToSize(text, size));
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.truncateToSize(
 				RandomTestUtil.randomString(size + 1), size));
 	}
 
@@ -123,7 +123,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 		String text = RandomTestUtil.randomString(size - 1);
 
 		Assert.assertEquals(
-			text, GoogleCloudNaturalLanguageUtil.truncateToSize(text, size));
+			text, GCloudNaturalLanguageUtil.truncateToSize(text, size));
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.truncateToSize(
 				RandomTestUtil.randomString(size + 1) + StringPool.SPACE +
 					RandomTestUtil.randomString(size + 1),
 				size));
@@ -148,7 +148,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 
 		Assert.assertEquals(
 			text,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.truncateToSize(
 				text + StringPool.SPACE + RandomTestUtil.randomString(size - 1),
 				text.length() + 1));
 	}
@@ -161,7 +161,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 
 		Assert.assertEquals(
 			text,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
+			GCloudNaturalLanguageUtil.truncateToSize(
 				text + StringPool.SPACE + text, size));
 	}
 
@@ -174,7 +174,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 				RandomTestUtil.randomString((size / 2) - 1);
 
 		Assert.assertEquals(
-			text, GoogleCloudNaturalLanguageUtil.truncateToSize(text, size));
+			text, GCloudNaturalLanguageUtil.truncateToSize(text, size));
 	}
 
 	@Test
@@ -184,8 +184,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 		byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
 
 		Assert.assertEquals(
-			text,
-			GoogleCloudNaturalLanguageUtil.truncateToSize(text, bytes.length));
+			text, GCloudNaturalLanguageUtil.truncateToSize(text, bytes.length));
 	}
 
 	@Test
@@ -196,8 +195,7 @@ public class GoogleCloudNaturalLanguageUtilTest {
 
 		Assert.assertEquals(
 			text.substring(0, text.lastIndexOf(CharPool.SPACE)),
-			GoogleCloudNaturalLanguageUtil.truncateToSize(
-				text, bytes.length - 1));
+			GCloudNaturalLanguageUtil.truncateToSize(text, bytes.length - 1));
 	}
 
 	private int _randomSize() {

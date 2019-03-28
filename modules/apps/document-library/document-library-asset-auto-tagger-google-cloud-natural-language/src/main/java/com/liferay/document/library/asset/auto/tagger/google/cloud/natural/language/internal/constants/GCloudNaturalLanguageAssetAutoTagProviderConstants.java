@@ -18,7 +18,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
  * @author Alicia García
  * @review
  */
-public class GoogleCloudNaturalLanguageAssetAutoTagProviderConstants {
+public class GCloudNaturalLanguageAssetAutoTagProviderConstants {
 
 	public static final String API_KEY_DOCS_URL =
 		"https://cloud.google.com/docs/authentication/api-keys";

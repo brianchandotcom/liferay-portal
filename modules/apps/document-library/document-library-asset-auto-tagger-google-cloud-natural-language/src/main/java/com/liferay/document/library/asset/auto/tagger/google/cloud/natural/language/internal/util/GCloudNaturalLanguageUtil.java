@@ -23,7 +23,7 @@ import java.util.Arrays;
 /**
  * @author Alicia García
  */
-public class GoogleCloudNaturalLanguageUtil {
+public class GCloudNaturalLanguageUtil {
 
 	public static String getDocumentPayload(String content, String type) {
 		return JSONUtil.put(

@@ -15,9 +15,9 @@
 package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.util.GoogleCloudNaturalLanguageUtil;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.util.GCloudNaturalLanguageUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
-public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
+public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
@@ -83,16 +83,15 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 		return predicate.negate();
 	}
 
-	private GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+	private GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(FileEntry fileEntry)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
-			GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				class,
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				fileEntry.getCompanyId(),
-				GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.
+				GCloudNaturalLanguageAssetAutoTagProviderConstants.
 					SERVICE_NAME));
 	}
 
@@ -143,13 +142,13 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		GoogleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
 				_getConfiguration(fileEntry);
 
-		if (!googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				classificationEndpointEnabled() &&
-			!googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+			!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				entityEndpointEnabled()) {
 
 			return Collections.emptyList();
@@ -158,29 +157,28 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 		Set<String> tagNames = new HashSet<>();
 
 		String apiKey =
-			googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				apiKey();
 
 		String type = _getFileEntryType(fileEntry);
 
 		int size =
-			GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.
+			GCloudNaturalLanguageAssetAutoTagProviderConstants.
 				MAX_CHARACTERS_SERVICE - _MINIMUM_PAYLOAD_SIZE - type.length();
 
-		String truncatedContent = GoogleCloudNaturalLanguageUtil.truncateToSize(
+		String truncatedContent = GCloudNaturalLanguageUtil.truncateToSize(
 			_getFileEntryContent(fileEntry), size);
 
-		String documentPayload =
-			GoogleCloudNaturalLanguageUtil.getDocumentPayload(
-				truncatedContent, type);
+		String documentPayload = GCloudNaturalLanguageUtil.getDocumentPayload(
+			truncatedContent, type);
 
-		if (googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				classificationEndpointEnabled()) {
 
 			JSONObject responseJSONObject = _post(
 				_getServiceURL(apiKey, "classifyText"), documentPayload);
 			float confidence =
-				googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					confidence();
 
 			_processTagNames(
@@ -189,13 +187,13 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 				tagNames::add);
 		}
 
-		if (googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				entityEndpointEnabled()) {
 
 			JSONObject responseJSONObject = _post(
 				_getServiceURL(apiKey, "analyzeEntities"), documentPayload);
 			float salience =
-				googleCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					salience();
 
 			_processTagNames(
@@ -275,7 +273,7 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 	private static final int _MINIMUM_PAYLOAD_SIZE;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider.class);
+		GCloudNaturalLanguageDocumentAssetAutoTagProvider.class);
 
 	private static final Set<String> _supportedContentTypes = new HashSet<>(
 		Arrays.asList(
@@ -288,7 +286,7 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 			ContentTypes.TEXT_PLAIN));
 
 	static {
-		String payload = GoogleCloudNaturalLanguageUtil.getDocumentPayload(
+		String payload = GCloudNaturalLanguageUtil.getDocumentPayload(
 			StringPool.BLANK, StringPool.BLANK);
 
 		_MINIMUM_PAYLOAD_SIZE = payload.length();

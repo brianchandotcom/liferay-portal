@@ -17,8 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
 /**
  * @author Alicia García
  */
-public class
-	PortalSettingsGoogleCloudNaturalLanguageAssetAutoTagProviderConstants {
+public class PortalSettingsGCloudNaturalLanguageAssetAutoTagProviderConstants {
 
 	public static final String FORM_PARAMETER_NAMESPACE =
 		"documentLibraryAssetAutoTaggerGoogleCloudNatualLanguage_";

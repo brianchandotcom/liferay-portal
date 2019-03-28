@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.portlet.action;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.PortalSettingsGoogleCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.PortalSettingsGCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class
-	GoogleCloudNaturalLanguageAssetAutoTagProviderPortalSettingsFormContributor
+	GCloudNaturalLanguageAssetAutoTagProviderPortalSettingsFormContributor
 		implements PortalSettingsFormContributor {
 
 	@Override
@@ -41,7 +41,8 @@ public class
 
 	@Override
 	public String getParameterNamespace() {
-		return PortalSettingsGoogleCloudNaturalLanguageAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE;
+		return PortalSettingsGCloudNaturalLanguageAssetAutoTagProviderConstants.
+			FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override
@@ -53,8 +54,7 @@ public class
 
 	@Override
 	public String getSettingsId() {
-		return GoogleCloudNaturalLanguageAssetAutoTagProviderConstants.
-			SERVICE_NAME;
+		return GCloudNaturalLanguageAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 	@Override

@@ -126,7 +126,10 @@ class FragmentsEditor extends Component {
 				}
 			);
 		}
-		else {
+		else if (event.target instanceof HTMLElement &&
+			event.target.parentElement !== document.body &&
+			!dom.closest(event.target, '.modal')) {
+
 			this.store.dispatchAction(
 				CLEAR_ACTIVE_ITEM
 			);

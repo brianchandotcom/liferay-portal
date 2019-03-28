@@ -102,6 +102,34 @@ public class DDMStructureLayoutServiceSoap {
 		}
 	}
 
+	public static
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayoutSoap[]
+				getStructureLayoutsSearch(
+					long companyId, long[] groupIds, long classNameId,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.dynamic.data.mapping.model.
+							DDMStructureLayout> orderByComparator)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+					returnValue =
+						DDMStructureLayoutServiceUtil.getStructureLayoutsSearch(
+							companyId, groupIds, classNameId, keywords, start,
+							end, orderByComparator);
+
+			return com.liferay.dynamic.data.mapping.model.
+				DDMStructureLayoutSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DDMStructureLayoutServiceSoap.class);
 

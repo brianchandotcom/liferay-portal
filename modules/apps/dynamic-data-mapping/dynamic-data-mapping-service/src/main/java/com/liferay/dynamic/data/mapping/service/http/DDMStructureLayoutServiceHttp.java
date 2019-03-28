@@ -126,6 +126,55 @@ public class DDMStructureLayoutServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+				getStructureLayoutsSearch(
+					HttpPrincipal httpPrincipal, long companyId,
+					long[] groupIds, long classNameId, String keywords,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.dynamic.data.mapping.model.
+							DDMStructureLayout> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DDMStructureLayoutServiceUtil.class,
+				"getStructureLayoutsSearch",
+				_getStructureLayoutsSearchParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, groupIds, classNameId, keywords, start,
+				end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DDMStructureLayoutServiceHttp.class);
 
@@ -133,5 +182,10 @@ public class DDMStructureLayoutServiceHttp {
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _getStructureLayoutsCountParameterTypes1 =
 		new Class[] {long.class};
+	private static final Class<?>[] _getStructureLayoutsSearchParameterTypes2 =
+		new Class[] {
+			long.class, long[].class, long.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 
 }

@@ -78,10 +78,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = nameMap.get(_portal.getLocale(actionRequest));
 
+		String segmentsEntryKey = ParamUtil.getString(
+			actionRequest, "segmentsEntryKey", name);
+
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
-		String key = ParamUtil.getString(actionRequest, "key", name);
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -104,14 +106,14 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (segmentsEntryId <= 0) {
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
-					nameMap, descriptionMap, active,
-					CriteriaSerializer.serialize(criteria), key,
+					segmentsEntryKey, nameMap, descriptionMap, active,
+					CriteriaSerializer.serialize(criteria),
 					SegmentsConstants.SOURCE_DEFAULT, type, serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(
-					segmentsEntryId, nameMap, descriptionMap, active,
-					CriteriaSerializer.serialize(criteria), key,
+					segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap,
+					active, CriteriaSerializer.serialize(criteria),
 					serviceContext);
 			}
 

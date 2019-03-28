@@ -162,9 +162,10 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 				serviceContext.setUserId(rs.getLong("userId"));
 
 				_segmentsEntryLocalService.addSegmentsEntry(
-					nameMap, descriptionMap, true, getCriteria(userSegmentId),
-					"ct_" + userSegmentId, SegmentsConstants.SOURCE_DEFAULT,
-					User.class.getName(), serviceContext);
+					"ct_" + userSegmentId, nameMap, descriptionMap, true,
+					getCriteria(userSegmentId),
+					SegmentsConstants.SOURCE_DEFAULT, User.class.getName(),
+					serviceContext);
 			}
 		}
 	}

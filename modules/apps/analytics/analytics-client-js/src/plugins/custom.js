@@ -95,14 +95,12 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
 function trackCustomAssetSubmitted(analytics) {
 	const onSubmit = event => {
 		const {target} = event;
-
 		const customAssetElement = getClosestAssetElement(target, 'custom');
 
 		if (
 			!isTrackableCustomAsset(customAssetElement) ||
 			(isTrackableCustomAsset(customAssetElement) &&
-				target.tagName !== 'FORM' &&
-				event.defaultPrevented)
+				(target.tagName !== 'FORM' || event.defaultPrevented))
 		) {
 			return;
 		}
@@ -114,9 +112,9 @@ function trackCustomAssetSubmitted(analytics) {
 		);
 	};
 
-	document.addEventListener('submit', onSubmit, true);
+	document.addEventListener('submit', onSubmit);
 
-	return () => document.removeEventListener('submit', onSubmit, true);
+	return () => document.removeEventListener('submit', onSubmit);
 }
 
 /**

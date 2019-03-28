@@ -176,28 +176,25 @@
 		}
 	}
 
-	function updateElement(formElement, action) {
-		for (var element of formElement) {
-			var domElement = "<portlet:namespace />" + element;
+	function updateElement(formElementIds, action) {
+		for (var formElementId of formElementIds) {
+			var formElement = document.getElementById("<portlet:namespace />" + formElementId);
 
-			var updateElement = document.getElementById(domElement);
-
-			if (updateElement) {
+			if (formElement) {
 				if (action == "enable") {
-					updateElement.removeAttribute("disabled");
+					formElement.removeAttribute("disabled");
 
-					updateElement.classList.remove("disabled");
+					formElement.classList.remove("disabled");
 				}
 				else if (action == "disable") {
-					updateElement.setAttribute("disabled", "true");
+					formElement.setAttribute("disabled", "true");
 				}
 				else if (action == "hide") {
-					updateElement.classList.add("hide");
+					formElement.classList.add("hide");
 				}
 				else if (action == "unhide") {
-					updateElement.classList.remove("hide");
+					formElement.classList.remove("hide");
 				}
-
 			}
 		}
 	}

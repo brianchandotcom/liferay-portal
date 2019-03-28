@@ -329,6 +329,13 @@ public interface DDMStructureLayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructureLayoutsCount(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructureLayout> getStructureLayoutsSearch(
+			long companyId, long[] groupIds, long classNameId, String keywords,
+			int start, int end,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws PortalException;
+
 	/**
 	 * Updates the ddm structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

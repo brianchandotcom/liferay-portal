@@ -65,7 +65,7 @@ class SidebarStructurePanel extends Component {
 						fragmentEntryLink
 					)
 				),
-				key: `column-${column.columnId}`,
+				key: `${FRAGMENTS_EDITOR_ITEM_TYPES.column}-${column.columnId}`,
 				label: Liferay.Language.get('column')
 			}
 		);
@@ -90,14 +90,14 @@ class SidebarStructurePanel extends Component {
 						{
 							elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 							elementType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
-							key: `editable-value-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
+							key: `${FRAGMENTS_EDITOR_ITEM_TYPES.editable}-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 							label: editableValueKey
 						}
 					)
 				),
 				elementId: fragmentEntryLink.fragmentEntryLinkId,
 				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-				key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
+				key: `${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}-${fragmentEntryLink.fragmentEntryLinkId}`,
 				label: fragmentEntryLink.name,
 				removable: true
 			}
@@ -123,7 +123,7 @@ class SidebarStructurePanel extends Component {
 				),
 				elementId: row.rowId,
 				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
-				key: `row-${row.rowId}`,
+				key: `${FRAGMENTS_EDITOR_ITEM_TYPES.section}-${row.rowId}`,
 				label: Liferay.Language.get('section'),
 				removable: true
 			}
@@ -172,6 +172,28 @@ class SidebarStructurePanel extends Component {
 	 */
 	prepareStateForRender(state) {
 		return SidebarStructurePanel._addStructureToState(state);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	syncActiveItemId() {
+		if (this.activeItemId && this.activeItemType) {
+			getItemPath(
+				this.activeItemId,
+				this.activeItemType,
+				this.layoutData.structure
+			).forEach(
+				activeItem => {
+					const key = `${activeItem.itemType}-${activeItem.itemId}`;
+
+					if (this._expandedNodes.indexOf(key) === -1) {
+						this._expandedNodes = [...this._expandedNodes, key];
+					}
+				}
+			);
+		}
 	}
 
 	/**

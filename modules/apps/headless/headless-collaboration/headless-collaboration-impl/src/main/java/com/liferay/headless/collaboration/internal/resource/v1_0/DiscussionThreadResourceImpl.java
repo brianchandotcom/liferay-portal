@@ -84,8 +84,8 @@ public class DiscussionThreadResourceImpl
 
 	@Override
 	public Page<DiscussionThread> getContentSpaceDiscussionThreadsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -96,6 +96,12 @@ public class DiscussionThreadResourceImpl
 				booleanFilter.add(
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
+
+				if (GetterUtil.getBoolean(tree)) {
+					booleanFilter.add(
+						new TermFilter(Field.CATEGORY_ID, "0"),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			filter, MBMessage.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -128,6 +134,7 @@ public class DiscussionThreadResourceImpl
 						"categoryId",
 						String.valueOf(mbCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
+
 				booleanFilter.add(
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);

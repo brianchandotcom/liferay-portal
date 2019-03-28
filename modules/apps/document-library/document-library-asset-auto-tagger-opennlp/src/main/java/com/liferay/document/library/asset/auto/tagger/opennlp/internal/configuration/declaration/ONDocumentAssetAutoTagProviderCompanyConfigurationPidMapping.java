@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.ONDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.ONDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(service = ConfigurationPidMapping.class)
-public class OpenNLPDocumentAssetAutoTagProviderCompanyConfigurationPidMapping
+public class ONDocumentAssetAutoTagProviderCompanyConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class;
+		return ONDocumentAssetAutoTagProviderCompanyConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME;
+		return ONDocumentAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 }

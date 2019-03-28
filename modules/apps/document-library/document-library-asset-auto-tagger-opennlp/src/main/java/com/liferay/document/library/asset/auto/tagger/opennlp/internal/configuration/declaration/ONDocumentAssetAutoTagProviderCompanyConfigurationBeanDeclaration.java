@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.ONDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,13 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class
-	OpenNLPDocumentAssetAutoTagProviderCompanyConfigurationBeanDeclaration
-		implements ConfigurationBeanDeclaration {
+public class ONDocumentAssetAutoTagProviderCompanyConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class;
+		return ONDocumentAssetAutoTagProviderCompanyConfiguration.class;
 	}
 
 }

@@ -17,7 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.constant
 /**
  * @author Cristina González
  */
-public class OpenNLPDocumentAssetAutoTagProviderConstants {
+public class ONDocumentAssetAutoTagProviderConstants {
 
 	public static final String SERVICE_NAME =
 		"com.liferay.document.library.asset.auto.tagger.opennlp";

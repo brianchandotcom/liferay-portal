@@ -54,7 +54,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class OpenNLPDocumentAssetAutoTagProviderTest {
+public class ONDocumentAssetAutoTagProviderTest {
 
 	@ClassRule
 	@Rule
@@ -319,11 +319,10 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 	private static final String _OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME =
 		"com.liferay.document.library.asset.auto.tagger.opennlp.internal." +
-			"configuration." +
-				"OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration";
+			"configuration.ONDocumentAssetAutoTagProviderCompanyConfiguration";
 
 	@Inject(
-		filter = "component.name=com.liferay.document.library.asset.auto.tagger.opennlp.internal.OpenNLPDocumentAssetAutoTagProvider"
+		filter = "component.name=com.liferay.document.library.asset.auto.tagger.opennlp.internal.ONDocumentAssetAutoTagProvider"
 	)
 	private AssetAutoTagProvider _assetAutoTagProvider;
 

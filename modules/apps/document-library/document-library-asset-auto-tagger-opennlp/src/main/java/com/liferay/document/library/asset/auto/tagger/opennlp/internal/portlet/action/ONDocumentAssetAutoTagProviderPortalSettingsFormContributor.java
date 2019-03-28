@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal.portlet.action;
 
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.ONDocumentAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.PortalSettingsONDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(immediate = true, service = PortalSettingsFormContributor.class)
-public class OpenNLPDocumentAssetAutoTagProviderPortalSettingsFormContributor
+public class ONDocumentAssetAutoTagProviderPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
@@ -40,7 +40,7 @@ public class OpenNLPDocumentAssetAutoTagProviderPortalSettingsFormContributor
 
 	@Override
 	public String getParameterNamespace() {
-		return PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants.
+		return PortalSettingsONDocumentAssetAutoTagProviderConstants.
 			FORM_PARAMETER_NAMESPACE;
 	}
 
@@ -52,7 +52,7 @@ public class OpenNLPDocumentAssetAutoTagProviderPortalSettingsFormContributor
 
 	@Override
 	public String getSettingsId() {
-		return OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME;
+		return ONDocumentAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 	@Override

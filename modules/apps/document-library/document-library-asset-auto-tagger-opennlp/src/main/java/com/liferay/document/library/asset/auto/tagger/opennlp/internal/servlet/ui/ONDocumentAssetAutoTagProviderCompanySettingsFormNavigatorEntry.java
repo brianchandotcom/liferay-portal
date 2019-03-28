@@ -17,7 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.servlet.
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.ONDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,10 +49,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(immediate = true, service = FormNavigatorEntry.class)
-public class
-	OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
-		extends BaseJSPFormNavigatorEntry<Company>
-		implements FormNavigatorEntry<Company> {
+public class ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Company>
+	implements FormNavigatorEntry<Company> {
 
 	@Override
 	public String getCategoryKey() {
@@ -70,44 +69,18 @@ public class
 		return "document-library-document-opennlp";
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
+
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale,
-			OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
+			ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
+				class);
 
 		return _language.get(
 			resourceBundle, "opennlp-auto-tag-provider-configuration-name");
-	}
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
-				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry =
-					_configurationProvider.getConfiguration(
-						OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class,
-						new CompanyServiceSettingsLocator(
-							themeDisplay.getCompanyId(),
-							OpenNLPDocumentAssetAutoTagProviderConstants.
-								SERVICE_NAME));
-
-			request.setAttribute(
-				OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class.
-					getName(),
-				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry);
-
-			super.include(request, response);
-		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
-		}
 	}
 
 	@Override
@@ -133,9 +106,35 @@ public class
 		return "/portal_settings/opennlp_auto_tag_provider.jsp";
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
-			class);
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
+				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry =
+					_configurationProvider.getConfiguration(
+						ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class,
+						new CompanyServiceSettingsLocator(
+							themeDisplay.getCompanyId(),
+							ONDocumentAssetAutoTagProviderConstants.
+								SERVICE_NAME));
+
+			request.setAttribute(
+				ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
+					class.getName(),
+				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry);
+
+			super.include(request, response);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+		}
+	}
 
 	@Reference
 	private AssetAutoTaggerConfigurationFactory

@@ -17,9 +17,9 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.constant
 /**
  * @author Cristina González
  */
-public class PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants {
+public class PortalSettingsONDocumentAssetAutoTagProviderConstants {
 
 	public static final String FORM_PARAMETER_NAMESPACE =
-		"documentLibraryAssetAutoTaggerOpenNLPDocument_";
+		"documentLibraryAssetAutoTaggerONDocument_";
 
 }

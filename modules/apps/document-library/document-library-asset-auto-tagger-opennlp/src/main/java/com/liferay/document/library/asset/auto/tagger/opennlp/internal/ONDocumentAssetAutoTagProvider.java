@@ -15,8 +15,8 @@
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.ONDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.ONDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
-public class OpenNLPDocumentAssetAutoTagProvider
+public class ONDocumentAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
@@ -96,15 +96,15 @@ public class OpenNLPDocumentAssetAutoTagProvider
 				bundle.getResource("META-INF/opennlp/en-ner-person.bin")));
 	}
 
-	private OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+	private ONDocumentAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(long companyId)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
-			OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class,
+			ONDocumentAssetAutoTagProviderCompanyConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId,
-				OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
+				ONDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
 	}
 
 	private String _getFileEntryContent(FileEntry fileEntry)
@@ -127,13 +127,11 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration =
+		ONDocumentAssetAutoTagProviderCompanyConfiguration
+			oNDocumentAssetAutoTagProviderCompanyConfiguration =
 				_getConfiguration(fileEntry.getCompanyId());
 
-		if (!openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
-				enabled()) {
-
+		if (!oNDocumentAssetAutoTagProviderCompanyConfiguration.enabled()) {
 			return Collections.emptyList();
 		}
 
@@ -143,7 +141,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
 
 		float confidenceThreshold =
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+			oNDocumentAssetAutoTagProviderCompanyConfiguration.
 				confidenceThreshold();
 
 		return Stream.of(
@@ -180,7 +178,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenNLPDocumentAssetAutoTagProvider.class);
+		ONDocumentAssetAutoTagProvider.class);
 
 	private static final Set<String> _supportedContentTypes = new HashSet<>(
 		Arrays.asList(

@@ -17,9 +17,6 @@
 		"metal-position": "^2.1.0",
 		"metal-state": "^2.13.2"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "site-navigation-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

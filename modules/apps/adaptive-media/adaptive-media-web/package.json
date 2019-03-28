@@ -7,9 +7,6 @@
 		"metal-events": "^2.6.4",
 		"metal-soy": "^2.7.0"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "adaptive-media-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

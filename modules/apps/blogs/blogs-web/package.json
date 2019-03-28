@@ -13,9 +13,6 @@
 	"dependencies": {
 		"metal-state": "^2.6.4"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "blogs-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

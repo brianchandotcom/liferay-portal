@@ -6,9 +6,6 @@
 		"metal-promise": "^2.0.1",
 		"metal-soy": "^2.13.2"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "frontend-image-editor-capability-saturation",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

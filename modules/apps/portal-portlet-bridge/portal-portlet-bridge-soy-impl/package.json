@@ -9,9 +9,6 @@
 		"metal-uri": "^2.3.0",
 		"senna": "^2.5.6"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "portal-portlet-bridge-soy-impl",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

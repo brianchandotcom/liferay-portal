@@ -18,9 +18,6 @@
 		"metal-soy": "^2.4.5",
 		"metal-state": "^2.6.4"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "journal-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bridge --bundler",

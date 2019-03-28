@@ -20,9 +20,6 @@
 		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "product-navigation-control-menu-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

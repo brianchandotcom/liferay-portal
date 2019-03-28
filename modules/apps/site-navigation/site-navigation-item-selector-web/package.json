@@ -5,9 +5,6 @@
 		"metal-soy": "^2.4.5",
 		"metal-state": "^2.6.4"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "site-navigation-item-selector-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

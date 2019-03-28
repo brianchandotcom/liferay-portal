@@ -3,9 +3,6 @@
 		"metal": "^2.4.7",
 		"metal-events": "^2.5.0"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "wiki-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

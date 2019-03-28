@@ -17,15 +17,9 @@ package com.liferay.data.engine.rest.internal.constants;
 /**
  * @author Jeyvison Nascimento
  */
-public class DataActionKeys {
+public class DataLayoutConstants {
 
-	public static final String ADD_DATA_DEFINITION = "ADD_DATA_DEFINITION";
-
-	public static final String ADD_DATA_LAYOUT = "ADD_DATA_LAYOUT";
-
-	public static final String ADD_DATA_RECORD_COLLECTION =
-		"ADD_DATA_RECORD_COLLECTION";
-
-	public static final String DEFINE_PERMISSIONS = "DEFINE_PERMISSIONS";
+	public static final String RESOURCE_NAME =
+		"com.liferay.data.engine.rest.internal.model.InternalDataLayout";
 
 }

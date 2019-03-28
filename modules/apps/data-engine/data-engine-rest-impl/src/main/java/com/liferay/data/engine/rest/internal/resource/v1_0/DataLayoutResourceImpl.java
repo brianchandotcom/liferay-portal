@@ -15,17 +15,23 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
+import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -46,6 +52,10 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Override
 	public void deleteDataLayout(Long dataLayoutId) throws Exception {
+		_modelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			ActionKeys.DELETE);
+
 		_ddmStructureLayoutLocalService.deleteDDMStructureLayout(dataLayoutId);
 	}
 
@@ -56,17 +66,21 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		return Page.of(
 			transform(
-				_ddmStructureLayoutService.getStructureLayouts(
+				_ddmStructureLayoutLocalService.getStructureLayouts(
 					contentSpaceId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				this::_toDataLayout),
 			pagination,
-			_ddmStructureLayoutService.getStructureLayoutsCount(
+			_ddmStructureLayoutLocalService.getStructureLayoutsCount(
 				contentSpaceId));
 	}
 
 	@Override
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
+		_modelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			ActionKeys.VIEW);
+
 		return _toDataLayout(
 			_ddmStructureLayoutLocalService.getDDMStructureLayout(
 				dataLayoutId));
@@ -81,8 +95,12 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			throw new Exception("Name is required");
 		}
 
-		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
+
+		DataEnginePermissionUtil.checkPermission(
+			DataActionKeys.ADD_DATA_LAYOUT, ddmStructure.getGroupId(),
+			_groupLocalService);
 
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.addStructureLayout(
@@ -106,6 +124,10 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			throw new Exception("Name is required");
 		}
 
+		_modelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			ActionKeys.UPDATE);
+
 		return _toDataLayout(
 			_ddmStructureLayoutLocalService.updateStructureLayout(
 				dataLayoutId,
@@ -114,6 +136,17 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 				LocalizedValueUtil.toLocalizationMap(
 					dataLayout.getDescription()),
 				DataLayoutUtil.toJSON(dataLayout), new ServiceContext()));
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataLayout)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<InternalDataRecordCollection>
+			modelResourcePermission) {
+
+		_modelResourcePermission = modelResourcePermission;
 	}
 
 	private long _getDDMStructureId(DDMStructureLayout ddmStructureLayout)
@@ -163,12 +196,15 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
-	private DDMStructureLayoutService _ddmStructureLayoutService;
-
-	@Reference
-	private DDMStructureService _ddmStructureService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private ModelResourcePermission<InternalDataRecordCollection>
+		_modelResourcePermission;
 
 }

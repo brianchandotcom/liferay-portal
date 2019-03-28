@@ -2207,10 +2207,6 @@ public abstract class BaseBuild implements Build {
 			new ArrayList<>();
 
 		for (StopWatchRecord stopWatchRecord : getStopWatchRecordsGroup()) {
-			if (stopWatchRecord.getDuration() == null) {
-				continue;
-			}
-
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
 				stopWatchRecord.getJenkinsReportTableRowElements());
 		}

@@ -16,18 +16,13 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
-
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -104,7 +99,12 @@ public class ProcessWorkflowMetricsIndexer
 		document.addKeyword(
 			"processId", kaleoDefinition.getKaleoDefinitionId());
 		document.addLocalizedKeyword(
-			"title", _populateTitleMap(kaleoDefinition), false, true);
+			"title",
+			LocalizationUtil.populateLocalizationMap(
+				kaleoDefinition.getTitleMap(),
+				kaleoDefinition.getDefaultLanguageId(),
+				kaleoDefinition.getGroupId()),
+			false, true);
 		document.addKeyword("userId", kaleoDefinition.getUserId());
 		document.addKeyword("version", kaleoDefinition.getVersion());
 
@@ -173,28 +173,6 @@ public class ProcessWorkflowMetricsIndexer
 		document.addKeyword("slaDefinitionId", 0);
 
 		return document;
-	}
-
-	private Map<Locale, String> _populateTitleMap(
-		KaleoDefinition kaleoDefinition) {
-
-		Map<Locale, String> titleMap = kaleoDefinition.getTitleMap();
-
-		String defaultValue = titleMap.get(
-			LocaleUtil.fromLanguageId(kaleoDefinition.getDefaultLanguageId()));
-
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(
-					kaleoDefinition.getGroupId())) {
-
-			if (!titleMap.containsKey(availableLocale) ||
-				Validator.isNull(titleMap.get(availableLocale))) {
-
-				titleMap.put(availableLocale, defaultValue);
-			}
-		}
-
-		return titleMap;
 	}
 
 	@Reference

@@ -150,7 +150,7 @@ function getItemPath(itemId, itemType, structure) {
 			const column = [].concat(
 				...structure.map(row => row.columns)
 			).find(
-				column => column.fragmentEntryLinkIds.indexOf(itemId)
+				column => column.fragmentEntryLinkIds.indexOf(itemId) !== -1
 			);
 
 			itemPath = [

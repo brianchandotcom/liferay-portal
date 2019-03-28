@@ -4535,7 +4535,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			indexingEnabled = serviceContext.isIndexingEnabled();
 		}
 
-		updateGroups(userId, newGroupIds, serviceContext, indexingEnabled);
+		updateGroups(userId, newGroupIds, indexingEnabled);
 	}
 
 	/**
@@ -5512,7 +5512,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		List<UserGroupRole> previousUserGroupRoles =
 			userGroupRolePersistence.findByUserId(userId);
 
-		updateGroups(userId, groupIds, serviceContext, false);
+		updateGroups(userId, groupIds, false);
 		updateOrganizations(userId, organizationIds, false);
 
 		// Roles
@@ -6710,8 +6710,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void updateGroups(
-			long userId, long[] newGroupIds, ServiceContext serviceContext,
-			boolean indexingEnabled)
+			long userId, long[] newGroupIds, boolean indexingEnabled)
 		throws PortalException {
 
 		Set<Long> oldGroupIds = SetUtil.fromArray(getGroupPrimaryKeys(userId));

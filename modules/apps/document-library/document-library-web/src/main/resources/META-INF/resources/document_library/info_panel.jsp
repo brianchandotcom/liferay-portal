@@ -79,7 +79,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				cssClass="navbar-no-collapse"
 				names="details"
 				refresh="<%= false %>"
-				type="tabs nav-tabs-default"
 			>
 				<liferay-ui:section>
 					<dl class="sidebar-block">
@@ -159,7 +158,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				cssClass="navbar-no-collapse"
 				names="details"
 				refresh="<%= false %>"
-				type="tabs nav-tabs-default"
 			>
 				<liferay-ui:section>
 
@@ -263,7 +261,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				cssClass="navbar-no-collapse"
 				names="details"
 				refresh="<%= false %>"
-				type="tabs nav-tabs-default"
 			>
 				<liferay-ui:section>
 					<h5>

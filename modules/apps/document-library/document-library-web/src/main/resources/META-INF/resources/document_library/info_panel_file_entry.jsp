@@ -70,7 +70,6 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 	cssClass="navbar-no-collapse"
 	names="<%= tabsNames %>"
 	refresh="<%= false %>"
-	type="tabs nav-tabs-default"
 >
 	<liferay-ui:section>
 

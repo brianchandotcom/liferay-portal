@@ -14,22 +14,25 @@
 
 package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.constants.AssetPublisherConstants;
-import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import javax.servlet.ServletContext;
-
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo García
  */
 @Component(
 	property = "form.navigator.entry.order:Integer=400",
@@ -39,45 +42,38 @@ public class AssetListScopeFormNavigatorEntry
 	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return AssetPublisherConstants.CATEGORY_KEY_ASSET_SELECTION;
-	}
-
-	@Override
 	public String getKey() {
-		return "scope";
+		return AssetListFormConstants.ENTRY_KEY_SCOPE;
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		if (!isManualSelection() && !isDynamicAssetSelection()) {
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		super.include(request, response);
+	}
+
+	@Override
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry == null) {
 			return false;
 		}
 
-		if (isManualSelection()) {
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
 			return true;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String rootPortletId = PortletIdCodec.decodePortletName(
-			portletDisplay.getPortletName());
-
-		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		target = "(osgi.web.symbolicname=com.liferay.asset.list.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -86,7 +82,10 @@ public class AssetListScopeFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/scope.jsp";
+		return "/asset_list/scope.jsp";
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

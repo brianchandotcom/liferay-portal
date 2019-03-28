@@ -33,6 +33,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
@@ -100,6 +101,15 @@ public class EditAssetListDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String encodeName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		DDMIndexer ddmIndexer = (DDMIndexer)_request.getAttribute(
+			AssetListWebKeys.DDM_INDEXER);
+
+		return ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
 	public AssetListEntry getAssetListEntry() {

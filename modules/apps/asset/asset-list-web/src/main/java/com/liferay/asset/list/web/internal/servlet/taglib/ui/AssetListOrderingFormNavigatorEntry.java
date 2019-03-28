@@ -14,24 +14,20 @@
 
 package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.constants.AssetPublisherConstants;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo García
  */
 @Component(
 	property = "form.navigator.entry.order:Integer=200",
@@ -41,46 +37,28 @@ public class AssetListOrderingFormNavigatorEntry
 	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return AssetPublisherConstants.CATEGORY_KEY_ASSET_SELECTION;
-	}
-
-	@Override
 	public String getKey() {
-		return "ordering";
+		return AssetListFormConstants.ENTRY_KEY_ORDERING;
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		if (!isDynamicAssetSelection()) {
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry == null) {
 			return false;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
-
-		AssetPublisherCustomizer assetPublisherCustomizer =
-			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
-				portlet.getRootPortletId());
-
-		if (assetPublisherCustomizer == null) {
 			return true;
 		}
 
-		return assetPublisherCustomizer.isOrderingAndGroupingEnabled(
-			serviceContext.getRequest());
+		return false;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		target = "(osgi.web.symbolicname=com.liferay.asset.list.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -89,11 +67,8 @@ public class AssetListOrderingFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/ordering.jsp";
+		return "/asset_list/ordering.jsp";
 	}
-
-	@Reference
-	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

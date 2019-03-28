@@ -14,16 +14,19 @@
 
 package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo García
  */
 @Component(
 	property = "form.navigator.entry.order:Integer=400",
@@ -33,18 +36,19 @@ public class AssetListFilterFormNavigatorEntry
 	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return AssetPublisherConstants.CATEGORY_KEY_ASSET_SELECTION;
-	}
-
-	@Override
 	public String getKey() {
-		return "filter";
+		return AssetListFormConstants.ENTRY_KEY_FILTER;
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		if (isDynamicAssetSelection()) {
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry == null) {
+			return false;
+		}
+
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
 			return true;
 		}
 
@@ -53,7 +57,7 @@ public class AssetListFilterFormNavigatorEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		target = "(osgi.web.symbolicname=com.liferay.asset.list.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -62,7 +66,7 @@ public class AssetListFilterFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/filter.jsp";
+		return "/asset_list/filter.jsp";
 	}
 
 }

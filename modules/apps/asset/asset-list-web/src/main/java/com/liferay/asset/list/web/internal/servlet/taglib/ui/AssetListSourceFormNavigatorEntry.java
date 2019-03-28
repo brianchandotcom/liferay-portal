@@ -14,16 +14,25 @@
 
 package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import javax.servlet.ServletContext;
-
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo García
  */
 @Component(
 	property = "form.navigator.entry.order:Integer=500",
@@ -33,23 +42,38 @@ public class AssetListSourceFormNavigatorEntry
 	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return AssetPublisherConstants.CATEGORY_KEY_ASSET_SELECTION;
-	}
-
-	@Override
 	public String getKey() {
-		return "source";
+		return AssetListFormConstants.ENTRY_KEY_SOURCE;
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		return isDynamicAssetSelection();
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
+
+		super.include(request, response);
+	}
+
+	@Override
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry == null) {
+			return false;
+		}
+
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		target = "(osgi.web.symbolicname=com.liferay.asset.list.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -58,7 +82,10 @@ public class AssetListSourceFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/source.jsp";
+		return "/asset_list/source.jsp";
 	}
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
 
 }

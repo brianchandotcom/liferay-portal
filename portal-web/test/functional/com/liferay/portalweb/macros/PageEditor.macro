@@ -55,14 +55,8 @@ definition {
 			key_id = "${id}"
 		);
 
-		AssertVisible(
+		Click(
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON"
-		);
-
-		DoubleClick(
-			locator1 = "Fragment#EDITABLE_FIELD",
-			key_fragmentName = "${fragmentName}",
-			key_id = "${id}"
 		);
 
 		Type(

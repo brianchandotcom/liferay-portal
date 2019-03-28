@@ -93,7 +93,7 @@ class FragmentsEditor extends Component {
 	_handleDocumentMouseOver(event) {
 		const {fragmentsEditorItemId, fragmentsEditorItemType} = FragmentsEditor._getItemTarget(event);
 
-		if (fragmentsEditorItemId && fragmentsEditorItemType) {
+		if (fragmentsEditorItemId && fragmentsEditorItemType && this.store) {
 			this.store.dispatchAction(
 				UPDATE_HOVERED_ITEM,
 				{
@@ -102,7 +102,7 @@ class FragmentsEditor extends Component {
 				}
 			);
 		}
-		else {
+		else if (this.store) {
 			this.store.dispatchAction(
 				CLEAR_HOVERED_ITEM
 			);

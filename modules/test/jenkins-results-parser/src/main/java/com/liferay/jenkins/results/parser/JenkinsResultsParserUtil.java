@@ -1775,49 +1775,16 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String redact(String string) {
-		if (_redactTokens == null) {
-			_redactTokens = new HashSet<>();
-
-			Properties properties = null;
-
-			try {
-				properties = getBuildProperties();
+		if (_redactTokens.isEmpty()) {
+			synchronized (_redactTokens) {
+				_initializeRedactTokens();
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to get build properties", ioe);
-			}
-
-			for (int i = 1; properties.containsKey(_getRedactTokenKey(i));
-				 i++) {
-
-				String key = _getRedactTokenKey(i);
-
-				String redactToken = getProperty(properties, key);
-
-				if (redactToken != null) {
-					if ((redactToken.length() < 5) &&
-						redactToken.matches("\\d+")) {
-
-						System.out.println(
-							combine(
-								"Ignoring ", key,
-								" because the value is numeric and ",
-								"less than 5 characters long."));
-					}
-					else {
-						if (!redactToken.isEmpty()) {
-							_redactTokens.add(redactToken);
-						}
-					}
-				}
-			}
-
-			_redactTokens.remove("test");
 		}
 
-		for (String redactToken : _redactTokens) {
-			string = string.replace(redactToken, "[REDACTED]");
+		synchronized (_redactTokens) {
+			for (String redactToken : _redactTokens) {
+				string = string.replace(redactToken, "[REDACTED]");
+			}
 		}
 
 		return string;
@@ -2808,6 +2775,42 @@ public class JenkinsResultsParserUtil {
 		return "github.message.redact.token[" + index + "]";
 	}
 
+	private static void _initializeRedactTokens() {
+		Properties properties = null;
+
+		try {
+			properties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		_redactTokens.clear();
+
+		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+			String key = _getRedactTokenKey(i);
+
+			String redactToken = getProperty(properties, key);
+
+			if (redactToken != null) {
+				if ((redactToken.length() < 5) && redactToken.matches("\\d+")) {
+					System.out.println(
+						combine(
+							"Ignoring ", key,
+							" because the value is numeric and ",
+							"less than 5 characters long."));
+				}
+				else {
+					if (!redactToken.isEmpty()) {
+						_redactTokens.add(redactToken);
+					}
+				}
+			}
+		}
+
+		_redactTokens.remove("test");
+	}
+
 	private static boolean _isJSONExpectedAndActualEqual(
 		Object expected, Object actual) {
 
@@ -2866,7 +2869,7 @@ public class JenkinsResultsParserUtil {
 	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
-	private static Set<String> _redactTokens;
+	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(

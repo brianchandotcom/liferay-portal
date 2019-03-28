@@ -10,8 +10,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		TestCase.enableMetal();
 	}
 
 	tearDown {
@@ -156,6 +154,7 @@ definition {
 		);
 	}
 
+<<<<<<< HEAD
 	@description = "This is a use case for LPS-71592."
 	@priority = "5"
 	test ConfigureCalculateRule {
@@ -332,6 +331,8 @@ definition {
 		FormPortlet.submitWithValidationError();
 	}
 
+=======
+>>>>>>> Removing the migrated tests from FormRules and Forms testcase files
 	@priority = "5"
 	test ConfigureShowRuleUsingAndCondition {
 		property portal.acceptance = "true";
@@ -585,160 +586,5 @@ definition {
 			fieldLabel = "Manager",
 			fieldValue = "Admin Comments"
 		);
-	}
-
-	@description = "This is a use case for LPS-71399."
-	@priority = "4"
-	test UseIsNotEmptyRuleToShowField {
-		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
-
-		Navigator.openURL();
-		
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Forms"
-		);
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.gotoAddField(fieldType = "Text Field");
-
-		Form.editFieldLabel(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(fieldType = "Date");
-
-		Form.editFieldLabel(fieldValue = "Date Field");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field",
-			conditionOperator = "Is not empty",
-			conditionRowNumber = "1"
-		);
-
-		FormRules.configureActionOptions(
-			action = "Show",
-			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
-
-		FormFields.viewDateFieldNotPresent(
-			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
-
-		FormFields.editText(fieldName = "TextField", fieldValue = "1");
-
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
-
-		FormFields.editText(fieldName = "TextField", fieldValue = "Test");
-
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
-
-		FormFields.editText(fieldName = "TextField", fieldValue = "%");
-
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
-
-		FormFields.editTextWithBackspace(fieldName = "TextField");
-
-		FormFields.viewDateFieldNotPresent(
-			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
-	}
-
-	@description = "This is a use case for LPS-75495."
-	@priority = "3"
-	test ViewShowRuleActivationAfterInputtingUnrelatedField {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Forms"
-		);
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName(formName = "Test Form");
-
-		Form.gotoAddField(fieldType = "Text Field");
-
-		Form.editFieldLabel(fieldValue = "Text Field 1");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(fieldType = "Text Field");
-
-		Form.editFieldLabel(fieldValue = "Text Field 2");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(fieldType = "Date");
-
-		Form.editFieldLabel(fieldValue = "Date Field");
-
-		FormFields.enableSwitcher(fieldName = "required");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field 1",
-			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
-
-		FormRules.configureActionOptions(
-			action = "Show",
-			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(fieldName = "TextField2", fieldValue = "testing");
-
-		FormFields.viewDateFieldNotPresent(
-			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
-
-		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
-
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
 	}
 }

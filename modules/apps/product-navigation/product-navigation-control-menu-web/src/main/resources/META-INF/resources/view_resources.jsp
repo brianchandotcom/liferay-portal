@@ -74,7 +74,7 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:icon
 			data="<%= data %>"
 			icon="cards2"
-			linkCssClass='<%= displayStyle.equals("icon") ? "display-style active" : "display-style" %>'
+			linkCssClass='<%= displayStyle.equals("icon") ? "display-style" : "display-style active" %>'
 			markupView="lexicon"
 			url="javascript:;"
 		/>
@@ -86,7 +86,7 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:icon
 			data="<%= data %>"
 			icon="list"
-			linkCssClass='<%= displayStyle.equals("descriptive") ? "display-style active" : "display-style" %>'
+			linkCssClass='<%= displayStyle.equals("descriptive") ? "display-style" : "display-style active" %>'
 			markupView="lexicon"
 			url="javascript:;"
 		/>

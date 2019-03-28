@@ -25,7 +25,6 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategor
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.DiscussionForumPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -251,7 +250,7 @@ public class DiscussionForumPostingResourceImpl
 				id = mbMessage.getMessageId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
-						KBArticle.class.getName(), mbMessage.getClassPK()),
+						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
 				numberOfDiscussionAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
@@ -262,7 +261,7 @@ public class DiscussionForumPostingResourceImpl
 				showAsAnswer = mbMessage.isAnswer();
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
-						MBMessage.class.getName(), mbMessage.getClassPK()),
+						MBMessage.class.getName(), mbMessage.getMessageId()),
 					TaxonomyCategoryUtil::toTaxonomyCategory,
 					TaxonomyCategory.class);
 

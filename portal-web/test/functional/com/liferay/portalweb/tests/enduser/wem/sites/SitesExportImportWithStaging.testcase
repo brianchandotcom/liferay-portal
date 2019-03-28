@@ -183,7 +183,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
-				pageType = "Display Pages"
+				pageType = Display Page Templates
 			);
 
 			PortletEntry.publish();

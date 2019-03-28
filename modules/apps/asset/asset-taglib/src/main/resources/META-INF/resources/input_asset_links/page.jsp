@@ -139,7 +139,8 @@
 							var assetEntryIds = event.newVal;
 
 							if (assetEntryIds) {
-								assetEntryIds.forEach(
+								Array.prototype.forEach.call(
+									assetEntryIds,
 									function(assetEntry) {
 										var entityId = assetEntry.entityid;
 

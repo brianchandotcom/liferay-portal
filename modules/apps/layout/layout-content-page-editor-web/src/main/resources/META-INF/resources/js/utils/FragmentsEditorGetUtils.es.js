@@ -306,6 +306,19 @@ function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 	return widgetPath;
 }
 
+/**
+ * @param {object} path
+ * @param {string} itemId
+ * @param {string} itemType
+ * @return {boolean} Item is in path
+ * @review
+ */
+function itemIsInPath(path, itemId, itemType) {
+	return path.some(
+		pathItem => pathItem.itemId === itemId && pathItem.itemType === itemType
+	);
+}
+
 export {
 	getColumn,
 	getDropSectionPosition,
@@ -317,5 +330,6 @@ export {
 	getSectionIndex,
 	getTargetBorder,
 	getWidget,
-	getWidgetPath
+	getWidgetPath,
+	itemIsInPath
 };

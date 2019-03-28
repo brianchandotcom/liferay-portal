@@ -85,23 +85,25 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
+<script>
+	(function() {
+		var Util = Liferay.Util;
 
-	var socialBookmarksTypes = document.querySelector('#<portlet:namespace />socialBookmarksTypes');
-	var currentTypes = document.querySelector('#<portlet:namespace />currentTypes');
+		var socialBookmarksTypes = document.getElementById('<portlet:namespace />socialBookmarksTypes');
+		var currentTypes = document.getElementById('<portlet:namespace />currentTypes');
 
-	Liferay.after(
-		'inputmoveboxes:moveItem',
-		function(event) {
-			socialBookmarksTypes.value = Util.listSelect(currentTypes);
-		}
-	);
+		Liferay.after(
+			'inputmoveboxes:moveItem',
+			function(event) {
+				socialBookmarksTypes.value = Util.listSelect(currentTypes);
+			}
+		);
 
-	Liferay.after(
-		'inputmoveboxes:orderItem',
-		function(event) {
-			socialBookmarksTypes.value = Util.listSelect(currentTypes);
-		}
-	);
-</aui:script>
+		Liferay.after(
+			'inputmoveboxes:orderItem',
+			function(event) {
+				socialBookmarksTypes.value = Util.listSelect(currentTypes);
+			}
+		);
+	})();
+</script>

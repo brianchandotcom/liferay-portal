@@ -4291,15 +4291,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		reindex(userIds);
 	}
 
-	/**
-	 * Removes the user from the organizations.
-	 *
-	 * @param userId the primary key of the user
-	 * @param organizationIds the primary keys of the organizations
-	 */
-	@Override
-	public void unsetUserOrganizations(
-			final long userId, long[] organizationIds)
+	protected void unsetUserOrganizations(long userId, long[] organizationIds)
 		throws PortalException {
 
 		long[] groupIds = new long[organizationIds.length];

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -34,8 +33,6 @@ import java.io.Reader;
 
 import java.net.URL;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -60,16 +57,28 @@ public class SampleSQLBuilderTest {
 	public void testFreemarkerTemplateContent() throws Exception {
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource(
-			"/com/liferay/portal/tools/sample/sql/builder/dependencies/sample" +
-				".ftl");
+		try (Reader reader = new InputStreamReader(
+				clazz.getResourceAsStream(
+					"/com/liferay/portal/tools/sample/sql/builder" +
+						"/dependencies/sample.ftl"))) {
 
-		String fileContent = new String(
-			Files.readAllBytes(Paths.get(url.toURI())), StringPool.UTF8);
+			char[] buffer = new char[1024];
 
-		Assert.assertTrue(
-			"sample.ftl must end with " + _SAMPLE_FTL_END,
-			fileContent.endsWith(_SAMPLE_FTL_END));
+			int result = -1;
+
+			UnsyncCharArrayWriter unsyncCharArrayWriter =
+				new UnsyncCharArrayWriter();
+
+			while ((result = reader.read(buffer)) != -1) {
+				unsyncCharArrayWriter.write(buffer, 0, result);
+			}
+
+			String fileContent = unsyncCharArrayWriter.toString();
+
+			Assert.assertTrue(
+				"sample.ftl must end with " + _SAMPLE_FTL_END,
+				fileContent.endsWith(_SAMPLE_FTL_END));
+		}
 	}
 
 	@Test

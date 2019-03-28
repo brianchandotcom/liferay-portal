@@ -19,6 +19,7 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -34,14 +35,19 @@ public class IndexExecutor {
 	public <T extends Throwable> void execute(
 		UnsafeRunnable<T> unsafeRunnable) {
 
-		_noticeableExecutorService.submit(
+		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				try {
-					unsafeRunnable.run();
-				}
-				catch (Throwable t) {
-					_log.error(t, t);
-				}
+				_noticeableExecutorService.submit(
+					() -> {
+						try {
+							unsafeRunnable.run();
+						}
+						catch (Throwable t) {
+							_log.error(t, t);
+						}
+					});
+
+				return null;
 			});
 	}
 

@@ -34,6 +34,36 @@ import java.util.Arrays;
  */
 public class ResourceConfigurationFactory {
 
+	public static V1Pod newMySQLPodConfiguration(String baseName, String image)
+		throws UnknownHostException {
+
+		V1Pod podConfiguration = new V1Pod();
+
+		String name = getSystemSimpleHostName() + "-" + baseName;
+
+		podConfiguration.setMetadata(createMetaData(name));
+
+		V1Container container = createContainer(baseName, image);
+
+		container.setEnv(
+			new ArrayList<>(
+				Arrays.asList(
+					createEnvVar("MYSQL_ROOT_PASSWORD", "password"))));
+
+		container.setPorts(
+			new ArrayList<>(
+				Arrays.asList(createContainerPort(baseName, 3306))));
+
+		V1PodSpec podSpec = createPodSpec(container);
+
+		podSpec.setVolumes(
+			new ArrayList<>(Arrays.asList(createEmptyDirVolume(baseName))));
+
+		podConfiguration.setSpec(podSpec);
+
+		return podConfiguration;
+	}
+
 	protected static V1Container createContainer(String name, String image) {
 		V1Container v1Container = new V1Container();
 

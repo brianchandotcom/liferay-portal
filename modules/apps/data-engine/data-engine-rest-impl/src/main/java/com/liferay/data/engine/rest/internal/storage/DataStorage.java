@@ -23,7 +23,7 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -35,11 +35,11 @@ public class DataStorage {
 	public DataStorage(
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMContentLocalService ddmContentLocalService,
-		DDMStructureService ddmStructureService) {
+		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmContentLocalService = ddmContentLocalService;
-		_ddmStructureService = ddmStructureService;
+		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	public long delete(long dataStorageId) throws Exception {
@@ -61,7 +61,7 @@ public class DataStorage {
 
 		return DataRecordValueUtil.toDataRecordValues(
 			DataDefinitionUtil.toDataDefinition(
-				_ddmStructureService.getStructure(dataDefinitionId)),
+				_ddmStructureLocalService.getStructure(dataDefinitionId)),
 			ddmContent.getData());
 	}
 
@@ -76,7 +76,7 @@ public class DataStorage {
 			DataRecord.class.getName(), null,
 			DataRecordValueUtil.toJSON(
 				DataDefinitionUtil.toDataDefinition(
-					_ddmStructureService.getStructure(
+					_ddmStructureLocalService.getStructure(
 						dataRecordCollection.getDataDefinitionId())),
 				dataRecord.getDataRecordValues()),
 			new ServiceContext() {
@@ -91,6 +91,6 @@ public class DataStorage {
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMContentLocalService _ddmContentLocalService;
-	private final DDMStructureService _ddmStructureService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 
 }

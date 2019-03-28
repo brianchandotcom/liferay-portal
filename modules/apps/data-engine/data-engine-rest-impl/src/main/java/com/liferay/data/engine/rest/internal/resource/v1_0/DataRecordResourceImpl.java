@@ -36,7 +36,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,7 +76,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		_dataStorage = new DataStorage(
 			_ddlRecordSetLocalService, _ddmContentLocalService,
-			_ddmStructureService);
+			_ddmStructureLocalService);
 	}
 
 	@Override
@@ -127,6 +127,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 			dataRecordCollectionId);
 
+		dataRecord.setDataRecordCollectionId(dataRecordCollectionId);
+
 		_validate(
 			DataDefinitionUtil.toDataDefinition(ddlRecordSet.getDDMStructure()),
 			dataRecord);
@@ -145,6 +147,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDLRecord ddlRecord = _ddlRecordService.getRecord(dataRecordId);
 
 		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		dataRecord.setDataRecordCollectionId(ddlRecordSet.getRecordSetId());
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
@@ -300,7 +304,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
 	@Reference
-	private DDMStructureService _ddmStructureService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private Portal _portal;

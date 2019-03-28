@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -82,7 +83,7 @@ public class DataRecordCollectionResourceImpl
 			Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception {
 
-		if (keywords == null) {
+		if (Validator.isNull(keywords)) {
 			return Page.of(
 				transform(
 					_ddlRecordSetLocalService.getRecordSets(
@@ -118,7 +119,7 @@ public class DataRecordCollectionResourceImpl
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		if (keywords == null) {
+		if (Validator.isNull(keywords)) {
 			return Page.of(
 				transform(
 					_ddlRecordSetLocalService.getRecordSets(
@@ -244,7 +245,7 @@ public class DataRecordCollectionResourceImpl
 		return DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-				dataRecordCollection.getDataDefinitionId(), null,
+				dataDefinitionId, null,
 				LocalizedValueUtil.toLocalizationMap(
 					dataRecordCollection.getName()),
 				LocalizedValueUtil.toLocalizationMap(

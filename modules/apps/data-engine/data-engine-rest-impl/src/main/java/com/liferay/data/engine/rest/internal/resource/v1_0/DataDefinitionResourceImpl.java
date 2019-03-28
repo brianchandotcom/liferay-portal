@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -79,7 +80,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception {
 
-		if (keywords == null) {
+		if (Validator.isNull(keywords)) {
 			return Page.of(
 				transform(
 					_ddmStructureService.getStructures(

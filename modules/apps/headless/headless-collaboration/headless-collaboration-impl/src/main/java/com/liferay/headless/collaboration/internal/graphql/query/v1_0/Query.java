@@ -392,6 +392,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<DiscussionSection> getContentSpaceDiscussionSectionsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("tree") Boolean tree,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -404,7 +405,7 @@ public class Query {
 				Page paginationPage =
 					discussionSectionResource.
 						getContentSpaceDiscussionSectionsPage(
-							contentSpaceId, filter,
+							contentSpaceId, tree, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

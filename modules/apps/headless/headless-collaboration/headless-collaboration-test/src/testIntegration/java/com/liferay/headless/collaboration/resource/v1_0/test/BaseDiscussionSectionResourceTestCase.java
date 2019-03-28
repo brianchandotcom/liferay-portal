@@ -126,7 +126,8 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 			Page<DiscussionSection> page =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+					irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -146,7 +147,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		Page<DiscussionSection> page =
 			invokeGetContentSpaceDiscussionSectionsPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -192,7 +193,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionSection> page =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", discussionSection1),
 					Pagination.of(1, 2), null);
 
@@ -228,7 +229,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionSection> page =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", discussionSection1),
 					Pagination.of(1, 2), null);
 
@@ -259,7 +260,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		Page<DiscussionSection> page1 =
 			invokeGetContentSpaceDiscussionSectionsPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<DiscussionSection> discussionSections1 =
 			(List<DiscussionSection>)page1.getItems();
@@ -269,7 +270,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		Page<DiscussionSection> page2 =
 			invokeGetContentSpaceDiscussionSectionsPage(
-				contentSpaceId, null, Pagination.of(2, 2), null);
+				contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -326,7 +327,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionSection> ascPage =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -335,7 +336,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 			Page<DiscussionSection> descPage =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -379,7 +380,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionSection> ascPage =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -388,7 +389,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 			Page<DiscussionSection> descPage =
 				invokeGetContentSpaceDiscussionSectionsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -421,8 +422,8 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 	protected Page<DiscussionSection>
 			invokeGetContentSpaceDiscussionSectionsPage(
-				Long contentSpaceId, String filterString, Pagination pagination,
-				String sortString)
+				Long contentSpaceId, Boolean tree, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -457,8 +458,8 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceDiscussionSectionsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, Boolean tree, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

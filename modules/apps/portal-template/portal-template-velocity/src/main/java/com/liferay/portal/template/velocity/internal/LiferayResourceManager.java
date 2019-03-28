@@ -15,15 +15,11 @@
 package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 
 import java.io.IOException;
@@ -129,15 +125,9 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			(TemplateResourceLoader)extendedProperties.get(
 				VelocityTemplateResourceLoader.class.getName());
 
-		SingleVMPool singleVMPool = (SingleVMPool)runtimeServices.getProperty(
-			PortalCacheManagerNames.SINGLE_VM);
-
 		_portalCache =
-			(PortalCache<TemplateResource, Template>)
-				singleVMPool.getPortalCache(
-					StringBundler.concat(
-						TemplateResource.class.getName(), StringPool.POUND,
-						TemplateConstants.LANG_TYPE_VM));
+			(PortalCache<TemplateResource, Template>)extendedProperties.get(
+				"liferay." + VelocityEngine.RESOURCE_LOADER + "portal.cache");
 
 		_portalCache.removeAll();
 

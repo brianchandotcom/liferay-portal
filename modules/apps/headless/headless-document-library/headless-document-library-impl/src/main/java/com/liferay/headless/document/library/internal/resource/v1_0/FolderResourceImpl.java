@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.document.library.internal.dto.v1_0.util.FolderUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.FolderEntityModel;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -187,22 +187,8 @@ public class FolderResourceImpl
 			com.liferay.portal.kernel.repository.model.Folder folder)
 		throws Exception {
 
-		return new Folder() {
-			{
-				contentSpaceId = folder.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(folder.getUserId()));
-				dateCreated = folder.getCreateDate();
-				dateModified = folder.getModifiedDate();
-				description = folder.getDescription();
-				id = folder.getFolderId();
-				name = folder.getName();
-				numberOfDocuments = _dlAppService.getFileEntriesCount(
-					folder.getRepositoryId(), folder.getFolderId());
-				numberOfFolders = _dlAppService.getFoldersCount(
-					folder.getRepositoryId(), folder.getFolderId());
-			}
-		};
+		return FolderUtil.toFolder(
+			folder, _dlAppService, _portal, _userLocalService);
 	}
 
 	private Folder _updateFolder(Long folderId, String name, String description)

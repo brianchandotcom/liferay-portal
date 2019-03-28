@@ -16,7 +16,6 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.blogs.model.BlogsEntry;
@@ -25,9 +24,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
-import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.BlogPostingUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -196,26 +192,6 @@ public class BlogPostingResourceImpl
 		blogPosting.setNumberOfComments((Number)null);
 	}
 
-	private Image _getImage(BlogsEntry blogsEntry) throws Exception {
-		long coverImageFileEntryId = blogsEntry.getCoverImageFileEntryId();
-
-		if (coverImageFileEntryId == 0) {
-			return null;
-		}
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(coverImageFileEntryId);
-
-		return new Image() {
-			{
-				caption = blogsEntry.getCoverImageCaption();
-				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
-				imageId = coverImageFileEntryId;
-			}
-		};
-	}
-
 	private ImageSelector _getImageSelector(Long imageId) {
 		if ((imageId == null) || (imageId == 0)) {
 			return new ImageSelector();
@@ -236,43 +212,10 @@ public class BlogPostingResourceImpl
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
-		return new BlogPosting() {
-			{
-				alternativeHeadline = blogsEntry.getSubtitle();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
-				articleBody = blogsEntry.getContent();
-				contentSpaceId = blogsEntry.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
-				dateCreated = blogsEntry.getCreateDate();
-				dateModified = blogsEntry.getModifiedDate();
-				datePublished = blogsEntry.getDisplayDate();
-				description = blogsEntry.getDescription();
-				encodingFormat = "text/html";
-				friendlyUrlPath = blogsEntry.getUrlTitle();
-				headline = blogsEntry.getTitle();
-				id = blogsEntry.getEntryId();
-				image = _getImage(blogsEntry);
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfComments = _commentManager.getCommentsCount(
-					BlogsEntry.class.getName(), blogsEntry.getEntryId());
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-			}
-		};
+		return BlogPostingUtil.toBlogPosting(
+			_assetCategoryLocalService, _assetTagLocalService, blogsEntry,
+			_commentManager, _dlAppService, _dlURLHelper, _portal,
+			_ratingsStatsLocalService, _userLocalService);
 	}
 
 	private static final EntityModel _entityModel =

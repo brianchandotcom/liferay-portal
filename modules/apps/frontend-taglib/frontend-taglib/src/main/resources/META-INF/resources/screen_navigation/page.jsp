@@ -65,7 +65,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 			<div class="<%= navCssClass %>">
 				<nav class="<%= menubarCssClass %>">
 					<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
-						<liferay-ui:message key="<%= selectedScreenNavigationEntry.getEntryKey() %>" />
+						<%= selectedScreenNavigationEntry.getLabel(locale) %>
 
 						<aui:icon image="caret-bottom" markupView="lexicon" />
 					</a>

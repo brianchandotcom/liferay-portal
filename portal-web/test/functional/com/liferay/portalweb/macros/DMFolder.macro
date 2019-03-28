@@ -405,8 +405,6 @@ definition {
 
 		MenuItem.click(menuItem = "Move");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
-
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
 		var key_dmFolderName = "${dmFolderName1}";
@@ -417,13 +415,6 @@ definition {
 		);
 
 		SelectFrame(locator1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaEditDocument#FOLDER",
-			value1 = "${dmFolderName1}"
-		);
-
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
 
 		Alert.viewSuccessMessage();
 

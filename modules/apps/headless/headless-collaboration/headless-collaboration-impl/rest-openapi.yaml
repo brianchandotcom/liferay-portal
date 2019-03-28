@@ -168,6 +168,8 @@ components:
         DiscussionForumPosting:
             description: https://www.schema.org/DiscussionForumPosting
             properties:
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
                 anonymous:
                     type: boolean
                 articleBody:
@@ -257,6 +259,8 @@ components:
         DiscussionThread:
             description: https://www.schema.org/DiscussionThread
             properties:
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
                 articleBody:
                     type: string
                 contentSpaceId:
@@ -906,6 +910,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:

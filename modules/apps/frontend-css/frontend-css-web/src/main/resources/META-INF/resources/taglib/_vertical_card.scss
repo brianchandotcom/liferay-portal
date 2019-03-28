@@ -39,16 +39,12 @@
 		width: 80px;
 	}
 
-	.icon-vertical-card-image, .user-vertical-card-initials {
+	.icon-vertical-card-image {
 		left: 50%;
 		position: absolute;
 		top: 50%;
 
 		@include transform(translate(-50%, -50%));
-	}
-
-	.user-vertical-card-initials {
-		font-family: inherit;
 	}
 }
 

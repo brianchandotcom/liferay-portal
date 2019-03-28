@@ -31,7 +31,6 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, "x-is-the-owner", owner.getFullName()) %>">
 			<liferay-ui:user-portrait
-				cssClass="sticker-lg"
 				user="<%= owner %>"
 			/>
 		</div>
@@ -56,7 +55,6 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 				<div class="autofit-col">
 					<div class="lfr-portal-tooltip" data-title="<%= sharingEntryToUser.getFullName() %>">
 						<liferay-ui:user-portrait
-							cssClass="sticker-lg"
 							user="<%= sharingEntryToUser %>"
 						/>
 					</div>

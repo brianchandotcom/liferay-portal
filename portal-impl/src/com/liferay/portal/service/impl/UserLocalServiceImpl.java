@@ -173,7 +173,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.internet.InternetAddress;
@@ -4118,8 +4117,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetGroupUsers(
-			final long groupId, final long[] userIds,
-			ServiceContext serviceContext)
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
@@ -4131,10 +4129,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		reindex(userIds);
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
 				Message message = new Message();
 
 				message.put("groupId", groupId);
@@ -4144,11 +4140,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
 
 				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+			});
 	}
 
 	/**
@@ -4158,8 +4150,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param userIds the primary keys of the users
 	 */
 	@Override
-	public void unsetOrganizationUsers(
-			long organizationId, final long[] userIds)
+	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
@@ -4174,10 +4165,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		reindex(userIds);
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
 				Message message = new Message();
 
 				message.put("groupId", group.getGroupId());
@@ -4187,11 +4176,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
 
 				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+			});
 	}
 
 	/**
@@ -4333,10 +4318,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		reindex(userId);
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
 				Message message = new Message();
 
 				message.put("groupIds", groupIds);
@@ -4346,11 +4329,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					DestinationNames.USER_SUBSCRIPTION_CLEAN_UP, message);
 
 				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+			});
 	}
 
 	/**

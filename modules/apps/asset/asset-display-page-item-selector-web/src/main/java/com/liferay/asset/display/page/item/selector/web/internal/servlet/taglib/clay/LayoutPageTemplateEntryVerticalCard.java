@@ -57,7 +57,8 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public String getElementClasses() {
-		return "layout-page-template-entry";
+		return "card-interactive card-interactive-secondary " +
+			"layout-page-template-entry";
 	}
 
 	@Override

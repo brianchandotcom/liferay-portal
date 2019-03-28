@@ -39,6 +39,11 @@ public class AssetRendererVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getElementClasses() {
+		return "card-interactive card-interactive-secondary";
+	}
+
+	@Override
 	public String getIcon() {
 		try {
 			return _assetRenderer.getIconCssClass();

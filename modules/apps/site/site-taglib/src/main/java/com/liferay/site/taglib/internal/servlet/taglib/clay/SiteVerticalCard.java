@@ -73,7 +73,7 @@ public class SiteVerticalCard implements VerticalCard {
 			return "text-muted";
 		}
 
-		return "selector-button";
+		return "card-interactive card-interactive-secondary selector-button";
 	}
 
 	@Override

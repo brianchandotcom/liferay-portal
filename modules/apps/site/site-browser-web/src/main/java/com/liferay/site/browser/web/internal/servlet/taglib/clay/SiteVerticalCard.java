@@ -78,7 +78,8 @@ public class SiteVerticalCard implements VerticalCard {
 	@Override
 	public String getElementClasses() {
 		if (_siteBrowserDisplayContext.isShowLink(_group)) {
-			return "selector-button";
+			return "card-interactive card-interactive-secondary " +
+				"selector-button";
 		}
 
 		return null;

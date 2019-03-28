@@ -50,6 +50,11 @@ public class SiteVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getElementClasses() {
+		return "card-interactive card-interactive-secondary";
+	}
+
+	@Override
 	public String getHref() {
 		return _groupURLProvider.getGroupURL(_group, _liferayPortletRequest);
 	}

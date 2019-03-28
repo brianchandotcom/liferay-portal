@@ -244,7 +244,7 @@ public class DataRecordCollectionResourceImpl
 		return DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-				dataRecordCollection.getDataDefinitionId(), null,
+				dataDefinitionId, null,
 				LocalizedValueUtil.toLocalizationMap(
 					dataRecordCollection.getName()),
 				LocalizedValueUtil.toLocalizationMap(

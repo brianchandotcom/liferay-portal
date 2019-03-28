@@ -92,13 +92,13 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 				"Unable to find Velocity template with ID " + resourceName);
 		}
 
-		Object object = _portalCache.get(templateResource);
+		Template template = _portalCache.get(templateResource);
 
-		if ((object != null) && (object instanceof Template)) {
-			return (Template)object;
+		if (template != null) {
+			return template;
 		}
 
-		Template template = _createTemplate(templateResource);
+		template = _createTemplate(templateResource);
 
 		if (_resourceModificationCheckInterval != 0) {
 			_portalCache.put(templateResource, template);
@@ -133,10 +133,11 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			PortalCacheManagerNames.SINGLE_VM);
 
 		_portalCache =
-			(PortalCache<TemplateResource, Object>)singleVMPool.getPortalCache(
-				StringBundler.concat(
-					TemplateResource.class.getName(), StringPool.POUND,
-					TemplateConstants.LANG_TYPE_VM));
+			(PortalCache<TemplateResource, Template>)
+				singleVMPool.getPortalCache(
+					StringBundler.concat(
+						TemplateResource.class.getName(), StringPool.POUND,
+						TemplateConstants.LANG_TYPE_VM));
 
 		_portalCache.removeAll();
 
@@ -158,7 +159,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private PortalCache<TemplateResource, Object> _portalCache;
+	private PortalCache<TemplateResource, Template> _portalCache;
 	private int _resourceModificationCheckInterval = 60;
 	private TemplateResourceLoader _templateResourceLoader;
 

@@ -61,8 +61,8 @@ public class LiferayTemplateCache extends TemplateCache {
 		);
 
 		_portalCache =
-			(PortalCache<TemplateResource, Object>)singleVMPool.getPortalCache(
-				portalCacheName);
+			(PortalCache<TemplateResource, MaybeMissingTemplate>)
+				singleVMPool.getPortalCache(portalCacheName);
 
 		_constructor = MaybeMissingTemplate.class.getDeclaredConstructor(
 			Template.class);
@@ -116,10 +116,11 @@ public class LiferayTemplateCache extends TemplateCache {
 				"Unable to find FreeMarker template with ID " + templateId);
 		}
 
-		Object object = _portalCache.get(templateResource);
+		MaybeMissingTemplate maybeMissingTemplate = _portalCache.get(
+			templateResource);
 
-		if ((object != null) && (object instanceof MaybeMissingTemplate)) {
-			return (MaybeMissingTemplate)object;
+		if (maybeMissingTemplate != null) {
+			return maybeMissingTemplate;
 		}
 
 		Template template = new Template(
@@ -127,8 +128,7 @@ public class LiferayTemplateCache extends TemplateCache {
 			_configuration);
 
 		try {
-			MaybeMissingTemplate maybeMissingTemplate =
-				_constructor.newInstance(template);
+			maybeMissingTemplate = _constructor.newInstance(template);
 
 			if (_freeMarkerEngineConfiguration.resourceModificationCheck() !=
 					0) {
@@ -146,7 +146,8 @@ public class LiferayTemplateCache extends TemplateCache {
 	private final Configuration _configuration;
 	private final Constructor<MaybeMissingTemplate> _constructor;
 	private final FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
-	private final PortalCache<TemplateResource, Object> _portalCache;
+	private final PortalCache<TemplateResource, MaybeMissingTemplate>
+		_portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;
 
 }

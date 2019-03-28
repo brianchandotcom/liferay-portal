@@ -64,9 +64,8 @@ public class LiferayTemplateCache extends TemplateCache {
 			(PortalCache<TemplateResource, Object>)singleVMPool.getPortalCache(
 				portalCacheName);
 
-		_constructor =
-			TemplateCache.MaybeMissingTemplate.class.getDeclaredConstructor(
-				Template.class);
+		_constructor = MaybeMissingTemplate.class.getDeclaredConstructor(
+			Template.class);
 
 		_constructor.setAccessible(true);
 	}
@@ -77,7 +76,7 @@ public class LiferayTemplateCache extends TemplateCache {
 	}
 
 	@Override
-	public TemplateCache.MaybeMissingTemplate getTemplate(
+	public MaybeMissingTemplate getTemplate(
 			String templateId, Locale locale, Object customLookupCondition,
 			String encoding, boolean parse)
 		throws IOException {
@@ -119,10 +118,8 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		Object object = _portalCache.get(templateResource);
 
-		if ((object != null) &&
-			(object instanceof TemplateCache.MaybeMissingTemplate)) {
-
-			return (TemplateCache.MaybeMissingTemplate)object;
+		if ((object != null) && (object instanceof MaybeMissingTemplate)) {
+			return (MaybeMissingTemplate)object;
 		}
 
 		Template template = new Template(
@@ -130,7 +127,7 @@ public class LiferayTemplateCache extends TemplateCache {
 			_configuration);
 
 		try {
-			TemplateCache.MaybeMissingTemplate maybeMissingTemplate =
+			MaybeMissingTemplate maybeMissingTemplate =
 				_constructor.newInstance(template);
 
 			if (_freeMarkerEngineConfiguration.resourceModificationCheck() !=
@@ -147,7 +144,7 @@ public class LiferayTemplateCache extends TemplateCache {
 	}
 
 	private final Configuration _configuration;
-	private final Constructor<TemplateCache.MaybeMissingTemplate> _constructor;
+	private final Constructor<MaybeMissingTemplate> _constructor;
 	private final FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;

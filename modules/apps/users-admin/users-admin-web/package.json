@@ -1,23 +1,17 @@
 {
-	"babel": {
-		"presets": [
-			"env"
-		]
-	},
 	"dependencies": {
-		"metal-dom": "^2.6.4",
-		"metal-events": "^2.6.4",
+		"metal-dom": "^2.16.7",
+		"metal-events": "^2.16.7",
 		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
-		"liferay-jest-junit-reporter": "1.0.1",
-		"liferay-npm-bundler": "2.7.0"
+		"liferay-npm-scripts": "1.4.9"
 	},
 	"name": "users-admin-web",
 	"scripts": {
-		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
+		"build": "liferay-npm-scripts build --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "4.0.0"
 }

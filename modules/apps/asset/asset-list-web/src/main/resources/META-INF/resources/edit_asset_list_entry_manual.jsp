@@ -176,7 +176,8 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 									if (selectedItems) {
 										var assetEntryIds = [];
 
-										selectedItems.forEach(
+										Array.prototype.forEach.call(
+											selectedItems,
 											function(assetEntry) {
 												assetEntryIds.push(assetEntry.entityid);
 											}

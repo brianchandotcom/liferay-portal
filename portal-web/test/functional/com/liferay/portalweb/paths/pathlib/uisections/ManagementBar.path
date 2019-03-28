@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVBAR_TEXT</td>
+	<td>//nav[contains(@class,'management-bar')]//span[contains(@class,'navbar-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_ICON_GENERIC</td>
 	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order') and contains(@class,'active')]</td>
 	<td></td>

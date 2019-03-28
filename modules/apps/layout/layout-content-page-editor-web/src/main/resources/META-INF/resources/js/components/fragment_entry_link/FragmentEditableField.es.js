@@ -137,13 +137,13 @@ class FragmentEditableField extends PortletBase {
 
 		let nextState = state;
 
-		const fragmentEntryLinkEditableId = `${this.fragmentEntryLinkId}-${this.editableId}`;
+		const itemId = this._getItemId();
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
 		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
-		nextState = setIn(nextState, ['fragmentEntryLinkEditableId'], fragmentEntryLinkEditableId);
+		nextState = setIn(nextState, ['itemId'], itemId);
 		nextState = setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
 
 		return nextState;
@@ -154,7 +154,7 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	rendered() {
-		if ((`${this.fragmentEntryLinkId}-${this.editableId}` === this.activeItemId) &&
+		if ((this._getItemId() === this.activeItemId) &&
 			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable)) {
 
 			this._createFloatingToolbar();
@@ -191,7 +191,7 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	syncFragmentEditorClear(newVal) {
-		if (newVal === this.editableId) {
+		if (newVal === this._getItemId()) {
 			this._handleEditableChanged('');
 
 			this.store.dispatchAction(
@@ -209,7 +209,7 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	syncFragmentEditorEnabled(newVal) {
-		if (newVal === this.editableId) {
+		if (newVal === this._getItemId()) {
 			this._enableEditor();
 
 			this._disposeFloatingToolbar();
@@ -245,11 +245,12 @@ class FragmentEditableField extends PortletBase {
 				buttonClicked: this._handleFloatingToolbarButtonClicked
 			},
 			item: {
+				editableId: this.editableId,
 				editableValues: this.editableValues,
 				fragmentEntryLinkId: this.fragmentEntryLinkId,
 				type: this.type
 			},
-			itemId: this.editableId,
+			itemId: this._getItemId(),
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
 			portalElement: document.body,
 			store: this.store
@@ -306,6 +307,16 @@ class FragmentEditableField extends PortletBase {
 		);
 
 		this._editing = true;
+	}
+
+	/**
+	 * @private
+	 * @return {string} Valid FragmentsEditor itemId for it's
+	 * 	fragmentEntryLinkId and editableId
+	 * @review
+	 */
+	_getItemId() {
+		return `${this.fragmentEntryLinkId}-${this.editableId}`;
 	}
 
 	/**
@@ -408,7 +419,7 @@ class FragmentEditableField extends PortletBase {
 			this.store.dispatchAction(
 				ENABLE_FRAGMENT_EDITOR,
 				{
-					itemId: this.editableId
+					itemId: this._getItemId()
 				}
 			);
 		}

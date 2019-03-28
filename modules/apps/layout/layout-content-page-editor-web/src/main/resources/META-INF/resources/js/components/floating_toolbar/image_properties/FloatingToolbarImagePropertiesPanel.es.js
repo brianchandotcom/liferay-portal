@@ -30,7 +30,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
-					editableId: this.itemId,
+					editableId: this.item.editableId,
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId
 				}
 			)

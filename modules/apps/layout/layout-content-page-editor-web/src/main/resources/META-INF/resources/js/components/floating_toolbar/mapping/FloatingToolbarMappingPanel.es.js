@@ -317,7 +317,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			.dispatchAction(
 				UPDATE_EDITABLE_VALUE,
 				{
-					editableId: this.itemId,
+					editableId: this.item.editableId,
 					editableValue: value,
 					editableValueId: key,
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId

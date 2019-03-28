@@ -121,7 +121,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										<div class="autofit-padded-no-gutters autofit-row">
 											<div class="autofit-col lfr-discussion-details">
 												<liferay-ui:user-portrait
-													cssClass="sticker-lg"
 													user="<%= user %>"
 												/>
 											</div>

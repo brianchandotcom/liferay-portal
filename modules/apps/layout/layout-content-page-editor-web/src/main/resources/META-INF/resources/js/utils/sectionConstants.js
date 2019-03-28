@@ -25,6 +25,11 @@ export const CONFIG_KEYS = {
 };
 
 /**
+ * Default padding size
+ */
+const DEFAULT_PADDING_SIZE = '3';
+
+/**
  * Max section columns
  */
 export const MAX_COLUMNS = 12;
@@ -98,6 +103,6 @@ export const PADDING_OPTIONS = [
  */
 export const DEFAULT_CONFIG = {
 	[CONFIG_KEYS.columnSpacing]: true,
-	[CONFIG_KEYS.paddingHorizontal]: PADDING_OPTIONS[1].paddingSize,
-	[CONFIG_KEYS.paddingVertical]: PADDING_OPTIONS[1].paddingSize
+	[CONFIG_KEYS.paddingHorizontal]: DEFAULT_PADDING_SIZE,
+	[CONFIG_KEYS.paddingVertical]: DEFAULT_PADDING_SIZE
 };

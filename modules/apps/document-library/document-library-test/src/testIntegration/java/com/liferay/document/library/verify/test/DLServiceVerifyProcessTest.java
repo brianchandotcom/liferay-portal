@@ -76,6 +76,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,6 +104,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteMismatchCompanyIdDLFileEntryMetadatas()
 		throws Exception {

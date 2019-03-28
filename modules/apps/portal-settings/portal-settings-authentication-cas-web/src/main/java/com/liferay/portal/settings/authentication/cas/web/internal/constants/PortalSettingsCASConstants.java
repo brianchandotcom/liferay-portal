@@ -19,6 +19,12 @@ package com.liferay.portal.settings.authentication.cas.web.internal.constants;
  */
 public class PortalSettingsCASConstants {
 
+	public static final String DELETE_MVC_ACTION_COMMAND_NAME =
+		"/portal_settings/cas_delete";
+
 	public static final String FORM_PARAMETER_NAMESPACE = "cas_";
+
+	public static final String SAVE_MVC_ACTION_COMMAND_NAME =
+		"/portal_settings/cas";
 
 }

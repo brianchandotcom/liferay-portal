@@ -37,7 +37,8 @@ public class CASPortalSettingsFormContributor
 
 	@Override
 	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/cas_delete");
+		return Optional.of(
+			PortalSettingsCASConstants.DELETE_MVC_ACTION_COMMAND_NAME);
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class CASPortalSettingsFormContributor
 
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/cas");
+		return Optional.of(
+			PortalSettingsCASConstants.SAVE_MVC_ACTION_COMMAND_NAME);
 	}
 
 	@Override

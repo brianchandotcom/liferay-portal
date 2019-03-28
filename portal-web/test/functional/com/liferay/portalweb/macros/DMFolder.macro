@@ -140,8 +140,8 @@ definition {
 
 		AssertClick.assertTextClickAt(
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Subfolder",
-			key_menuItem = "Subfolder"
+			value1 = "Folder",
+			key_menuItem = "Folder"
 		);
 
 		Pause(locator1 = "1000");

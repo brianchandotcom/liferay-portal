@@ -208,7 +208,9 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.node") {
 			afterEvaluate {
 				tasks.withType(ExecuteNpmTask) {
-					scriptFile = new File(rootDir, "yarn-1.13.0.js")
+					if (npmInstall.packageLockJsonFile == null) {
+						scriptFile = new File(rootDir, "yarn-1.13.0.js")
+					}
 				}
 
 				tasks.withType(NpmRunTask) {

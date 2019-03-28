@@ -315,36 +315,12 @@
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param key: string}
-	{@param dropTargetBorder: ?}
-	{@param dropTargetItemId: ?}
-	{@param dropTargetItemType: ?}
 	{@param mappingFieldsURL: ?}
 	{@param name: string}
 	{@param selectedMappingTypes: ?}
 	{@param store: ?}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
-	{@param? dropTargetItemTypes: ?}
-
-	{let $styleModifier kind="text"}
-		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
-			{sp}{$dropTargetBorder}
-		{/if}
-
-		{if $activeItemId == $fragmentEntryLinkId and $activeItemType == $dropTargetItemTypes.fragment}
-			{sp}fragments-editor__topper-wrapper--active
-			{sp}fragment-entry-link-wrapper--active
-		{/if}
-
-		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}
-			{sp}fragments-editor__topper-wrapper--hovered
-			{sp}fragment-entry-link-wrapper--hovered
-		{/if}
-	{/let}
 
 	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
 		{param content: $content /}
@@ -360,7 +336,6 @@
 		{param ref: $key /}
 		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 		{param store: $store /}
-		{param styleModifier: $styleModifier /}
 	{/call}
 {/template}
 

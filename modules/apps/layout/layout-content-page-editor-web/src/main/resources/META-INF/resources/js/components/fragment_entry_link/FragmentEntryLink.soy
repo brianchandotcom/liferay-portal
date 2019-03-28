@@ -5,13 +5,21 @@
  */
 {template .render}
 	{@param fragmentEntryLinkId: string}
+	{@param? _fragmentsEditorItemTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? content: ?}
 	{@param? defaultEditorConfigurations: ?}
 	{@param? defaultLanguageId: ?}
 	{@param? defaultSegmentsExperienceId: string}
+	{@param? dropTargetBorder: ?}
+	{@param? dropTargetItemId: ?}
+	{@param? dropTargetItemType: ?}
 	{@param? editableValues: ?}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? imageSelectorURL: ?}
 	{@param? languageId: string}
 	{@param? name: string}
@@ -21,7 +29,6 @@
 	{@param? showMapping: bool}
 	{@param? spritemap: string}
 	{@param? store: ?}
-	{@param? styleModifier: string}
 
 	{let $wrapperClasses kind="text"}
 		fragments-editor__drag-source
@@ -33,8 +40,18 @@
 		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__topper-wrapper
 
-		{if $styleModifier}
-			{sp}{$styleModifier}
+		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $_fragmentsEditorItemTypes.fragment}
+			{sp}{$dropTargetBorder}
+		{/if}
+
+		{if $activeItemId == $fragmentEntryLinkId and $activeItemType == $_fragmentsEditorItemTypes.fragment}
+			{sp}fragments-editor__topper-wrapper--active
+			{sp}fragment-entry-link-wrapper--active
+		{/if}
+
+		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $_fragmentsEditorItemTypes.fragment}
+			{sp}fragments-editor__topper-wrapper--hovered
+			{sp}fragment-entry-link-wrapper--hovered
 		{/if}
 	{/let}
 

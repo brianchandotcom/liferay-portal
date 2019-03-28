@@ -18,6 +18,20 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		return setIn(
+			state,
+			['_fragmentsEditorItemTypes'],
+			FRAGMENTS_EDITOR_ITEM_TYPES
+		);
+	}
+
+	/**
+	 * @inheritdoc
 	 * @return {boolean}
 	 * @review
 	 */
@@ -123,6 +137,11 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 		'activeItemId',
 		'activeItemType',
 		'defaultLanguageId',
+		'dropTargetItemId',
+		'dropTargetItemType',
+		'dropTargetBorder',
+		'hoveredItemId',
+		'hoveredItemType',
 		'imageSelectorURL',
 		'languageId',
 		'portletNamespace',

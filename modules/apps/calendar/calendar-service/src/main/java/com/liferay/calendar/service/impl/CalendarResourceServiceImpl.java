@@ -15,15 +15,13 @@
 package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
-import com.liferay.calendar.constants.CalendarConstants;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -31,11 +29,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = {
+		"json.web.service.context.name=calendar",
+		"json.web.service.context.path=CalendarResource"
+	},
+	service = AopService.class
+)
 public class CalendarResourceServiceImpl
 	extends CalendarResourceServiceBaseImpl {
 
@@ -151,16 +159,13 @@ public class CalendarResourceServiceImpl
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<CalendarResource>
-		_calendarResourceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CalendarResourceServiceImpl.class,
-				"_calendarResourceModelResourcePermission",
-				CalendarResource.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CalendarResourceServiceImpl.class, "_portletResourcePermission",
-				CalendarConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.CalendarResource)"
+	)
+	private ModelResourcePermission<CalendarResource>
+		_calendarResourceModelResourcePermission;
+
+	@Reference(target = "(resource.name=com.liferay.calendar)")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

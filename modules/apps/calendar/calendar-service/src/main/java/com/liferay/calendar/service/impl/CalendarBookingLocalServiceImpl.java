@@ -46,6 +46,7 @@ import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -86,7 +87,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -105,12 +105,19 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  * @author Marcellus Tavares
  * @author Pier Paolo Ramon
  */
+@Component(
+	property = "model.class.name=com.liferay.calendar.model.CalendarBooking",
+	service = AopService.class
+)
 public class CalendarBookingLocalServiceImpl
 	extends CalendarBookingLocalServiceBaseImpl {
 
@@ -2416,19 +2423,19 @@ public class CalendarBookingLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = MBMessageLocalService.class)
+	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
 
-	@ServiceReference(type = RecurrenceSplitter.class)
+	@Reference
 	protected RecurrenceSplitter recurrenceSplitter;
 
-	@ServiceReference(type = SubscriptionLocalService.class)
+	@Reference
 	protected SubscriptionLocalService subscriptionLocalService;
 
-	@ServiceReference(type = SystemEventLocalService.class)
+	@Reference
 	protected SystemEventLocalService systemEventLocalService;
 
-	@ServiceReference(type = TrashEntryLocalService.class)
+	@Reference
 	protected TrashEntryLocalService trashEntryLocalService;
 
 	private User _getDefaultSenderUser(Calendar calendar) throws Exception {

@@ -24,6 +24,7 @@ import com.liferay.calendar.service.base.CalendarResourceLocalServiceBaseImpl;
 import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -43,6 +44,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
@@ -50,6 +53,10 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = "model.class.name=com.liferay.calendar.model.CalendarResource",
+	service = AopService.class
+)
 public class CalendarResourceLocalServiceImpl
 	extends CalendarResourceLocalServiceBaseImpl {
 

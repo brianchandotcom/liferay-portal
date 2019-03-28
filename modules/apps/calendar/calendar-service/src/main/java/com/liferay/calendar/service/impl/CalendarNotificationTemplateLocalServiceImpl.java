@@ -19,6 +19,7 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.base.CalendarNotificationTemplateLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -28,10 +29,16 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adam Brandizzi
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate",
+	service = AopService.class
+)
 public class CalendarNotificationTemplateLocalServiceImpl
 	extends CalendarNotificationTemplateLocalServiceBaseImpl {
 

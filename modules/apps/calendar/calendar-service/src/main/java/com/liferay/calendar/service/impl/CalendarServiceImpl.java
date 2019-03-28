@@ -18,11 +18,11 @@ import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,11 +32,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = {
+		"json.web.service.context.name=calendar",
+		"json.web.service.context.path=Calendar"
+	},
+	service = AopService.class
+)
 public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 	@Override
@@ -327,16 +337,15 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 		return calendars;
 	}
 
-	private static volatile ModelResourcePermission<Calendar>
-		_calendarModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CalendarServiceImpl.class, "_calendarModelResourcePermission",
-				Calendar.class);
-	private static volatile ModelResourcePermission<CalendarResource>
-		_calendarResourceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CalendarServiceImpl.class,
-				"_calendarResourceModelResourcePermission",
-				CalendarResource.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
+	)
+	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.CalendarResource)"
+	)
+	private ModelResourcePermission<CalendarResource>
+		_calendarResourceModelResourcePermission;
 
 }

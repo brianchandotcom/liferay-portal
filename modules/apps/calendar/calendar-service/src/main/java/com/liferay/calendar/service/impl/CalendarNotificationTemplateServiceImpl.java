@@ -19,15 +19,25 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.base.CalendarNotificationTemplateServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = {
+		"json.web.service.context.name=calendar",
+		"json.web.service.context.path=CalendarNotificationTemplate"
+	},
+	service = AopService.class
+)
 public class CalendarNotificationTemplateServiceImpl
 	extends CalendarNotificationTemplateServiceBaseImpl {
 
@@ -70,10 +80,9 @@ public class CalendarNotificationTemplateServiceImpl
 				subject, body, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<Calendar>
-		_calendarModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CalendarNotificationTemplateServiceImpl.class,
-				"_calendarModelResourcePermission", Calendar.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
+	)
+	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
 
 }

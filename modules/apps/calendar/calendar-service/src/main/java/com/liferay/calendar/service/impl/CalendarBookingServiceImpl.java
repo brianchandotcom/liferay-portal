@@ -24,6 +24,7 @@ import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -31,17 +32,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
 import com.liferay.rss.model.SyndEntry;
@@ -62,12 +61,22 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  * @author Bruno Basto
  * @author Pier Paolo Ramon
  */
+@Component(
+	property = {
+		"json.web.service.context.name=calendar",
+		"json.web.service.context.path=CalendarBooking"
+	},
+	service = AopService.class
+)
 public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 	@Override
@@ -369,7 +378,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		return exportToRSS(
 			calendar.getName(themeDisplay.getLocale()),
 			calendar.getDescription(themeDisplay.getLocale()), type, version,
-			displayStyle, PortalUtil.getLayoutFullURL(themeDisplay),
+			displayStyle, _portal.getLayoutFullURL(themeDisplay),
 			calendarBookings, themeDisplay);
 	}
 
@@ -910,7 +919,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		for (CalendarBooking calendarBooking : calendarBookings) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = PortalUtil.getUserName(calendarBooking);
+			String author = _portal.getUserName(calendarBooking);
 
 			syndEntry.setAuthor(author);
 
@@ -1073,16 +1082,18 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingServiceImpl.class);
 
-	private static volatile ModelResourcePermission<Calendar>
-		_calendarModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CalendarBookingServiceImpl.class,
-				"_calendarModelResourcePermission", Calendar.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
+	)
+	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
 
-	@ServiceReference(type = RSSExporter.class)
+	@Reference
+	private Portal _portal;
+
+	@Reference
 	private RSSExporter _rssExporter;
 
-	@ServiceReference(type = SyndModelFactory.class)
+	@Reference
 	private SyndModelFactory _syndModelFactory;
 
 }

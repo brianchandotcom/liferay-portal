@@ -22,6 +22,7 @@ import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,11 +45,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = "model.class.name=com.liferay.calendar.model.Calendar",
+	service = AopService.class
+)
 public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)

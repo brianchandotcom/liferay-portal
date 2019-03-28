@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="sheet sheet-lg">
+<div class="sheet sheet-lg" id="<portlet:namespace/>connectedApps">
 	<div class="sheet-header">
 		<h2 class="sheet-title">
 			<liferay-ui:message key="apps" />
@@ -58,7 +58,20 @@
 					</div>
 
 					<div class="autofit-col">
-						<input class="btn btn-secondary btn-sm" onclick="document.querySelector('[name=<portlet:namespace/>connectedAppKey]').setAttribute('value', '<%= connectedApp.getKey() %>')" type="submit" value="<%= LanguageUtil.get(resourceBundle, "revoke") %>" />
+
+						<%
+						Map<String, String> data = new HashMap<>();
+
+						data.put("key", connectedApp.getKey());
+						%>
+
+						<clay:button
+							data="<%= data %>"
+							label='<%= LanguageUtil.get(resourceBundle, "revoke") %>'
+							size="sm"
+							style="secondary"
+							type="submit"
+						/>
 					</div>
 				</div>
 
@@ -74,3 +87,16 @@
 		</aui:form>
 	</div>
 </div>
+
+<aui:script require="metal-dom/src/dom as dom">
+	var connectedAppKeyInput = document.querySelector('[name=<portlet:namespace/>connectedAppKey]');
+
+	dom.delegate(
+		document.getElementById('<portlet:namespace/>connectedApps'),
+		'click',
+		'[data-key]',
+		function(event) {
+			connectedAppKeyInput.setAttribute('value', event.target.dataset.key);
+		}
+	);
+</aui:script>

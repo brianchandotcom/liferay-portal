@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ONDocumentAssetAutoTagProviderCompanyConfiguration
-	oNDocumentAssetAutoTagProviderCompanyConfiguration = (ONDocumentAssetAutoTagProviderCompanyConfiguration)request.getAttribute(ONDocumentAssetAutoTagProviderCompanyConfiguration.class.getName());
+ONDocumentAssetAutoTagProviderCompanyConfiguration oNDocumentAssetAutoTagProviderCompanyConfiguration = (ONDocumentAssetAutoTagProviderCompanyConfiguration)request.getAttribute(ONDocumentAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/document_library_asset_auto_tagger_opennlp" />

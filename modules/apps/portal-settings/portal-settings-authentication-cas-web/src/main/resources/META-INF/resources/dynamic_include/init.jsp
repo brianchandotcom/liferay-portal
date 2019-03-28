@@ -25,12 +25,9 @@ page import="com.liferay.portal.kernel.module.configuration.ConfigurationProvide
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.security.sso.cas.configuration.CASConfiguration" %><%@
 page import="com.liferay.portal.security.sso.cas.constants.CASConstants" %><%@
 page import="com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants" %>
-
-<%@ page import="javax.portlet.ActionRequest" %>
 
 <liferay-theme:defineObjects />
 

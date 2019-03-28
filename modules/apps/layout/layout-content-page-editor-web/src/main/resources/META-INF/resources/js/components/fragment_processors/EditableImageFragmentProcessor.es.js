@@ -69,17 +69,19 @@ function init(
 	const {imageSelectorURL} = options;
 
 	openImageSelector(
-		imageSelectorURL,
-		portletNamespace,
-		url => {
-			_handleImageEditorChange(
-				url,
-				editableElement,
-				fragmentEntryLinkId,
-				changedCallback
-			);
-		},
-		destroyedCallback
+		{
+			callback: url => {
+				_handleImageEditorChange(
+					url,
+					editableElement,
+					fragmentEntryLinkId,
+					changedCallback
+				);
+			},
+			destroyedCallback,
+			imageSelectorURL,
+			portletNamespace
+		}
 	);
 }
 

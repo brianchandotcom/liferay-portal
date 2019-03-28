@@ -8,13 +8,22 @@ const IMAGE_SELECTOR_RETURN_TYPES = {
 };
 
 /**
- * @param {string} assetBrowserURL
- * @param {string} modalTitle
- * @param {string} portletNamespace
- * @param {function} callback
- * @param {function} [destroyedCallback=null]
+ * @param {object} options
+ * @param {function} options.callback
+ * @param {string} options.assetBrowserURL
+ * @param {string} options.modalTitle
+ * @param {string} options.portletNamespace
+ * @param {function} [options.destroyedCallback=null]
  */
-function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callback, destroyedCallback = null) {
+function openAssetBrowser(
+	{
+		assetBrowserURL,
+		callback,
+		modalTitle,
+		portletNamespace,
+		destroyedCallback = null
+	}
+) {
 	Liferay.Util.selectEntity(
 		{
 			dialog: {
@@ -44,12 +53,20 @@ function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callbac
 }
 
 /**
- * @param {string} imageSelectorURL
- * @param {string} portletNamespace
- * @param {function} callback
- * @param {function} [destroyedCallback=null]
+ * @param {object} options
+ * @param {function} options.callback
+ * @param {string} options.imageSelectorURL
+ * @param {string} options.portletNamespace
+ * @param {function} [options.destroyedCallback=null]
  */
-function openImageSelector(imageSelectorURL, portletNamespace, callback, destroyedCallback = null) {
+function openImageSelector(
+	{
+		callback,
+		imageSelectorURL,
+		portletNamespace,
+		destroyedCallback = null
+	}
+) {
 	AUI().use(
 		'liferay-item-selector-dialog',
 		A => {

@@ -20,9 +20,11 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 	 */
 	_handleSelectButtonClick() {
 		openImageSelector(
-			this.imageSelectorURL,
-			this.portletNamespace,
-			url => this._updateSectionBackgroundImage(url)
+			{
+				callback: url => this._updateSectionBackgroundImage(url),
+				imageSelectorURL: this.imageSelectorURL,
+				portletNamespace: this.portletNamespace
+			}
 		);
 	}
 

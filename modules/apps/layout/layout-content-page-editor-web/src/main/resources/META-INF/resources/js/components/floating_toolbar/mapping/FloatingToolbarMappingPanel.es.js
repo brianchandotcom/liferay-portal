@@ -162,22 +162,24 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		const {assetBrowserUrl, assetBrowserWindowTitle} = event.delegateTarget.dataset;
 
 		openAssetBrowser(
-			assetBrowserUrl,
-			assetBrowserWindowTitle,
-			this.portletNamespace,
-			selectedAssetEntry => {
-				this._selectAssetEntry(selectedAssetEntry);
+			{
+				assetBrowserURL: assetBrowserUrl,
+				callback: selectedAssetEntry => {
+					this._selectAssetEntry(selectedAssetEntry);
 
-				this.store.dispatchAction(
-					ADD_MAPPED_ASSET_ENTRY,
-					selectedAssetEntry
-				);
+					this.store.dispatchAction(
+						ADD_MAPPED_ASSET_ENTRY,
+						selectedAssetEntry
+					);
 
-				requestAnimationFrame(
-					() => {
-						this.refs.panel.focus();
-					}
-				);
+					requestAnimationFrame(
+						() => {
+							this.refs.panel.focus();
+						}
+					);
+				},
+				modalTitle: assetBrowserWindowTitle,
+				portletNamespace: this.portletNamespace
 			}
 		);
 	}

@@ -19,5 +19,8 @@
 	"publishConfig": {
 		"tag": "7_0_x"
 	},
+	"scripts": {
+		"build": "gulp build"
+	},
 	"version": "1.0.0"
 }

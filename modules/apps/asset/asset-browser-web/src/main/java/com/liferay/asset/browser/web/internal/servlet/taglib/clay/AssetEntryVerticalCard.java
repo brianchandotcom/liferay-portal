@@ -55,7 +55,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		if (!_assetBrowserDisplayContext.isMultipleSelection()) {
+		if (_assetBrowserDisplayContext.isMultipleSelection()) {
 			return null;
 		}
 

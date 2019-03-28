@@ -8,41 +8,6 @@ const IMAGE_SELECTOR_RETURN_TYPES = {
 };
 
 /**
- * @param {string} url
- * @param {string} title
- * @param {string} eventName
- * @param {function} callback
- * @param {function} destroyedCallback
- */
-function _openItemSelector(url, title, eventName, callback, destroyedCallback) {
-	AUI().use(
-		'liferay-item-selector-dialog',
-		A => {
-			const itemSelector = new A.LiferayItemSelectorDialog(
-				{
-					eventName,
-					on: {
-						selectedItemChange: event => {
-							callback(event);
-						},
-
-						visibleChange: event => {
-							if ((event.newVal === false) && destroyedCallback) {
-								destroyedCallback();
-							}
-						}
-					},
-					title,
-					url
-				}
-			);
-
-			itemSelector.open();
-		}
-	);
-}
-
-/**
  * @param {string} assetBrowserURL
  * @param {string} modalTitle
  * @param {string} portletNamespace
@@ -82,34 +47,52 @@ function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callbac
  * @param {string} imageSelectorURL
  * @param {string} portletNamespace
  * @param {function} callback
- * @param {function} destroyedCallback
+ * @param {function} [destroyedCallback=null]
  */
-function openImageSelector(imageSelectorURL, portletNamespace, callback, destroyedCallback) {
-	_openItemSelector(
-		imageSelectorURL,
-		Liferay.Language.get('select'),
-		`${portletNamespace}selectImage`,
-		event => {
-			const selectedItem = event.newVal || {};
+function openImageSelector(imageSelectorURL, portletNamespace, callback, destroyedCallback = null) {
+	AUI().use(
+		'liferay-item-selector-dialog',
+		A => {
+			const itemSelector = new A.LiferayItemSelectorDialog(
+				{
+					eventName: `${portletNamespace}selectImage`,
+					on: {
+						selectedItemChange: event => {
+							const selectedItem = event.newVal || {};
 
-			const {returnType, value} = selectedItem;
-			let selectedImageURL = '';
+							const {returnType, value} = selectedItem;
+							let selectedImageURL = '';
 
-			if (returnType === IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
-				returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
+							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
+								returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
 
-				selectedImageURL = value;
-			}
+								selectedImageURL = value;
+							}
 
-			if (returnType === IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector) {
-				selectedImageURL = JSON.parse(value).url;
-			}
+							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector) {
+								selectedImageURL = JSON.parse(value).url;
+							}
 
-			if (selectedImageURL) {
-				callback(selectedImageURL);
-			}
-		},
-		destroyedCallback
+							if (selectedImageURL) {
+								callback(selectedImageURL);
+							}
+						},
+
+						visibleChange: event => {
+							if ((event.newVal === false) &&
+								destroyedCallback) {
+
+								destroyedCallback();
+							}
+						}
+					},
+					title: Liferay.Language.get('select'),
+					url: imageSelectorURL
+				}
+			);
+
+			itemSelector.open();
+		}
 	);
 }
 

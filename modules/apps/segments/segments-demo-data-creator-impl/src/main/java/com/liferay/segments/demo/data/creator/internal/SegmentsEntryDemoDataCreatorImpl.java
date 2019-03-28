@@ -81,8 +81,8 @@ public class SegmentsEntryDemoDataCreatorImpl
 
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.addSegmentsEntry(
-				nameMap, descriptionMap, true, criteria,
-				StringUtil.randomString(), SegmentsConstants.SOURCE_DEFAULT,
+				StringUtil.randomString(), nameMap, descriptionMap, true,
+				criteria, SegmentsConstants.SOURCE_DEFAULT,
 				User.class.getName(), serviceContext);
 
 		if (Validator.isNull(criteria)) {

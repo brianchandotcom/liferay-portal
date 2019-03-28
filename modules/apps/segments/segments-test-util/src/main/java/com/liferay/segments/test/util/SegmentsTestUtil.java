@@ -46,9 +46,9 @@ public class SegmentsTestUtil {
 		throws PortalException {
 
 		return addSegmentsEntry(
-			groupId, RandomTestUtil.randomString(),
+			groupId, segmentsEntryKey, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			segmentsEntryKey, RandomTestUtil.randomString());
+			RandomTestUtil.randomString());
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
@@ -72,17 +72,17 @@ public class SegmentsTestUtil {
 
 		return addSegmentsEntry(
 			groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), criteria,
-			RandomTestUtil.randomString(), type);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			criteria, type);
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
-			long groupId, final String name, final String description,
-			String criteria, String segmentsEntryKey, String type)
+			long groupId, String segmentsEntryKey, String name,
+			String description, String criteria, String type)
 		throws PortalException {
 
 		return addSegmentsEntry(
-			name, description, criteria, segmentsEntryKey,
+			segmentsEntryKey, name, description, criteria,
 			SegmentsConstants.SOURCE_DEFAULT, type,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
@@ -98,8 +98,8 @@ public class SegmentsTestUtil {
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
-			final String name, final String description, String criteria,
-			String segmentsEntryKey, String source, String type,
+			String segmentsEntryKey, String name, String description,
+			String criteria, String source, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -112,7 +112,7 @@ public class SegmentsTestUtil {
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
 		return SegmentsEntryLocalServiceUtil.addSegmentsEntry(
-			nameMap, descriptionMap, true, criteria, segmentsEntryKey, source,
+			segmentsEntryKey, nameMap, descriptionMap, true, criteria, source,
 			type, serviceContext);
 	}
 

@@ -99,17 +99,16 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		try {
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
-					nameMap, Collections.emptyMap(), true, null,
-					individualSegment.getId(),
-					SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
+					individualSegment.getId(), nameMap, Collections.emptyMap(),
+					true, null, SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
 					User.class.getName(), serviceContext);
 
 				return;
 			}
 
 			_segmentsEntryLocalService.updateSegmentsEntry(
-				segmentsEntry.getSegmentsEntryId(), nameMap, null, true, null,
-				individualSegment.getId(), serviceContext);
+				segmentsEntry.getSegmentsEntryId(), individualSegment.getId(),
+				nameMap, null, true, null, serviceContext);
 		}
 		catch (PortalException pe) {
 			_log.error(

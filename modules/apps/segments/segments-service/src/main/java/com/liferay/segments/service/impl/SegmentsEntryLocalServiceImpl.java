@@ -64,8 +64,8 @@ public class SegmentsEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SegmentsEntry addSegmentsEntry(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String segmentsEntryKey,
+			String segmentsEntryKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, String criteria,
 			String source, String type, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -91,11 +91,11 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
 		segmentsEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 		segmentsEntry.setNameMap(nameMap);
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
 		if (Validator.isNull(source)) {
 			segmentsEntry.setSource(SegmentsConstants.SOURCE_DEFAULT);
@@ -299,9 +299,9 @@ public class SegmentsEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String segmentsEntryKey, ServiceContext serviceContext)
+			long segmentsEntryId, String segmentsEntryKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, String criteria, ServiceContext serviceContext)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = segmentsEntryPersistence.findByPrimaryKey(
@@ -312,11 +312,12 @@ public class SegmentsEntryLocalServiceImpl
 
 		validate(segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
+		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
+
 		segmentsEntry.setNameMap(nameMap);
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
 		return segmentsEntryPersistence.update(segmentsEntry);
 	}

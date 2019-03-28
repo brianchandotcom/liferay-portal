@@ -126,7 +126,7 @@ function getItemMoveDirection(keycode) {
 function getItemPath(itemId, itemType, structure) {
 	let itemPath = [];
 
-	if (itemId && itemType) {
+	if (itemId && itemType && structure.length) {
 		itemPath = [
 			{
 				itemId,

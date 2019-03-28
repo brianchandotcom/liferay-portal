@@ -21,6 +21,7 @@ import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -136,7 +137,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		// Calendar bookings
 
-		calendarBookingLocalService.deleteCalendarBookings(
+		_calendarBookingLocalService.deleteCalendarBookings(
 			calendar.getCalendarId());
 
 		// Calendar notification templates
@@ -430,6 +431,9 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarLocalServiceImpl.class);
+
+	@Reference
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Reference
 	private CalendarNotificationTemplateLocalService

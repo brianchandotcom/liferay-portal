@@ -1037,8 +1037,22 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getParentCalendarBooking());
 		}
 
-		return calendarLocalService.isStagingCalendar(
-			calendarBooking.getCalendar());
+		Calendar calendar = calendarBooking.getCalendar();
+
+		long groupId = calendar.getGroupId();
+
+		try {
+			Group group = groupLocalService.getGroup(groupId);
+
+			return group.isStagingGroup();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return false;
+		}
 	}
 
 	@Override
@@ -1485,7 +1499,8 @@ public class CalendarBookingLocalServiceImpl
 		updatedDescriptionMap.putAll(descriptionMap);
 
 		if (allFollowing) {
-			Calendar calendar = calendarLocalService.getCalendar(calendarId);
+			Calendar calendar = calendarPersistence.findByPrimaryKey(
+				calendarId);
 
 			List<CalendarBooking> recurringCalendarBookings =
 				splitCalendarBookingInstances(
@@ -1938,7 +1953,7 @@ public class CalendarBookingLocalServiceImpl
 
 			Group stagingGroup = group.getStagingGroup();
 
-			calendar = calendarLocalService.getCalendarByUuidAndGroupId(
+			calendar = calendarPersistence.findByUUID_G(
 				calendar.getUuid(), stagingGroup.getGroupId());
 		}
 
@@ -1948,7 +1963,7 @@ public class CalendarBookingLocalServiceImpl
 	protected long getNotLiveCalendarId(long calendarId)
 		throws PortalException {
 
-		Calendar calendar = calendarLocalService.getCalendar(calendarId);
+		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
 
 		calendar = getNotLiveCalendar(calendar);
 

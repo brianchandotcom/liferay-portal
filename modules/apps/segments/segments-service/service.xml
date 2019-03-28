@@ -24,11 +24,11 @@
 
 		<!-- Other fields -->
 
+		<column name="segmentsEntryKey" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="active" type="boolean" />
 		<column name="criteria" type="String" />
-		<column name="segmentsEntryKey" type="String" />
 		<column name="source" type="String" />
 		<column name="type" type="String" />
 
@@ -49,13 +49,13 @@
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_A" return-type="Collection">
-			<finder-column arrayable-operator="OR" name="groupId" />
-			<finder-column name="active" />
-		</finder>
 		<finder name="G_S" return-type="SegmentsEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsEntryKey" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="active" />
 		</finder>
 		<finder name="A_T" return-type="Collection">
 			<finder-column name="active" />

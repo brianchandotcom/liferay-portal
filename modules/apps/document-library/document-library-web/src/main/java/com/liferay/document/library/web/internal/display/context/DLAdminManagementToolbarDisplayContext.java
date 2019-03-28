@@ -157,6 +157,8 @@ public class DLAdminManagementToolbarDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "editTags");
+							dropdownItem.putData(
+								"enableOnBulk", Boolean.TRUE.toString());
 							dropdownItem.setIcon("tag");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "edit-tags"));
@@ -168,6 +170,8 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem -> {
 								dropdownItem.putData(
 									"action", "editCategories");
+								dropdownItem.putData(
+									"enableOnBulk", Boolean.TRUE.toString());
 								dropdownItem.setIcon("categories");
 								dropdownItem.setLabel(
 									LanguageUtil.get(

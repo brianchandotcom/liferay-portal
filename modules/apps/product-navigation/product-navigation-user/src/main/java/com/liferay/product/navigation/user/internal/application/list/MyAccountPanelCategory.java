@@ -15,7 +15,6 @@
 package com.liferay.product.navigation.user.internal.application.list;
 
 import com.liferay.application.list.BaseJSPPanelCategory;
-import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,20 +27,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @see com.liferay.product.navigation.personal.menu.PersonalMenuEntry
  */
-@Component(
-	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.USER,
-		"panel.category.order:Integer=100"
-	},
-	service = PanelCategory.class
-)
+@Deprecated
 public class MyAccountPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
@@ -70,10 +61,6 @@ public class MyAccountPanelCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.user)",
-		unbind = "-"
-	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}

@@ -40,7 +40,7 @@ definition {
 
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
-			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Asset Lists");
+			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Content Sets");
 		}
 
 		task("Assert we cannot navigate to asset list administration in the live site.") {
@@ -52,7 +52,7 @@ definition {
 
 			AssertElementNotPresent(
 				locator1 = "ProductMenu#PORTLET",
-				key_portlet = "Asset Lists"
+				key_portlet = "Content Sets"
 			);
 		}
 	}

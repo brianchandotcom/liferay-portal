@@ -78,15 +78,13 @@
 	{@param? vocabularies: list<?>}
 
 	{if $selectAll}
-		<div class="alert alert-info" role="alert">
-			<span class="alert-indicator">
-				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-					<use href="{$spritemap}#info-circle"></use>
-				</svg>
-			</span>
-
-			<strong class="lead"></strong>{msg desc=""}this-operation-will-not-be-applied-to-any-of-the-selected-folders{/msg}
-		</div>
+		{call ClayAlert.render}
+			{param message kind="text"}
+				{msg desc=""}this-operation-will-not-be-applied-to-any-of-the-selected-folders{/msg}
+			{/param}
+			{param spritemap: $spritemap /}
+			{param title: '' /}
+		{/call}
 	{/if}
 
 	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-categories{/msg} {/if}</p>

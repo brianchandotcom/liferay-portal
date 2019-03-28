@@ -48,8 +48,10 @@ import java.util.List;
 import org.apache.log4j.Level;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,8 +72,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 				Propagation.REQUIRED,
 				"com.liferay.portal.tools.service.builder.test.service"));
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_sessionFactoryInvocationHandler = new SessionFactoryInvocationHandler(
 			ReflectionTestUtil.getFieldValue(
 				_nestedSetsTreeEntryPersistence, "_sessionFactory"));
@@ -91,7 +93,21 @@ public class PersistenceNestedSetsTreeManagerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_nestedSetsTreeEntries = new NestedSetsTreeEntry[9];
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		_groupLocalService.deleteGroup(_group);
+
+		ReflectionTestUtil.setFieldValue(
+			_nestedSetsTreeEntryPersistence, "_sessionFactory",
+			_sessionFactoryInvocationHandler.getTarget());
+
+		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(true);
+	}
+
+	@Before
+	public void setUp() {
 		for (int i = 0; i < 9; i++) {
 			_nestedSetsTreeEntries[i] =
 				_nestedSetsTreeEntryLocalService.addNestedSetsTreeEntry(
@@ -100,20 +116,12 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@After
-	public void tearDown() throws PortalException {
-		ReflectionTestUtil.setFieldValue(
-			_nestedSetsTreeEntryPersistence, "_sessionFactory",
-			_sessionFactoryInvocationHandler.getTarget());
-
+	public void tearDown() {
 		for (NestedSetsTreeEntry nestedSetsTreeEntry : _nestedSetsTreeEntries) {
 			if (nestedSetsTreeEntry != null) {
 				_nestedSetsTreeEntryPersistence.remove(nestedSetsTreeEntry);
 			}
 		}
-
-		_groupLocalService.deleteGroup(_group);
-
-		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(true);
 	}
 
 	@Test
@@ -756,8 +764,12 @@ public class PersistenceNestedSetsTreeManagerTest {
 		}
 	}
 
+	private static Group _group;
+
 	@Inject
 	private static GroupLocalService _groupLocalService;
+
+	private static NestedSetsTreeEntry[] _nestedSetsTreeEntries;
 
 	@Inject
 	private static NestedSetsTreeEntryLocalService
@@ -767,10 +779,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 	private static NestedSetsTreeEntryPersistence
 		_nestedSetsTreeEntryPersistence;
 
-	private Group _group;
-	private NestedSetsTreeEntry[] _nestedSetsTreeEntries;
-	private NestedSetsTreeManager<NestedSetsTreeEntry> _nestedSetsTreeManager;
-	private SessionFactoryInvocationHandler _sessionFactoryInvocationHandler;
+	private static NestedSetsTreeManager<NestedSetsTreeEntry>
+		_nestedSetsTreeManager;
+	private static SessionFactoryInvocationHandler
+		_sessionFactoryInvocationHandler;
 
 	private static class SessionFactoryInvocationHandler
 		implements InvocationHandler {

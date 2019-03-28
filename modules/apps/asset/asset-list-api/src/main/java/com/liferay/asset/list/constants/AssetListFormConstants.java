@@ -33,7 +33,4 @@ public class AssetListFormConstants {
 
 	public static final String FORM_NAVIGATOR_ID = "edit.asset.list.form";
 
-	public static final String SCREEN_NAVIGATION_KEY_ASSET_LIST =
-		"edit.asset.list.form";
-
 }

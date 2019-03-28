@@ -225,7 +225,7 @@ if (comment) {
 <c:if test="<%= !repost %>">
 	<aui:script>
 		function <portlet:namespace />relationTypeOnChange(event) {
-			var form = event.currentTarget.closest('form');
+			var form = event.currentTarget.form;
 
 			var contentInput = form.getElementsByTagName('textarea')[0];
 

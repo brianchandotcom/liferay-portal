@@ -16,7 +16,9 @@ package com.liferay.calendar.service.persistence.impl;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @generated
  */
-public class CalendarResourceFinderBaseImpl
+public abstract class CalendarResourceFinderBaseImpl
 	extends BasePersistenceImpl<CalendarResource> {
 
 	public CalendarResourceFinderBaseImpl() {
@@ -46,30 +52,37 @@ public class CalendarResourceFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getCalendarResourcePersistence().getBadColumnNames();
+		return calendarResourcePersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the calendar resource persistence.
-	 *
-	 * @return the calendar resource persistence
-	 */
-	public CalendarResourcePersistence getCalendarResourcePersistence() {
-		return calendarResourcePersistence;
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the calendar resource persistence.
-	 *
-	 * @param calendarResourcePersistence the calendar resource persistence
-	 */
-	public void setCalendarResourcePersistence(
-		CalendarResourcePersistence calendarResourcePersistence) {
-
-		this.calendarResourcePersistence = calendarResourcePersistence;
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CalendarResourcePersistence.class)
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CalendarResourcePersistence calendarResourcePersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

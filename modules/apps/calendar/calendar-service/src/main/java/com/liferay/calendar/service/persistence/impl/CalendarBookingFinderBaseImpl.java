@@ -16,7 +16,9 @@ package com.liferay.calendar.service.persistence.impl;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @generated
  */
-public class CalendarBookingFinderBaseImpl
+public abstract class CalendarBookingFinderBaseImpl
 	extends BasePersistenceImpl<CalendarBooking> {
 
 	public CalendarBookingFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class CalendarBookingFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getCalendarBookingPersistence().getBadColumnNames();
+		return calendarBookingPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the calendar booking persistence.
-	 *
-	 * @return the calendar booking persistence
-	 */
-	public CalendarBookingPersistence getCalendarBookingPersistence() {
-		return calendarBookingPersistence;
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the calendar booking persistence.
-	 *
-	 * @param calendarBookingPersistence the calendar booking persistence
-	 */
-	public void setCalendarBookingPersistence(
-		CalendarBookingPersistence calendarBookingPersistence) {
-
-		this.calendarBookingPersistence = calendarBookingPersistence;
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CalendarBookingPersistence.class)
+	@Override
+	@Reference(
+		target = CalendarPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CalendarBookingPersistence calendarBookingPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -93,20 +93,11 @@
 		<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
 	</c:when>
 	<c:otherwise>
-		<c:choose>
-			<c:when test="<%= expandoColumn != null %>">
-				<aui:select disabled="<%= true %>" label="data-type" name="dataType">
-					<aui:option label="<%= ExpandoColumnConstants.getDataType(type) %>" />
-				</aui:select>
-			</c:when>
-			<c:otherwise>
-				<aui:select label="data-type" name="dataType" onChange="setDataType()">
-					<aui:option label="<%= ExpandoColumnConstants.TYPE_TEXT %>" />
-					<aui:option label="<%= ExpandoColumnConstants.TYPE_DECIMAL %>" />
-					<aui:option label="<%= ExpandoColumnConstants.TYPE_INTEGER %>" />
-				</aui:select>
-			</c:otherwise>
-		</c:choose>
+		<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType()" value="<%= ExpandoColumnConstants.getDataType(type) %>">
+			<aui:option label="<%= ExpandoColumnConstants.TYPE_TEXT %>" />
+			<aui:option label="<%= ExpandoColumnConstants.TYPE_DECIMAL %>" />
+			<aui:option label="<%= ExpandoColumnConstants.TYPE_INTEGER %>" />
+		</aui:select>
 
 		<%
 		String xml = StringPool.BLANK;

@@ -215,4 +215,42 @@ definition {
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "${key_searchTerm}");
 		}
 	}
+
+	@description = "This test selects multiple documents and moves them into one folder."
+	@priority = "5"
+	test MoveDocumentsToFolder {
+		DMFolder.addPG(
+			dmFolderDescription = "Folder 1",
+			dmFolderName = "Folder 1"
+		);
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.doc,Document_2.doc"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.doc") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		DMDocument.moveToFolderPG(
+			bulkSelection = "2 of 3 Selected",
+			dmFolderName = "Folder 1"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder 1");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Document_2.doc",
+			dmDocumentTitle = "Document_2.doc"
+		);
+	}
 }

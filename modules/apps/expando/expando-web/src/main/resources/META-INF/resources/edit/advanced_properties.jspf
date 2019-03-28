@@ -21,19 +21,11 @@
 >
 	<div class="<%= ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.SHORT)) ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">
 		<aui:field-wrapper cssClass="custom-precision-type-field-wrapper">
-			<c:choose>
-				<c:when test="<%= expandoColumn != null %>">
-					<aui:select disabled="<%= true %>" label="precision" name="precisionType">
-						<aui:option label="<%= ExpandoColumnConstants.getPrecisionType(type) %>" />
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<aui:select label="precision" name="precisionType">
-						<aui:option label="<%= ExpandoColumnConstants.PRECISION_64_BIT %>" />
-						<aui:option label="<%= ExpandoColumnConstants.PRECISION_32_BIT %>" />
-					</aui:select>
-				</c:otherwise>
-			</c:choose>
+			<aui:select disabled="<%= expandoColumn != null %>" label="precision" name="precisionType" value="<%= ExpandoColumnConstants.getPrecisionType(type) %>">
+				<aui:option label="<%= ExpandoColumnConstants.PRECISION_64_BIT %>" />
+				<aui:option label="<%= ExpandoColumnConstants.PRECISION_32_BIT %>" />
+				<aui:option label="<%= ExpandoColumnConstants.PRECISION_16_BIT %>" />
+			</aui:select>
 
 			<div class="form-text">
 				<liferay-ui:message key="custom-field-precision-help" />
@@ -131,34 +123,33 @@
 </liferay-frontend:fieldset>
 
 <script>
-	function populatePrecisionType(precisionTypeForm, integerBit) {
-		var integerBitOptions = "";
+	function populatePrecisionType(precisionTypeElement, numberSize) {
+		var numberSizeOptions = "";
 
-		for (var bit of integerBit) {
-			integerBitOptions += "<option value=\"" + bit + "\">" + bit + "</option>";
+		for (var bit of numberSize) {
+			numberSizeOptions += "<option value=\"" + bit + "\">" + bit + "</option>";
 		}
 
-		precisionTypeForm.innerHTML = integerBitOptions;
+		precisionTypeElement.innerHTML = numberSizeOptions;
 	}
 
 	function setPrecisionType(currentSelectedDataType) {
+		if (!currentSelectedDataType) {
+			return;
+		}
+
 		var precisionTypeElement = document.getElementById('<portlet:namespace />precisionType');
 
 		if (precisionTypeElement) {
 			precisionTypeElement.options.length = 0;
-		}
 
-		if (currentSelectedDataType && precisionTypeElement) {
-			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_DECIMAL %>') {
-				var integerBit = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>'];
+			var numberSize = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>'];
 
-				populatePrecisionType(precisionTypeElement, integerBit);
+			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>') {
+				numberSize.push('<%= ExpandoColumnConstants.PRECISION_16_BIT %>');
 			}
-			else if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>') {
-				var integerBit = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>', '<%= ExpandoColumnConstants.PRECISION_16_BIT %>'];
 
-				populatePrecisionType(precisionTypeElement, integerBit);
-			}
+			populatePrecisionType(precisionTypeElement, numberSize);
 		}
 	}
 </script>

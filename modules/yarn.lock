@@ -10764,7 +10764,7 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.6.2:
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.1.2, liferay-npm-bundler-preset-liferay-dev@^1.1.0, liferay-npm-bundler-preset-liferay-dev@^1.1.1:
+liferay-npm-bundler-preset-liferay-dev@1.1.2, liferay-npm-bundler-preset-liferay-dev@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.1.2.tgz#fe9c5dc2362b182687fa266d40df9e862a945b64"
   integrity sha512-Shg9VyqmAX+KfpErWmjGKAMw5w6qR43dlYJBrEDtUL4/CHZL5aZCzgN1cy2o7lNSIobGHgdtMCQ63zvR2uM35A==
@@ -10790,7 +10790,7 @@ liferay-npm-bundler-preset-standard@2.6.2:
     liferay-npm-bundler-plugin-replace-browser-modules "2.6.2"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.6.2"
 
-liferay-npm-bundler@2.6.2, liferay-npm-bundler@^2.0.0, liferay-npm-bundler@^2.1.0, liferay-npm-bundler@^2.2.1, liferay-npm-bundler@^2.4.0, liferay-npm-bundler@^2.5.1, liferay-npm-bundler@^2.6.1, liferay-npm-bundler@~2.6.2:
+liferay-npm-bundler@2.6.2, liferay-npm-bundler@^2.0.0, liferay-npm-bundler@^2.1.0, liferay-npm-bundler@^2.2.1, liferay-npm-bundler@^2.4.0, liferay-npm-bundler@^2.5.1, liferay-npm-bundler@~2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler/-/liferay-npm-bundler-2.6.2.tgz#743ee2f662f9b4330beb5edc7ad504299966a0a1"
   integrity sha512-/obq731zP3gbSqDQVAuh0PnuFacH2ed0dm1r/+tlnVtvAesbpf4XnocrF0X07404j9P6jQw6q+YgRbsy5dVu8g==

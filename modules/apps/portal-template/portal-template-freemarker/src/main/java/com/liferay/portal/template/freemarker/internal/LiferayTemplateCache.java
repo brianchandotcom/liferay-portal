@@ -14,9 +14,7 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
@@ -43,7 +41,7 @@ public class LiferayTemplateCache extends TemplateCache {
 			Configuration configuration,
 			FreeMarkerEngineConfiguration freeMarkerEngineConfiguration,
 			TemplateResourceLoader templateResourceLoader,
-			SingleVMPool singleVMPool)
+			PortalCache<TemplateResource, MaybeMissingTemplate> portalCache)
 		throws Exception {
 
 		super(null, configuration);
@@ -51,18 +49,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		_configuration = configuration;
 		_freeMarkerEngineConfiguration = freeMarkerEngineConfiguration;
 		_templateResourceLoader = templateResourceLoader;
-
-		String portalCacheName = TemplateResource.class.getName();
-
-		portalCacheName = portalCacheName.concat(
-			StringPool.POUND
-		).concat(
-			TemplateConstants.LANG_TYPE_FTL
-		);
-
-		_portalCache =
-			(PortalCache<TemplateResource, MaybeMissingTemplate>)
-				singleVMPool.getPortalCache(portalCacheName);
+		_portalCache = portalCache;
 
 		_constructor = MaybeMissingTemplate.class.getDeclaredConstructor(
 			Template.class);

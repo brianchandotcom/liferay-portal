@@ -274,9 +274,7 @@
 		<check name="JavaStringBundlerInitialCapacityCheck" />
 		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
-		<check name="JavaTaglibMethodCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="JavaTaglibMethodCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
 		<check name="JavaUnsafeCastingCheck" />
 		<check name="JavaUpgradeClassCheck" />

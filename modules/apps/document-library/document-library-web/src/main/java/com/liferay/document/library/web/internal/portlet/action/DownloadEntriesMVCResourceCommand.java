@@ -78,7 +78,12 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			String resourceID = GetterUtil.getString(
 				resourceRequest.getResourceID());
 
-			if (resourceID.equals("/document_library/download_folder")) {
+			boolean selectAll = ParamUtil.getBoolean(
+				resourceRequest, "selectAll");
+
+			if (selectAll ||
+				resourceID.equals("/document_library/download_folder")) {
+
 				downloadFolder(resourceRequest, resourceResponse);
 			}
 			else {

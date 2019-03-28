@@ -3694,6 +3694,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.2.0, with no direct replacement.</description>
 			<name>servletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -21,11 +21,6 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<attribute>
-			<name>servletContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 	<tag>
 		<description>Creates a component that displays the child panel categories of a panel category.</description>
@@ -38,11 +33,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>com.liferay.application.list.PanelCategory</type>
-		</attribute>
-		<attribute>
-			<name>servletContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -84,11 +74,6 @@
 			<type>com.liferay.application.list.PanelApp</type>
 		</attribute>
 		<attribute>
-			<name>servletContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>The URL to use in the link if no panel app is passed.</description>
 			<name>url</name>
 			<required>false</required>
@@ -113,11 +98,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>servletContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>Whether to display the body of the panel.</description>

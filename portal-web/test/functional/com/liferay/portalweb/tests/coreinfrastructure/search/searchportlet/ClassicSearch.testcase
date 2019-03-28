@@ -547,10 +547,11 @@ definition {
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 	}
 
-	// Ignoring test, see LRQA-47805
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47805
 	@priority = "4"
 	test ViewSearchResultForLongURL {
+		property portal.suite.search.engine = "disable";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

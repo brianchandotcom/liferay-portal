@@ -351,10 +351,11 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Title1");
 	}
 
-	// Ignoring test, see LRQA-47803
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47803
 	@priority = "4"
 	test SearchBlogsEntryCategory {
+		property portal.suite.search.engine = "disable";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -420,10 +421,10 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Name1");
 	}
 
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47803
 	@priority = "4"
 	test SearchBlogsEntryCategoryQuotes {
-		// Ignoring test until LPS-73326 is resolved
+		property portal.suite.search.engine = "disable";
 
 		Navigator.openURL();
 
@@ -620,10 +621,11 @@ definition {
 		);
 	}
 
-	// Ignoring test, see LRQA-47803
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47803
 	@priority = "4"
 	test SearchBlogsEntryTag {
+		property portal.suite.search.engine = "disable";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -673,10 +675,11 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "name1");
 	}
 
-	// Ignoring test, see LRQA-47803
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47803
 	@priority = "4"
 	test SearchBlogsEntryTagQuotes {
+		property portal.suite.search.engine = "disable";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -953,10 +956,10 @@ definition {
 		);
 	}
 
-	// Ignoring test, see LRQA-47803
-	@ignore = "true"
+	// Temporarily removing from search suite, see LRQA-47803
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
+		property portal.suite.search.engine = "disable";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

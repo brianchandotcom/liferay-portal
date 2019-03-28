@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 /**
  * @author Alejandro Tardín
  */
-public class GoogleCloudVisionUtil {
+public class GCloudVisionUtil {
 
 	public static String getAnnotateImagePayload(FileEntry fileEntry)
 		throws Exception {

@@ -37,7 +37,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Alejandro Tardín
  */
-public class GoogleCloudVisionUtilTest {
+public class GCloudVisionUtilTest {
 
 	@Before
 	public void setUp() {
@@ -73,7 +73,7 @@ public class GoogleCloudVisionUtilTest {
 				"{\"requests\":[{\"features\":",
 				"[{\"type\":\"LABEL_DETECTION\"}],\"image\":{\"content\":\"",
 				Base64.encode(randomString.getBytes()), "\"}}]}"),
-			GoogleCloudVisionUtil.getAnnotateImagePayload(_fileEntry));
+			GCloudVisionUtil.getAnnotateImagePayload(_fileEntry));
 	}
 
 	@Mock

@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
@@ -29,17 +29,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "google-cloud-vision-asset-auto-tag-provider-description",
-	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "google-cloud-vision-asset-auto-tag-provider-configuration-name"
 )
-public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
+public interface GCloudVisionAssetAutoTagProviderCompanyConfiguration {
 
 	/**
-	 * Sets the API key for the Google Cloud Vision API.
+	 * Sets the API key for the G Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = GoogleCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
+		descriptionArguments = GCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false
@@ -47,7 +47,7 @@ public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	public String apiKey();
 
 	/**
-	 * Enables auto tagging of images using the Google Cloud Vision API.
+	 * Enables auto tagging of images using the G Cloud Vision API.
 	 */
 	@Meta.AD(
 		description = "enabled-description", name = "enabled", required = false

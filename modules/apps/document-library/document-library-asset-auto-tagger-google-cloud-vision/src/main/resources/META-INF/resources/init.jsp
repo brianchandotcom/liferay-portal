@@ -17,9 +17,9 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<%@ page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration" %><%@
-page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants" %><%@
-page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.PortalSettingsGoogleCloudVisionAssetAutoTagProviderConstants" %><%@
+<%@ page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration" %><%@
+page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants" %><%@
+page import="com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.PortalSettingsGCloudVisionAssetAutoTagProviderConstants" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>

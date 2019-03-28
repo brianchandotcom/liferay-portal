@@ -17,8 +17,8 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,10 +50,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = FormNavigatorEntry.class)
-public class
-	GoogleCloudVisionAssetAutoTagProviderCompanySettingsFormNavigatorEntry
-		extends BaseJSPFormNavigatorEntry<Company>
-		implements FormNavigatorEntry<Company> {
+public class GCloudVisionAssetAutoTagProviderCompanySettingsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Company>
+	implements FormNavigatorEntry<Company> {
 
 	@Override
 	public String getCategoryKey() {
@@ -125,24 +124,23 @@ public class
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
-			googleCloudVisionAssetAutoTagProviderCompanyConfiguration =
+		GCloudVisionAssetAutoTagProviderCompanyConfiguration
+			gCloudVisionAssetAutoTagProviderCompanyConfiguration =
 				_configurationProvider.getConfiguration(
-					GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.
-						class,
+					GCloudVisionAssetAutoTagProviderCompanyConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						themeDisplay.getCompanyId(),
-						GoogleCloudVisionAssetAutoTagProviderConstants.
+						GCloudVisionAssetAutoTagProviderConstants.
 							SERVICE_NAME));
 
 		request.setAttribute(
-			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class.
+			GCloudVisionAssetAutoTagProviderCompanyConfiguration.class.
 				getName(),
-			googleCloudVisionAssetAutoTagProviderCompanyConfiguration);
+			gCloudVisionAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleCloudVisionAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
+		GCloudVisionAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
 			class);
 
 	@Reference

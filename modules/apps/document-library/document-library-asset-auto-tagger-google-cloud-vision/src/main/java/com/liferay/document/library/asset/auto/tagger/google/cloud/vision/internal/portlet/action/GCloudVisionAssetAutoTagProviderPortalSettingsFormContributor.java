@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.portlet.action;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.PortalSettingsGoogleCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.PortalSettingsGCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = PortalSettingsFormContributor.class)
-public class GoogleCloudVisionAssetAutoTagProviderPortalSettingsFormContributor
+public class GCloudVisionAssetAutoTagProviderPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
@@ -40,7 +40,7 @@ public class GoogleCloudVisionAssetAutoTagProviderPortalSettingsFormContributor
 
 	@Override
 	public String getParameterNamespace() {
-		return PortalSettingsGoogleCloudVisionAssetAutoTagProviderConstants.
+		return PortalSettingsGCloudVisionAssetAutoTagProviderConstants.
 			FORM_PARAMETER_NAMESPACE;
 	}
 
@@ -53,7 +53,7 @@ public class GoogleCloudVisionAssetAutoTagProviderPortalSettingsFormContributor
 
 	@Override
 	public String getSettingsId() {
-		return GoogleCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME;
+		return GCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 	@Override

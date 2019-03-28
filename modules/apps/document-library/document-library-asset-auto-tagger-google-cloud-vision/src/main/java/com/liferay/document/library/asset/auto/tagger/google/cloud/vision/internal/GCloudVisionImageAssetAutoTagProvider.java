@@ -15,9 +15,9 @@
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util.GoogleCloudVisionUtil;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util.GCloudVisionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,27 +54,26 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
-public class GoogleCloudVisionImageAssetAutoTagProvider
+public class GCloudVisionImageAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
 	public Collection<String> getTagNames(FileEntry fileEntry) {
 		try {
-			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
-				googleCloudVisionAssetAutoTagProviderCompanyConfiguration =
+			GCloudVisionAssetAutoTagProviderCompanyConfiguration
+				gCloudVisionAssetAutoTagProviderCompanyConfiguration =
 					_getConfiguration(fileEntry);
 
-			if (!googleCloudVisionAssetAutoTagProviderCompanyConfiguration.
+			if (!gCloudVisionAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
 				_isTemporary(fileEntry) || !_isSupportedFormat(fileEntry)) {
 
 				return Collections.emptyList();
 			}
 
-			JSONObject responseJSONObject = _queryGoogleCloudVisionJSONObject(
-				googleCloudVisionAssetAutoTagProviderCompanyConfiguration.
-					apiKey(),
-				GoogleCloudVisionUtil.getAnnotateImagePayload(fileEntry));
+			JSONObject responseJSONObject = _queryGCloudVisionJSONObject(
+				gCloudVisionAssetAutoTagProviderCompanyConfiguration.apiKey(),
+				GCloudVisionUtil.getAnnotateImagePayload(fileEntry));
 
 			JSONArray responsesJSONArray = responseJSONObject.getJSONArray(
 				"responses");
@@ -99,15 +98,15 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		return Collections.emptyList();
 	}
 
-	private GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
+	private GCloudVisionAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(FileEntry fileEntry)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
-			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class,
+			GCloudVisionAssetAutoTagProviderCompanyConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				fileEntry.getCompanyId(),
-				GoogleCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME));
+				GCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME));
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {
@@ -121,7 +120,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryGoogleCloudVisionJSONObject(
+	private JSONObject _queryGCloudVisionJSONObject(
 			String apiKey, String payloadJSON)
 		throws Exception {
 
@@ -149,7 +148,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleCloudVisionImageAssetAutoTagProvider.class);
+		GCloudVisionImageAssetAutoTagProvider.class);
 
 	private static final Set<String> _supportedFormats = new HashSet<>(
 		Arrays.asList(

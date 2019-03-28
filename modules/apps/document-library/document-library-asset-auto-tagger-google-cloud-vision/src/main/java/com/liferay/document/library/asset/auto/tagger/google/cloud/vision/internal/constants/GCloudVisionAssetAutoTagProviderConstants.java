@@ -17,7 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 /**
  * @author Alejandro Tardín
  */
-public class GoogleCloudVisionAssetAutoTagProviderConstants {
+public class GCloudVisionAssetAutoTagProviderConstants {
 
 	public static final String API_KEY_DOCS_URL =
 		"https://cloud.google.com/docs/authentication/api-keys";

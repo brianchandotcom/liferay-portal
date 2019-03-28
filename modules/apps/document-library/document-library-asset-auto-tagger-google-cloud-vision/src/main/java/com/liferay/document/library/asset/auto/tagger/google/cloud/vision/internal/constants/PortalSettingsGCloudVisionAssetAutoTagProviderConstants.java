@@ -17,9 +17,9 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 /**
  * @author Alejandro Tardín
  */
-public class PortalSettingsGoogleCloudVisionAssetAutoTagProviderConstants {
+public class PortalSettingsGCloudVisionAssetAutoTagProviderConstants {
 
 	public static final String FORM_PARAMETER_NAMESPACE =
-		"documentLibraryAssetAutoTaggerGoogleCloudVision_";
+		"documentLibraryAssetAutoTaggerGCloudVision_";
 
 }

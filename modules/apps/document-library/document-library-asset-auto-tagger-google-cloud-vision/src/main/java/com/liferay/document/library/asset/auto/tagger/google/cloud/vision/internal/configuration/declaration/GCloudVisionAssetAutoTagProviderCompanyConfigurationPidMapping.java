@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = ConfigurationPidMapping.class)
-public class GoogleCloudVisionAssetAutoTagProviderCompanyConfigurationPidMapping
+public class GCloudVisionAssetAutoTagProviderCompanyConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class;
+		return GCloudVisionAssetAutoTagProviderCompanyConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return GoogleCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME;
+		return GCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 }

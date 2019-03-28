@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,13 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class
-	GoogleCloudVisionAssetAutoTagProviderCompanyConfigurationBeanDeclaration
-		implements ConfigurationBeanDeclaration {
+public class GCloudVisionAssetAutoTagProviderCompanyConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class;
+		return GCloudVisionAssetAutoTagProviderCompanyConfiguration.class;
 	}
 
 }

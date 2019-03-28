@@ -183,14 +183,13 @@ public class IconTag extends BaseIconTag {
 
 					title = HtmlUtil.escapeAttribute(
 						LanguageUtil.get(resourceBundle, label));
-
-					jspWriter.write(title);
 				}
 
 				if (title == null) {
 					title = "Icon";
 				}
 
+				jspWriter.write(title);
 				jspWriter.write("\" ");
 				jspWriter.write(
 					InlineUtil.buildDynamicAttributes(getDynamicAttributes()));

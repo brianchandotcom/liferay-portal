@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Connected Apps API
+Bundle-SymbolicName: com.liferay.connected.apps.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.connected.apps

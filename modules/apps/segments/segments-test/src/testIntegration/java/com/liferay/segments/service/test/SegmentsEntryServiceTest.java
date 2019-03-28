@@ -105,10 +105,11 @@ public class SegmentsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			_segmentsEntryService.addSegmentsEntry(
+				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), SegmentsConstants.SOURCE_DEFAULT,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -122,10 +123,11 @@ public class SegmentsEntryServiceTest {
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
 			_segmentsEntryService.addSegmentsEntry(
+				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), SegmentsConstants.SOURCE_DEFAULT,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -360,9 +362,10 @@ public class SegmentsEntryServiceTest {
 
 			_segmentsEntryService.updateSegmentsEntry(
 				segmentsEntry.getSegmentsEntryId(),
+				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -387,9 +390,10 @@ public class SegmentsEntryServiceTest {
 
 			_segmentsEntryService.updateSegmentsEntry(
 				segmentsEntry.getSegmentsEntryId(),
+				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}

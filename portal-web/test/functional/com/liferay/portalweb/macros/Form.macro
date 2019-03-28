@@ -165,8 +165,6 @@ definition {
 			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
 		}
 
-		Form.gotoAdvancedTab();
-
 		//TODO: adding it to test, remove this line after this bug (LPS-87612) is fixed
 		//Type(locator1 = "FormFields#FIELD_NAME_EDIT", value1 = "${fieldName}");
 

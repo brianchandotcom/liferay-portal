@@ -5601,7 +5601,7 @@ es6-iterator@~2.0.3:
     es5-ext "^0.10.35"
     es6-symbol "^3.1.1"
 
-es6-promise@^4.0.3, es6-promise@^4.0.5:
+es6-promise@^4.0.3:
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.5.tgz#da6d0d5692efb461e082c14817fe2427d8f5d054"
   integrity sha512-n6wvpdE43VFtJq+lUDYDBFUwV8TZbuGXLV4D6wKafg13ldznKsyEvatubnmUe31zcvelSzOHF+XbaT+Bl9ObDg==
@@ -10509,12 +10509,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-amd-loader@4.0.0-alpha.4:
-  version "4.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.0.0-alpha.4.tgz#da125db85070dbf6f9728d78811037d4ed84c832"
-  integrity sha512-HFs7H/KbfPdh5jfgHZhvN+Rblkyo+dLAYlL4Ee56SMtG9A8mCydZuTRgXZlS8i5Km8HZctFwSEeZDbPZWONRGg==
-  dependencies:
-    es6-promise "^4.0.5"
+liferay-amd-loader@4.0.0-alpha.5:
+  version "4.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.0.0-alpha.5.tgz#cf2f3d8b2922d11a35e297113cf859e5241ad443"
+  integrity sha512-zjX1hBwe6laOAvex49zPIbbsDUvSNA2Nw8ob2sRbGEfZMv5pZWleQqSC0Tx/ZGa0A7oaTniaFS3tekS4/bKbwA==
 
 liferay-css-parse@~1.7.1:
   version "1.7.1"

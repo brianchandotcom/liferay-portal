@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.Field;
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 
@@ -25,7 +26,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -53,8 +57,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_test(
 			5000, 5000, localDateTime, true, 0,
 			_createDocument(
-				_createField(
-					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS));
+					}
+				}));
 	}
 
 	@Test
@@ -64,14 +73,24 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_test(
 			10000, 10000, localDateTime, true, 0,
 			_createDocument(
-				_createField(
-					"completionDate",
-					localDateTime.minus(4, ChronoUnit.SECONDS)),
-				_createField(
-					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS))),
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"completionDate",
+							localDateTime.minus(4, ChronoUnit.SECONDS));
+						put(
+							"createDate",
+							localDateTime.minus(10, ChronoUnit.SECONDS));
+					}
+				}),
 			_createDocument(
-				_createField(
-					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS));
+					}
+				}));
 	}
 
 	@Test
@@ -81,8 +100,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_test(
 			5000, 6000, localDateTime, false, -1000,
 			_createDocument(
-				_createField(
-					"createDate", localDateTime.minus(6, ChronoUnit.SECONDS))));
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"createDate",
+							localDateTime.minus(6, ChronoUnit.SECONDS));
+					}
+				}));
 	}
 
 	@Test
@@ -92,32 +116,35 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_test(
 			5000, 10000, localDateTime, false, -5000,
 			_createDocument(
-				_createField(
-					"completionDate",
-					localDateTime.minus(4, ChronoUnit.SECONDS)),
-				_createField(
-					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS))),
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"completionDate",
+							localDateTime.minus(4, ChronoUnit.SECONDS));
+						put(
+							"createDate",
+							localDateTime.minus(10, ChronoUnit.SECONDS));
+					}
+				}),
 			_createDocument(
-				_createField(
-					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
+				new HashMap<String, LocalDateTime>() {
+					{
+						put(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS));
+					}
+				}));
 	}
 
-	private Document _createDocument(Field... fields) {
-		return new Document() {
-			{
-				for (Field field : fields) {
-					addField(field);
-				}
-			}
-		};
-	}
+	private Document _createDocument(Map<String, LocalDateTime> values) {
+		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
-	private Field _createField(String fieldName, LocalDateTime localDateTime) {
-		Field field = new Field(fieldName);
+		for (Entry<String, LocalDateTime> entry : values.entrySet()) {
+			documentBuilder.setValue(
+				entry.getKey(), _dateTimeFormatter.format(entry.getValue()));
+		}
 
-		field.addValue(localDateTime.format(_dateTimeFormatter));
-
-		return field;
+		return documentBuilder.build();
 	}
 
 	private LocalDateTime _createLocalDateTime() {

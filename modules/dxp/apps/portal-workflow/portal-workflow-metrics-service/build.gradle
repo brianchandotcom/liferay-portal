@@ -24,4 +24,5 @@ dependencies {
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-metrics-api")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile project(":apps:portal-search:portal-search")
 }

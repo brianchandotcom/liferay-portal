@@ -149,19 +149,22 @@ public class DiscussionForumPostingResourceImpl
 			DiscussionForumPosting discussionForumPosting)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
+		MBMessage parentMBMessage = _mbMessageService.getMessage(
 			discussionForumPostingId);
 
-		return _toDiscussionForumPosting(
-			_mbMessageService.updateDiscussionMessage(
-				mbMessage.getClassName(), mbMessage.getClassPK(),
-				discussionForumPostingId, discussionForumPosting.getHeadline(),
-				discussionForumPosting.getArticleBody(),
-				ServiceContextUtil.createServiceContext(
-					discussionForumPosting.getKeywords(),
-					discussionForumPosting.getTaxonomyCategoryIds(),
-					mbMessage.getGroupId(),
-					discussionForumPosting.getViewableByAsString())));
+		MBMessage mbMessage = _mbMessageService.updateDiscussionMessage(
+			parentMBMessage.getClassName(), parentMBMessage.getClassPK(),
+			discussionForumPostingId, discussionForumPosting.getHeadline(),
+			discussionForumPosting.getArticleBody(),
+			ServiceContextUtil.createServiceContext(
+				discussionForumPosting.getKeywords(),
+				discussionForumPosting.getTaxonomyCategoryIds(),
+				parentMBMessage.getGroupId(),
+				discussionForumPosting.getViewableByAsString()));
+
+		_updateAnswer(discussionForumPosting, mbMessage);
+
+		return _toDiscussionForumPosting(mbMessage);
 	}
 
 	private DiscussionForumPosting _addDiscussionThread(
@@ -169,7 +172,7 @@ public class DiscussionForumPostingResourceImpl
 			DiscussionForumPosting discussionForumPosting)
 		throws PortalException {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
+		MBMessage parentMBMessage = _mbMessageService.getMessage(
 			discussionForumPostingId);
 
 		String headline = discussionForumPosting.getHeadline();
@@ -177,21 +180,24 @@ public class DiscussionForumPostingResourceImpl
 		if (headline == null) {
 			headline =
 				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
-					mbMessage.getSubject();
+					parentMBMessage.getSubject();
 		}
 
-		return _toDiscussionForumPosting(
-			_mbMessageService.addMessage(
-				discussionForumPostingId, headline,
-				discussionForumPosting.getArticleBody(),
-				MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
-				GetterUtil.getBoolean(discussionForumPosting.getAnonymous()),
-				0.0, false,
-				ServiceContextUtil.createServiceContext(
-					discussionForumPosting.getKeywords(),
-					discussionForumPosting.getTaxonomyCategoryIds(),
-					mbMessage.getGroupId(),
-					discussionForumPosting.getViewableByAsString())));
+		MBMessage mbMessage = _mbMessageService.addMessage(
+			discussionForumPostingId, headline,
+			discussionForumPosting.getArticleBody(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
+			GetterUtil.getBoolean(discussionForumPosting.getAnonymous()), 0.0,
+			false,
+			ServiceContextUtil.createServiceContext(
+				discussionForumPosting.getKeywords(),
+				discussionForumPosting.getTaxonomyCategoryIds(),
+				parentMBMessage.getGroupId(),
+				discussionForumPosting.getViewableByAsString()));
+
+		_updateAnswer(discussionForumPosting, mbMessage);
+
+		return _toDiscussionForumPosting(mbMessage);
 	}
 
 	private Page<DiscussionForumPosting> _getDiscussionForumPostingsPage(
@@ -272,6 +278,19 @@ public class DiscussionForumPostingResourceImpl
 					});
 			}
 		};
+	}
+
+	private void _updateAnswer(
+			DiscussionForumPosting discussionForumPosting, MBMessage mbMessage)
+		throws PortalException {
+
+		Boolean showAsAnswer = discussionForumPosting.getShowAsAnswer();
+
+		if (showAsAnswer != null) {
+			_mbMessageService.updateAnswer(
+				mbMessage.getMessageId(), showAsAnswer, false);
+			mbMessage.setAnswer(showAsAnswer);
+		}
 	}
 
 	private static final EntityModel _entityModel =

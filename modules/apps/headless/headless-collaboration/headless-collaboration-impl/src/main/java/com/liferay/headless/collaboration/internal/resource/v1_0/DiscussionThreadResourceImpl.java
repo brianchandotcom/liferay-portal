@@ -37,6 +37,7 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -206,17 +207,19 @@ public class DiscussionThreadResourceImpl
 			DiscussionThread discussionThread)
 		throws Exception {
 
-		return _toDiscussionThread(
-			_mbMessageService.addMessage(
-				contentSpaceId, discussionSectionId,
-				discussionThread.getHeadline(),
-				discussionThread.getArticleBody(),
-				MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
-				false, 0.0, false,
-				ServiceContextUtil.createServiceContext(
-					discussionThread.getKeywords(),
-					discussionThread.getTaxonomyCategoryIds(), contentSpaceId,
-					discussionThread.getViewableByAsString())));
+		MBMessage mbMessage = _mbMessageService.addMessage(
+			contentSpaceId, discussionSectionId, discussionThread.getHeadline(),
+			discussionThread.getArticleBody(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			0.0, false,
+			ServiceContextUtil.createServiceContext(
+				discussionThread.getKeywords(),
+				discussionThread.getTaxonomyCategoryIds(), contentSpaceId,
+				discussionThread.getViewableByAsString()));
+
+		_updateQuestion(discussionThread, mbMessage);
+
+		return _toDiscussionThread(mbMessage);
 	}
 
 	private DiscussionThread _toDiscussionThread(MBMessage mbMessage)
@@ -284,6 +287,22 @@ public class DiscussionThreadResourceImpl
 		}
 
 		return null;
+	}
+
+	private void _updateQuestion(
+			DiscussionThread discussionThread, MBMessage mbMessage)
+		throws PortalException {
+
+		Boolean showAsQuestion = discussionThread.getShowAsQuestion();
+
+		if (showAsQuestion != null) {
+			_mbThreadLocalService.updateQuestion(
+				mbMessage.getThreadId(), showAsQuestion);
+
+			MBThread mbThread = mbMessage.getThread();
+
+			mbThread.setQuestion(showAsQuestion);
+		}
 	}
 
 	private static final EntityModel _entityModel =

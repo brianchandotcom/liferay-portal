@@ -69,9 +69,6 @@ public class ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 		return "document-library-document-opennlp";
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
-
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -81,29 +78,6 @@ public class ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 
 		return _language.get(
 			resourceBundle, "opennlp-auto-tag-provider-configuration-name");
-	}
-
-	@Override
-	public boolean isVisible(User user, Company company) {
-		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
-			_assetAutoTaggerConfigurationFactory.
-				getCompanyAssetAutoTaggerConfiguration(company);
-
-		return assetAutoTaggerConfiguration.isEnabled();
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.asset.auto.tagger.opennlp)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/portal_settings/opennlp_auto_tag_provider.jsp";
 	}
 
 	@Override
@@ -135,6 +109,32 @@ public class ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 			_log.error(ce, ce);
 		}
 	}
+
+	@Override
+	public boolean isVisible(User user, Company company) {
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+			_assetAutoTaggerConfigurationFactory.
+				getCompanyAssetAutoTaggerConfiguration(company);
+
+		return assetAutoTaggerConfiguration.isEnabled();
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.asset.auto.tagger.opennlp)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/portal_settings/opennlp_auto_tag_provider.jsp";
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ONDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
 
 	@Reference
 	private AssetAutoTaggerConfigurationFactory

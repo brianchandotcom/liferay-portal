@@ -147,15 +147,14 @@
 					{param shape: 'circle' /}
 				{/call}
 			{else}
-				<span class="user-avatar-image">
-					<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$data.data.userId % 10}">
-						{call ClayIcon.render}
-							{param spritemap: $data.data.spritemap /}
-							{param symbol: 'user' /}
-						{/call}
-					</div>
-				</span>
+				{call ClaySticker.render}
+					{param size: 'lg' /}
+					{param icon: 'user' /}
+					{param shape: 'circle' /}
+					{param spritemap: $data.data.spritemap /}
+				{/call}
 			{/if}
+			{sp}
 			<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
 		</a>
 	</li>

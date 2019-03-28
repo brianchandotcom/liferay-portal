@@ -104,19 +104,17 @@
 	<div class="autofit-col">
 		{if $collaborator.portraitURL}
 			{call ClaySticker.render}
-				{param size: 'xl' /}
+				{param size: 'lg' /}
 				{param imageSrc: $collaborator.portraitURL /}
 				{param shape: 'circle' /}
 			{/call}
 		{else}
-			<span class="user-avatar-image">
-				<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$collaborator.userId % 10}">
-					{call ClayIcon.render}
-						{param spritemap: $spritemap /}
-						{param symbol: 'user' /}
-					{/call}
-				</div>
-			</span>
+			{call ClaySticker.render}
+				{param size: 'lg' /}
+				{param icon: 'user' /}
+				{param shape: 'circle' /}
+				{param spritemap: $spritemap /}
+			{/call}
 		{/if}
 	</div>
 

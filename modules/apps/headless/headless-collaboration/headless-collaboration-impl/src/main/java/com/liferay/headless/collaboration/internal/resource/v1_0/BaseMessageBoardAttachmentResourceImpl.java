@@ -14,8 +14,8 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -54,44 +54,44 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseDiscussionAttachmentResourceImpl
-	implements DiscussionAttachmentResource {
+public abstract class BaseMessageBoardAttachmentResourceImpl
+	implements MessageBoardAttachmentResource {
 
 	@Override
 	@DELETE
-	@Path("/discussion-attachments/{discussion-attachment-id}")
+	@Path("/message-board-attachments/{message-board-attachment-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public void deleteDiscussionAttachment(
-			@NotNull @PathParam("discussion-attachment-id") Long
-				discussionAttachmentId)
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public void deleteMessageBoardAttachment(
+			@NotNull @PathParam("message-board-attachment-id") Long
+				messageBoardAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/discussion-attachments/{discussion-attachment-id}")
+	@Path("/message-board-attachments/{message-board-attachment-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public DiscussionAttachment getDiscussionAttachment(
-			@NotNull @PathParam("discussion-attachment-id") Long
-				discussionAttachmentId)
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public MessageBoardAttachment getMessageBoardAttachment(
+			@NotNull @PathParam("message-board-attachment-id") Long
+				messageBoardAttachmentId)
 		throws Exception {
 
-		return new DiscussionAttachment();
+		return new MessageBoardAttachment();
 	}
 
 	@Override
 	@GET
 	@Path(
-		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments"
+		"/message-board-messages/{message-board-message-id}/message-board-attachments"
 	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public Page<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionAttachmentsPage(
-				@NotNull @PathParam("discussion-forum-posting-id") Long
-					discussionForumPostingId)
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public Page<MessageBoardAttachment>
+			getMessageBoardMessageMessageBoardAttachmentsPage(
+				@NotNull @PathParam("message-board-message-id") Long
+					messageBoardMessageId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -101,28 +101,30 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path(
-		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments"
+		"/message-board-messages/{message-board-message-id}/message-board-attachments"
 	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
-			@NotNull @PathParam("discussion-forum-posting-id") Long
-				discussionForumPostingId,
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
+			@NotNull @PathParam("message-board-message-id") Long
+				messageBoardMessageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
-		return new DiscussionAttachment();
+		return new MessageBoardAttachment();
 	}
 
 	@Override
 	@GET
-	@Path("/discussion-threads/{discussion-thread-id}/discussion-attachments")
+	@Path(
+		"/message-board-threads/{message-board-thread-id}/message-board-attachments"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public Page<DiscussionAttachment>
-			getDiscussionThreadDiscussionAttachmentsPage(
-				@NotNull @PathParam("discussion-thread-id") Long
-					discussionThreadId)
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public Page<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				@NotNull @PathParam("message-board-thread-id") Long
+					messageBoardThreadId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -131,15 +133,18 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/discussion-threads/{discussion-thread-id}/discussion-attachments")
+	@Path(
+		"/message-board-threads/{message-board-thread-id}/message-board-attachments"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public DiscussionAttachment postDiscussionThreadDiscussionAttachment(
-			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId,
+	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId,
 			MultipartBody multipartBody)
 		throws Exception {
 
-		return new DiscussionAttachment();
+		return new MessageBoardAttachment();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -155,11 +160,11 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseDiscussionAttachmentResourceImpl.class
+			BaseMessageBoardAttachmentResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseDiscussionAttachmentResourceImpl.class, methodName
+			BaseMessageBoardAttachmentResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -167,7 +172,7 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(DiscussionAttachment discussionAttachment) {
+	protected void preparePatch(MessageBoardAttachment messageBoardAttachment) {
 	}
 
 	protected <T, R> List<R> transform(

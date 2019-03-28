@@ -19,13 +19,13 @@ import com.liferay.headless.collaboration.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -53,20 +53,20 @@ public class ServletDataImpl implements ServletData {
 			_blogPostingImageResourceComponentServiceObjects);
 		Mutation.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
-		Mutation.setDiscussionAttachmentResourceComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects);
-		Mutation.setDiscussionForumPostingResourceComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects);
-		Mutation.setDiscussionSectionResourceComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects);
-		Mutation.setDiscussionThreadResourceComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseFolderResourceComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects);
+		Mutation.setMessageBoardAttachmentResourceComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects);
+		Mutation.setMessageBoardMessageResourceComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects);
+		Mutation.setMessageBoardSectionResourceComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects);
+		Mutation.setMessageBoardThreadResourceComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects);
 
 		Query.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
@@ -74,20 +74,20 @@ public class ServletDataImpl implements ServletData {
 			_blogPostingImageResourceComponentServiceObjects);
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
-		Query.setDiscussionAttachmentResourceComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects);
-		Query.setDiscussionForumPostingResourceComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects);
-		Query.setDiscussionSectionResourceComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects);
-		Query.setDiscussionThreadResourceComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Query.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects);
 		Query.setKnowledgeBaseFolderResourceComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects);
+		Query.setMessageBoardAttachmentResourceComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects);
+		Query.setMessageBoardMessageResourceComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects);
+		Query.setMessageBoardSectionResourceComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects);
+		Query.setMessageBoardThreadResourceComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -118,22 +118,6 @@ public class ServletDataImpl implements ServletData {
 		_commentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DiscussionAttachmentResource>
-		_discussionAttachmentResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DiscussionForumPostingResource>
-		_discussionForumPostingResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DiscussionSectionResource>
-		_discussionSectionResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DiscussionThreadResource>
-		_discussionThreadResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 
@@ -144,5 +128,21 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KnowledgeBaseFolderResource>
 		_knowledgeBaseFolderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MessageBoardAttachmentResource>
+		_messageBoardAttachmentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MessageBoardMessageResource>
+		_messageBoardMessageResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MessageBoardSectionResource>
+		_messageBoardSectionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MessageBoardThreadResource>
+		_messageBoardThreadResourceComponentServiceObjects;
 
 }

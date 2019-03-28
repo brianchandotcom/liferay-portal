@@ -148,8 +148,8 @@ components:
                     format: uri
                     type: string
             type: object
-        DiscussionAttachment:
-            description: https://www.schema.org/DiscussionAttachment
+        MessageBoardAttachment:
+            description: https://www.schema.org/MessageBoardAttachment
             properties:
                 contentUrl:
                     type: string
@@ -165,8 +165,8 @@ components:
                 title:
                     type: string
             type: object
-        DiscussionForumPosting:
-            description: https://www.schema.org/DiscussionForumPosting
+        MessageBoardMessage:
+            description: https://www.schema.org/MessageBoardMessage
             properties:
                 aggregateRating:
                     $ref: "#/components/schemas/AggregateRating"
@@ -194,10 +194,10 @@ components:
                     items:
                         type: string
                     type: array
-                numberOfDiscussionAttachments:
+                numberOfMessageBoardAttachments:
                     readOnly: true
                     type: integer
-                numberOfDiscussionForumPostings:
+                numberOfMessageBoardMessages:
                     readOnly: true
                     type: integer
                 showAsAnswer:
@@ -224,8 +224,8 @@ components:
                     type: string
                     writeOnly: true
             type: object
-        DiscussionSection:
-            description: https://www.schema.org/DiscussionSection
+        MessageBoardSection:
+            description: https://www.schema.org/MessageBoardSection
             properties:
                 contentSpaceId:
                     format: int64
@@ -243,10 +243,10 @@ components:
                 id:
                     format: int64
                     type: integer
-                numberOfDiscussionSections:
+                numberOfMessageBoardSections:
                     readOnly: true
                     type: integer
-                numberOfDiscussionThreads:
+                numberOfMessageBoardThreads:
                     readOnly: true
                     type: integer
                 title:
@@ -256,8 +256,8 @@ components:
                     type: string
                     writeOnly: true
             type: object
-        DiscussionThread:
-            description: https://www.schema.org/DiscussionThread
+        MessageBoardThread:
+            description: https://www.schema.org/MessageBoardThread
             properties:
                 aggregateRating:
                     $ref: "#/components/schemas/AggregateRating"
@@ -283,10 +283,10 @@ components:
                     items:
                         type: string
                     type: array
-                numberOfDiscussionAttachments:
+                numberOfMessageBoardAttachments:
                     readOnly: true
                     type: integer
-                numberOfDiscussionForumPostings:
+                numberOfMessageBoardMessages:
                     readOnly: true
                     type: integer
                 showAsQuestion:
@@ -825,7 +825,7 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
-    "/content-spaces/{content-space-id}/discussion-sections":
+    "/content-spaces/{content-space-id}/message-board-sections":
         get:
             parameters:
                 - in: path
@@ -860,10 +860,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionSection"
+                                    $ref: "#/components/schemas/MessageBoardSection"
                                 type: array
                     description: ""
-            tags: ["DiscussionSection"]
+            tags: ["MessageBoardSection"]
         post:
             parameters:
                 - in: path
@@ -876,16 +876,16 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionSection"
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionSection"
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
-            tags: ["DiscussionSection"]
-    "/content-spaces/{content-space-id}/discussion-threads":
+            tags: ["MessageBoardSection"]
+    "/content-spaces/{content-space-id}/message-board-threads":
         get:
             parameters:
                 - in: path
@@ -920,10 +920,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionThread"
+                                    $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
         post:
             parameters:
                 - in: path
@@ -936,15 +936,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionThread"
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionThread"
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
     "/content-spaces/{content-space-id}/knowledge-base-articles":
         get:
             parameters:
@@ -1053,11 +1053,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
-    "/discussion-attachments/{discussion-attachment-id}":
+    "/message-board-attachments/{message-board-attachment-id}":
         delete:
             parameters:
                 - in: path
-                  name: discussion-attachment-id
+                  name: message-board-attachment-id
                   required: true
                   schema:
                       format: int64
@@ -1067,11 +1067,11 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["DiscussionAttachment"]
+            tags: ["MessageBoardAttachment"]
         get:
             parameters:
                 - in: path
-                  name: discussion-attachment-id
+                  name: message-board-attachment-id
                   required: true
                   schema:
                       format: int64
@@ -1081,14 +1081,14 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionAttachment"
+                                $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
-            tags: ["DiscussionAttachment"]
-    "/discussion-forum-postings/{discussion-forum-posting-id}":
+            tags: ["MessageBoardAttachment"]
+    "/message-board-messages/{message-board-message-id}":
         delete:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1098,11 +1098,11 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
         get:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1112,13 +1112,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionForumPosting"
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
         patch:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1127,19 +1127,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionForumPosting"
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionForumPosting"
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
         put:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1148,20 +1148,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionForumPosting"
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionForumPosting"
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
-            tags: ["DiscussionForumPosting"]
-    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments":
+            tags: ["MessageBoardMessage"]
+    "/message-board-messages/{message-board-message-id}/message-board-attachments":
         get:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1172,14 +1172,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
                                 type: array
                     description: ""
-            tags: ["DiscussionAttachment"]
+            tags: ["MessageBoardAttachment"]
         post:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1189,8 +1189,8 @@ paths:
                     multipart/form-data:
                         schema:
                             properties:
-                                discussionAttachment:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                MessageBoardAttachment:
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
                                 file:
                                     format: binary
                                     type: string
@@ -1200,14 +1200,14 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionAttachment"
+                                $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
-            tags: ["DiscussionAttachment"]
-    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings":
+            tags: ["MessageBoardAttachment"]
+    "/message-board-messages/{message-board-message-id}/message-board-messages":
         get:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1234,14 +1234,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionForumPosting"
+                                    $ref: "#/components/schemas/MessageBoardMessage"
                                 type: array
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
         post:
             parameters:
                 - in: path
-                  name: discussion-forum-posting-id
+                  name: message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -1250,20 +1250,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionForumPosting"
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionForumPosting"
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
-            tags: ["DiscussionForumPosting"]
-    "/discussion-sections/{discussion-section-id}":
+            tags: ["MessageBoardMessage"]
+    "/message-board-sections/{message-board-section-id}":
         delete:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1273,11 +1273,11 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["DiscussionSection"]
+            tags: ["MessageBoardSection"]
         get:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1287,13 +1287,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionSection"
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
-            tags: ["DiscussionSection"]
+            tags: ["MessageBoardSection"]
         patch:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1302,19 +1302,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionSection"
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionSection"
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
-            tags: ["DiscussionSection"]
+            tags: ["MessageBoardSection"]
         put:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1323,20 +1323,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionSection"
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionSection"
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
-            tags: ["DiscussionSection"]
-    "/discussion-sections/{discussion-section-id}/discussion-sections":
+            tags: ["MessageBoardSection"]
+    "/message-board-sections/{message-board-section-id}/message-board-sections":
         get:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1363,14 +1363,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionSection"
+                                    $ref: "#/components/schemas/MessageBoardSection"
                                 type: array
                     description: ""
-            tags: ["DiscussionSection"]
+            tags: ["MessageBoardSection"]
         post:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1379,20 +1379,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionSection"
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionSection"
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
-            tags: ["DiscussionSection"]
-    "/discussion-sections/{discussion-section-id}/discussion-threads":
+            tags: ["MessageBoardSection"]
+    "/message-board-sections/{message-board-section-id}/message-board-threads":
         get:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1419,14 +1419,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionThread"
+                                    $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
         post:
             parameters:
                 - in: path
-                  name: discussion-section-id
+                  name: message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -1435,20 +1435,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionThread"
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionThread"
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
-            tags: ["DiscussionThread"]
-    "/discussion-threads/{discussion-thread-id}":
+            tags: ["MessageBoardThread"]
+    "/message-board-threads/{message-board-thread-id}":
         delete:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1458,11 +1458,11 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
         get:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1472,13 +1472,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionThread"
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
         patch:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1487,19 +1487,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionThread"
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionThread"
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
-            tags: ["DiscussionThread"]
+            tags: ["MessageBoardThread"]
         put:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1508,20 +1508,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionThread"
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionThread"
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
-            tags: ["DiscussionThread"]
-    "/discussion-threads/{discussion-thread-id}/discussion-attachments":
+            tags: ["MessageBoardThread"]
+    "/message-board-threads/{message-board-thread-id}/message-board-attachments":
         get:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1532,14 +1532,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
                                 type: array
                     description: ""
-            tags: ["DiscussionAttachment"]
+            tags: ["MessageBoardAttachment"]
         post:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1553,21 +1553,21 @@ paths:
                                     format: binary
                                     type: string
                                 knowledgeBaseAttachment:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
                             type: object
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionAttachment"
+                                $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
-            tags: ["DiscussionAttachment"]
-    "/discussion-threads/{discussion-thread-id}/discussion-forum-postings":
+            tags: ["MessageBoardAttachment"]
+    "/message-board-threads/{message-board-thread-id}/message-board-messages":
         get:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1594,14 +1594,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/DiscussionForumPosting"
+                                    $ref: "#/components/schemas/MessageBoardMessage"
                                 type: array
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
         post:
             parameters:
                 - in: path
-                  name: discussion-thread-id
+                  name: message-board-thread-id
                   required: true
                   schema:
                       format: int64
@@ -1610,15 +1610,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DiscussionForumPosting"
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/DiscussionForumPosting"
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
-            tags: ["DiscussionForumPosting"]
+            tags: ["MessageBoardMessage"]
     "/knowledge-base-articles/{knowledge-base-article-id}":
         delete:
             parameters:

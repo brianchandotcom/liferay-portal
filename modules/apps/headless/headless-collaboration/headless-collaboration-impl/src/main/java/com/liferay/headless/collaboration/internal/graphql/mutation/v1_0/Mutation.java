@@ -17,23 +17,23 @@ package com.liferay.headless.collaboration.internal.graphql.mutation.v1_0;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionForumPosting;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionSection;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -79,38 +79,6 @@ public class Mutation {
 			commentResourceComponentServiceObjects;
 	}
 
-	public static void setDiscussionAttachmentResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionAttachmentResource>
-			discussionAttachmentResourceComponentServiceObjects) {
-
-		_discussionAttachmentResourceComponentServiceObjects =
-			discussionAttachmentResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionForumPostingResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionForumPostingResource>
-			discussionForumPostingResourceComponentServiceObjects) {
-
-		_discussionForumPostingResourceComponentServiceObjects =
-			discussionForumPostingResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionSectionResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionSectionResource>
-			discussionSectionResourceComponentServiceObjects) {
-
-		_discussionSectionResourceComponentServiceObjects =
-			discussionSectionResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionThreadResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionThreadResource>
-			discussionThreadResourceComponentServiceObjects) {
-
-		_discussionThreadResourceComponentServiceObjects =
-			discussionThreadResourceComponentServiceObjects;
-	}
-
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
 		ComponentServiceObjects<KnowledgeBaseArticleResource>
 			knowledgeBaseArticleResourceComponentServiceObjects) {
@@ -134,6 +102,38 @@ public class Mutation {
 
 		_knowledgeBaseFolderResourceComponentServiceObjects =
 			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardAttachmentResource>
+			messageBoardAttachmentResourceComponentServiceObjects) {
+
+		_messageBoardAttachmentResourceComponentServiceObjects =
+			messageBoardAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardMessageResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardMessageResource>
+			messageBoardMessageResourceComponentServiceObjects) {
+
+		_messageBoardMessageResourceComponentServiceObjects =
+			messageBoardMessageResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardSectionResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardSectionResource>
+			messageBoardSectionResourceComponentServiceObjects) {
+
+		_messageBoardSectionResourceComponentServiceObjects =
+			messageBoardSectionResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardThreadResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardThreadResource>
+			messageBoardThreadResourceComponentServiceObjects) {
+
+		_messageBoardThreadResourceComponentServiceObjects =
+			messageBoardThreadResourceComponentServiceObjects;
 	}
 
 	@GraphQLInvokeDetached
@@ -269,285 +269,284 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDiscussionAttachment(
-			@GraphQLName("discussion-attachment-id") Long
-				discussionAttachmentId)
+	public void deleteMessageBoardAttachment(
+			@GraphQLName("message-board-attachment-id") Long
+				messageBoardAttachmentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
+			_messageBoardAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.deleteDiscussionAttachment(
-					discussionAttachmentId));
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.deleteMessageBoardAttachment(
+					messageBoardAttachmentId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	@GraphQLName(
-		"postDiscussionForumPostingDiscussionAttachmentDiscussionForumPostingIdMultipartBody"
+		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
 	)
-	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
-			@GraphQLName("discussion-forum-posting-id") Long
-				discussionForumPostingId,
+	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
+			_messageBoardAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.
-					postDiscussionForumPostingDiscussionAttachment(
-						discussionForumPostingId, multipartBody));
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardMessageMessageBoardAttachment(
+						messageBoardMessageId, multipartBody));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	@GraphQLName(
-		"postDiscussionThreadDiscussionAttachmentDiscussionThreadIdMultipartBody"
+		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
 	)
-	public DiscussionAttachment postDiscussionThreadDiscussionAttachment(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId,
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
+			_messageBoardAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.
-					postDiscussionThreadDiscussionAttachment(
-						discussionThreadId, multipartBody));
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardThreadMessageBoardAttachment(
+						messageBoardThreadId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDiscussionForumPosting(
-			@GraphQLName("discussion-forum-posting-id") Long
-				discussionForumPostingId)
+	public void deleteMessageBoardMessage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
+			_messageBoardMessageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.deleteDiscussionForumPosting(
-					discussionForumPostingId));
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessage(
+					messageBoardMessageId));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionForumPosting patchDiscussionForumPosting(
-			@GraphQLName("discussion-forum-posting-id") Long
-				discussionForumPostingId,
-			@GraphQLName("DiscussionForumPosting") DiscussionForumPosting
-				discussionForumPosting)
+	public MessageBoardMessage patchMessageBoardMessage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
+			@GraphQLName("MessageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
+			_messageBoardMessageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.patchDiscussionForumPosting(
-					discussionForumPostingId, discussionForumPosting));
+			messageBoardMessageResource ->
+				messageBoardMessageResource.patchMessageBoardMessage(
+					messageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionForumPosting putDiscussionForumPosting(
-			@GraphQLName("discussion-forum-posting-id") Long
-				discussionForumPostingId,
-			@GraphQLName("DiscussionForumPosting") DiscussionForumPosting
-				discussionForumPosting)
+	public MessageBoardMessage putMessageBoardMessage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
+			@GraphQLName("MessageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
+			_messageBoardMessageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.putDiscussionForumPosting(
-					discussionForumPostingId, discussionForumPosting));
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessage(
+					messageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionForumPosting
-			postDiscussionForumPostingDiscussionForumPosting(
-				@GraphQLName("discussion-forum-posting-id") Long
-					discussionForumPostingId,
-				@GraphQLName("DiscussionForumPosting") DiscussionForumPosting
-					discussionForumPosting)
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
+			@GraphQLName("MessageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
+			_messageBoardMessageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.
-					postDiscussionForumPostingDiscussionForumPosting(
-						discussionForumPostingId, discussionForumPosting));
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardMessageMessageBoardMessage(
+						messageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionForumPosting postDiscussionThreadDiscussionForumPosting(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId,
-			@GraphQLName("DiscussionForumPosting") DiscussionForumPosting
-				discussionForumPosting)
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId,
+			@GraphQLName("MessageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
+			_messageBoardMessageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.
-					postDiscussionThreadDiscussionForumPosting(
-						discussionThreadId, discussionForumPosting));
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessage(
+						messageBoardThreadId, messageBoardMessage));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionSection postContentSpaceDiscussionSection(
+	public MessageBoardSection postContentSpaceMessageBoardSection(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("DiscussionSection") DiscussionSection
-				discussionSection)
+			@GraphQLName("MessageBoardSection") MessageBoardSection
+				messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
+			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.postContentSpaceDiscussionSection(
-					contentSpaceId, discussionSection));
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postContentSpaceMessageBoardSection(
+					contentSpaceId, messageBoardSection));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDiscussionSection(
-			@GraphQLName("discussion-section-id") Long discussionSectionId)
+	public void deleteMessageBoardSection(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
+			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.deleteDiscussionSection(
-					discussionSectionId));
+			messageBoardSectionResource ->
+				messageBoardSectionResource.deleteMessageBoardSection(
+					messageBoardSectionId));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionSection patchDiscussionSection(
-			@GraphQLName("discussion-section-id") Long discussionSectionId,
-			@GraphQLName("DiscussionSection") DiscussionSection
-				discussionSection)
+	public MessageBoardSection patchMessageBoardSection(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId,
+			@GraphQLName("MessageBoardSection") MessageBoardSection
+				messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
+			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.patchDiscussionSection(
-					discussionSectionId, discussionSection));
+			messageBoardSectionResource ->
+				messageBoardSectionResource.patchMessageBoardSection(
+					messageBoardSectionId, messageBoardSection));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionSection putDiscussionSection(
-			@GraphQLName("discussion-section-id") Long discussionSectionId,
-			@GraphQLName("DiscussionSection") DiscussionSection
-				discussionSection)
+	public MessageBoardSection putMessageBoardSection(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId,
+			@GraphQLName("MessageBoardSection") MessageBoardSection
+				messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
+			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.putDiscussionSection(
-					discussionSectionId, discussionSection));
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSection(
+					messageBoardSectionId, messageBoardSection));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionSection postDiscussionSectionDiscussionSection(
-			@GraphQLName("discussion-section-id") Long discussionSectionId,
-			@GraphQLName("DiscussionSection") DiscussionSection
-				discussionSection)
+	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId,
+			@GraphQLName("MessageBoardSection") MessageBoardSection
+				messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
+			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.
-					postDiscussionSectionDiscussionSection(
-						discussionSectionId, discussionSection));
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					postMessageBoardSectionMessageBoardSection(
+						messageBoardSectionId, messageBoardSection));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionThread postContentSpaceDiscussionThread(
+	public MessageBoardThread postContentSpaceMessageBoardThread(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("DiscussionThread") DiscussionThread discussionThread)
+			@GraphQLName("MessageBoardThread") MessageBoardThread
+				messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.postContentSpaceDiscussionThread(
-					contentSpaceId, discussionThread));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postContentSpaceMessageBoardThread(
+					contentSpaceId, messageBoardThread));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionThread postDiscussionSectionDiscussionThread(
-			@GraphQLName("discussion-section-id") Long discussionSectionId,
-			@GraphQLName("DiscussionThread") DiscussionThread discussionThread)
+	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId,
+			@GraphQLName("MessageBoardThread") MessageBoardThread
+				messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.postDiscussionSectionDiscussionThread(
-					discussionSectionId, discussionThread));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.
+					postMessageBoardSectionMessageBoardThread(
+						messageBoardSectionId, messageBoardThread));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDiscussionThread(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId)
+	public void deleteMessageBoardThread(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.deleteDiscussionThread(
-					discussionThreadId));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThread(
+					messageBoardThreadId));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionThread patchDiscussionThread(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId,
-			@GraphQLName("DiscussionThread") DiscussionThread discussionThread)
+	public MessageBoardThread patchMessageBoardThread(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId,
+			@GraphQLName("MessageBoardThread") MessageBoardThread
+				messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.patchDiscussionThread(
-					discussionThreadId, discussionThread));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.patchMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
 	}
 
 	@GraphQLInvokeDetached
-	public DiscussionThread putDiscussionThread(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId,
-			@GraphQLName("DiscussionThread") DiscussionThread discussionThread)
+	public MessageBoardThread putMessageBoardThread(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId,
+			@GraphQLName("MessageBoardThread") MessageBoardThread
+				messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.putDiscussionThread(
-					discussionThreadId, discussionThread));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
 	}
 
 	@GraphQLField
@@ -824,42 +823,6 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			DiscussionAttachmentResource discussionAttachmentResource)
-		throws Exception {
-
-		discussionAttachmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionForumPostingResource discussionForumPostingResource)
-		throws Exception {
-
-		discussionForumPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionSectionResource discussionSectionResource)
-		throws Exception {
-
-		discussionSectionResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionThreadResource discussionThreadResource)
-		throws Exception {
-
-		discussionThreadResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
 
@@ -886,25 +849,61 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			MessageBoardAttachmentResource messageBoardAttachmentResource)
+		throws Exception {
+
+		messageBoardAttachmentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardMessageResource messageBoardMessageResource)
+		throws Exception {
+
+		messageBoardMessageResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardSectionResource messageBoardSectionResource)
+		throws Exception {
+
+		messageBoardSectionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardThreadResource messageBoardThreadResource)
+		throws Exception {
+
+		messageBoardThreadResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
 		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionAttachmentResource>
-		_discussionAttachmentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionForumPostingResource>
-		_discussionForumPostingResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionSectionResource>
-		_discussionSectionResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionThreadResource>
-		_discussionThreadResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>
 		_knowledgeBaseAttachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
 		_knowledgeBaseFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardAttachmentResource>
+		_messageBoardAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardMessageResource>
+		_messageBoardMessageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardSectionResource>
+		_messageBoardSectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardThreadResource>
+		_messageBoardThreadResourceComponentServiceObjects;
 
 }

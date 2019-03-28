@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,7 +77,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseDiscussionAttachmentResourceTestCase {
+public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -106,30 +106,31 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteDiscussionAttachment() throws Exception {
-		DiscussionAttachment discussionAttachment =
-			testDeleteDiscussionAttachment_addDiscussionAttachment();
+	public void testDeleteMessageBoardAttachment() throws Exception {
+		MessageBoardAttachment messageBoardAttachment =
+			testDeleteMessageBoardAttachment_addMessageBoardAttachment();
 
 		assertResponseCode(
 			204,
-			invokeDeleteDiscussionAttachmentResponse(
-				discussionAttachment.getId()));
+			invokeDeleteMessageBoardAttachmentResponse(
+				messageBoardAttachment.getId()));
 
 		assertResponseCode(
 			404,
-			invokeGetDiscussionAttachmentResponse(
-				discussionAttachment.getId()));
+			invokeGetMessageBoardAttachmentResponse(
+				messageBoardAttachment.getId()));
 	}
 
-	protected DiscussionAttachment
-			testDeleteDiscussionAttachment_addDiscussionAttachment()
+	protected MessageBoardAttachment
+			testDeleteMessageBoardAttachment_addMessageBoardAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteDiscussionAttachment(Long discussionAttachmentId)
+	protected void invokeDeleteMessageBoardAttachment(
+			Long messageBoardAttachmentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -139,8 +140,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-attachments/{discussion-attachment-id}",
-					discussionAttachmentId);
+					"/message-board-attachments/{message-board-attachment-id}",
+					messageBoardAttachmentId);
 
 		options.setLocation(location);
 
@@ -151,8 +152,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeDeleteDiscussionAttachmentResponse(
-			Long discussionAttachmentId)
+	protected Http.Response invokeDeleteMessageBoardAttachmentResponse(
+			Long messageBoardAttachmentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -162,8 +163,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-attachments/{discussion-attachment-id}",
-					discussionAttachmentId);
+					"/message-board-attachments/{message-board-attachment-id}",
+					messageBoardAttachmentId);
 
 		options.setLocation(location);
 
@@ -173,27 +174,27 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscussionAttachment() throws Exception {
-		DiscussionAttachment postDiscussionAttachment =
-			testGetDiscussionAttachment_addDiscussionAttachment();
+	public void testGetMessageBoardAttachment() throws Exception {
+		MessageBoardAttachment postMessageBoardAttachment =
+			testGetMessageBoardAttachment_addMessageBoardAttachment();
 
-		DiscussionAttachment getDiscussionAttachment =
-			invokeGetDiscussionAttachment(postDiscussionAttachment.getId());
+		MessageBoardAttachment getMessageBoardAttachment =
+			invokeGetMessageBoardAttachment(postMessageBoardAttachment.getId());
 
-		assertEquals(postDiscussionAttachment, getDiscussionAttachment);
-		assertValid(getDiscussionAttachment);
+		assertEquals(postMessageBoardAttachment, getMessageBoardAttachment);
+		assertValid(getMessageBoardAttachment);
 	}
 
-	protected DiscussionAttachment
-			testGetDiscussionAttachment_addDiscussionAttachment()
+	protected MessageBoardAttachment
+			testGetMessageBoardAttachment_addMessageBoardAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected DiscussionAttachment invokeGetDiscussionAttachment(
-			Long discussionAttachmentId)
+	protected MessageBoardAttachment invokeGetMessageBoardAttachment(
+			Long messageBoardAttachmentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -201,8 +202,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-attachments/{discussion-attachment-id}",
-					discussionAttachmentId);
+					"/message-board-attachments/{message-board-attachment-id}",
+					messageBoardAttachmentId);
 
 		options.setLocation(location);
 
@@ -214,7 +215,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		try {
 			return _outputObjectMapper.readValue(
-				string, DiscussionAttachment.class);
+				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -223,8 +224,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetDiscussionAttachmentResponse(
-			Long discussionAttachmentId)
+	protected Http.Response invokeGetMessageBoardAttachmentResponse(
+			Long messageBoardAttachmentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -232,8 +233,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-attachments/{discussion-attachment-id}",
-					discussionAttachmentId);
+					"/message-board-attachments/{message-board-attachment-id}",
+					messageBoardAttachmentId);
 
 		options.setLocation(location);
 
@@ -243,56 +244,56 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscussionForumPostingDiscussionAttachmentsPage()
+	public void testGetMessageBoardMessageMessageBoardAttachmentsPage()
 		throws Exception {
 
-		Long discussionForumPostingId =
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_getDiscussionForumPostingId();
-		Long irrelevantDiscussionForumPostingId =
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_getIrrelevantDiscussionForumPostingId();
+		Long messageBoardMessageId =
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId();
+		Long irrelevantMessageBoardMessageId =
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getIrrelevantMessageBoardMessageId();
 
-		if ((irrelevantDiscussionForumPostingId != null)) {
-			DiscussionAttachment irrelevantDiscussionAttachment =
-				testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
-					irrelevantDiscussionForumPostingId,
-					randomIrrelevantDiscussionAttachment());
+		if ((irrelevantMessageBoardMessageId != null)) {
+			MessageBoardAttachment irrelevantMessageBoardAttachment =
+				testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
+					irrelevantMessageBoardMessageId,
+					randomIrrelevantMessageBoardAttachment());
 
-			Page<DiscussionAttachment> page =
-				invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
-					irrelevantDiscussionForumPostingId);
+			Page<MessageBoardAttachment> page =
+				invokeGetMessageBoardMessageMessageBoardAttachmentsPage(
+					irrelevantMessageBoardMessageId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantDiscussionAttachment),
-				(List<DiscussionAttachment>)page.getItems());
+				Arrays.asList(irrelevantMessageBoardAttachment),
+				(List<MessageBoardAttachment>)page.getItems());
 			assertValid(page);
 		}
 
-		DiscussionAttachment discussionAttachment1 =
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
-				discussionForumPostingId, randomDiscussionAttachment());
+		MessageBoardAttachment messageBoardAttachment1 =
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				messageBoardMessageId, randomMessageBoardAttachment());
 
-		DiscussionAttachment discussionAttachment2 =
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
-				discussionForumPostingId, randomDiscussionAttachment());
+		MessageBoardAttachment messageBoardAttachment2 =
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				messageBoardMessageId, randomMessageBoardAttachment());
 
-		Page<DiscussionAttachment> page =
-			invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
-				discussionForumPostingId);
+		Page<MessageBoardAttachment> page =
+			invokeGetMessageBoardMessageMessageBoardAttachmentsPage(
+				messageBoardMessageId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(discussionAttachment1, discussionAttachment2),
-			(List<DiscussionAttachment>)page.getItems());
+			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
+			(List<MessageBoardAttachment>)page.getItems());
 		assertValid(page);
 	}
 
-	protected DiscussionAttachment
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
-				Long discussionForumPostingId,
-				DiscussionAttachment discussionAttachment)
+	protected MessageBoardAttachment
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				Long messageBoardMessageId,
+				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -300,7 +301,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_getDiscussionForumPostingId()
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -308,15 +309,15 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionForumPostingDiscussionAttachmentsPage_getIrrelevantDiscussionForumPostingId()
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getIrrelevantMessageBoardMessageId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<DiscussionAttachment>
-			invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
-				Long discussionForumPostingId)
+	protected Page<MessageBoardAttachment>
+			invokeGetMessageBoardMessageMessageBoardAttachmentsPage(
+				Long messageBoardMessageId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -324,8 +325,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
-					discussionForumPostingId);
+					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					messageBoardMessageId);
 
 		options.setLocation(location);
 
@@ -337,13 +338,13 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			string,
-			new TypeReference<Page<DiscussionAttachment>>() {
+			new TypeReference<Page<MessageBoardAttachment>>() {
 			});
 	}
 
 	protected Http.Response
-			invokeGetDiscussionForumPostingDiscussionAttachmentsPageResponse(
-				Long discussionForumPostingId)
+			invokeGetMessageBoardMessageMessageBoardAttachmentsPageResponse(
+				Long messageBoardMessageId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -351,8 +352,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
-					discussionForumPostingId);
+					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					messageBoardMessageId);
 
 		options.setLocation(location);
 
@@ -362,24 +363,24 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscussionForumPostingDiscussionAttachment()
+	public void testPostMessageBoardMessageMessageBoardAttachment()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
-	protected DiscussionAttachment
-			testPostDiscussionForumPostingDiscussionAttachment_addDiscussionAttachment(
-				DiscussionAttachment discussionAttachment)
+	protected MessageBoardAttachment
+			testPostMessageBoardMessageMessageBoardAttachment_addMessageBoardAttachment(
+				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected DiscussionAttachment
-			invokePostDiscussionForumPostingDiscussionAttachment(
-				Long discussionForumPostingId, MultipartBody multipartBody)
+	protected MessageBoardAttachment
+			invokePostMessageBoardMessageMessageBoardAttachment(
+				Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -387,8 +388,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
-					discussionForumPostingId);
+					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					messageBoardMessageId);
 
 		options.setLocation(location);
 
@@ -402,7 +403,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		try {
 			return _outputObjectMapper.readValue(
-				string, DiscussionAttachment.class);
+				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -412,8 +413,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostDiscussionForumPostingDiscussionAttachmentResponse(
-				Long discussionForumPostingId, MultipartBody multipartBody)
+			invokePostMessageBoardMessageMessageBoardAttachmentResponse(
+				Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -421,8 +422,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
-					discussionForumPostingId);
+					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					messageBoardMessageId);
 
 		options.setLocation(location);
 
@@ -434,56 +435,56 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscussionThreadDiscussionAttachmentsPage()
+	public void testGetMessageBoardThreadMessageBoardAttachmentsPage()
 		throws Exception {
 
-		Long discussionThreadId =
-			testGetDiscussionThreadDiscussionAttachmentsPage_getDiscussionThreadId();
-		Long irrelevantDiscussionThreadId =
-			testGetDiscussionThreadDiscussionAttachmentsPage_getIrrelevantDiscussionThreadId();
+		Long messageBoardThreadId =
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId();
+		Long irrelevantMessageBoardThreadId =
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getIrrelevantMessageBoardThreadId();
 
-		if ((irrelevantDiscussionThreadId != null)) {
-			DiscussionAttachment irrelevantDiscussionAttachment =
-				testGetDiscussionThreadDiscussionAttachmentsPage_addDiscussionAttachment(
-					irrelevantDiscussionThreadId,
-					randomIrrelevantDiscussionAttachment());
+		if ((irrelevantMessageBoardThreadId != null)) {
+			MessageBoardAttachment irrelevantMessageBoardAttachment =
+				testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
+					irrelevantMessageBoardThreadId,
+					randomIrrelevantMessageBoardAttachment());
 
-			Page<DiscussionAttachment> page =
-				invokeGetDiscussionThreadDiscussionAttachmentsPage(
-					irrelevantDiscussionThreadId);
+			Page<MessageBoardAttachment> page =
+				invokeGetMessageBoardThreadMessageBoardAttachmentsPage(
+					irrelevantMessageBoardThreadId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantDiscussionAttachment),
-				(List<DiscussionAttachment>)page.getItems());
+				Arrays.asList(irrelevantMessageBoardAttachment),
+				(List<MessageBoardAttachment>)page.getItems());
 			assertValid(page);
 		}
 
-		DiscussionAttachment discussionAttachment1 =
-			testGetDiscussionThreadDiscussionAttachmentsPage_addDiscussionAttachment(
-				discussionThreadId, randomDiscussionAttachment());
+		MessageBoardAttachment messageBoardAttachment1 =
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				messageBoardThreadId, randomMessageBoardAttachment());
 
-		DiscussionAttachment discussionAttachment2 =
-			testGetDiscussionThreadDiscussionAttachmentsPage_addDiscussionAttachment(
-				discussionThreadId, randomDiscussionAttachment());
+		MessageBoardAttachment messageBoardAttachment2 =
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				messageBoardThreadId, randomMessageBoardAttachment());
 
-		Page<DiscussionAttachment> page =
-			invokeGetDiscussionThreadDiscussionAttachmentsPage(
-				discussionThreadId);
+		Page<MessageBoardAttachment> page =
+			invokeGetMessageBoardThreadMessageBoardAttachmentsPage(
+				messageBoardThreadId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(discussionAttachment1, discussionAttachment2),
-			(List<DiscussionAttachment>)page.getItems());
+			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
+			(List<MessageBoardAttachment>)page.getItems());
 		assertValid(page);
 	}
 
-	protected DiscussionAttachment
-			testGetDiscussionThreadDiscussionAttachmentsPage_addDiscussionAttachment(
-				Long discussionThreadId,
-				DiscussionAttachment discussionAttachment)
+	protected MessageBoardAttachment
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
+				Long messageBoardThreadId,
+				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -491,7 +492,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionThreadDiscussionAttachmentsPage_getDiscussionThreadId()
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -499,15 +500,15 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionThreadDiscussionAttachmentsPage_getIrrelevantDiscussionThreadId()
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getIrrelevantMessageBoardThreadId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<DiscussionAttachment>
-			invokeGetDiscussionThreadDiscussionAttachmentsPage(
-				Long discussionThreadId)
+	protected Page<MessageBoardAttachment>
+			invokeGetMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -515,8 +516,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-threads/{discussion-thread-id}/discussion-attachments",
-					discussionThreadId);
+					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					messageBoardThreadId);
 
 		options.setLocation(location);
 
@@ -528,13 +529,13 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			string,
-			new TypeReference<Page<DiscussionAttachment>>() {
+			new TypeReference<Page<MessageBoardAttachment>>() {
 			});
 	}
 
 	protected Http.Response
-			invokeGetDiscussionThreadDiscussionAttachmentsPageResponse(
-				Long discussionThreadId)
+			invokeGetMessageBoardThreadMessageBoardAttachmentsPageResponse(
+				Long messageBoardThreadId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -542,8 +543,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-threads/{discussion-thread-id}/discussion-attachments",
-					discussionThreadId);
+					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					messageBoardThreadId);
 
 		options.setLocation(location);
 
@@ -553,24 +554,24 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscussionThreadDiscussionAttachment()
+	public void testPostMessageBoardThreadMessageBoardAttachment()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
-	protected DiscussionAttachment
-			testPostDiscussionThreadDiscussionAttachment_addDiscussionAttachment(
-				DiscussionAttachment discussionAttachment)
+	protected MessageBoardAttachment
+			testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
+				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected DiscussionAttachment
-			invokePostDiscussionThreadDiscussionAttachment(
-				Long discussionThreadId, MultipartBody multipartBody)
+	protected MessageBoardAttachment
+			invokePostMessageBoardThreadMessageBoardAttachment(
+				Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -578,8 +579,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-threads/{discussion-thread-id}/discussion-attachments",
-					discussionThreadId);
+					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					messageBoardThreadId);
 
 		options.setLocation(location);
 
@@ -593,7 +594,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		try {
 			return _outputObjectMapper.readValue(
-				string, DiscussionAttachment.class);
+				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -603,8 +604,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostDiscussionThreadDiscussionAttachmentResponse(
-				Long discussionThreadId, MultipartBody multipartBody)
+			invokePostMessageBoardThreadMessageBoardAttachmentResponse(
+				Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -612,8 +613,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-threads/{discussion-thread-id}/discussion-attachments",
-					discussionThreadId);
+					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					messageBoardThreadId);
 
 		options.setLocation(location);
 
@@ -632,47 +633,48 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected void assertEquals(
-		DiscussionAttachment discussionAttachment1,
-		DiscussionAttachment discussionAttachment2) {
+		MessageBoardAttachment messageBoardAttachment1,
+		MessageBoardAttachment messageBoardAttachment2) {
 
 		Assert.assertTrue(
-			discussionAttachment1 + " does not equal " + discussionAttachment2,
-			equals(discussionAttachment1, discussionAttachment2));
+			messageBoardAttachment1 + " does not equal " +
+				messageBoardAttachment2,
+			equals(messageBoardAttachment1, messageBoardAttachment2));
 	}
 
 	protected void assertEquals(
-		List<DiscussionAttachment> discussionAttachments1,
-		List<DiscussionAttachment> discussionAttachments2) {
+		List<MessageBoardAttachment> messageBoardAttachments1,
+		List<MessageBoardAttachment> messageBoardAttachments2) {
 
 		Assert.assertEquals(
-			discussionAttachments1.size(), discussionAttachments2.size());
+			messageBoardAttachments1.size(), messageBoardAttachments2.size());
 
-		for (int i = 0; i < discussionAttachments1.size(); i++) {
-			DiscussionAttachment discussionAttachment1 =
-				discussionAttachments1.get(i);
-			DiscussionAttachment discussionAttachment2 =
-				discussionAttachments2.get(i);
+		for (int i = 0; i < messageBoardAttachments1.size(); i++) {
+			MessageBoardAttachment messageBoardAttachment1 =
+				messageBoardAttachments1.get(i);
+			MessageBoardAttachment messageBoardAttachment2 =
+				messageBoardAttachments2.get(i);
 
-			assertEquals(discussionAttachment1, discussionAttachment2);
+			assertEquals(messageBoardAttachment1, messageBoardAttachment2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<DiscussionAttachment> discussionAttachments1,
-		List<DiscussionAttachment> discussionAttachments2) {
+		List<MessageBoardAttachment> messageBoardAttachments1,
+		List<MessageBoardAttachment> messageBoardAttachments2) {
 
 		Assert.assertEquals(
-			discussionAttachments1.size(), discussionAttachments2.size());
+			messageBoardAttachments1.size(), messageBoardAttachments2.size());
 
-		for (DiscussionAttachment discussionAttachment1 :
-				discussionAttachments1) {
+		for (MessageBoardAttachment messageBoardAttachment1 :
+				messageBoardAttachments1) {
 
 			boolean contains = false;
 
-			for (DiscussionAttachment discussionAttachment2 :
-					discussionAttachments2) {
+			for (MessageBoardAttachment messageBoardAttachment2 :
+					messageBoardAttachments2) {
 
-				if (equals(discussionAttachment1, discussionAttachment2)) {
+				if (equals(messageBoardAttachment1, messageBoardAttachment2)) {
 					contains = true;
 
 					break;
@@ -680,24 +682,24 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				discussionAttachments2 + " does not contain " +
-					discussionAttachment1,
+				messageBoardAttachments2 + " does not contain " +
+					messageBoardAttachment1,
 				contains);
 		}
 	}
 
-	protected void assertValid(DiscussionAttachment discussionAttachment) {
+	protected void assertValid(MessageBoardAttachment messageBoardAttachment) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<DiscussionAttachment> page) {
+	protected void assertValid(Page<MessageBoardAttachment> page) {
 		boolean valid = false;
 
-		Collection<DiscussionAttachment> discussionAttachments =
+		Collection<MessageBoardAttachment> messageBoardAttachments =
 			page.getItems();
 
-		int size = discussionAttachments.size();
+		int size = messageBoardAttachments.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -710,10 +712,10 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected boolean equals(
-		DiscussionAttachment discussionAttachment1,
-		DiscussionAttachment discussionAttachment2) {
+		MessageBoardAttachment messageBoardAttachment1,
+		MessageBoardAttachment messageBoardAttachment2) {
 
-		if (discussionAttachment1 == discussionAttachment2) {
+		if (messageBoardAttachment1 == messageBoardAttachment2) {
 			return true;
 		}
 
@@ -721,13 +723,13 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_discussionAttachmentResource instanceof EntityModelResource)) {
+		if (!(_messageBoardAttachmentResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_discussionAttachmentResource;
+			(EntityModelResource)_messageBoardAttachmentResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -754,7 +756,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		DiscussionAttachment discussionAttachment) {
+		MessageBoardAttachment messageBoardAttachment) {
 
 		StringBundler sb = new StringBundler();
 
@@ -768,7 +770,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		if (entityFieldName.equals("contentUrl")) {
 			sb.append("'");
-			sb.append(String.valueOf(discussionAttachment.getContentUrl()));
+			sb.append(String.valueOf(messageBoardAttachment.getContentUrl()));
 			sb.append("'");
 
 			return sb.toString();
@@ -776,7 +778,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
-			sb.append(String.valueOf(discussionAttachment.getEncodingFormat()));
+			sb.append(
+				String.valueOf(messageBoardAttachment.getEncodingFormat()));
 			sb.append("'");
 
 			return sb.toString();
@@ -784,7 +787,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		if (entityFieldName.equals("fileExtension")) {
 			sb.append("'");
-			sb.append(String.valueOf(discussionAttachment.getFileExtension()));
+			sb.append(
+				String.valueOf(messageBoardAttachment.getFileExtension()));
 			sb.append("'");
 
 			return sb.toString();
@@ -802,7 +806,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
-			sb.append(String.valueOf(discussionAttachment.getTitle()));
+			sb.append(String.valueOf(messageBoardAttachment.getTitle()));
 			sb.append("'");
 
 			return sb.toString();
@@ -812,8 +816,8 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected DiscussionAttachment randomDiscussionAttachment() {
-		return new DiscussionAttachment() {
+	protected MessageBoardAttachment randomMessageBoardAttachment() {
+		return new MessageBoardAttachment() {
 			{
 				contentUrl = RandomTestUtil.randomString();
 				encodingFormat = RandomTestUtil.randomString();
@@ -824,12 +828,12 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		};
 	}
 
-	protected DiscussionAttachment randomIrrelevantDiscussionAttachment() {
-		return randomDiscussionAttachment();
+	protected MessageBoardAttachment randomIrrelevantMessageBoardAttachment() {
+		return randomMessageBoardAttachment();
 	}
 
-	protected DiscussionAttachment randomPatchDiscussionAttachment() {
-		return randomDiscussionAttachment();
+	protected MessageBoardAttachment randomPatchMessageBoardAttachment() {
+		return randomMessageBoardAttachment();
 	}
 
 	protected Group irrelevantGroup;
@@ -906,7 +910,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDiscussionAttachmentResourceTestCase.class);
+		BaseMessageBoardAttachmentResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -948,7 +952,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	};
 
 	@Inject
-	private DiscussionAttachmentResource _discussionAttachmentResource;
+	private MessageBoardAttachmentResource _messageBoardAttachmentResource;
 
 	private URL _resourceURL;
 

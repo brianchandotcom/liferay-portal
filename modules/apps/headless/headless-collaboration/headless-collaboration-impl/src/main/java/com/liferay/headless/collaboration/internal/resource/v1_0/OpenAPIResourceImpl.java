@@ -82,13 +82,13 @@ public class OpenAPIResourceImpl {
 
 			add(CommentResourceImpl.class);
 
-			add(DiscussionAttachmentResourceImpl.class);
+			add(MessageBoardAttachmentResourceImpl.class);
 
-			add(DiscussionForumPostingResourceImpl.class);
+			add(MessageBoardMessageResourceImpl.class);
 
-			add(DiscussionSectionResourceImpl.class);
+			add(MessageBoardSectionResourceImpl.class);
 
-			add(DiscussionThreadResourceImpl.class);
+			add(MessageBoardThreadResourceImpl.class);
 
 			add(KnowledgeBaseArticleResourceImpl.class);
 

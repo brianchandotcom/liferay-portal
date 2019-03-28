@@ -35,7 +35,7 @@ definition {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -110,7 +110,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -174,7 +174,7 @@ definition {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

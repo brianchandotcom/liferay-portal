@@ -14,7 +14,7 @@ definition {
 		User.firstLoginPG();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -90,7 +90,7 @@ definition {
 		ProductMenu.gotoPersonalSite();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

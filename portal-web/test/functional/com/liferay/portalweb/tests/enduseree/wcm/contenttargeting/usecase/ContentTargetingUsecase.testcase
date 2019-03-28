@@ -27,7 +27,7 @@ definition {
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1216,7 +1216,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2625,7 +2625,7 @@ definition {
 		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2717,7 +2717,7 @@ definition {
 		property content.targeting.release = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -3689,7 +3689,7 @@ definition {
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -3970,7 +3970,7 @@ definition {
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -4118,7 +4118,7 @@ definition {
 		Site.addBlankCP(siteName = "Import Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

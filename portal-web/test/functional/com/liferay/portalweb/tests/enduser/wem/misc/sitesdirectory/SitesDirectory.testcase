@@ -34,7 +34,7 @@ definition {
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -54,7 +54,7 @@ definition {
 		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 1");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -70,7 +70,7 @@ definition {
 		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 2");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -86,7 +86,7 @@ definition {
 		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 3");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

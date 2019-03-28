@@ -133,7 +133,7 @@ definition {
 		property test.name.skip.portal.instance = "Elasticsearch6EE#XPackSmokeTest";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

@@ -39,7 +39,7 @@ definition {
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -578,7 +578,7 @@ definition {
 	@priority = "4"
 	test DeleteBlogsEntryNoGuestRole {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2064,7 +2064,7 @@ definition {
 	@priority = "4"
 	test ViewBlogsPortletNoGuestRole {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

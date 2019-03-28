@@ -462,7 +462,7 @@ definition {
 
 	macro changeSiteLogo {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

@@ -1316,7 +1316,7 @@ definition {
 	macro tearDown {
 		if ("${marketplace}" == "true") {
 			ProductMenu.gotoPortlet(
-				category = "Build",
+				category = "Site Builder",
 				panel = "Site Administration",
 				portlet = "Pages"
 			);

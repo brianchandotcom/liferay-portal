@@ -16,7 +16,7 @@ definition {
 	@priority = "4"
 	test ViewHTTPClient {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

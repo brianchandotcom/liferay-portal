@@ -58,7 +58,7 @@ definition {
 		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -89,7 +89,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

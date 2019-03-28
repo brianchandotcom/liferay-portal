@@ -267,7 +267,7 @@ definition {
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -343,7 +343,7 @@ definition {
 		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates,Training";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -629,7 +629,7 @@ definition {
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -709,7 +709,7 @@ definition {
 		property testray.component.names = "Asset Publisher,Tags";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

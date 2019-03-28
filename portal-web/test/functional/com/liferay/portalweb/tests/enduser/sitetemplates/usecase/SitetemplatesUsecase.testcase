@@ -67,7 +67,7 @@ definition {
 		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Test");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -138,7 +138,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -171,7 +171,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -331,7 +331,7 @@ definition {
 
 		for (var page : list "Home,Wiki") {
 			ProductMenu.gotoPortlet(
-				category = "Build",
+				category = "Site Builder",
 				panel = "Site Administration",
 				portlet = "Pages"
 			);
@@ -655,7 +655,7 @@ definition {
 		Site.addCP(siteName = "Export", siteType = "Blank");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -667,7 +667,7 @@ definition {
 		AssertTextEquals(locator1 = "TextInput#FRIENDLY_URL", value1 = "/1");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -679,7 +679,7 @@ definition {
 		AssertTextEquals(locator1 = "TextInput#FRIENDLY_URL", value1 = "/2");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -726,7 +726,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

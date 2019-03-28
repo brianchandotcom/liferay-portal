@@ -22,7 +22,7 @@ definition {
 	@priority = "5"
 	test ConfigureLookAndFeelSettingsSinglePage {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

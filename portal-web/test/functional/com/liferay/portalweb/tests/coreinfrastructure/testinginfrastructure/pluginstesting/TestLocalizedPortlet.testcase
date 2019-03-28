@@ -16,7 +16,7 @@ definition {
 	@priority = "4"
 	test ViewLocalizedChinese {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -37,7 +37,7 @@ definition {
 	@priority = "4"
 	test ViewLocalizedEnglish {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -60,7 +60,7 @@ definition {
 	@priority = "4"
 	test ViewLocalizedFrench {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -81,7 +81,7 @@ definition {
 	@priority = "4"
 	test ViewLocalizedSpanish {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

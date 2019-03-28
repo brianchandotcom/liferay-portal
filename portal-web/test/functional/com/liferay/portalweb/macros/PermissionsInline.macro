@@ -152,7 +152,7 @@ definition {
 
 	macro gotoPagePG {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -198,7 +198,7 @@ definition {
 
 	macro gotoSiteTemplateCP {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

@@ -26,7 +26,7 @@ definition {
 	@priority = "4"
 	test AssertNoWikiJavascript {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -56,7 +56,7 @@ definition {
 	@priority = "4"
 	test AssertWebContentJavascript {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

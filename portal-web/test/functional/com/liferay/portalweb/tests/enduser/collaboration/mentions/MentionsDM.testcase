@@ -59,7 +59,7 @@ definition {
 	@priority = "5"
 	test ViewMentionViaDMComment {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -122,7 +122,7 @@ definition {
 	@priority = "5"
 	test ViewReplyMentionViaDMComment {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

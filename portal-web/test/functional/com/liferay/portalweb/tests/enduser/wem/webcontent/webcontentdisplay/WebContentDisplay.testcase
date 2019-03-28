@@ -240,7 +240,7 @@ definition {
 		property testray.component.names = "Web Content Display";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -370,7 +370,7 @@ definition {
 
 		for (var i : list "1,2") {
 			ProductMenu.gotoPortlet(
-				category = "Build",
+				category = "Site Builder",
 				panel = "Site Administration",
 				portlet = "Pages"
 			);
@@ -634,7 +634,7 @@ definition {
 		property testray.component.names = "Web Content Display";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

@@ -111,7 +111,7 @@ definition {
 	@priority = "3"
 	test AddKBChildArticleAsDraft {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -189,7 +189,7 @@ definition {
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -278,7 +278,7 @@ definition {
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -358,7 +358,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -443,7 +443,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -557,7 +557,7 @@ definition {
 	@priority = "3"
 	test SaveEditedChildArticleAsDraft {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -675,7 +675,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -706,7 +706,7 @@ definition {
 	@priority = "3"
 	test SearchKBArticleInFolderViaSearchPortlet {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -786,7 +786,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -831,7 +831,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -864,7 +864,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -924,7 +924,7 @@ definition {
 	@priority = "3"
 	test ViewConfiguredKBArticleWithinFolderViaKBDisplay {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -993,7 +993,7 @@ definition {
 	@priority = "3"
 	test ViewDefaultFolderViaKBDisplay {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1039,7 +1039,7 @@ definition {
 	@priority = "4"
 	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1117,7 +1117,7 @@ definition {
 	@priority = "4"
 	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1185,7 +1185,7 @@ definition {
 	@priority = "4"
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1264,7 +1264,7 @@ definition {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1342,7 +1342,7 @@ definition {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleFriendlyURL";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1442,7 +1442,7 @@ definition {
 		Navigator.gotoPage(pageName = "Welcome");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1471,7 +1471,7 @@ definition {
 	@priority = "3"
 	test ViewKBArticleNoHierarchyInFolder {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1542,7 +1542,7 @@ definition {
 	@priority = "4"
 	test ViewKBArticlesHierarchyWithinFolders {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1681,7 +1681,7 @@ definition {
 	@priority = "3"
 	test ViewKBArticlesInDifferentScopesPerSite {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1715,7 +1715,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1794,7 +1794,7 @@ definition {
 	@priority = "4"
 	test ViewKBArticlesInKBFolder {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1860,7 +1860,7 @@ definition {
 	@priority = "4"
 	test ViewKBArticlesInMultipleKBFolders {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -1977,7 +1977,7 @@ definition {
 	@priority = "4"
 	test ViewKBArticleSuggestionsWorkflow {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2126,7 +2126,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2292,7 +2292,7 @@ definition {
 	@priority = "3"
 	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2451,7 +2451,7 @@ definition {
 	@priority = "3"
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2566,7 +2566,7 @@ definition {
 	@priority = "4"
 	test ViewSuggestionsWithPermissions {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2809,7 +2809,7 @@ definition {
 	@priority = "3"
 	test ViewUnchangedKBArticlePriorityAfterEdit {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2929,7 +2929,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -2940,7 +2940,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

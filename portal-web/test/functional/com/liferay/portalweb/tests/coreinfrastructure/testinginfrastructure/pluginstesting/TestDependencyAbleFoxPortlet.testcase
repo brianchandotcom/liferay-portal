@@ -16,7 +16,7 @@ definition {
 	@priority = "4"
 	test ViewDependencyAbleFox {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

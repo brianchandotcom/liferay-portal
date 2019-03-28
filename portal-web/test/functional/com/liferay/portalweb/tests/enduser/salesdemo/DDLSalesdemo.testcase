@@ -30,7 +30,7 @@ definition {
 	@priority = "3"
 	test Demo1 {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

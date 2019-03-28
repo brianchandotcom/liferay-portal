@@ -25,7 +25,7 @@ definition {
 	@priority = "4"
 	test AddBlogsEntryWithImageViaBlogsImages {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -135,7 +135,7 @@ definition {
 	@priority = "4"
 	test ViewWikiFrontPageLeftToRight {
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);
@@ -166,7 +166,7 @@ definition {
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
 		ProductMenu.gotoPortlet(
-			category = "Build",
+			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages"
 		);

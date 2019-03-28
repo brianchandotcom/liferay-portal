@@ -60,7 +60,6 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 				%>
 
 				<liferay-ui:user-portrait
-					cssClass="sticker-lg"
 					user="<%= entryUser %>"
 				/>
 			</div>

@@ -44,13 +44,7 @@ public class CleanUpUserSubscriptionMessageListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

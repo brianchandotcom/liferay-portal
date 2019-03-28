@@ -293,6 +293,7 @@ public class DDMDataProviderDisplayContext {
 					String defaultDDMDisplayTabItemTitle = GetterUtil.getString(
 						defaultDDMDisplayTabItem.getTitle(
 							liferayPortletRequest, liferayPortletResponse));
+
 					String ddmDisplayTabItemHREF = GetterUtil.getString(
 						ddmDisplayTabItem.getURL(
 							liferayPortletRequest, liferayPortletResponse));

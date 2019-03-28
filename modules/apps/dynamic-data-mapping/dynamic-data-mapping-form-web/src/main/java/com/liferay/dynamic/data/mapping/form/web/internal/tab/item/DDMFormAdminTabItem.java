@@ -74,6 +74,7 @@ public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 				WebKeys.THEME_DISPLAY);
 
 		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+
 		portletURL.setParameter(
 			"refererPortletName",
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);

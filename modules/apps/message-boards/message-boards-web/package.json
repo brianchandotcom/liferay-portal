@@ -3,9 +3,6 @@
 		"metal": "^2.16.7",
 		"metal-events": "^2.16.7"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "message-boards-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

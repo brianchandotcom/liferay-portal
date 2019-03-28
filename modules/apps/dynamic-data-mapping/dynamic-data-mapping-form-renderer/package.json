@@ -4,9 +4,6 @@
 		"metal-component": "^2.14.0",
 		"metal-soy": "^2.14.0"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "dynamic-data-mapping-form-renderer",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

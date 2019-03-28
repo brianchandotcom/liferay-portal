@@ -2,9 +2,6 @@
 	"dependencies": {
 		"metal-state": "^2.16.7"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "site-membership-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler",

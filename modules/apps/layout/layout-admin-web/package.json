@@ -30,9 +30,6 @@
 		"metal-throttle": "^3.0.0",
 		"metal-uri": "^3.1.0"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "layout-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bridge --bundler",

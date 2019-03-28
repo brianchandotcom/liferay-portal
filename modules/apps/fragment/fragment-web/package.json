@@ -8,9 +8,6 @@
 		"metal-state": "^2.16.7",
 		"metal-uri": "^3.1.2"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "fragment-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

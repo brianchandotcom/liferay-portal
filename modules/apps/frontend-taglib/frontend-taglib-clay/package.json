@@ -55,8 +55,7 @@
 		"metal-state": "^2.16.0"
 	},
 	"devDependencies": {
-		"liferay-npm-bundler-preset-standard": "2.7.0",
-		"liferay-npm-scripts": "1.4.9"
+		"liferay-npm-bundler-preset-standard": "2.7.0"
 	},
 	"jest": {
 		"moduleNameMapper": {

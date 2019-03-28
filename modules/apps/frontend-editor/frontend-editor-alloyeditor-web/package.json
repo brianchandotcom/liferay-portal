@@ -15,9 +15,6 @@
 	"dependencies": {
 		"alloyeditor": "2.0.0-beta.3"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {
 		"checkFormat": "npm run csf",

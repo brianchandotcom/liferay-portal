@@ -21,9 +21,6 @@
 		"metal-state": "^2.6.0",
 		"metal-structs": "^1.0.1"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "frontend-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bridge --bundler",

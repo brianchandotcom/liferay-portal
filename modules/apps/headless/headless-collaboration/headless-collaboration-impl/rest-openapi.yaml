@@ -844,6 +844,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:

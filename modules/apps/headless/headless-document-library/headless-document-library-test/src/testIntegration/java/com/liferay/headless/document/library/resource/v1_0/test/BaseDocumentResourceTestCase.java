@@ -388,7 +388,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Page<Document> invokeGetContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean tree, String filterString,
+			Long contentSpaceId, Boolean flatten, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -424,7 +424,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
-			Long contentSpaceId, Boolean tree, String filterString,
+			Long contentSpaceId, Boolean flatten, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 

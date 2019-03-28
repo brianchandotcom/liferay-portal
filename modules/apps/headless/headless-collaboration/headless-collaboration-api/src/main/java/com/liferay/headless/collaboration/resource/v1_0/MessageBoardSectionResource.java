@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

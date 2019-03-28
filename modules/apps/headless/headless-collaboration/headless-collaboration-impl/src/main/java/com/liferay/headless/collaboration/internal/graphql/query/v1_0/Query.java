@@ -271,7 +271,7 @@ public class Query {
 	public Collection<KnowledgeBaseArticle>
 			getContentSpaceKnowledgeBaseArticlesPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -285,7 +285,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getContentSpaceKnowledgeBaseArticlesPage(
-							contentSpaceId, tree, filter,
+							contentSpaceId, flatten, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -339,7 +339,7 @@ public class Query {
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
-				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -353,7 +353,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-							knowledgeBaseFolderId, tree, filter,
+							knowledgeBaseFolderId, flatten, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -584,7 +584,7 @@ public class Query {
 	public Collection<MessageBoardSection>
 			getContentSpaceMessageBoardSectionsPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -598,7 +598,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardSectionResource.
 						getContentSpaceMessageBoardSectionsPage(
-							contentSpaceId, tree, filter,
+							contentSpaceId, flatten, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -650,7 +650,7 @@ public class Query {
 	public Collection<MessageBoardThread>
 			getContentSpaceMessageBoardThreadsPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -664,7 +664,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardThreadResource.
 						getContentSpaceMessageBoardThreadsPage(
-							contentSpaceId, tree, filter,
+							contentSpaceId, flatten, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

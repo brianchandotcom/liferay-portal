@@ -424,7 +424,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	protected Page<MessageBoardSection>
 			invokeGetContentSpaceMessageBoardSectionsPage(
-				Long contentSpaceId, Boolean tree, String filterString,
+				Long contentSpaceId, Boolean flatten, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -461,7 +461,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceMessageBoardSectionsPageResponse(
-				Long contentSpaceId, Boolean tree, String filterString,
+				Long contentSpaceId, Boolean flatten, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 

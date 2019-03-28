@@ -81,7 +81,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Page<MessageBoardThread> getContentSpaceMessageBoardThreadsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

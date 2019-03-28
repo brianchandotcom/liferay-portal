@@ -80,7 +80,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getContentSpaceDocumentsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

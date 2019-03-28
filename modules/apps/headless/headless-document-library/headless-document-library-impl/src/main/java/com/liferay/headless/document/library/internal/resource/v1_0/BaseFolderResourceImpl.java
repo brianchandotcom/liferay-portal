@@ -80,7 +80,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

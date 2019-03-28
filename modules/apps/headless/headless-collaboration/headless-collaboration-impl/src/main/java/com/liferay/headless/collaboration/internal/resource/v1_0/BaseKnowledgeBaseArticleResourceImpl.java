@@ -81,7 +81,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -295,9 +295,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("knowledge-base-folder-id") Long
+				@PathParam("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
-				@QueryParam("tree") Boolean tree, @Context Filter filter,
+				@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

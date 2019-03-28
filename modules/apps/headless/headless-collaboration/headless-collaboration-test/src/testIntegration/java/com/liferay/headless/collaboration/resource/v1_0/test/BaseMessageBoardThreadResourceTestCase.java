@@ -423,7 +423,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	protected Page<MessageBoardThread>
 			invokeGetContentSpaceMessageBoardThreadsPage(
-				Long contentSpaceId, Boolean tree, String filterString,
+				Long contentSpaceId, Boolean flatten, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -460,7 +460,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceMessageBoardThreadsPageResponse(
-				Long contentSpaceId, Boolean tree, String filterString,
+				Long contentSpaceId, Boolean flatten, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 

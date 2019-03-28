@@ -36,7 +36,7 @@ import javax.annotation.Generated;
 public interface DocumentResource {
 
 	public Page<Document> getContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

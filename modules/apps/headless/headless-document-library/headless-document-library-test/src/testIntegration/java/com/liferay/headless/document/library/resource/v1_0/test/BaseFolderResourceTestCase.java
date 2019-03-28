@@ -385,7 +385,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Page<Folder> invokeGetContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean tree, String filterString,
+			Long contentSpaceId, Boolean flatten, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -421,7 +421,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
-			Long contentSpaceId, Boolean tree, String filterString,
+			Long contentSpaceId, Boolean flatten, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 

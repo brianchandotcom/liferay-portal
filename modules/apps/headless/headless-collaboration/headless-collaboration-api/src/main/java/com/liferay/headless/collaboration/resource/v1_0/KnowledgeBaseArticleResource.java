@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			Long contentSpaceId, Boolean tree, Filter filter,
+			Long contentSpaceId, Boolean flatten, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -73,7 +73,7 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				Long knowledgeBaseFolderId, Boolean tree, Filter filter,
+				Long knowledgeBaseFolderId, Boolean flatten, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 

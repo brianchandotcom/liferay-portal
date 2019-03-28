@@ -81,7 +81,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("tree") Boolean tree, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,10 @@ public class SimpleFacetCollector implements FacetCollector {
 
 	@Override
 	public List<TermCollector> getTermCollectors() {
-		return ListUtil.fromMapValues(_termCollectors);
+		return ListUtil.sort(
+			ListUtil.fromMapValues(_termCollectors),
+			Comparator.comparing(
+				TermCollector::getFrequency, Comparator.reverseOrder()));
 	}
 
 	@Override

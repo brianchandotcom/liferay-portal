@@ -48,14 +48,18 @@
 			for (ConnectedApp connectedApp : connectedApps) {
 			%>
 
-				<div style="margin-bottom: 1em;">
-					<span class="sticker">
-						<img src="<%= connectedApp.getImageURL() %>" style="width: 1.25em;" />
-					</span>
+				<div class="autofit-padded-no-gutters-x autofit-row autofit-row-center mb-3">
+					<div class="autofit-col">
+						<img class="icon-monospaced" src="<%= connectedApp.getImageURL() %>" />
+					</div>
 
-					<%= connectedApp.getName(locale) %>
+					<div class="autofit-col autofit-col-expand">
+						<%= connectedApp.getName(locale) %>
+					</div>
 
-					<input class="btn btn-secondary btn-sm pull-right" onclick="document.querySelector('[name=<portlet:namespace/>connectedAppKey]').setAttribute('value', '<%= connectedApp.getKey() %>')" type="submit" value="<%= LanguageUtil.get(resourceBundle, "revoke") %>" />
+					<div class="autofit-col">
+						<input class="btn btn-secondary btn-sm" onclick="document.querySelector('[name=<portlet:namespace/>connectedAppKey]').setAttribute('value', '<%= connectedApp.getKey() %>')" type="submit" value="<%= LanguageUtil.get(resourceBundle, "revoke") %>" />
+					</div>
 				</div>
 
 			<%

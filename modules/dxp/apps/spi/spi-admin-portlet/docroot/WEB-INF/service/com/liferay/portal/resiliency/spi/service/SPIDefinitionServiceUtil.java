@@ -17,7 +17,6 @@ package com.liferay.portal.resiliency.spi.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for SPIDefinition. This utility wraps
@@ -155,9 +154,6 @@ public class SPIDefinitionServiceUtil {
 			_service = (SPIDefinitionService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				SPIDefinitionService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SPIDefinitionServiceUtil.class, "_service");
 		}
 
 		return _service;

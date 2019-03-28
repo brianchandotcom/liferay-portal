@@ -2,5 +2,6 @@ Bundle-Name: Liferay Headless Common SPI
 Bundle-SymbolicName: com.liferay.headless.common.spi
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.headless.common.spi.osgi,\
 	com.liferay.headless.common.spi.resource,\
 	com.liferay.headless.common.spi.service.context

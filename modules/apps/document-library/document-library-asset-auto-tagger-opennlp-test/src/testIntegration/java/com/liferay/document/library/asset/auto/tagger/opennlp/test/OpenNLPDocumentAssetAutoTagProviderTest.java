@@ -86,9 +86,14 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
 				Collection<String> expectedTagNames = Arrays.asList(
-					"Ah", "Alice", "Arthur DiBianca", "Bill",
-					"David Widger ALICE’S", "Lewis Carroll", "Mary Ann",
-					"Michael Hart", "Michael S. Hart", "Pat", "Pepper", "Pray",
+					"ADVENTURES", "Adventures", "Ah", "Alice",
+					"Arthur DiBianca", "Australia", "Bill",
+					"David Widger ALICE’S", "David Widger Updated", "France",
+					"General Information About Project", "IRS",
+					"Internal Revenue Service", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Mississippi", "Paris",
+					"Pat", "Pepper", "Queens", "Rabbit", "Rome",
+					"Salt Lake City", "United States", "White Rabbit",
 					"William");
 
 				Collection<String> actualTagNames =
@@ -116,10 +121,15 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
 				Collection<String> expectedTagNames = Arrays.asList(
-					"Ah", "Alice", "Arthur DiBianca", "Bill",
-					"David Widger ALICE", "Lewis Carroll", "Mary Ann",
-					"Michael Hart", "Michael S. Hart", "Pat", "Pepper",
-					"Story CHAPTER X", "William");
+					"ADVENTURES", "Adventures", "Ah", "Alice",
+					"Arthur DiBianca", "Australia", "Bill",
+					"David Widger ALICE", "David Widger Updated", "France",
+					"General Information About Project", "IRS",
+					"Internal Revenue Service", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Mississippi", "Paris",
+					"Pat", "Pepper", "Queens", "Rabbit", "Rome",
+					"Salt Lake City", "United States", "White Rabbit",
+					"William");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -166,10 +176,14 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
 				Collection<String> expectedTagNames = Arrays.asList(
-					"Alice", "Bill", "David Widger ALICE",
-					"David Widger Updated", "Lewis Carroll", "Mary Ann",
-					"Michael Hart", "Michael S. Hart", "Pat", "Pepper",
-					"Story CHAPTER X", "William");
+					"ADVENTURES", "AT ALL.", "Adventures", "Alice", "Australia",
+					"Bill", "David Widger ALICE", "David Widger Updated",
+					"France", "General Information About Project", "IRS",
+					"Internal Revenue Service", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Mississippi", "NOT",
+					"Paris", "Pat", "Pepper", "Queens", "Rabbit", "Rome",
+					"Salt Lake City", "THERE", "United States", "White Rabbit",
+					"William", "YOUR");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -219,9 +233,13 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
 				Collection<String> expectedTagNames = Arrays.asList(
-					"Alice", "Bill", "Lewis Carroll", "Mary Ann",
-					"Michael Hart", "Michael S. Hart", "Pat", "Pepper", "Pray",
-					"William");
+					"AT ALL.", "Adventures", "Alice", "Australia", "Bill",
+					"General Information About Project", "IRS",
+					"Internal Revenue Service", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Mississippi", "NOT",
+					"Paris", "Pat", "Pepper", "Queens", "Rabbit", "Rome",
+					"Salt Lake City", "THERE", "United States", "White Rabbit",
+					"William", "YOUR");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);

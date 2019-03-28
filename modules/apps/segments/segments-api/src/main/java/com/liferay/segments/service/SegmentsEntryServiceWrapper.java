@@ -37,16 +37,16 @@ public class SegmentsEntryServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
+			String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type,
+			boolean active, String criteria, String source, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsEntryService.addSegmentsEntry(
-			nameMap, descriptionMap, active, criteria, key, source, type,
-			serviceContext);
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria, source,
+			type, serviceContext);
 	}
 
 	@Override
@@ -120,16 +120,16 @@ public class SegmentsEntryServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId,
+			long segmentsEntryId, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String key,
+			boolean active, String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsEntryService.updateSegmentsEntry(
-			segmentsEntryId, nameMap, descriptionMap, active, criteria, key,
-			serviceContext);
+			segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap, active,
+			criteria, serviceContext);
 	}
 
 	@Override

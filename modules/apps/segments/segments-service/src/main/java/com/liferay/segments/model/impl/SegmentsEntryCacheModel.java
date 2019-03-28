@@ -81,6 +81,8 @@ public class SegmentsEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", segmentsEntryKey=");
+		sb.append(segmentsEntryKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -89,8 +91,6 @@ public class SegmentsEntryCacheModel
 		sb.append(active);
 		sb.append(", criteria=");
 		sb.append(criteria);
-		sb.append(", key=");
-		sb.append(key);
 		sb.append(", source=");
 		sb.append(source);
 		sb.append(", type=");
@@ -130,6 +130,13 @@ public class SegmentsEntryCacheModel
 			segmentsEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (segmentsEntryKey == null) {
+			segmentsEntryImpl.setSegmentsEntryKey("");
+		}
+		else {
+			segmentsEntryImpl.setSegmentsEntryKey(segmentsEntryKey);
+		}
+
 		if (name == null) {
 			segmentsEntryImpl.setName("");
 		}
@@ -151,13 +158,6 @@ public class SegmentsEntryCacheModel
 		}
 		else {
 			segmentsEntryImpl.setCriteria(criteria);
-		}
-
-		if (key == null) {
-			segmentsEntryImpl.setKey("");
-		}
-		else {
-			segmentsEntryImpl.setKey(key);
 		}
 
 		if (source == null) {
@@ -191,12 +191,12 @@ public class SegmentsEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		segmentsEntryKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
 		active = objectInput.readBoolean();
 		criteria = objectInput.readUTF();
-		key = objectInput.readUTF();
 		source = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
@@ -221,6 +221,13 @@ public class SegmentsEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (segmentsEntryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(segmentsEntryKey);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -242,13 +249,6 @@ public class SegmentsEntryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(criteria);
-		}
-
-		if (key == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(key);
 		}
 
 		if (source == null) {
@@ -273,11 +273,11 @@ public class SegmentsEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String segmentsEntryKey;
 	public String name;
 	public String description;
 	public boolean active;
 	public String criteria;
-	public String key;
 	public String source;
 	public String type;
 

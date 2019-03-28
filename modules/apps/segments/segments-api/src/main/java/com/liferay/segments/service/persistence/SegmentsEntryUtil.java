@@ -844,6 +844,73 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryKey the segments entry key
+	 * @return the matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	public static SegmentsEntry findByG_S(long groupId, String segmentsEntryKey)
+		throws com.liferay.segments.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_S(groupId, segmentsEntryKey);
+	}
+
+	/**
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryKey the segments entry key
+	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	public static SegmentsEntry fetchByG_S(
+		long groupId, String segmentsEntryKey) {
+
+		return getPersistence().fetchByG_S(groupId, segmentsEntryKey);
+	}
+
+	/**
+	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryKey the segments entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	public static SegmentsEntry fetchByG_S(
+		long groupId, String segmentsEntryKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByG_S(
+			groupId, segmentsEntryKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the segments entry where groupId = &#63; and segmentsEntryKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryKey the segments entry key
+	 * @return the segments entry that was removed
+	 */
+	public static SegmentsEntry removeByG_S(
+			long groupId, String segmentsEntryKey)
+		throws com.liferay.segments.exception.NoSuchEntryException {
+
+		return getPersistence().removeByG_S(groupId, segmentsEntryKey);
+	}
+
+	/**
+	 * Returns the number of segments entries where groupId = &#63; and segmentsEntryKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryKey the segments entry key
+	 * @return the number of matching segments entries
+	 */
+	public static int countByG_S(long groupId, String segmentsEntryKey) {
+		return getPersistence().countByG_S(groupId, segmentsEntryKey);
+	}
+
+	/**
 	 * Returns all the segments entries where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1267,69 +1334,6 @@ public class SegmentsEntryUtil {
 	 */
 	public static int filterCountByG_A(long[] groupIds, boolean active) {
 		return getPersistence().filterCountByG_A(groupIds, active);
-	}
-
-	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByG_K(long groupId, String key)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_K(groupId, key);
-	}
-
-	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByG_K(long groupId, String key) {
-		return getPersistence().fetchByG_K(groupId, key);
-	}
-
-	/**
-	 * Returns the segments entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByG_K(
-		long groupId, String key, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
-	}
-
-	/**
-	 * Removes the segments entry where groupId = &#63; and key = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the segments entry that was removed
-	 */
-	public static SegmentsEntry removeByG_K(long groupId, String key)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().removeByG_K(groupId, key);
-	}
-
-	/**
-	 * Returns the number of segments entries where groupId = &#63; and key = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the number of matching segments entries
-	 */
-	public static int countByG_K(long groupId, String key) {
-		return getPersistence().countByG_K(groupId, key);
 	}
 
 	/**

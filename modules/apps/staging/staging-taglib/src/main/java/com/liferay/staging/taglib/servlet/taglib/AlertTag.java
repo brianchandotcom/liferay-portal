@@ -37,10 +37,6 @@ public class AlertTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
-	public AlertType getType() {
-		return _type;
-	}
-
 	public boolean isDismissible() {
 		return _dismissible;
 	}
@@ -65,7 +61,7 @@ public class AlertTag extends IncludeTag implements BodyTag {
 	}
 
 	public void setType(AlertType type) {
-		_type = type;
+		_type = type.getAlertCode();
 	}
 
 	@Override
@@ -74,7 +70,7 @@ public class AlertTag extends IncludeTag implements BodyTag {
 
 		_dismissible = false;
 		_fluid = false;
-		_type = AlertType.INFO;
+		_type = AlertType.INFO.getAlertCode();
 	}
 
 	@Override
@@ -93,8 +89,7 @@ public class AlertTag extends IncludeTag implements BodyTag {
 			"liferay-staging:alert:dismissible", String.valueOf(_dismissible));
 		request.setAttribute(
 			"liferay-staging:alert:fluid", String.valueOf(_fluid));
-		request.setAttribute(
-			"liferay-staging:alert:type", _type.getAlertCode());
+		request.setAttribute("liferay-staging:alert:type", _type);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "liferay-staging:alert:";
@@ -103,6 +98,6 @@ public class AlertTag extends IncludeTag implements BodyTag {
 
 	private boolean _dismissible;
 	private boolean _fluid;
-	private AlertType _type = AlertType.INFO;
+	private String _type = AlertType.INFO.getAlertCode();
 
 }

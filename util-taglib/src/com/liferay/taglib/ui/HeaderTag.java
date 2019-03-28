@@ -32,10 +32,6 @@ public class HeaderTag extends IncludeTag {
 		return _backLabel;
 	}
 
-	public String getBackURL() {
-		return _backURL;
-	}
-
 	public String getCssClass() {
 		return _cssClass;
 	}

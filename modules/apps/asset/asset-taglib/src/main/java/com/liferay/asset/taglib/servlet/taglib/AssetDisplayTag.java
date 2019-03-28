@@ -76,14 +76,6 @@ public class AssetDisplayTag extends IncludeTag {
 		return _assetEntry;
 	}
 
-	public AssetRenderer<?> getAssetRenderer() {
-		if (_renderer instanceof AssetRenderer<?>) {
-			return (AssetRenderer<?>)_renderer;
-		}
-
-		return null;
-	}
-
 	public AssetRendererFactory<?> getAssetRendererFactory() {
 		return _assetRendererFactory;
 	}

@@ -37,10 +37,6 @@ public class InputCheckBoxTag extends IncludeTag {
 		return _cssClass;
 	}
 
-	public Boolean getDefaultValue() {
-		return _defaultValue;
-	}
-
 	public String getFormName() {
 		return _formName;
 	}

@@ -66,10 +66,6 @@ public class SocialBookmarksTag extends IncludeTag {
 		return _classPK;
 	}
 
-	public String getDisplayStyle() {
-		return _displayStyle;
-	}
-
 	public int getMaxInlineItems() {
 		return _maxInlineItems;
 	}
@@ -80,10 +76,6 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	public String getTitle() {
 		return _title;
-	}
-
-	public String[] getTypes() {
-		return _types;
 	}
 
 	public String getUrl() {

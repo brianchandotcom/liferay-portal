@@ -85,10 +85,6 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		return _message;
 	}
 
-	public String getRowBreak() {
-		return _rowBreak;
-	}
-
 	public String getTargetNode() {
 		return _targetNode;
 	}

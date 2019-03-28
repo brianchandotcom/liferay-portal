@@ -47,10 +47,6 @@ public class EmptyTag extends IncludeTag {
 		return _infoMessage;
 	}
 
-	public String getPortletURL() {
-		return _portletURL;
-	}
-
 	public int getTotalEntries() {
 		return _totalEntries;
 	}

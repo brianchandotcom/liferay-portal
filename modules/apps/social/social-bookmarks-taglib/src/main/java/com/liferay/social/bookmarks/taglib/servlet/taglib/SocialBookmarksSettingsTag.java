@@ -34,10 +34,6 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 		return _displayStyle;
 	}
 
-	public String[] getTypes() {
-		return _types;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}

@@ -29,10 +29,6 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class SelectPagesTag extends IncludeTag {
 
-	public String getAction() {
-		return _action;
-	}
-
 	public long getExportImportConfigurationId() {
 		return _exportImportConfigurationId;
 	}

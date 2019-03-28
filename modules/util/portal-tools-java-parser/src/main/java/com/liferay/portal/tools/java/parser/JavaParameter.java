@@ -47,8 +47,34 @@ public class JavaParameter extends BaseJavaTerm {
 		sb.append(prefix);
 
 		if (ListUtil.isNotEmpty(_javaAnnotations)) {
+			int index = sb.index();
+
+			if (appendSingleLine(
+					sb, _javaAnnotations, " ", "", " ", maxLineLength) &&
+				(ListUtil.isEmpty(_modifiers) ||
+				 appendSingleLine(
+					 sb, _modifiers, " ", "", " ", maxLineLength)) &&
+				appendSingleLine(sb, _javaType, "", " ", maxLineLength) &&
+				appendSingleLine(sb, _name, "", suffix, maxLineLength)) {
+
+				return sb.toString();
+			}
+
+			sb.setIndex(index);
+
 			indent = append(
 				sb, _javaAnnotations, " ", indent, "", " ", maxLineLength);
+
+			if (ListUtil.isNotEmpty(_modifiers)) {
+				indent = append(
+					sb, _modifiers, " ", indent, "", " ", maxLineLength);
+			}
+
+			appendNewLine(sb, _javaType, indent, "", " ", maxLineLength);
+
+			append(sb, _name, indent, "", suffix, maxLineLength);
+
+			return sb.toString();
 		}
 
 		if (ListUtil.isNotEmpty(_modifiers)) {

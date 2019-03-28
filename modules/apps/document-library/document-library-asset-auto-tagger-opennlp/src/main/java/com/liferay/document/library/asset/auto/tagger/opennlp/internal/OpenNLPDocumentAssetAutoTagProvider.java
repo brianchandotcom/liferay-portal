@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -86,8 +87,13 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		_tokenizerModel = new TokenizerModel(
 			bundle.getResource("META-INF/opennlp/en-token.bin"));
 
-		_tokenNameFinderModel = new TokenNameFinderModel(
-			bundle.getResource("META-INF/opennlp/en-ner-person.bin"));
+		_tokenNameFinderModels = Arrays.asList(
+			new TokenNameFinderModel(
+				bundle.getResource("META-INF/opennlp/en-ner-location.bin")),
+			new TokenNameFinderModel(
+				bundle.getResource("META-INF/opennlp/en-ner-organization.bin")),
+			new TokenNameFinderModel(
+				bundle.getResource("META-INF/opennlp/en-ner-person.bin")));
 	}
 
 	private OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
@@ -136,8 +142,6 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 		TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
 
-		NameFinderME nameFinderME = new NameFinderME(_tokenNameFinderModel);
-
 		float confidenceThreshold =
 			openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
 				confidenceThreshold();
@@ -147,7 +151,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		).map(
 			tokenizerME::tokenize
 		).map(
-			tokens -> _getTagNames(nameFinderME, tokens, confidenceThreshold)
+			tokens -> _getTagNames(tokens, confidenceThreshold)
 		).flatMap(
 			Arrays::stream
 		).collect(
@@ -155,13 +159,16 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		);
 	}
 
-	private String[] _getTagNames(
-		NameFinderME nameFinderME, String[] tokens,
-		double confidenceThreshold) {
+	private String[] _getTagNames(String[] tokens, double confidenceThreshold) {
+		Stream<TokenNameFinderModel> stream = _tokenNameFinderModels.stream();
 
 		return Span.spansToStrings(
-			Stream.of(
-				nameFinderME.find(tokens)
+			stream.map(
+				NameFinderME::new
+			).map(
+				nameFinderME -> nameFinderME.find(tokens)
+			).flatMap(
+				Arrays::stream
 			).filter(
 				span -> span.getProb() > confidenceThreshold
 			).collect(
@@ -191,6 +198,6 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 	private SentenceModel _sentenceModel;
 	private TokenizerModel _tokenizerModel;
-	private TokenNameFinderModel _tokenNameFinderModel;
+	private List<TokenNameFinderModel> _tokenNameFinderModels;
 
 }

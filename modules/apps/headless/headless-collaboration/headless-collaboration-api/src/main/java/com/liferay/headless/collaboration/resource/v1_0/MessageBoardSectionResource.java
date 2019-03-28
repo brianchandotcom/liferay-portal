@@ -14,7 +14,7 @@
 
 package com.liferay.headless.collaboration.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionForumPosting;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -32,46 +32,40 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DiscussionForumPostingResource {
+public interface MessageBoardSectionResource {
 
-	public void deleteDiscussionForumPosting(Long discussionForumPostingId)
+	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DiscussionForumPosting getDiscussionForumPosting(
-			Long discussionForumPostingId)
+	public MessageBoardSection postContentSpaceMessageBoardSection(
+			Long contentSpaceId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
-	public DiscussionForumPosting patchDiscussionForumPosting(
-			Long discussionForumPostingId,
-			DiscussionForumPosting discussionForumPosting)
+	public void deleteMessageBoardSection(Long messageBoardSectionId)
 		throws Exception;
 
-	public DiscussionForumPosting putDiscussionForumPosting(
-			Long discussionForumPostingId,
-			DiscussionForumPosting discussionForumPosting)
+	public MessageBoardSection getMessageBoardSection(
+			Long messageBoardSectionId)
 		throws Exception;
 
-	public Page<DiscussionForumPosting>
-			getDiscussionForumPostingDiscussionForumPostingsPage(
-				Long discussionForumPostingId, Filter filter,
+	public MessageBoardSection patchMessageBoardSection(
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public MessageBoardSection putMessageBoardSection(
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public Page<MessageBoardSection>
+			getMessageBoardSectionMessageBoardSectionsPage(
+				Long messageBoardSectionId, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DiscussionForumPosting
-			postDiscussionForumPostingDiscussionForumPosting(
-				Long discussionForumPostingId,
-				DiscussionForumPosting discussionForumPosting)
-		throws Exception;
-
-	public Page<DiscussionForumPosting>
-			getDiscussionThreadDiscussionForumPostingsPage(
-				Long discussionThreadId, Filter filter, Pagination pagination,
-				Sort[] sorts)
-		throws Exception;
-
-	public DiscussionForumPosting postDiscussionThreadDiscussionForumPosting(
-			Long discussionThreadId,
-			DiscussionForumPosting discussionForumPosting)
+	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

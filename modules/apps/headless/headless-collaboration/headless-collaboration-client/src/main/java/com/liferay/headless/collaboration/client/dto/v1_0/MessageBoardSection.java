@@ -12,42 +12,26 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.dto.v1_0;
+package com.liferay.headless.collaboration.client.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.headless.collaboration.client.function.UnsafeSupplier;
 
 import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscussionSection")
-@JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DiscussionSection")
-public class DiscussionSection {
+public class MessageBoardSection {
 
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
 
-		@JsonCreator
 		public static ViewableBy create(String value) {
 			for (ViewableBy viewableBy : values()) {
 				if (Objects.equals(viewableBy.getValue(), value)) {
@@ -58,7 +42,6 @@ public class DiscussionSection {
 			return null;
 		}
 
-		@JsonValue
 		public String getValue() {
 			return _value;
 		}
@@ -84,7 +67,6 @@ public class DiscussionSection {
 		this.contentSpaceId = contentSpaceId;
 	}
 
-	@JsonIgnore
 	public void setContentSpaceId(
 		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
 
@@ -96,8 +78,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpaceId;
 
 	public Creator getCreator() {
@@ -108,7 +88,6 @@ public class DiscussionSection {
 		this.creator = creator;
 	}
 
-	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
@@ -120,8 +99,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -132,7 +109,6 @@ public class DiscussionSection {
 		this.dateCreated = dateCreated;
 	}
 
-	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
@@ -144,8 +120,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -156,7 +130,6 @@ public class DiscussionSection {
 		this.dateModified = dateModified;
 	}
 
-	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
@@ -168,8 +141,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -180,7 +151,6 @@ public class DiscussionSection {
 		this.description = description;
 	}
 
-	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
@@ -192,8 +162,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Long getId() {
@@ -204,7 +172,6 @@ public class DiscussionSection {
 		this.id = id;
 	}
 
-	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
@@ -214,65 +181,57 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public Integer getNumberOfDiscussionSections() {
-		return numberOfDiscussionSections;
+	public Integer getNumberOfMessageBoardSections() {
+		return numberOfMessageBoardSections;
 	}
 
-	public void setNumberOfDiscussionSections(
-		Integer numberOfDiscussionSections) {
+	public void setNumberOfMessageBoardSections(
+		Integer numberOfMessageBoardSections) {
 
-		this.numberOfDiscussionSections = numberOfDiscussionSections;
+		this.numberOfMessageBoardSections = numberOfMessageBoardSections;
 	}
 
-	@JsonIgnore
-	public void setNumberOfDiscussionSections(
+	public void setNumberOfMessageBoardSections(
 		UnsafeSupplier<Integer, Exception>
-			numberOfDiscussionSectionsUnsafeSupplier) {
+			numberOfMessageBoardSectionsUnsafeSupplier) {
 
 		try {
-			numberOfDiscussionSections =
-				numberOfDiscussionSectionsUnsafeSupplier.get();
+			numberOfMessageBoardSections =
+				numberOfMessageBoardSectionsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer numberOfDiscussionSections;
+	protected Integer numberOfMessageBoardSections;
 
-	public Integer getNumberOfDiscussionThreads() {
-		return numberOfDiscussionThreads;
+	public Integer getNumberOfMessageBoardThreads() {
+		return numberOfMessageBoardThreads;
 	}
 
-	public void setNumberOfDiscussionThreads(
-		Integer numberOfDiscussionThreads) {
+	public void setNumberOfMessageBoardThreads(
+		Integer numberOfMessageBoardThreads) {
 
-		this.numberOfDiscussionThreads = numberOfDiscussionThreads;
+		this.numberOfMessageBoardThreads = numberOfMessageBoardThreads;
 	}
 
-	@JsonIgnore
-	public void setNumberOfDiscussionThreads(
+	public void setNumberOfMessageBoardThreads(
 		UnsafeSupplier<Integer, Exception>
-			numberOfDiscussionThreadsUnsafeSupplier) {
+			numberOfMessageBoardThreadsUnsafeSupplier) {
 
 		try {
-			numberOfDiscussionThreads =
-				numberOfDiscussionThreadsUnsafeSupplier.get();
+			numberOfMessageBoardThreads =
+				numberOfMessageBoardThreadsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer numberOfDiscussionThreads;
+	protected Integer numberOfMessageBoardThreads;
 
 	public String getTitle() {
 		return title;
@@ -282,7 +241,6 @@ public class DiscussionSection {
 		this.title = title;
 	}
 
-	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
@@ -294,15 +252,12 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}
 
-	@JsonIgnore
 	public String getViewableByAsString() {
 		if (viewableBy == null) {
 			return null;
@@ -315,7 +270,6 @@ public class DiscussionSection {
 		this.viewableBy = viewableBy;
 	}
 
-	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
@@ -327,77 +281,6 @@ public class DiscussionSection {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
-
-	public String toString() {
-		StringBundler sb = new StringBundler();
-
-		sb.append("{");
-
-		sb.append("\"contentSpaceId\": ");
-
-		sb.append(contentSpaceId);
-		sb.append(", ");
-
-		sb.append("\"creator\": ");
-
-		sb.append(creator);
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		sb.append("\"");
-		sb.append(dateCreated);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"dateModified\": ");
-
-		sb.append("\"");
-		sb.append(dateModified);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"description\": ");
-
-		sb.append("\"");
-		sb.append(description);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"id\": ");
-
-		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"numberOfDiscussionSections\": ");
-
-		sb.append(numberOfDiscussionSections);
-		sb.append(", ");
-
-		sb.append("\"numberOfDiscussionThreads\": ");
-
-		sb.append(numberOfDiscussionThreads);
-		sb.append(", ");
-
-		sb.append("\"title\": ");
-
-		sb.append("\"");
-		sb.append(title);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"viewableBy\": ");
-
-		sb.append("\"");
-		sb.append(viewableBy);
-		sb.append("\"");
-
-		sb.append("}");
-
-		return sb.toString();
-	}
 
 }

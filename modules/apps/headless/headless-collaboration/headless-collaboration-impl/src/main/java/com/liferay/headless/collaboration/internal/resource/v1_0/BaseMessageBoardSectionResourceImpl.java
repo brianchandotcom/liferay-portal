@@ -14,8 +14,8 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionSection;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -63,8 +63,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseDiscussionSectionResourceImpl
-	implements DiscussionSectionResource {
+public abstract class BaseMessageBoardSectionResourceImpl
+	implements MessageBoardSectionResource {
 
 	@Override
 	@GET
@@ -76,10 +76,10 @@ public abstract class BaseDiscussionSectionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/discussion-sections")
+	@Path("/content-spaces/{content-space-id}/message-board-sections")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public Page<DiscussionSection> getContentSpaceDiscussionSectionsPage(
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@QueryParam("tree") Boolean tree, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -91,118 +91,119 @@ public abstract class BaseDiscussionSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/discussion-sections")
+	@Path("/content-spaces/{content-space-id}/message-board-sections")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public DiscussionSection postContentSpaceDiscussionSection(
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public MessageBoardSection postContentSpaceMessageBoardSection(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			DiscussionSection discussionSection)
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return new DiscussionSection();
+		return new MessageBoardSection();
 	}
 
 	@Override
 	@DELETE
-	@Path("/discussion-sections/{discussion-section-id}")
+	@Path("/message-board-sections/{message-board-section-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public void deleteDiscussionSection(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public void deleteMessageBoardSection(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/discussion-sections/{discussion-section-id}")
+	@Path("/message-board-sections/{message-board-section-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public DiscussionSection getDiscussionSection(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public MessageBoardSection getMessageBoardSection(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId)
 		throws Exception {
 
-		return new DiscussionSection();
+		return new MessageBoardSection();
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/discussion-sections/{discussion-section-id}")
+	@Path("/message-board-sections/{message-board-section-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public DiscussionSection patchDiscussionSection(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			DiscussionSection discussionSection)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public MessageBoardSection patchMessageBoardSection(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		preparePatch(discussionSection);
+		preparePatch(messageBoardSection);
 
-		DiscussionSection existingDiscussionSection = getDiscussionSection(
-			discussionSectionId);
+		MessageBoardSection existingMessageBoardSection =
+			getMessageBoardSection(messageBoardSectionId);
 
-		if (Validator.isNotNull(discussionSection.getContentSpaceId())) {
-			existingDiscussionSection.setContentSpaceId(
-				discussionSection.getContentSpaceId());
+		if (Validator.isNotNull(messageBoardSection.getContentSpaceId())) {
+			existingMessageBoardSection.setContentSpaceId(
+				messageBoardSection.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(discussionSection.getDateCreated())) {
-			existingDiscussionSection.setDateCreated(
-				discussionSection.getDateCreated());
+		if (Validator.isNotNull(messageBoardSection.getDateCreated())) {
+			existingMessageBoardSection.setDateCreated(
+				messageBoardSection.getDateCreated());
 		}
 
-		if (Validator.isNotNull(discussionSection.getDateModified())) {
-			existingDiscussionSection.setDateModified(
-				discussionSection.getDateModified());
+		if (Validator.isNotNull(messageBoardSection.getDateModified())) {
+			existingMessageBoardSection.setDateModified(
+				messageBoardSection.getDateModified());
 		}
 
-		if (Validator.isNotNull(discussionSection.getDescription())) {
-			existingDiscussionSection.setDescription(
-				discussionSection.getDescription());
-		}
-
-		if (Validator.isNotNull(
-				discussionSection.getNumberOfDiscussionSections())) {
-
-			existingDiscussionSection.setNumberOfDiscussionSections(
-				discussionSection.getNumberOfDiscussionSections());
+		if (Validator.isNotNull(messageBoardSection.getDescription())) {
+			existingMessageBoardSection.setDescription(
+				messageBoardSection.getDescription());
 		}
 
 		if (Validator.isNotNull(
-				discussionSection.getNumberOfDiscussionThreads())) {
+				messageBoardSection.getNumberOfMessageBoardSections())) {
 
-			existingDiscussionSection.setNumberOfDiscussionThreads(
-				discussionSection.getNumberOfDiscussionThreads());
+			existingMessageBoardSection.setNumberOfMessageBoardSections(
+				messageBoardSection.getNumberOfMessageBoardSections());
 		}
 
-		if (Validator.isNotNull(discussionSection.getTitle())) {
-			existingDiscussionSection.setTitle(discussionSection.getTitle());
+		if (Validator.isNotNull(
+				messageBoardSection.getNumberOfMessageBoardThreads())) {
+
+			existingMessageBoardSection.setNumberOfMessageBoardThreads(
+				messageBoardSection.getNumberOfMessageBoardThreads());
 		}
 
-		if (Validator.isNotNull(discussionSection.getViewableBy())) {
-			existingDiscussionSection.setViewableBy(
-				discussionSection.getViewableBy());
+		if (Validator.isNotNull(messageBoardSection.getTitle())) {
+			existingMessageBoardSection.setTitle(
+				messageBoardSection.getTitle());
 		}
 
-		return putDiscussionSection(
-			discussionSectionId, existingDiscussionSection);
+		if (Validator.isNotNull(messageBoardSection.getViewableBy())) {
+			existingMessageBoardSection.setViewableBy(
+				messageBoardSection.getViewableBy());
+		}
+
+		return putMessageBoardSection(
+			messageBoardSectionId, existingMessageBoardSection);
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/discussion-sections/{discussion-section-id}")
+	@Path("/message-board-sections/{message-board-section-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public DiscussionSection putDiscussionSection(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			DiscussionSection discussionSection)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public MessageBoardSection putMessageBoardSection(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return new DiscussionSection();
+		return new MessageBoardSection();
 	}
 
 	@Override
@@ -215,14 +216,17 @@ public abstract class BaseDiscussionSectionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/discussion-sections/{discussion-section-id}/discussion-sections")
+	@Path(
+		"/message-board-sections/{message-board-section-id}/message-board-sections"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public Page<DiscussionSection> getDiscussionSectionDiscussionSectionsPage(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public Page<MessageBoardSection>
+			getMessageBoardSectionMessageBoardSectionsPage(
+				@NotNull @PathParam("message-board-section-id") Long
+					messageBoardSectionId,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -231,16 +235,18 @@ public abstract class BaseDiscussionSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/discussion-sections/{discussion-section-id}/discussion-sections")
+	@Path(
+		"/message-board-sections/{message-board-section-id}/message-board-sections"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public DiscussionSection postDiscussionSectionDiscussionSection(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			DiscussionSection discussionSection)
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return new DiscussionSection();
+		return new MessageBoardSection();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -256,11 +262,11 @@ public abstract class BaseDiscussionSectionResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseDiscussionSectionResourceImpl.class
+			BaseMessageBoardSectionResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseDiscussionSectionResourceImpl.class, methodName
+			BaseMessageBoardSectionResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -268,7 +274,7 @@ public abstract class BaseDiscussionSectionResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(DiscussionSection discussionSection) {
+	protected void preparePatch(MessageBoardSection messageBoardSection) {
 	}
 
 	protected <T, R> List<R> transform(

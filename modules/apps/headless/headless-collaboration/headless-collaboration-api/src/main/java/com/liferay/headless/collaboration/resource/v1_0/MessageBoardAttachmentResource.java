@@ -14,7 +14,7 @@
 
 package com.liferay.headless.collaboration.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -30,31 +30,31 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DiscussionAttachmentResource {
+public interface MessageBoardAttachmentResource {
 
-	public void deleteDiscussionAttachment(Long discussionAttachmentId)
+	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
 		throws Exception;
 
-	public DiscussionAttachment getDiscussionAttachment(
-			Long discussionAttachmentId)
+	public MessageBoardAttachment getMessageBoardAttachment(
+			Long messageBoardAttachmentId)
 		throws Exception;
 
-	public Page<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionAttachmentsPage(
-				Long discussionForumPostingId)
+	public Page<MessageBoardAttachment>
+			getMessageBoardMessageMessageBoardAttachmentsPage(
+				Long messageBoardMessageId)
 		throws Exception;
 
-	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
-			Long discussionForumPostingId, MultipartBody multipartBody)
+	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
+			Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception;
 
-	public Page<DiscussionAttachment>
-			getDiscussionThreadDiscussionAttachmentsPage(
-				Long discussionThreadId)
+	public Page<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
 		throws Exception;
 
-	public DiscussionAttachment postDiscussionThreadDiscussionAttachment(
-			Long discussionThreadId, MultipartBody multipartBody)
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+			Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -17,23 +17,23 @@ package com.liferay.headless.collaboration.internal.graphql.query.v1_0;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionForumPosting;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionSection;
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -84,38 +84,6 @@ public class Query {
 			commentResourceComponentServiceObjects;
 	}
 
-	public static void setDiscussionAttachmentResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionAttachmentResource>
-			discussionAttachmentResourceComponentServiceObjects) {
-
-		_discussionAttachmentResourceComponentServiceObjects =
-			discussionAttachmentResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionForumPostingResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionForumPostingResource>
-			discussionForumPostingResourceComponentServiceObjects) {
-
-		_discussionForumPostingResourceComponentServiceObjects =
-			discussionForumPostingResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionSectionResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionSectionResource>
-			discussionSectionResourceComponentServiceObjects) {
-
-		_discussionSectionResourceComponentServiceObjects =
-			discussionSectionResourceComponentServiceObjects;
-	}
-
-	public static void setDiscussionThreadResourceComponentServiceObjects(
-		ComponentServiceObjects<DiscussionThreadResource>
-			discussionThreadResourceComponentServiceObjects) {
-
-		_discussionThreadResourceComponentServiceObjects =
-			discussionThreadResourceComponentServiceObjects;
-	}
-
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
 		ComponentServiceObjects<KnowledgeBaseArticleResource>
 			knowledgeBaseArticleResourceComponentServiceObjects) {
@@ -139,6 +107,38 @@ public class Query {
 
 		_knowledgeBaseFolderResourceComponentServiceObjects =
 			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardAttachmentResource>
+			messageBoardAttachmentResourceComponentServiceObjects) {
+
+		_messageBoardAttachmentResourceComponentServiceObjects =
+			messageBoardAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardMessageResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardMessageResource>
+			messageBoardMessageResourceComponentServiceObjects) {
+
+		_messageBoardMessageResourceComponentServiceObjects =
+			messageBoardMessageResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardSectionResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardSectionResource>
+			messageBoardSectionResourceComponentServiceObjects) {
+
+		_messageBoardSectionResourceComponentServiceObjects =
+			messageBoardSectionResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardThreadResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardThreadResource>
+			messageBoardThreadResourceComponentServiceObjects) {
+
+		_messageBoardThreadResourceComponentServiceObjects =
+			messageBoardThreadResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -264,254 +264,6 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public DiscussionAttachment getDiscussionAttachment(
-			@GraphQLName("discussion-attachment-id") Long
-				discussionAttachmentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.getDiscussionAttachment(
-					discussionAttachmentId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionAttachmentsPage(
-				@GraphQLName("discussion-forum-posting-id") Long
-					discussionForumPostingId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionAttachmentResource -> {
-				Page paginationPage =
-					discussionAttachmentResource.
-						getDiscussionForumPostingDiscussionAttachmentsPage(
-							discussionForumPostingId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionAttachment>
-			getDiscussionThreadDiscussionAttachmentsPage(
-				@GraphQLName("discussion-thread-id") Long discussionThreadId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionAttachmentResource -> {
-				Page paginationPage =
-					discussionAttachmentResource.
-						getDiscussionThreadDiscussionAttachmentsPage(
-							discussionThreadId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public DiscussionForumPosting getDiscussionForumPosting(
-			@GraphQLName("discussion-forum-posting-id") Long
-				discussionForumPostingId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionForumPostingResource ->
-				discussionForumPostingResource.getDiscussionForumPosting(
-					discussionForumPostingId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionForumPosting>
-			getDiscussionForumPostingDiscussionForumPostingsPage(
-				@GraphQLName("discussion-forum-posting-id") Long
-					discussionForumPostingId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionForumPostingResource -> {
-				Page paginationPage =
-					discussionForumPostingResource.
-						getDiscussionForumPostingDiscussionForumPostingsPage(
-							discussionForumPostingId, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionForumPosting>
-			getDiscussionThreadDiscussionForumPostingsPage(
-				@GraphQLName("discussion-thread-id") Long discussionThreadId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionForumPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionForumPostingResource -> {
-				Page paginationPage =
-					discussionForumPostingResource.
-						getDiscussionThreadDiscussionForumPostingsPage(
-							discussionThreadId, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionSection> getContentSpaceDiscussionSectionsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("tree") Boolean tree,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionSectionResource -> {
-				Page paginationPage =
-					discussionSectionResource.
-						getContentSpaceDiscussionSectionsPage(
-							contentSpaceId, tree, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public DiscussionSection getDiscussionSection(
-			@GraphQLName("discussion-section-id") Long discussionSectionId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionSectionResource ->
-				discussionSectionResource.getDiscussionSection(
-					discussionSectionId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionSection>
-			getDiscussionSectionDiscussionSectionsPage(
-				@GraphQLName("discussion-section-id") Long discussionSectionId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionSectionResource -> {
-				Page paginationPage =
-					discussionSectionResource.
-						getDiscussionSectionDiscussionSectionsPage(
-							discussionSectionId, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionThread> getContentSpaceDiscussionThreadsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("tree") Boolean tree,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionThreadResource -> {
-				Page paginationPage =
-					discussionThreadResource.
-						getContentSpaceDiscussionThreadsPage(
-							contentSpaceId, tree, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<DiscussionThread>
-			getDiscussionSectionDiscussionThreadsPage(
-				@GraphQLName("discussion-section-id") Long discussionSectionId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionThreadResource -> {
-				Page paginationPage =
-					discussionThreadResource.
-						getDiscussionSectionDiscussionThreadsPage(
-							discussionSectionId, filter,
-							Pagination.of(pageSize, page), sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public DiscussionThread getDiscussionThread(
-			@GraphQLName("discussion-thread-id") Long discussionThreadId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionThreadResource ->
-				discussionThreadResource.getDiscussionThread(
-					discussionThreadId));
 	}
 
 	@GraphQLField
@@ -704,6 +456,261 @@ public class Query {
 			});
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public MessageBoardAttachment getMessageBoardAttachment(
+			@GraphQLName("message-board-attachment-id") Long
+				messageBoardAttachmentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.getMessageBoardAttachment(
+					messageBoardAttachmentId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardAttachment>
+			getMessageBoardMessageMessageBoardAttachmentsPage(
+				@GraphQLName("message-board-message-id") Long
+					messageBoardMessageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource -> {
+				Page paginationPage =
+					messageBoardAttachmentResource.
+						getMessageBoardMessageMessageBoardAttachmentsPage(
+							messageBoardMessageId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				@GraphQLName("message-board-thread-id") Long
+					messageBoardThreadId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource -> {
+				Page paginationPage =
+					messageBoardAttachmentResource.
+						getMessageBoardThreadMessageBoardAttachmentsPage(
+							messageBoardThreadId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public MessageBoardMessage getMessageBoardMessage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.getMessageBoardMessage(
+					messageBoardMessageId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardMessage>
+			getMessageBoardMessageMessageBoardMessagesPage(
+				@GraphQLName("message-board-message-id") Long
+					messageBoardMessageId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource -> {
+				Page paginationPage =
+					messageBoardMessageResource.
+						getMessageBoardMessageMessageBoardMessagesPage(
+							messageBoardMessageId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardMessage>
+			getMessageBoardThreadMessageBoardMessagesPage(
+				@GraphQLName("message-board-thread-id") Long
+					messageBoardThreadId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource -> {
+				Page paginationPage =
+					messageBoardMessageResource.
+						getMessageBoardThreadMessageBoardMessagesPage(
+							messageBoardThreadId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardSection>
+			getContentSpaceMessageBoardSectionsPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource -> {
+				Page paginationPage =
+					messageBoardSectionResource.
+						getContentSpaceMessageBoardSectionsPage(
+							contentSpaceId, tree, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public MessageBoardSection getMessageBoardSection(
+			@GraphQLName("message-board-section-id") Long messageBoardSectionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.getMessageBoardSection(
+					messageBoardSectionId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardSection>
+			getMessageBoardSectionMessageBoardSectionsPage(
+				@GraphQLName("message-board-section-id") Long
+					messageBoardSectionId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource -> {
+				Page paginationPage =
+					messageBoardSectionResource.
+						getMessageBoardSectionMessageBoardSectionsPage(
+							messageBoardSectionId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardThread>
+			getContentSpaceMessageBoardThreadsPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> {
+				Page paginationPage =
+					messageBoardThreadResource.
+						getContentSpaceMessageBoardThreadsPage(
+							contentSpaceId, tree, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<MessageBoardThread>
+			getMessageBoardSectionMessageBoardThreadsPage(
+				@GraphQLName("message-board-section-id") Long
+					messageBoardSectionId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> {
+				Page paginationPage =
+					messageBoardThreadResource.
+						getMessageBoardSectionMessageBoardThreadsPage(
+							messageBoardSectionId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public MessageBoardThread getMessageBoardThread(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.getMessageBoardThread(
+					messageBoardThreadId));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -750,42 +757,6 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			DiscussionAttachmentResource discussionAttachmentResource)
-		throws Exception {
-
-		discussionAttachmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionForumPostingResource discussionForumPostingResource)
-		throws Exception {
-
-		discussionForumPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionSectionResource discussionSectionResource)
-		throws Exception {
-
-		discussionSectionResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
-			DiscussionThreadResource discussionThreadResource)
-		throws Exception {
-
-		discussionThreadResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
 
@@ -812,25 +783,61 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			MessageBoardAttachmentResource messageBoardAttachmentResource)
+		throws Exception {
+
+		messageBoardAttachmentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardMessageResource messageBoardMessageResource)
+		throws Exception {
+
+		messageBoardMessageResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardSectionResource messageBoardSectionResource)
+		throws Exception {
+
+		messageBoardSectionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			MessageBoardThreadResource messageBoardThreadResource)
+		throws Exception {
+
+		messageBoardThreadResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
 		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionAttachmentResource>
-		_discussionAttachmentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionForumPostingResource>
-		_discussionForumPostingResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionSectionResource>
-		_discussionSectionResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DiscussionThreadResource>
-		_discussionThreadResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>
 		_knowledgeBaseAttachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
 		_knowledgeBaseFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardAttachmentResource>
+		_messageBoardAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardMessageResource>
+		_messageBoardMessageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardSectionResource>
+		_messageBoardSectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardThreadResource>
+		_messageBoardThreadResourceComponentServiceObjects;
 
 }

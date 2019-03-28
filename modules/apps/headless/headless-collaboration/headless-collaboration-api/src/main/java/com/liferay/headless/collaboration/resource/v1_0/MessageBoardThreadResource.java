@@ -14,7 +14,7 @@
 
 package com.liferay.headless.collaboration.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -32,38 +32,39 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DiscussionThreadResource {
+public interface MessageBoardThreadResource {
 
-	public Page<DiscussionThread> getContentSpaceDiscussionThreadsPage(
+	public Page<MessageBoardThread> getContentSpaceMessageBoardThreadsPage(
 			Long contentSpaceId, Boolean tree, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DiscussionThread postContentSpaceDiscussionThread(
-			Long contentSpaceId, DiscussionThread discussionThread)
+	public MessageBoardThread postContentSpaceMessageBoardThread(
+			Long contentSpaceId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
-	public Page<DiscussionThread> getDiscussionSectionDiscussionThreadsPage(
-			Long discussionSectionId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<MessageBoardThread>
+			getMessageBoardSectionMessageBoardThreadsPage(
+				Long messageBoardSectionId, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DiscussionThread postDiscussionSectionDiscussionThread(
-			Long discussionSectionId, DiscussionThread discussionThread)
+	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
-	public void deleteDiscussionThread(Long discussionThreadId)
+	public void deleteMessageBoardThread(Long messageBoardThreadId)
 		throws Exception;
 
-	public DiscussionThread getDiscussionThread(Long discussionThreadId)
+	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
 		throws Exception;
 
-	public DiscussionThread patchDiscussionThread(
-			Long discussionThreadId, DiscussionThread discussionThread)
+	public MessageBoardThread patchMessageBoardThread(
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
-	public DiscussionThread putDiscussionThread(
-			Long discussionThreadId, DiscussionThread discussionThread)
+	public MessageBoardThread putMessageBoardThread(
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

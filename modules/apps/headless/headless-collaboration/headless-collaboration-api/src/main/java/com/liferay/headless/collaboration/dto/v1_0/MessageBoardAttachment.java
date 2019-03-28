@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscussionAttachment")
+@GraphQLName("MessageBoardAttachment")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DiscussionAttachment")
-public class DiscussionAttachment {
+@XmlRootElement(name = "MessageBoardAttachment")
+public class MessageBoardAttachment {
 
 	public String getContentUrl() {
 		return contentUrl;

@@ -12,42 +12,26 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.dto.v1_0;
+package com.liferay.headless.collaboration.client.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.headless.collaboration.client.function.UnsafeSupplier;
 
 import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscussionForumPosting")
-@JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DiscussionForumPosting")
-public class DiscussionForumPosting {
+public class MessageBoardMessage {
 
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
 
-		@JsonCreator
 		public static ViewableBy create(String value) {
 			for (ViewableBy viewableBy : values()) {
 				if (Objects.equals(viewableBy.getValue(), value)) {
@@ -58,7 +42,6 @@ public class DiscussionForumPosting {
 			return null;
 		}
 
-		@JsonValue
 		public String getValue() {
 			return _value;
 		}
@@ -84,7 +67,6 @@ public class DiscussionForumPosting {
 		this.aggregateRating = aggregateRating;
 	}
 
-	@JsonIgnore
 	public void setAggregateRating(
 		UnsafeSupplier<AggregateRating, Exception>
 			aggregateRatingUnsafeSupplier) {
@@ -97,8 +79,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregateRating aggregateRating;
 
 	public Boolean getAnonymous() {
@@ -109,7 +89,6 @@ public class DiscussionForumPosting {
 		this.anonymous = anonymous;
 	}
 
-	@JsonIgnore
 	public void setAnonymous(
 		UnsafeSupplier<Boolean, Exception> anonymousUnsafeSupplier) {
 
@@ -121,8 +100,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean anonymous;
 
 	public String getArticleBody() {
@@ -133,7 +110,6 @@ public class DiscussionForumPosting {
 		this.articleBody = articleBody;
 	}
 
-	@JsonIgnore
 	public void setArticleBody(
 		UnsafeSupplier<String, Exception> articleBodyUnsafeSupplier) {
 
@@ -145,8 +121,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
 	public Long getContentSpaceId() {
@@ -157,7 +131,6 @@ public class DiscussionForumPosting {
 		this.contentSpaceId = contentSpaceId;
 	}
 
-	@JsonIgnore
 	public void setContentSpaceId(
 		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
 
@@ -169,8 +142,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpaceId;
 
 	public Creator getCreator() {
@@ -181,7 +152,6 @@ public class DiscussionForumPosting {
 		this.creator = creator;
 	}
 
-	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
@@ -193,8 +163,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -205,7 +173,6 @@ public class DiscussionForumPosting {
 		this.dateCreated = dateCreated;
 	}
 
-	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
@@ -217,8 +184,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -229,7 +194,6 @@ public class DiscussionForumPosting {
 		this.dateModified = dateModified;
 	}
 
-	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
@@ -241,8 +205,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getHeadline() {
@@ -253,7 +215,6 @@ public class DiscussionForumPosting {
 		this.headline = headline;
 	}
 
-	@JsonIgnore
 	public void setHeadline(
 		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
 
@@ -265,8 +226,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
 	public Long getId() {
@@ -277,7 +236,6 @@ public class DiscussionForumPosting {
 		this.id = id;
 	}
 
-	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
@@ -287,8 +245,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String[] getKeywords() {
@@ -299,7 +255,6 @@ public class DiscussionForumPosting {
 		this.keywords = keywords;
 	}
 
-	@JsonIgnore
 	public void setKeywords(
 		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
@@ -311,65 +266,57 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public Integer getNumberOfDiscussionAttachments() {
-		return numberOfDiscussionAttachments;
+	public Integer getNumberOfMessageBoardAttachments() {
+		return numberOfMessageBoardAttachments;
 	}
 
-	public void setNumberOfDiscussionAttachments(
-		Integer numberOfDiscussionAttachments) {
+	public void setNumberOfMessageBoardAttachments(
+		Integer numberOfMessageBoardAttachments) {
 
-		this.numberOfDiscussionAttachments = numberOfDiscussionAttachments;
+		this.numberOfMessageBoardAttachments = numberOfMessageBoardAttachments;
 	}
 
-	@JsonIgnore
-	public void setNumberOfDiscussionAttachments(
+	public void setNumberOfMessageBoardAttachments(
 		UnsafeSupplier<Integer, Exception>
-			numberOfDiscussionAttachmentsUnsafeSupplier) {
+			numberOfMessageBoardAttachmentsUnsafeSupplier) {
 
 		try {
-			numberOfDiscussionAttachments =
-				numberOfDiscussionAttachmentsUnsafeSupplier.get();
+			numberOfMessageBoardAttachments =
+				numberOfMessageBoardAttachmentsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer numberOfDiscussionAttachments;
+	protected Integer numberOfMessageBoardAttachments;
 
-	public Integer getNumberOfDiscussionForumPostings() {
-		return numberOfDiscussionForumPostings;
+	public Integer getNumberOfMessageBoardMessages() {
+		return numberOfMessageBoardMessages;
 	}
 
-	public void setNumberOfDiscussionForumPostings(
-		Integer numberOfDiscussionForumPostings) {
+	public void setNumberOfMessageBoardMessages(
+		Integer numberOfMessageBoardMessages) {
 
-		this.numberOfDiscussionForumPostings = numberOfDiscussionForumPostings;
+		this.numberOfMessageBoardMessages = numberOfMessageBoardMessages;
 	}
 
-	@JsonIgnore
-	public void setNumberOfDiscussionForumPostings(
+	public void setNumberOfMessageBoardMessages(
 		UnsafeSupplier<Integer, Exception>
-			numberOfDiscussionForumPostingsUnsafeSupplier) {
+			numberOfMessageBoardMessagesUnsafeSupplier) {
 
 		try {
-			numberOfDiscussionForumPostings =
-				numberOfDiscussionForumPostingsUnsafeSupplier.get();
+			numberOfMessageBoardMessages =
+				numberOfMessageBoardMessagesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer numberOfDiscussionForumPostings;
+	protected Integer numberOfMessageBoardMessages;
 
 	public Boolean getShowAsAnswer() {
 		return showAsAnswer;
@@ -379,7 +326,6 @@ public class DiscussionForumPosting {
 		this.showAsAnswer = showAsAnswer;
 	}
 
-	@JsonIgnore
 	public void setShowAsAnswer(
 		UnsafeSupplier<Boolean, Exception> showAsAnswerUnsafeSupplier) {
 
@@ -391,8 +337,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsAnswer;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {
@@ -403,7 +347,6 @@ public class DiscussionForumPosting {
 		this.taxonomyCategories = taxonomyCategories;
 	}
 
-	@JsonIgnore
 	public void setTaxonomyCategories(
 		UnsafeSupplier<TaxonomyCategory[], Exception>
 			taxonomyCategoriesUnsafeSupplier) {
@@ -416,8 +359,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
@@ -428,7 +369,6 @@ public class DiscussionForumPosting {
 		this.taxonomyCategoryIds = taxonomyCategoryIds;
 	}
 
-	@JsonIgnore
 	public void setTaxonomyCategoryIds(
 		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
 
@@ -440,15 +380,12 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}
 
-	@JsonIgnore
 	public String getViewableByAsString() {
 		if (viewableBy == null) {
 			return null;
@@ -461,7 +398,6 @@ public class DiscussionForumPosting {
 		this.viewableBy = viewableBy;
 	}
 
-	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
@@ -473,157 +409,6 @@ public class DiscussionForumPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
-
-	public String toString() {
-		StringBundler sb = new StringBundler();
-
-		sb.append("{");
-
-		sb.append("\"aggregateRating\": ");
-
-		sb.append(aggregateRating);
-		sb.append(", ");
-
-		sb.append("\"anonymous\": ");
-
-		sb.append(anonymous);
-		sb.append(", ");
-
-		sb.append("\"articleBody\": ");
-
-		sb.append("\"");
-		sb.append(articleBody);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"contentSpaceId\": ");
-
-		sb.append(contentSpaceId);
-		sb.append(", ");
-
-		sb.append("\"creator\": ");
-
-		sb.append(creator);
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		sb.append("\"");
-		sb.append(dateCreated);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"dateModified\": ");
-
-		sb.append("\"");
-		sb.append(dateModified);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"headline\": ");
-
-		sb.append("\"");
-		sb.append(headline);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"id\": ");
-
-		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"keywords\": ");
-
-		if (keywords == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < keywords.length; i++) {
-				sb.append("\"");
-				sb.append(keywords[i]);
-				sb.append("\"");
-
-				if ((i + 1) < keywords.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"numberOfDiscussionAttachments\": ");
-
-		sb.append(numberOfDiscussionAttachments);
-		sb.append(", ");
-
-		sb.append("\"numberOfDiscussionForumPostings\": ");
-
-		sb.append(numberOfDiscussionForumPostings);
-		sb.append(", ");
-
-		sb.append("\"showAsAnswer\": ");
-
-		sb.append(showAsAnswer);
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategories\": ");
-
-		if (taxonomyCategories == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategories.length; i++) {
-				sb.append(taxonomyCategories[i]);
-
-				if ((i + 1) < taxonomyCategories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategoryIds\": ");
-
-		if (taxonomyCategoryIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
-				sb.append(taxonomyCategoryIds[i]);
-
-				if ((i + 1) < taxonomyCategoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"viewableBy\": ");
-
-		sb.append("\"");
-		sb.append(viewableBy);
-		sb.append("\"");
-
-		sb.append("}");
-
-		return sb.toString();
-	}
 
 }

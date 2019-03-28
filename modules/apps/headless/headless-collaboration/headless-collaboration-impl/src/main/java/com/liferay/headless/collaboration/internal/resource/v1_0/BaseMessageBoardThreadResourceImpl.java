@@ -14,8 +14,8 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
-import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
+import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -63,8 +63,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseDiscussionThreadResourceImpl
-	implements DiscussionThreadResource {
+public abstract class BaseMessageBoardThreadResourceImpl
+	implements MessageBoardThreadResource {
 
 	@Override
 	@GET
@@ -76,10 +76,10 @@ public abstract class BaseDiscussionThreadResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/discussion-threads")
+	@Path("/content-spaces/{content-space-id}/message-board-threads")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public Page<DiscussionThread> getContentSpaceDiscussionThreadsPage(
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public Page<MessageBoardThread> getContentSpaceMessageBoardThreadsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@QueryParam("tree") Boolean tree, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -91,15 +91,15 @@ public abstract class BaseDiscussionThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/discussion-threads")
+	@Path("/content-spaces/{content-space-id}/message-board-threads")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public DiscussionThread postContentSpaceDiscussionThread(
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public MessageBoardThread postContentSpaceMessageBoardThread(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			DiscussionThread discussionThread)
+			MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		return new DiscussionThread();
+		return new MessageBoardThread();
 	}
 
 	@Override
@@ -112,14 +112,17 @@ public abstract class BaseDiscussionThreadResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/discussion-sections/{discussion-section-id}/discussion-threads")
+	@Path(
+		"/message-board-sections/{message-board-section-id}/message-board-threads"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public Page<DiscussionThread> getDiscussionSectionDiscussionThreadsPage(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public Page<MessageBoardThread>
+			getMessageBoardSectionMessageBoardThreadsPage(
+				@NotNull @PathParam("message-board-section-id") Long
+					messageBoardSectionId,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -128,136 +131,142 @@ public abstract class BaseDiscussionThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/discussion-sections/{discussion-section-id}/discussion-threads")
+	@Path(
+		"/message-board-sections/{message-board-section-id}/message-board-threads"
+	)
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public DiscussionThread postDiscussionSectionDiscussionThread(
-			@NotNull @PathParam("discussion-section-id") Long
-				discussionSectionId,
-			DiscussionThread discussionThread)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			@NotNull @PathParam("message-board-section-id") Long
+				messageBoardSectionId,
+			MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		return new DiscussionThread();
+		return new MessageBoardThread();
 	}
 
 	@Override
 	@DELETE
-	@Path("/discussion-threads/{discussion-thread-id}")
+	@Path("/message-board-threads/{message-board-thread-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public void deleteDiscussionThread(
-			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public void deleteMessageBoardThread(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/discussion-threads/{discussion-thread-id}")
+	@Path("/message-board-threads/{message-board-thread-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public DiscussionThread getDiscussionThread(
-			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public MessageBoardThread getMessageBoardThread(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId)
 		throws Exception {
 
-		return new DiscussionThread();
+		return new MessageBoardThread();
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/discussion-threads/{discussion-thread-id}")
+	@Path("/message-board-threads/{message-board-thread-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public DiscussionThread patchDiscussionThread(
-			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId,
-			DiscussionThread discussionThread)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public MessageBoardThread patchMessageBoardThread(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId,
+			MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		preparePatch(discussionThread);
+		preparePatch(messageBoardThread);
 
-		DiscussionThread existingDiscussionThread = getDiscussionThread(
-			discussionThreadId);
+		MessageBoardThread existingMessageBoardThread = getMessageBoardThread(
+			messageBoardThreadId);
 
-		if (Validator.isNotNull(discussionThread.getArticleBody())) {
-			existingDiscussionThread.setArticleBody(
-				discussionThread.getArticleBody());
+		if (Validator.isNotNull(messageBoardThread.getArticleBody())) {
+			existingMessageBoardThread.setArticleBody(
+				messageBoardThread.getArticleBody());
 		}
 
-		if (Validator.isNotNull(discussionThread.getContentSpaceId())) {
-			existingDiscussionThread.setContentSpaceId(
-				discussionThread.getContentSpaceId());
+		if (Validator.isNotNull(messageBoardThread.getContentSpaceId())) {
+			existingMessageBoardThread.setContentSpaceId(
+				messageBoardThread.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(discussionThread.getDateCreated())) {
-			existingDiscussionThread.setDateCreated(
-				discussionThread.getDateCreated());
+		if (Validator.isNotNull(messageBoardThread.getDateCreated())) {
+			existingMessageBoardThread.setDateCreated(
+				messageBoardThread.getDateCreated());
 		}
 
-		if (Validator.isNotNull(discussionThread.getDateModified())) {
-			existingDiscussionThread.setDateModified(
-				discussionThread.getDateModified());
+		if (Validator.isNotNull(messageBoardThread.getDateModified())) {
+			existingMessageBoardThread.setDateModified(
+				messageBoardThread.getDateModified());
 		}
 
-		if (Validator.isNotNull(discussionThread.getHeadline())) {
-			existingDiscussionThread.setHeadline(
-				discussionThread.getHeadline());
+		if (Validator.isNotNull(messageBoardThread.getHeadline())) {
+			existingMessageBoardThread.setHeadline(
+				messageBoardThread.getHeadline());
 		}
 
-		if (Validator.isNotNull(discussionThread.getKeywords())) {
-			existingDiscussionThread.setKeywords(
-				discussionThread.getKeywords());
-		}
-
-		if (Validator.isNotNull(
-				discussionThread.getNumberOfDiscussionAttachments())) {
-
-			existingDiscussionThread.setNumberOfDiscussionAttachments(
-				discussionThread.getNumberOfDiscussionAttachments());
+		if (Validator.isNotNull(messageBoardThread.getKeywords())) {
+			existingMessageBoardThread.setKeywords(
+				messageBoardThread.getKeywords());
 		}
 
 		if (Validator.isNotNull(
-				discussionThread.getNumberOfDiscussionForumPostings())) {
+				messageBoardThread.getNumberOfMessageBoardAttachments())) {
 
-			existingDiscussionThread.setNumberOfDiscussionForumPostings(
-				discussionThread.getNumberOfDiscussionForumPostings());
+			existingMessageBoardThread.setNumberOfMessageBoardAttachments(
+				messageBoardThread.getNumberOfMessageBoardAttachments());
 		}
 
-		if (Validator.isNotNull(discussionThread.getShowAsQuestion())) {
-			existingDiscussionThread.setShowAsQuestion(
-				discussionThread.getShowAsQuestion());
+		if (Validator.isNotNull(
+				messageBoardThread.getNumberOfMessageBoardMessages())) {
+
+			existingMessageBoardThread.setNumberOfMessageBoardMessages(
+				messageBoardThread.getNumberOfMessageBoardMessages());
 		}
 
-		if (Validator.isNotNull(discussionThread.getTaxonomyCategoryIds())) {
-			existingDiscussionThread.setTaxonomyCategoryIds(
-				discussionThread.getTaxonomyCategoryIds());
+		if (Validator.isNotNull(messageBoardThread.getShowAsQuestion())) {
+			existingMessageBoardThread.setShowAsQuestion(
+				messageBoardThread.getShowAsQuestion());
 		}
 
-		if (Validator.isNotNull(discussionThread.getThreadType())) {
-			existingDiscussionThread.setThreadType(
-				discussionThread.getThreadType());
+		if (Validator.isNotNull(messageBoardThread.getTaxonomyCategoryIds())) {
+			existingMessageBoardThread.setTaxonomyCategoryIds(
+				messageBoardThread.getTaxonomyCategoryIds());
 		}
 
-		if (Validator.isNotNull(discussionThread.getViewableBy())) {
-			existingDiscussionThread.setViewableBy(
-				discussionThread.getViewableBy());
+		if (Validator.isNotNull(messageBoardThread.getThreadType())) {
+			existingMessageBoardThread.setThreadType(
+				messageBoardThread.getThreadType());
 		}
 
-		return putDiscussionThread(
-			discussionThreadId, existingDiscussionThread);
+		if (Validator.isNotNull(messageBoardThread.getViewableBy())) {
+			existingMessageBoardThread.setViewableBy(
+				messageBoardThread.getViewableBy());
+		}
+
+		return putMessageBoardThread(
+			messageBoardThreadId, existingMessageBoardThread);
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/discussion-threads/{discussion-thread-id}")
+	@Path("/message-board-threads/{message-board-thread-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public DiscussionThread putDiscussionThread(
-			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId,
-			DiscussionThread discussionThread)
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public MessageBoardThread putMessageBoardThread(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId,
+			MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		return new DiscussionThread();
+		return new MessageBoardThread();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -273,11 +282,11 @@ public abstract class BaseDiscussionThreadResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseDiscussionThreadResourceImpl.class
+			BaseMessageBoardThreadResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseDiscussionThreadResourceImpl.class, methodName
+			BaseMessageBoardThreadResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -285,7 +294,7 @@ public abstract class BaseDiscussionThreadResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(DiscussionThread discussionThread) {
+	protected void preparePatch(MessageBoardThread messageBoardThread) {
 	}
 
 	protected <T, R> List<R> transform(

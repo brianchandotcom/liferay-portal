@@ -41,13 +41,14 @@ public class SegmentsTestUtil {
 		return addSegmentsEntry(groupId, RandomTestUtil.randomString());
 	}
 
-	public static SegmentsEntry addSegmentsEntry(long groupId, String key)
+	public static SegmentsEntry addSegmentsEntry(
+			long groupId, String segmentsEntryKey)
 		throws PortalException {
 
 		return addSegmentsEntry(
 			groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), key,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			segmentsEntryKey, RandomTestUtil.randomString());
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
@@ -77,12 +78,13 @@ public class SegmentsTestUtil {
 
 	public static SegmentsEntry addSegmentsEntry(
 			long groupId, final String name, final String description,
-			String criteria, String key, String type)
+			String criteria, String segmentsEntryKey, String type)
 		throws PortalException {
 
 		return addSegmentsEntry(
-			name, description, criteria, key, SegmentsConstants.SOURCE_DEFAULT,
-			type, ServiceContextTestUtil.getServiceContext(groupId));
+			name, description, criteria, segmentsEntryKey,
+			SegmentsConstants.SOURCE_DEFAULT, type,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static SegmentsEntry addSegmentsEntry(ServiceContext serviceContext)
@@ -97,7 +99,7 @@ public class SegmentsTestUtil {
 
 	public static SegmentsEntry addSegmentsEntry(
 			final String name, final String description, String criteria,
-			String key, String source, String type,
+			String segmentsEntryKey, String source, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -110,8 +112,8 @@ public class SegmentsTestUtil {
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
 		return SegmentsEntryLocalServiceUtil.addSegmentsEntry(
-			nameMap, descriptionMap, true, criteria, key, source, type,
-			serviceContext);
+			nameMap, descriptionMap, true, criteria, segmentsEntryKey, source,
+			type, serviceContext);
 	}
 
 }

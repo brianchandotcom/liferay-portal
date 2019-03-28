@@ -599,7 +599,7 @@ public class AutoCloseUtil {
 	private static List<String> _getBuildPropertyAsList(String propertyName) {
 		try {
 			return JenkinsResultsParserUtil.getBuildPropertyAsList(
-				propertyName);
+				true, propertyName);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

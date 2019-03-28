@@ -2150,7 +2150,7 @@ public class GitWorkingDirectory {
 
 	private static List<String> _getBuildPropertyAsList(String key) {
 		try {
-			return JenkinsResultsParserUtil.getBuildPropertyAsList(key);
+			return JenkinsResultsParserUtil.getBuildPropertyAsList(true, key);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

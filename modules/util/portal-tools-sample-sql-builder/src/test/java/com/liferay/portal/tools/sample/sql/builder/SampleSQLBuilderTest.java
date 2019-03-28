@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.io.unsync.UnsyncCharArrayWriter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,12 +29,13 @@ import com.liferay.portal.tools.HypersonicLoader;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -59,8 +61,8 @@ public class SampleSQLBuilderTest {
 		Class<?> clazz = getClass();
 
 		URL url = clazz.getResource(
-			"/com/liferay/portal/tools/sample/sql/builder/dependencies" +
-				"/sample.ftl");
+			"/com/liferay/portal/tools/sample/sql/builder/dependencies/sample" +
+				".ftl");
 
 		String fileContent = new String(
 			Files.readAllBytes(Paths.get(url.toURI())), StringPool.UTF8);

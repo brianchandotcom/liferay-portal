@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,12 +93,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
 
 			return false;
-		}
-
-		if ((_portal.getClassNameId(Layout.class) == layout.getClassNameId()) &&
-			(layout.getClassPK() > 0)) {
-
-			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 
 		Map<String, String> values = new HashMap<>();
@@ -203,9 +196,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -16,22 +16,33 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.DiscussionSection;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.odata.entity.v1_0.DiscussionSectionEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DiscussionSectionResource.class
 )
 public class DiscussionSectionResourceImpl
-	extends BaseDiscussionSectionResourceImpl {
+	extends BaseDiscussionSectionResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteDiscussionSection(Long discussionSectionId)
@@ -56,19 +67,22 @@ public class DiscussionSectionResourceImpl
 
 	@Override
 	public Page<DiscussionSection> getContentSpaceDiscussionSectionsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_mbCategoryService.getCategories(
-					contentSpaceId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionSection),
-			pagination,
-			_mbCategoryService.getCategoriesCount(
-				contentSpaceId, WorkflowConstants.STATUS_APPROVED));
+		return _getContentSpaceDiscussionSectionsPage(
+			booleanQuery -> {
+				if (Boolean.TRUE.equals(tree)) {
+					BooleanFilter booleanFilter =
+						booleanQuery.getPreBooleanFilter();
+
+					booleanFilter.add(
+						new TermFilter(Field.ASSET_PARENT_CATEGORY_ID, "0"),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -88,17 +102,25 @@ public class DiscussionSectionResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			discussionSectionId);
 
-		return Page.of(
-			transform(
-				_mbCategoryService.getCategories(
-					mbCategory.getGroupId(), discussionSectionId,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionSection),
-			pagination,
-			_mbCategoryService.getCategoriesCount(
-				mbCategory.getGroupId(), discussionSectionId,
-				WorkflowConstants.STATUS_APPROVED));
+		return _getContentSpaceDiscussionSectionsPage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.ASSET_PARENT_CATEGORY_ID,
+						String.valueOf(mbCategory.getCategoryId())),
+					BooleanClauseOccur.MUST);
+			},
+			filter, pagination, sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -154,6 +176,24 @@ public class DiscussionSectionResourceImpl
 					discussionSection.getViewableByAsString())));
 	}
 
+	private Page<DiscussionSection> _getContentSpaceDiscussionSectionsPage(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQueryUnsafeConsumer, filter, MBCategory.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toDiscussionSection(
+				_mbCategoryService.getCategory(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
+	}
+
 	private DiscussionSection _toDiscussionSection(MBCategory mbCategory)
 		throws PortalException {
 
@@ -175,6 +215,9 @@ public class DiscussionSectionResourceImpl
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new DiscussionSectionEntityModel();
 
 	@Reference
 	private MBCategoryService _mbCategoryService;

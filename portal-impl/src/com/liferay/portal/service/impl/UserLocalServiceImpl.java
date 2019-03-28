@@ -4291,39 +4291,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		reindex(userIds);
 	}
 
-	protected void unsetUserOrganizations(long userId, long[] organizationIds)
-		throws PortalException {
-
-		long[] groupIds = new long[organizationIds.length];
-
-		for (int i = 0; i < organizationIds.length; i++) {
-			Organization organization =
-				organizationPersistence.findByPrimaryKey(organizationIds[i]);
-
-			groupIds[i] = organization.getGroupId();
-		}
-
-		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
-
-		organizationLocalService.deleteUserOrganizations(
-			userId, organizationIds);
-
-		reindex(userId);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
-
-				message.put("groupIds", groupIds);
-				message.put("userId", userId);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.USER_SUBSCRIPTION_CLEAN_UP, message);
-
-				return null;
-			});
-	}
-
 	/**
 	 * Updates whether the user has agreed to the terms of use.
 	 *
@@ -6660,6 +6627,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		passwordTrackerLocalService.trackPassword(user.getUserId(), oldEncPwd);
+	}
+
+	protected void unsetUserOrganizations(long userId, long[] organizationIds)
+		throws PortalException {
+
+		long[] groupIds = new long[organizationIds.length];
+
+		for (int i = 0; i < organizationIds.length; i++) {
+			Organization organization =
+				organizationPersistence.findByPrimaryKey(organizationIds[i]);
+
+			groupIds[i] = organization.getGroupId();
+		}
+
+		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
+
+		organizationLocalService.deleteUserOrganizations(
+			userId, organizationIds);
+
+		reindex(userId);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Message message = new Message();
+
+				message.put("groupIds", groupIds);
+				message.put("userId", userId);
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.USER_SUBSCRIPTION_CLEAN_UP, message);
+
+				return null;
+			});
 	}
 
 	protected void updateGroups(

@@ -131,7 +131,7 @@
 		</div>
 
 		<c:if test="<%= ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) && (expandoColumn == null) %>">
-			<div class="number-hide" id="<portlet:namespace />textFieldLocalizedCheckbox">
+			<div id="<portlet:namespace />textFieldLocalizedCheckbox">
 				<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
 
 				<aui:script>

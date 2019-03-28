@@ -150,24 +150,23 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 <aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>
 
-<aui:script require="metal-dom/src/dom">
+<aui:script require="metal-dom/src/dom as dom">
 	AUI().use(
 		'liferay-item-selector-dialog',
 		function(A) {
-			let dom = metalDomSrcDom.default;
+			var deleteCollections = function() {
+				var fragmentCollectionsFm = document.<portlet:namespace />fragmentCollectionsFm;
 
-			const deleteCollections = function() {
-				const fragmentCollectionsFm = document.getElementById('<portlet:namespace />fragmentCollectionsFm');
-
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{
 						eventName: '<portlet:namespace />selectCollections',
 						on: {
 							selectedItemChange: function(event) {
-								const selectedItems = event.newVal;
+								var selectedItems = event.newVal;
 
 								if (selectedItems) {
-									selectedItems.forEach(
+									Array.prototype.forEach.call(
+										selectedItems,
 										function(item) {
 											dom.append(fragmentCollectionsFm, item);
 										}
@@ -189,18 +188,19 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 				itemSelectorDialog.open();
 			};
 
-			const exportCollections = function() {
-				const fragmentCollectionsFm = document.getElementById('<portlet:namespace />fragmentCollectionsFm');
+			var exportCollections = function() {
+				var fragmentCollectionsFm = document.<portlet:namespace />fragmentCollectionsFm;
 
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{
 						eventName: '<portlet:namespace />selectCollections',
 						on: {
 							selectedItemChange: function(event) {
-								const selectedItems = event.newVal;
+								var selectedItems = event.newVal;
 
 								if (selectedItems) {
-									selectedItems.forEach(
+									Array.prototype.forEach.call(
+										selectedItems,
 										function(item) {
 											dom.append(fragmentCollectionsFm, item);
 										}
@@ -222,7 +222,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 				itemSelectorDialog.open();
 			};
 
-			const openImportView = function() {
+			var openImportView = function() {
 				Liferay.Util.openWindow(
 					{
 						dialog: {
@@ -243,17 +243,17 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 				);
 			};
 
-			const ACTIONS = {
+			var ACTIONS = {
 				deleteCollections: deleteCollections,
 				exportCollections: exportCollections,
 				openImportView: openImportView
 			};
 
-			const handleComponentReady = function(component) {
+			var handleComponentReady = function(component) {
 				component.on(
 					['click', 'itemClicked'],
 					function(event, facade) {
-						let itemData;
+						var itemData;
 
 						if (event.data && event.data.item) {
 							itemData = event.data.item.data;

@@ -126,7 +126,8 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 			Page<DiscussionThread> page =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+					irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -146,7 +147,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 		Page<DiscussionThread> page =
 			invokeGetContentSpaceDiscussionThreadsPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -192,7 +193,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionThread> page =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", discussionThread1),
 					Pagination.of(1, 2), null);
 
@@ -228,7 +229,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionThread> page =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", discussionThread1),
 					Pagination.of(1, 2), null);
 
@@ -259,7 +260,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 		Page<DiscussionThread> page1 =
 			invokeGetContentSpaceDiscussionThreadsPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<DiscussionThread> discussionThreads1 =
 			(List<DiscussionThread>)page1.getItems();
@@ -269,7 +270,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 		Page<DiscussionThread> page2 =
 			invokeGetContentSpaceDiscussionThreadsPage(
-				contentSpaceId, null, Pagination.of(2, 2), null);
+				contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -326,7 +327,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionThread> ascPage =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -335,7 +336,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 			Page<DiscussionThread> descPage =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -379,7 +380,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscussionThread> ascPage =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -388,7 +389,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 			Page<DiscussionThread> descPage =
 				invokeGetContentSpaceDiscussionThreadsPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -420,8 +421,8 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 	}
 
 	protected Page<DiscussionThread> invokeGetContentSpaceDiscussionThreadsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, Boolean tree, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -456,8 +457,8 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceDiscussionThreadsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, Boolean tree, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1477,6 +1478,11 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("aggregateRating")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("articleBody")) {
 			sb.append("'");

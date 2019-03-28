@@ -59,6 +59,28 @@ public class DiscussionThread {
 
 	}
 
+	public AggregateRating getAggregateRating() {
+		return aggregateRating;
+	}
+
+	public void setAggregateRating(AggregateRating aggregateRating) {
+		this.aggregateRating = aggregateRating;
+	}
+
+	public void setAggregateRating(
+		UnsafeSupplier<AggregateRating, Exception>
+			aggregateRatingUnsafeSupplier) {
+
+		try {
+			aggregateRating = aggregateRatingUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AggregateRating aggregateRating;
+
 	public String getArticleBody() {
 		return articleBody;
 	}

@@ -1549,6 +1549,11 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("aggregateRating")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("anonymous")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);

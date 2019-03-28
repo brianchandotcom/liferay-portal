@@ -76,6 +76,31 @@ public class DiscussionThread {
 
 	}
 
+	public AggregateRating getAggregateRating() {
+		return aggregateRating;
+	}
+
+	public void setAggregateRating(AggregateRating aggregateRating) {
+		this.aggregateRating = aggregateRating;
+	}
+
+	@JsonIgnore
+	public void setAggregateRating(
+		UnsafeSupplier<AggregateRating, Exception>
+			aggregateRatingUnsafeSupplier) {
+
+		try {
+			aggregateRating = aggregateRatingUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AggregateRating aggregateRating;
+
 	public String getArticleBody() {
 		return articleBody;
 	}
@@ -456,6 +481,11 @@ public class DiscussionThread {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"aggregateRating\": ");
+
+		sb.append(aggregateRating);
+		sb.append(", ");
 
 		sb.append("\"articleBody\": ");
 

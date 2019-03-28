@@ -55,6 +55,11 @@ public class DiscussionForumPostingSerDes {
 
 		sb.append("{");
 
+		sb.append("\"aggregateRating\": ");
+
+		sb.append(discussionForumPosting.getAggregateRating());
+		sb.append(", ");
+
 		sb.append("\"anonymous\": ");
 
 		sb.append(discussionForumPosting.getAnonymous());
@@ -248,7 +253,14 @@ public class DiscussionForumPostingSerDes {
 			DiscussionForumPosting discussionForumPosting,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "anonymous")) {
+			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+				if (jsonParserFieldValue != null) {
+					discussionForumPosting.setAggregateRating(
+						AggregateRatingSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "anonymous")) {
 				if (jsonParserFieldValue != null) {
 					discussionForumPosting.setAnonymous(
 						(Boolean)jsonParserFieldValue);

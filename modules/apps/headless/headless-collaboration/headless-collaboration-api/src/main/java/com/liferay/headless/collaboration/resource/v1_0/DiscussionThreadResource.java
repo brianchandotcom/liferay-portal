@@ -35,8 +35,8 @@ import javax.annotation.Generated;
 public interface DiscussionThreadResource {
 
 	public Page<DiscussionThread> getContentSpaceDiscussionThreadsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DiscussionThread postContentSpaceDiscussionThread(

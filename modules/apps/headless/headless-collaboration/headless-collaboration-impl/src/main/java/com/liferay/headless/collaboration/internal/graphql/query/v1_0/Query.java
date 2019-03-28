@@ -455,6 +455,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<DiscussionThread> getContentSpaceDiscussionThreadsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("tree") Boolean tree,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -467,7 +468,7 @@ public class Query {
 				Page paginationPage =
 					discussionThreadResource.
 						getContentSpaceDiscussionThreadsPage(
-							contentSpaceId, filter,
+							contentSpaceId, tree, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

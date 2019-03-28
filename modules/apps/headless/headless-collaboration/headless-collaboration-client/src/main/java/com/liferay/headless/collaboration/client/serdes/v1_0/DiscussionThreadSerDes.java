@@ -55,6 +55,11 @@ public class DiscussionThreadSerDes {
 
 		sb.append("{");
 
+		sb.append("\"aggregateRating\": ");
+
+		sb.append(discussionThread.getAggregateRating());
+		sb.append(", ");
+
 		sb.append("\"articleBody\": ");
 
 		sb.append("\"");
@@ -241,7 +246,14 @@ public class DiscussionThreadSerDes {
 			DiscussionThread discussionThread, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "articleBody")) {
+			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+				if (jsonParserFieldValue != null) {
+					discussionThread.setAggregateRating(
+						AggregateRatingSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "articleBody")) {
 				if (jsonParserFieldValue != null) {
 					discussionThread.setArticleBody(
 						(String)jsonParserFieldValue);

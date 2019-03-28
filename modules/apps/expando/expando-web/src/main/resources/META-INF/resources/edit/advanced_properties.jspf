@@ -59,8 +59,12 @@
 		</aui:field-wrapper>
 	</c:if>
 
+	<%
+	boolean textInputType = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
+	%>
+
 	<aui:field-wrapper>
-		<div class="<%= ((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeywordOrText">
+		<div class="<%= textInputType ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeywordOrText">
 			<aui:input disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="searchableKeyWordOrText" label="searchable" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
 
 			<div class="form-text">
@@ -82,10 +86,10 @@
 			</aui:script>
 		</div>
 
-		<div class="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeyword">
-			<aui:input disabled="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? false : true %>" id="indexTypeSearchableAsKeyword" name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+		<div class="<%= !textInputType ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeyword">
+			<aui:input disabled="<%= !textInputType ? false : true %>" id="indexTypeSearchableAsKeyword" name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 
-			<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" disabled="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? false : true %>" id="indexTypeSearchableAsKeywordToggleSwitch" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
+			<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" disabled="<%= !textInputType ? false : true %>" id="indexTypeSearchableAsKeywordToggleSwitch" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
 
 			<div class="form-text">
 				<liferay-ui:message key="custom-field-index-type-help" />
@@ -93,7 +97,7 @@
 		</div>
 	</aui:field-wrapper>
 
-	<c:if test="<%= (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) %>">
+	<c:if test="<%= textInputType %>">
 		<div id="<portlet:namespace />widthAdvancedSetting">
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 				<aui:input label="width" name="Property--width--" type="text" value="<%= propertyWidth %>">

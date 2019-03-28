@@ -122,6 +122,14 @@
 			height: 445px;
 		}
 
+		&.modal-dialog-expanded .modal-content {
+			height: 575px;
+
+			.modal-body.inline-scroller {
+				max-height: 445px;
+			}
+		}
+
 		small {
 			color: #6B6C7E;
 			padding-left: 25px;

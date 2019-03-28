@@ -38,7 +38,13 @@
 				{/if}
 			{/param}
 
-			{param dialogClasses: 'edit-categories modal-dialog-sm' /}
+			{param dialogClasses kind="text"}
+				edit-tags modal-dialog-sm
+
+				{if $selectAll}
+					{sp}modal-dialog-expanded
+				{/if}
+			{/param}
 
 			{param header kind="html"}
 				{msg desc=""}edit-categories{/msg}

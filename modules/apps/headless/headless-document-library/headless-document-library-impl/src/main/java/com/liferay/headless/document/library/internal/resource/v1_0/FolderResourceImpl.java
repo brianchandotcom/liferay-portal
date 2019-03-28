@@ -69,7 +69,7 @@ public class FolderResourceImpl
 
 		Long folderId = null;
 
-		if ((tree != null) && tree) {
+		if (GetterUtil.getBoolean(tree)) {
 			folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 

@@ -440,6 +440,20 @@ public class DDMFormAdminDisplayContext {
 		};
 	}
 
+	public String getFieldSetDefinitionURL() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return ddmFormBuilderSettingsResponse.getFieldSetDefinitionURL();
+	}
+
+	public JSONArray getFieldSets() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return ddmFormBuilderSettingsResponse.getFieldSets();
+	}
+
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest request = formAdminRequestHelper.getRequest();
 
@@ -972,10 +986,13 @@ public class DDMFormAdminDisplayContext {
 
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
+		long fieldSetClassNameId = PortalUtil.getClassNameId(
+			DDMFormInstance.class);
+
 		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest =
 			DDMFormBuilderSettingsRequest.with(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), 0,
-				getDDMForm(), themeDisplay.getLocale());
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				fieldSetClassNameId, getDDMForm(), themeDisplay.getLocale());
 
 		_ddmFormBuilderSettingsResponse =
 			_ddmFormBuilderSettingsRetriever.getSettings(

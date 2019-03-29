@@ -32,7 +32,7 @@ definition {
 		SocialBookmarks.viewBookmarkIcons(socialBookmarks = "Facebook,LinkedIn,Twitter");
 
 		SocialBookmarks.viewBookmarkMenuItems(
-			socialBookmarks = "Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+			socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
 		);
 	}
 

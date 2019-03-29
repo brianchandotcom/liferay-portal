@@ -167,11 +167,6 @@ definition {
 			locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT",
 			value1 = "Facebook"
 		);
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT",
-			value1 = "Google+"
-		);
 	}
 
 	macro viewDefaultConfigurationRSS {

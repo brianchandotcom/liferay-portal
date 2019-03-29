@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_VERSION_ANY</td>
-	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/div</td>
+	<td>//li[contains(.,'${key_dmDocumentVersionNumber}')]//div[@class='list-group-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -264,7 +264,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_LATEST_VERSION</td>
-	<td>//ul[contains(@class,'sidebar-list')]//div[contains(@class,'list-group-title')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[@class='h5']</td>
 	<td></td>
 </tr>
 <tr>

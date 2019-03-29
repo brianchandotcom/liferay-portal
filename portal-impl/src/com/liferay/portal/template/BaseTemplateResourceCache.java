@@ -16,6 +16,8 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -182,5 +184,81 @@ public abstract class BaseTemplateResourceCache
 	private PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private TemplateResourcePortalCacheListener
 		_templateResourcePortalCacheListener;
+
+	private class TemplateResourcePortalCacheListener
+		implements PortalCacheListener<String, TemplateResource> {
+
+		@Override
+		public void dispose() {
+		}
+
+		@Override
+		public void notifyEntryEvicted(
+				PortalCache<String, TemplateResource> portalCache, String key,
+				TemplateResource templateResource, int timeToLive)
+			throws PortalCacheException {
+
+			if (templateResource != null) {
+				_portalCache.remove(templateResource);
+			}
+		}
+
+		@Override
+		public void notifyEntryExpired(
+				PortalCache<String, TemplateResource> portalCache, String key,
+				TemplateResource templateResource, int timeToLive)
+			throws PortalCacheException {
+
+			if (templateResource != null) {
+				_portalCache.remove(templateResource);
+			}
+		}
+
+		@Override
+		public void notifyEntryPut(
+				PortalCache<String, TemplateResource> portalCache, String key,
+				TemplateResource templateResource, int timeToLive)
+			throws PortalCacheException {
+		}
+
+		@Override
+		public void notifyEntryRemoved(
+				PortalCache<String, TemplateResource> portalCache, String key,
+				TemplateResource templateResource, int timeToLive)
+			throws PortalCacheException {
+
+			if (templateResource != null) {
+				_portalCache.remove(templateResource);
+			}
+		}
+
+		@Override
+		public void notifyEntryUpdated(
+				PortalCache<String, TemplateResource> portalCache, String key,
+				TemplateResource templateResource, int timeToLive)
+			throws PortalCacheException {
+
+			if (templateResource != null) {
+				_portalCache.remove(templateResource);
+			}
+		}
+
+		@Override
+		public void notifyRemoveAll(
+				PortalCache<String, TemplateResource> portalCache)
+			throws PortalCacheException {
+
+			_portalCache.removeAll();
+		}
+
+		private TemplateResourcePortalCacheListener(
+			PortalCache<TemplateResource, ?> portalCache) {
+
+			_portalCache = portalCache;
+		}
+
+		private final PortalCache<TemplateResource, ?> _portalCache;
+
+	}
 
 }

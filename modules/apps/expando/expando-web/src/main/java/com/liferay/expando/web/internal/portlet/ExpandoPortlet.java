@@ -99,44 +99,16 @@ public class ExpandoPortlet extends MVCPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
+		int type = ParamUtil.getInteger(actionRequest, "type");
+
 		String dataType = ParamUtil.getString(actionRequest, "dataType");
 		String precisionType = ParamUtil.getString(
 			actionRequest, "precisionType");
 
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
 		if (Validator.isNotNull(dataType) &&
 			Validator.isNotNull(precisionType)) {
 
-			if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
-				precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
-
-				type = ExpandoColumnConstants.DOUBLE;
-			}
-			else if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
-					 precisionType.equals(
-						 ExpandoColumnConstants.PRECISION_32_BIT)) {
-
-				type = ExpandoColumnConstants.FLOAT;
-			}
-			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
-					 precisionType.equals(
-						 ExpandoColumnConstants.PRECISION_64_BIT)) {
-
-				type = ExpandoColumnConstants.LONG;
-			}
-			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
-					 precisionType.equals(
-						 ExpandoColumnConstants.PRECISION_32_BIT)) {
-
-				type = ExpandoColumnConstants.INTEGER;
-			}
-			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
-					 precisionType.equals(
-						 ExpandoColumnConstants.PRECISION_16_BIT)) {
-
-				type = ExpandoColumnConstants.SHORT;
-			}
+			type = _getNumberType(dataType, precisionType);
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -423,6 +395,40 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		expandoBridge.setAttributeProperties(name, properties);
+	}
+
+	private int _getNumberType(String dataType, String precisionType) {
+		if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+			precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
+
+			return ExpandoColumnConstants.DOUBLE;
+		}
+
+		if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+			precisionType.equals(ExpandoColumnConstants.PRECISION_32_BIT)) {
+
+			return ExpandoColumnConstants.FLOAT;
+		}
+
+		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+			precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
+
+			return ExpandoColumnConstants.LONG;
+		}
+
+		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+			precisionType.equals(ExpandoColumnConstants.PRECISION_32_BIT)) {
+
+			return ExpandoColumnConstants.INTEGER;
+		}
+
+		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+			precisionType.equals(ExpandoColumnConstants.PRECISION_16_BIT)) {
+
+			return ExpandoColumnConstants.SHORT;
+		}
+
+		return 0;
 	}
 
 	private ExpandoColumnService _expandoColumnService;

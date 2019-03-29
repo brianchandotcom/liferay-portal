@@ -273,7 +273,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-55622."
-	@ignore = "true"
 	@priority = "5"
 	test ViewNoInvokedPortletViaURL {
 		var portalURL = PropsUtil.get("portal.url");

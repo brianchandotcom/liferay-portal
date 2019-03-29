@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.petra.lang.HashUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -90,6 +91,16 @@ public class ConfigurationScreenConfigurationEntry
 	@Override
 	public String getScope() {
 		return _configurationScreen.getScope();
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, getCategory());
+
+		hash = HashUtil.hash(hash, getKey());
+		hash = HashUtil.hash(hash, getScope());
+
+		return hash;
 	}
 
 	private final ConfigurationScreen _configurationScreen;

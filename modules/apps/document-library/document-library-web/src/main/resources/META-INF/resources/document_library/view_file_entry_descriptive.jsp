@@ -78,16 +78,23 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	<aui:a href="<%= rowURL.toString() %>">
 		<%= latestFileVersion.getTitle() %>
 	</aui:a>
-
-	<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-		<span>
-			<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
-		</span>
-	</c:if>
 </h2>
 
 <span class="h5 text-default">
 	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+
+	<c:choose>
+		<c:when test="<%= fileShortcut != null %>">
+			<span>
+				<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+			</span>
+		</c:when>
+		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+			<span>
+				<aui:icon image="lock" markupView="lexicon" message="locked" />
+			</span>
+		</c:when>
+	</c:choose>
 </span>
 
 <c:if test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">

@@ -133,12 +133,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<c:choose>
-								<c:when test="<%= fileShortcut != null %>">
-									<liferay-ui:search-container-column-icon
-										icon="shortcut"
-										toggleRowChecker="<%= true %>"
-									/>
-								</c:when>
 								<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 									<liferay-ui:search-container-column-image
 										src="<%= thumbnailSrc %>"

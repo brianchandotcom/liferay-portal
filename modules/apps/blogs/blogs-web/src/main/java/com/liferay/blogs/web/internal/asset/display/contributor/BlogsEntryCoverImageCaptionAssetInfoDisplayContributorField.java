@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,21 +28,23 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class DLFileEntrySizeAssetDisplayContributorField
-	implements AssetDisplayContributorField<FileEntry> {
+public class BlogsEntryCoverImageCaptionAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "size";
+		return "coverImageCaption";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(locale, getClass()), "size");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "cover-image-caption");
 	}
 
 	@Override
@@ -51,8 +53,8 @@ public class DLFileEntrySizeAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, Locale locale) {
-		return TextFormatter.formatStorageSize(fileEntry.getSize(), locale);
+	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+		return blogsEntry.getCoverImageCaption();
 	}
 
 }

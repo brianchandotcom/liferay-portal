@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayField;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.asset.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -75,12 +75,12 @@ public class JournalArticleAssetDisplayContributor
 	}
 
 	@Override
-	public List<AssetDisplayField> getClassTypeFields(
+	public List<AssetInfoDisplayField> getClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		List<AssetDisplayField> assetDisplayFields = super.getClassTypeFields(
-			classTypeId, locale);
+		List<AssetInfoDisplayField> assetInfoDisplayFields =
+			super.getClassTypeFields(classTypeId, locale);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			classTypeId);
@@ -89,9 +89,9 @@ public class JournalArticleAssetDisplayContributor
 
 		Stream<DDMTemplate> stream = ddmTemplates.stream();
 
-		assetDisplayFields.addAll(
+		assetInfoDisplayFields.addAll(
 			stream.map(
-				ddmTemplate -> new AssetDisplayField(
+				ddmTemplate -> new AssetInfoDisplayField(
 					_DDM_TEMPLATE + ddmTemplate.getTemplateKey(),
 					ddmTemplate.getName(locale) + StringPool.SPACE +
 						StringPool.STAR,
@@ -100,7 +100,7 @@ public class JournalArticleAssetDisplayContributor
 				Collectors.toList()
 			));
 
-		return assetDisplayFields;
+		return assetInfoDisplayFields;
 	}
 
 	@Override

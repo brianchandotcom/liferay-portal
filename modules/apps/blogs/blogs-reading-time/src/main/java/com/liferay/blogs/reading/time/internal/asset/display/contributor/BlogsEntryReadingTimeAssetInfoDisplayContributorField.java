@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.contributor;
+package com.liferay.blogs.reading.time.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.petra.string.StringPool;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.reading.time.message.ReadingTimeMessageProvider;
+import com.liferay.reading.time.model.ReadingTimeEntry;
+import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -29,18 +29,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class AssetEntryAuthorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class BlogsEntryReadingTimeAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "authorName";
+		return "readingTime";
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-name");
+		return LanguageUtil.get(resourceBundle, "reading-time");
 	}
 
 	@Override
@@ -57,17 +57,18 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(AssetEntry assetEntry, Locale locale) {
-		User user = _userLocalService.fetchUser(assetEntry.getUserId());
+	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+		ReadingTimeEntry readingTimeEntry =
+			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
+				blogsEntry);
 
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
+		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
 	}
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
+
+	@Reference
+	private ReadingTimeMessageProvider _readingTimeMessageProvider;
 
 }

@@ -12,41 +12,36 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.contributor;
+package com.liferay.document.library.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jürgen Kappler
+ * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class AssetEntryCategoriesAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class DLFileEntryMimeTypeAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "categories";
+		return "mimeType";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "categories");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), "content-type");
 	}
 
 	@Override
@@ -55,9 +50,8 @@ public class AssetEntryCategoriesAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return ListUtil.toString(
-			assetEntry.getCategories(), AssetCategory.NAME_ACCESSOR);
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		return fileEntry.getMimeType();
 	}
 
 }

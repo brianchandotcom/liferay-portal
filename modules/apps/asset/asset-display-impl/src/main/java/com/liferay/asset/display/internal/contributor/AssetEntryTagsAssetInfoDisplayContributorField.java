@@ -12,36 +12,41 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset.display.contributor;
+package com.liferay.asset.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class DLFileEntryMimeTypeAssetDisplayContributorField
-	implements AssetDisplayContributorField<FileEntry> {
+public class AssetEntryTagsAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "mimeType";
+		return "tagNames";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(locale, getClass()), "content-type");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "tags");
 	}
 
 	@Override
@@ -50,8 +55,8 @@ public class DLFileEntryMimeTypeAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, Locale locale) {
-		return fileEntry.getMimeType();
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		return ListUtil.toString(assetEntry.getTags(), AssetTag.NAME_ACCESSOR);
 	}
 
 }

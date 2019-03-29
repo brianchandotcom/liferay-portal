@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor;
+package com.liferay.asset.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.journal.model.JournalArticle;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -32,23 +32,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class JournalArticleLastEditorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class AssetEntryAuthorNameAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "lastEditorName";
+		return "authorName";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.lang");
+			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "last-editor-name");
+		return LanguageUtil.get(resourceBundle, "author-name");
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class JournalArticleLastEditorNameAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(JournalArticle article, Locale locale) {
-		User user = _userLocalService.fetchUser(article.getUserId());
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
 		if (user != null) {
 			return user.getFullName();

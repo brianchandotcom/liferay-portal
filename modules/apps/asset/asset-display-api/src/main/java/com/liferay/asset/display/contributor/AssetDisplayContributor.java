@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public interface AssetDisplayContributor {
 
-	public Set<AssetDisplayField> getAssetDisplayFields(
+	public Set<AssetInfoDisplayField> getAssetDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException;
 
@@ -59,7 +59,7 @@ public interface AssetDisplayContributor {
 
 	public String getClassName();
 
-	public default List<AssetDisplayField> getClassTypeFields(
+	public default List<AssetInfoDisplayField> getClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -86,11 +86,11 @@ public interface AssetDisplayContributor {
 			return Collections.emptyList();
 		}
 
-		List<AssetDisplayField> classTypeFields = new ArrayList<>();
+		List<AssetInfoDisplayField> classTypeFields = new ArrayList<>();
 
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			classTypeFields.add(
-				new AssetDisplayField(
+				new AssetInfoDisplayField(
 					classTypeField.getName(),
 					LanguageUtil.get(locale, classTypeField.getLabel()),
 					classTypeField.getType()));

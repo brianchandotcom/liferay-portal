@@ -51,11 +51,13 @@ public class AssetInfoDisplayContributor
 
 		List<InfoDisplayField> infoDisplayFields = new ArrayList<>();
 
-		List<AssetDisplayField> assetDisplayFields =
+		List<AssetInfoDisplayField> assetInfoDisplayFields =
 			_assetDisplayContributor.getClassTypeFields(classTypeId, locale);
 
-		for (AssetDisplayField assetDisplayField : assetDisplayFields) {
-			infoDisplayFields.add(assetDisplayField);
+		for (AssetInfoDisplayField assetInfoDisplayField :
+				assetInfoDisplayFields) {
+
+			infoDisplayFields.add(assetInfoDisplayField);
 		}
 
 		return infoDisplayFields;
@@ -75,11 +77,13 @@ public class AssetInfoDisplayContributor
 
 		Set<InfoDisplayField> infoDisplayFields = new HashSet<>();
 
-		Set<AssetDisplayField> assetDisplayFields =
+		Set<AssetInfoDisplayField> assetInfoDisplayFields =
 			_assetDisplayContributor.getAssetDisplayFields(classTypeId, locale);
 
-		for (AssetDisplayField assetDisplayField : assetDisplayFields) {
-			infoDisplayFields.add(assetDisplayField);
+		for (AssetInfoDisplayField assetInfoDisplayField :
+				assetInfoDisplayFields) {
+
+			infoDisplayFields.add(assetInfoDisplayField);
 		}
 
 		return infoDisplayFields;

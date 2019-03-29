@@ -985,21 +985,13 @@ public class TopLevelBuild extends BaseBuild {
 	protected Element getJenkinsReportHeadElement() {
 		Element headElement = Dom4JUtil.getNewElement("head");
 
-		String resourceFileContent = null;
+		getResourceFileContentAsElement(
+			"style", headElement, "dependencies/jenkins_report.css");
 
-		try {
-			resourceFileContent =
-				JenkinsResultsParserUtil.getResourceFileContent(
-					"dependencies/jenkins_report.css");
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to load resource jenkins_report.css", ioe);
-		}
+		Element scriptElement = getResourceFileContentAsElement(
+			"script", headElement, "dependencies/jenkins_report.js");
 
-		Dom4JUtil.addToElement(
-			headElement,
-			Dom4JUtil.getNewElement("style", null, resourceFileContent));
+		scriptElement.addAttribute("language", "javascript");
 
 		return headElement;
 	}
@@ -1214,6 +1206,24 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
 
 		return moreDetailsElement;
+	}
+
+	protected Element getResourceFileContentAsElement(
+		String tagName, Element parentElement, String resourceName) {
+
+		String resourceFileContent = null;
+
+		try {
+			resourceFileContent =
+				JenkinsResultsParserUtil.getResourceFileContent(resourceName);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource " + resourceName, ioe);
+		}
+
+		return Dom4JUtil.getNewElement(
+			tagName, parentElement, resourceFileContent);
 	}
 
 	protected Element getResultElement() {

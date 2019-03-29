@@ -1048,7 +1048,9 @@ information.
 
 					<basename file="${project.dir}" property="project.dir.name" />
 
-					<property name="junit.java.gc" value="${junit.java.integration.gc} -verbose:gc -Xloggc:/tmp/${project.dir.name}-@{test.type}-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" />
+					<condition else="${junit.java.integration.gc} -verbose:gc -Xloggc:/tmp/${project.dir.name}-@{test.type}-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" property="junit.java.gc" value="${junit.java.integration.gc} -Xlog:gc:/tmp/${project.dir.name}-@{test.type}-gc.log">
+						<isset property="junit.java.integration.gc[@{junit.jvm.version}]" />
+					</condition>
 				</else>
 			</if>
 

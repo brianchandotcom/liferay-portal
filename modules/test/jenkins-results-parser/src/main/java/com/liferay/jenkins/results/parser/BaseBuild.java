@@ -1832,6 +1832,12 @@ public abstract class BaseBuild implements Build {
 			return list.iterator();
 		}
 
+		public int size() {
+			List<StopWatchRecord> list = getStopWatchRecords();
+
+			return list.size();
+		}
+
 		private final Map<String, StopWatchRecord> _stopWatchRecordsMap =
 			new HashMap<>();
 
@@ -2271,7 +2277,8 @@ public abstract class BaseBuild implements Build {
 
 		for (StopWatchRecord stopWatchRecord : getStopWatchRecordsGroup()) {
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
-				stopWatchRecord.getJenkinsReportTableRowElements());
+				stopWatchRecord.getJenkinsReportTableRowElements(
+					getStopWatchRecordsNamespace()));
 		}
 
 		return jenkinsReportStopWatchRecordTableRowElements;
@@ -2281,12 +2288,24 @@ public abstract class BaseBuild implements Build {
 		String cellElementTagName =
 			getJenkinsReportBuildInfoCellElementTagName();
 
+		Element stopWatchRecordsExpanderAnchorElement =
+			getStopWatchRecordsExpanderAnchorElement();
+
+		Element nameCellElement = Dom4JUtil.getNewElement(
+			cellElementTagName, null, stopWatchRecordsExpanderAnchorElement,
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), null, getDisplayName()));
+
+		int indent = 0;
+
+		if (stopWatchRecordsExpanderAnchorElement == null) {
+			indent += 12;
+		}
+
+		nameCellElement.addAttribute("style", "text-indent: " + indent);
+
 		Element buildInfoElement = Dom4JUtil.getNewElement(
-			"tr", null,
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					getBuildURL(), null, getDisplayName())),
+			"tr", null, nameCellElement,
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				Dom4JUtil.getNewAnchorElement(
@@ -2295,6 +2314,25 @@ public abstract class BaseBuild implements Build {
 				cellElementTagName, null,
 				Dom4JUtil.getNewAnchorElement(
 					getBuildURL() + "testReport", "Test Report")));
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (!stopWatchRecordsGroup.isEmpty()) {
+			List<String> childStopWatchRecordNames = new ArrayList<>(
+				stopWatchRecordsGroup.size());
+
+			for (StopWatchRecord stopWatchRecord : stopWatchRecordsGroup) {
+				childStopWatchRecordNames.add(stopWatchRecord.getName());
+			}
+
+			buildInfoElement.addAttribute(
+				"child-stopwatch-rows",
+				JenkinsResultsParserUtil.join(",", childStopWatchRecordNames));
+		}
+
+		buildInfoElement.addAttribute(
+			"id", getStopWatchRecordsNamespace() + "-");
 
 		getStartTime();
 

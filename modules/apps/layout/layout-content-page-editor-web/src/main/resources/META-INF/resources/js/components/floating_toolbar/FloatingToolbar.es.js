@@ -18,8 +18,10 @@ class FloatingToolbar extends Component {
 	created() {
 		this._defaultButtonClicked = this._defaultButtonClicked.bind(this);
 		this._handleWindowResize = this._handleWindowResize.bind(this);
+		this._handleWindowScroll = this._handleWindowScroll.bind(this);
 
 		window.addEventListener('resize', this._handleWindowResize);
+		window.addEventListener('scroll', this._handleWindowScroll);
 	}
 
 	/**
@@ -35,6 +37,7 @@ class FloatingToolbar extends Component {
 	 */
 	disposed() {
 		window.removeEventListener('resize', this._handleWindowResize);
+		window.removeEventListener('scroll', this._handleWindowScroll);
 	}
 
 	/**
@@ -109,6 +112,14 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
+	 * @private
+	 * @review
+	 */
+	_handleWindowScroll() {
+		this._align();
+	}
+
+	/**
 	 * Aligns the floating panel to the anchorElement
 	 * @private
 	 * @review
@@ -119,7 +130,7 @@ class FloatingToolbar extends Component {
 				this.element,
 				this.anchorElement,
 				Align.BottomRight,
-				true
+				false
 			);
 		}
 	}

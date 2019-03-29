@@ -2344,6 +2344,24 @@ rerun your task.
 
 		<if>
 			<not>
+				<isset property="junit.jvm.override" />
+			</not>
+			<then>
+				<property name="junit.jvm.override" value="${junit.jvm}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="junit.jvm.version}" />
+			</not>
+			<then>
+				<property name="junit.jvm.version" value="${ant.java.version}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
 				<isset property="test.class" />
 			</not>
 			<then>
@@ -2377,6 +2395,24 @@ rerun your task.
 		<property file="${project.dir}/test.class.file.names.properties" />
 
 		<propertycopy from="TEST_CLASS_GROUP_${test.class.group.index}" name="test.classes" />
+
+		<if>
+			<not>
+				<isset property="junit.jvm.override" />
+			</not>
+			<then>
+				<property name="junit.jvm.override" value="${junit.jvm}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="junit.jvm.version}" />
+			</not>
+			<then>
+				<property name="junit.jvm.version" value="${ant.java.version}" />
+			</then>
+		</if>
 
 		<if>
 			<or>

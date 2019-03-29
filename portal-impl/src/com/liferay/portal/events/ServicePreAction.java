@@ -133,7 +133,7 @@ import org.apache.commons.lang.time.StopWatch;
 public class ServicePreAction extends Action {
 
 	public ServicePreAction() {
-		initImportLARFiles();
+		_initImportLARFiles();
 	}
 
 	public ThemeDisplay initThemeDisplay(
@@ -329,7 +329,7 @@ public class ServicePreAction extends Action {
 		// Layouts
 
 		if (signedIn) {
-			updateUserLayouts(user);
+			_updateUserLayouts(user);
 		}
 
 		Layout layout = null;
@@ -367,7 +367,7 @@ public class ServicePreAction extends Action {
 				User layoutUser = UserLocalServiceUtil.getUserById(
 					company.getCompanyId(), layoutGroup.getClassPK());
 
-				updateUserLayouts(layoutUser);
+				_updateUserLayouts(layoutUser);
 
 				layout = LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
 			}
@@ -405,7 +405,7 @@ public class ServicePreAction extends Action {
 
 		boolean stagingGroup = false;
 		boolean viewableGroup = false;
-		boolean loginRequest = isLoginRequest(request);
+		boolean loginRequest = _isLoginRequest(request);
 
 		if (layout != null) {
 			group = layout.getGroup();
@@ -416,7 +416,7 @@ public class ServicePreAction extends Action {
 				request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 			}
 
-			viewableGroup = hasAccessPermission(
+			viewableGroup = _hasAccessPermission(
 				permissionChecker, layout, doAsGroupId, true);
 
 			boolean viewableStaging = false;
@@ -439,7 +439,7 @@ public class ServicePreAction extends Action {
 			else if (!loginRequest &&
 					 (!viewableGroup || !viewableSourceGroup ||
 					  (!redirectToDefaultLayout &&
-					   !hasAccessPermission(
+					   !_hasAccessPermission(
 						   permissionChecker, layout, doAsGroupId, false)))) {
 
 				if (user.isDefaultUser() &&
@@ -494,7 +494,7 @@ public class ServicePreAction extends Action {
 				ignoreHiddenLayouts = true;
 			}
 
-			viewableLayoutComposite = getDefaultViewableLayoutComposite(
+			viewableLayoutComposite = _getDefaultViewableLayoutComposite(
 				request, user, permissionChecker, doAsGroupId, signedIn,
 				ignoreHiddenLayouts);
 
@@ -517,13 +517,13 @@ public class ServicePreAction extends Action {
 			}
 
 			if (!group.isControlPanel()) {
-				rememberVisitedGroupIds(request, group.getGroupId());
+				_rememberVisitedGroupIds(request, group.getGroupId());
 			}
 		}
 
 		LayoutTypePortlet layoutTypePortlet = null;
 
-		layouts = mergeAdditionalLayouts(
+		layouts = _mergeAdditionalLayouts(
 			request, user, permissionChecker, layout, layouts, doAsGroupId);
 
 		LayoutSet layoutSet = null;
@@ -1100,7 +1100,7 @@ public class ServicePreAction extends Action {
 		stopWatch.start();
 
 		try {
-			servicePre(request, response);
+			_servicePre(request, response);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -1111,7 +1111,7 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected void addDefaultLayoutsByLAR(
+	private void _addDefaultLayoutsByLAR(
 			long userId, long groupId, boolean privateLayout, File larFile)
 		throws PortalException {
 
@@ -1166,11 +1166,11 @@ public class ServicePreAction extends Action {
 			exportImportConfiguration, larFile);
 	}
 
-	protected void addDefaultUserPrivateLayoutByProperties(
+	private void _addDefaultUserPrivateLayoutByProperties(
 			long userId, long groupId)
 		throws PortalException {
 
-		String friendlyURL = getFriendlyURL(
+		String friendlyURL = _getFriendlyURL(
 			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL);
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -1231,26 +1231,26 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected void addDefaultUserPrivateLayouts(User user)
+	private void _addDefaultUserPrivateLayouts(User user)
 		throws PortalException {
 
 		Group group = user.getGroup();
 
 		if (privateLARFile != null) {
-			addDefaultLayoutsByLAR(
+			_addDefaultLayoutsByLAR(
 				user.getUserId(), group.getGroupId(), true, privateLARFile);
 		}
 		else {
-			addDefaultUserPrivateLayoutByProperties(
+			_addDefaultUserPrivateLayoutByProperties(
 				user.getUserId(), group.getGroupId());
 		}
 	}
 
-	protected void addDefaultUserPublicLayoutByProperties(
+	private void _addDefaultUserPublicLayoutByProperties(
 			long userId, long groupId)
 		throws PortalException {
 
-		String friendlyURL = getFriendlyURL(
+		String friendlyURL = _getFriendlyURL(
 			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL);
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -1310,22 +1310,22 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected void addDefaultUserPublicLayouts(User user)
+	private void _addDefaultUserPublicLayouts(User user)
 		throws PortalException {
 
 		Group userGroup = user.getGroup();
 
 		if (publicLARFile != null) {
-			addDefaultLayoutsByLAR(
+			_addDefaultLayoutsByLAR(
 				user.getUserId(), userGroup.getGroupId(), false, publicLARFile);
 		}
 		else {
-			addDefaultUserPublicLayoutByProperties(
+			_addDefaultUserPublicLayoutByProperties(
 				user.getUserId(), userGroup.getGroupId());
 		}
 	}
 
-	protected void deleteDefaultUserPrivateLayouts(User user)
+	private void _deleteDefaultUserPrivateLayouts(User user)
 		throws PortalException {
 
 		Group group = user.getGroup();
@@ -1336,7 +1336,7 @@ public class ServicePreAction extends Action {
 			group.getGroupId(), true, serviceContext);
 	}
 
-	protected void deleteDefaultUserPublicLayouts(User user)
+	private void _deleteDefaultUserPublicLayouts(User user)
 		throws PortalException {
 
 		Group userGroup = user.getGroup();
@@ -1430,7 +1430,7 @@ public class ServicePreAction extends Action {
 		return layoutComposite;
 	}
 
-	protected LayoutComposite getDefaultViewableLayoutComposite(
+	private LayoutComposite _getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,
 			boolean signedIn, boolean ignoreHiddenLayouts)
@@ -1534,7 +1534,7 @@ public class ServicePreAction extends Action {
 		return new LayoutComposite(layout, layouts);
 	}
 
-	protected String getFriendlyURL(String friendlyURL) {
+	private String _getFriendlyURL(String friendlyURL) {
 		friendlyURL = GetterUtil.getString(friendlyURL);
 
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
@@ -1572,7 +1572,7 @@ public class ServicePreAction extends Action {
 
 		boolean hasViewLayoutPermission = false;
 
-		if (hasAccessPermission(
+		if (_hasAccessPermission(
 				permissionChecker, layout, doAsGroupId, false)) {
 
 			hasViewLayoutPermission = true;
@@ -1582,7 +1582,7 @@ public class ServicePreAction extends Action {
 
 		for (Layout curLayout : layouts) {
 			if ((ignoreHiddenLayouts || !curLayout.isHidden()) &&
-				hasAccessPermission(
+				_hasAccessPermission(
 					permissionChecker, curLayout, doAsGroupId, false)) {
 
 				if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {
@@ -1596,7 +1596,7 @@ public class ServicePreAction extends Action {
 		if (accessibleLayouts.isEmpty()) {
 			layouts = null;
 
-			if (!isLoginRequest(request) && !hasViewLayoutPermission) {
+			if (!_isLoginRequest(request) && !hasViewLayoutPermission) {
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
 
@@ -1615,7 +1615,7 @@ public class ServicePreAction extends Action {
 		return new LayoutComposite(layout, layouts);
 	}
 
-	protected boolean hasAccessPermission(
+	private boolean _hasAccessPermission(
 			PermissionChecker permissionChecker, Layout layout,
 			long doAsGroupId, boolean checkViewableGroup)
 		throws PortalException {
@@ -1624,13 +1624,13 @@ public class ServicePreAction extends Action {
 			permissionChecker, layout, checkViewableGroup, ActionKeys.VIEW);
 	}
 
-	protected Boolean hasPowerUserRole(User user) throws Exception {
+	private Boolean _hasPowerUserRole(User user) throws Exception {
 		return RoleLocalServiceUtil.hasUserRole(
 			user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER,
 			true);
 	}
 
-	protected void initImportLARFiles() {
+	private void _initImportLARFiles() {
 		String privateLARFileName =
 			PropsValues.DEFAULT_USER_PRIVATE_LAYOUTS_LAR;
 
@@ -1686,7 +1686,7 @@ public class ServicePreAction extends Action {
 	 * @return <code>true</code> if the request is a login request;
 	 *         <code>false</code> otherwise
 	 */
-	protected boolean isLoginRequest(HttpServletRequest request) {
+	private boolean _isLoginRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
 		String mainPath = _PATH_MAIN;
@@ -1710,7 +1710,7 @@ public class ServicePreAction extends Action {
 		return false;
 	}
 
-	protected List<Layout> mergeAdditionalLayouts(
+	private List<Layout> _mergeAdditionalLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId)
@@ -1810,7 +1810,7 @@ public class ServicePreAction extends Action {
 		return layouts;
 	}
 
-	protected void rememberVisitedGroupIds(
+	private void _rememberVisitedGroupIds(
 		HttpServletRequest request, long currentGroupId) {
 
 		String requestURI = GetterUtil.getString(request.getRequestURI());
@@ -1852,7 +1852,7 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected void servicePre(
+	private void _servicePre(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -1894,7 +1894,7 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected void updateUserLayouts(User user) throws Exception {
+	private void _updateUserLayouts(User user) throws Exception {
 		Boolean hasPowerUserRole = null;
 
 		// Private layouts
@@ -1908,7 +1908,7 @@ public class ServicePreAction extends Action {
 
 			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
 				if (hasPowerUserRole == null) {
-					hasPowerUserRole = hasPowerUserRole(user);
+					hasPowerUserRole = _hasPowerUserRole(user);
 				}
 
 				if (!hasPowerUserRole.booleanValue()) {
@@ -1924,7 +1924,7 @@ public class ServicePreAction extends Action {
 				user, true, false);
 
 			if (!hasPrivateLayouts) {
-				addDefaultUserPrivateLayouts(user);
+				_addDefaultUserPrivateLayouts(user);
 			}
 		}
 
@@ -1935,7 +1935,7 @@ public class ServicePreAction extends Action {
 		}
 		else if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
 			if (hasPowerUserRole == null) {
-				hasPowerUserRole = hasPowerUserRole(user);
+				hasPowerUserRole = _hasPowerUserRole(user);
 			}
 
 			if (!hasPowerUserRole.booleanValue()) {
@@ -1950,7 +1950,7 @@ public class ServicePreAction extends Action {
 			}
 
 			if (hasPrivateLayouts) {
-				deleteDefaultUserPrivateLayouts(user);
+				_deleteDefaultUserPrivateLayouts(user);
 			}
 		}
 
@@ -1965,7 +1965,7 @@ public class ServicePreAction extends Action {
 
 			if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) {
 				if (hasPowerUserRole == null) {
-					hasPowerUserRole = hasPowerUserRole(user);
+					hasPowerUserRole = _hasPowerUserRole(user);
 				}
 
 				if (!hasPowerUserRole.booleanValue()) {
@@ -1981,7 +1981,7 @@ public class ServicePreAction extends Action {
 				user, false, false);
 
 			if (!hasPublicLayouts) {
-				addDefaultUserPublicLayouts(user);
+				_addDefaultUserPublicLayouts(user);
 			}
 		}
 
@@ -1992,7 +1992,7 @@ public class ServicePreAction extends Action {
 		}
 		else if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) {
 			if (hasPowerUserRole == null) {
-				hasPowerUserRole = hasPowerUserRole(user);
+				hasPowerUserRole = _hasPowerUserRole(user);
 			}
 
 			if (!hasPowerUserRole.booleanValue()) {
@@ -2007,7 +2007,7 @@ public class ServicePreAction extends Action {
 			}
 
 			if (hasPublicLayouts) {
-				deleteDefaultUserPublicLayouts(user);
+				_deleteDefaultUserPublicLayouts(user);
 			}
 		}
 	}

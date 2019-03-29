@@ -265,7 +265,7 @@
 	portlet_id = paramUtil.getString(request, "p_p_id")
 />
 
-<#if validator.isNotNull(portlet_id) && layout.isSystem() && stringUtil.equals(layout_friendly_url, "/manage")>
+<#if validator.isNotNull(portlet_id) && layout.isSystem() && !layout.isTypeControlPanel() && stringUtil.equals(layout_friendly_url, "/manage")>
 	<#assign the_title = portalUtil.getPortletTitle(portlet_id, locale) />
 </#if>
 

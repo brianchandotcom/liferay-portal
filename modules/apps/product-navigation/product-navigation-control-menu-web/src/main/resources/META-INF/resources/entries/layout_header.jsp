@@ -27,7 +27,7 @@ String layoutFriendlyURL = layout.getFriendlyURL();
 
 String portletId = ParamUtil.getString(request, "p_p_id");
 
-if (Validator.isNotNull(portletId) && layout.isSystem() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+if (Validator.isNotNull(portletId) && layout.isSystem() && !layout.isTypeControlPanel() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 	headerTitle = PortalUtil.getPortletTitle(portletId, locale);
 }
 %>

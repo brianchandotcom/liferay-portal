@@ -44,7 +44,7 @@ definition {
 	}
 
 	macro renameDisplayPage {
-		DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "${displayPageName}",
 			item = "Rename"
 		);

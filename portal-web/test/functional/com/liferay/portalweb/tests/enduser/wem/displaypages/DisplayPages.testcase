@@ -24,9 +24,9 @@ definition {
 		}
 
 		task ("Add a display page") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 	}
 
@@ -47,11 +47,11 @@ definition {
 		task ("Publish the display page") {
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("View the display page") {
-			DisplayPagesAdmin.viewDisplayPagePresent(
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
 				displayPageName = "Display Page Name"
 			);
 		}
@@ -83,11 +83,11 @@ definition {
 		task ("Publish the display page") {
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the fragment was added to the display page") {
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Edit"
 			);
@@ -213,13 +213,13 @@ definition {
 	@priority = "5"
 	test ConfigureDraftStatusDisplayPage {
 		task ("Navigate back to Display Pages Admin without publishing") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(
 				siteURLKey = "test-site-name"
 			);
 		}
 
 		task ("Configure the draft status display page") {
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Configure"
 			);
@@ -237,7 +237,7 @@ definition {
 		}
 
 		task ("Assert the configuration saved properly") {
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Configure"
 			);
@@ -257,15 +257,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Delete the display page") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.deleteDisplayPage(
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
 				displayPageName = "Display Page Name"
 			);
 		}
 
 		task ("Assert the display page was deleted") {
-			DisplayPagesAdmin.viewDisplayPageNotPresent(
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(
 				displayPageName = "DisplayPage Name"
 			);
 		}
@@ -294,11 +294,11 @@ definition {
 		task ("Publish the display page") {
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate back to the display page") {
-			DisplayPagesAdmin.gotoDisplayPage(
+			DisplayPageTemplatesAdmin.gotoDisplayPage(
 				displayPageName = "Display Page Name"
 			);
 		}
@@ -325,11 +325,11 @@ definition {
 		task ("Publish the display page with the new edits") {
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate back to the display page") {
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Edit"
 			);
@@ -382,16 +382,16 @@ definition {
 	@priority = "4"
 	test RenameDisplayPage {
 		task ("Rename the display page") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.renameDisplayPage(
+			DisplayPageTemplatesAdmin.renameDisplayPage(
 				displayPageName = "Display Page Name",
 				newDisplayPageName = "Display Page Name New"
 			);
 		}
 
 		task ("Assert the display page was renamed") {
-			DisplayPagesAdmin.viewDisplayPagePresent(
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
 				displayPageName = "Display Page Name New"
 			);
 		}
@@ -410,7 +410,7 @@ definition {
 		task ("Publish the display page") {
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a web content article that uses the display page") {
@@ -432,9 +432,9 @@ definition {
 		}
 
 		task ("Assert the display page cannot be deleted") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.deleteDisplayPage(
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
 				displayPageName = "Display Page Name"
 			);
 
@@ -448,7 +448,7 @@ definition {
 				value1 = "Error:You cannot delete asset display pages that are used by one or more assets."
 			);
 
-			DisplayPagesAdmin.viewDisplayPagePresent(
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
 				displayPageName = "Display Page Name"
 			);
 		}

@@ -24,9 +24,9 @@ definition {
 		}
 
 		task ("Add a display page with fragments mapped to Basic Web Content") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -59,7 +59,7 @@ definition {
 
 			Button.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -126,11 +126,11 @@ definition {
 		}
 
 		task ("Configure the display page settings so the header and footer do not appear") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(
 				siteURLKey = "test-site-name"
 			);
 
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Configure"
 			);
@@ -221,11 +221,11 @@ definition {
 		}
 
 		task ("Change the display page theme from Classic to Fjord") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(
 				siteURLKey = "test-site-name"
 			);
 
-			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Configure"
 			);
@@ -268,7 +268,7 @@ definition {
 	@priority = "5"
 	test EditDisplayPageWhenViewingInDisplayPage {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -291,7 +291,7 @@ definition {
 		}
 
 		task ("Click the pencil icon > Edit Display Page Template") {
-			DisplayPage.clickPencilItem(
+			DisplayPageTemplate.clickPencilItem(
 				item = "Edit Display Page Template"
 			);
 		}
@@ -339,7 +339,7 @@ definition {
 	@priority = "5"
 	test EditWebContentWhenViewingInDisplayPage {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -362,7 +362,7 @@ definition {
 		}
 
 		task ("Click the pencil icon > Edit Webcontent Title") {
-			DisplayPage.clickPencilItem(
+			DisplayPageTemplate.clickPencilItem(
 				item = "Edit Webcontent Title"
 			);
 		}
@@ -398,7 +398,7 @@ definition {
 	@priority = "5"
 	test PreviewDraftWebContent {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a draft status web content article") {
@@ -453,7 +453,7 @@ definition {
 	@priority = "5"
 	test PreviewPendingWebContent {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Configure Web Content Article workflow to Single Approver") {
@@ -519,7 +519,7 @@ definition {
 	@priority = "5"
 	test PreviewPublishedWebContent {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -572,7 +572,7 @@ definition {
 	@priority = "5"
 	test ViewDisplayPageMarkedAsDefault {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -801,11 +801,11 @@ definition {
 	@priority = "5"
 	test ViewNonDefaultDisplayPage {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a second display page that is mapped to Basic Web Content") {
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Non-Default Display Page");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Non-Default Display Page");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -884,7 +884,7 @@ definition {
 	@priority = "4"
 	test ViewNoSelectedDisplayPage {
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article that has no display page selected") {

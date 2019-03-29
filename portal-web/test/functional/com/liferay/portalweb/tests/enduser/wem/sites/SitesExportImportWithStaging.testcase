@@ -123,9 +123,9 @@ definition {
 		}
 
 		task ("Add a display page to the first site") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a Title Fragment to the display page") {
@@ -329,7 +329,7 @@ definition {
 		}
 
 		task ("Assert the display page survived the import") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
 
 			AssertVisible(
 				locator1 = "Card#SPECIFIC_LARGE_TEXT",

@@ -6,7 +6,7 @@ definition {
 	}
 
 	macro clickPencilItem {
-		DisplayPage.clickPencil();
+		DisplayPageTemplate.clickPencil();
 
 		MenuItem.clickNoError(
 			menuItem = "${item}"

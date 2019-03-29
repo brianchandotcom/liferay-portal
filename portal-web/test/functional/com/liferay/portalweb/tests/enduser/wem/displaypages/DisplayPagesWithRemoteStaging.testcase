@@ -21,13 +21,13 @@ definition {
 		}
 
 		task ("Add a display page") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.clickPublish();
 
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -64,9 +64,9 @@ definition {
 
 		Staging.publishCustomPublication(remoteStaging= "true");
 
-		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "Display Page Name",
 			item = "Edit"
 		);

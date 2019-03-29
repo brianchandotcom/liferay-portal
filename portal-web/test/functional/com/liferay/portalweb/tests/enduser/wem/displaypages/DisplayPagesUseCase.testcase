@@ -24,7 +24,7 @@ definition {
 		}
 
 		task ("Navigate to Build > Pages > Display Pages") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -56,7 +56,7 @@ definition {
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {
 		task ("Add a display page with fragments mapped to Basic Web Content") {
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -91,9 +91,9 @@ definition {
 		}
 
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -162,7 +162,7 @@ definition {
 		}
 
 		task ("Click the pencil icon > Edit Display Page Template") {
-			DisplayPage.clickPencilItem(
+			DisplayPageTemplate.clickPencilItem(
 				item = "Edit Display Page Template"
 			);
 		}
@@ -212,7 +212,7 @@ definition {
 		}
 
 		task ("Click the pencil icon > Edit Webcontent Title") {
-			DisplayPage.clickPencilItem(
+			DisplayPageTemplate.clickPencilItem(
 				item = "Edit Webcontent Title"
 			);
 		}
@@ -274,7 +274,7 @@ definition {
 	@priority = "5"
 	test MapWebContentAuthor {
 		task ("Add a display page with author name and profile fields mapped") {
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -361,7 +361,7 @@ definition {
 	@priority = "5"
 	test MapWebContentLastEditor {
 		task ("Add a display page with last editor name and profile fields mapped") {
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -518,7 +518,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a display page") {
-			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a fragment with multiple editable fields in it and map it to Basic Web Content") {
@@ -666,9 +666,9 @@ definition {
 			templateName = "WC Template Name"
 		);
 
-		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -737,7 +737,7 @@ definition {
 			assetLinkBehavior = "View in Context"
 		);
 
-		DisplayPagesAdmin.viewPGViaAP(
+		DisplayPageTemplatesAdmin.viewPGViaAP(
 			contentList = "Webcontent Title,Webcontent Content,tag1,tag2,tag3",
 			webContentContent = "Webcontent Content",
 			webContentTitle = "Webcontent Title"

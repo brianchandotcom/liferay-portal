@@ -1739,8 +1739,6 @@ public abstract class BaseBuild implements Build {
 			List<StopWatchRecord> parentStopWatchRecords = new ArrayList<>();
 
 			for (StopWatchRecord stopWatchRecord : allStopWatchRecords) {
-				boolean addedAsChild = false;
-
 				for (StopWatchRecord parentStopWatchRecord :
 						parentStopWatchRecords) {
 
@@ -1748,13 +1746,11 @@ public abstract class BaseBuild implements Build {
 						parentStopWatchRecord.addChildStopWatchRecord(
 							stopWatchRecord);
 
-						addedAsChild = true;
-
 						break;
 					}
 				}
 
-				if (!addedAsChild) {
+				if (stopWatchRecord.getParentStopWatchRecord() == null) {
 					parentStopWatchRecords.add(stopWatchRecord);
 				}
 			}

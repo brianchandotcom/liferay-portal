@@ -1005,7 +1005,7 @@ information.
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute default="${junit.jvm}" name="junit.jvm.override" />
-		<attribute default="${ant.java.version}" name="junit.jvm.override.version" />
+		<attribute default="${java.specification.version}" name="junit.jvm.override.version" />
 		<attribute name="test.type" />
 		<element name="misc" optional="yes" />
 		<element name="test.classes" />
@@ -1797,7 +1797,7 @@ rerun your task.
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
 		<attribute default="${junit.jvm}" name="junit.jvm.override" />
-		<attribute default="${ant.java.version}" name="junit.jvm.override.version" />
+		<attribute default="${java.specification.version}" name="junit.jvm.override.version" />
 
 		<sequential>
 			<if>
@@ -2358,7 +2358,7 @@ rerun your task.
 				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.override.version" value="${ant.java.version}" />
+				<property name="junit.jvm.override.version" value="${java.specification.version}" />
 			</then>
 		</if>
 
@@ -2412,7 +2412,7 @@ rerun your task.
 				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.override.version" value="${ant.java.version}" />
+				<property name="junit.jvm.override.version" value="${java.specification.version}" />
 			</then>
 		</if>
 

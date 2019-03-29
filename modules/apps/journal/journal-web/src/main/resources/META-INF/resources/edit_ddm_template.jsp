@@ -159,15 +159,15 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 								<aui:col width="<%= (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null)) ? 50 : 100 %>">
 									<aui:fieldset>
-										<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
+										<aui:input cssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
 
-										<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+										<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" title="small-image-url" />
 									</aui:fieldset>
 
 									<aui:fieldset>
-										<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
+										<aui:input cssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
 
-										<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
+										<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
 									</aui:fieldset>
 								</aui:col>
 							</aui:row>

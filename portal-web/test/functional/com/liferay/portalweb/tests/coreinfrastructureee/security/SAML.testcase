@@ -528,16 +528,6 @@ definition {
 
 		User.viewLoggedInPG(userFirstName = "Test");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
-
-		SAMLNavigation.gotoIdentityProvider();
-
-		SAMLPortlet.configureIdentityProvider();
-
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		ProductMenu.gotoPortlet(
@@ -558,6 +548,18 @@ definition {
 		);
 
 		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider();
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 

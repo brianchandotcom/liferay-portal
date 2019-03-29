@@ -301,7 +301,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
 		var key_webContentTitle = "${webContentTitle}";
 

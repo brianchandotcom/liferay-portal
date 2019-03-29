@@ -16,6 +16,7 @@ package com.liferay.petra.io.unsync;
 
 import com.liferay.petra.io.OutputStreamWriter;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,7 +28,6 @@ import java.io.Writer;
 
 import java.lang.reflect.Field;
 
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.After;
@@ -432,13 +432,14 @@ public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 
 		stringBuffer.setLength(0);
 
-		unsyncPrintWriter.printf(Locale.CANADA, "%1$s", "replace formatter");
+		unsyncPrintWriter.printf(
+			LocaleUtil.CANADA, "%1$s", "replace formatter");
 
 		Assert.assertEquals("replace formatter", stringWriter.toString());
 
 		unsyncPrintWriter.close();
 
-		unsyncPrintWriter.printf(Locale.getDefault(), null);
+		unsyncPrintWriter.printf(LocaleUtil.getDefault(), null);
 
 		Assert.assertTrue(unsyncPrintWriter.checkError());
 	}

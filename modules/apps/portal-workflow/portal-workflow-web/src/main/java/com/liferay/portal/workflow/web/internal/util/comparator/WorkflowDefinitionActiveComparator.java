@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.web.internal.util.comparator;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
@@ -36,7 +37,7 @@ public class WorkflowDefinitionActiveComparator
 	public static final String[] ORDER_BY_FIELDS = {"active"};
 
 	public WorkflowDefinitionActiveComparator() {
-		this(false, Locale.getDefault());
+		this(false, LocaleUtil.getDefault());
 	}
 
 	public WorkflowDefinitionActiveComparator(

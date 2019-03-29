@@ -83,7 +83,7 @@ public class DLFileEntryMetadataDDMStructureIndexerTest
 
 	@Test
 	public void testReindexDLFileEntry() throws Exception, PortalException {
-		Locale locale = Locale.JAPAN;
+		Locale locale = LocaleUtil.JAPAN;
 		String fileName_jp = "content_search.txt";
 		String searchTerm = "新規";
 

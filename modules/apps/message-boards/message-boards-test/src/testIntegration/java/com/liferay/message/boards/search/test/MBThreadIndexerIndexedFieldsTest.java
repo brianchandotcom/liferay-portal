@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -41,7 +42,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -84,7 +84,7 @@ public class MBThreadIndexerIndexedFieldsTest {
 		String searchTerm = mbThread.getUserName();
 
 		Document document = mbThreadIndexerFixture.searchOnlyOne(
-			_user.getUserId(), searchTerm, Locale.US);
+			_user.getUserId(), searchTerm, LocaleUtil.US);
 
 		indexedFieldsFixture.postProcessDocument(document);
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,7 +40,6 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
@@ -100,7 +100,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		List<BaseModel<?>> results = oDataRetriever.getResults(
-			segmentsEntry.getCompanyId(), filterString, Locale.getDefault(),
+			segmentsEntry.getCompanyId(), filterString, LocaleUtil.getDefault(),
 			start, end);
 
 		Stream<BaseModel<?>> stream = results.stream();
@@ -137,7 +137,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		return oDataRetriever.getResultsCount(
-			segmentsEntry.getCompanyId(), filterString, Locale.getDefault());
+			segmentsEntry.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -302,7 +303,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			try {
 				int count = oDataRetriever.getResultsCount(
 					segmentsEntry.getCompanyId(), sb.toString(),
-					Locale.getDefault());
+					LocaleUtil.getDefault());
 
 				if (count > 0) {
 					matchesModel = true;

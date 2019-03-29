@@ -177,7 +177,7 @@ public class MembershipPolicyTestUtil {
 			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
-		String languageId = LocaleUtil.toLanguageId(Locale.getDefault());
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
 		String timeZoneId = RandomTestUtil.randomString();
 		String greeting = RandomTestUtil.randomString();
 		String comments = RandomTestUtil.randomString();

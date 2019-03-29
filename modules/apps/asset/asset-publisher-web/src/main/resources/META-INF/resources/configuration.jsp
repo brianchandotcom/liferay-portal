@@ -64,47 +64,59 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />saveSelectBoxes() {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
+		var form = document.<portlet:namespace />fm;
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 			String className = assetPublisherWebUtil.getClassName(curRendererFactory);
 		%>
 
-			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));
+			Liferay.Util.setFormValues(
+				form,
+				{
+					classTypeIds<%= className %>: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, '<%= className %>currentClassTypeIds'))
+				}
+			);
 
 		<%
 		}
 		%>
 
-		form.fm('metadataFields').val(Util.listSelect(form.fm('currentMetadataFields')));
+		var currentClassNameIdsSelect = Liferay.Util.getFormElement(form, 'currentClassNameIds');
+		var currentMetadataFieldsInput = Liferay.Util.getFormElement(form, 'currentMetadataFields');
 
-		submitForm(form);
-	}
-</aui:script>
-
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-		function handleCreateAssetListLinkClick(event) {
-			event.preventDefault();
-
-			modalCommands.openSimpleInputModal(
+		if (currentClassNameIdsSelect && currentMetadataFieldsInput) {
+			Liferay.Util.postForm(
+				form,
 				{
-					dialogTitle: '<liferay-ui:message key="content-set-title" />',
-					formSubmitURL: '<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
-					mainFieldLabel: '<liferay-ui:message key="title" />',
-					mainFieldName: 'title',
-					mainFieldPlaceholder: '<liferay-ui:message key="title" />',
-					namespace: '<%= PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource)) %>',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					data: {
+						classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect),
+						metadataFields: Liferay.Util.listSelect(currentMetadataFieldsInput)
+					}
 				}
 			);
 		}
+	}
+</script>
+
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	function handleCreateAssetListLinkClick(event) {
+		event.preventDefault();
+
+		modalCommands.openSimpleInputModal(
+			{
+				dialogTitle: '<liferay-ui:message key="content-set-title" />',
+				formSubmitURL: '<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
+				mainFieldLabel: '<liferay-ui:message key="title" />',
+				mainFieldName: 'title',
+				mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+				namespace: '<%= PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource)) %>',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
+	}
 
 	var createAssetListLinkClickHandler = dom.delegate(
 		document.body,

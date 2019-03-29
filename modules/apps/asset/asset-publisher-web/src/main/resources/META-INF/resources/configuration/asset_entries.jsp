@@ -245,7 +245,8 @@ for (long groupId : groupIds) {
 				var assetClassName = '';
 				var assetEntryIds = [];
 
-				assetEntryList.forEach(
+				Array.prototype.forEach.call(
+					assetEntryList,
 					function(assetEntry) {
 						assetEntryIds.push(assetEntry.entityid);
 

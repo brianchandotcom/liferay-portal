@@ -15,26 +15,19 @@
 package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.ClassLoaderResourceParser;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
-import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.FileImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -46,8 +39,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,7 +47,6 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.runtime.RuntimeConstants;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -70,41 +60,29 @@ public class VelocityTemplateTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		ToolDependencies.wireCaches();
-
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
 
-		Registry registry = RegistryUtil.getRegistry();
+		_templateResourceCache = new VelocityTemplateResourceCache() {
 
-		_templateResourceLoader = new MockTemplateResourceLoader();
+			@Override
+			public boolean isEnabled() {
+				return false;
+			}
 
-		_templateResourceLoader.activate(
-			Collections.<String, Object>emptyMap());
+		};
 
-		_serviceRegistrations.add(
-			registry.registerService(
-				TemplateResourceLoader.class, _templateResourceLoader));
+		_velocityTemplateResourceLoader = new VelocityTemplateResourceLoader();
 
-		_serviceReference = registry.getServiceReference(SingleVMPool.class);
+		ReflectionTestUtil.setFieldValue(
+			_velocityTemplateResourceLoader, "_velocityTemplateResourceCache",
+			_templateResourceCache);
 
-		_singleVMPool = registry.getService(_serviceReference);
-	}
+		_velocityTemplateResourceLoader.setTemplateResourceParser(
+			new ClassLoaderResourceParser());
 
-	@AfterClass
-	public static void tearDownClass() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.ungetService(_serviceReference);
+		_velocityTemplateResourceLoader.activate(Collections.emptyMap());
 	}
 
 	@Before
@@ -144,11 +122,6 @@ public class VelocityTemplateTest {
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
 			String.valueOf(cacheEnabled));
 		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER +
-				".resourceModificationCheckInterval",
-			velocityEngineConfiguration.resourceModificationCheckInterval() +
-				"");
-		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
 			LiferayResourceLoader.class.getName());
 		extendedProperties.setProperty(
@@ -161,7 +134,7 @@ public class VelocityTemplateTest {
 				"");
 		extendedProperties.setProperty(
 			VelocityTemplateResourceLoader.class.getName(),
-			_templateResourceLoader);
+			_velocityTemplateResourceLoader);
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			velocityEngineConfiguration.logger());
@@ -180,8 +153,6 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 			String.valueOf(!cacheEnabled));
-		extendedProperties.setProperty(
-			PortalCacheManagerNames.SINGLE_VM, _singleVMPool);
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 
@@ -192,7 +163,7 @@ public class VelocityTemplateTest {
 	public void testGet() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -211,7 +182,7 @@ public class VelocityTemplateTest {
 	public void testPrepare() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -232,7 +203,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate1() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -249,7 +220,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate2() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -272,7 +243,8 @@ public class VelocityTemplateTest {
 		Template template = new VelocityTemplate(
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, null, _velocityEngine, _templateContextHelper, 60);
+			null, null, _velocityEngine, _templateContextHelper,
+			_templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -290,7 +262,7 @@ public class VelocityTemplateTest {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -308,7 +280,7 @@ public class VelocityTemplateTest {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -326,7 +298,7 @@ public class VelocityTemplateTest {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -351,7 +323,8 @@ public class VelocityTemplateTest {
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new StringTemplateResource(
 				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, _velocityEngine, _templateContextHelper, 60);
+			null, _velocityEngine, _templateContextHelper,
+			_templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -372,7 +345,7 @@ public class VelocityTemplateTest {
 
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
-			_velocityEngine, _templateContextHelper, 60);
+			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -396,11 +369,9 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
-	private static ServiceReference<SingleVMPool> _serviceReference;
-	private static final Set<ServiceRegistration<?>> _serviceRegistrations =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private static SingleVMPool _singleVMPool;
-	private static MockTemplateResourceLoader _templateResourceLoader;
+	private static TemplateResourceCache _templateResourceCache;
+	private static VelocityTemplateResourceLoader
+		_velocityTemplateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;
@@ -481,25 +452,6 @@ public class VelocityTemplateTest {
 
 		private long _lastModified = System.currentTimeMillis();
 		private String _templateId;
-
-	}
-
-	private static class MockTemplateResourceLoader
-		extends VelocityTemplateResourceLoader {
-
-		@Override
-		protected void activate(Map<String, Object> properties) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			setMultiVMPool(
-				registry.callService(MultiVMPool.class, Function.identity()));
-			setSingleVMPool(
-				registry.callService(SingleVMPool.class, Function.identity()));
-
-			setTemplateResourceParser(new ClassLoaderResourceParser());
-
-			super.activate(properties);
-		}
 
 	}
 

@@ -131,6 +131,20 @@ public class ContentPageLayoutEditorDisplayContext
 				segmentsEntrySoyContext);
 		}
 
+		SoyContext segmentsEntrySoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		segmentsEntrySoyContext.put(
+			"name",
+			SegmentsConstants.getDefaultSegmentsEntryName(
+				themeDisplay.getLocale())
+		).put(
+			"segmentsEntryId", SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID
+		);
+
+		availableSegmentsEntriesSoyContext.put(
+			String.valueOf(SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID),
+			segmentsEntrySoyContext);
 
 		return availableSegmentsEntriesSoyContext;
 	}

@@ -14,11 +14,12 @@
 
 package com.liferay.portal.async.advice.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.async.Async;
@@ -27,8 +28,10 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,8 +39,46 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ChainableMethodAdvice.class)
+@Component(
+	configurationPid = "com.liferay.portal.async.advice.internal.AsyncAdviceConfiguration",
+	immediate = true, service = ChainableMethodAdvice.class
+)
 public class AsyncAdvice extends ChainableMethodAdvice {
+
+	@Activate
+	public void activate(Map<String, String> properties) {
+		_asyncAdviceConfiguration = ConfigurableUtil.createConfigurable(
+			AsyncAdviceConfiguration.class, properties);
+
+		String[] targetClassNamesToDestinationNames =
+			_asyncAdviceConfiguration.targetClassNamesToDestinationNames();
+
+		if (targetClassNamesToDestinationNames != null) {
+			Map<String, String> destinationNames = new HashMap<>();
+
+			for (String targetClassNameToDestinationName :
+					targetClassNamesToDestinationNames) {
+
+				int index = targetClassNameToDestinationName.indexOf(
+					CharPool.EQUAL);
+
+				if (index <= 0) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid target class name to destination name \"" +
+								targetClassNameToDestinationName + "\"");
+					}
+				}
+				else {
+					destinationNames.put(
+						targetClassNameToDestinationName.substring(0, index),
+						targetClassNameToDestinationName.substring(index + 1));
+				}
+			}
+
+			_destinationNames = destinationNames;
+		}
+	}
 
 	@Override
 	public Object createMethodContext(
@@ -60,7 +101,17 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		return nullResult;
+		String destinationName = null;
+
+		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
+			destinationName = _destinationNames.get(targetClass.getName());
+		}
+
+		if (destinationName == null) {
+			return _asyncAdviceConfiguration.defaultDestinationName();
+		}
+
+		return destinationName;
 	}
 
 	@Override
@@ -71,6 +122,8 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
+		String destinationName = aopMethodInvocation.getAdviceMethodContext();
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				Message message = new Message();
@@ -78,7 +131,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 				message.setPayload(
 					new AsyncProcessCallable(aopMethodInvocation, arguments));
 
-				_messageBus.sendMessage(_DESTINATION_NAME, message);
+				_messageBus.sendMessage(destinationName, message);
 
 				return null;
 			});
@@ -86,10 +139,10 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 		return nullResult;
 	}
 
-	private static final String _DESTINATION_NAME =
-		DestinationNames.ASYNC_SERVICE;
-
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
+
+	private AsyncAdviceConfiguration _asyncAdviceConfiguration;
+	private Map<String, String> _destinationNames;
 
 	@Reference
 	private MessageBus _messageBus;

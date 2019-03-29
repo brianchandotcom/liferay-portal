@@ -36,6 +36,11 @@ public class BuildRunnerFactory {
 				(PortalBatchBuildData)buildData);
 		}
 
+		if (jobName.startsWith("test-portal-testsuite-upstream-controller(")) {
+			buildRunner = new PortalTestSuiteUpstreamControllerBuildRunner(
+				buildData);
+		}
+
 		if (buildRunner == null) {
 			throw new RuntimeException("Invalid build data " + buildData);
 		}

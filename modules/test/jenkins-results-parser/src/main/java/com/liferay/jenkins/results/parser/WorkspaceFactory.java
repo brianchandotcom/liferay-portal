@@ -70,6 +70,14 @@ public abstract class WorkspaceFactory {
 			new MethodLogger(workspace));
 	}
 
+	public static Workspace newSimpleWorkspace() {
+		Workspace workspace = new SimpleWorkspace();
+
+		return (Workspace)Proxy.newProxyInstance(
+			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
+			new MethodLogger(workspace));
+	}
+
 	public static Workspace newTopLevelWorkspace(
 		String gitHubURL, String upstreamBranchName) {
 

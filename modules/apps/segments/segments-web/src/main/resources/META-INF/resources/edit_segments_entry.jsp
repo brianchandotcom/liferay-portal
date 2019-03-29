@@ -37,7 +37,6 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 %>
 
-<liferay-ui:error embed="<%= false %>" exception="<%= DefaultSegmentsEntryException.MustNotUpdateDefaultSegmentsEntry.class %>" message="the-segment-cannot-be-updated-because-it-is-the-default-segment" />
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryKeyException.class %>" message="key-is-already-used" />
 

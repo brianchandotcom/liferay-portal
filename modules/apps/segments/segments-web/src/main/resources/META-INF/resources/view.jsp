@@ -44,7 +44,6 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 <aui:form action="<%= deleteSegmentsEntryURL %>" cssClass="container-fluid-1280" method="post" name="fmSegmentsEntries">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-ui:error exception="<%= DefaultSegmentsEntryException.MustNotDeleteDefaultSegmentsEntry.class %>" message="the-segment-cannot-be-deleted-because-it-is-the-default-segment" />
 	<liferay-ui:error exception="<%= RequiredSegmentsEntryException.MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences.class %>" message="the-segment-cannot-be-deleted-because-it-is-required-by-one-or-more-experiences" />
 
 	<liferay-ui:search-container
@@ -73,7 +72,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-title"
-				href="<%= segmentsEntry.isDefaultSegment() ? null : rowURL %>"
+				href="<%= rowURL %>"
 				name="name"
 				value="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>"
 			/>

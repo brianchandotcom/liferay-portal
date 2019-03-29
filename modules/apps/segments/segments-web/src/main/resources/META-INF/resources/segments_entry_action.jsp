@@ -22,54 +22,52 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 %>
 
-<c:if test="<%= !segmentsEntry.isDefaultSegment() %>">
-	<liferay-ui:icon-menu
-		direction="left-side"
-		icon="<%= StringPool.BLANK %>"
-		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
-		showWhenSingleIcon="<%= true %>"
-	>
-		<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.UPDATE) %>">
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="editSegmentsEntry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
-			</portlet:renderURL>
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
+	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="editSegmentsEntry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
+		</portlet:renderURL>
 
-			<liferay-ui:icon
-				message="edit"
-				url="<%= editURL %>"
-			/>
-		</c:if>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editURL %>"
+		/>
+	</c:if>
 
-		<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.PERMISSIONS) %>">
-			<liferay-security:permissionsURL
-				modelResource="<%= SegmentsEntry.class.getName() %>"
-				modelResourceDescription="<%= segmentsEntry.getName(locale) %>"
-				resourcePrimKey="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>"
-				var="permissionsURL"
-				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-			/>
+	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= SegmentsEntry.class.getName() %>"
+			modelResourceDescription="<%= segmentsEntry.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-			<liferay-ui:icon
-				message="permissions"
-				method="get"
-				url="<%= permissionsURL %>"
-				useDialog="<%= true %>"
-			/>
-		</c:if>
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 
-		<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.DELETE) %>">
-			<portlet:actionURL name="deleteSegmentsEntry" var="deleteURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
-			</portlet:actionURL>
+	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteSegmentsEntry" var="deleteURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
+		</portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
-			/>
-		</c:if>
-	</liferay-ui:icon-menu>
-</c:if>
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
+</liferay-ui:icon-menu>

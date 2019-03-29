@@ -71,6 +71,73 @@
 			}
 		}
 	},
+	"WorkflowMetricsNodeType": {
+		"date_detection": false,
+		"dynamic_templates": [
+			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			}
+		],
+		"properties": {
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"createDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"deleted": {
+				"store": true,
+				"type": "boolean"
+			},
+			"id": {
+				"store": true,
+				"type": "keyword"
+			},
+			"initial": {
+				"store": true,
+				"type": "boolean"
+			},
+			"modifiedDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"name": {
+				"store": true,
+				"type": "keyword"
+			},
+			"nodeId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"processId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"terminal": {
+				"store": true,
+				"type": "boolean"
+			},
+			"type": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userId": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	},
 	"WorkflowMetricsProcessType": {
 		"date_detection": false,
 		"dynamic_templates": [
@@ -589,61 +656,6 @@
 				"type": "long"
 			},
 			"slaDefinitionId": {
-				"store": true,
-				"type": "keyword"
-			}
-		}
-	},
-	"WorkflowMetricsTaskType": {
-		"date_detection": false,
-		"dynamic_templates": [
-			{
-				"template_long_sortable": {
-					"mapping": {
-						"store": true,
-						"type": "long"
-					},
-					"match": "*_sortable",
-					"match_mapping_type": "long"
-				}
-			}
-		],
-		"properties": {
-			"companyId": {
-				"store": true,
-				"type": "keyword"
-			},
-			"createDate": {
-				"format": "yyyyMMddHHmmss",
-				"store": true,
-				"type": "date"
-			},
-			"deleted": {
-				"store": true,
-				"type": "boolean"
-			},
-			"id": {
-				"store": true,
-				"type": "keyword"
-			},
-			"modifiedDate": {
-				"format": "yyyyMMddHHmmss",
-				"store": true,
-				"type": "date"
-			},
-			"name": {
-				"store": true,
-				"type": "keyword"
-			},
-			"processId": {
-				"store": true,
-				"type": "keyword"
-			},
-			"taskId": {
-				"store": true,
-				"type": "keyword"
-			},
-			"userId": {
 				"store": true,
 				"type": "keyword"
 			}

@@ -1821,6 +1821,10 @@ public abstract class BaseBuild implements Build {
 			return parentStopWatchRecords;
 		}
 
+		public boolean isEmpty() {
+			return _stopWatchRecordsMap.isEmpty();
+		}
+
 		@Override
 		public Iterator<StopWatchRecord> iterator() {
 			List<StopWatchRecord> list = getStopWatchRecords();
@@ -2541,6 +2545,34 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	protected Element getStopWatchRecordsExpanderAnchorElement() {
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup.isEmpty()) {
+			return null;
+		}
+
+		Element stopWatchRecordsExpanderAnchorElement =
+			Dom4JUtil.getNewAnchorElement("", "+ ");
+		String namespace = getStopWatchRecordsNamespace();
+
+		stopWatchRecordsExpanderAnchorElement.addAttribute(
+			"id",
+			JenkinsResultsParserUtil.combine(namespace, "-expander-anchor-"));
+
+		stopWatchRecordsExpanderAnchorElement.addAttribute(
+			"onClick",
+			JenkinsResultsParserUtil.combine(
+				"return toggleStopwatchRecordExpander(\'", namespace,
+				"\', \'\')"));
+
+		stopWatchRecordsExpanderAnchorElement.addAttribute(
+			"style", "text-decoration: none");
+
+		return stopWatchRecordsExpanderAnchorElement;
+	}
+
 	protected StopWatchRecordsGroup getStopWatchRecordsGroup() {
 		String consoleText = getConsoleText();
 
@@ -2603,6 +2635,12 @@ public abstract class BaseBuild implements Build {
 		stopWatchRecordConsoleReadCursor = consoleTextLength;
 
 		return stopWatchRecordsGroup;
+	}
+
+	protected String getStopWatchRecordsNamespace() {
+		String key = getBuildURL();
+
+		return String.valueOf(key.hashCode());
 	}
 
 	protected Map<String, String> getTempMap(String tempMapName) {

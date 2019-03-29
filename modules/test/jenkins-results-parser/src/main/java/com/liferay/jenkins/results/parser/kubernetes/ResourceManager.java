@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.kubernetes;
 
 import io.kubernetes.client.ApiException;
+import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 
 /**
@@ -34,6 +35,19 @@ public class ResourceManager {
 				namespace, podConfiguration, null);
 		}
 		catch (ApiException ae) {
+			String message = ae.getMessage();
+
+			if (message.equals("Conflict")) {
+				V1ObjectMeta meta = podConfiguration.getMetadata();
+
+				System.out.println(
+					"Unable to create new pod with name '" + meta.getName() +
+						"' as it already exists in namespace '" + namespace +
+							"'");
+
+				return podConfiguration;
+			}
+
 			throw ae;
 		}
 	}

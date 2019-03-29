@@ -40,13 +40,13 @@ FileEntry toFileEntry = null;
 
 if (toFileEntryId > 0) {
 	try {
-		toFileEntry = DLAppLocalServiceUtil.getFileEntry(toFileEntryId);
+		toFileEntry = DLAppServiceUtil.getFileEntry(toFileEntryId);
 
 		toFileEntry = toFileEntry.toEscapedModel();
 
 		toGroupId = toFileEntry.getRepositoryId();
 
-		toGroup = GroupLocalServiceUtil.getGroup(toGroupId);
+		toGroup = GroupServiceUtil.getGroup(toGroupId);
 
 		toGroup = toGroup.toEscapedModel();
 	}

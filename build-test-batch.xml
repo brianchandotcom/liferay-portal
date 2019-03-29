@@ -1395,9 +1395,17 @@ app.server.type=@{app.server.type}]]></echo>
 						<test-action>
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
+							<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+							<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+
+							<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
+
 							<ant dir="portal-impl" inheritAll="false" target="test-class-group">
 								<property name="database.type" value="@{database.type}" />
 								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
+								<property name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
+								<property name="junit.jvm.version" value="${java.jdk.bundle.version}" />
 								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>

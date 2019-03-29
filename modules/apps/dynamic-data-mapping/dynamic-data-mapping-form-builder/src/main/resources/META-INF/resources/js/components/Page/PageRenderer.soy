@@ -25,6 +25,7 @@
 		]
 	}
 	{@param? titlePlaceholder: string}
+	{@param? view: ?}
 
 	{delcall PageRenderer.container variant="$contentRenderer"}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
@@ -45,6 +46,7 @@
 		{param spritemap: $spritemap /}
 		{param strings: $strings /}
 		{param titlePlaceholder: $titlePlaceholder /}
+		{param view: $view /}
 	{/delcall}
 {/template}
 
@@ -73,20 +75,24 @@
 		]
 	}
 	{@param? titlePlaceholder: string}
+	{@param? view: ?}
+
 
 	<div class="ddm-layout-builder ddm-page-container-layout">
 		{if $activePage == $pageIndex}
 			<div class="ddm-form-page pl-4 pr-4">
-				{call .form}
-					{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
-					{param _handlePageTitleChanged: $_handlePageTitleChanged /}
-					{param contentRenderer: $contentRenderer /}
-					{param descriptionPlaceholder: $descriptionPlaceholder /}
-					{param editable: $editable /}
-					{param page: $page /}
-					{param pageIndex: $pageIndex /}
-					{param titlePlaceholder: $titlePlaceholder /}
-				{/call}
+				{if $view != 'fieldSets'}
+					{call .form}
+						{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
+						{param _handlePageTitleChanged: $_handlePageTitleChanged /}
+						{param contentRenderer: $contentRenderer /}
+						{param descriptionPlaceholder: $descriptionPlaceholder /}
+						{param editable: $editable /}
+						{param page: $page /}
+						{param pageIndex: $pageIndex /}
+						{param titlePlaceholder: $titlePlaceholder /}
+					{/call}
+				{/if}
 
 				<div class="form-builder-layout">
 					{delcall PageRenderer.page variant="$contentRenderer"}

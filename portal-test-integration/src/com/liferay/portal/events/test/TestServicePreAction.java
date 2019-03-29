@@ -124,17 +124,6 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public LayoutComposite getViewableLayoutComposite(
-			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts, long doAsGroupId)
-		throws PortalException {
-
-		return super.getViewableLayoutComposite(
-			request, user, permissionChecker, layout, layouts, doAsGroupId);
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Layout layout,
 			long doAsGroupId, boolean checkViewableGroup)

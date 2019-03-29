@@ -502,7 +502,8 @@ public class ServicePreAction extends Action {
 		}
 		else {
 			viewableLayoutComposite = getViewableLayoutComposite(
-				request, user, permissionChecker, layout, layouts, doAsGroupId);
+				request, user, permissionChecker, layout, layouts, doAsGroupId,
+				false);
 		}
 
 		String layoutSetLogo = null;
@@ -1456,8 +1457,10 @@ public class ServicePreAction extends Action {
 			getDefaultVirtualHostLayoutComposite(request);
 
 		defaultLayoutComposite = getViewableLayoutComposite(
-			request, user, permissionChecker, defaultLayoutComposite,
-			doAsGroupId, ignoreHiddenLayouts);
+			request, user, permissionChecker,
+			defaultLayoutComposite.getLayout(),
+			defaultLayoutComposite.getLayouts(), doAsGroupId,
+			ignoreHiddenLayouts);
 
 		if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 			return defaultLayoutComposite;
@@ -1473,8 +1476,10 @@ public class ServicePreAction extends Action {
 			}
 
 			defaultLayoutComposite = getViewableLayoutComposite(
-				request, user, permissionChecker, defaultLayoutComposite,
-				doAsGroupId, ignoreHiddenLayouts);
+				request, user, permissionChecker,
+				defaultLayoutComposite.getLayout(),
+				defaultLayoutComposite.getLayouts(), doAsGroupId,
+				ignoreHiddenLayouts);
 
 			if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 				return defaultLayoutComposite;
@@ -1484,8 +1489,10 @@ public class ServicePreAction extends Action {
 		defaultLayoutComposite = getGuestSiteLayoutComposite(user);
 
 		return getViewableLayoutComposite(
-			request, user, permissionChecker, defaultLayoutComposite,
-			doAsGroupId, ignoreHiddenLayouts);
+			request, user, permissionChecker,
+			defaultLayoutComposite.getLayout(),
+			defaultLayoutComposite.getLayouts(), doAsGroupId,
+			ignoreHiddenLayouts);
 	}
 
 	protected LayoutComposite getDefaultVirtualHostLayoutComposite(
@@ -1573,17 +1580,6 @@ public class ServicePreAction extends Action {
 	protected LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts, long doAsGroupId)
-		throws PortalException {
-
-		return getViewableLayoutComposite(
-			request, user, permissionChecker, layout, layouts, doAsGroupId,
-			false);
-	}
-
-	protected LayoutComposite getViewableLayoutComposite(
-			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, boolean ignoreHiddenLayouts)
 		throws PortalException {
 
@@ -1634,39 +1630,6 @@ public class ServicePreAction extends Action {
 		}
 
 		return new LayoutComposite(layout, layouts);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getViewableLayoutComposite(
-	 *                 HttpServletRequest,User,PermissionChecker,Layout,List,
-	 *                 long,boolean)}
-	 */
-	@Deprecated
-	protected LayoutComposite getViewableLayoutComposite(
-			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker,
-			LayoutComposite defaultLayoutComposite, long doAsGroupId)
-		throws PortalException {
-
-		return getViewableLayoutComposite(
-			request, user, permissionChecker, defaultLayoutComposite,
-			doAsGroupId, true);
-	}
-
-	protected LayoutComposite getViewableLayoutComposite(
-			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker,
-			LayoutComposite defaultLayoutComposite, long doAsGroupId,
-			boolean ignoreHiddenLayouts)
-		throws PortalException {
-
-		Layout layout = defaultLayoutComposite.getLayout();
-		List<Layout> layouts = defaultLayoutComposite.getLayouts();
-
-		return getViewableLayoutComposite(
-			request, user, permissionChecker, layout, layouts, doAsGroupId,
-			ignoreHiddenLayouts);
 	}
 
 	protected boolean hasAccessPermission(
@@ -1799,7 +1762,7 @@ public class ServicePreAction extends Action {
 			LayoutComposite viewableLayoutComposite =
 				getViewableLayoutComposite(
 					request, user, permissionChecker, layout, guestLayouts,
-					doAsGroupId);
+					doAsGroupId, false);
 
 			guestLayouts = viewableLayoutComposite.getLayouts();
 
@@ -1851,7 +1814,7 @@ public class ServicePreAction extends Action {
 				LayoutComposite viewableLayoutComposite =
 					getViewableLayoutComposite(
 						request, user, permissionChecker, layout,
-						previousLayouts, doAsGroupId);
+						previousLayouts, doAsGroupId, false);
 
 				previousLayouts = viewableLayoutComposite.getLayouts();
 

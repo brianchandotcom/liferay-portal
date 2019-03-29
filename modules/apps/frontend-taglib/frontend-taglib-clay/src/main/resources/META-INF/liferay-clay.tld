@@ -2208,13 +2208,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>itemsPerPage</name>
+			<name>page</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>pageNumber</name>
+			<name>pageSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

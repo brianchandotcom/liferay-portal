@@ -20,7 +20,10 @@ import io.kubernetes.client.ApiException;
 import io.kubernetes.client.models.V1DeleteOptions;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
+import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.models.V1Status;
+
+import java.util.List;
 
 /**
  * @author Kenji Heigel
@@ -103,6 +106,46 @@ public class ResourceManager {
 
 			throw jse;
 		}
+	}
+
+	public static V1Pod getPod(V1Pod podConfiguration) throws ApiException {
+		return getPod(podConfiguration, "default");
+	}
+
+	public static V1Pod getPod(V1Pod pod, String namespace)
+		throws ApiException {
+
+		try {
+			return _liferayKubernetesApi.core.readNamespacedPod(
+				getPodName(pod), namespace, null, true, false);
+		}
+		catch (ApiException ae) {
+			String message = ae.getMessage();
+
+			if (message.equals("Not Found")) {
+				System.out.println(
+					"Unable to get pod with name '" + getPodName(pod) +
+						"' as it was not found in namespace '" + namespace +
+							"'");
+
+				return null;
+			}
+
+			throw ae;
+		}
+	}
+
+	public static List<V1Pod> getPods() throws ApiException {
+		V1PodList podList = _liferayKubernetesApi.core.listPodForAllNamespaces(
+			null, null, null, null, null, null, null, null, null);
+
+		return podList.getItems();
+	}
+
+	protected static String getPodName(V1Pod pod) {
+		V1ObjectMeta meta = pod.getMetadata();
+
+		return meta.getName();
 	}
 
 	private static final LiferayKubernetesApi _liferayKubernetesApi =

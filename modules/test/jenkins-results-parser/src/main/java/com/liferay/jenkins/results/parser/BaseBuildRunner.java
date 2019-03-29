@@ -73,6 +73,25 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	protected abstract void initWorkspace();
 
+	protected void keepLogs(boolean keepLogs) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
+		sb.append(_buildData.getJobName());
+		sb.append("\"); ");
+
+		sb.append("def build = job.getBuildByNumber(");
+		sb.append(_buildData.getBuildNumber());
+		sb.append("); ");
+
+		sb.append("build.keepLog(");
+		sb.append(keepLogs);
+		sb.append(");");
+
+		JenkinsResultsParserUtil.executeJenkinsScript(
+			_buildData.getMasterHostname(), "script=" + sb.toString());
+	}
+
 	protected void publishToUserContentDir(File file) {
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			return;

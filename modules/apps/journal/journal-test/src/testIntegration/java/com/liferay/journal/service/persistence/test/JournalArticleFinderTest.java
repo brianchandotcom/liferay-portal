@@ -303,13 +303,13 @@ public class JournalArticleFinderTest {
 
 		Map<Locale, String> titleMap = new HashMap<>();
 
-		titleMap.put(Locale.US, "Localized Article");
-		titleMap.put(Locale.FRANCE, "Localized Article");
+		titleMap.put(LocaleUtil.US, "Localized Article");
+		titleMap.put(LocaleUtil.FRANCE, "Localized Article");
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(), _folder.getFolderId(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
-			titleMap, Locale.US, true, true, serviceContext);
+			titleMap, LocaleUtil.US, true, true, serviceContext);
 
 		QueryDefinition<JournalArticle> queryDefinition =
 			new QueryDefinition<>();

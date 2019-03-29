@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -56,7 +57,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -650,7 +650,7 @@ public class PortletDescriptorParser {
 		return localeMap;
 	}
 
-	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
+	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();
 
 	private static final boolean _PORTLET_XML_VALIDATE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.PORTLET_XML_VALIDATE));

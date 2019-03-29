@@ -17,6 +17,7 @@ package com.liferay.reading.time.internal.calculator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 
@@ -44,7 +45,7 @@ public class ReadingTimeCalculatorImplTest {
 			Optional<Duration> readingTimeOptional =
 				readingTimeCalculator.calculate(
 					StringUtil.randomString(), contentType,
-					Locale.getDefault());
+					LocaleUtil.getDefault());
 
 			Assert.assertTrue(readingTimeOptional.isPresent());
 		}
@@ -63,7 +64,7 @@ public class ReadingTimeCalculatorImplTest {
 		sb.append("<img src=\"img3\"/>");
 
 		Duration readingTimeDuration = _calculateReadingTime(
-			sb.toString(), "text/html", Locale.getDefault());
+			sb.toString(), "text/html", LocaleUtil.getDefault());
 
 		Assert.assertEquals(60 + 3 * 3, readingTimeDuration.getSeconds());
 	}
@@ -71,7 +72,7 @@ public class ReadingTimeCalculatorImplTest {
 	@Test
 	public void testCounts0ForEmptyContent() {
 		Duration readingTimeDuration = _calculateReadingTime(
-			StringPool.BLANK, "text/html", Locale.getDefault());
+			StringPool.BLANK, "text/html", LocaleUtil.getDefault());
 
 		Assert.assertEquals(0, readingTimeDuration.getSeconds());
 	}
@@ -79,7 +80,7 @@ public class ReadingTimeCalculatorImplTest {
 	@Test
 	public void testCounts0ForNullContent() {
 		Duration readingTimeDuration = _calculateReadingTime(
-			null, "text/html", Locale.getDefault());
+			null, "text/html", LocaleUtil.getDefault());
 
 		Assert.assertEquals(0, readingTimeDuration.getSeconds());
 	}
@@ -93,7 +94,7 @@ public class ReadingTimeCalculatorImplTest {
 		}
 
 		Duration readingTimeDuration = _calculateReadingTime(
-			sb.toString(), "text/html", Locale.getDefault());
+			sb.toString(), "text/html", LocaleUtil.getDefault());
 
 		Assert.assertEquals(60, readingTimeDuration.getSeconds());
 	}
@@ -107,7 +108,7 @@ public class ReadingTimeCalculatorImplTest {
 		}
 
 		Duration readingTimeDuration = _calculateReadingTime(
-			sb.toString(), "text/plain", Locale.getDefault());
+			sb.toString(), "text/plain", LocaleUtil.getDefault());
 
 		Assert.assertEquals(60, readingTimeDuration.getSeconds());
 	}
@@ -120,7 +121,7 @@ public class ReadingTimeCalculatorImplTest {
 		Optional<Duration> readingTimeOptional =
 			readingTimeCalculator.calculate(
 				StringUtil.randomString(), ContentTypes.APPLICATION_PDF,
-				Locale.getDefault());
+				LocaleUtil.getDefault());
 
 		Assert.assertFalse(readingTimeOptional.isPresent());
 	}

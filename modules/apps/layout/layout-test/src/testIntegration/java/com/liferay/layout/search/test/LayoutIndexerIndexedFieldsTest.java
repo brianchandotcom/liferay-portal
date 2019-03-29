@@ -168,7 +168,7 @@ public class LayoutIndexerIndexedFieldsTest {
 		map.put(
 			"leftPlid_Number_sortable", String.valueOf(layout.getLeftPlid()));
 		map.put("privateLayout", "false");
-		map.put("title_ja_JP", layout.getName(Locale.JAPAN));
+		map.put("title_ja_JP", layout.getName(LocaleUtil.JAPAN));
 
 		indexedFieldsFixture.populateUID(
 			Layout.class.getName(), layout.getPrimaryKey(), map);

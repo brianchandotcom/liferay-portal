@@ -14,9 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,12 +49,12 @@ public class SaveFormInstanceMVCResourceCommandTest {
 		Assert.assertEquals(
 			"Apr 18, 2018 2:00 PM",
 			_saveFormInstanceMVCResourceCommand.formatDate(
-				date, Locale.US, "UTC"));
+				date, LocaleUtil.US, "UTC"));
 
 		Assert.assertEquals(
 			"Apr 18, 2018 11:00 AM",
 			_saveFormInstanceMVCResourceCommand.formatDate(
-				date, Locale.US, "America/Sao_Paulo"));
+				date, LocaleUtil.US, "America/Sao_Paulo"));
 	}
 
 	protected void setUpSaveFormInstanceMVCResourceCommand() throws Exception {

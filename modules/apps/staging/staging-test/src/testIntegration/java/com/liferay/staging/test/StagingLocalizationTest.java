@@ -101,7 +101,7 @@ public class StagingLocalizationTest {
 		LanguageUtil.init();
 
 		CompanyTestUtil.resetCompanyLocales(
-			TestPropsValues.getCompanyId(), _locales, Locale.US);
+			TestPropsValues.getCompanyId(), _locales, LocaleUtil.US);
 
 		_sourceGroup = GroupTestUtil.addGroup();
 		_targetGroup = GroupTestUtil.addGroup();

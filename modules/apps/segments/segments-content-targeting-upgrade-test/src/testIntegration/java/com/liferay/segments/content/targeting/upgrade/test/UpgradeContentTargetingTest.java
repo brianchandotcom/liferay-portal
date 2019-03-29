@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -776,7 +777,7 @@ public class UpgradeContentTargetingTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd HH:mm", Locale.ENGLISH);
+			"yyyy-MM-dd HH:mm", LocaleUtil.ENGLISH);
 
 		jsonObject.put(
 			"startDate",

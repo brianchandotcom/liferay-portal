@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
@@ -32,7 +33,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +59,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 
 			DateFormat startDateFormat =
 				DateFormatFactoryUtil.getSimpleDateFormat(
-					"yyyy-MM-dd HH:mm", Locale.ENGLISH,
+					"yyyy-MM-dd HH:mm", LocaleUtil.ENGLISH,
 					TimeZoneUtil.getTimeZone(startDateTimeZoneId));
 
 			Date startDate = startDateFormat.parse(
@@ -95,7 +95,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 
 					DateFormat endDateFormat =
 						DateFormatFactoryUtil.getSimpleDateFormat(
-							"yyyy-MM-dd HH:mm", Locale.ENGLISH,
+							"yyyy-MM-dd HH:mm", LocaleUtil.ENGLISH,
 							TimeZoneUtil.getTimeZone(endDateTimeZoneId));
 
 					Date endDate = endDateFormat.parse(

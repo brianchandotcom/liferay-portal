@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -36,7 +37,6 @@ import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
 
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -77,7 +77,7 @@ public class ExpressionConvertImplTest {
 			new LiteralExpressionImpl("test", LiteralExpression.Type.STRING));
 
 		TermFilter termFilter = (TermFilter)_expressionConvert.convert(
-			binaryExpression, Locale.getDefault(), _entityModel);
+			binaryExpression, LocaleUtil.getDefault(), _entityModel);
 
 		Assert.assertEquals("title", termFilter.getField());
 		Assert.assertEquals("test", termFilter.getValue());
@@ -100,7 +100,7 @@ public class ExpressionConvertImplTest {
 							"'keyword1'", LiteralExpression.Type.STRING)))));
 
 		TermFilter termFilter = (TermFilter)_expressionConvert.convert(
-			memberExpression, Locale.getDefault(), _entityModel);
+			memberExpression, LocaleUtil.getDefault(), _entityModel);
 
 		Assert.assertNotNull(termFilter);
 		Assert.assertEquals("keywords.raw", termFilter.getField());

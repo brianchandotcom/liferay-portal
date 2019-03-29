@@ -154,6 +154,6 @@ public abstract class BaseAssetTagNamesFieldQueryBuilderTestCase
 	}
 
 	private static final String _FIELD = _getLocalizedName(
-		Field.ASSET_TAG_NAMES, Locale.US);
+		Field.ASSET_TAG_NAMES, LocaleUtil.US);
 
 }

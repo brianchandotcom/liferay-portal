@@ -468,11 +468,6 @@ public class SegmentsEntryWrapper
 	}
 
 	@Override
-	public boolean isDefaultSegment() {
-		return model.isDefaultSegment();
-	}
-
-	@Override
 	public void persist() {
 		model.persist();
 	}

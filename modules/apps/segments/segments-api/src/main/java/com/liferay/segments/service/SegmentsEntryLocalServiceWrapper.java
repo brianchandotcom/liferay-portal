@@ -245,14 +245,6 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsEntry getDefaultSegmentsEntry(
-			long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

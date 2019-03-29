@@ -58,6 +58,4 @@ public interface SegmentsEntry extends PersistedModel, SegmentsEntryModel {
 
 	public com.liferay.segments.criteria.Criteria getCriteriaObj();
 
-	public boolean isDefaultSegment();
-
 }

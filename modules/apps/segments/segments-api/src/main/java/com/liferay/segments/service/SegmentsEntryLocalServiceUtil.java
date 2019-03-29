@@ -232,13 +232,6 @@ public class SegmentsEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.segments.model.SegmentsEntry
-			getDefaultSegmentsEntry(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getDefaultSegmentsEntry(groupId);
-	}
-
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

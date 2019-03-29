@@ -87,10 +87,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return "ManageCollaborators";
 	}
 
-	private Template _getTemplate(RenderRequest renderRequest) {
-		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
-	}
-
 	private JSONArray _getCollaboratorsJSONArray(RenderRequest renderRequest)
 		throws PortletException {
 
@@ -248,6 +244,10 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
+	}
+
+	private Template _getTemplate(RenderRequest renderRequest) {
+		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
 	@Reference

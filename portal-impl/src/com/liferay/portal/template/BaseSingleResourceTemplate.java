@@ -33,12 +33,10 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 	public BaseSingleResourceTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper, String templateManagerName,
+		TemplateContextHelper templateContextHelper,
 		TemplateResourceCache templateResourceCache) {
 
-		super(
-			errorTemplateResource, context, templateContextHelper,
-			templateManagerName);
+		super(errorTemplateResource, context, templateContextHelper);
 
 		if (templateResource == null) {
 			throw new IllegalArgumentException("Template resource is null");

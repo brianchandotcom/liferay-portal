@@ -36,16 +36,11 @@ public abstract class BaseTemplate implements Template {
 
 	public BaseTemplate(
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper,
-		String templateManagerName) {
+		TemplateContextHelper templateContextHelper) {
 
 		if (templateContextHelper == null) {
 			throw new IllegalArgumentException(
 				"Template context helper is null");
-		}
-
-		if (templateManagerName == null) {
-			throw new IllegalArgumentException("Template manager name is null");
 		}
 
 		this.errorTemplateResource = errorTemplateResource;

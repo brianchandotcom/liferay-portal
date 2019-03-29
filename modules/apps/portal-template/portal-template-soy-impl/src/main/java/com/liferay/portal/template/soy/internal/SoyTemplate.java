@@ -71,7 +71,7 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 
 		super(
 			templateResources, errorTemplateResource, null,
-			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
+			templateContextHelper);
 
 		_templateContextHelper = templateContextHelper;
 

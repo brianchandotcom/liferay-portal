@@ -46,8 +46,7 @@ public class VelocityTemplate extends BaseSingleResourceTemplate {
 
 		super(
 			templateResource, errorTemplateResource, context,
-			templateContextHelper, TemplateConstants.LANG_TYPE_VM,
-			templateResourceCache);
+			templateContextHelper, templateResourceCache);
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;

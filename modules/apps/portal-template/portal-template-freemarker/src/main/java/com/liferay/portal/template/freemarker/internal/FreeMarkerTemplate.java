@@ -63,8 +63,7 @@ public class FreeMarkerTemplate extends BaseSingleResourceTemplate {
 
 		super(
 			templateResource, errorTemplateResource, context,
-			templateContextHelper, TemplateConstants.LANG_TYPE_FTL,
-			templateResourceCache);
+			templateContextHelper, templateResourceCache);
 
 		_configuration = configuration;
 	}

@@ -34,12 +34,9 @@ public abstract class BaseMultiResourceTemplate extends BaseTemplate {
 	public BaseMultiResourceTemplate(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper, String templateManagerName,
-		long interval) {
+		TemplateContextHelper templateContextHelper) {
 
-		super(
-			errorTemplateResource, context, templateContextHelper,
-			templateManagerName);
+		super(errorTemplateResource, context, templateContextHelper);
 
 		if (ListUtil.isEmpty(templateResources)) {
 			throw new IllegalArgumentException("Template resource is null");

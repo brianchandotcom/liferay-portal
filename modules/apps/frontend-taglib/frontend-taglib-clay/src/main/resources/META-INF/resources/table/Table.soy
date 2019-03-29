@@ -4,54 +4,54 @@
  *
  */
 {template .render}
-	{@param _handlePageClicked: any}
-	{@param _handleItemToggled: any}
-	{@param _handleItemsPerPageClicked: any}
 	{@param spritemap: string}
 	{@param? actionsMenuVariant: string}
-	{@param? pageNumber: int}
-	{@param? dataSourceKey: string}
 	{@param? id: string}
-	{@param? items : ?}
-	{@param? paginationBaseHref : string}
-	{@param? paginationEntries : ?}
-	{@param? paginationSelectedEntry : int}
-	{@param? schema : ?}
-	{@param? selectable : bool}
-	{@param? showActionsMenu : bool}
-	{@param? size : string}
-	{@param? tableClasses : string}
-	{@param? totalItems : int}
-	{@param? useDefaultClasses : bool}
-	{@param? wrapTable : bool}
+	{@param? items: ?}
+	{@param? page: int}
+	{@param? paginationBaseHref: string}
+	{@param? paginationEntries: ?}
+	{@param? paginationSelectedEntry: int}
+	{@param? schema: ?}
+	{@param? selectable: bool}
+	{@param? showActionsMenu: bool}
+	{@param? size: string}
+	{@param? tableClasses: string}
+	{@param? totalItems: int}
+	{@param? useDefaultClasses: bool}
+	{@param? wrapTable: bool}
+	{@param? _handlePageClicked: any}
+	{@param? _handlepageSizeClicked: any}
 
 	<div id="{$id}">
 		{call ClayTable.render}
-		  {param events: ['itemToggled': $_handleItemToggled ] /}
-		  {param id: $id + 'Table'/}
-		  {param items: $items /}
-		  {param schema: $schema /}
-		  {param selectable: $selectable /}
-		  {param showActionsMenu : $showActionsMenu /}
-		  {param spritemap: $spritemap /}
-		  {param tableClasses: $tableClasses /}
-		  {param useDefaultClasses: $useDefaultClasses /}
-		  {param wrapTable: $wrapTable /}
-		  {param size: $size /}
-		  {param actionsMenuVariant: $actionsMenuVariant /}
+			{param actionsMenuVariant: $actionsMenuVariant /}
+			{param id: $id + 'Table'/}
+			{param items: $items /}
+			{param schema: $schema /}
+			{param selectable: $selectable /}
+			{param showActionsMenu: $showActionsMenu /}
+			{param size: $size /}
+			{param spritemap: $spritemap /}
+			{param tableClasses: $tableClasses /}
+			{param useDefaultClasses: $useDefaultClasses /}
+			{param wrapTable: $wrapTable /}
 		{/call}
 
-		{if $dataSourceKey}
-		  {call ClayPaginationBar.render}
-			{param events: ['itemsPerPageClicked': $_handleItemsPerPageClicked, 'pageClicked': $_handlePageClicked ] /}
-			{param currentPage: $pageNumber ?: 0 /}
-			{param selectedEntry: $paginationSelectedEntry ?: 0 /}
-			{param entries: $paginationEntries /}
-			{param spritemap: $spritemap /}
-			{param totalEntries: $totalItems ?: 0 /}
-			{param baseHref: $paginationBaseHref /}
-			{param id: $id + 'Pagination' /}
-		  {/call}
+		{if $paginationEntries}
+			{call ClayPaginationBar.render}
+				{param baseHref: $paginationBaseHref /}
+				{param currentPage: $page ?: 0 /}
+				{param entries: $paginationEntries /}
+				{param events: [
+					'itemsPerPageClicked': $_handlepageSizeClicked,
+					'pageClicked': $_handlePageClicked
+				] /}
+				{param id: $id + 'Pagination' /}
+				{param selectedEntry: $paginationSelectedEntry ?: 0 /}
+				{param spritemap: $spritemap /}
+				{param totalEntries: $totalItems ?: 0 /}
+			{/call}
 		{/if}
 	</div>
 {/template}

@@ -7,10 +7,12 @@ import java.util.jar.Manifest
 task jarManifest
 
 dependencies {
+	compileInclude group: "com.fasterxml", name: "aalto-xml", version: "0.9.10"
 	compileInclude group: "com.fasterxml", name: "classmate", version: "1.4.0"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.9.8"
+	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-xml-provider", version: "2.9.8"
 	compileInclude group: "com.google.guava", name: "guava", version: "20.0"
 	compileInclude group: "com.graphql-java", name: "graphql-java", version: "8.0"
 	compileInclude group: "com.graphql-java", name: "graphql-java-servlet", version: "6.1.3"

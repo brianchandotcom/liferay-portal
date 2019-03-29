@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -32,22 +30,6 @@ import java.util.Set;
  */
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #DefaultTemplateResourceLoader(
-	 * 				String, Set, long, MultiVMPool, SingleVMPool)}
-	 */
-	@Deprecated
-	public DefaultTemplateResourceLoader(
-		String name, long modificationCheckInterval, MultiVMPool multiVMPool,
-		SingleVMPool singleVMPool) {
-
-		throw new UnsupportedOperationException(
-			"This constructor is deprecated and replaced by " +
-				"#DefaultTemplateResourceLoader(String, Set, long, " +
-					"MultiVMPool, SingleVMPool)");
-	}
-
 	public DefaultTemplateResourceLoader(
 		String name, Set<TemplateResourceParser> templateResourceParsers,
 		TemplateResourceCache templateResourceCache) {
@@ -61,18 +43,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_templateResourceParsers = templateResourceParsers;
 		_templateResourceCache = templateResourceCache;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public DefaultTemplateResourceLoader(
-		String name, String[] templateResourceParserClassNames,
-		long modificationCheckInterval, MultiVMPool multiVMPool,
-		SingleVMPool singleVMPool) {
-
-		this(name, modificationCheckInterval, multiVMPool, singleVMPool);
 	}
 
 	@Override

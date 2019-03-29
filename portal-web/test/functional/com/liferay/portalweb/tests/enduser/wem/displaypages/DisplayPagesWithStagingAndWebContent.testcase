@@ -95,7 +95,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
-				pageType = Display Page Templates
+				pageType = "Display Page Templates"
 			);
 
 			PortletEntry.publish();
@@ -156,7 +156,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
-				pageType = Display Page Templates
+				pageType = "Display Page Templates"
 			);
 
 			PortletEntry.publish();

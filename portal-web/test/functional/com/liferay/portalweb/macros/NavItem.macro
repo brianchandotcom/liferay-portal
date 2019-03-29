@@ -18,7 +18,7 @@ definition {
 	}
 
 	macro gotoDisplayPages {
-		NavItem.click(navItem = Display Page Templates);
+		NavItem.click(navItem = "Display Page Templates");
 	}
 
 	macro gotoOrganizations {

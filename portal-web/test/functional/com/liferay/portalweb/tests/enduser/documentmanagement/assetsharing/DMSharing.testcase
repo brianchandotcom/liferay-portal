@@ -246,7 +246,9 @@ definition {
 			configurationScope = "Virtual Instance Scope"
 		);
 
-		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled");
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
 
 		Navigator.openURL();
 
@@ -284,7 +286,9 @@ definition {
 			configurationScope = "System Scope"
 		);
 
-		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled");
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
 
 		Navigator.openURL();
 

@@ -10,6 +10,7 @@ configurations {
 	objectAssign
 	objectEntries
 	objectValues
+	promise
 	stringEndsWith
 	urlSearchParams
 }
@@ -23,6 +24,7 @@ task buildFormData(type: Copy)
 task buildObjectAssign(type: Copy)
 task buildObjectEntries(type: Copy)
 task buildObjectValues(type: Copy)
+task buildPromise(type: Copy)
 task buildStringEndsWith(type: Copy)
 task buildUrlSearchParams(type: Copy)
 
@@ -166,6 +168,22 @@ buildObjectValues {
 	}
 }
 
+buildPromise {
+	eachFile new StripPathSegmentsAction(6)
+
+	from {
+		zipTree(configurations.promise.singleFile)
+	}
+
+	include "META-INF/resources/webjars/promise-polyfill/8.1.0/dist/polyfill.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "polyfill", "promise"
+	}
+}
+
 buildStringEndsWith{
 	eachFile new StripPathSegmentsAction(5)
 
@@ -208,6 +226,7 @@ classes {
 	dependsOn buildObjectAssign
 	dependsOn buildObjectEntries
 	dependsOn buildObjectValues
+	dependsOn buildPromise
 	dependsOn buildStringEndsWith
 	dependsOn buildUrlSearchParams
 }
@@ -237,6 +256,8 @@ dependencies {
 	objectEntries group: "org.webjars.npm", name: "object_entries", transitive: false, version: "0.1.2"
 
 	objectValues group: "org.webjars.npm", name: "object_values", transitive: false, version: "0.1.2"
+
+	promise group: "org.webjars.npm", name: "promise-polyfill", transitive: false, version: "8.1.0"
 
 	stringEndsWith group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
 

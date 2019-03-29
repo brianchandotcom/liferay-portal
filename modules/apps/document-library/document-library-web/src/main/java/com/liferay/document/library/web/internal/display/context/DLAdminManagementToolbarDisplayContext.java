@@ -149,7 +149,7 @@ public class DLAdminManagementToolbarDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "move");
-							dropdownItem.setIcon("change");
+							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "move"));
 							dropdownItem.setQuickAction(true);

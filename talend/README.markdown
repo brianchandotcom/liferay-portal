@@ -7,7 +7,13 @@ Open Studio.
 
 * JDK 1.8+
 * Apache Maven 3.5.4+
-* Open Talend 7.1.1
+* Open Talend 7.2.1 M3
 
 Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
-* Direct link: https://download-mirror2.talend.com/esb/release/V7.1.1/TOS_ESB-20181026_1147-V7.1.1.zip
+* Direct link: https://sourceforge.net/projects/talendesb/files/Talend%20Open%20Studio%20for%20ESB/7.2.1M3/TOS_ESB-20190228_1114-V7.2.1M3.zip/download
+
+## Compile, Test and Deploy the component to Talend Open Studio
+
+From the current folder invoke the following command:
+
+`mvn clean install package talend-component:deploy-in-studio -Dtalend.component.studioHome=PATH_TO_THE_STUDIO_HOME`

@@ -43,8 +43,6 @@ import freemarker.template.utility.ObjectWrapperWithAPISupport;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.security.PrivilegedExceptionAction;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -222,26 +220,6 @@ public class FreeMarkerTemplate extends BaseSingleResourceTemplate {
 		private final Map<String, Object> _map;
 		private final ObjectWrapper _objectWrapper;
 		private final Map<String, TemplateModel> _wrappedValueMap;
-
-	}
-
-	private class TemplatePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Template> {
-
-		public TemplatePrivilegedExceptionAction(
-			TemplateResource templateResource) {
-
-			_templateResource = templateResource;
-		}
-
-		@Override
-		public Template run() throws Exception {
-			return _configuration.getTemplate(
-				getTemplateResourceUUID(_templateResource),
-				TemplateConstants.DEFAUT_ENCODING);
-		}
-
-		private final TemplateResource _templateResource;
 
 	}
 

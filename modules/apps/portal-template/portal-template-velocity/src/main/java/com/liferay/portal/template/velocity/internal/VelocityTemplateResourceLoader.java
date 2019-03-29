@@ -16,7 +16,7 @@ package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.template.DefaultTemplateResourceLoader;
+import com.liferay.portal.template.BaseTemplateResourceLoader;
 import com.liferay.portal.template.TemplateResourceParser;
 
 import java.util.Collections;
@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
 	}
 )
-public class VelocityTemplateResourceLoader
-	extends DefaultTemplateResourceLoader {
+public class VelocityTemplateResourceLoader extends BaseTemplateResourceLoader {
 
 	@Activate
 	@Modified

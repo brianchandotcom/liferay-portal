@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * @author Tina Tian
  */
-public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
+public class BaseTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void clearCache() {
@@ -127,7 +127,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultTemplateResourceLoader.class);
+		BaseTemplateResourceLoader.class);
 
 	private String _name;
 	private TemplateResourceCache _templateResourceCache;

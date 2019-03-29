@@ -1004,6 +1004,8 @@ information.
 
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
+		<attribute default="${junit.jvm}" name="junit.jvm.override" />
+		<attribute default="${ant.java.version}" name="junit.jvm.version" />
 		<attribute name="test.type" />
 		<element name="misc" optional="yes" />
 		<element name="test.classes" />
@@ -1016,9 +1018,9 @@ information.
 				<equals arg1="@{test.type}" arg2="unit" />
 				<then>
 					<if>
-						<isset property="junit.java.unit.gc[${java.specification.version}]" />
+						<isset property="junit.java.unit.gc[@{junit.jvm.version}]" />
 						<then>
-							<propertycopy from="junit.java.unit.gc[${java.specification.version}]" name="junit.java.unit.gc" override="true" />
+							<propertycopy from="junit.java.unit.gc[@{junit.jvm.version}]" name="junit.java.unit.gc" override="true" />
 						</then>
 					</if>
 
@@ -1034,9 +1036,9 @@ information.
 				</then>
 				<else>
 					<if>
-						<isset property="junit.java.integration.gc[${java.specification.version}]" />
+						<isset property="junit.java.integration.gc[@{junit.jvm.version}]" />
 						<then>
-							<propertycopy from="junit.java.integration.gc[${java.specification.version}]" name="junit.java.integration.gc" override="true" />
+							<propertycopy from="junit.java.integration.gc[@{junit.jvm.version}]" name="junit.java.integration.gc" override="true" />
 						</then>
 					</if>
 
@@ -1051,13 +1053,13 @@ information.
 			</if>
 
 			<if>
-				<isset property="junit.java.add.opens[${java.specification.version}]" />
+				<isset property="junit.java.add.opens[@{junit.jvm.version}]" />
 				<then>
-					<propertycopy from="junit.java.add.opens[${java.specification.version}]" name="junit.java.add.opens" override="true" />
+					<propertycopy from="junit.java.add.opens[@{junit.jvm.version}]" name="junit.java.add.opens" override="true" />
 				</then>
 			</if>
 
-			<junit dir="${project.dir}" fork="on" forkmode="@{forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
+			<junit dir="${project.dir}" fork="on" forkmode="@{forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm.override}" outputtoformatters="false" printsummary="on" showoutput="true">
 				<sysproperty if:true="${aspectj.weaver.enabled}" key="aspectj.agent" value="${aspectj.agent}" />
 				<sysproperty key="catalina.base" value="." />
 				<sysproperty file="woven-classes" key="junit.aspectj.dump" />
@@ -1792,6 +1794,8 @@ rerun your task.
 		<attribute name="test.includes" />
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
+		<attribute default="${junit.jvm}" name="junit.jvm.override" />
+		<attribute default="${ant.java.version}" name="junit.jvm.version" />
 
 		<sequential>
 			<if>
@@ -1821,6 +1825,8 @@ rerun your task.
 
 					<junit-cmd
 						forkmode="@{junit.forkmode}"
+						junit.jvm.override="@{junit.jvm.override}"
+						junit.jvm.version="@{junit.jvm.version}"
 						test.type="@{test.type}"
 					>
 						<misc>
@@ -2351,6 +2357,8 @@ rerun your task.
 
 		<test-cmd
 			junit.forkmode="perTest"
+			junit.jvm.override="${junit.jvm.override}"
+			junit.jvm.version="${junit.jvm.version}"
 			test.includes="**/${test.class}.class"
 			test.type="${test.type}"
 		/>
@@ -2380,6 +2388,8 @@ rerun your task.
 			<then>
 				<test-cmd
 					junit.forkmode="perTest"
+					junit.jvm.override="${junit.jvm.override}"
+					junit.jvm.version="${junit.jvm.version}"
 					test.includes="${test.classes}"
 					test.type="unit"
 				/>
@@ -2396,6 +2406,8 @@ rerun your task.
 			<then>
 				<test-cmd
 					junit.forkmode="once"
+					junit.jvm.override="${junit.jvm.override}"
+					junit.jvm.version="${junit.jvm.version}"
 					test.includes="${test.classes}"
 					test.type="integration"
 				/>

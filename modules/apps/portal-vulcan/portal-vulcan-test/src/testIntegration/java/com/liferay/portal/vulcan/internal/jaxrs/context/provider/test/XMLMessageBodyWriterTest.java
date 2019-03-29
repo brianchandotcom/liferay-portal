@@ -1,0 +1,208 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+import java.net.URLConnection;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Ivica Cardic
+ */
+@RunWith(Arquillian.class)
+public class XMLMessageBodyWriterTest {
+
+	@Before
+	public void setUp() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("liferay.auth.verifier", false);
+		properties.put("liferay.oauth2", false);
+		properties.put("osgi.jaxrs.application.base", "/test-vulcan");
+		properties.put(
+			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)");
+
+		_serviceRegistration = registry.registerService(
+			Application.class, new TestApplication(), properties);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testFieldsFilterRootJSONObject() throws Exception {
+		Document document = _getDocument(
+			"http://localhost:8080/o/test-vulcan/test-class?fields=string");
+
+		Element testClassElement = document.getRootElement();
+
+		Assert.assertNull(testClassElement.element("number"));
+		Assert.assertNull(testClassElement.element("testClass"));
+		Assert.assertEquals("hello", testClassElement.elementText("string"));
+	}
+
+	@Test
+	public void testIsListWrittenToXML() throws Exception {
+		Document document = _getDocument(
+			"http://localhost:8080/o/test-vulcan/test-classes");
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> elements = rootElement.elements();
+
+		Element element = elements.get(0);
+
+		Assert.assertEquals(
+			1L, GetterUtil.getLong(element.elementText("number")));
+		Assert.assertEquals("hello", element.elementText("string"));
+
+		Element innerTestClassElement = element.element("testClass");
+
+		Assert.assertEquals(
+			6L,
+			GetterUtil.getLong(innerTestClassElement.elementText("number")));
+		Assert.assertEquals("hi", innerTestClassElement.elementText("string"));
+		Assert.assertNull(innerTestClassElement.element("testClass"));
+
+		element = elements.get(1);
+
+		Assert.assertEquals(
+			2L, GetterUtil.getLong(element.elementText("number")));
+		Assert.assertEquals("world", element.elementText("string"));
+	}
+
+	@Test
+	public void testIsWrittenToXML() throws Exception {
+		Document document = _getDocument(
+			"http://localhost:8080/o/test-vulcan/test-class");
+
+		Element testClassElement = document.getRootElement();
+
+		Assert.assertEquals(
+			1L, GetterUtil.getLong(testClassElement.elementText("number")));
+		Assert.assertEquals("hello", testClassElement.elementText("string"));
+
+		Element innerTestClassElement = testClassElement.element("testClass");
+
+		Assert.assertEquals(
+			6L,
+			GetterUtil.getLong(innerTestClassElement.elementText("number")));
+		Assert.assertEquals("hi", innerTestClassElement.elementText("string"));
+		Assert.assertNull(innerTestClassElement.element("testClass"));
+	}
+
+	public static class TestApplication extends Application {
+
+		@Override
+		public Set<Object> getSingletons() {
+			return Collections.singleton(this);
+		}
+
+		@GET
+		@Path("/test-class")
+		@Produces(MediaType.APPLICATION_XML)
+		public TestClass testClass() {
+			return TestClass.of(1L, "hello", TestClass.of(6L, "hi", null));
+		}
+
+		@GET
+		@Path("/test-classes")
+		@Produces(MediaType.APPLICATION_XML)
+		public List<TestClass> testClasses() {
+			return Arrays.asList(
+				TestClass.of(1L, "hello", TestClass.of(6L, "hi", null)),
+				TestClass.of(2L, "world", null));
+		}
+
+	}
+
+	@JsonFilter("Liferay.Vulcan")
+	public static class TestClass {
+
+		public static TestClass of(
+			Long number, String string, TestClass testClass) {
+
+			return new TestClass(number, string, testClass);
+		}
+
+		public TestClass(Long number, String string, TestClass testClass) {
+			this.number = number;
+			this.string = string;
+			this.testClass = testClass;
+		}
+
+		public final Long number;
+		public final String string;
+		public final TestClass testClass;
+
+	}
+
+	private Document _getDocument(String spec)
+		throws DocumentException, IOException {
+
+		URL url = new URL(spec);
+
+		URLConnection urlConnection = url.openConnection();
+
+		urlConnection.setRequestProperty("Accept", MediaType.APPLICATION_XML);
+
+		try (InputStream inputStream = urlConnection.getInputStream()) {
+			String content = StringUtil.read(inputStream);
+
+			return SAXReaderUtil.read(content);
+		}
+	}
+
+	private ServiceRegistration<Application> _serviceRegistration;
+
+}

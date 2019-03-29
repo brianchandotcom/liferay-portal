@@ -87,7 +87,7 @@ definition {
 
 		GogoShell.executeCommand(commandName = "dm wtf");
 
-		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=revert.schema.version,release.schema.version>=2.0.0,release.schema.version>=2.1.0,is not found in the service registry") {
+		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=com.liferay.revert.schema.version,release.schema.version>=2.0.0,release.schema.version>=2.1.0,is not found in the service registry") {
 			GogoShell.viewOutput(outputContent = "${outputContent}");
 		}
 
@@ -106,7 +106,7 @@ definition {
 
 		GogoShell.executeCommand(commandName = "dm wtf");
 
-		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=revert.schema.version,release.schema.version>=1.0.0,release.schema.version>=1.1.0,is not found in the service registry") {
+		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=com.liferay.revert.schema.version,release.schema.version>=1.0.0,release.schema.version>=1.1.0,is not found in the service registry") {
 			GogoShell.viewOutput(outputContent = "${outputContent}");
 		}
 	}

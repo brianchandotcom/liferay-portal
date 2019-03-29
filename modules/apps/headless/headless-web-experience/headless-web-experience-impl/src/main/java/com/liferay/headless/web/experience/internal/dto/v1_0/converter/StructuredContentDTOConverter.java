@@ -39,11 +39,10 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatin
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.web.experience.internal.resource.v1_0.BaseStructuredContentResourceImpl;
+import com.liferay.headless.web.experience.internal.resource.v1_0.StructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,10 +56,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-
-import java.net.URI;
 
 import java.text.ParseException;
 
@@ -74,7 +72,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -150,8 +147,8 @@ public class StructuredContentDTOConverter implements DTOConverter {
 					ddmStructure.getTemplates(),
 					ddmTemplate -> new RenderedContent() {
 						{
-							renderedContentURL = _getJAXRSLink(
-								BaseStructuredContentResourceImpl.class,
+							renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
+								StructuredContentResourceImpl.class,
 								"getStructuredContentRenderedContentTemplate",
 								uriInfo, journalArticle.getResourcePrimKey(),
 								ddmTemplate.getTemplateId());
@@ -176,29 +173,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				uuid = journalArticle.getUuid();
 			}
 		};
-	}
-
-	private String _getJAXRSLink(
-		Class clazz, String methodName, UriInfo uriInfo, Object... values) {
-
-		String baseURIString = String.valueOf(uriInfo.getBaseUri());
-
-		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
-			baseURIString = baseURIString.substring(
-				0, baseURIString.length() - 1);
-		}
-
-		URI resourceURI = UriBuilder.fromResource(
-			clazz
-		).build();
-
-		URI methodURI = UriBuilder.fromMethod(
-			clazz, methodName
-		).build(
-			values
-		);
-
-		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
 	private ContentField _toContentField(

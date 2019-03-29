@@ -246,12 +246,11 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 	var unitConverterTypes = [lengthArray, areaArray, volumeArray, massArray, temperatureArray];
 
 	var changeUnitType = function(unitTypeSelect, newUnitTypes) {
-		var newUnitTypesOptions = [];
+		var newUnitTypesList = Array.prototype.slice.call(newUnitTypes);
 
-		Array.prototype.forEach.call(
-			newUnitTypes,
+		var newUnitTypesOptions = newUnitTypesList.map(
 			function(unitType, index) {
-				newUnitTypesOptions.push('<option value="' + index + '">' + unitType + '</option>');
+				return '<option value="' + index + '">' + unitType + '</option>';
 			}
 		);
 

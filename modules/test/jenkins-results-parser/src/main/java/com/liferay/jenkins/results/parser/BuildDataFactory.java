@@ -44,8 +44,12 @@ public class BuildDataFactory {
 	public static TopLevelBuildData newTopLevelBuildData(
 		String runID, String jobName, String buildURL) {
 
-		if (jobName.contains("portal") ||
-			jobName.contains("root-cause-analysis-tool")) {
+		if (jobName.contains("test-portal-testsuite-upstream-controller")) {
+			return new PortalTestSuiteUpstreamControllerBuildData(
+				runID, jobName, buildURL);
+		}
+		else if (jobName.contains("portal") ||
+				 jobName.contains("root-cause-analysis-tool")) {
 
 			return new PortalTopLevelBuildData(runID, jobName, buildURL);
 		}

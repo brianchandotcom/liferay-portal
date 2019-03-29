@@ -38,7 +38,7 @@ public class BuildRunnerFactory {
 
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(")) {
 			buildRunner = new PortalTestSuiteUpstreamControllerBuildRunner(
-				buildData);
+				(PortalTopLevelBuildData)buildData);
 		}
 
 		if (buildRunner == null) {

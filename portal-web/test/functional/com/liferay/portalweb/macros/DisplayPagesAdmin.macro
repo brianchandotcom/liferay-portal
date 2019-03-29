@@ -39,7 +39,7 @@ definition {
 
 	macro openDisplayPagesAdmin {
 		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-pages"
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-page-templates"
 		);
 	}
 

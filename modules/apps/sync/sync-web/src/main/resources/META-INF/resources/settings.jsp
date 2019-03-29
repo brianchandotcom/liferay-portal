@@ -67,7 +67,7 @@ if (deployed && oAuthEnabled) {
 
 		<aui:fieldset>
 			<div class="sheet-section">
-				<h4 class="sheet-subtitle"><liferay-ui:message key="general" /></h4>
+				<h3 class="sheet-subtitle"><liferay-ui:message key="general" /></h3>
 
 				<aui:input label="allow-the-use-of-sync" name="enabled" type="toggle-switch" value="<%= enabled %>" />
 				<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
@@ -79,7 +79,7 @@ if (deployed && oAuthEnabled) {
 		</aui:fieldset>
 
 		<div class="sheet-section">
-			<h4 class="sheet-subtitle"><liferay-ui:message key="desktop" /></h4>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="desktop" /></h3>
 
 			<aui:input helpMessage="allow-lan-syncing-help" label="allow-lan-syncing" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
 
@@ -116,7 +116,7 @@ if (deployed && oAuthEnabled) {
 
 		<aui:fieldset>
 			<div class="sheet-section">
-				<h4 class="sheet-subtitle"><liferay-ui:message key="mobile" /></h4>
+				<h3 class="sheet-subtitle"><liferay-ui:message key="mobile" /></h3>
 
 				<aui:input helpMessage="force-security-mode-help" label="force-security-mode" name="forceSecurityMode" type="toggle-switch" value="<%= forceSecurityMode %>" />
 			</div>

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -109,13 +108,13 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 	@Activate
 	public void activate() {
 		CalendarDataHandlerFactory.registerCalendarDataHandler(
-			CalendarDataFormat.parse(CalendarUtil.ICAL_EXTENSION), this);
+			CalendarDataFormat.ICAL, this);
 	}
 
 	@Deactivate
 	public void deactivate() {
 		CalendarDataHandlerFactory.unregisterCalendarDataHandler(
-			CalendarDataFormat.parse(CalendarUtil.ICAL_EXTENSION));
+			CalendarDataFormat.ICAL);
 	}
 
 	@Override

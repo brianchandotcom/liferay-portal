@@ -125,12 +125,37 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	_align() {
-		if (this.element && this.anchorElement) {
+		if (this.anchorElement && this.refs.buttons) {
 			Align.align(
-				this.element,
+				this.refs.buttons,
 				this.anchorElement,
 				Align.BottomRight,
 				false
+			);
+
+			requestAnimationFrame(
+				() => {
+					if (this.refs.panel) {
+						const suggestedAlign = Align.suggestAlignBestRegion(
+							this.refs.panel,
+							this.refs.buttons,
+							Align.BottomRight
+						);
+
+						let alignPosition = Align.BottomRight;
+
+						if (suggestedAlign.position !== Align.BottomRight) {
+							alignPosition = Align.TopRight;
+						}
+
+						Align.align(
+							this.refs.panel,
+							this.refs.buttons,
+							alignPosition,
+							false
+						);
+					}
+				}
 			);
 		}
 	}

@@ -2,14 +2,11 @@
 
 .fragments-editor__floating-toolbar {
 	display: inline-block;
-	padding: $fragmentsEditorSpacing;
-	position: absolute;
-	text-align: right;
-	z-index: $floatingToolbarZIndex;
 
-	&-buttons.popover,
-	&-panel.popover {
-		position: static;
+	&-buttons,
+	&-panel {
+		position: absolute;
+		z-index: $floatingToolbarZIndex;
 	}
 
 	&-buttons {
@@ -24,12 +21,21 @@
 				opacity: 1;
 			}
 		}
+
+		& > .popover {
+			padding: $fragmentsEditorSpacing;
+			position: static;
+		}
 	}
 
 	&-panel {
-		margin-top: $fragmentsEditorSpacing;
-		min-width: $floatingToolbarPanelMinWidth;
-		padding: $fragmentsEditorSpacing * 2;
+		padding: 0 $fragmentsEditorSpacing;
+
+		& > .popover {
+			min-width: $floatingToolbarPanelMinWidth;
+			padding: $fragmentsEditorSpacing * 2;
+			position: static;
+		}
 
 		.btn, .form-group, .form-group-autofit {
 			margin-bottom: $fragmentsEditorSpacing * 2;

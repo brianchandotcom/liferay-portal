@@ -29,29 +29,33 @@
 	>
 		{if $spritemap and $buttons and (length($buttons) > 0)}
 			{if (not $selectedPanelId) or (not $fixSelectedPanel)}
-				<div class="fragments-editor__floating-toolbar-buttons popover">
-					{foreach $button in $buttons}
-						{call .button}
-							{param handleButtonClick: $_handlePanelButtonClick /}
-							{param key: $button.id /}
-							{param button: $button /}
-							{param ref: $button.id /}
-							{param selectedPanelId: $selectedPanelId /}
-							{param spritemap: $spritemap /}
-						{/call}
-					{/foreach}
+				<div class="fragments-editor__floating-toolbar-buttons" ref="buttons">
+					<div class="popover">
+						{foreach $button in $buttons}
+							{call .button}
+								{param handleButtonClick: $_handlePanelButtonClick /}
+								{param key: $button.id /}
+								{param button: $button /}
+								{param ref: $button.id /}
+								{param selectedPanelId: $selectedPanelId /}
+								{param spritemap: $spritemap /}
+							{/call}
+						{/foreach}
+					</div>
 				</div>
 			{/if}
 
 			{if $selectedPanelId}
-				<div class="fragments-editor__floating-toolbar-panel popover">
-					{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
-						{param item: $item /}
-						{param itemId: $itemId /}
-						{param portalElement: null /}
-						{param selectedPanelId: $selectedPanelId /}
-						{param store: $store /}
-					{/delcall}
+				<div class="fragments-editor__floating-toolbar-panel" ref="panel">
+					<div class="popover">
+						{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
+							{param item: $item /}
+							{param itemId: $itemId /}
+							{param portalElement: null /}
+							{param selectedPanelId: $selectedPanelId /}
+							{param store: $store /}
+						{/delcall}
+					</div>
 				</div>
 			{/if}
 		{/if}

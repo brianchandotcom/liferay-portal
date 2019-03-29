@@ -30,21 +30,6 @@ import java.util.Set;
  */
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
-	public DefaultTemplateResourceLoader(
-		String name, Set<TemplateResourceParser> templateResourceParsers,
-		TemplateResourceCache templateResourceCache) {
-
-		if (Validator.isNull(name)) {
-			throw new IllegalArgumentException(
-				"Template resource loader name is null");
-		}
-
-		_name = name;
-
-		_templateResourceParsers = templateResourceParsers;
-		_templateResourceCache = templateResourceCache;
-	}
-
 	@Override
 	public void clearCache() {
 		_templateResourceCache.clear();
@@ -93,6 +78,21 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
+	protected void init(
+		String name, Set<TemplateResourceParser> templateResourceParsers,
+		TemplateResourceCache templateResourceCache) {
+
+		if (Validator.isNull(name)) {
+			throw new IllegalArgumentException(
+				"Template resource loader name is null");
+		}
+
+		_name = name;
+
+		_templateResourceParsers = templateResourceParsers;
+		_templateResourceCache = templateResourceCache;
+	}
+
 	private TemplateResource _loadFromParser(String templateId) {
 		for (TemplateResourceParser templateResourceParser :
 				_templateResourceParsers) {
@@ -129,8 +129,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
-	private final String _name;
-	private final TemplateResourceCache _templateResourceCache;
-	private final Set<TemplateResourceParser> _templateResourceParsers;
+	private String _name;
+	private TemplateResourceCache _templateResourceCache;
+	private Set<TemplateResourceParser> _templateResourceParsers;
 
 }

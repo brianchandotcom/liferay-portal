@@ -15,7 +15,6 @@
 package com.liferay.portal.template.soy.internal;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.template.DefaultTemplateResourceLoader;
 import com.liferay.portal.template.TemplateResourceParser;
@@ -41,45 +40,19 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	immediate = true,
 	service = {SoyTemplateResourceLoader.class, TemplateResourceLoader.class}
 )
-public class SoyTemplateResourceLoader implements TemplateResourceLoader {
-
-	@Override
-	public void clearCache() {
-		_defaultTemplateResourceLoader.clearCache();
-	}
-
-	@Override
-	public void clearCache(String templateId) {
-		_defaultTemplateResourceLoader.clearCache(templateId);
-	}
-
-	@Deactivate
-	@Override
-	public void destroy() {
-		_defaultTemplateResourceLoader.destroy();
-	}
-
-	@Override
-	public String getName() {
-		return _defaultTemplateResourceLoader.getName();
-	}
-
-	@Override
-	public TemplateResource getTemplateResource(String templateId) {
-		return _defaultTemplateResourceLoader.getTemplateResource(templateId);
-	}
-
-	@Override
-	public boolean hasTemplateResource(String templateId) {
-		return _defaultTemplateResourceLoader.hasTemplateResource(templateId);
-	}
+public class SoyTemplateResourceLoader extends DefaultTemplateResourceLoader {
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
+		init(
 			TemplateConstants.LANG_TYPE_SOY, _templateResourceParsers,
 			_soyTemplateResourceCache);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		destroy();
 	}
 
 	@Reference(
@@ -99,9 +72,6 @@ public class SoyTemplateResourceLoader implements TemplateResourceLoader {
 
 		_templateResourceParsers.remove(templateResourceParser);
 	}
-
-	private static volatile DefaultTemplateResourceLoader
-		_defaultTemplateResourceLoader;
 
 	@Reference
 	private SoyTemplateResourceCache _soyTemplateResourceCache;

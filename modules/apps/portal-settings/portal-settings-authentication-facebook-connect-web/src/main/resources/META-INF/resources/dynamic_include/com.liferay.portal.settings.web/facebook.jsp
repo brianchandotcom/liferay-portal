@@ -41,8 +41,6 @@ String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 <liferay-ui:error key="facebookConnectOauthTokenURLInvalid" message="the-facebook-connect-oauth-token-url-is-invalid" />
 
 <aui:fieldset>
-	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_facebook") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/facebook_connect" />
-
 	<aui:input label="enabled" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= authEnabled %>" />
 
 	<aui:input label="require-verified-account" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "verifiedAccountRequired" %>' type="checkbox" value="<%= verifiedAccountRequired %>" />
@@ -58,16 +56,4 @@ String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthTokenURL" %>' type="text" value="<%= oauthTokenURL %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="oauth-redirect-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>' type="text" value="<%= oauthRedirectURL %>" />
-
-	<aui:button-row>
-		<portlet:actionURL name="/portal_settings/facebook_connect_delete" var="resetValuesURL">
-			<portlet:param name="tabs1" value="facebook_connect" />
-		</portlet:actionURL>
-
-		<%
-		String taglibOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" value="reset-values" />
-	</aui:button-row>
 </aui:fieldset>

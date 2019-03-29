@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,10 +70,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 		ServicePreAction servicePreAction = new ServicePreAction();
 
-		ThemeDisplay themeDisplay = servicePreAction.initThemeDisplay(
-			request, new MockHttpServletResponse());
-
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		servicePreAction.run(request, new MockHttpServletResponse());
 
 		serviceContext = ServiceContextFactory.getInstance(request);
 	}

@@ -191,8 +191,10 @@ public class ServicePreActionTest {
 
 		_request.setAttribute(WebKeys.USER, _user);
 
-		ThemeDisplay themeDisplay = _servicePreAction.initThemeDisplay(
-			_request, _response);
+		_servicePreAction.run(_request, _response);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPlid();
 	}

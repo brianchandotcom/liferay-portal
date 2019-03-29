@@ -46,9 +46,9 @@ if (layoutSet != null) {
 
 		ServicePreAction servicePreAction = (ServicePreAction)InstancePool.get(ServicePreAction.class.getName());
 
-		ThemeDisplay themeDisplay = servicePreAction.initThemeDisplay(request, response);
+		servicePreAction.run(request, response);
 
-		redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+		redirect = PortalUtil.getLayoutURL(layout, (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY));
 	}
 	else {
 		redirect = PortalUtil.getPathMain();

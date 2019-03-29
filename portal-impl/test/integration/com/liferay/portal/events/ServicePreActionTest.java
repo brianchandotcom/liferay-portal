@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -36,6 +38,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,9 +84,16 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(true, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			_servicePreAction.getDefaultVirtualHostLayoutComposite(_request);
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
+				new Class<?>[] {HttpServletRequest.class}, _request);
 
-		defaultLayoutComposite = _servicePreAction.getViewableLayoutComposite(
+		defaultLayoutComposite = ReflectionTestUtil.invoke(
+			_servicePreAction, "_getViewableLayoutComposite",
+			new Class<?>[] {
+				HttpServletRequest.class, User.class, PermissionChecker.class,
+				Layout.class, List.class, boolean.class
+			},
 			_request, _user, PermissionCheckerFactoryUtil.create(_user),
 			defaultLayoutComposite.getLayout(),
 			defaultLayoutComposite.getLayouts(), false);
@@ -103,7 +114,9 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(false, true);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			_servicePreAction.getDefaultUserPersonalSiteLayoutComposite(_user);
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
+				new Class<?>[] {User.class}, _user);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -126,7 +139,9 @@ public class ServicePreActionTest {
 			long plid = getThemeDisplayPlid(false, true);
 
 			ServicePreAction.LayoutComposite defaultLayoutComposite =
-				_servicePreAction.getDefaultUserSitesLayoutComposite(_user);
+				ReflectionTestUtil.invoke(
+					_servicePreAction, "_getDefaultUserSitesLayoutComposite",
+					new Class<?>[] {User.class}, _user);
 
 			Layout layout = defaultLayoutComposite.getLayout();
 
@@ -147,7 +162,9 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(false, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			_servicePreAction.getGuestSiteLayoutComposite(_user);
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getGuestSiteLayoutComposite",
+				new Class<?>[] {User.class}, _user);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -161,7 +178,9 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(true, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			_servicePreAction.getDefaultVirtualHostLayoutComposite(_request);
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
+				new Class<?>[] {HttpServletRequest.class}, _request);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 

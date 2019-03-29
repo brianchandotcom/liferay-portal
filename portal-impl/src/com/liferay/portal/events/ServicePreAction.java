@@ -156,217 +156,6 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected LayoutComposite getDefaultUserPersonalSiteLayoutComposite(
-		User user) {
-
-		Layout layout = null;
-
-		Group group = user.getGroup();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layouts.isEmpty()) {
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
-
-		if (!layouts.isEmpty()) {
-			layout = layouts.get(0);
-		}
-
-		return new LayoutComposite(layout, layouts);
-	}
-
-	protected LayoutComposite getDefaultUserSitesLayoutComposite(
-			final User user)
-		throws PortalException {
-
-		final LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
-
-		int count = GroupLocalServiceUtil.searchCount(
-			user.getCompanyId(), null, null, groupParams);
-
-		IntervalActionProcessor<LayoutComposite> intervalActionProcessor =
-			new IntervalActionProcessor<>(count);
-
-		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod
-				<LayoutComposite>() {
-
-				@Override
-				public LayoutComposite performIntervalAction(
-					int start, int end) {
-
-					List<Group> groups = GroupLocalServiceUtil.search(
-						user.getCompanyId(), null, null, groupParams, start,
-						end);
-
-					for (Group group : groups) {
-						List<Layout> layouts =
-							LayoutLocalServiceUtil.getLayouts(
-								group.getGroupId(), true,
-								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-						if (layouts.isEmpty()) {
-							layouts = LayoutLocalServiceUtil.getLayouts(
-								group.getGroupId(), false,
-								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-						}
-
-						if (!layouts.isEmpty()) {
-							return new LayoutComposite(layouts.get(0), layouts);
-						}
-					}
-
-					intervalActionProcessor.incrementStart(groups.size());
-
-					return null;
-				}
-
-			});
-
-		LayoutComposite layoutComposite =
-			intervalActionProcessor.performIntervalActions();
-
-		if (layoutComposite == null) {
-			return new LayoutComposite(null, new ArrayList<Layout>());
-		}
-
-		return layoutComposite;
-	}
-
-	protected LayoutComposite getDefaultVirtualHostLayoutComposite(
-			HttpServletRequest request)
-		throws PortalException {
-
-		Layout layout = null;
-		List<Layout> layouts = null;
-
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
-		if (layoutSet != null) {
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			Group group = null;
-
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-
-				group = layout.getGroup();
-			}
-
-			if ((layout != null) && layout.isPrivateLayout()) {
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					group.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				if (!layouts.isEmpty()) {
-					layout = layouts.get(0);
-				}
-				else {
-					group = null;
-					layout = null;
-				}
-			}
-
-			if ((group != null) && group.isStagingGroup()) {
-				Group liveGroup = group.getLiveGroup();
-
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					liveGroup.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				if (!layouts.isEmpty()) {
-					layout = layouts.get(0);
-				}
-				else {
-					layout = null;
-				}
-			}
-		}
-
-		return new LayoutComposite(layout, layouts);
-	}
-
-	protected LayoutComposite getGuestSiteLayoutComposite(User user)
-		throws PortalException {
-
-		Layout layout = null;
-		List<Layout> layouts = null;
-
-		Group guestGroup = GroupLocalServiceUtil.getGroup(
-			user.getCompanyId(), GroupConstants.GUEST);
-
-		layouts = LayoutLocalServiceUtil.getLayouts(
-			guestGroup.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (!layouts.isEmpty()) {
-			layout = layouts.get(0);
-		}
-
-		return new LayoutComposite(layout, layouts);
-	}
-
-	protected LayoutComposite getViewableLayoutComposite(
-			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts, boolean ignoreHiddenLayouts)
-		throws PortalException {
-
-		if ((layouts == null) || layouts.isEmpty()) {
-			return new LayoutComposite(layout, layouts);
-		}
-
-		boolean hasViewLayoutPermission = false;
-
-		if (_hasAccessPermission(permissionChecker, layout, false)) {
-			hasViewLayoutPermission = true;
-		}
-
-		List<Layout> accessibleLayouts = new ArrayList<>();
-
-		for (Layout curLayout : layouts) {
-			if ((ignoreHiddenLayouts || !curLayout.isHidden()) &&
-				_hasAccessPermission(permissionChecker, curLayout, false)) {
-
-				if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {
-					layout = curLayout;
-				}
-
-				accessibleLayouts.add(curLayout);
-			}
-		}
-
-		if (accessibleLayouts.isEmpty()) {
-			layouts = null;
-
-			if (!_isLoginRequest(request) && !hasViewLayoutPermission) {
-				if (user.isDefaultUser() &&
-					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
-
-					throw new PrincipalException.MustBeAuthenticated(
-						String.valueOf(user.getUserId()));
-				}
-
-				SessionErrors.add(
-					request, LayoutPermissionException.class.getName());
-			}
-		}
-		else {
-			layouts = accessibleLayouts;
-		}
-
-		return new LayoutComposite(layout, layouts);
-	}
-
 	protected File privateLARFile;
 	protected File publicLARFile;
 
@@ -638,6 +427,88 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
+	private LayoutComposite _getDefaultUserPersonalSiteLayoutComposite(
+		User user) {
+
+		Layout layout = null;
+
+		Group group = user.getGroup();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layouts.isEmpty()) {
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		}
+
+		if (!layouts.isEmpty()) {
+			layout = layouts.get(0);
+		}
+
+		return new LayoutComposite(layout, layouts);
+	}
+
+	private LayoutComposite _getDefaultUserSitesLayoutComposite(final User user)
+		throws PortalException {
+
+		final LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+		groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+
+		int count = GroupLocalServiceUtil.searchCount(
+			user.getCompanyId(), null, null, groupParams);
+
+		IntervalActionProcessor<LayoutComposite> intervalActionProcessor =
+			new IntervalActionProcessor<>(count);
+
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod
+				<LayoutComposite>() {
+
+				@Override
+				public LayoutComposite performIntervalAction(
+					int start, int end) {
+
+					List<Group> groups = GroupLocalServiceUtil.search(
+						user.getCompanyId(), null, null, groupParams, start,
+						end);
+
+					for (Group group : groups) {
+						List<Layout> layouts =
+							LayoutLocalServiceUtil.getLayouts(
+								group.getGroupId(), true,
+								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+						if (layouts.isEmpty()) {
+							layouts = LayoutLocalServiceUtil.getLayouts(
+								group.getGroupId(), false,
+								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						}
+
+						if (!layouts.isEmpty()) {
+							return new LayoutComposite(layouts.get(0), layouts);
+						}
+					}
+
+					intervalActionProcessor.incrementStart(groups.size());
+
+					return null;
+				}
+
+			});
+
+		LayoutComposite layoutComposite =
+			intervalActionProcessor.performIntervalActions();
+
+		if (layoutComposite == null) {
+			return new LayoutComposite(null, new ArrayList<Layout>());
+		}
+
+		return layoutComposite;
+	}
+
 	private LayoutComposite _getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, boolean signedIn,
@@ -645,9 +516,9 @@ public class ServicePreAction extends Action {
 		throws PortalException {
 
 		LayoutComposite defaultLayoutComposite =
-			getDefaultVirtualHostLayoutComposite(request);
+			_getDefaultVirtualHostLayoutComposite(request);
 
-		defaultLayoutComposite = getViewableLayoutComposite(
+		defaultLayoutComposite = _getViewableLayoutComposite(
 			request, user, permissionChecker,
 			defaultLayoutComposite.getLayout(),
 			defaultLayoutComposite.getLayouts(), ignoreHiddenLayouts);
@@ -657,15 +528,15 @@ public class ServicePreAction extends Action {
 		}
 
 		if (signedIn) {
-			defaultLayoutComposite = getDefaultUserPersonalSiteLayoutComposite(
+			defaultLayoutComposite = _getDefaultUserPersonalSiteLayoutComposite(
 				user);
 
 			if (defaultLayoutComposite.getLayout() == null) {
-				defaultLayoutComposite = getDefaultUserSitesLayoutComposite(
+				defaultLayoutComposite = _getDefaultUserSitesLayoutComposite(
 					user);
 			}
 
-			defaultLayoutComposite = getViewableLayoutComposite(
+			defaultLayoutComposite = _getViewableLayoutComposite(
 				request, user, permissionChecker,
 				defaultLayoutComposite.getLayout(),
 				defaultLayoutComposite.getLayouts(), ignoreHiddenLayouts);
@@ -675,18 +546,146 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		defaultLayoutComposite = getGuestSiteLayoutComposite(user);
+		defaultLayoutComposite = _getGuestSiteLayoutComposite(user);
 
-		return getViewableLayoutComposite(
+		return _getViewableLayoutComposite(
 			request, user, permissionChecker,
 			defaultLayoutComposite.getLayout(),
 			defaultLayoutComposite.getLayouts(), ignoreHiddenLayouts);
+	}
+
+	private LayoutComposite _getDefaultVirtualHostLayoutComposite(
+			HttpServletRequest request)
+		throws PortalException {
+
+		Layout layout = null;
+		List<Layout> layouts = null;
+
+		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+
+		if (layoutSet != null) {
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			Group group = null;
+
+			if (!layouts.isEmpty()) {
+				layout = layouts.get(0);
+
+				group = layout.getGroup();
+			}
+
+			if ((layout != null) && layout.isPrivateLayout()) {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					group = null;
+					layout = null;
+				}
+			}
+
+			if ((group != null) && group.isStagingGroup()) {
+				Group liveGroup = group.getLiveGroup();
+
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					liveGroup.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					layout = null;
+				}
+			}
+		}
+
+		return new LayoutComposite(layout, layouts);
 	}
 
 	private String _getFriendlyURL(String friendlyURL) {
 		friendlyURL = GetterUtil.getString(friendlyURL);
 
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+	}
+
+	private LayoutComposite _getGuestSiteLayoutComposite(User user)
+		throws PortalException {
+
+		Layout layout = null;
+		List<Layout> layouts = null;
+
+		Group guestGroup = GroupLocalServiceUtil.getGroup(
+			user.getCompanyId(), GroupConstants.GUEST);
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			guestGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (!layouts.isEmpty()) {
+			layout = layouts.get(0);
+		}
+
+		return new LayoutComposite(layout, layouts);
+	}
+
+	private LayoutComposite _getViewableLayoutComposite(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, Layout layout,
+			List<Layout> layouts, boolean ignoreHiddenLayouts)
+		throws PortalException {
+
+		if ((layouts == null) || layouts.isEmpty()) {
+			return new LayoutComposite(layout, layouts);
+		}
+
+		boolean hasViewLayoutPermission = false;
+
+		if (_hasAccessPermission(permissionChecker, layout, false)) {
+			hasViewLayoutPermission = true;
+		}
+
+		List<Layout> accessibleLayouts = new ArrayList<>();
+
+		for (Layout curLayout : layouts) {
+			if ((ignoreHiddenLayouts || !curLayout.isHidden()) &&
+				_hasAccessPermission(permissionChecker, curLayout, false)) {
+
+				if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {
+					layout = curLayout;
+				}
+
+				accessibleLayouts.add(curLayout);
+			}
+		}
+
+		if (accessibleLayouts.isEmpty()) {
+			layouts = null;
+
+			if (!_isLoginRequest(request) && !hasViewLayoutPermission) {
+				if (user.isDefaultUser() &&
+					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
+
+					throw new PrincipalException.MustBeAuthenticated(
+						String.valueOf(user.getUserId()));
+				}
+
+				SessionErrors.add(
+					request, LayoutPermissionException.class.getName());
+			}
+		}
+		else {
+			layouts = accessibleLayouts;
+		}
+
+		return new LayoutComposite(layout, layouts);
 	}
 
 	private boolean _hasAccessPermission(
@@ -1116,7 +1115,7 @@ public class ServicePreAction extends Action {
 			request.setAttribute(WebKeys.LAYOUT_DEFAULT, Boolean.TRUE);
 		}
 		else {
-			viewableLayoutComposite = getViewableLayoutComposite(
+			viewableLayoutComposite = _getViewableLayoutComposite(
 				request, user, permissionChecker, layout, layouts, false);
 		}
 
@@ -1771,7 +1770,7 @@ public class ServicePreAction extends Action {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			LayoutComposite viewableLayoutComposite =
-				getViewableLayoutComposite(
+				_getViewableLayoutComposite(
 					request, user, permissionChecker, layout, guestLayouts,
 					false);
 
@@ -1823,7 +1822,7 @@ public class ServicePreAction extends Action {
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				LayoutComposite viewableLayoutComposite =
-					getViewableLayoutComposite(
+					_getViewableLayoutComposite(
 						request, user, permissionChecker, layout,
 						previousLayouts, false);
 

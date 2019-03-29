@@ -88,7 +88,7 @@ public class FragmentManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "moveSelectedFragmentEntries");
-							dropdownItem.setIcon("change");
+							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(request, "move"));
 							dropdownItem.setQuickAction(true);

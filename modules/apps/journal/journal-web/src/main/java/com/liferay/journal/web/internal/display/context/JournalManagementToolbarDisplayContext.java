@@ -124,7 +124,7 @@ public class JournalManagementToolbarDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "moveEntries");
-						dropdownItem.setIcon("change");
+						dropdownItem.setIcon("move-folder");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "move"));
 						dropdownItem.setQuickAction(true);

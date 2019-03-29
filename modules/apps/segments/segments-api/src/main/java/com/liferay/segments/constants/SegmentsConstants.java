@@ -19,7 +19,7 @@ package com.liferay.segments.constants;
  */
 public class SegmentsConstants {
 
-	public static final String KEY_DEFAULT = "default-segment";
+	public static final long DEFAULT_SEGMENTS_ENTRY_ID = 0;
 
 	public static final String RESOURCE_NAME = "com.liferay.segments";
 

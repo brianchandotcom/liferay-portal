@@ -93,6 +93,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						targetLayoutPageTemplateStructure);
 			}
 
+			_fragmentEntryLinkLocalService.
+				deleteLayoutPageTemplateEntryFragmentEntryLinks(
+					targetLayout.getGroupId(), classNameId,
+					targetLayout.getPlid());
+
 			return;
 		}
 

@@ -37,8 +37,7 @@ public interface SLAResource {
 
 	public SLA postProcessSLA(Long processId, SLA sLA) throws Exception;
 
-	public boolean deleteProcessSLA(Long processId, Long slaId)
-		throws Exception;
+	public void deleteProcessSLA(Long processId, Long slaId) throws Exception;
 
 	public SLA getProcessSLA(Long processId, Long slaId) throws Exception;
 

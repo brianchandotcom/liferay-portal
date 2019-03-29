@@ -27,8 +27,6 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -48,36 +46,36 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Response postProcessSLA(
+	public SLA postProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("SLA") SLA sLA)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _applyComponentServiceObjects(
+			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
+			sLAResource -> sLAResource.postProcessSLA(processId, sLA));
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteProcessSLA(
+	public void deleteProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("sla-id") Long slaId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
 			sLAResource -> sLAResource.deleteProcessSLA(processId, slaId));
 	}
 
 	@GraphQLInvokeDetached
-	public Response putProcessSLA(
+	public SLA putProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sLA)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _applyComponentServiceObjects(
+			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
+			sLAResource -> sLAResource.putProcessSLA(processId, slaId, sLA));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -93,6 +91,25 @@ public class Mutation {
 			unsafeConsumer.accept(resource);
 
 			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
 		}
 		finally {
 			componentServiceObjects.ungetService(resource);

@@ -22,9 +22,12 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -92,6 +95,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL(
@@ -100,20 +104,18 @@ public abstract class BaseProcessResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
 	@Test
 	public void testGetProcessesPage() throws Exception {
-		String title = testGetProcessesPage_getTitle();
+		Process process1 = testGetProcessesPage_addProcess(randomProcess());
 
-		Process process1 = testGetProcessesPage_addProcess(
-			title, randomProcess());
-		Process process2 = testGetProcessesPage_addProcess(
-			title, randomProcess());
+		Process process2 = testGetProcessesPage_addProcess(randomProcess());
 
 		Page<Process> page = invokeGetProcessesPage(
-			title, Pagination.of(1, 2), null);
+			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -124,24 +126,21 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPageWithPagination() throws Exception {
-		String title = testGetProcessesPage_getTitle();
+		Process process1 = testGetProcessesPage_addProcess(randomProcess());
 
-		Process process1 = testGetProcessesPage_addProcess(
-			title, randomProcess());
-		Process process2 = testGetProcessesPage_addProcess(
-			title, randomProcess());
-		Process process3 = testGetProcessesPage_addProcess(
-			title, randomProcess());
+		Process process2 = testGetProcessesPage_addProcess(randomProcess());
+
+		Process process3 = testGetProcessesPage_addProcess(randomProcess());
 
 		Page<Process> page1 = invokeGetProcessesPage(
-			title, Pagination.of(1, 2), null);
+			null, Pagination.of(1, 2), null);
 
 		List<Process> processes1 = (List<Process>)page1.getItems();
 
 		Assert.assertEquals(processes1.toString(), 2, processes1.size());
 
 		Page<Process> page2 = invokeGetProcessesPage(
-			title, Pagination.of(2, 2), null);
+			null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -168,8 +167,6 @@ public abstract class BaseProcessResourceTestCase {
 			return;
 		}
 
-		String title = testGetProcessesPage_getTitle();
-
 		Process process1 = randomProcess();
 		Process process2 = randomProcess();
 
@@ -179,22 +176,22 @@ public abstract class BaseProcessResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		process1 = testGetProcessesPage_addProcess(title, process1);
+		process1 = testGetProcessesPage_addProcess(process1);
 
 		Thread.sleep(1000);
 
-		process2 = testGetProcessesPage_addProcess(title, process2);
+		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Process> ascPage = invokeGetProcessesPage(
-				title, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(process1, process2),
 				(List<Process>)ascPage.getItems());
 
 			Page<Process> descPage = invokeGetProcessesPage(
-				title, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(process2, process1),
@@ -211,8 +208,6 @@ public abstract class BaseProcessResourceTestCase {
 			return;
 		}
 
-		String title = testGetProcessesPage_getTitle();
-
 		Process process1 = randomProcess();
 		Process process2 = randomProcess();
 
@@ -221,19 +216,20 @@ public abstract class BaseProcessResourceTestCase {
 			BeanUtils.setProperty(process2, entityField.getName(), "Bbb");
 		}
 
-		process1 = testGetProcessesPage_addProcess(title, process1);
-		process2 = testGetProcessesPage_addProcess(title, process2);
+		process1 = testGetProcessesPage_addProcess(process1);
+
+		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Process> ascPage = invokeGetProcessesPage(
-				title, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(process1, process2),
 				(List<Process>)ascPage.getItems());
 
 			Page<Process> descPage = invokeGetProcessesPage(
-				title, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(process2, process1),
@@ -241,15 +237,9 @@ public abstract class BaseProcessResourceTestCase {
 		}
 	}
 
-	protected Process testGetProcessesPage_addProcess(
-			String title, Process process)
+	protected Process testGetProcessesPage_addProcess(Process process)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String testGetProcessesPage_getTitle() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -260,7 +250,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/processes", title);
+		String location = _resourceURL + _toPath("/processes");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -271,8 +261,14 @@ public abstract class BaseProcessResourceTestCase {
 
 		options.setLocation(location);
 
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
+			string,
 			new TypeReference<Page<Process>>() {
 			});
 	}
@@ -283,7 +279,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/processes", title);
+		String location = _resourceURL + _toPath("/processes");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -294,7 +290,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -322,8 +318,20 @@ public abstract class BaseProcessResourceTestCase {
 
 		options.setLocation(location);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Process.class);
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Process.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokeGetProcessResponse(Long processId)
@@ -336,7 +344,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -519,10 +527,15 @@ public abstract class BaseProcessResourceTestCase {
 		};
 	}
 
+	protected Process randomIrrelevantProcess() {
+		return randomProcess();
+	}
+
 	protected Process randomPatchProcess() {
 		return randomProcess();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -582,9 +595,21 @@ public abstract class BaseProcessResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*?\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseProcessResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

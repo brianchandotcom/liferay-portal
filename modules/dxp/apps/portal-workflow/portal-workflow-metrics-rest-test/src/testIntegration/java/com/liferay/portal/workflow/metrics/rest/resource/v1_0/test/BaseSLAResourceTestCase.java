@@ -23,9 +23,12 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -91,6 +94,7 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL(
@@ -99,14 +103,32 @@ public abstract class BaseSLAResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
 	@Test
 	public void testGetProcessSLAsPage() throws Exception {
 		Long processId = testGetProcessSLAsPage_getProcessId();
+		Long irrelevantProcessId =
+			testGetProcessSLAsPage_getIrrelevantProcessId();
+
+		if ((irrelevantProcessId != null)) {
+			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
+				irrelevantProcessId, randomIrrelevantSLA());
+
+			Page<SLA> page = invokeGetProcessSLAsPage(
+				irrelevantProcessId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantSLA), (List<SLA>)page.getItems());
+			assertValid(page);
+		}
 
 		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+
 		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page = invokeGetProcessSLAsPage(
@@ -124,7 +146,9 @@ public abstract class BaseSLAResourceTestCase {
 		Long processId = testGetProcessSLAsPage_getProcessId();
 
 		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+
 		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+
 		SLA sLA3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page1 = invokeGetProcessSLAsPage(
@@ -165,6 +189,12 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected Long testGetProcessSLAsPage_getIrrelevantProcessId()
+		throws Exception {
+
+		return null;
+	}
+
 	protected Page<SLA> invokeGetProcessSLAsPage(
 			Long processId, Pagination pagination)
 		throws Exception {
@@ -181,8 +211,14 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setLocation(location);
 
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
+			string,
 			new TypeReference<Page<SLA>>() {
 			});
 	}
@@ -203,7 +239,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -223,7 +259,7 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Response invokePostProcessSLA(Long processId, SLA sLA)
+	protected SLA invokePostProcessSLA(Long processId, SLA sLA)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -239,8 +275,20 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setPost(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Response.class);
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, SLA.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePostProcessSLAResponse(
@@ -260,7 +308,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -269,11 +317,9 @@ public abstract class BaseSLAResourceTestCase {
 	public void testDeleteProcessSLA() throws Exception {
 		SLA sLA = testDeleteProcessSLA_addSLA();
 
-		assertResponseCode(200, invokeDeleteProcessSLAResponse(
-			sLA.getProcessId(), sLA.getId()));
+		assertResponseCode(204, invokeDeleteProcessSLAResponse(sLA.getId()));
 
-		assertResponseCode(404, invokeGetProcessSLAResponse(
-			sLA.getProcessId(), sLA.getId()));
+		assertResponseCode(404, invokeGetProcessSLAResponse(sLA.getId()));
 	}
 
 	protected SLA testDeleteProcessSLA_addSLA() throws Exception {
@@ -281,7 +327,7 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteProcessSLA(Long processId, Long slaId)
+	protected void invokeDeleteProcessSLA(Long processId, Long slaId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -290,12 +336,16 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
 	}
 
 	protected Http.Response invokeDeleteProcessSLAResponse(
@@ -308,11 +358,12 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -322,7 +373,7 @@ public abstract class BaseSLAResourceTestCase {
 		SLA postSLA = testGetProcessSLA_addSLA();
 
 		SLA getSLA = invokeGetProcessSLA(
-			postSLA.getProcessId(), postSLA.getId());
+			postSLA.getProcessId(), postSLA.getSlaId());
 
 		assertEquals(postSLA, getSLA);
 		assertValid(getSLA);
@@ -340,12 +391,25 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), SLA.class);
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, SLA.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokeGetProcessSLAResponse(
@@ -356,18 +420,31 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
 
 	@Test
 	public void testPutProcessSLA() throws Exception {
-		Assert.assertTrue(true);
+		SLA postSLA = testPutProcessSLA_addSLA();
+
+		SLA randomSLA = randomSLA();
+
+		SLA putSLA = invokePutSLA(postSLA.getId(), randomSLA);
+
+		assertEquals(randomSLA, putSLA);
+		assertValid(putSLA);
+
+		SLA getSLA = invokeGetSLA(putSLA.getId());
+
+		assertEquals(randomSLA, getSLA);
+		assertValid(getSLA);
 	}
 
 	protected SLA testPutProcessSLA_addSLA() throws Exception {
@@ -375,7 +452,7 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Response invokePutProcessSLA(Long processId, Long slaId, SLA sLA)
+	protected SLA invokePutProcessSLA(Long processId, Long slaId, SLA sLA)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -386,14 +463,27 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
 		options.setPut(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Response.class);
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, SLA.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePutProcessSLAResponse(
@@ -408,13 +498,14 @@ public abstract class BaseSLAResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/processes/{process-id}/slas/{sla-id}", processId);
+				_toPath(
+					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
 
 		options.setLocation(location);
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -596,10 +687,15 @@ public abstract class BaseSLAResourceTestCase {
 		};
 	}
 
+	protected SLA randomIrrelevantSLA() {
+		return randomSLA();
+	}
+
 	protected SLA randomPatchSLA() {
 		return randomSLA();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -659,9 +755,21 @@ public abstract class BaseSLAResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*?\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSLAResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

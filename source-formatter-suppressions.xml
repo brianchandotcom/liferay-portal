@@ -123,6 +123,8 @@
 		<suppress checks="JSPStylingCheck" files="portal-web/docroot/html/portal/api/jsonws/action\.jsp" />
 		<suppress checks="JSStylingCheck" files="modules/yarn-1\.13\.0\.js" />
 		<suppress checks="JSWhitespaceCheck" files="modules/yarn-1\.13\.0\.js" />
+		<suppress checks="LocaleUtilCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/LocaleUtil\.java" />
+		<suppress checks="LocaleUtilCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/LocaleUtilTest\.java" />
 		<suppress checks="MethodCallsOrderCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-impl/src/com/liferay/portal/json/jabsorb/serializer/LiferaySerializer\.java" />
 		<suppress checks="PropertiesEmptyLinesCheck" files="build\.properties" />

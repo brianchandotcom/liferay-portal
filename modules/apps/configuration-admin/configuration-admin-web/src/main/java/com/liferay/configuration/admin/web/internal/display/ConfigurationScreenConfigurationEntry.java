@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.internal.display;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -33,6 +34,20 @@ public class ConfigurationScreenConfigurationEntry
 
 		_configurationScreen = configurationScreen;
 		_locale = locale;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		ConfigurationEntry configurationEntry = (ConfigurationEntry)obj;
+
+		if (Objects.equals(getKey(), configurationEntry.getKey()) &&
+			Objects.equals(getCategory(), configurationEntry.getCategory()) &&
+			Objects.equals(getScope(), configurationEntry.getScope())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

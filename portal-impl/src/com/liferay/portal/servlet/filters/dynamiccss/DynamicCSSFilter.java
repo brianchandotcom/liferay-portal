@@ -115,9 +115,10 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
+		long lastModified = getLastModified(request, resourceURL);
+
 		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= getLastModified(
-				request, resourceURL))) {
+			(cacheDataFile.lastModified() == lastModified)) {
 
 			if (cacheContentTypeFile.exists()) {
 				String contentType = FileUtil.read(cacheContentTypeFile);
@@ -195,6 +196,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		else {
 			dynamicContent = content;
 		}
+
+		cacheDataFile.setLastModified(lastModified);
 
 		return dynamicContent;
 	}

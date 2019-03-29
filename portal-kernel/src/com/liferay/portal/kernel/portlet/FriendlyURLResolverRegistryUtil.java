@@ -113,7 +113,11 @@ public class FriendlyURLResolverRegistryUtil {
 					FriendlyURLResolver friendlyURLResolver =
 						registry.getService(serviceReference);
 
-					emitter.emit(friendlyURLResolver.getURLSeparator());
+					for (String urlSeparator :
+							friendlyURLResolver.getURLSeparators()) {
+
+						emitter.emit(urlSeparator);
+					}
 
 					registry.ungetService(serviceReference);
 				}

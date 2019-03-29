@@ -84,12 +84,18 @@ public class AssetBrowserDisplayContext {
 
 			assetBrowserSearch.setTotal(total);
 
+			long[] subtypeSelectionId = null;
+
+			if (getSubtypeSelectionId() > 0) {
+				subtypeSelectionId = new long[] {getSubtypeSelectionId()};
+			}
+
 			List<AssetEntry> assetEntries =
 				AssetEntryLocalServiceUtil.getEntries(
 					_getFilterGroupIds(), _getClassNameIds(),
-					new long[] {getSubtypeSelectionId()}, _getKeywords(),
-					_getKeywords(), _getKeywords(), _getKeywords(),
-					_getListable(), false, false, assetBrowserSearch.getStart(),
+					subtypeSelectionId, _getKeywords(), _getKeywords(),
+					_getKeywords(), _getKeywords(), _getListable(), false,
+					false, assetBrowserSearch.getStart(),
 					assetBrowserSearch.getEnd(), "modifiedDate",
 					StringPool.BLANK, getOrderByType(), StringPool.BLANK);
 

@@ -398,31 +398,31 @@ public class ExpandoPortlet extends MVCPortlet {
 	}
 
 	private int _getNumberType(String dataType, String precisionType) {
-		if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+		if (dataType.equals(ExpandoColumnConstants.DATA_TYPE_DECIMAL) &&
 			precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
 
 			return ExpandoColumnConstants.DOUBLE;
 		}
 
-		if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+		if (dataType.equals(ExpandoColumnConstants.DATA_TYPE_DECIMAL) &&
 			precisionType.equals(ExpandoColumnConstants.PRECISION_32_BIT)) {
 
 			return ExpandoColumnConstants.FLOAT;
 		}
 
-		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+		if (dataType.equals(ExpandoColumnConstants.DATA_TYPE_INTEGER) &&
 			precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
 
 			return ExpandoColumnConstants.LONG;
 		}
 
-		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+		if (dataType.equals(ExpandoColumnConstants.DATA_TYPE_INTEGER) &&
 			precisionType.equals(ExpandoColumnConstants.PRECISION_32_BIT)) {
 
 			return ExpandoColumnConstants.INTEGER;
 		}
 
-		if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+		if (dataType.equals(ExpandoColumnConstants.DATA_TYPE_INTEGER) &&
 			precisionType.equals(ExpandoColumnConstants.PRECISION_16_BIT)) {
 
 			return ExpandoColumnConstants.SHORT;

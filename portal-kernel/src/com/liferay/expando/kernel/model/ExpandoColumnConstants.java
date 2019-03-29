@@ -44,6 +44,12 @@ public class ExpandoColumnConstants {
 
 	public static final String BOOLEAN_LABEL = "custom.field.boolean";
 
+	public static final String DATA_TYPE_DECIMAL = "Decimal";
+
+	public static final String DATA_TYPE_INTEGER = "Integer";
+
+	public static final String DATA_TYPE_TEXT = "Text";
+
 	public static final int DATE = 3;
 
 	public static final int DATE_ARRAY = 4;
@@ -172,12 +178,6 @@ public class ExpandoColumnConstants {
 	public static final String STRING_LOCALIZED_LABEL =
 		"custom.field.java.lang.String.localized";
 
-	public static final String TYPE_DECIMAL = "Decimal";
-
-	public static final String TYPE_INTEGER = "Integer";
-
-	public static final String TYPE_TEXT = "Text";
-
 	public static final int[] TYPES = {
 		BOOLEAN, BOOLEAN_ARRAY, DATE, DATE_ARRAY, DOUBLE, DOUBLE_ARRAY, FLOAT,
 		FLOAT_ARRAY, GEOLOCATION, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY,
@@ -189,13 +189,13 @@ public class ExpandoColumnConstants {
 
 	public static final String getDataType(int type) {
 		if ((type == DOUBLE) || (type == FLOAT)) {
-			return TYPE_DECIMAL;
+			return DATA_TYPE_DECIMAL;
 		}
 		else if ((type == LONG) || (type == INTEGER) || (type == SHORT)) {
-			return TYPE_INTEGER;
+			return DATA_TYPE_INTEGER;
 		}
 		else if ((type == STRING) || (type == STRING_LOCALIZED)) {
-			return TYPE_TEXT;
+			return DATA_TYPE_TEXT;
 		}
 
 		return StringPool.BLANK;

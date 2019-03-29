@@ -94,9 +94,9 @@
 	</c:when>
 	<c:otherwise>
 		<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType()" value="<%= ExpandoColumnConstants.getDataType(type) %>">
-			<aui:option label="<%= ExpandoColumnConstants.TYPE_TEXT %>" />
-			<aui:option label="<%= ExpandoColumnConstants.TYPE_DECIMAL %>" />
-			<aui:option label="<%= ExpandoColumnConstants.TYPE_INTEGER %>" />
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>" />
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>" />
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>" />
 		</aui:select>
 
 		<%
@@ -153,7 +153,7 @@
 		var currentSelectedDataType = dataTypeElement.value;
 
 		if (currentSelectedDataType) {
-			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_TEXT %>') {
+			if (currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>') {
 				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "disable")
 
 				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "enable")
@@ -162,7 +162,7 @@
 
 				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "hide");
 			}
-			else if ((currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_DECIMAL %>') || (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>')) {
+			else if ((currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>') || (currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>')) {
 				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "disable")
 
 				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "enable")

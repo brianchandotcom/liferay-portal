@@ -25,6 +25,7 @@
 	{@param? paginationMode: string}
 	{@param? successPageLabel: string}
 	{@param? successPageSettings: ?}
+	{@param? view: ?}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 	{let $total: length($pages) /}
@@ -55,6 +56,7 @@
 		{param successPageLabel: $successPageLabel /}
 		{param successPageSettings: $successPageSettings /}
 		{param total: $total /}
+		{param view: $view /}
 	{/delcall}
 {/template}
 
@@ -84,6 +86,7 @@
 	{@param? successPageLabel: string}
 	{@param? successPageSettings: ?}
 	{@param? total: int}
+	{@param? view: ?}
 
 	<div class="position-relative">
 		{if ($paginationMode == 'wizard') or (length($pages) == 1 and not $successPageSettings.enabled)}
@@ -103,6 +106,7 @@
 				{param spritemap: $spritemap /}
 				{param successPageLabel: $successPageLabel /}
 				{param successPageSettings: $successPageSettings /}
+				{param view: $view /}
 			{/delcall}
 		{/if}
 
@@ -135,6 +139,7 @@
 					{param ref: 'pageRenderer' /}
 					{param spritemap: $spritemap /}
 					{param total: $total /}
+					{param view: $view /}
 				{/call}
 			{/for}
 		{/if}
@@ -178,6 +183,7 @@
 	{@param? successPageLabel: string}
 	{@param? successPageSettings: ?}
 	{@param? total: int}
+	{@param? view: ?}
 
 	{let $multiple: length($pages) > 1 or $successPageSettings.enabled /}
 	{let $classes kind="text"}
@@ -219,16 +225,18 @@
 			{/delcall}
 		{/if}
 
-		<div class="ddm-page-settings" role="group">
-			{call ClayActionsDropdown.render}
-				{param items: $pageSettingsItems /}
-				{param triggerClasses: 'component-action' /}
-				{param events: [
-					'itemClicked': $_handlePageSettingsClicked
-				] /}
-				{param spritemap: $spritemap /}
-			{/call}
-		</div>
+		{if $view != 'fieldSets'}
+			<div class="ddm-page-settings" role="group">
+				{call ClayActionsDropdown.render}
+					{param items: $pageSettingsItems /}
+					{param triggerClasses: 'component-action' /}
+					{param events: [
+						'itemClicked': $_handlePageSettingsClicked
+					] /}
+					{param spritemap: $spritemap /}
+				{/call}
+			</div>
+		{/if}
 	</div>
 {/deltemplate}
 

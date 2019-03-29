@@ -624,4 +624,123 @@ definition {
 			}
 		}
 	}
+
+	@description = "Add a fragment with new added structure in it."
+	@priority = "4"
+	test ViewDisplayPageWithNewStructureMapInFragments {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Content",
+			fieldName = "Content"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Content",
+			templateName = "WC Template Name"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Multiple Editables"
+		);
+
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "WC Structure Name"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test1",
+			itemName = "Title"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test2",
+			itemName = "Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test3",
+			itemName = "Tags"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test4",
+			itemName = "Publish Date"
+		);
+
+		Button.clickPublish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "Content",
+			webContentTextBox = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.addWithTagCP(tagNameList = "tag1,tag2,tag3");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "View in Context"
+		);
+
+		DisplayPagesAdmin.viewPGViaAP(
+			contentList = "Webcontent Title,Webcontent Content,tag1,tag2,tag3",
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+	}
 }

@@ -180,18 +180,15 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
 				LiferayResourceLoader.class.getName());
 
-			extendedProperties.setProperty(
-				"liferay." + VelocityEngine.RESOURCE_LOADER + "portal.cache",
-				_singleVMPool.getPortalCache(
-					StringBundler.concat(
-						TemplateResource.class.getName(), StringPool.POUND,
-						TemplateConstants.LANG_TYPE_VM)));
-
-			extendedProperties.setProperty(
-				"liferay." + VelocityEngine.RESOURCE_LOADER +
-					".resourceModificationCheckInterval",
-				_velocityEngineConfiguration.
-					resourceModificationCheckInterval() + "");
+			if (cacheEnabled) {
+				extendedProperties.setProperty(
+					"liferay." + VelocityEngine.RESOURCE_LOADER +
+						"portal.cache",
+					_singleVMPool.getPortalCache(
+						StringBundler.concat(
+							TemplateResource.class.getName(), StringPool.POUND,
+							TemplateConstants.LANG_TYPE_VM)));
+			}
 
 			extendedProperties.setProperty(
 				VelocityEngine.RESOURCE_MANAGER_CLASS,

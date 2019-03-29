@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 
 import java.io.IOException;
@@ -88,15 +87,19 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 				"Unable to find Velocity template with ID " + resourceName);
 		}
 
-		Template template = _portalCache.get(templateResource);
+		Template template = null;
 
-		if (template != null) {
-			return template;
+		if (_portalCache != null) {
+			_portalCache.get(templateResource);
+
+			if (template != null) {
+				return template;
+			}
 		}
 
 		template = _createTemplate(templateResource);
 
-		if (_resourceModificationCheckInterval != 0) {
+		if (_portalCache != null) {
 			_portalCache.put(templateResource, template);
 		}
 
@@ -116,11 +119,6 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		field.set(
 			runtimeServices, new FastExtendedProperties(extendedProperties));
 
-		_resourceModificationCheckInterval = GetterUtil.getInteger(
-			extendedProperties.get(
-				"liferay." + VelocityEngine.RESOURCE_LOADER +
-					".resourceModificationCheckInterval"),
-			60);
 		_templateResourceLoader =
 			(TemplateResourceLoader)extendedProperties.get(
 				VelocityTemplateResourceLoader.class.getName());
@@ -129,7 +127,9 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			(PortalCache<TemplateResource, Template>)extendedProperties.get(
 				"liferay." + VelocityEngine.RESOURCE_LOADER + "portal.cache");
 
-		_portalCache.removeAll();
+		if (_portalCache != null) {
+			_portalCache.removeAll();
+		}
 
 		super.initialize(runtimeServices);
 	}
@@ -150,7 +150,6 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 	}
 
 	private PortalCache<TemplateResource, Template> _portalCache;
-	private int _resourceModificationCheckInterval = 60;
 	private TemplateResourceLoader _templateResourceLoader;
 
 	private static class LiferayTemplate extends Template {

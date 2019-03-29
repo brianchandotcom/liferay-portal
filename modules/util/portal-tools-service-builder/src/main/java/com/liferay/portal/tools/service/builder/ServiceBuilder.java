@@ -2110,6 +2110,8 @@ public class ServiceBuilder {
 				for (int i = 0; i < columnNames.length; i++) {
 					if (!columnNames[i].equals(pkEntityColumnDBNames.get(i))) {
 						redundant = false;
+
+						break;
 					}
 				}
 

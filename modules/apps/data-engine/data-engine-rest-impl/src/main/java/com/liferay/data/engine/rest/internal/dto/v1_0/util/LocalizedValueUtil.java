@@ -53,6 +53,10 @@ public class LocalizedValueUtil {
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
+		if (localizedValues == null) {
+			return localizationMap;
+		}
+
 		for (LocalizedValue localizedValue : localizedValues) {
 			localizationMap.put(
 				LocaleUtil.fromLanguageId(localizedValue.getKey()),

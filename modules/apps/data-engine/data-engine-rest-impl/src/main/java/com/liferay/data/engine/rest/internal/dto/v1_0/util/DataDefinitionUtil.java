@@ -36,6 +36,7 @@ public class DataDefinitionUtil {
 
 		return new DataDefinition() {
 			{
+				contentSpaceId = ddmStructure.getGroupId();
 				dataDefinitionFields = JSONUtil.toArray(
 					jsonObject.getJSONArray("fields"),
 					fieldJSONObject -> _toDataDefinitionField(fieldJSONObject),

@@ -16,8 +16,11 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
 
 import java.util.Objects;
+
+import jodd.util.RandomString;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -26,10 +29,36 @@ import org.junit.runner.RunWith;
 /**
  * @author Jeyvison Nascimento
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
+
+	@Ignore
+	@Override
+	public void testDeleteDataDefinition() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testGetDataDefinition() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testPostContentSpaceDataDefinitionPermission()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testPostDataDefinitionDataDefinitionPermission()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testPutDataDefinition() throws Exception {
+	}
 
 	protected void assertValid(DataDefinition dataDefinition) {
 		boolean valid = false;
@@ -50,10 +79,11 @@ public class DataDefinitionResourceTest
 	protected boolean equals(
 		DataDefinition dataDefinition1, DataDefinition dataDefinition2) {
 
+		LocalizedValue[] localizedValues1 = dataDefinition1.getName();
+		LocalizedValue[] localizedValues2 = dataDefinition2.getName();
+
 		if (Objects.equals(
-				dataDefinition1.getDateCreated(),
-				dataDefinition2.getDateCreated()) &&
-			Objects.equals(dataDefinition1.getId(), dataDefinition2.getId())) {
+				localizedValues1[0].getKey(), localizedValues2[0].getKey())) {
 
 			return true;
 		}
@@ -64,6 +94,16 @@ public class DataDefinitionResourceTest
 	protected DataDefinition randomDataDefinition() {
 		return new DataDefinition() {
 			{
+				RandomString randomString = RandomString.getInstance();
+
+				LocalizedValue localizedValue = new LocalizedValue() {
+					{
+						key = "en_US";
+						value = randomString.randomAlpha(10);
+					}
+				};
+
+				name = new LocalizedValue[] {localizedValue};
 			}
 		};
 	}
@@ -84,7 +124,7 @@ public class DataDefinitionResourceTest
 			contentSpaceId, dataDefinition);
 	}
 
-	protected Long testGetContentSpaceDataDefinitionsPage_getGroupId()
+	protected Long testGetContentSpaceDataDefinitionsPage_getContentSpaceId()
 		throws Exception {
 
 		return testGroup.getGroupId();

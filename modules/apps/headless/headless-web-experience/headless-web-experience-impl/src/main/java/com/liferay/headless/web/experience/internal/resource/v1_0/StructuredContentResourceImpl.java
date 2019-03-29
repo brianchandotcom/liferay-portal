@@ -784,7 +784,7 @@ public class StructuredContentResourceImpl
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
+	@Reference(target = "(dto.converter.api.version=v1.0)")
 	private StructuredContentDTOConverter _structuredContentDTOConverter;
 
 }

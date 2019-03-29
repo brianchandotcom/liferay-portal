@@ -15,15 +15,21 @@
 package com.liferay.headless.web.experience.internal.dto.v1_0.converter;
 
 import com.liferay.headless.common.spi.dto.converter.DTOConverter;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Rubén Pulido
@@ -32,15 +38,63 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = DTOConverterRegistry.class)
 public class DTOConverterRegistry {
 
-	public DTOConverter getDTOConverter(String className) {
-		return _serviceTrackerMap.getService(className);
+	public DTOConverter getDTOConverter(String className, String version) {
+		List<DTOConverterWrapper> dtoConverterWrappers =
+			_serviceTrackerMap.getService(className);
+
+		if (ListUtil.isEmpty(dtoConverterWrappers)) {
+			return null;
+		}
+
+		return dtoConverterWrappers.stream(
+		).filter(
+			wrapper -> version.equals(wrapper.getVersion())
+		).findFirst(
+		).map(
+			DTOConverterWrapper::getDtoConverter
+		).orElse(
+			null
+		);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, DTOConverter.class, "(dto.converter.class.name=*)",
-			new DTOConverterServiceReferenceMapper());
+			new DTOConverterServiceReferenceMapper(),
+			new ServiceTrackerCustomizer<DTOConverter, DTOConverterWrapper>() {
+
+				@Override
+				public DTOConverterWrapper addingService(
+					ServiceReference<DTOConverter> serviceReference) {
+
+					String version = (String)serviceReference.getProperty(
+						"dto.converter.api.version");
+
+					DTOConverter dtoConverter = bundleContext.getService(
+						serviceReference);
+
+					return new DTOConverterWrapper(dtoConverter, version);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<DTOConverter> serviceReference,
+					DTOConverterWrapper dtoConverterWrapper) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<DTOConverter> serviceReference,
+					DTOConverterWrapper dtoConverterWrapper) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			},
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator(
+					"dto.converter.api.version")));
 	}
 
 	@Deactivate
@@ -48,7 +102,8 @@ public class DTOConverterRegistry {
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DTOConverter> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<DTOConverterWrapper>>
+		_serviceTrackerMap;
 
 	private static class DTOConverterServiceReferenceMapper
 		implements ServiceReferenceMapper<String, DTOConverter> {
@@ -63,6 +118,26 @@ public class DTOConverterRegistry {
 
 			emitter.emit(className);
 		}
+
+	}
+
+	private static class DTOConverterWrapper {
+
+		public DTOConverterWrapper(DTOConverter dtoConverter, String version) {
+			_dtoConverter = dtoConverter;
+			_version = version;
+		}
+
+		public DTOConverter getDtoConverter() {
+			return _dtoConverter;
+		}
+
+		public String getVersion() {
+			return _version;
+		}
+
+		private final DTOConverter _dtoConverter;
+		private final String _version;
 
 	}
 

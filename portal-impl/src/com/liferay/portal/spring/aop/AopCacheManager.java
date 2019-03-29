@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
@@ -75,8 +74,6 @@ public class AopCacheManager {
 		List<ChainableMethodAdvice> chainableMethodAdvices = new ArrayList<>();
 
 		chainableMethodAdvices.add(new AccessControlAdvice());
-
-		chainableMethodAdvices.add(new AsyncAdvice("liferay/async_service"));
 
 		chainableMethodAdvices.add(new BufferedIncrementAdvice());
 

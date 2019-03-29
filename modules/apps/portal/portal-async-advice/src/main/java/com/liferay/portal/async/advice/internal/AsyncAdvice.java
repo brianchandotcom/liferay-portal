@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.messaging.async;
+package com.liferay.portal.async.advice.internal;
 
-import com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal;
-import com.liferay.portal.internal.messaging.async.AsyncProcessCallable;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
@@ -29,15 +29,15 @@ import java.lang.reflect.Method;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ChainableMethodAdvice.class)
 public class AsyncAdvice extends ChainableMethodAdvice {
-
-	public AsyncAdvice(String destinationName) {
-		_destinationName = destinationName;
-	}
 
 	@Override
 	public Object createMethodContext(
@@ -73,9 +73,12 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				MessageBusUtil.sendMessage(
-					_destinationName,
+				Message message = new Message();
+
+				message.setPayload(
 					new AsyncProcessCallable(aopMethodInvocation, arguments));
+
+				_messageBus.sendMessage(_DESTINATION_NAME, message);
 
 				return null;
 			});
@@ -83,8 +86,12 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 		return nullResult;
 	}
 
+	private static final String _DESTINATION_NAME =
+		DestinationNames.ASYNC_SERVICE;
+
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
-	private final String _destinationName;
+	@Reference
+	private MessageBus _messageBus;
 
 }

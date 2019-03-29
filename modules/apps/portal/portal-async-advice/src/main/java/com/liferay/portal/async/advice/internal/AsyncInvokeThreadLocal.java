@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.internal.messaging.async;
+package com.liferay.portal.async.advice.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 

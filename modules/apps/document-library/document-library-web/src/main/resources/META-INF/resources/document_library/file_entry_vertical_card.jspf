@@ -15,12 +15,10 @@
 --%>
 
 <liferay-frontend:vertical-card-sticker-bottom>
-	<c:if test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
-		<liferay-document-library:mime-type-sticker
-			cssClass="sticker-bottom"
-			fileVersion="<%= latestFileVersion %>"
-		/>
-	</c:if>
+	<liferay-document-library:mime-type-sticker
+		cssClass="sticker-bottom"
+		fileVersion="<%= latestFileVersion %>"
+	/>
 </liferay-frontend:vertical-card-sticker-bottom>
 
 <liferay-frontend:vertical-card-header>

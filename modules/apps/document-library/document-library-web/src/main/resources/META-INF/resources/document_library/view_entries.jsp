@@ -145,19 +145,13 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										toggleRowChecker="<%= true %>"
 									/>
 								</c:when>
-								<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
+								<c:otherwise>
 									<liferay-ui:search-container-column-text>
 										<liferay-document-library:mime-type-sticker
 											cssClass="sticker-secondary"
 											fileVersion="<%= latestFileVersion %>"
 										/>
 									</liferay-ui:search-container-column-text>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:search-container-column-icon
-										icon="documents-and-media"
-										toggleRowChecker="<%= true %>"
-									/>
 								</c:otherwise>
 							</c:choose>
 

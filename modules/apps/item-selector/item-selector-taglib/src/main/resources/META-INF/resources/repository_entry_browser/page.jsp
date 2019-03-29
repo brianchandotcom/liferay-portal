@@ -408,17 +408,12 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												src="<%= DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 											/>
 										</c:when>
-										<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
+										<c:otherwise>
 											<liferay-ui:search-container-column-text>
 												<liferay-document-library:mime-type-sticker
 													fileVersion="<%= latestFileVersion %>"
 												/>
 											</liferay-ui:search-container-column-text>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:search-container-column-icon
-												icon="documents-and-media"
-											/>
 										</c:otherwise>
 									</c:choose>
 

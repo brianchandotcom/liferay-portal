@@ -14,10 +14,29 @@
 
 package com.liferay.jenkins.results.parser.kubernetes;
 
+import io.kubernetes.client.ApiException;
+import io.kubernetes.client.models.V1Pod;
+
 /**
  * @author Kenji Heigel
  */
 public class ResourceManager {
+
+	public static V1Pod createPod(V1Pod podConfiguration) throws ApiException {
+		return createPod(podConfiguration, "default");
+	}
+
+	public static V1Pod createPod(V1Pod podConfiguration, String namespace)
+		throws ApiException {
+
+		try {
+			return _liferayKubernetesApi.core.createNamespacedPod(
+				namespace, podConfiguration, null);
+		}
+		catch (ApiException ae) {
+			throw ae;
+		}
+	}
 
 	private static final LiferayKubernetesApi _liferayKubernetesApi =
 		LiferayKubernetesApi.getInstance();

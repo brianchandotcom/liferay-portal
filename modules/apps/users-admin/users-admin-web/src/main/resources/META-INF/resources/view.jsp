@@ -119,9 +119,9 @@ else {
 					form,
 					{
 						data: {
-							'<%= Constants.CMD %>': cmd,
 							deleteUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'),
-							redirect: usersRedirect.value
+							redirect: usersRedirect.value,
+							'<%= Constants.CMD %>': cmd
 						},
 						url: '<portlet:actionURL name="/users_admin/edit_user" />'
 					}
@@ -195,8 +195,8 @@ else {
 			form,
 			{
 				data: {
-					'<%= Constants.CMD %>': '<%= Constants.DELETE %>',
-					deleteOrganizationIds: organizationIds
+					deleteOrganizationIds: organizationIds,
+					'<%= Constants.CMD %>': '<%= Constants.DELETE %>'
 				},
 				url: '<portlet:actionURL name="/users_admin/edit_organization" />'
 			}
@@ -227,7 +227,7 @@ else {
 			function(response) {
 				callback(response);
 			}
-		)
+		);
 	}
 
 	function <portlet:namespace />showUsers(status) {

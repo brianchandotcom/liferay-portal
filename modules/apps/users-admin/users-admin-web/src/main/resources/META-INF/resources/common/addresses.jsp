@@ -100,7 +100,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 						</div>
 
 						<c:if test="<%= address.isPrimary() %>">
-							<div>
+							<div class="address-primary-label-wrapper">
 								<span class="label label-primary">
 									<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
 								</span>

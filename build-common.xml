@@ -1005,7 +1005,7 @@ information.
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute default="${junit.jvm}" name="junit.jvm.override" />
-		<attribute default="${ant.java.version}" name="junit.jvm.version" />
+		<attribute default="${ant.java.version}" name="junit.jvm.override.version" />
 		<attribute name="test.type" />
 		<element name="misc" optional="yes" />
 		<element name="test.classes" />
@@ -1018,9 +1018,9 @@ information.
 				<equals arg1="@{test.type}" arg2="unit" />
 				<then>
 					<if>
-						<isset property="junit.java.unit.gc[@{junit.jvm.version}]" />
+						<isset property="junit.java.unit.gc[@{junit.jvm.override.version}]" />
 						<then>
-							<propertycopy from="junit.java.unit.gc[@{junit.jvm.version}]" name="junit.java.unit.gc" override="true" />
+							<propertycopy from="junit.java.unit.gc[@{junit.jvm.override.version}]" name="junit.java.unit.gc" override="true" />
 						</then>
 					</if>
 
@@ -1036,9 +1036,9 @@ information.
 				</then>
 				<else>
 					<if>
-						<isset property="junit.java.integration.gc[@{junit.jvm.version}]" />
+						<isset property="junit.java.integration.gc[@{junit.jvm.override.version}]" />
 						<then>
-							<propertycopy from="junit.java.integration.gc[@{junit.jvm.version}]" name="junit.java.integration.gc" override="true" />
+							<propertycopy from="junit.java.integration.gc[@{junit.jvm.override.version}]" name="junit.java.integration.gc" override="true" />
 						</then>
 					</if>
 
@@ -1049,15 +1049,15 @@ information.
 					<basename file="${project.dir}" property="project.dir.name" />
 
 					<condition else="${junit.java.integration.gc} -verbose:gc -Xloggc:/tmp/${project.dir.name}-@{test.type}-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" property="junit.java.gc" value="${junit.java.integration.gc} -Xlog:gc:/tmp/${project.dir.name}-@{test.type}-gc.log">
-						<isset property="junit.java.integration.gc[@{junit.jvm.version}]" />
+						<isset property="junit.java.integration.gc[@{junit.jvm.override.version}]" />
 					</condition>
 				</else>
 			</if>
 
 			<if>
-				<isset property="junit.java.add.opens[@{junit.jvm.version}]" />
+				<isset property="junit.java.add.opens[@{junit.jvm.override.version}]" />
 				<then>
-					<propertycopy from="junit.java.add.opens[@{junit.jvm.version}]" name="junit.java.add.opens" override="true" />
+					<propertycopy from="junit.java.add.opens[@{junit.jvm.override.version}]" name="junit.java.add.opens" override="true" />
 				</then>
 			</if>
 
@@ -1797,7 +1797,7 @@ rerun your task.
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
 		<attribute default="${junit.jvm}" name="junit.jvm.override" />
-		<attribute default="${ant.java.version}" name="junit.jvm.version" />
+		<attribute default="${ant.java.version}" name="junit.jvm.override.version" />
 
 		<sequential>
 			<if>
@@ -1828,7 +1828,7 @@ rerun your task.
 					<junit-cmd
 						forkmode="@{junit.forkmode}"
 						junit.jvm.override="@{junit.jvm.override}"
-						junit.jvm.version="@{junit.jvm.version}"
+						junit.jvm.override.version="@{junit.jvm.override.version}"
 						test.type="@{test.type}"
 					>
 						<misc>
@@ -2355,10 +2355,10 @@ rerun your task.
 
 		<if>
 			<not>
-				<isset property="junit.jvm.version}" />
+				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.version" value="${ant.java.version}" />
+				<property name="junit.jvm.override.version" value="${ant.java.version}" />
 			</then>
 		</if>
 
@@ -2378,7 +2378,7 @@ rerun your task.
 		<test-cmd
 			junit.forkmode="perTest"
 			junit.jvm.override="${junit.jvm.override}"
-			junit.jvm.version="${junit.jvm.version}"
+			junit.jvm.override.version="${junit.jvm.override.version}"
 			test.includes="**/${test.class}.class"
 			test.type="${test.type}"
 		/>
@@ -2409,10 +2409,10 @@ rerun your task.
 
 		<if>
 			<not>
-				<isset property="junit.jvm.version}" />
+				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.version" value="${ant.java.version}" />
+				<property name="junit.jvm.override.version" value="${ant.java.version}" />
 			</then>
 		</if>
 
@@ -2427,7 +2427,7 @@ rerun your task.
 				<test-cmd
 					junit.forkmode="perTest"
 					junit.jvm.override="${junit.jvm.override}"
-					junit.jvm.version="${junit.jvm.version}"
+					junit.jvm.override.version="${junit.jvm.override.version}"
 					test.includes="${test.classes}"
 					test.type="unit"
 				/>
@@ -2445,7 +2445,7 @@ rerun your task.
 				<test-cmd
 					junit.forkmode="once"
 					junit.jvm.override="${junit.jvm.override}"
-					junit.jvm.version="${junit.jvm.version}"
+					junit.jvm.override.version="${junit.jvm.override.version}"
 					test.includes="${test.classes}"
 					test.type="integration"
 				/>

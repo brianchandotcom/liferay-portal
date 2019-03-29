@@ -1405,7 +1405,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<property name="database.type" value="@{database.type}" />
 								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
 								<property name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
-								<property name="junit.jvm.version" value="${java.jdk.bundle.version}" />
+								<property name="junit.jvm.override.version" value="${java.jdk.bundle.version}" />
 								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>

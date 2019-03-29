@@ -159,6 +159,16 @@ class Form extends Component {
 		published: Config.bool().value(false),
 
 		/**
+		 * The url to be redirected when canceling the Element Set edition.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		redirectURL: Config.string(),
+
+		/**
 		 * The rules of a form.
 		 * @default undefined
 		 * @instance
@@ -204,7 +214,9 @@ class Form extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		view: Config.string()
 	};
 
 	static STATE = {
@@ -218,6 +230,16 @@ class Form extends Component {
 		 */
 
 		activeFormMode: Config.number().value(0),
+
+		/**
+		 * The label of the save button
+		 * @default 'save-form'
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		cancelButtonLabel: Config.string().valueFn('_cancelButtonLabelValueFn'),
 
 		/**
 		 * Internal mirror of the pages state
@@ -269,7 +291,19 @@ class Form extends Component {
 	}
 
 	_saveButtonLabelValueFn() {
-		return Liferay.Language.get('save-form');
+		let saveType = '';
+
+		if (this.props.showFormsButtons) {
+			saveType = Liferay.Language.get('save-form');
+		}
+
+		saveType = Liferay.Language.get('save');
+
+		return saveType;
+	}
+
+	_cancelButtonLabelValueFn() {
+		return Liferay.Language.get('cancel');
 	}
 
 	checkEditorLimit(event, limit) {
@@ -439,6 +473,14 @@ class Form extends Component {
 		}
 	}
 
+	_handleCancelButtonClicked(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const href = event.delegateTarget.href;
+
+		window.location.href = href;
+	}
+
 	_updateAutoSaveMessage({savedAsDraft, modifiedDate}) {
 		const {namespace} = this.props;
 
@@ -519,15 +561,20 @@ class Form extends Component {
 	render() {
 		const {
 			context,
+			fieldSetDefinitionURL,
+			fieldSets,
 			fieldTypes,
 			formInstanceId,
+			groupId,
 			namespace,
 			published,
+			redirectURL,
 			showPublishAlert,
-			spritemap
+			spritemap,
+			view
 		} = this.props;
 
-		const {saveButtonLabel} = this.state;
+		const {cancelButtonLabel, saveButtonLabel} = this.state;
 
 		const layoutProviderProps = {
 			...this.props,
@@ -542,6 +589,8 @@ class Form extends Component {
 		};
 
 		const showRuleBuilder = parseInt(this.state.activeFormMode, 10) === 1;
+
+		const showFormsButtons = (view != 'fieldSets');
 
 		return (
 			<div class={'ddm-form-builder'}>
@@ -560,42 +609,59 @@ class Form extends Component {
 					/>
 					{!showRuleBuilder && (
 						<FormBuilder
+							fieldSetDefinitionURL={fieldSetDefinitionURL}
+							fieldSets={fieldSets}
 							fieldTypes={fieldTypes}
+							groupId={groupId}
 							namespace={this.props.namespace}
 							ref="builder"
 							rules={this.props.rules}
 							spritemap={spritemap}
+							view={view}
 							visible={!showRuleBuilder}
 						/>
 					)}
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">
-					<div class="button-holder ddm-form-builder-buttons">
-						<PublishButton
-							events={
-								{
-									publishedChanged: this._handlePublishedChanged
+					{showFormsButtons && (
+						<div class="button-holder ddm-form-builder-buttons">
+							<PublishButton
+								events={
+									{
+										publishedChanged: this._handlePublishedChanged
+									}
 								}
-							}
-							formInstanceId={formInstanceId}
-							namespace={namespace}
-							published={published}
-							resolvePublishURL={this._createFormURL}
-							showPublishAlert={showPublishAlert}
-							spritemap={spritemap}
-							submitForm={this.submitForm}
-							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
-						/>
-						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
-							{saveButtonLabel}
-						</button>
-						<PreviewButton
-							namespace={namespace}
-							resolvePreviewURL={this._resolvePreviewURL}
-							spritemap={spritemap}
-						/>
-					</div>
+								formInstanceId={formInstanceId}
+								namespace={namespace}
+								published={published}
+								resolvePublishURL={this._createFormURL}
+								showPublishAlert={showPublishAlert}
+								spritemap={spritemap}
+								submitForm={this.submitForm}
+								url={Liferay.DDM.FormSettings.publishFormInstanceURL}
+							/>
+							<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
+								{saveButtonLabel}
+							</button>
+							<PreviewButton
+								namespace={namespace}
+								resolvePreviewURL={this._resolvePreviewURL}
+								spritemap={spritemap}
+							/>
+						</div>
+					)}
+
+					{!showFormsButtons && (
+						<div class="button-holder ddm-form-builder-buttons">
+							<button class="btn btn-primary ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveFieldSetButton">
+								{saveButtonLabel}
+							</button>
+							<a class="btn btn-cancel btn-default btn-link" data-onclick="_handleCancelButtonClicked" href={redirectURL} ref="cancelFieldSetButton">
+								{cancelButtonLabel}
+							</a>
+						</div>
+					)}
 
 					<ClayModal
 						body={Liferay.Language.get('any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave')}

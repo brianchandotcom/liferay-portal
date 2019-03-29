@@ -492,17 +492,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<sequential>
 			<var name="java.jdk.home" unset="true" />
 
-			<local name="version" />
-
-			<propertyregex
-				defaultValue="@{version}"
-				input="@{version}"
-				property="version"
-				regexp="1\.([0-9]+)"
-				select="\1"
-			/>
-
-			<propertycopy from="java.jdk.home[${version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
+			<propertycopy from="java.jdk.home[@{version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
 
 			<property name="java.jdk.home" value="${java.home}" />
 

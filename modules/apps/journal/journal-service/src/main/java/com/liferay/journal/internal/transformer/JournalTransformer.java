@@ -73,6 +73,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -243,6 +245,9 @@ public class JournalTransformer {
 					request.setAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE,
 						portletRequestModel.getPortletResponse());
+					request.setAttribute(
+						PortletRequest.LIFECYCLE_PHASE,
+						portletRequestModel.getLifecycle());
 				}
 
 				template.prepare(request);

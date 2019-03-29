@@ -62,25 +62,28 @@ public class DefineObjectsTag extends TagSupport {
 				"liferayPortletRequest",
 				PortalUtil.getLiferayPortletRequest(portletRequest));
 
-			String portletRequestAttrName = null;
+			if (lifecycle != null) {
+				String portletRequestAttrName = null;
 
-			if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-				portletRequestAttrName = "actionRequest";
-			}
-			else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
-				portletRequestAttrName = "eventRequest";
-			}
-			else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
-				portletRequestAttrName = "headerRequest";
-			}
-			else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-				portletRequestAttrName = "renderRequest";
-			}
-			else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-				portletRequestAttrName = "resourceRequest";
-			}
+				if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+					portletRequestAttrName = "actionRequest";
+				}
+				else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
+					portletRequestAttrName = "eventRequest";
+				}
+				else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
+					portletRequestAttrName = "headerRequest";
+				}
+				else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+					portletRequestAttrName = "renderRequest";
+				}
+				else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+					portletRequestAttrName = "resourceRequest";
+				}
 
-			pageContext.setAttribute(portletRequestAttrName, portletRequest);
+				pageContext.setAttribute(
+					portletRequestAttrName, portletRequest);
+			}
 
 			PortletPreferences portletPreferences =
 				portletRequest.getPreferences();
@@ -117,25 +120,27 @@ public class DefineObjectsTag extends TagSupport {
 			"liferayPortletResponse",
 			PortalUtil.getLiferayPortletResponse(portletResponse));
 
-		String portletResponseAttrName = null;
+		if (lifecycle != null) {
+			String portletResponseAttrName = null;
 
-		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			portletResponseAttrName = "actionResponse";
-		}
-		else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
-			portletResponseAttrName = "eventResponse";
-		}
-		else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
-			portletResponseAttrName = "headerResponse";
-		}
-		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-			portletResponseAttrName = "renderResponse";
-		}
-		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-			portletResponseAttrName = "resourceResponse";
-		}
+			if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+				portletResponseAttrName = "actionResponse";
+			}
+			else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
+				portletResponseAttrName = "eventResponse";
+			}
+			else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
+				portletResponseAttrName = "headerResponse";
+			}
+			else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+				portletResponseAttrName = "renderResponse";
+			}
+			else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+				portletResponseAttrName = "resourceResponse";
+			}
 
-		pageContext.setAttribute(portletResponseAttrName, portletResponse);
+			pageContext.setAttribute(portletResponseAttrName, portletResponse);
+		}
 
 		return SKIP_BODY;
 	}

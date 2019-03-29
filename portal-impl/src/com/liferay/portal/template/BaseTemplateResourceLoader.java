@@ -28,7 +28,8 @@ import java.util.Set;
 /**
  * @author Tina Tian
  */
-public class BaseTemplateResourceLoader implements TemplateResourceLoader {
+public abstract class BaseTemplateResourceLoader
+	implements TemplateResourceLoader {
 
 	@Override
 	public void clearCache() {

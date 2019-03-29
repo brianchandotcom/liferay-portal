@@ -403,7 +403,6 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-// TODO: adding editFieldLabelMetalMetal macro
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();

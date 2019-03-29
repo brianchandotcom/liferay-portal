@@ -1636,6 +1636,29 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
 		}
 
+		protected Element getExpanderAnchorElement(String namespace) {
+			if (_childStopWatchRecords == null) {
+				return null;
+			}
+
+			Element expanderAnchorElement = Dom4JUtil.getNewAnchorElement(
+				"", "+ ");
+
+			expanderAnchorElement.addAttribute(
+				"id",
+				JenkinsResultsParserUtil.combine(
+					namespace, "-expander-anchor-", getName()));
+			expanderAnchorElement.addAttribute(
+				"onClick",
+				JenkinsResultsParserUtil.combine(
+					"return toggleStopwatchRecordExpander(\'", namespace,
+					"\', \'", getName(), "\')"));
+			expanderAnchorElement.addAttribute(
+				"style", "text-decoration: none");
+
+			return expanderAnchorElement;
+		}
+
 		protected String getIndentedName() {
 			StringBuilder sb = new StringBuilder();
 

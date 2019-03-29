@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.feature;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -30,6 +31,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationConte
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
+import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExceptionMapper;
@@ -43,6 +45,8 @@ import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.WebApplicationE
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessageBodyReader;
+import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
+import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
 
 import javax.ws.rs.core.Feature;
@@ -78,6 +82,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
 		featureContext.register(JacksonJsonProvider.class);
+		featureContext.register(JacksonXMLProvider.class);
 		featureContext.register(JsonMappingExceptionMapper.class);
 		featureContext.register(JSONMessageBodyReader.class);
 		featureContext.register(JSONMessageBodyWriter.class);
@@ -92,6 +97,9 @@ public class VulcanFeature implements Feature {
 		featureContext.register(UnrecognizedPropertyExceptionMapper.class);
 		featureContext.register(ValidationExceptionMapper.class);
 		featureContext.register(WebApplicationExceptionMapper.class);
+		featureContext.register(XmlMapperContextResolver.class);
+		featureContext.register(XMLMessageBodyReader.class);
+		featureContext.register(XMLMessageBodyWriter.class);
 
 		featureContext.register(
 			new AcceptLanguageContextProvider(_language, _portal));

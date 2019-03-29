@@ -105,6 +105,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -6111,21 +6112,43 @@ public class ServiceBuilder {
 			String localizedPKEntityColumn = entityElement.attributeValue(
 				"localized-pk-entity-column");
 
-			for (EntityFinder entityFinder : entityFinders) {
+			ListIterator<EntityFinder> listIterator =
+				entityFinders.listIterator();
+
+			while (listIterator.hasNext()) {
+				EntityFinder entityFinder = listIterator.next();
+
 				String finderName = entityFinder.getName();
 
-				if (entityFinder.isUnique() && !finderName.equals("HeadId")) {
-					if ((localizedPKEntityColumn != null) &&
-						entityFinder.hasEntityColumn(localizedPKEntityColumn)) {
+				if (finderName.equals("HeadId") ||
+					((localizedPKEntityColumn != null) &&
+					 entityFinder.hasEntityColumn(localizedPKEntityColumn))) {
 
-						continue;
-					}
-
-					List<EntityColumn> finderEntityColumns =
-						entityFinder.getEntityColumns();
-
-					finderEntityColumns.add(headEntityColumn);
+					continue;
 				}
+
+				// Finder for both draft and head
+
+				listIterator.set(
+					new EntityFinder(
+						entityFinder.getName(), "Collection", false,
+						entityFinder.getWhere(), entityFinder.getDBWhere(),
+						entityFinder.isDBIndex(),
+						new ArrayList<>(entityFinder.getEntityColumns())));
+
+				List<EntityColumn> finderEntityColumns =
+					entityFinder.getEntityColumns();
+
+				finderEntityColumns.add(headEntityColumn);
+
+				// Finder for either draft or head
+
+				listIterator.add(
+					new EntityFinder(
+						entityFinder.getName() + "_Head",
+						entityFinder.getReturnType(), entityFinder.isUnique(),
+						entityFinder.getWhere(), entityFinder.getDBWhere(),
+						entityFinder.isDBIndex(), finderEntityColumns));
 			}
 		}
 

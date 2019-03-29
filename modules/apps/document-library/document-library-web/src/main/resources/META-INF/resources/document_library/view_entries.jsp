@@ -257,6 +257,11 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
 									name="title"
 								>
+									<liferay-document-library:mime-type-sticker
+										cssClass="sticker-secondary"
+										fileVersion="<%= latestFileVersion %>"
+									/>
+
 									<aui:a href="<%= rowURL.toString() %>"><%= latestFileVersion.getTitle() %></aui:a>
 
 									<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">

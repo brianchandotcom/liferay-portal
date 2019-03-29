@@ -39,7 +39,7 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatin
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.web.experience.internal.resource.v1_0.StructuredContentResourceImpl;
+import com.liferay.headless.web.experience.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
@@ -148,7 +148,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 					ddmTemplate -> new RenderedContent() {
 						{
 							renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
-								StructuredContentResourceImpl.class,
+								BaseStructuredContentResourceImpl.class,
 								"getStructuredContentRenderedContentTemplate",
 								uriInfo, journalArticle.getResourcePrimKey(),
 								ddmTemplate.getTemplateId());

@@ -298,9 +298,7 @@ definition {
 
 		PortalSettings.gotoPortalSettings();
 
-		// LRQA-47756
-
-		// PortalSettings.viewAuthenticationGeneralCP();
+		PortalSettings.viewAuthenticationGeneralCP();
 
 		PortalSettings.viewAuthenticationCASCP();
 

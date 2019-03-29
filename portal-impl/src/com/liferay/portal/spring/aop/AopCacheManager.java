@@ -163,6 +163,14 @@ public class AopCacheManager {
 		public void modifiedService(
 			ServiceReference<ChainableMethodAdvice> serviceReference,
 			ChainableMethodAdvice chainableMethodAdvice) {
+
+			synchronized (AopCacheManager.class) {
+				for (AopInvocationHandler aopInvocationHandler :
+						_aopInvocationHandlers) {
+
+					aopInvocationHandler.reset();
+				}
+			}
 		}
 
 		@Override

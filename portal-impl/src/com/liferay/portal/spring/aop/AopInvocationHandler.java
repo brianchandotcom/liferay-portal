@@ -64,6 +64,10 @@ public class AopInvocationHandler implements InvocationHandler {
 		_transactionExecutor = transactionExecutor;
 	}
 
+	protected synchronized void reset() {
+		_aopMethodInvocations.clear();
+	}
+
 	protected synchronized void setChainableMethodAdvices(
 		ChainableMethodAdvice[] chainableMethodAdvices) {
 

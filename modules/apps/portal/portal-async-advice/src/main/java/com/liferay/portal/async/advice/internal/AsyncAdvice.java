@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Activate
+	@Modified
 	public void activate(Map<String, String> properties) {
 		_asyncAdviceConfiguration = ConfigurableUtil.createConfigurable(
 			AsyncAdviceConfiguration.class, properties);

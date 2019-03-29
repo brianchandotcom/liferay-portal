@@ -79,7 +79,7 @@ public class ContentListElementResourceImpl
 					() -> {
 						DTOConverter dtoConverter =
 							_dtoConverterRegistry.getDTOConverter(
-								assetEntry.getClassName());
+								assetEntry.getClassName(), "v1.0");
 
 						if (dtoConverter == null) {
 							return null;

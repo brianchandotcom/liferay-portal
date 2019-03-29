@@ -78,7 +78,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  */
 @Component(
-	property = "dto.converter.class.name=com.liferay.journal.model.JournalArticle",
+	property = {
+		"dto.converter.api.version=v1.0",
+		"dto.converter.class.name=com.liferay.journal.model.JournalArticle"
+	},
 	service = {DTOConverter.class, StructuredContentDTOConverter.class}
 )
 public class StructuredContentDTOConverter implements DTOConverter {

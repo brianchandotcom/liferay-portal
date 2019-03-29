@@ -1679,10 +1679,29 @@ public abstract class BaseBuild implements Build {
 			return sb.toString();
 		}
 
-		protected List<Element> getJenkinsReportTableRowElements() {
+		protected List<Element> getJenkinsReportTableRowElements(
+			String namespace) {
+
 			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
 
-			Dom4JUtil.getNewElement("td", buildInfoElement, getIndentedName());
+			buildInfoElement.addAttribute("id", namespace + "-" + getName());
+			buildInfoElement.addAttribute("style", "display: none");
+
+			Element expanderAnchorElement = getExpanderAnchorElement(namespace);
+
+			Element nameElement = Dom4JUtil.getNewElement(
+				"td", buildInfoElement, expanderAnchorElement, getName());
+
+			int indent = (getDepth() + 1) * 35;
+
+			if (expanderAnchorElement == null) {
+				indent += 12;
+			}
+
+			nameElement.addAttribute(
+				"style",
+				JenkinsResultsParserUtil.combine(
+					"text-indent: ", String.valueOf(indent), "px"));
 
 			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
 
@@ -1695,7 +1714,7 @@ public abstract class BaseBuild implements Build {
 					_baseBuild.getJenkinsReportTimeZoneName()));
 
 			if (getDuration() == null) {
-				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp");
+				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
 			}
 			else {
 				Dom4JUtil.getNewElement(
@@ -1712,13 +1731,34 @@ public abstract class BaseBuild implements Build {
 			jenkinsReportTableRowElements.add(buildInfoElement);
 
 			if (_childStopWatchRecords != null) {
+				List<String> childStopWatchRecordNames = new ArrayList<>(
+					_childStopWatchRecords.size());
+
 				for (StopWatchRecord childStopWatchRecord :
 						_childStopWatchRecords) {
 
+					childStopWatchRecordNames.add(
+						childStopWatchRecord.getName());
+
+					List<Element> childJenkinsReportTableRowElements =
+						childStopWatchRecord.getJenkinsReportTableRowElements(
+							namespace);
+
+					for (Element childJenkinsReportTableRowElement :
+							childJenkinsReportTableRowElements) {
+
+						childJenkinsReportTableRowElement.addAttribute(
+							"style", "display: none");
+					}
+
 					jenkinsReportTableRowElements.addAll(
-						childStopWatchRecord.
-							getJenkinsReportTableRowElements());
+						childJenkinsReportTableRowElements);
 				}
+
+				buildInfoElement.addAttribute(
+					"child-stopwatch-rows",
+					JenkinsResultsParserUtil.join(
+						",", childStopWatchRecordNames));
 			}
 
 			return jenkinsReportTableRowElements;

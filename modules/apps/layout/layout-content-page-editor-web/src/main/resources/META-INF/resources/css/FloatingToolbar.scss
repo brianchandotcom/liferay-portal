@@ -6,6 +6,7 @@
 	&-buttons,
 	&-panel {
 		position: absolute;
+		transition: top ease 0.3s;
 		z-index: $floatingToolbarZIndex;
 	}
 

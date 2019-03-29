@@ -12,6 +12,38 @@ import templates from './FloatingToolbar.soy';
 class FloatingToolbar extends Component {
 
 	/**
+	 * Aligns the given element to the anchor,
+	 * defaulting to BottomRight position and moving to
+	 * TopRight if it does not fit.
+	 * @param {HTMLElement|null} element
+	 * @param {HTMLElement|null} anchor
+	 * @param {number} preferedPosition
+	 * @param {number} fallbackPosition
+	 * @private
+	 * @return {number} Selected position
+	 * @review
+	 */
+	static _alignElement(element, anchor, preferedPosition, fallbackPosition) {
+		let position = -1;
+
+		if (element && anchor) {
+			const suggestedAlign = Align.suggestAlignBestRegion(
+				element,
+				anchor,
+				preferedPosition
+			);
+
+			position = suggestedAlign.position === preferedPosition ?
+				preferedPosition :
+				fallbackPosition;
+
+			Align.align(element, anchor, position, false);
+		}
+
+		return position;
+	}
+
+	/**
 	 * @inheritdoc
 	 * @review
 	 */
@@ -87,6 +119,14 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
+	 * @private
+	 * @review
+	 */
+	_handleButtonsTransitionEnd() {
+		this._alignPanel();
+	}
+
+	/**
 	 * Handle panel button click
 	 * @param {MouseEvent} event Click event
 	 */
@@ -120,44 +160,41 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
-	 * Aligns the floating panel to the anchorElement
+	 * Aligns the FloatingToolbar to the anchorElement
 	 * @private
 	 * @review
 	 */
 	_align() {
-		if (this.anchorElement && this.refs.buttons) {
-			Align.align(
-				this.refs.buttons,
-				this.anchorElement,
-				Align.BottomRight,
-				false
-			);
+		requestAnimationFrame(
+			() => {
+				FloatingToolbar._alignElement(
+					this.refs.buttons,
+					this.anchorElement,
+					Align.BottomRight,
+					Align.TopRight
+				);
 
-			requestAnimationFrame(
-				() => {
-					if (this.refs.panel) {
-						const suggestedAlign = Align.suggestAlignBestRegion(
-							this.refs.panel,
-							this.refs.buttons,
-							Align.BottomRight
-						);
-
-						let alignPosition = Align.BottomRight;
-
-						if (suggestedAlign.position !== Align.BottomRight) {
-							alignPosition = Align.TopRight;
-						}
-
-						Align.align(
-							this.refs.panel,
-							this.refs.buttons,
-							alignPosition,
-							false
-						);
+				requestAnimationFrame(
+					() => {
+						this._alignPanel();
 					}
-				}
-			);
-		}
+				);
+			}
+		);
+	}
+
+	/**
+	 * Aligns the FloatingToolbar panel to the buttons
+	 * @private
+	 * @review
+	 */
+	_alignPanel() {
+		FloatingToolbar._alignElement(
+			this.refs.panel,
+			this.refs.buttons,
+			Align.BottomRight,
+			Align.TopRight
+		);
 	}
 
 }

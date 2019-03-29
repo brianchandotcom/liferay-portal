@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.template.BaseSingleResourceTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -41,12 +42,12 @@ public class VelocityTemplate extends BaseSingleResourceTemplate {
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper,
-		int resourceModificationCheckInterval) {
+		TemplateResourceCache templateResourceCache) {
 
 		super(
 			templateResource, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_VM,
-			resourceModificationCheckInterval);
+			templateResourceCache);
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;

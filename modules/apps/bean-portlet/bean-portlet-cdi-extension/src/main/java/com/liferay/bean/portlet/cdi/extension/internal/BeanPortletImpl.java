@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
@@ -32,7 +33,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -749,7 +749,7 @@ public class BeanPortletImpl implements BeanPortlet {
 		);
 	}
 
-	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
+	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();
 
 	private final boolean _asyncSupported;
 	private final Map<MethodType, List<BeanMethod>> _beanMethodMap;

@@ -79,7 +79,7 @@ public class ResourceBundleUtil {
 	public static ResourceBundle getBundle(
 		String baseName, ClassLoader classLoader) {
 
-		return getBundle(baseName, Locale.getDefault(), classLoader);
+		return getBundle(baseName, LocaleUtil.getDefault(), classLoader);
 	}
 
 	public static ResourceBundle getBundle(

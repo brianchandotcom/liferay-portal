@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -184,7 +185,7 @@ public class SharingNotificationUtil {
 			return toUser.getLocale();
 		}
 
-		return Locale.getDefault();
+		return LocaleUtil.getDefault();
 	}
 
 	private String _getNotificationMessage(

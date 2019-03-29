@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.internal.util;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 /**
  * @author Gregory Amerson
@@ -35,7 +35,7 @@ public class StringUtil {
 
 				// Found non-ascii char, fallback to the slow unicode detection
 
-				return s.toLowerCase(Locale.getDefault());
+				return s.toLowerCase(LocaleUtil.getDefault());
 			}
 
 			if ((c >= 'A') && (c <= 'Z')) {

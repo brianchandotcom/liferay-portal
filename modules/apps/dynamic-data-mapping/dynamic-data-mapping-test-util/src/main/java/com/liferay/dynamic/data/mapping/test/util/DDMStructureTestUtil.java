@@ -285,7 +285,7 @@ public class DDMStructureTestUtil {
 
 		Map<Locale, String> contents = new HashMap<>();
 
-		contents.put(Locale.US, keywords);
+		contents.put(LocaleUtil.US, keywords);
 
 		return getSampleStructuredContent(
 			name, Collections.singletonList(contents), "en_US");

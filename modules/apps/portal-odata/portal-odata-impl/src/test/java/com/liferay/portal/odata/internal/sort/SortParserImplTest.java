@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.sort;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -23,7 +24,6 @@ import com.liferay.portal.odata.sort.SortField;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -92,7 +92,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -108,7 +108,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -124,7 +124,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(!sortField.isAscending());
 	}
@@ -161,7 +161,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -178,7 +178,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -195,7 +195,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(!sortField.isAscending());
 	}
@@ -266,7 +266,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal1",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -291,7 +291,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal1",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
@@ -299,7 +299,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal2",
-			sortField2.getSortableFieldName(Locale.getDefault()));
+			sortField2.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField2.isAscending());
 	}
@@ -317,7 +317,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal1",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
@@ -325,7 +325,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal2",
-			sortField2.getSortableFieldName(Locale.getDefault()));
+			sortField2.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(!sortField2.isAscending());
 	}
@@ -343,7 +343,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal1",
-			sortField.getSortableFieldName(Locale.getDefault()));
+			sortField.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
@@ -351,7 +351,7 @@ public class SortParserImplTest {
 
 		Assert.assertEquals(
 			"fieldInternal2",
-			sortField2.getSortableFieldName(Locale.getDefault()));
+			sortField2.getSortableFieldName(LocaleUtil.getDefault()));
 
 		Assert.assertTrue(!sortField2.isAscending());
 	}

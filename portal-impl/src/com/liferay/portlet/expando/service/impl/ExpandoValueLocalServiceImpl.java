@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.typeconverter.DateArrayConverter;
 import com.liferay.portal.typeconverter.NumberArrayConverter;
 import com.liferay.portal.typeconverter.NumberConverter;
@@ -576,7 +577,7 @@ public class ExpandoValueLocalServiceImpl
 
 		return expandoValueLocalService.addValue(
 			companyId, className, tableName, columnName, classPK,
-			(Map<Locale, ?>)data, Locale.getDefault());
+			(Map<Locale, ?>)data, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -816,7 +817,8 @@ public class ExpandoValueLocalServiceImpl
 			}
 			else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 				value.setStringMap(
-					(Map<Locale, String>)attributeValue, Locale.getDefault());
+					(Map<Locale, String>)attributeValue,
+					LocaleUtil.getDefault());
 			}
 			else {
 				value.setString((String)attributeValue);

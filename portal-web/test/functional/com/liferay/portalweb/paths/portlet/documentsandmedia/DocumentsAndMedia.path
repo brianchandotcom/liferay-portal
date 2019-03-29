@@ -264,7 +264,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_LATEST_VERSION</td>
-	<td>//div[contains(@class,'sidebar-body')]//div[@class='h5']</td>
+	<td>//ul[contains(@class,'sidebar-list')]//div[contains(@class,'list-group-title')]</td>
 	<td></td>
 </tr>
 <tr>

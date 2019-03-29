@@ -14,7 +14,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.events.test.TestServicePreAction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -81,14 +80,12 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(true, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayoutComposite(
-				_request);
+			_servicePreAction.getDefaultVirtualHostLayoutComposite(_request);
 
-		defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.getViewableLayoutComposite(
-				_request, _user, PermissionCheckerFactoryUtil.create(_user),
-				defaultLayoutComposite.getLayout(),
-				defaultLayoutComposite.getLayouts(), 0, false);
+		defaultLayoutComposite = _servicePreAction.getViewableLayoutComposite(
+			_request, _user, PermissionCheckerFactoryUtil.create(_user),
+			defaultLayoutComposite.getLayout(),
+			defaultLayoutComposite.getLayouts(), 0, false);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -106,8 +103,7 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(false, true);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.
-				getDefaultUserPersonalSiteLayoutComposite(_user);
+			_servicePreAction.getDefaultUserPersonalSiteLayoutComposite(_user);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -130,8 +126,7 @@ public class ServicePreActionTest {
 			long plid = getThemeDisplayPlid(false, true);
 
 			ServicePreAction.LayoutComposite defaultLayoutComposite =
-				TestServicePreAction.INSTANCE.
-					getDefaultUserSitesLayoutComposite(_user);
+				_servicePreAction.getDefaultUserSitesLayoutComposite(_user);
 
 			Layout layout = defaultLayoutComposite.getLayout();
 
@@ -152,7 +147,7 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(false, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.getGuestSiteLayoutComposite(_user);
+			_servicePreAction.getGuestSiteLayoutComposite(_user);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -166,8 +161,7 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(true, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayoutComposite(
-				_request);
+			_servicePreAction.getDefaultVirtualHostLayoutComposite(_request);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 
@@ -197,8 +191,8 @@ public class ServicePreActionTest {
 
 		_request.setAttribute(WebKeys.USER, _user);
 
-		ThemeDisplay themeDisplay =
-			TestServicePreAction.INSTANCE.initThemeDisplay(_request, _response);
+		ThemeDisplay themeDisplay = _servicePreAction.initThemeDisplay(
+			_request, _response);
 
 		return themeDisplay.getPlid();
 	}
@@ -210,6 +204,7 @@ public class ServicePreActionTest {
 		new MockHttpServletRequest();
 	private final MockHttpServletResponse _response =
 		new MockHttpServletResponse();
+	private final ServicePreAction _servicePreAction = new ServicePreAction();
 	private User _user;
 
 }

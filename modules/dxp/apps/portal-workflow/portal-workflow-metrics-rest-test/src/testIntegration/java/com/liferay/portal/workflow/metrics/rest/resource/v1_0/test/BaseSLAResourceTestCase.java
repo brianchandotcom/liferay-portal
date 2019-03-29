@@ -314,30 +314,25 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteProcessSLA() throws Exception {
-		SLA sLA = testDeleteProcessSLA_addSLA();
+	public void testDeleteSLA() throws Exception {
+		SLA sLA = testDeleteSLA_addSLA();
 
-		assertResponseCode(204, invokeDeleteProcessSLAResponse(sLA.getId()));
+		assertResponseCode(204, invokeDeleteSLAResponse(sLA.getId()));
 
-		assertResponseCode(404, invokeGetProcessSLAResponse(sLA.getId()));
+		assertResponseCode(404, invokeGetSLAResponse(sLA.getId()));
 	}
 
-	protected SLA testDeleteProcessSLA_addSLA() throws Exception {
+	protected SLA testDeleteSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteProcessSLA(Long processId, Long slaId)
-		throws Exception {
-
+	protected void invokeDeleteSLA(Long slaId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 
@@ -348,18 +343,14 @@ public abstract class BaseSLAResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeDeleteProcessSLAResponse(
-			Long processId, Long slaId)
+	protected Http.Response invokeDeleteSLAResponse(Long slaId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 
@@ -369,30 +360,24 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessSLA() throws Exception {
-		SLA postSLA = testGetProcessSLA_addSLA();
+	public void testGetSLA() throws Exception {
+		SLA postSLA = testGetSLA_addSLA();
 
-		SLA getSLA = invokeGetProcessSLA(
-			postSLA.getProcessId(), postSLA.getSlaId());
+		SLA getSLA = invokeGetSLA(postSLA.getId());
 
 		assertEquals(postSLA, getSLA);
 		assertValid(getSLA);
 	}
 
-	protected SLA testGetProcessSLA_addSLA() throws Exception {
+	protected SLA testGetSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokeGetProcessSLA(Long processId, Long slaId)
-		throws Exception {
-
+	protected SLA invokeGetSLA(Long slaId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 
@@ -412,16 +397,10 @@ public abstract class BaseSLAResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetProcessSLAResponse(
-			Long processId, Long slaId)
-		throws Exception {
-
+	protected Http.Response invokeGetSLAResponse(Long slaId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 
@@ -431,8 +410,8 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testPutProcessSLA() throws Exception {
-		SLA postSLA = testPutProcessSLA_addSLA();
+	public void testPutSLA() throws Exception {
+		SLA postSLA = testPutSLA_addSLA();
 
 		SLA randomSLA = randomSLA();
 
@@ -447,24 +426,19 @@ public abstract class BaseSLAResourceTestCase {
 		assertValid(getSLA);
 	}
 
-	protected SLA testPutProcessSLA_addSLA() throws Exception {
+	protected SLA testPutSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokePutProcessSLA(Long processId, Long slaId, SLA sLA)
-		throws Exception {
-
+	protected SLA invokePutSLA(Long slaId, SLA sLA) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
 			_inputObjectMapper.writeValueAsString(sLA),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 
@@ -486,8 +460,7 @@ public abstract class BaseSLAResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePutProcessSLAResponse(
-			Long processId, Long slaId, SLA sLA)
+	protected Http.Response invokePutSLAResponse(Long slaId, SLA sLA)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -496,10 +469,7 @@ public abstract class BaseSLAResourceTestCase {
 			_inputObjectMapper.writeValueAsString(sLA),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{process-id}/slas/{sla-id}", processId, slaId);
+		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
 
 		options.setLocation(location);
 

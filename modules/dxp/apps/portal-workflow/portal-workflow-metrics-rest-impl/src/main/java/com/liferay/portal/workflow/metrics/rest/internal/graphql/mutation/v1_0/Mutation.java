@@ -57,25 +57,20 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteProcessSLA(
-			@GraphQLName("process-id") Long processId,
-			@GraphQLName("sla-id") Long slaId)
-		throws Exception {
-
+	public void deleteSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.deleteProcessSLA(processId, slaId));
+			sLAResource -> sLAResource.deleteSLA(slaId));
 	}
 
 	@GraphQLInvokeDetached
-	public SLA putProcessSLA(
-			@GraphQLName("process-id") Long processId,
+	public SLA putSLA(
 			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sLA)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.putProcessSLA(processId, slaId, sLA));
+			sLAResource -> sLAResource.putSLA(slaId, sLA));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

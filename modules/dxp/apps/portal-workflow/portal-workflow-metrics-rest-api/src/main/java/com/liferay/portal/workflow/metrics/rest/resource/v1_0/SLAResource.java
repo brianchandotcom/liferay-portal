@@ -37,12 +37,11 @@ public interface SLAResource {
 
 	public SLA postProcessSLA(Long processId, SLA sLA) throws Exception;
 
-	public void deleteProcessSLA(Long processId, Long slaId) throws Exception;
+	public void deleteSLA(Long slaId) throws Exception;
 
-	public SLA getProcessSLA(Long processId, Long slaId) throws Exception;
+	public SLA getSLA(Long slaId) throws Exception;
 
-	public SLA putProcessSLA(Long processId, Long slaId, SLA sLA)
-		throws Exception;
+	public SLA putSLA(Long slaId, SLA sLA) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

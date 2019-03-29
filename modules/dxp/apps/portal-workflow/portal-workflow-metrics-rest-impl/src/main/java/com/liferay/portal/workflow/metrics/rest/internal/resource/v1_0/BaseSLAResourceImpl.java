@@ -94,23 +94,19 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 
 	@Override
 	@DELETE
-	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Path("/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public void deleteProcessSLA(
-			@NotNull @PathParam("process-id") Long processId,
-			@NotNull @PathParam("sla-id") Long slaId)
+	public void deleteSLA(@NotNull @PathParam("sla-id") Long slaId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Path("/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA getProcessSLA(
-			@NotNull @PathParam("process-id") Long processId,
-			@NotNull @PathParam("sla-id") Long slaId)
+	public SLA getSLA(@NotNull @PathParam("sla-id") Long slaId)
 		throws Exception {
 
 		return new SLA();
@@ -119,12 +115,10 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Path("/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putProcessSLA(
-			@NotNull @PathParam("process-id") Long processId,
-			@NotNull @PathParam("sla-id") Long slaId, SLA sLA)
+	public SLA putSLA(@NotNull @PathParam("sla-id") Long slaId, SLA sLA)
 		throws Exception {
 
 		return new SLA();

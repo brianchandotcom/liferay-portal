@@ -109,14 +109,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public SLA getProcessSLA(
-			@GraphQLName("process-id") Long processId,
-			@GraphQLName("sla-id") Long slaId)
-		throws Exception {
-
+	public SLA getSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
 		return _applyComponentServiceObjects(
 			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.getProcessSLA(processId, slaId));
+			sLAResource -> sLAResource.getSLA(slaId));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

@@ -14,20 +14,13 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.Map;
@@ -41,7 +34,7 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper, String templateManagerName,
-		long interval) {
+		TemplateResourceCache templateResourceCache) {
 
 		super(
 			errorTemplateResource, context, templateContextHelper,
@@ -53,8 +46,8 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 
 		this.templateResource = templateResource;
 
-		if (interval != 0) {
-			cacheTemplateResource(templateManagerName);
+		if (templateResourceCache.isEnabled()) {
+			cacheTemplateResource(templateResourceCache);
 		}
 	}
 
@@ -90,72 +83,34 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 		write(writer);
 	}
 
-	protected void cacheTemplateResource(String templateManagerName) {
-		if (!(templateResource instanceof CacheTemplateResource) &&
-			!(templateResource instanceof StringTemplateResource)) {
+	protected void cacheTemplateResource(
+		TemplateResourceCache templateResourceCache) {
 
-			templateResource = new CacheTemplateResource(templateResource);
-		}
+		TemplateResource cachedTemplateResource =
+			templateResourceCache.getTemplateResource(
+				templateResource.getTemplateId());
 
-		String portalCacheName = TemplateResourceLoader.class.getName();
+		if ((cachedTemplateResource == null) ||
+			!templateResource.equals(cachedTemplateResource)) {
 
-		portalCacheName = portalCacheName.concat(
-			StringPool.PERIOD
-		).concat(
-			templateManagerName
-		);
-
-		PortalCache<String, Serializable> portalCache = getPortalCache(
-			templateResource, portalCacheName);
-
-		Object object = portalCache.get(templateResource.getTemplateId());
-
-		if ((object == null) || !templateResource.equals(object)) {
-			portalCache.put(templateResource.getTemplateId(), templateResource);
+			templateResourceCache.put(
+				templateResource.getTemplateId(), templateResource);
 		}
 
 		if (errorTemplateResource == null) {
 			return;
 		}
 
-		if (!(errorTemplateResource instanceof CacheTemplateResource) &&
-			!(errorTemplateResource instanceof StringTemplateResource)) {
+		TemplateResource cachedErrorTemplateResource =
+			templateResourceCache.getTemplateResource(
+				errorTemplateResource.getTemplateId());
 
-			errorTemplateResource = new CacheTemplateResource(
-				errorTemplateResource);
-		}
+		if ((cachedErrorTemplateResource == null) ||
+			!errorTemplateResource.equals(cachedErrorTemplateResource)) {
 
-		portalCache = getPortalCache(errorTemplateResource, portalCacheName);
-
-		object = portalCache.get(errorTemplateResource.getTemplateId());
-
-		if ((object == null) || !errorTemplateResource.equals(object)) {
-			portalCache.put(
+			templateResourceCache.put(
 				errorTemplateResource.getTemplateId(), errorTemplateResource);
 		}
-	}
-
-	protected PortalCache<String, Serializable> getPortalCache(
-		TemplateResource templateResource, String portalCacheName) {
-
-		if (!(templateResource instanceof CacheTemplateResource)) {
-			return PortalCacheHelperUtil.getPortalCache(
-				PortalCacheManagerNames.MULTI_VM, portalCacheName);
-		}
-
-		CacheTemplateResource cacheTemplateResource =
-			(CacheTemplateResource)templateResource;
-
-		TemplateResource innerTemplateResource =
-			cacheTemplateResource.getInnerTemplateResource();
-
-		if (innerTemplateResource instanceof URLTemplateResource) {
-			return PortalCacheHelperUtil.getPortalCache(
-				PortalCacheManagerNames.SINGLE_VM, portalCacheName);
-		}
-
-		return PortalCacheHelperUtil.getPortalCache(
-			PortalCacheManagerNames.MULTI_VM, portalCacheName);
 	}
 
 	protected abstract void processTemplate(

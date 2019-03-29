@@ -11,6 +11,7 @@ import handleFieldBlurred from './handlers/fieldBlurredHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
+import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -182,6 +183,10 @@ class LayoutProvider extends Component {
 
 	_handleFieldAdded(event) {
 		this.setState(handleFieldAdded(this.props, this.state, event));
+	}
+
+	_handleFieldSetAdded(event) {
+		this.setState(handleFieldSetAdded(this.props, this.state, event));
 	}
 
 	_handleFieldBlurred(event) {
@@ -509,6 +514,7 @@ class LayoutProvider extends Component {
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
+				fieldSetAdded: this._handleFieldSetAdded.bind(this),
 				focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),

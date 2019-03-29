@@ -80,41 +80,6 @@ public class TemplatePortletPreferences {
 		return getPreferences(Collections.singletonMap(key, value));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void reset() {
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
-
-		portletPreferencesImpl.reset();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setValue(String key, String value) throws ReadOnlyException {
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
-
-		portletPreferencesImpl.setValue(key, value);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setValues(String key, String[] values)
-		throws ReadOnlyException {
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
-
-		portletPreferencesImpl.setValues(key, values);
-	}
-
 	@Override
 	public String toString() {
 		PortletPreferencesImpl portletPreferencesImpl =

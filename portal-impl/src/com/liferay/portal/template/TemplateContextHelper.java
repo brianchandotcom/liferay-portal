@@ -379,16 +379,6 @@ public class TemplateContextHelper {
 		_helperUtilitiesMaps.remove(classLoader);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public TemplateControlContext getTemplateControlContext();
-
-	}
-
 	protected void populateCommonHelperUtilities(
 		Map<String, Object> variables) {
 

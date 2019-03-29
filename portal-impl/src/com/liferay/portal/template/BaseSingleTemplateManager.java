@@ -63,47 +63,4 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #doGetTemplate(TemplateResource, TemplateResource, boolean, Map)}
-	 */
-	@Deprecated
-	protected Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities, boolean privileged) {
-
-		return doGetTemplate(
-			templateResource, errorTemplateResource, restricted,
-			helperUtilities);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected class DoGetSingleTemplatePrivilegedAction
-		extends DoGetAbstractTemplatePrivilegedAction {
-
-		public DoGetSingleTemplatePrivilegedAction(
-			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, boolean restricted,
-			Map<String, Object> helperUtilities) {
-
-			super(errorTemplateResource, restricted, helperUtilities);
-
-			_templateResource = templateResource;
-		}
-
-		@Override
-		public Template run() {
-			return doGetTemplate(
-				_templateResource, errorTemplateResource, restricted,
-				helperUtilities);
-		}
-
-		private final TemplateResource _templateResource;
-
-	}
-
 }

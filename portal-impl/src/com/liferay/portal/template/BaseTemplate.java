@@ -145,14 +145,6 @@ public abstract class BaseTemplate implements Template {
 		return context.values();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #write(Writer)}
-	 */
-	@Deprecated
-	protected void _write(Writer writer) throws TemplateException {
-		write(writer);
-	}
-
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 

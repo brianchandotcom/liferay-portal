@@ -107,9 +107,4 @@ public class ClassLoaderResourceParserTest {
 					templateId)));
 	}
 
-	@Test
-	public void testMisc() {
-		new ClassLoaderResourceParser(null);
-	}
-
 }

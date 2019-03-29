@@ -66,46 +66,4 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected Template doGetTemplate(
-		List<TemplateResource> templateResources,
-		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities, boolean privileged) {
-
-		return doGetTemplate(
-			templateResources, errorTemplateResource, restricted,
-			helperUtilities);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected class DoGetMultiTemplatePrivilegedAction
-		extends DoGetAbstractTemplatePrivilegedAction {
-
-		public DoGetMultiTemplatePrivilegedAction(
-			List<TemplateResource> templateResources,
-			TemplateResource errorTemplateResource, boolean restricted,
-			Map<String, Object> helperUtilities) {
-
-			super(errorTemplateResource, restricted, helperUtilities);
-
-			_templateResources = templateResources;
-		}
-
-		@Override
-		public Template run() {
-			return doGetTemplate(
-				_templateResources, errorTemplateResource, restricted,
-				helperUtilities);
-		}
-
-		private final List<TemplateResource> _templateResources;
-
-	}
-
 }

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -51,7 +52,6 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.log4j.Level;
@@ -98,7 +98,7 @@ public class ExportImportLifecycleEventTest {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
 					TestPropsValues.getUserId(), 0, false, new long[0],
-					_parameterMap, Locale.US, TimeZoneUtil.GMT);
+					_parameterMap, LocaleUtil.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -135,7 +135,7 @@ public class ExportImportLifecycleEventTest {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					TestPropsValues.getUserId(), 0, false, new long[0],
-					_parameterMap, Locale.US, TimeZoneUtil.GMT);
+					_parameterMap, LocaleUtil.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -204,7 +204,7 @@ public class ExportImportLifecycleEventTest {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportPortletSettingsMap(
 					TestPropsValues.getUserId(), plid, _group.getGroupId(),
-					StringPool.BLANK, _parameterMap, Locale.US,
+					StringPool.BLANK, _parameterMap, LocaleUtil.US,
 					TimeZoneUtil.GMT, StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
@@ -237,7 +237,7 @@ public class ExportImportLifecycleEventTest {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportPortletSettingsMap(
 					TestPropsValues.getUserId(), 0, _group.getGroupId(),
-					StringPool.BLANK, _parameterMap, Locale.US,
+					StringPool.BLANK, _parameterMap, LocaleUtil.US,
 					TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =

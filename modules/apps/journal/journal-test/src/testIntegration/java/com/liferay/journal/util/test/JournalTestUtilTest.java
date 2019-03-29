@@ -290,7 +290,7 @@ public class JournalTestUtilTest {
 
 		Map<Locale, String> contents = new HashMap<>();
 
-		contents.put(Locale.US, "This is an updated test article.");
+		contents.put(LocaleUtil.US, "This is an updated test article.");
 
 		String defaultLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getSiteDefault());

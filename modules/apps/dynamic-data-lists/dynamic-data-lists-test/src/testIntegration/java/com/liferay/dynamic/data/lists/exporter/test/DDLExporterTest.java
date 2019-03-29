@@ -107,8 +107,9 @@ public class DDLExporterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_availableLocales = DDMFormTestUtil.createAvailableLocales(Locale.US);
-		_defaultLocale = Locale.US;
+		_availableLocales = DDMFormTestUtil.createAvailableLocales(
+			LocaleUtil.US);
+		_defaultLocale = LocaleUtil.US;
 		_group = GroupTestUtil.addGroup();
 
 		_originalPermissionChecker =

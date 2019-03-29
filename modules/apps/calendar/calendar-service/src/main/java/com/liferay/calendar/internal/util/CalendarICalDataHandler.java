@@ -14,7 +14,9 @@
 
 package com.liferay.calendar.internal.util;
 
+import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
+import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -92,10 +95,28 @@ import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.XProperty;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Marcellus Tavares
  */
+@org.osgi.service.component.annotations.Component(
+	immediate = true, service = {}
+)
 public class CalendarICalDataHandler implements CalendarDataHandler {
+
+	@Activate
+	public void activate() {
+		CalendarDataHandlerFactory.registerCalendarDataHandler(
+			CalendarDataFormat.parse(CalendarUtil.ICAL_EXTENSION), this);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		CalendarDataHandlerFactory.unregisterCalendarDataHandler(
+			CalendarDataFormat.parse(CalendarUtil.ICAL_EXTENSION));
+	}
 
 	@Override
 	public String exportCalendar(long calendarId) throws Exception {

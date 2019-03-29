@@ -16,8 +16,8 @@ package com.liferay.calendar.exporter;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Marcellus Tavares
@@ -39,22 +39,20 @@ public class CalendarDataHandlerFactory {
 		return calendarDataHandler;
 	}
 
-	public void setCalendarDataHandlers(
-		Map<String, CalendarDataHandler> calendarDataHandlers) {
+	public static void registerCalendarDataHandler(
+		CalendarDataFormat calendarDataFormat,
+		CalendarDataHandler calendarDataHandler) {
 
-		_calendarDataHandlers = new HashMap<>();
-
-		for (Map.Entry<String, CalendarDataHandler> entry :
-				calendarDataHandlers.entrySet()) {
-
-			CalendarDataFormat calendarDataFormat = CalendarDataFormat.parse(
-				entry.getKey());
-
-			_calendarDataHandlers.put(calendarDataFormat, entry.getValue());
-		}
+		_calendarDataHandlers.put(calendarDataFormat, calendarDataHandler);
 	}
 
-	private static Map<CalendarDataFormat, CalendarDataHandler>
-		_calendarDataHandlers;
+	public static void unregisterCalendarDataHandler(
+		CalendarDataFormat calendarDataFormat) {
+
+		_calendarDataHandlers.remove(calendarDataFormat);
+	}
+
+	private static final Map<CalendarDataFormat, CalendarDataHandler>
+		_calendarDataHandlers = new ConcurrentHashMap<>();
 
 }

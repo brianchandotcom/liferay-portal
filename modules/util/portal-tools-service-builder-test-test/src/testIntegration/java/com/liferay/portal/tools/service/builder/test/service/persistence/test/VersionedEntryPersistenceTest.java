@@ -155,6 +155,14 @@ public class VersionedEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId_Head() throws Exception {
+		_persistence.countByGroupId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByGroupId_Head(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByHeadId() throws Exception {
 		_persistence.countByHeadId(RandomTestUtil.nextLong());
 

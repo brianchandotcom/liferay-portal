@@ -193,6 +193,161 @@ public interface VersionedEntryPersistence
 	public int countByGroupId(long groupId);
 
 	/**
+	 * Returns all the versioned entries where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the matching versioned entries
+	 */
+	public java.util.List<VersionedEntry> findByGroupId_Head(
+		long groupId, boolean head);
+
+	/**
+	 * Returns a range of all the versioned entries where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of versioned entries
+	 * @param end the upper bound of the range of versioned entries (not inclusive)
+	 * @return the range of matching versioned entries
+	 */
+	public java.util.List<VersionedEntry> findByGroupId_Head(
+		long groupId, boolean head, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the versioned entries where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of versioned entries
+	 * @param end the upper bound of the range of versioned entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching versioned entries
+	 */
+	public java.util.List<VersionedEntry> findByGroupId_Head(
+		long groupId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the versioned entries where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of versioned entries
+	 * @param end the upper bound of the range of versioned entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching versioned entries
+	 */
+	public java.util.List<VersionedEntry> findByGroupId_Head(
+		long groupId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first versioned entry in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching versioned entry
+	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
+	 */
+	public VersionedEntry findByGroupId_Head_First(
+			long groupId, boolean head,
+			com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+				orderByComparator)
+		throws NoSuchVersionedEntryException;
+
+	/**
+	 * Returns the first versioned entry in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
+	 */
+	public VersionedEntry fetchByGroupId_Head_First(
+		long groupId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching versioned entry
+	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
+	 */
+	public VersionedEntry findByGroupId_Head_Last(
+			long groupId, boolean head,
+			com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+				orderByComparator)
+		throws NoSuchVersionedEntryException;
+
+	/**
+	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
+	 */
+	public VersionedEntry fetchByGroupId_Head_Last(
+		long groupId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the versioned entries before and after the current versioned entry in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param versionedEntryId the primary key of the current versioned entry
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next versioned entry
+	 * @throws NoSuchVersionedEntryException if a versioned entry with the primary key could not be found
+	 */
+	public VersionedEntry[] findByGroupId_Head_PrevAndNext(
+			long versionedEntryId, long groupId, boolean head,
+			com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
+				orderByComparator)
+		throws NoSuchVersionedEntryException;
+
+	/**
+	 * Removes all the versioned entries where groupId = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 */
+	public void removeByGroupId_Head(long groupId, boolean head);
+
+	/**
+	 * Returns the number of versioned entries where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the number of matching versioned entries
+	 */
+	public int countByGroupId_Head(long groupId, boolean head);
+
+	/**
 	 * Returns the versioned entry where headId = &#63; or throws a <code>NoSuchVersionedEntryException</code> if it could not be found.
 	 *
 	 * @param headId the head ID

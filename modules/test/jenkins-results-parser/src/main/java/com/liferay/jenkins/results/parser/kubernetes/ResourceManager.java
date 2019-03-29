@@ -45,12 +45,11 @@ public class ResourceManager {
 			String message = ae.getMessage();
 
 			if (message.equals("Conflict")) {
-				V1ObjectMeta meta = podConfiguration.getMetadata();
-
 				System.out.println(
-					"Unable to create new pod with name '" + meta.getName() +
-						"' as it already exists in namespace '" + namespace +
-							"'");
+					"Unable to create new pod with name '" +
+						getPodName(podConfiguration) +
+							"' as it already exists in namespace '" +
+								namespace + "'");
 
 				return podConfiguration;
 			}
@@ -68,21 +67,20 @@ public class ResourceManager {
 	public static V1Status deletePod(V1Pod podConfiguration, String namespace)
 		throws ApiException {
 
-		V1ObjectMeta meta = podConfiguration.getMetadata();
-
 		try {
 			return _liferayKubernetesApi.core.deleteNamespacedPod(
-				meta.getName(), namespace, new V1DeleteOptions(), null, 60,
-				true, null);
+				getPodName(podConfiguration), namespace, new V1DeleteOptions(),
+				null, 60, true, null);
 		}
 		catch (ApiException ae) {
 			String message = ae.getMessage();
 
 			if (message.equals("Not Found")) {
 				System.out.println(
-					"Unable to delete pod with name '" + meta.getName() +
-						"' as it was not found in namespace '" + namespace +
-							"'");
+					"Unable to delete pod with name '" +
+						getPodName(podConfiguration) +
+							"' as it was not found in namespace '" + namespace +
+								"'");
 
 				return null;
 			}

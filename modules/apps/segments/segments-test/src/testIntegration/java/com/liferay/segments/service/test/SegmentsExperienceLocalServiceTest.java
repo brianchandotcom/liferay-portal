@@ -35,6 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -98,12 +99,8 @@ public class SegmentsExperienceLocalServiceTest {
 
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 
-		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(
-				_group.getGroupId());
-
 		Assert.assertEquals(
-			defaultSegmentsEntry.getSegmentsEntryId(),
+			SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID,
 			segmentsExperience.getSegmentsEntryId());
 	}
 
@@ -114,15 +111,11 @@ public class SegmentsExperienceLocalServiceTest {
 		_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 			_group.getGroupId(), _classNameId, _classPK);
 
-		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(
-				_group.getGroupId());
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
-			defaultSegmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+			SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID, _classNameId, _classPK,
 			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomBoolean(), serviceContext);
 	}

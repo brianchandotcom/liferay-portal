@@ -64,10 +64,6 @@ public class SegmentsEntryProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_defaultSegmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(
-				_group.getGroupId());
 	}
 
 	@Test
@@ -217,16 +213,13 @@ public class SegmentsEntryProviderTest {
 			context);
 
 		Assert.assertEquals(
-			segmentsEntryIds.toString(), 4, segmentsEntryIds.length);
-		Assert.assertEquals(
-			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[3]);
+			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId(),
-					segmentsEntry3.getSegmentsEntryId(),
-					_defaultSegmentsEntry.getSegmentsEntryId()
+					segmentsEntry3.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -278,15 +271,12 @@ public class SegmentsEntryProviderTest {
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
 		Assert.assertEquals(
-			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
-		Assert.assertEquals(
-			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegmentsEntry.getSegmentsEntryId()
+					segmentsEntry2.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -327,16 +317,13 @@ public class SegmentsEntryProviderTest {
 			context);
 
 		Assert.assertEquals(
-			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
-		Assert.assertEquals(
-			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				segmentsEntryIds,
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegmentsEntry.getSegmentsEntryId()
+					segmentsEntry2.getSegmentsEntryId()
 				}));
 	}
 
@@ -377,15 +364,12 @@ public class SegmentsEntryProviderTest {
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
 		Assert.assertEquals(
-			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
-		Assert.assertEquals(
-			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegmentsEntry.getSegmentsEntryId()
+					segmentsEntry2.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -395,8 +379,6 @@ public class SegmentsEntryProviderTest {
 		type = SegmentsCriteriaContributor.class
 	)
 	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
-
-	private SegmentsEntry _defaultSegmentsEntry;
 
 	@DeleteAfterTestRun
 	private Group _group;

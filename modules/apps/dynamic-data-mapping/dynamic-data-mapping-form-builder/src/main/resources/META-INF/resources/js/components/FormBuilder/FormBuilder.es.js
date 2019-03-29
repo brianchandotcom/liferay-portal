@@ -9,6 +9,7 @@ import {debounce} from 'metal-debounce';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 import {generateFieldName} from '../LayoutProvider/util/fields.es';
+import {makeFetch} from '../../util/fetch.es';
 import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
@@ -250,6 +251,75 @@ class Builder extends Component {
 				locale,
 				propertyName: fieldName,
 				propertyValue: value
+			}
+		);
+	}
+
+	/**
+	 * Event handler for when the user adds a new FieldSet to the Form Builder.
+	 * This method creates a new field name based on the label of the FieldType
+	 * added and emits an event with the new field configurations.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleFieldSetAdded(event) {
+		const {data} = event;
+		const elementSetId = data.source.dataset.fieldSetId;
+
+		let fieldSetPage = [];
+
+		const promise = this.getElementSetPage(elementSetId);
+
+		promise.then(
+			value => {
+				fieldSetPage = value;
+
+				this.emit(
+					'fieldSetAdded',
+					{
+						...event,
+						fieldSetPage
+					}
+				);
+			}
+		);
+	}
+
+	getElementSetPage(elementSetId) {
+		const promise = this._fetchElementSetURL(elementSetId)
+			.then(
+				({pages}) => {
+					let fieldSetPage = [];
+
+					if (!this.isDisposed()) {
+						fieldSetPage = pages;
+					}
+
+					return fieldSetPage;
+				}
+			).catch(
+				error => {
+					throw new Error(error);
+				}
+			);
+
+		return promise;
+	}
+
+	_fetchElementSetURL(elementSetId) {
+		const {fieldSetDefinitionURL, groupId, namespace} = this.props;
+
+		let language = themeDisplay.getLanguageId();
+
+		return makeFetch(
+			{
+				method: 'GET',
+				url: `${fieldSetDefinitionURL}?ddmStructureId=${elementSetId}&languageId=${language}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
+			}
+		).catch(
+			error => {
+				throw new Error(error);
 			}
 		);
 	}
@@ -594,6 +664,7 @@ class Builder extends Component {
 		const {
 			activePage,
 			editingLanguageId,
+			fieldSets,
 			fieldTypes,
 			focusedField,
 			namespace,
@@ -602,7 +673,8 @@ class Builder extends Component {
 			rules,
 			spritemap,
 			successPageSettings,
-			visible
+			visible,
+			view
 		} = props;
 
 		const FormRendererEvents = {
@@ -626,6 +698,7 @@ class Builder extends Component {
 			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			fieldSetAdded: this._handleFieldSetAdded.bind(this),
 			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
 			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
 			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
@@ -645,6 +718,7 @@ class Builder extends Component {
 							ref="FormRenderer"
 							spritemap={spritemap}
 							successPageSettings={successPageSettings}
+							view={view}
 						/>
 						<ClayModal
 							body={Liferay.Language.get('are-you-sure-you-want-to-delete-this-field')}
@@ -699,6 +773,7 @@ class Builder extends Component {
 				<Sidebar
 					editingLanguageId={editingLanguageId}
 					events={sidebarEvents}
+					fieldSets={fieldSets}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
 					namespace={namespace}

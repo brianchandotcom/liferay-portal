@@ -263,16 +263,24 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			Field field = ReflectionUtil.getDeclaredField(
 				Configuration.class, "cache");
 
+			PortalCache<TemplateResource, TemplateCache.MaybeMissingTemplate>
+				portalCache = null;
+
+			if (_freeMarkerEngineConfiguration.resourceModificationCheck() !=
+					0) {
+
+				portalCache =
+					(PortalCache
+						<TemplateResource, TemplateCache.MaybeMissingTemplate>)
+							_singleVMPool.getPortalCache(
+								StringBundler.concat(
+									TemplateResource.class.getName(),
+									StringPool.POUND,
+									TemplateConstants.LANG_TYPE_FTL));
+			}
+
 			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freeMarkerEngineConfiguration,
-				templateResourceLoader,
-				(PortalCache
-					<TemplateResource, TemplateCache.MaybeMissingTemplate>)
-						_singleVMPool.getPortalCache(
-							StringBundler.concat(
-								TemplateResource.class.getName(),
-								StringPool.POUND,
-								TemplateConstants.LANG_TYPE_FTL)));
+				_configuration, templateResourceLoader, portalCache);
 
 			field.set(_configuration, templateCache);
 		}

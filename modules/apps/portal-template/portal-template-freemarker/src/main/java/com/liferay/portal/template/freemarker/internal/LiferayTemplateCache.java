@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.cache.TemplateCache;
 
@@ -39,7 +38,6 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	public LiferayTemplateCache(
 			Configuration configuration,
-			FreeMarkerEngineConfiguration freeMarkerEngineConfiguration,
 			TemplateResourceLoader templateResourceLoader,
 			PortalCache<TemplateResource, MaybeMissingTemplate> portalCache)
 		throws Exception {
@@ -47,7 +45,6 @@ public class LiferayTemplateCache extends TemplateCache {
 		super(null, configuration);
 
 		_configuration = configuration;
-		_freeMarkerEngineConfiguration = freeMarkerEngineConfiguration;
 		_templateResourceLoader = templateResourceLoader;
 		_portalCache = portalCache;
 
@@ -59,7 +56,9 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	@Override
 	public void clear() {
-		_portalCache.removeAll();
+		if (_portalCache != null) {
+			_portalCache.removeAll();
+		}
 	}
 
 	@Override
@@ -103,11 +102,14 @@ public class LiferayTemplateCache extends TemplateCache {
 				"Unable to find FreeMarker template with ID " + templateId);
 		}
 
-		MaybeMissingTemplate maybeMissingTemplate = _portalCache.get(
-			templateResource);
+		MaybeMissingTemplate maybeMissingTemplate = null;
 
-		if (maybeMissingTemplate != null) {
-			return maybeMissingTemplate;
+		if (_portalCache != null) {
+			maybeMissingTemplate = _portalCache.get(templateResource);
+
+			if (maybeMissingTemplate != null) {
+				return maybeMissingTemplate;
+			}
 		}
 
 		Template template = new Template(
@@ -117,9 +119,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		try {
 			maybeMissingTemplate = _constructor.newInstance(template);
 
-			if (_freeMarkerEngineConfiguration.resourceModificationCheck() !=
-					0) {
-
+			if (_portalCache != null) {
 				_portalCache.put(templateResource, maybeMissingTemplate);
 			}
 
@@ -132,7 +132,6 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	private final Configuration _configuration;
 	private final Constructor<MaybeMissingTemplate> _constructor;
-	private final FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, MaybeMissingTemplate>
 		_portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;

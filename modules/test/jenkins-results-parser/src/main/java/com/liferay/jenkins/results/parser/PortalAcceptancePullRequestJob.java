@@ -26,12 +26,14 @@ import java.util.TreeSet;
 public class PortalAcceptancePullRequestJob
 	extends PortalGitRepositoryJob implements TestSuiteJob {
 
-	public PortalAcceptancePullRequestJob(String url) {
-		this(url, "default");
+	public PortalAcceptancePullRequestJob(String jobName) {
+		this(jobName, "default");
 	}
 
-	public PortalAcceptancePullRequestJob(String url, String testSuiteName) {
-		super(url);
+	public PortalAcceptancePullRequestJob(
+		String jobName, String testSuiteName) {
+
+		super(jobName);
 
 		_testSuiteName = testSuiteName;
 	}

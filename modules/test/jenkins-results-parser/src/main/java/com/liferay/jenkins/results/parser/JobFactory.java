@@ -155,9 +155,7 @@ public class JobFactory {
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-upstream(")) {
-			_jobs.put(
-				jobName,
-				new PortalAcceptanceUpstreamJob(jobName, testSuiteName));
+			_jobs.put(jobName, new PortalAcceptanceUpstreamJob(jobName));
 
 			return _jobs.get(jobName);
 		}
@@ -179,6 +177,14 @@ public class JobFactory {
 
 		if (jobName.equals("test-portal-release")) {
 			_jobs.put(jobName, new PortalReleaseJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
+		if (jobName.startsWith("test-portal-testsuite-upstream(")) {
+			_jobs.put(
+				jobName,
+				new PortalTestSuiteUpstreamJob(jobName, testSuiteName));
 
 			return _jobs.get(jobName);
 		}

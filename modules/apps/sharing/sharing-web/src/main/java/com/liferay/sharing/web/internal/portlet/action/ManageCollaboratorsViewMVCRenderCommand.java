@@ -71,7 +71,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		Template template = getTemplate(renderRequest);
+		Template template = _getTemplate(renderRequest);
 
 		template.put(
 			"actionUrl", _getManageCollaboratorsActionURL(renderResponse));
@@ -87,7 +87,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return "ManageCollaborators";
 	}
 
-	protected Template getTemplate(RenderRequest renderRequest) {
+	private Template _getTemplate(RenderRequest renderRequest) {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 

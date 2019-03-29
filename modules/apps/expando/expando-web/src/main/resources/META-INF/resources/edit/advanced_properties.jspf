@@ -21,7 +21,7 @@
 >
 	<div class="<%= ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.SHORT)) ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">
 		<aui:field-wrapper cssClass="custom-precision-type-field-wrapper">
-			<aui:select disabled="<%= expandoColumn != null %>" label="precision" name="precisionType" value="<%= ExpandoColumnConstants.getPrecisionType(type) %>">
+			<aui:select disabled="<%= true %>" id="precisionTypeSelect" label="precision" name="precisionType" value="<%= ExpandoColumnConstants.getPrecisionType(type) %>">
 				<aui:option label="<%= ExpandoColumnConstants.PRECISION_64_BIT %>" />
 				<aui:option label="<%= ExpandoColumnConstants.PRECISION_32_BIT %>" />
 				<aui:option label="<%= ExpandoColumnConstants.PRECISION_16_BIT %>" />

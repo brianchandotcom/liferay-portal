@@ -154,7 +154,7 @@
 
 		if (currentSelectedDataType) {
 			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_TEXT %>') {
-				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch"], "disable")
+				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "disable")
 
 				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "enable")
 
@@ -165,7 +165,7 @@
 			else if ((currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_DECIMAL %>') || (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>')) {
 				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "disable")
 
-				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch"], "enable")
+				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "enable")
 
 				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "unhide");
 

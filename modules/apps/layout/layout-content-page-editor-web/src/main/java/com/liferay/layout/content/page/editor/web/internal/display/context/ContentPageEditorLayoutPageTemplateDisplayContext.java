@@ -136,7 +136,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), draftLayout.getPlid());
+			draftLayout.getClassPK());
 
 		if (layout == null) {
 			return null;

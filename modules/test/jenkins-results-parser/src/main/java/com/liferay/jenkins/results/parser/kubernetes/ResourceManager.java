@@ -14,9 +14,13 @@
 
 package com.liferay.jenkins.results.parser.kubernetes;
 
+import com.google.gson.JsonSyntaxException;
+
 import io.kubernetes.client.ApiException;
+import io.kubernetes.client.models.V1DeleteOptions;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
+import io.kubernetes.client.models.V1Status;
 
 /**
  * @author Kenji Heigel
@@ -49,6 +53,55 @@ public class ResourceManager {
 			}
 
 			throw ae;
+		}
+	}
+
+	public static V1Status deletePod(V1Pod podConfiguration)
+		throws ApiException {
+
+		return deletePod(podConfiguration, "default");
+	}
+
+	public static V1Status deletePod(V1Pod podConfiguration, String namespace)
+		throws ApiException {
+
+		V1ObjectMeta meta = podConfiguration.getMetadata();
+
+		try {
+			return _liferayKubernetesApi.core.deleteNamespacedPod(
+				meta.getName(), namespace, new V1DeleteOptions(), null, 60,
+				true, null);
+		}
+		catch (ApiException ae) {
+			String message = ae.getMessage();
+
+			if (message.equals("Not Found")) {
+				System.out.println(
+					"Unable to delete pod with name '" + meta.getName() +
+						"' as it was not found in namespace '" + namespace +
+							"'");
+
+				return null;
+			}
+
+			throw ae;
+		}
+		catch (JsonSyntaxException jse) {
+			String message = jse.getMessage();
+
+			if (message == null) {
+				throw jse;
+			}
+
+			if (message.contains("Expected a string but was BEGIN_OBJECT")) {
+				System.out.println(
+					"Catching issue: " +
+						"https://github.com/kubernetes-client/java/issues/86");
+
+				return null;
+			}
+
+			throw jse;
 		}
 	}
 

@@ -62,6 +62,8 @@ public interface BuildData {
 
 	public String getJobName();
 
+	public String getJobURL();
+
 	public JSONObject getJSONObject();
 
 	public String getMasterHostname();

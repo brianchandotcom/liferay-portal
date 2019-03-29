@@ -72,7 +72,8 @@ class Sidebar extends Component {
 			{
 				add: {
 					items: [
-						Liferay.Language.get('elements')
+						Liferay.Language.get('elements'),
+						Liferay.Language.get('element-sets')
 					]
 				},
 				edit: {
@@ -452,20 +453,34 @@ class Sidebar extends Component {
 		const {fieldTypes} = this.props;
 		const fieldTypeName = data.source.dataset.fieldTypeName;
 
+		const fieldSetId = data.source.dataset.fieldSetId;
+
 		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
-		this.emit(
-			'fieldAdded',
-			{
-				data,
-				fieldType: {
-					...fieldType,
-					editable: true
-				},
-				target: indexes
-			}
-		);
+		if (fieldSetId) {
+			this.emit(
+				'fieldSetAdded',
+				{
+					data,
+					fieldSetId,
+					target: indexes
+				}
+			);
+		}
+		else {
+			this.emit(
+				'fieldAdded',
+				{
+					data,
+					fieldType: {
+						...fieldType,
+						editable: true
+					},
+					target: indexes
+				}
+			);
+		}
 	}
 
 	/**
@@ -748,6 +763,57 @@ class Sidebar extends Component {
 		);
 	}
 
+	_renderFieldSets() {
+		const {fieldSets, spritemap} = this.props;
+		const group = Object.keys(fieldSets);
+
+		return (
+			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
+				{group.map(
+					(key, index) => (
+						<div
+							aria-labelledby={`#ddm-field-types-${key}-header`}
+							class="panel-collapse show"
+							id={`ddm-field-types-${key}-body`}
+							role="tabpanel"
+						>
+
+							<div class="panel-body p-0 m-0 list-group">
+								<div
+									class="ddm-drag-item list-group-item list-group-item-flex"
+									data-field-set-id={fieldSets[key].id}
+									data-field-set-name={fieldSets[key].name}
+									key={`fieldType_${fieldSets[key].name}`}
+									ref={`fieldType_${fieldSets[key].name}`}
+								>
+									<div class="autofit-col">
+										<span class="sticker sticker-secondary">
+											<span class="inline-item">
+												<svg
+													aria-hidden="true"
+													class={`lexicon-icon lexicon-icon-${fieldSets[key].icon}`}
+												>
+													<use
+														xlink:href={`${spritemap}#${fieldSets[key].icon}`}
+													/>
+												</svg>
+											</span>
+										</span>
+									</div>
+									<div class="autofit-col autofit-col-expand">
+										<h4 class="list-group-title text-truncate">
+											<span>{fieldSets[key].name}</span>
+										</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					)
+				)}
+			</div>
+		);
+	}
+
 	_renderNavItems() {
 		const {activeTab, tabs} = this.state;
 
@@ -962,8 +1028,11 @@ class Sidebar extends Component {
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{!editMode &&
+						{!editMode && (activeTab == 0) &&
 							this._renderFieldTypeGroups()
+						}
+						{!editMode && (activeTab == 1) &&
+							this._renderFieldSets()
 						}
 						{editMode && (
 							<div class="sidebar-body ddm-field-settings">

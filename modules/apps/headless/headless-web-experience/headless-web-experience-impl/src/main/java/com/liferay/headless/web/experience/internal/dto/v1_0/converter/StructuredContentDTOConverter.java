@@ -66,12 +66,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -402,12 +398,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Context
-	private HttpServletRequest _contextHttpServletRequest;
-
-	@Context
-	private HttpServletResponse _contextHttpServletResponse;
 
 	@Reference
 	private DLAppService _dlAppService;

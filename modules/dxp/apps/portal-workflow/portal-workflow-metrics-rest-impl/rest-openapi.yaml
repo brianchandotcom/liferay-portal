@@ -171,15 +171,9 @@ paths:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""
             tags: ["SLA"]
-    "/processes/{process-id}/slas/{sla-id}":
+    "/slas/{sla-id}":
         delete:
             parameters:
-                - in: path
-                  name: process-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
                 - in: path
                   name: sla-id
                   required: true
@@ -194,12 +188,6 @@ paths:
             tags: ["SLA"]
         get:
             parameters:
-                - in: path
-                  name: process-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
                 - in: path
                   name: sla-id
                   required: true
@@ -216,12 +204,6 @@ paths:
             tags: ["SLA"]
         put:
             parameters:
-                - in: path
-                  name: process-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
                 - in: path
                   name: sla-id
                   required: true

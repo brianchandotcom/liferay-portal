@@ -39,17 +39,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
-	public boolean deleteProcessSLA(Long processId, Long slaId)
-		throws Exception {
-
+	public void deleteSLA(Long slaId) throws Exception {
 		_workflowMetricsSLADefinitionLocalService.
 			deleteWorkflowMetricsSLADefinition(slaId);
-
-		return true;
 	}
 
 	@Override
-	public SLA getProcessSLA(Long processId, Long slaId) throws Exception {
+	public SLA getSLA(Long slaId) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinition(slaId));
@@ -82,9 +78,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA putProcessSLA(Long processId, Long slaId, SLA sla)
-		throws Exception {
-
+	public SLA putSLA(Long slaId, SLA sla) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(

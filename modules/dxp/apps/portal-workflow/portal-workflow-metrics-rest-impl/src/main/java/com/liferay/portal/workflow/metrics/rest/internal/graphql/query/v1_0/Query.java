@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
@@ -43,6 +45,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setNodeResourceComponentServiceObjects(
+		ComponentServiceObjects<NodeResource>
+			nodeResourceComponentServiceObjects) {
+
+		_nodeResourceComponentServiceObjects =
+			nodeResourceComponentServiceObjects;
+	}
+
 	public static void setProcessResourceComponentServiceObjects(
 		ComponentServiceObjects<ProcessResource>
 			processResourceComponentServiceObjects) {
@@ -57,6 +67,23 @@ public class Query {
 
 		_slaResourceComponentServiceObjects =
 			slaResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Node> getProcessNodesPage(
+			@GraphQLName("process-id") Long processId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_nodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			nodeResource -> {
+				Page paginationPage = nodeResource.getProcessNodesPage(
+					processId);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -134,6 +161,14 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(NodeResource nodeResource)
+		throws Exception {
+
+		nodeResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProcessResource processResource)
 		throws Exception {
 
@@ -150,6 +185,8 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private static ComponentServiceObjects<NodeResource>
+		_nodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>

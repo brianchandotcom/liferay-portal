@@ -167,14 +167,6 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 				className, classPK, context, segmentsEntry)
 		).sorted(
 			(segmentsEntry1, segmentsEntry2) -> {
-				if (segmentsEntry1.isDefaultSegment()) {
-					return 1;
-				}
-
-				if (segmentsEntry2.isDefaultSegment()) {
-					return -1;
-				}
-
 				Date modifiedDate = segmentsEntry2.getModifiedDate();
 
 				return modifiedDate.compareTo(segmentsEntry1.getModifiedDate());
@@ -232,10 +224,6 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	private boolean _isMember(
 		String className, long classPK, Context context,
 		SegmentsEntry segmentsEntry) {
-
-		if (segmentsEntry.isDefaultSegment()) {
-			return true;
-		}
 
 		if (_segmentsEntryRelLocalService.hasSegmentsEntryRel(
 				segmentsEntry.getSegmentsEntryId(),

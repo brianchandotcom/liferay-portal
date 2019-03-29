@@ -26,17 +26,17 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
@@ -79,7 +79,7 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsServiceConfiguration.class, properties);
 	}
 
-	protected void doRun(HttpServletRequest request) throws PortalException {
+	protected void doRun(HttpServletRequest request) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -87,7 +87,7 @@ public class SegmentsServicePreAction extends Action {
 			return;
 		}
 
-		long[] segmentsEntryIds = null;
+		long[] segmentsEntryIds = {SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID};
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -97,25 +97,19 @@ public class SegmentsServicePreAction extends Action {
 			try {
 				Context context = _requestContextMapper.map(request);
 
-				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-					themeDisplay.getScopeGroupId(), User.class.getName(),
-					themeDisplay.getUserId(), context);
+				long[] userSegmentsEntryIds =
+					_segmentsEntryProvider.getSegmentsEntryIds(
+						themeDisplay.getScopeGroupId(), User.class.getName(),
+						themeDisplay.getUserId(), context);
+
+				segmentsEntryIds = ArrayUtil.append(
+					userSegmentsEntryIds, segmentsEntryIds);
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(pe.getMessage());
 				}
 			}
-		}
-
-		if (segmentsEntryIds == null) {
-			SegmentsEntry defaultSegmentsEntry =
-				_segmentsEntryLocalService.getDefaultSegmentsEntry(
-					themeDisplay.getCompanyGroupId());
-
-			segmentsEntryIds = new long[] {
-				defaultSegmentsEntry.getSegmentsEntryId()
-			};
 		}
 
 		request.setAttribute(
@@ -130,9 +124,7 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	private long[] _getSegmentsExperienceIds(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK)
-		throws PortalException {
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK) {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -157,9 +149,6 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;

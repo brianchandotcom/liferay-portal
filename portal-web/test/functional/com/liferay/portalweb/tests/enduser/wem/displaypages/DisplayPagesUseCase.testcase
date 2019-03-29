@@ -668,7 +668,7 @@ definition {
 
 		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+		DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

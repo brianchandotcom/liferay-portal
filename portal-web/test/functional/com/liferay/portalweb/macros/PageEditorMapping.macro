@@ -5,6 +5,30 @@ definition {
 		Button.viewNotPresent(button = "Select");
 	}
 
+	macro mapEditableTextToAsset {
+		PageEditor.gotoTab(tabName = "Mapping");
+
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
+
+		Click(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
+
+		Button.clickMap();
+
+		AssertClick(
+			locator1 = "PageEditor#LIST_GROUP_ITEM",
+			value1 = "${itemName}",
+			key_itemName = "${itemName}"
+		);
+	}
+
 	macro mapEditableTextToField {
 		Click(
 			locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER"
@@ -31,6 +55,34 @@ definition {
 			value1 = "${field}",
 			key_fieldLabel = "Field"
 		);
+	}
+
+	macro selectAssetType {
+		PageEditor.gotoTab(tabName = "Mapping");
+
+		Button.clickSelect();
+
+		if (contains("${assetType}", "{assetType}")) {
+			var assetType = "Web Content Article";
+
+			if (contains("${subType}", "{subType}")) {
+				var subType = "Basic Web Content";
+			}
+		}
+
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${assetType}",
+			key_fieldLabel = "Asset Type"
+		);
+
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${subType}",
+			key_fieldLabel = "Subtype"
+		);
+
+		Button.clickSave();
 	}
 
 	macro selectContentType {

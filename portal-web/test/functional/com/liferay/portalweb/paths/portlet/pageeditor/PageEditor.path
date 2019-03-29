@@ -112,6 +112,11 @@
 	<td>//button[@data-title='Map']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON</td>
+	<td>//button[@data-panel-id='image_properties']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

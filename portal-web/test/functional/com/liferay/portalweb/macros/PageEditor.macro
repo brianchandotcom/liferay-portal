@@ -27,8 +27,10 @@ definition {
 		);
 
 		Click(
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON"
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON"
 		);
+
+		Button.clickSelect();
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

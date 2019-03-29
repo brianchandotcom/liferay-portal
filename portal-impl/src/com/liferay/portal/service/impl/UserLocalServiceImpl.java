@@ -6713,6 +6713,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, long[] newGroupIds, boolean indexingEnabled)
 		throws PortalException {
 
+		if (newGroupIds == null) {
+			return;
+		}
+
 		Set<Long> oldGroupIds = SetUtil.fromArray(getGroupPrimaryKeys(userId));
 
 		oldGroupIds.removeAll(SetUtil.fromArray(newGroupIds));
@@ -6739,6 +6743,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected void updateOrganizations(
 			long userId, long[] newOrganizationIds, boolean indexingEnabled)
 		throws PortalException {
+
+		if (newOrganizationIds == null) {
+			return;
+		}
 
 		Set<Long> oldOrganizationIds = SetUtil.fromArray(
 			getOrganizationPrimaryKeys(userId));

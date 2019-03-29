@@ -45,13 +45,6 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA getSLA(Long slaId) throws Exception {
-		return _toSLA(
-			_workflowMetricsSLADefinitionLocalService.
-				getWorkflowMetricsSLADefinition(slaId));
-	}
-
-	@Override
 	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
 		throws Exception {
 
@@ -65,6 +58,13 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitionsCount(
 					contextCompany.getCompanyId(), processId));
+	}
+
+	@Override
+	public SLA getSLA(Long slaId) throws Exception {
+		return _toSLA(
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinition(slaId));
 	}
 
 	@Override

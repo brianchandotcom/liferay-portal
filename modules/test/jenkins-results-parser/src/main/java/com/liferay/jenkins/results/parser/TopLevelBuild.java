@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessa
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GitLPushFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.JenkinsRegenFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
@@ -1521,6 +1522,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			new GitLPushFailureMessageGenerator(),
 			new GradleTaskFailureMessageGenerator(),
+			new JenkinsRegenFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
 
 			new CIFailureMessageGenerator(),

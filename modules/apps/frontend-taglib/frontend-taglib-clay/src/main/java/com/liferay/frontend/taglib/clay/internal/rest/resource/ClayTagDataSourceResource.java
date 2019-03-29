@@ -56,8 +56,7 @@ public class ClayTagDataSourceResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClayTagDataSourceItems(
 		@PathParam("dataSourceKey") String dataSourceKey,
-		@QueryParam("itemsPerPage") int itemsPerPage,
-		@QueryParam("pageNumber") int pageNumber,
+		@QueryParam("page") int page, @QueryParam("pageSize") int pageSize,
 		@Context HttpServletRequest request) {
 
 		ClayTagDataSource<?> clayTagDataSource =
@@ -69,7 +68,7 @@ public class ClayTagDataSourceResource {
 			).build();
 		}
 
-		Pagination pagination = new Pagination(itemsPerPage, pageNumber);
+		Pagination pagination = new Pagination(pageSize, page);
 
 		List<?> items = clayTagDataSource.getItems(request, pagination);
 

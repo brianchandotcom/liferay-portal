@@ -116,12 +116,12 @@ public class TableTag<T> extends BaseClayTag {
 		putValue("items", items);
 	}
 
-	public void setItemsPerPage(int itemsPerPage) {
-		putValue("itemsPerPage", itemsPerPage);
+	public void setPage(int page) {
+		putValue("page", page);
 	}
 
-	public void setPageNumber(int pageNumber) {
-		putValue("pageNumber", pageNumber);
+	public void setPageSize(int pageSize) {
+		putValue("pageSize", pageSize);
 	}
 
 	public void setSchema(Schema schema) {
@@ -240,7 +240,9 @@ public class TableTag<T> extends BaseClayTag {
 
 		putValue(
 			"dataSourceURL",
-			absolutePortalURLBuilder.forWhiteboard(sb.toString()));
+			absolutePortalURLBuilder.forWhiteboard(
+				sb.toString()
+			).build());
 	}
 
 	private void _populateContextDefaultValues() {
@@ -250,16 +252,15 @@ public class TableTag<T> extends BaseClayTag {
 			"deltaParam",
 			context.getOrDefault(
 				"deltaParam", SearchContainer.DEFAULT_DELTA_PARAM));
-		putValue("itemsPerPage", context.getOrDefault("itemsPerPage", 5));
-		putValue("pageNumber", context.getOrDefault("pageNumber", 1));
+		putValue("page", context.getOrDefault("page", 1));
+		putValue("pageSize", context.getOrDefault("pageSize", 5));
 	}
 
 	private void _populateContextItems(ClayTagDataSource<T> clayTagDataSource) {
 		setItems(
 			clayTagDataSource.getItems(
 				request,
-				new Pagination(
-					getValue("itemsPerPage"), getValue("pageNumber"))));
+				new Pagination(getValue("pageSize"), getValue("page"))));
 
 		putValue("totalItems", clayTagDataSource.getTotalItemsCount());
 	}
@@ -272,13 +273,13 @@ public class TableTag<T> extends BaseClayTag {
 
 		putValue("paginationSelectedEntry", 0);
 
-		int pageNumber = getValue("pageNumber");
+		int page = getValue("page");
 
 		for (int i = 0; i < clayPaginationEntries.size(); i++) {
 			ClayPaginationEntry clayPaginationEntry = clayPaginationEntries.get(
 				i);
 
-			if (clayPaginationEntry.getLabel() == pageNumber) {
+			if (clayPaginationEntry.getLabel() == page) {
 				putValue("paginationSelectedEntry", i);
 
 				break;

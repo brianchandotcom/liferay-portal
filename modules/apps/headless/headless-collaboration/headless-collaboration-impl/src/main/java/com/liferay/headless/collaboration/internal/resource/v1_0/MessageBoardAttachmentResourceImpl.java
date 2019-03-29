@@ -140,7 +140,7 @@ public class MessageBoardAttachmentResourceImpl
 
 		return new MessageBoardAttachment() {
 			{
-				contentUrl = _dlurlHelper.getPreviewURL(
+				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 				encodingFormat = fileEntry.getMimeType();
@@ -153,7 +153,7 @@ public class MessageBoardAttachmentResourceImpl
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private MBMessageService _mbMessageService;

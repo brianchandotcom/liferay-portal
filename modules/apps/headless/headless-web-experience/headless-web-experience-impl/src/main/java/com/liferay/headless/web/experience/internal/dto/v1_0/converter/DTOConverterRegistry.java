@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.registry;
+package com.liferay.headless.web.experience.internal.dto.v1_0.converter;
 
-import com.liferay.headless.common.spi.osgi.AssetEntryToDTOConverter;
+import com.liferay.headless.common.spi.dto.converter.DTOConverter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -31,23 +29,18 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Rubén Pulido
  * @author Víctor Galán
  */
-@Component(service = AssetEntryToDTOConverterRegistry.class)
-public class AssetEntryToDTOConverterRegistryImpl
-	implements AssetEntryToDTOConverterRegistry {
+@Component(service = DTOConverterRegistry.class)
+public class DTOConverterRegistry {
 
-	@Override
-	public Optional<AssetEntryToDTOConverter> getAssetEntryToDTOConverter(
-		String className) {
-
-		return Optional.ofNullable(_serviceTrackerMap.getService(className));
+	public DTOConverter getDTOConverter(String className) {
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, AssetEntryToDTOConverter.class,
-			"(asset.entry.to.dto.converter.class.name=*)",
-			new AssetEntryToDTOConverterServiceReferenceMapper());
+			bundleContext, DTOConverter.class, "(dto.converter.class.name=*)",
+			new DTOConverterServiceReferenceMapper());
 	}
 
 	@Deactivate
@@ -55,19 +48,18 @@ public class AssetEntryToDTOConverterRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, AssetEntryToDTOConverter>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, DTOConverter> _serviceTrackerMap;
 
-	private static class AssetEntryToDTOConverterServiceReferenceMapper
-		implements ServiceReferenceMapper<String, AssetEntryToDTOConverter> {
+	private static class DTOConverterServiceReferenceMapper
+		implements ServiceReferenceMapper<String, DTOConverter> {
 
 		@Override
 		public void map(
-			ServiceReference<AssetEntryToDTOConverter> serviceReference,
+			ServiceReference<DTOConverter> serviceReference,
 			Emitter<String> emitter) {
 
 			String className = (String)serviceReference.getProperty(
-				"asset.entry.to.dto.converter.class.name");
+				"dto.converter.class.name");
 
 			emitter.emit(className);
 		}

@@ -201,7 +201,7 @@ public class DDMValueUtil {
 		}
 		catch (ParseException pe) {
 			throw new BadRequestException(
-				"Date incorrectly formatted, you must use ISO-8601 format", pe);
+				"Unable to parse date that does not conform to ISO-8601", pe);
 		}
 	}
 

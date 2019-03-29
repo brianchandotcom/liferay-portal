@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class ContentDocumentUtil {
 
 	public static ContentDocument toContentDocument(
-			DLURLHelper dlurlHelper, FileEntry fileEntry)
+			DLURLHelper dlURLHelper, FileEntry fileEntry)
 		throws PortalException {
 
 		return new ContentDocument() {
 			{
-				contentUrl = dlurlHelper.getPreviewURL(
+				contentUrl = dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 				description = fileEntry.getDescription();

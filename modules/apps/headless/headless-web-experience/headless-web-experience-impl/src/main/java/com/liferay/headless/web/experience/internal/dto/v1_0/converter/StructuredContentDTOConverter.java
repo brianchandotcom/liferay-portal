@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.web.experience.internal.dto.v1_0.converter;
 
-import static com.liferay.portal.vulcan.util.TransformUtil.transformToArray;
-
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -28,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.headless.common.spi.dto.converter.DTOConverter;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
@@ -35,6 +35,10 @@ import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -53,6 +57,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.net.URI;
@@ -63,27 +68,47 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rubén Pulido
+ * @author Víctor Galán
  */
-public class StructuredContentUtil {
+@Component(
+	property = "dto.converter.class.name=com.liferay.journal.model.JournalArticle",
+	service = DTOConverter.class
+)
+public class StructuredContentDTOConverter implements DTOConverter {
 
-	public static StructuredContent toStructuredContent(
-			JournalArticle journalArticle, AcceptLanguage acceptLanguage,
-			AssetCategoryLocalService assetCategoryLocalService,
-			AssetTagLocalService assetTagLocalService,
-			CommentManager commentManager, DLAppService dlAppService,
-			DLURLHelper dlurlHelper,
-			FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
-			JournalArticleService journalArticleService,
-			JournalConverter journalConverter,
-			LayoutLocalService layoutLocalService, Portal portal,
-			RatingsStatsLocalService ratingsStatsLocalService, UriInfo uriInfo,
-			UserLocalService userLocalService)
+	@Override
+	public Object toDTO(
+		AcceptLanguage acceptLanguage, AssetEntry assetEntry, UriInfo uriInfo) {
+
+		try {
+			return toDTO(
+				acceptLanguage,
+				_journalArticleService.getLatestArticle(
+					assetEntry.getClassPK()),
+				uriInfo);
+		}
+		catch (Exception e) {
+			throw new NotFoundException(e);
+		}
+	}
+
+	public StructuredContent toDTO(
+			AcceptLanguage acceptLanguage, JournalArticle journalArticle,
+			UriInfo uriInfo)
 		throws Exception {
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
@@ -93,18 +118,18 @@ public class StructuredContentUtil {
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					journalArticle.getAvailableLanguageIds());
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					ratingsStatsLocalService.fetchStats(
+					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
 				contentFields = _toContentFields(
-					journalArticle, acceptLanguage, dlAppService, dlurlHelper,
-					fieldsToDDMFormValuesConverter, journalArticleService,
-					journalConverter, layoutLocalService);
+					journalArticle, acceptLanguage, _dlAppService, _dlURLHelper,
+					_fieldsToDDMFormValuesConverter, _journalArticleService,
+					_journalConverter, _layoutLocalService);
 				contentSpaceId = journalArticle.getGroupId();
 				contentStructureId = ddmStructure.getStructureId();
 				creator = CreatorUtil.toCreator(
-					portal,
-					userLocalService.getUserById(journalArticle.getUserId()));
+					_portal,
+					_userLocalService.getUserById(journalArticle.getUserId()));
 				dateCreated = journalArticle.getCreateDate();
 				dateModified = journalArticle.getModifiedDate();
 				datePublished = journalArticle.getDisplayDate();
@@ -113,15 +138,15 @@ public class StructuredContentUtil {
 				id = journalArticle.getResourcePrimKey();
 				key = journalArticle.getArticleId();
 				keywords = ListUtil.toArray(
-					assetTagLocalService.getTags(
+					_assetTagLocalService.getTags(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					AssetTag.NAME_ACCESSOR);
 				lastReviewed = journalArticle.getReviewDate();
-				numberOfComments = commentManager.getCommentsCount(
+				numberOfComments = _commentManager.getCommentsCount(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey());
-				renderedContents = transformToArray(
+				renderedContents = TransformUtil.transformToArray(
 					ddmStructure.getTemplates(),
 					ddmTemplate -> new RenderedContent() {
 						{
@@ -135,8 +160,8 @@ public class StructuredContentUtil {
 						}
 					},
 					RenderedContent.class);
-				taxonomyCategories = transformToArray(
-					assetCategoryLocalService.getCategories(
+				taxonomyCategories = TransformUtil.transformToArray(
+					_assetCategoryLocalService.getCategories(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					assetCategory -> new TaxonomyCategory() {
@@ -153,7 +178,7 @@ public class StructuredContentUtil {
 		};
 	}
 
-	private static String _getJAXRSLink(
+	private String _getJAXRSLink(
 		Class clazz, String methodName, UriInfo uriInfo, Object... values) {
 
 		String baseURIString = String.valueOf(uriInfo.getBaseUri());
@@ -176,9 +201,9 @@ public class StructuredContentUtil {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	private static ContentField _toContentField(
+	private ContentField _toContentField(
 			DDMFormFieldValue ddmFormFieldValue, AcceptLanguage acceptLanguage,
-			DLAppService dlAppService, DLURLHelper dlurlHelper,
+			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			JournalArticleService journalArticleService,
 			LayoutLocalService layoutLocalService)
 		throws Exception {
@@ -191,25 +216,24 @@ public class StructuredContentUtil {
 				inputControl = ContentStructureUtil.toInputControl(
 					ddmFormField);
 				name = ddmFormField.getName();
-				repeatable = ddmFormField.isRepeatable();
-				value = _toValue(
-					ddmFormFieldValue, dlAppService, dlurlHelper,
-					journalArticleService, layoutLocalService,
-					acceptLanguage.getPreferredLocale());
-
-				nestedFields = transformToArray(
+				nestedFields = TransformUtil.transformToArray(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
 					value -> _toContentField(
-						value, acceptLanguage, dlAppService, dlurlHelper,
+						value, acceptLanguage, dlAppService, dlURLHelper,
 						journalArticleService, layoutLocalService),
 					ContentField.class);
+				repeatable = ddmFormField.isRepeatable();
+				value = _toValue(
+					ddmFormFieldValue, dlAppService, dlURLHelper,
+					journalArticleService, layoutLocalService,
+					acceptLanguage.getPreferredLocale());
 			}
 		};
 	}
 
-	private static ContentField[] _toContentFields(
+	private ContentField[] _toContentFields(
 			JournalArticle journalArticle, AcceptLanguage acceptLanguage,
-			DLAppService dlAppService, DLURLHelper dlurlHelper,
+			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
 			JournalArticleService journalArticleService,
 			JournalConverter journalConverter,
@@ -224,15 +248,15 @@ public class StructuredContentUtil {
 		DDMFormValues ddmFormValues = fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
-		return transformToArray(
+		return TransformUtil.transformToArray(
 			ddmFormValues.getDDMFormFieldValues(),
 			aDDMFormFieldValue -> _toContentField(
-				aDDMFormFieldValue, acceptLanguage, dlAppService, dlurlHelper,
+				aDDMFormFieldValue, acceptLanguage, dlAppService, dlURLHelper,
 				journalArticleService, layoutLocalService),
 			ContentField.class);
 	}
 
-	private static String _toDateString(Locale locale, String valueString) {
+	private String _toDateString(Locale locale, String valueString) {
 		if (Validator.isNull(valueString)) {
 			return "";
 		}
@@ -245,13 +269,13 @@ public class StructuredContentUtil {
 		}
 		catch (ParseException pe) {
 			throw new BadRequestException(
-				"Date incorrectly formatted, you must use ISO-8601 format", pe);
+				"Unable to parse date that does not conform to ISO-8601", pe);
 		}
 	}
 
-	private static Value _toValue(
+	private Value _toValue(
 			DDMFormFieldValue ddmFormFieldValue, DLAppService dlAppService,
-			DLURLHelper dlurlHelper,
+			DLURLHelper dlURLHelper,
 			JournalArticleService journalArticleService,
 			LayoutLocalService layoutLocalService, Locale locale)
 		throws Exception {
@@ -292,7 +316,7 @@ public class StructuredContentUtil {
 			return new Value() {
 				{
 					document = ContentDocumentUtil.toContentDocument(
-						dlurlHelper, fileEntry);
+						dlURLHelper, fileEntry);
 				}
 			};
 		}
@@ -330,7 +354,7 @@ public class StructuredContentUtil {
 			return new Value() {
 				{
 					image = ContentDocumentUtil.toContentDocument(
-						dlurlHelper, fileEntry);
+						dlURLHelper, fileEntry);
 
 					image.setDescription(jsonObject.getString("alt"));
 				}
@@ -395,5 +419,47 @@ public class StructuredContentUtil {
 			}
 		};
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CommentManager _commentManager;
+
+	@Context
+	private HttpServletRequest _contextHttpServletRequest;
+
+	@Context
+	private HttpServletResponse _contextHttpServletResponse;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
+	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalConverter _journalConverter;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

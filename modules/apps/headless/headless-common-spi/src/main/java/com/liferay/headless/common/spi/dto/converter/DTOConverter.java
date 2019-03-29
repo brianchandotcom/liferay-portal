@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.common.spi.osgi;
+package com.liferay.headless.common.spi.dto.converter;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -23,9 +23,9 @@ import javax.ws.rs.core.UriInfo;
  * @author Rubén Pulido
  * @author Víctor Galán
  */
-public interface AssetEntryToDTOConverter {
+public interface DTOConverter {
 
 	public Object toDTO(
-		AssetEntry assetEntry, AcceptLanguage acceptLanguage, UriInfo uriInfo);
+		AcceptLanguage acceptLanguage, AssetEntry assetEntry, UriInfo uriInfo);
 
 }

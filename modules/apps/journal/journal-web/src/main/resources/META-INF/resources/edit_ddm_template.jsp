@@ -151,7 +151,9 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 							<aui:row>
 								<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) %>">
 									<aui:col width="<%= 50 %>">
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+										<div class="aspect-ratio aspect-ratio-16-to-9">
+											<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+										</div>
 									</aui:col>
 								</c:if>
 

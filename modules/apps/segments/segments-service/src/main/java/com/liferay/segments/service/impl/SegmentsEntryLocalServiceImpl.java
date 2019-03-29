@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
-import com.liferay.segments.exception.DefaultSegmentsEntryException;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -155,12 +154,6 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (segmentsEntry.isDefaultSegment()) {
-				throw new DefaultSegmentsEntryException.
-					MustNotDeleteDefaultSegmentsEntry(
-						segmentsEntry.getSegmentsEntryId());
-			}
-
 			if (segmentsExperiencePersistence.countBySegmentsEntryId(
 					segmentsEntry.getSegmentsEntryId()) > 0) {
 
@@ -213,21 +206,6 @@ public class SegmentsEntryLocalServiceImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public SegmentsEntry getDefaultSegmentsEntry(long groupId)
-		throws PortalException {
-
-		SegmentsEntry defaultSegmentsEntry = fetchSegmentsEntry(
-			groupId, SegmentsConstants.KEY_DEFAULT, true);
-
-		if (defaultSegmentsEntry != null) {
-			return defaultSegmentsEntry;
-		}
-
-		throw new DefaultSegmentsEntryException(
-			"Default segments entry is not available for group " + groupId);
 	}
 
 	@Override
@@ -326,11 +304,6 @@ public class SegmentsEntryLocalServiceImpl
 
 		SegmentsEntry segmentsEntry = segmentsEntryPersistence.findByPrimaryKey(
 			segmentsEntryId);
-
-		if (segmentsEntry.isDefaultSegment()) {
-			throw new DefaultSegmentsEntryException.
-				MustNotUpdateDefaultSegmentsEntry(segmentsEntryId);
-		}
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 

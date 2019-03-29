@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
@@ -52,20 +52,17 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		SegmentsEntry defaultSegmentsEntry =
-			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
 		SegmentsExperience defaultSegmentsExperience =
 			segmentsExperiencePersistence.fetchByG_S_C_C_First(
-				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-				_getPublishedLayoutClassPK(classPK), null);
+				groupId, SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID,
+				classNameId, _getPublishedLayoutClassPK(classPK), null);
 
 		if (defaultSegmentsExperience != null) {
 			return defaultSegmentsExperience;
 		}
 
 		return _addDefaultSegmentsExperience(
-			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
+			groupId, SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID, classNameId,
 			classPK);
 	}
 
@@ -227,13 +224,10 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		SegmentsEntry defaultSegmentsEntry =
-			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
 		SegmentsExperience defaultSegmentsExperience =
 			segmentsExperiencePersistence.fetchByG_S_C_C_First(
-				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-				_getPublishedLayoutClassPK(classPK), null);
+				groupId, SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID,
+				classNameId, _getPublishedLayoutClassPK(classPK), null);
 
 		if (defaultSegmentsExperience != null) {
 			return defaultSegmentsExperience;
@@ -426,22 +420,19 @@ public class SegmentsExperienceLocalServiceImpl
 					" already exists");
 		}
 
-		SegmentsEntry defaultSegmentsEntry =
-			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
 		if ((priority == 0) &&
-			(defaultSegmentsEntry.getSegmentsEntryId() != segmentsEntryId)) {
+			(SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID != segmentsEntryId)) {
 
 			throw new SegmentsExperiencePriorityException(
 				"Priority 0 is reserved for the default segments experience");
 		}
 
-		if (defaultSegmentsEntry.getSegmentsEntryId() != segmentsEntryId) {
+		if (SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID != segmentsEntryId) {
 			return;
 		}
 
 		segmentsExperience = segmentsExperiencePersistence.fetchByG_S_C_C_First(
-			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
+			groupId, SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID, classNameId,
 			classPK, null);
 
 		if (segmentsExperience == null) {

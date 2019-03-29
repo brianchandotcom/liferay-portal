@@ -201,6 +201,7 @@
 		<check name="JavaTermMetadataLineBreakCheck" />
 		<check name="JavaTermOrderCheck" />
 		<check name="JavaTermStylingCheck" />
+		<check name="LocaleUtilCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
@@ -339,6 +340,7 @@
 		<check name="JSPUnusedTermsCheck" />
 		<check name="JSPWhitespaceCheck" />
 		<check name="JSPXSSVulnerabilitiesCheck" />
+		<check name="LocaleUtilCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />

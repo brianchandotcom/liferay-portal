@@ -14,15 +14,11 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.template.DefaultTemplateResourceLoader;
 import com.liferay.portal.template.TemplateResourceParser;
-import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import java.util.Collections;
 import java.util.Map;
@@ -31,7 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -43,8 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Igor Spasic
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	service = {
 		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
 	}
@@ -86,23 +80,9 @@ public class FreeMarkerTemplateResourceLoader
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
-			FreeMarkerEngineConfiguration.class, properties);
-
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
 			TemplateConstants.LANG_TYPE_FTL, _templateResourceParsers,
-			_freeMarkerEngineConfiguration.resourceModificationCheck(),
-			_multiVMPool, _singleVMPool);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_singleVMPool = singleVMPool;
+			_freeMarkerTemplateResourceCache);
 	}
 
 	@Reference(
@@ -125,11 +105,10 @@ public class FreeMarkerTemplateResourceLoader
 
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
-	private static volatile FreeMarkerEngineConfiguration
-		_freeMarkerEngineConfiguration;
 
-	private MultiVMPool _multiVMPool;
-	private SingleVMPool _singleVMPool;
+	@Reference
+	private FreeMarkerTemplateResourceCache _freeMarkerTemplateResourceCache;
+
 	private final Set<TemplateResourceParser> _templateResourceParsers =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 

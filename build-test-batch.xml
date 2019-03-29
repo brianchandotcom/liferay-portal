@@ -3742,11 +3742,23 @@ log.sanitizer.enabled=false</echo>
 		<run-integration-test database.type="db2" />
 	</target>
 
+	<target name="integration-db2111-jdk11_open">
+		<run-integration-test database.type="db2" />
+	</target>
+
 	<target name="integration-hypersonic20-jdk8">
 		<run-integration-test database.type="hypersonic" />
 	</target>
 
+	<target name="integration-hypersonic20-jdk11_open">
+		<run-integration-test database.type="hypersonic" />
+	</target>
+
 	<target name="integration-mariadb102-jdk8">
+		<run-integration-test database.type="mariadb" />
+	</target>
+
+	<target name="integration-mariadb102-jdk11_open">
 		<run-integration-test database.type="mariadb" />
 	</target>
 
@@ -3758,7 +3770,15 @@ log.sanitizer.enabled=false</echo>
 		<run-integration-test database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="integration-mysql57-jdk11_open">
+		<run-integration-test database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="integration-oracle122-jdk8">
+		<run-integration-test database.type="oracle" />
+	</target>
+
+	<target name="integration-oracle122-jdk11_open">
 		<run-integration-test database.type="oracle" />
 	</target>
 
@@ -3766,10 +3786,17 @@ log.sanitizer.enabled=false</echo>
 		<run-integration-test database.type="postgresql" />
 	</target>
 
+	<target name="integration-postgresql10-jdk11_open">
+		<run-integration-test database.type="postgresql" />
+	</target>
+
 	<target name="integration-sybase160-jdk8">
 		<run-integration-test database.type="sybase" />
 	</target>
 
+	<target name="integration-sybase160-jdk11_open">
+		<run-integration-test database.type="sybase" />
+	</target>
 	<target name="javadoc-jdk8">
 		<run-batch-test>
 			<test-action>

@@ -85,7 +85,7 @@ public class ServicePreActionTest {
 		defaultLayoutComposite = _servicePreAction.getViewableLayoutComposite(
 			_request, _user, PermissionCheckerFactoryUtil.create(_user),
 			defaultLayoutComposite.getLayout(),
-			defaultLayoutComposite.getLayouts(), 0, false);
+			defaultLayoutComposite.getLayouts(), false);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 

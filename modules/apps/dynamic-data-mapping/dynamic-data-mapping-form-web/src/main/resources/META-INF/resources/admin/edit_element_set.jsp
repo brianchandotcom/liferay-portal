@@ -43,7 +43,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 <div class="loading-animation" id="<portlet:namespace />loader"></div>
 
 <portlet:actionURL name="saveStructure" var="saveStructureURL">
-	<portlet:param name="mvcPath" value="/admin/edit_element_set.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/admin/edit_element_set" />
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">

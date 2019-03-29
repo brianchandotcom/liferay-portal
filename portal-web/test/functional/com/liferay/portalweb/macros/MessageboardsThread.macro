@@ -849,7 +849,7 @@ definition {
 		MessageboardsThread.assertAlertNotPresent();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#THREAD_LIST_LAST_POST",
+			locator1 = "MessageBoardsThread#THREAD_USERNAME",
 			value1 = "${userName}"
 		);
 

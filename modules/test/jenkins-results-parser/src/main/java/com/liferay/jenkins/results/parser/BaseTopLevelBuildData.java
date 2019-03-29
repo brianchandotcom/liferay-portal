@@ -150,7 +150,8 @@ public abstract class BaseTopLevelBuildData
 		Properties buildProperties = null;
 
 		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties(
+				false);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

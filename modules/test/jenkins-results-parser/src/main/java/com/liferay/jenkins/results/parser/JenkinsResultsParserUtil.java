@@ -419,7 +419,7 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
 
-			Properties buildProperties = getBuildProperties();
+			Properties buildProperties = getBuildProperties(false);
 
 			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
 				buildProperties.getProperty("jenkins.admin.user.token"),
@@ -713,9 +713,17 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Properties getBuildProperties() throws IOException {
+		return getBuildProperties(true);
+	}
+
+	public static Properties getBuildProperties(boolean checkCache)
+		throws IOException {
+
 		Properties properties = new Properties();
 
-		if ((_buildProperties != null) && !_buildProperties.isEmpty()) {
+		if (checkCache && (_buildProperties != null) &&
+			!_buildProperties.isEmpty()) {
+
 			properties.putAll(_buildProperties);
 
 			return properties;
@@ -730,13 +738,18 @@ public class JenkinsResultsParserUtil {
 				new StringReader(toString(getLocalURL(url), false)));
 		}
 
+		_buildProperties = new Hashtable<>(properties.size());
+
+		_buildProperties.putAll(properties);
+
 		return properties;
 	}
 
-	public static List<String> getBuildPropertyAsList(String key)
+	public static List<String> getBuildPropertyAsList(
+			boolean checkCache, String key)
 		throws IOException {
 
-		Properties buildProperties = getBuildProperties();
+		Properties buildProperties = getBuildProperties(checkCache);
 
 		String propertyContent = buildProperties.getProperty(key);
 
@@ -1170,7 +1183,7 @@ public class JenkinsResultsParserUtil {
 			Properties buildProperties = null;
 
 			try {
-				buildProperties = getBuildProperties();
+				buildProperties = getBuildProperties(false);
 			}
 			catch (IOException ioe2) {
 				throw new RuntimeException(
@@ -1762,49 +1775,16 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String redact(String string) {
-		if (_redactTokens == null) {
-			_redactTokens = new HashSet<>();
-
-			Properties properties = null;
-
-			try {
-				properties = getBuildProperties();
+		if (_redactTokens.isEmpty()) {
+			synchronized (_redactTokens) {
+				_initializeRedactTokens();
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to get build properties", ioe);
-			}
-
-			for (int i = 1; properties.containsKey(_getRedactTokenKey(i));
-				 i++) {
-
-				String key = _getRedactTokenKey(i);
-
-				String redactToken = getProperty(properties, key);
-
-				if (redactToken != null) {
-					if ((redactToken.length() < 5) &&
-						redactToken.matches("\\d+")) {
-
-						System.out.println(
-							combine(
-								"Ignoring ", key,
-								" because the value is numeric and ",
-								"less than 5 characters long."));
-					}
-					else {
-						if (!redactToken.isEmpty()) {
-							_redactTokens.add(redactToken);
-						}
-					}
-				}
-			}
-
-			_redactTokens.remove("test");
 		}
 
-		for (String redactToken : _redactTokens) {
-			string = string.replace(redactToken, "[REDACTED]");
+		synchronized (_redactTokens) {
+			for (String redactToken : _redactTokens) {
+				string = string.replace(redactToken, "[REDACTED]");
+			}
 		}
 
 		return string;
@@ -1927,7 +1907,9 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static void setBuildProperties(Hashtable<?, ?> buildProperties) {
+	public static void setBuildProperties(
+		Hashtable<Object, Object> buildProperties) {
+
 		_buildPropertiesURLs = null;
 
 		_buildProperties = buildProperties;
@@ -2793,6 +2775,42 @@ public class JenkinsResultsParserUtil {
 		return "github.message.redact.token[" + index + "]";
 	}
 
+	private static void _initializeRedactTokens() {
+		Properties properties = null;
+
+		try {
+			properties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		_redactTokens.clear();
+
+		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+			String key = _getRedactTokenKey(i);
+
+			String redactToken = getProperty(properties, key);
+
+			if (redactToken != null) {
+				if ((redactToken.length() < 5) && redactToken.matches("\\d+")) {
+					System.out.println(
+						combine(
+							"Ignoring ", key,
+							" because the value is numeric and ",
+							"less than 5 characters long."));
+				}
+				else {
+					if (!redactToken.isEmpty()) {
+						_redactTokens.add(redactToken);
+					}
+				}
+			}
+		}
+
+		_redactTokens.remove("test");
+	}
+
 	private static boolean _isJSONExpectedAndActualEqual(
 		Object expected, Object actual) {
 
@@ -2842,7 +2860,7 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _TO_STRING_CACHE_PREFIX = "toStringCache-";
 
-	private static Hashtable<?, ?> _buildProperties;
+	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
@@ -2851,7 +2869,7 @@ public class JenkinsResultsParserUtil {
 	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
-	private static Set<String> _redactTokens;
+	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(

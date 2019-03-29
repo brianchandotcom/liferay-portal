@@ -48,7 +48,8 @@ public class BuildTest extends Test {
 
 	@After
 	public void tearDown() {
-		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>)null);
+		JenkinsResultsParserUtil.setBuildProperties(
+			(Hashtable<Object, Object>)null);
 	}
 
 	@Override

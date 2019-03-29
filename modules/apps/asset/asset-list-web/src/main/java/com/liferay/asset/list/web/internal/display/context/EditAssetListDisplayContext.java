@@ -60,8 +60,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
@@ -637,7 +636,7 @@ public class EditAssetListDisplayContext {
 		return _referencedModelsGroupIds;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -662,20 +661,14 @@ public class EditAssetListDisplayContext {
 		return _searchContainer;
 	}
 
-	public long getSegmentsEntryId() throws PortalException {
+	public long getSegmentsEntryId() {
 		if (_segmentsEntryId != null) {
 			return _segmentsEntryId;
 		}
 
-		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
-
-		if (_segmentsEntryId == 0) {
-			SegmentsEntry defaultSegmentsEntry =
-				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
-					_themeDisplay.getScopeGroupId());
-
-			_segmentsEntryId = defaultSegmentsEntry.getSegmentsEntryId();
-		}
+		_segmentsEntryId = ParamUtil.getLong(
+			_request, "segmentsEntryId",
+			SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID);
 
 		return _segmentsEntryId;
 	}

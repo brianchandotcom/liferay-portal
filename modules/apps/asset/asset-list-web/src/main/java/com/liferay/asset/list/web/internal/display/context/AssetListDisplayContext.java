@@ -29,7 +29,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -40,8 +39,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.List;
 
@@ -88,9 +86,7 @@ public class AssetListDisplayContext {
 		};
 	}
 
-	public SearchContainer<AssetEntry> getAssetListContentSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<AssetEntry> getAssetListContentSearchContainer() {
 		if (_assetListContentSearchContainer != null) {
 			return _assetListContentSearchContainer;
 		}
@@ -324,20 +320,14 @@ public class AssetListDisplayContext {
 		return portletURL;
 	}
 
-	public long getSegmentsEntryId() throws PortalException {
+	public long getSegmentsEntryId() {
 		if (_segmentsEntryId != null) {
 			return _segmentsEntryId;
 		}
 
-		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
-
-		if (_segmentsEntryId == 0) {
-			SegmentsEntry defaultSegmentsEntry =
-				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
-					_themeDisplay.getScopeGroupId());
-
-			_segmentsEntryId = defaultSegmentsEntry.getSegmentsEntryId();
-		}
+		_segmentsEntryId = ParamUtil.getLong(
+			_request, "segmentsEntryId",
+			SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID);
 
 		return _segmentsEntryId;
 	}

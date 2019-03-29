@@ -35,8 +35,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -163,14 +162,11 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list segments entry rel
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
-			SegmentsEntry defaultSegmentsEntry =
-				_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
 			_assetListEntrySegmentsEntryRelLocalService.
 				addAssetListEntrySegmentsEntryRel(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), assetListEntryId,
-					defaultSegmentsEntry.getSegmentsEntryId(), typeSettings,
+					SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID, typeSettings,
 					serviceContext);
 		}
 
@@ -198,12 +194,9 @@ public class AssetListEntryLocalServiceImpl
 			userId, groupId, title, AssetListEntryTypeConstants.TYPE_MANUAL,
 			serviceContext);
 
-		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
 		addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
-			defaultSegmentsEntry.getSegmentsEntryId(), serviceContext);
+			SegmentsConstants.DEFAULT_SEGMENTS_ENTRY_ID, serviceContext);
 
 		return assetListEntry;
 	}
@@ -480,8 +473,5 @@ public class AssetListEntryLocalServiceImpl
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

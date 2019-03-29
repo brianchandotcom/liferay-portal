@@ -50,7 +50,7 @@ public class TOpenApi3MapperTest {
 		List<JsonObject> results = SIMPLE_COMPONENT_RULE.getCollectedData(
 			JsonObject.class);
 
-		Assert.assertEquals(37, results.size());
+		Assert.assertEquals(16, results.size());
 	}
 
 	@Test

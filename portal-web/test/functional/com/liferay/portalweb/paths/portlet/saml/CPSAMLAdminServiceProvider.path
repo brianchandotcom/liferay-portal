@@ -10,8 +10,8 @@
 <tbody>
 <!--SERVICE_PROVIDER-->
 <tr>
-	<td>SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-ldap-import-enabled')]</td>
+	<td>SERVICE_PROVIDER_ALLOW_SHOWING_THE_LOGIN_PORTLET_CHECKBOX</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-allow-showing-the-login-portlet')]</td>
 	<td></td>
 </tr>
 <tr>

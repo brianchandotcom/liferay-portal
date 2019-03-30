@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -94,8 +93,8 @@ public class KnowledgeBaseArticleResourceImpl
 						booleanQuery.getPreBooleanFilter();
 
 					booleanFilter.add(
-						new ExistsFilter(Field.FOLDER_ID),
-						BooleanClauseOccur.MUST_NOT);
+						new TermFilter(Field.FOLDER_ID, "0"),
+						BooleanClauseOccur.MUST);
 					booleanFilter.add(
 						new TermFilter("parentMessageId", "0"),
 						BooleanClauseOccur.MUST);

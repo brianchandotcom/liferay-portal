@@ -117,4 +117,23 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 			submitForm(document.<portlet:namespace />fm);
 		}
 	);
+
+	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+
+	if (contextualSidebarButton) {
+		contextualSidebarButton.addEventListener(
+			'click',
+			function(event) {
+				var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
+
+				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
+					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
+
+				}
+				else {
+					contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+				}
+			}
+		);
+	}
 </aui:script>

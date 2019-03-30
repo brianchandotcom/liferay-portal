@@ -6,7 +6,7 @@ class DisplayPageManagementToolbarDefaultEventHandler extends DefaultEventHandle
 	addDisplayPage(itemData) {
 		OpenSimpleInputModal(
 			{
-				dialogTitle: Liferay.Language.get('add-display-page'),
+				dialogTitle: Liferay.Language.get('add-display-page-template'),
 				formSubmitURL: itemData.addDisplayPageURL,
 				mainFieldLabel: Liferay.Language.get('name'),
 				mainFieldName: 'name',

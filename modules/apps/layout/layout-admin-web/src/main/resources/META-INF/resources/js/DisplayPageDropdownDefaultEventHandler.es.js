@@ -39,7 +39,7 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 	renameDisplayPage(itemData) {
 		OpenSimpleInputModal(
 			{
-				dialogTitle: Liferay.Language.get('rename-display-page'),
+				dialogTitle: Liferay.Language.get('rename-display-page-template'),
 				formSubmitURL: itemData.updateDisplayPageURL,
 				idFieldName: 'layoutPageTemplateEntryId',
 				idFieldValue: itemData.layoutPageTemplateEntryId,

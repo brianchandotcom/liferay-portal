@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -41,13 +42,23 @@ public class UserAccountEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new IdEntityField("id", locale -> Field.USER_ID, String::valueOf),
+			new IdEntityField(
+				"organizationIds", locale -> "organizationIds",
+				String::valueOf),
+			new IdEntityField("roleIds", locale -> "roleIds", String::valueOf),
+			new IdEntityField(
+				"userGroupIds", locale -> "userGroupIds", String::valueOf),
 			new StringEntityField(
 				"alternateName",
 				locale -> Field.getSortableFieldName("screenName")),
+			new StringEntityField("emailAddress", locale -> "emailAddress"),
 			new StringEntityField(
 				"familyName", locale -> Field.getSortableFieldName("lastName")),
 			new StringEntityField(
-				"givenName", locale -> Field.getSortableFieldName("firstName"))
+				"givenName", locale -> Field.getSortableFieldName("firstName")),
+			new StringEntityField(
+				"jobTitle", locale -> Field.getSortableFieldName("jobTitle"))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

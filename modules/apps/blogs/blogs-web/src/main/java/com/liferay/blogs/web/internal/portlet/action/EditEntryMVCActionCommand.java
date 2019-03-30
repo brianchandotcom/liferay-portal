@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -86,7 +85,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -240,8 +238,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				WindowState windowState = actionRequest.getWindowState();
-
 				if (Validator.isNotNull(redirect) &&
 					cmd.equals(Constants.UPDATE)) {
 
@@ -252,20 +248,17 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 						false);
 				}
 
-				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else {
-					redirect = _portal.escapeRedirect(redirect);
+				redirect = _portal.escapeRedirect(redirect);
 
-					if (Validator.isNotNull(redirect)) {
-						if (cmd.equals(Constants.ADD) && (entry != null)) {
-							String portletId = _http.getParameter(
-								redirect, "p_p_id", false);
+				if (Validator.isNotNull(redirect)) {
+					if (cmd.equals(Constants.ADD) && (entry != null)) {
+						String portletId = _http.getParameter(
+							redirect, "p_p_id", false);
 
-							String namespace = _portal.getPortletNamespace(
-								portletId);
+						String namespace = _portal.getPortletNamespace(
+							portletId);
 
+						if (Validator.isNotNull(namespace)) {
 							redirect = _http.addParameter(
 								redirect, namespace + "className",
 								BlogsEntry.class.getName());
@@ -273,9 +266,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 								redirect, namespace + "classPK",
 								entry.getEntryId());
 						}
-
-						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 					}
+
+					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 				}
 			}
 		}

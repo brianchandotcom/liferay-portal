@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class JournalDDMTemplateBasicInfoFormNavigatorEntry
-	extends BaseJournalFormNavigatorEntry {
+	extends BaseJournalDDMTemplateFormNavigatorEntry {
 
 	@Override
 	public String getKey() {

@@ -117,8 +117,8 @@ definition {
 
 	macro configureIdentityProviderConnection {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ACTION_BUTTON",
-			key_idpNameID = "${idpNameID}"
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
+			key_samlEntityID = "${samlEntityID}"
 		);
 
 		MenuItem.click(menuItem = "Edit");

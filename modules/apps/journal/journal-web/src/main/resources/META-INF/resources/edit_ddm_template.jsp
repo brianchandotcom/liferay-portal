@@ -51,6 +51,19 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
 				</li>
+				<li class="tbar-item">
+					<div class="journal-article-button-row tbar-section text-right">
+						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>">
+							<liferay-ui:message key="cancel" />
+						</a>
+
+						<%
+						String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
+						%>
+
+						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClick %>" type="submit" value="save" />
+					</div>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -182,17 +195,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 			</liferay-frontend:fieldset-group>
 		</div>
 	</div>
-
-	<liferay-frontend:edit-form-footer>
-
-		<%
-		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" type="submit" value="save" />
-
-		<aui:button href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
 </aui:form>
 
 <aui:script use="aui-toggler">

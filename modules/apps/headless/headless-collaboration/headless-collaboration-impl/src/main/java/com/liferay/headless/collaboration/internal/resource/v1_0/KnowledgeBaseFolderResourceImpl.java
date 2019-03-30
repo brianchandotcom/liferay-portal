@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -23,6 +24,8 @@ import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -150,6 +153,8 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
+				creator = CreatorUtil.toCreator(
+					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();
 				description = kbFolder.getDescription();
@@ -176,5 +181,11 @@ public class KnowledgeBaseFolderResourceImpl
 
 	@Reference
 	private KBFolderService _kbFolderService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

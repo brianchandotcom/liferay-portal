@@ -16,6 +16,10 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
+	deleteFragmentEntryPreview(itemData) {
+		this._send(itemData.deleteFragmentEntryPreviewURL);
+	}
+
 	moveFragmentEntry(itemData) {
 		Liferay.Util.selectEntity(
 			{

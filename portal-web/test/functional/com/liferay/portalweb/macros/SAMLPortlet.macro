@@ -147,4 +147,22 @@ definition {
 
 		PortletEntry.save();
 	}
+
+	macro deleteSAMLConnection {
+		Click.waitForMenuToggleJSClick(
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
+			key_samlEntityID = "${samlEntityID}"
+		);
+
+		ClickNoError(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			key_menuItem = "Delete"
+		);
+
+		AssertConfirm.waitForConfirmation(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+	}
 }

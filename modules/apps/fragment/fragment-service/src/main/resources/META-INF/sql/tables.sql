@@ -57,5 +57,7 @@ create table FragmentEntryLink (
 	position INTEGER,
 	lastPropagationDate DATE null,
 	namespace VARCHAR(75) null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	rendererType INTEGER,
+	rendererKey VARCHAR(75) null
 );

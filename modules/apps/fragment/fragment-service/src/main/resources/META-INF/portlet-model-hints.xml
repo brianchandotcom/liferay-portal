@@ -79,5 +79,7 @@
 		<field name="lastPropagationDate" type="Date" />
 		<field name="namespace" type="String" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="rendererType" type="int" />
+		<field name="rendererKey" type="String" />
 	</model>
 </model-hints>

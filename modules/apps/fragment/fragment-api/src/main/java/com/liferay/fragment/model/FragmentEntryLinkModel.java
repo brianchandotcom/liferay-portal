@@ -394,4 +394,33 @@ public interface FragmentEntryLinkModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the renderer type of this fragment entry link.
+	 *
+	 * @return the renderer type of this fragment entry link
+	 */
+	public int getRendererType();
+
+	/**
+	 * Sets the renderer type of this fragment entry link.
+	 *
+	 * @param rendererType the renderer type of this fragment entry link
+	 */
+	public void setRendererType(int rendererType);
+
+	/**
+	 * Returns the renderer key of this fragment entry link.
+	 *
+	 * @return the renderer key of this fragment entry link
+	 */
+	@AutoEscape
+	public String getRendererKey();
+
+	/**
+	 * Sets the renderer key of this fragment entry link.
+	 *
+	 * @param rendererKey the renderer key of this fragment entry link
+	 */
+	public void setRendererKey(String rendererKey);
+
 }

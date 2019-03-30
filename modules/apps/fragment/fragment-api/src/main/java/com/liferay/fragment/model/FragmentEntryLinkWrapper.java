@@ -67,6 +67,8 @@ public class FragmentEntryLinkWrapper
 		attributes.put("lastPropagationDate", getLastPropagationDate());
 		attributes.put("namespace", getNamespace());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("rendererType", getRendererType());
+		attributes.put("rendererKey", getRendererKey());
 
 		return attributes;
 	}
@@ -192,6 +194,18 @@ public class FragmentEntryLinkWrapper
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Integer rendererType = (Integer)attributes.get("rendererType");
+
+		if (rendererType != null) {
+			setRendererType(rendererType);
+		}
+
+		String rendererKey = (String)attributes.get("rendererKey");
+
+		if (rendererKey != null) {
+			setRendererKey(rendererKey);
 		}
 	}
 
@@ -383,6 +397,26 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the renderer key of this fragment entry link.
+	 *
+	 * @return the renderer key of this fragment entry link
+	 */
+	@Override
+	public String getRendererKey() {
+		return model.getRendererKey();
+	}
+
+	/**
+	 * Returns the renderer type of this fragment entry link.
+	 *
+	 * @return the renderer type of this fragment entry link
+	 */
+	@Override
+	public int getRendererType() {
+		return model.getRendererType();
 	}
 
 	/**
@@ -622,6 +656,26 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the renderer key of this fragment entry link.
+	 *
+	 * @param rendererKey the renderer key of this fragment entry link
+	 */
+	@Override
+	public void setRendererKey(String rendererKey) {
+		model.setRendererKey(rendererKey);
+	}
+
+	/**
+	 * Sets the renderer type of this fragment entry link.
+	 *
+	 * @param rendererType the renderer type of this fragment entry link
+	 */
+	@Override
+	public void setRendererType(int rendererType) {
+		model.setRendererType(rendererType);
 	}
 
 	/**

@@ -67,7 +67,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -109,6 +109,10 @@ public class FragmentEntryLinkCacheModel
 		sb.append(namespace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", rendererType=");
+		sb.append(rendererType);
+		sb.append(", rendererKey=");
+		sb.append(rendererKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -210,6 +214,15 @@ public class FragmentEntryLinkCacheModel
 			fragmentEntryLinkImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		fragmentEntryLinkImpl.setRendererType(rendererType);
+
+		if (rendererKey == null) {
+			fragmentEntryLinkImpl.setRendererKey("");
+		}
+		else {
+			fragmentEntryLinkImpl.setRendererKey(rendererKey);
+		}
+
 		fragmentEntryLinkImpl.resetOriginalValues();
 
 		return fragmentEntryLinkImpl;
@@ -246,6 +259,9 @@ public class FragmentEntryLinkCacheModel
 		lastPropagationDate = objectInput.readLong();
 		namespace = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		rendererType = objectInput.readInt();
+		rendererKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -322,6 +338,15 @@ public class FragmentEntryLinkCacheModel
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(rendererType);
+
+		if (rendererKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(rendererKey);
+		}
 	}
 
 	public String uuid;
@@ -344,5 +369,7 @@ public class FragmentEntryLinkCacheModel
 	public long lastPropagationDate;
 	public String namespace;
 	public long lastPublishDate;
+	public int rendererType;
+	public String rendererKey;
 
 }

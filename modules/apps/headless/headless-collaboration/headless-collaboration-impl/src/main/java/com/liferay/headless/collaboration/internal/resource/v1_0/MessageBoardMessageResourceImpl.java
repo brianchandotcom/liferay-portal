@@ -237,6 +237,7 @@ public class MessageBoardMessageResourceImpl
 				contentSpaceId = mbMessage.getGroupId();
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
+				encodingFormat = mbMessage.getFormat();
 				headline = mbMessage.getSubject();
 				id = mbMessage.getMessageId();
 				keywords = ListUtil.toArray(

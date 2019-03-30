@@ -298,6 +298,7 @@ public class KnowledgeBaseArticleResourceImpl
 				dateCreated = kbArticle.getCreateDate();
 				dateModified = kbArticle.getModifiedDate();
 				description = kbArticle.getDescription();
+				encodingFormat = "text/html";
 				friendlyUrlPath = kbArticle.getUrlTitle();
 				id = kbArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(

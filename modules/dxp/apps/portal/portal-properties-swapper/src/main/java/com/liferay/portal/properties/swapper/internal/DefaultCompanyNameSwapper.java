@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.AccountLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
@@ -43,21 +44,31 @@ public class DefaultCompanyNameSwapper {
 			return;
 		}
 
+		String propertyCompanyDefaultName = PropsValues.COMPANY_DEFAULT_NAME;
 		PropsValues.COMPANY_DEFAULT_NAME = "Liferay DXP";
 
 		try {
 			Company defaultCompany = _companyLocalService.getCompany(
 				PortalInstances.getDefaultCompanyId());
 
-			_updateCompanyName(defaultCompany);
+			if (!_isCompanyNameCustomized(
+					defaultCompany, propertyCompanyDefaultName)) {
+
+				_updateCompanyName(defaultCompany);
+			}
 
 			if (!Objects.equals(
 					defaultCompany.getWebId(),
 					PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 
-				_updateCompanyName(
-					_companyLocalService.getCompanyByWebId(
-						PropsValues.COMPANY_DEFAULT_WEB_ID));
+				defaultCompany = _companyLocalService.getCompanyByWebId(
+					PropsValues.COMPANY_DEFAULT_WEB_ID);
+
+				if (!_isCompanyNameCustomized(
+						defaultCompany, propertyCompanyDefaultName)) {
+
+					_updateCompanyName(defaultCompany);
+				}
 			}
 		}
 		catch (PortalException pe) {
@@ -65,6 +76,19 @@ public class DefaultCompanyNameSwapper {
 				_log.warn("Unable to swap default company name", pe);
 			}
 		}
+	}
+
+	private boolean _isCompanyNameCustomized(
+			Company company, String defaultName)
+		throws PortalException {
+
+		String name = company.getName();
+
+		if (Validator.isNotNull(name) && !name.equals(defaultName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _updateCompanyName(Company company) {

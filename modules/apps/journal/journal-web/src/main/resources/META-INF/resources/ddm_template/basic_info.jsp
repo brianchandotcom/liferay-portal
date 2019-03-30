@@ -24,6 +24,8 @@ DDMTemplate ddmTemplate = journalEditDDMTemplateDisplayContext.getDDMTemplate();
 DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure();
 %>
 
+<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
+
 <div class="form-group">
 	<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" />
 

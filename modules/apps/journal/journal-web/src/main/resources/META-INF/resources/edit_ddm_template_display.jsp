@@ -32,46 +32,47 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 
 				<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
 					<div id="<portlet:namespace />paletteData">
+						<liferay-frontend:fieldset-group>
 
-						<%
-						for (TemplateVariableGroup templateVariableGroup : journalEditDDMTemplateDisplayContext.getTemplateVariableGroups()) {
-							if (templateVariableGroup.isEmpty()) {
-								continue;
+							<%
+							for (TemplateVariableGroup templateVariableGroup : journalEditDDMTemplateDisplayContext.getTemplateVariableGroups()) {
+								if (templateVariableGroup.isEmpty()) {
+									continue;
+								}
+							%>
+
+								<liferay-frontend:fieldset
+									collapsible="<%= true %>"
+									cssClass="palette-section"
+									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
+									label="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
+								>
+									<ul class="palette-item-content">
+
+										<%
+										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
+										%>
+
+											<li class="palette-item-container">
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
+													<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
+
+													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
+												</span>
+											</li>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</liferay-frontend:fieldset>
+
+							<%
 							}
-						%>
+							%>
 
-							<liferay-ui:panel
-								collapsible="<%= true %>"
-								cssClass="palette-section"
-								extended="<%= false %>"
-								id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
-								title="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
-							>
-								<ul class="palette-item-content">
-
-									<%
-									for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
-									%>
-
-										<li class="palette-item-container">
-											<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
-												<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
-
-												<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
-											</span>
-										</li>
-
-									<%
-									}
-									%>
-
-								</ul>
-							</liferay-ui:panel>
-
-						<%
-						}
-						%>
-
+						</liferay-frontend:fieldset-group>
 					</div>
 				</div>
 			</div>

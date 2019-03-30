@@ -175,7 +175,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 					</div>
 				</liferay-frontend:fieldset>
 
-				<%@ include file="/edit_ddm_template_display.jspf" %>
+				<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

@@ -31,3 +31,49 @@ addPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		<aui:icon cssClass="icon-monospaced" image="plus" markupView="lexicon" />
 	</a>
 </li>
+
+<%
+String namespace = PortalUtil.getPortletNamespace(ParamUtil.getString(request, "p_p_id"));
+
+String className = ParamUtil.getString(request, namespace + "className");
+long classPK = ParamUtil.getLong(request, namespace + "classPK");
+
+String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.ADD);
+
+AssetRenderer<?> assetRenderer = null;
+
+Map<String, Object> data = new HashMap<String, Object>();
+
+if (Validator.isNotNull(className) && (classPK > 0)) {
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+
+	data.put("class-name", className);
+	data.put("class-pk", classPK);
+	data.put("instanceable", true);
+	data.put("portlet-id", portletId);
+}
+%>
+
+<span <%= AUIUtil.buildData(data) %> class="hide portlet-item"></span>
+
+<aui:script use="aui-base">
+	<c:if test="<%= assetRenderer != null %>">
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
+			Liferay.fire(
+				'AddContent:addPortlet',
+				{
+					node: A.one('.portlet-item')
+				}
+			);
+
+			Liferay.once(
+				'updatedLayout',
+				function() {
+					Liferay.Util.navigate('<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>');
+				}
+			);
+		</c:if>
+	</c:if>
+</aui:script>

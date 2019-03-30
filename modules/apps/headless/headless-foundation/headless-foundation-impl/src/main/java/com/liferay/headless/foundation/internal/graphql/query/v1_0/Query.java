@@ -265,8 +265,9 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationsPage(
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -274,7 +275,7 @@ public class Query {
 			this::_populateResourceContext,
 			organizationResource -> {
 				Page paginationPage = organizationResource.getOrganizationsPage(
-					Pagination.of(pageSize, page));
+					filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -297,8 +298,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
 			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -307,7 +309,8 @@ public class Query {
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getOrganizationOrganizationsPage(
-						organizationId, Pagination.of(pageSize, page));
+						organizationId, filter, Pagination.of(pageSize, page),
+						sorts);
 
 				return paginationPage.getItems();
 			});

@@ -9,6 +9,10 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 		}
 	}
 
+	deleteLayoutPageTemplateEntryPreview(itemData) {
+		this._send(itemData.deleteLayoutPageTemplateEntryPreviewURL);
+	}
+
 	permissionsLayoutPageTemplateEntry(itemData) {
 		Liferay.Util.openWindow(
 			{

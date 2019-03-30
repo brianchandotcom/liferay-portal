@@ -85,6 +85,12 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 					add(
 						_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer());
+
+					if (_layoutPageTemplateEntry.getPreviewFileEntryId() > 0) {
+						add(
+							_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer());
+					}
+
 					add(
 						_getRenameLayoutPageTemplateEntryActionUnsafeConsumer());
 				}
@@ -131,6 +137,38 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				"deleteLayoutPageTemplateEntryURL",
 				deleteLayoutPageTemplateEntryURL.toString());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
+
+		PortletURL deleteLayoutPageTemplateEntryPreviewURL =
+			_renderResponse.createActionURL();
+
+		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout/delete_layout_page_template_entry_preview");
+
+		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData(
+				"action", "deleteLayoutPageTemplateEntryPreview");
+			dropdownItem.putData(
+				"deleteLayoutPageTemplateEntryPreviewURL",
+				deleteLayoutPageTemplateEntryPreviewURL.toString());
+			dropdownItem.putData(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_request, "remove-thumbnail"));
 		};
 	}
 

@@ -195,6 +195,8 @@ public class MessageBoardThreadResourceImpl
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			mbThread.getRootMessageId());
 
+		_updateQuestion(mbMessage, messageBoardThread);
+
 		return _toMessageBoardThread(
 			_mbMessageService.updateDiscussionMessage(
 				mbMessage.getClassName(), mbMessage.getClassPK(),

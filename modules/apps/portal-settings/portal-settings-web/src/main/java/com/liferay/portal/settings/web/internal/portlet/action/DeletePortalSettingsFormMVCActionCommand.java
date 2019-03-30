@@ -16,8 +16,11 @@ package com.liferay.portal.settings.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
@@ -52,14 +55,25 @@ public class DeletePortalSettingsFormMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		if (!hasPermissions(actionRequest, actionResponse, themeDisplay)) {
-			return;
+			if (!hasPermissions(actionRequest, actionResponse, themeDisplay)) {
+				return;
+			}
+
+			deleteSettings(themeDisplay);
 		}
+		catch (PortalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass(), pe);
 
-		deleteSettings(themeDisplay);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
+		}
 	}
 
 	@Override

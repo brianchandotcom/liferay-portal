@@ -236,6 +236,8 @@ components:
         KnowledgeBaseFolder:
             description: https://www.schema.org/KnowledgeBaseFolder
             properties:
+                creator:
+                    $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
                     type: string

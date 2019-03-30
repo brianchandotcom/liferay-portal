@@ -1054,10 +1054,10 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewSPInitiatedSSOWithMultipleIdPs {
+	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property app.server.bundles.size = "2";
 		property databases.size = "2";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPs";
+		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1141,5 +1141,65 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		User.viewLoggedOutPG();
+
+		User.loginPG(
+			idpName = "samlidp",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp2");
+
+		SAMLNavigation.gotoGeneral();
+
+		AssertTextEquals(
+			locator1 = "CPSAMLAdmin#INFO_MESSAGE",
+			value1 = "You must configure at least one identity provider connection for SAML to function."
+		);
+
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
+
+		User.viewLoggedOutPG();
+
+		User.loginPG(
+			specificURL = "http://www.baker.com:10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoServiceProvider();
+
+		SAMLPortlet.configureServiceProvider(allowShowingTheLoginPortlet = "disable");
+
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
+
+		User.viewLoggedOutPG();
+
+		Navigator.gotoLoginPage();
+
+		AssertTextEquals(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "No identity provider is available to sign you in."
+		);
 	}
 }

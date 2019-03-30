@@ -250,28 +250,6 @@ public class BlogPostingImage {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof BlogPostingImage)) {
-			return false;
-		}
-
-		BlogPostingImage blogPostingImage = (BlogPostingImage)object;
-
-		return Objects.equals(toString(), blogPostingImage.toString());
-	}
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
-	}
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 

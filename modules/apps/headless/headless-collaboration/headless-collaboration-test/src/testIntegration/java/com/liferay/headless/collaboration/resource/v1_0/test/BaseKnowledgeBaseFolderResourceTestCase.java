@@ -1105,6 +1105,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			sb.append(_dateFormat.format(knowledgeBaseFolder.getDateCreated()));
 

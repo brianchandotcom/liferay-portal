@@ -25,7 +25,6 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.Date;
-import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -40,6 +39,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "KnowledgeBaseFolder")
 public class KnowledgeBaseFolder {
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Creator creator;
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -269,32 +292,15 @@ public class KnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof KnowledgeBaseFolder)) {
-			return false;
-		}
-
-		KnowledgeBaseFolder knowledgeBaseFolder = (KnowledgeBaseFolder)object;
-
-		return Objects.equals(toString(), knowledgeBaseFolder.toString());
-	}
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
-	}
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		sb.append(creator);
+		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
 

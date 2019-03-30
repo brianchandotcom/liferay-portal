@@ -53,6 +53,11 @@ public class KnowledgeBaseFolderSerDes {
 
 		sb.append("{");
 
+		sb.append("\"creator\": ");
+
+		sb.append(knowledgeBaseFolder.getCreator());
+		sb.append(", ");
+
 		sb.append("\"dateCreated\": ");
 
 		sb.append("\"");
@@ -149,7 +154,13 @@ public class KnowledgeBaseFolderSerDes {
 			KnowledgeBaseFolder knowledgeBaseFolder, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setDateCreated(
 						(Date)jsonParserFieldValue);

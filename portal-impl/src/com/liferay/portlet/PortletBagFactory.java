@@ -200,7 +200,7 @@ public class PortletBagFactory {
 			registry, portlet, properties, serviceRegistrations);
 
 		PortletBag portletBag = new PortletBagImpl(
-			portlet.getPortletId(), _servletContext, portletInstance,
+			portlet.getPortletName(), _servletContext, portletInstance,
 			portlet.getResourceBundle(), friendlyURLMapperTracker,
 			serviceRegistrations);
 

@@ -37,17 +37,25 @@ import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -64,6 +72,7 @@ import com.liferay.portal.settings.web.internal.exception.RequiredLocaleExceptio
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -94,6 +103,10 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_validateDefaultLanguage(actionRequest);
+
+				_validateAvailableLanguages(actionRequest);
+
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
@@ -150,10 +163,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	protected void doValidateForm(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		_validateDefaultLanguage(actionRequest);
-
-		_validateAvailableLanguages(actionRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -169,10 +178,14 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	protected void updateCompany(ActionRequest actionRequest) throws Exception {
 		long companyId = _portal.getCompanyId(actionRequest);
 
+		Company company = _companyService.getCompanyById(companyId);
+
 		String virtualHostname = ParamUtil.getString(
-			actionRequest, "virtualHostname");
-		String mx = ParamUtil.getString(actionRequest, "mx");
-		String homeURL = ParamUtil.getString(actionRequest, "homeURL");
+			actionRequest, "virtualHostname", company.getVirtualHostname());
+		String mx = ParamUtil.getString(actionRequest, "mx", company.getMx());
+		String homeURL = ParamUtil.getString(
+			actionRequest, "homeURL", company.getHomeURL());
+
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		byte[] logoBytes = null;
@@ -185,23 +198,64 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String legalName = ParamUtil.getString(actionRequest, "legalName");
-		String legalId = ParamUtil.getString(actionRequest, "legalId");
-		String legalType = ParamUtil.getString(actionRequest, "legalType");
-		String sicCode = ParamUtil.getString(actionRequest, "sicCode");
+		String name = ParamUtil.getString(
+			actionRequest, "name", company.getName());
+
+		Account account = company.getAccount();
+
+		String legalName = ParamUtil.getString(
+			actionRequest, "legalName", account.getLegalName());
+		String legalId = ParamUtil.getString(
+			actionRequest, "legalId", account.getLegalId());
+		String legalType = ParamUtil.getString(
+			actionRequest, "legalType", account.getLegalType());
+		String sicCode = ParamUtil.getString(
+			actionRequest, "sicCode", account.getSicCode());
 		String tickerSymbol = ParamUtil.getString(
-			actionRequest, "tickerSymbol");
-		String industry = ParamUtil.getString(actionRequest, "industry");
-		String type = ParamUtil.getString(actionRequest, "type");
-		String size = ParamUtil.getString(actionRequest, "size");
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-		String timeZoneId = ParamUtil.getString(actionRequest, "timeZoneId");
+			actionRequest, "tickerSymbol", account.getTickerSymbol());
+		String industry = ParamUtil.getString(
+			actionRequest, "industry", account.getIndustry());
+		String type = ParamUtil.getString(
+			actionRequest, "type", account.getType());
+		String size = ParamUtil.getString(
+			actionRequest, "size", account.getSize());
+
+		User defaultUser = _userLocalService.getDefaultUser(companyId);
+
+		String languageId = ParamUtil.getString(
+			actionRequest, "languageId", defaultUser.getLanguageId());
+		String timeZoneId = ParamUtil.getString(
+			actionRequest, "timeZoneId", defaultUser.getTimeZoneId());
+
 		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
+
+		if (addresses.isEmpty()) {
+			addresses = _addressLocalService.getAddresses(
+				companyId, Account.class.getName(), company.getAccountId());
+		}
+
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest);
+
+		if (emailAddresses.isEmpty()) {
+			emailAddresses = _emailAddressLocalService.getEmailAddresses(
+				companyId, Account.class.getName(), company.getAccountId());
+		}
+
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
+
+		if (phones.isEmpty()) {
+			phones = _phoneLocalService.getPhones(
+				companyId, Account.class.getName(), company.getAccountId());
+		}
+
 		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
+
+		if (websites.isEmpty()) {
+			websites = _websiteLocalService.getWebsites(
+				companyId, Account.class.getName(), company.getAccountId());
+		}
+
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
@@ -267,7 +321,12 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	private void _validateDefaultLanguage(ActionRequest actionRequest)
 		throws PortalException {
 
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
+		String languageId = ParamUtil.getString(
+			actionRequest, "languageId", StringPool.IS_NULL);
+
+		if (Objects.equals(languageId, StringPool.IS_NULL)) {
+			return;
+		}
 
 		if (Validator.isNull(languageId)) {
 			SessionErrors.add(
@@ -295,13 +354,28 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		}
 	}
 
+	@Reference
+	private AddressLocalService _addressLocalService;
+
 	private CompanyService _companyService;
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private PhoneLocalService _phoneLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private WebsiteLocalService _websiteLocalService;
 
 }

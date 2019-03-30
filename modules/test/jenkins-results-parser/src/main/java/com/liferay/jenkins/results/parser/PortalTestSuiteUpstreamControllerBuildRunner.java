@@ -16,6 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,15 +34,19 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
-		S buildData = getBuildData();
-
-		String previousPortalBranchSHA = _getPreviousPortalBranchSHA();
-
-		if (!previousPortalBranchSHA.equals(buildData.getPortalBranchSHA())) {
-			updateBuildDescription();
-
-			keepLogs(true);
+		if (_previousBuildHasExistingInvocation()) {
+			return;
 		}
+
+		if (_previousBuildHasCurrentSHA()) {
+			return;
+		}
+
+		_invokeJob();
+
+		updateBuildDescription();
+
+		keepLogs(true);
 	}
 
 	@Override
@@ -57,16 +64,52 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	protected void updateBuildDescription() {
-		S buildData = getBuildData();
+		BuildData buildData = getBuildData();
 
 		buildData.setBuildDescription(
 			JenkinsResultsParserUtil.combine(
-				"<strong>GIT ID</strong> - ", buildData.getPortalBranchSHA()));
+				"<strong>GIT ID</strong> - ", _getPortalBranchAbbreviatedSHA(),
+				" - <a href=\"", _getInvocationURL(), "\">Invocation URL</a>"));
 
-		super.updateBuildDescription();
+		JenkinsResultsParserUtil.updateBuildDescription(
+			buildData.getBuildURL(), buildData.getBuildDescription());
 	}
 
-	private String _getPreviousPortalBranchSHA() {
+	private String _getInvocationURL() {
+		if (_invocationURL != null) {
+			return _invocationURL;
+		}
+
+		String baseInvocationURL =
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				JenkinsResultsParserUtil.combine(
+					"http://" + _INVOCATION_COHORT_NAME + ".liferay.com"),
+				1);
+
+		S buildData = getBuildData();
+
+		_invocationURL = JenkinsResultsParserUtil.combine(
+			baseInvocationURL, "/job/test-portal-testsuite-upstream(",
+			buildData.getPortalUpstreamBranchName(), ")");
+
+		return _invocationURL;
+	}
+
+	private String _getPortalBranchAbbreviatedSHA() {
+		S buildData = getBuildData();
+
+		String portalBranchSHA = buildData.getPortalBranchSHA();
+
+		return portalBranchSHA.substring(0, 7);
+	}
+
+	private List<JSONObject> _getPreviousBuildJSONObjects() {
+		if (_previousBuildJSONObjects != null) {
+			return _previousBuildJSONObjects;
+		}
+
+		_previousBuildJSONObjects = new ArrayList<>();
+
 		BuildData buildData = getBuildData();
 
 		try {
@@ -79,31 +122,130 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-				JSONObject previousBuildJSONObject =
+				_previousBuildJSONObjects.add(
 					JenkinsResultsParserUtil.toJSONObject(
 						JenkinsResultsParserUtil.getLocalURL(
-							buildJSONObject.getString("url") + "api/json"));
-
-				String description = previousBuildJSONObject.optString(
-					"description", "");
-
-				Matcher matcher = _pattern.matcher(description);
-
-				if (!matcher.find()) {
-					continue;
-				}
-
-				return matcher.group("sha");
+							buildJSONObject.getString("url") + "api/json")));
 			}
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
 
-		return "";
+		return _previousBuildJSONObjects;
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
-		"<strong>GIT ID<\\/strong> - (?<sha>[0-9a-f]{7,40})");
+	private String _getTestSuiteName() {
+		BuildData buildData = getBuildData();
+
+		String jobName = buildData.getJobName();
+
+		Matcher matcher = _jobNamePattern.matcher(jobName);
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid job name " + jobName);
+		}
+
+		return matcher.group("testSuiteName");
+	}
+
+	private void _invokeJob() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getInvocationURL());
+		sb.append("/buildWithParameters?");
+
+		String jenkinsAuthenticationToken;
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			jenkinsAuthenticationToken = buildProperties.getProperty(
+				"jenkins.authentication.token");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		sb.append("token=");
+		sb.append(jenkinsAuthenticationToken);
+
+		sb.append("&CI_TEST_SUITE=");
+		sb.append(_getTestSuiteName());
+
+		S buildData = getBuildData();
+
+		sb.append("&CONTROLLER_BUILD_URL=");
+		sb.append(buildData.getBuildURL());
+
+		String jenkinsGitHubURL = buildData.getBuildParameter(
+			"JENKINS_GITHUB_URL");
+
+		if (jenkinsGitHubURL != null) {
+			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
+				jenkinsGitHubURL);
+
+			if (matcher.find()) {
+				sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
+				sb.append(matcher.group("branchName"));
+				sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
+				sb.append(matcher.group("username"));
+			}
+		}
+
+		sb.append("&PORTAL_GIT_COMMIT=");
+		sb.append(buildData.getPortalBranchSHA());
+
+		try {
+			JenkinsResultsParserUtil.toString(sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private boolean _previousBuildHasCurrentSHA() {
+		String portalBranchSHA = _getPortalBranchAbbreviatedSHA();
+
+		for (JSONObject previousBuildJSONObject :
+				_getPreviousBuildJSONObjects()) {
+
+			String description = previousBuildJSONObject.optString(
+				"description", "");
+
+			if (description.contains(portalBranchSHA)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _previousBuildHasExistingInvocation() {
+		for (JSONObject previousBuildJSONObject :
+				_getPreviousBuildJSONObjects()) {
+
+			String description = previousBuildJSONObject.optString(
+				"description", "");
+
+			if (description.contains("Invocation URL")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String _INVOCATION_COHORT_NAME = "test-5";
+
+	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
+		"https://github.com/(?<username>[^/]+)/liferay-jenkins-ee/tree/" +
+			"(?<branchName>.+)");
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"[^\\(]+\\((?<branchName>[^_]+)_(?<testSuiteName>[^\\)]+)\\)");
+
+	private String _invocationURL;
+	private List<JSONObject> _previousBuildJSONObjects;
 
 }

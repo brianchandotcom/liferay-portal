@@ -14,6 +14,12 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
+<%
+JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request);
+%>
+
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
 
 <div id="templateScriptContainer">
@@ -416,7 +422,7 @@
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
-			<c:if test="<%= ddmTemplate == null %>">
+			<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
 				else {
 					editorContentElement.val(STR_EMPTY);
 				}

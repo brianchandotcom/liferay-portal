@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jorge Ferrer
  */
-@Component(service = InfoItemRenderer.class)
 public abstract class BaseAssetEntryInfoItemRenderer
 	implements InfoItemRenderer<AssetEntry> {
 

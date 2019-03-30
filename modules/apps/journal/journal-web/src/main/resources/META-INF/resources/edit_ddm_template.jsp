@@ -85,7 +85,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 	<div class="contextual-sidebar-content">
 		<div class="container-fluid container-fluid-max-xl container-view">
-			<div class="sheet sheet-lg">
+			<div class="sheet">
 				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 				<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 				<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />

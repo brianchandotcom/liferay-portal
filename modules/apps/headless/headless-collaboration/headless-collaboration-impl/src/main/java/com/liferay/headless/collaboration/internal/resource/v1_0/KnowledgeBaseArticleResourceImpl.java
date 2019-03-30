@@ -138,7 +138,7 @@ public class KnowledgeBaseArticleResourceImpl
 				booleanFilter.add(
 					new TermFilter(
 						"parentMessageId",
-						String.valueOf(kbArticle.getKbArticleId())),
+						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
 			kbArticle.getGroupId(), filter, pagination, sorts);

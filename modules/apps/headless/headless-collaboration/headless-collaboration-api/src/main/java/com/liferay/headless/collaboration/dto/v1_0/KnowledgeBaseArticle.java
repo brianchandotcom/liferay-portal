@@ -245,6 +245,30 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public void setEncodingFormat(String encodingFormat) {
+		this.encodingFormat = encodingFormat;
+	}
+
+	@JsonIgnore
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Exception> encodingFormatUnsafeSupplier) {
+
+		try {
+			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String encodingFormat;
+
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -597,6 +621,13 @@ public class KnowledgeBaseArticle {
 
 		sb.append("\"");
 		sb.append(description);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"encodingFormat\": ");
+
+		sb.append("\"");
+		sb.append(encodingFormat);
 		sb.append("\"");
 		sb.append(", ");
 

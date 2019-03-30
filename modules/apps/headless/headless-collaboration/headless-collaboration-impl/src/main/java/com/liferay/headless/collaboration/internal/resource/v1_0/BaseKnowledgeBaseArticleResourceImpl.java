@@ -168,6 +168,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription());
 		}
 
+		if (Validator.isNotNull(knowledgeBaseArticle.getEncodingFormat())) {
+			existingKnowledgeBaseArticle.setEncodingFormat(
+				knowledgeBaseArticle.getEncodingFormat());
+		}
+
 		if (Validator.isNotNull(knowledgeBaseArticle.getFriendlyUrlPath())) {
 			existingKnowledgeBaseArticle.setFriendlyUrlPath(
 				knowledgeBaseArticle.getFriendlyUrlPath());

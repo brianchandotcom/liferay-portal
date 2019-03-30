@@ -131,6 +131,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getDateModified());
 		}
 
+		if (Validator.isNotNull(messageBoardMessage.getEncodingFormat())) {
+			existingMessageBoardMessage.setEncodingFormat(
+				messageBoardMessage.getEncodingFormat());
+		}
+
 		if (Validator.isNotNull(messageBoardMessage.getHeadline())) {
 			existingMessageBoardMessage.setHeadline(
 				messageBoardMessage.getHeadline());

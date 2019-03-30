@@ -245,6 +245,30 @@ public class MessageBoardMessage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public void setEncodingFormat(String encodingFormat) {
+		this.encodingFormat = encodingFormat;
+	}
+
+	@JsonIgnore
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Exception> encodingFormatUnsafeSupplier) {
+
+		try {
+			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String encodingFormat;
+
 	public String getHeadline() {
 		return headline;
 	}
@@ -542,6 +566,13 @@ public class MessageBoardMessage {
 
 		sb.append("\"");
 		sb.append(dateModified);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"encodingFormat\": ");
+
+		sb.append("\"");
+		sb.append(encodingFormat);
 		sb.append("\"");
 		sb.append(", ");
 

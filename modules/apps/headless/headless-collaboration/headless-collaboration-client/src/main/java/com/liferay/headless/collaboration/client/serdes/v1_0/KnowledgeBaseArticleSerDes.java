@@ -98,6 +98,13 @@ public class KnowledgeBaseArticleSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"encodingFormat\": ");
+
+		sb.append("\"");
+		sb.append(knowledgeBaseArticle.getEncodingFormat());
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"friendlyUrlPath\": ");
 
 		sb.append("\"");
@@ -305,6 +312,12 @@ public class KnowledgeBaseArticleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setEncodingFormat(
 						(String)jsonParserFieldValue);
 				}
 			}

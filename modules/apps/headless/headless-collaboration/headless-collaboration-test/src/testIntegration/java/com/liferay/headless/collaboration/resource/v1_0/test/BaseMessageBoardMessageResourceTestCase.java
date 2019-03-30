@@ -1559,6 +1559,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("encodingFormat")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardMessage.getEncodingFormat()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("headline")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardMessage.getHeadline()));
@@ -1619,6 +1627,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				showAsAnswer = RandomTestUtil.randomBoolean();

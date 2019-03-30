@@ -207,6 +207,27 @@ public class KnowledgeBaseArticle {
 
 	protected String description;
 
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public void setEncodingFormat(String encodingFormat) {
+		this.encodingFormat = encodingFormat;
+	}
+
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Exception> encodingFormatUnsafeSupplier) {
+
+		try {
+			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String encodingFormat;
+
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}

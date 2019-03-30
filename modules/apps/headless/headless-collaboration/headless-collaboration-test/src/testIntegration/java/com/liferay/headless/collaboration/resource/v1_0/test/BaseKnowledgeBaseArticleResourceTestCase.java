@@ -2060,6 +2060,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("encodingFormat")) {
+			sb.append("'");
+			sb.append(String.valueOf(knowledgeBaseArticle.getEncodingFormat()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(
@@ -2134,6 +2142,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
+				encodingFormat = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();

@@ -89,7 +89,7 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 		<div class="lfr-editor-container <%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
 			<div class="lfr-rich-editor" id="<portlet:namespace />richEditor"></div>
 
-			<aui:input inlineLabel="left" label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
+			<aui:input label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
 		</div>
 	</div>
 </div>

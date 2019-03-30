@@ -139,6 +139,12 @@ definition {
 			);
 		}
 
+		if ("${allowShowingTheLoginPortlet}" == "disable") {
+			Uncheck(
+				locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_ALLOW_SHOWING_THE_LOGIN_PORTLET_CHECKBOX"
+			);
+		}
+
 		PortletEntry.save();
 	}
 

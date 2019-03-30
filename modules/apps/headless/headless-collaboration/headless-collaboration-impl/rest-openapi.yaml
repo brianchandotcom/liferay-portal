@@ -168,6 +168,8 @@ components:
                     type: string
                 description:
                     type: string
+                encodingFormat:
+                    type: string
                 friendlyUrlPath:
                     type: string
                 id:
@@ -302,6 +304,8 @@ components:
                     type: string
                 dateModified:
                     format: date-time
+                    type: string
+                encodingFormat:
                     type: string
                 headline:
                     type: string

@@ -19,6 +19,10 @@ package com.liferay.fragment.constants;
  */
 public class FragmentConstants {
 
+	public static final int RENDERER_TYPE_DYNAMIC = 1;
+
+	public static final int RENDERER_TYPE_STATIC = 0;
+
 	public static final String RESOURCE_NAME = "com.liferay.fragment";
 
 	public static final String SERVICE_NAME = "com.liferay.fragment";

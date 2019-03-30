@@ -176,6 +176,8 @@
 		<column name="lastPropagationDate" type="Date" />
 		<column name="namespace" type="String" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="rendererType" type="int" />
+		<column name="rendererKey" type="String" />
 
 		<!-- Order -->
 

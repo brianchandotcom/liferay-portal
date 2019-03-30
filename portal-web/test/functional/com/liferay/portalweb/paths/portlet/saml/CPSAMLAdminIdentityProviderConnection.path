@@ -15,11 +15,6 @@
 </tr>
 <!--IDENTITY_PROVIDER_CONNECTION-->
 <tr>
-	<td>IDENTITY_PROVIDER_CONNECTION_ACTION_BUTTON</td>
-	<td>//tbody[contains(.,'${key_idpNameID}')]//a[contains(@id,'samlSpIdpConnectionsSearchContainer_1_menu')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_enabled')]</td>
 	<td></td>

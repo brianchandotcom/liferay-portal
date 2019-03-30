@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -102,7 +101,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.WindowState;
 
 import org.apache.commons.fileupload.FileUploadBase;
 
@@ -537,8 +535,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				revertFileEntry(actionRequest);
 			}
 
-			WindowState windowState = actionRequest.getWindowState();
-
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
@@ -556,8 +552,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					"mvcRenderCommandName",
 					"/document_library/edit_file_entry");
 			}
-			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
-			}
 			else {
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -574,20 +568,18 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
-					if (windowState.equals(LiferayWindowState.POP_UP)) {
-						redirect = _portal.escapeRedirect(
-							ParamUtil.getString(actionRequest, "redirect"));
+					redirect = _portal.escapeRedirect(
+						ParamUtil.getString(actionRequest, "redirect"));
 
-						if (Validator.isNotNull(redirect)) {
-							if (cmd.equals(Constants.ADD) &&
-								(fileEntry != null)) {
+					if (Validator.isNotNull(redirect)) {
+						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
+							String portletId = _http.getParameter(
+								redirect, "p_p_id", false);
 
-								String portletId = _http.getParameter(
-									redirect, "p_p_id", false);
+							String namespace = _portal.getPortletNamespace(
+								portletId);
 
-								String namespace = _portal.getPortletNamespace(
-									portletId);
-
+							if (Validator.isNotNull(namespace)) {
 								redirect = _http.addParameter(
 									redirect, namespace + "className",
 									DLFileEntry.class.getName());
@@ -595,10 +587,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 									redirect, namespace + "classPK",
 									fileEntry.getFileEntryId());
 							}
-
-							actionRequest.setAttribute(
-								WebKeys.REDIRECT, redirect);
 						}
+
+						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 					}
 				}
 			}

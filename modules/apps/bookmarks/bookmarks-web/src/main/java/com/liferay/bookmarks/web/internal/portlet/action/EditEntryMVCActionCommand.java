@@ -25,7 +25,6 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryService;
 import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -49,7 +48,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -155,20 +153,17 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				unsubscribeEntry(actionRequest);
 			}
 
-			WindowState windowState = actionRequest.getWindowState();
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 
-			if (windowState.equals(LiferayWindowState.POP_UP)) {
-				String redirect = _portal.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
+			if (Validator.isNotNull(redirect)) {
+				if (cmd.equals(Constants.ADD) && (entry != null)) {
+					String portletId = _http.getParameter(
+						redirect, "p_p_id", false);
 
-				if (Validator.isNotNull(redirect)) {
-					if (cmd.equals(Constants.ADD) && (entry != null)) {
-						String portletId = _http.getParameter(
-							redirect, "p_p_id", false);
+					String namespace = _portal.getPortletNamespace(portletId);
 
-						String namespace = _portal.getPortletNamespace(
-							portletId);
-
+					if (Validator.isNotNull(namespace)) {
 						redirect = _http.addParameter(
 							redirect, namespace + "className",
 							BookmarksEntry.class.getName());
@@ -176,9 +171,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 							redirect, namespace + "classPK",
 							entry.getEntryId());
 					}
-
-					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 				}
+
+				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 			}
 		}
 		catch (Exception e) {

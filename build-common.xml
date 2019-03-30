@@ -1004,7 +1004,7 @@ information.
 
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
-		<attribute default="${junit.jvm}" name="junit.jvm.override" />
+		<attribute default="" name="junit.jvm.override" />
 		<attribute default="${java.specification.version}" name="junit.jvm.override.version" />
 		<attribute name="test.type" />
 		<element name="misc" optional="yes" />
@@ -1061,7 +1061,13 @@ information.
 				</then>
 			</if>
 
-			<junit dir="${project.dir}" fork="on" forkmode="@{forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm.override}" outputtoformatters="false" printsummary="on" showoutput="true">
+			<local name="junit.jvm.bin" />
+
+			<condition else="${junit.jvm.override}" property="junit.jvm.bin" value="${junit.jvm}">
+				<equals arg1="${junit.jvm.override}" arg2="" />
+			</condition>
+
+			<junit dir="${project.dir}" fork="on" forkmode="@{forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm.bin}" outputtoformatters="false" printsummary="on" showoutput="true">
 				<sysproperty if:true="${aspectj.weaver.enabled}" key="aspectj.agent" value="${aspectj.agent}" />
 				<sysproperty key="catalina.base" value="." />
 				<sysproperty file="woven-classes" key="junit.aspectj.dump" />

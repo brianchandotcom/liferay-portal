@@ -37,148 +37,151 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>"
-	enctype="multipart/form-data"
-	fluid="<%= true %>"
-	method="post"
-	name="fm"
-	onSubmit='<%= "event.preventDefault();" %>'
->
+<aui:form action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" />
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateId() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getGroupId() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getClassPK() %>" />
 
-	<liferay-frontend:edit-form-body>
-		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
-		<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
+	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-		<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
-			<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
-		</liferay-ui:error>
+	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
+		<div class="container-fluid container-fluid-max-xl">
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<aui:input cssClass="form-control-inline" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-		<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+	<div class="container-fluid container-fluid-max-xl container-view">
+		<div class="sheet">
+			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+			<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+			<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
 
-		<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
+			<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
+			</liferay-ui:error>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
-					</div>
-				</c:if>
+			<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<aui:input name="name" />
+			<liferay-frontend:fieldset-group>
+				<liferay-frontend:fieldset>
+					<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+						</div>
+					</c:if>
 
-				<liferay-frontend:fieldset
-					collapsed="<%= true %>"
-					collapsible="<%= true %>"
-					label="details"
-				>
-					<div class="form-group">
-						<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" />
+					<liferay-frontend:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="details"
+					>
+						<div class="form-group">
+							<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" />
 
-						<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
-							<liferay-ui:icon
-								iconCssClass="icon-search"
-								label="<%= true %>"
-								linkCssClass="btn btn-default"
-								message="select"
-								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-							/>
+							<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
+								<liferay-ui:icon
+									iconCssClass="icon-search"
+									label="<%= true %>"
+									linkCssClass="btn btn-default"
+									message="select"
+									url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+								/>
+							</c:if>
+						</div>
+
+						<aui:select changesContext="<%= true %>" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+
+							<%
+							String[] templateLanguageTypes = {TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM, TemplateConstants.LANG_TYPE_XSL};
+
+							for (String curLangType : templateLanguageTypes) {
+								StringBundler sb = new StringBundler(6);
+
+								sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+								sb.append(StringPool.SPACE);
+								sb.append(StringPool.OPEN_PARENTHESIS);
+								sb.append(StringPool.PERIOD);
+								sb.append(curLangType);
+								sb.append(StringPool.CLOSE_PARENTHESIS);
+							%>
+
+								<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<c:if test="<%= !journalEditDDMTemplateDisplayContext.autogenerateDDMTemplateKey() %>">
+							<aui:input disabled="<%= ddmTemplate != null %>" name="ddmTemplateKey" />
 						</c:if>
-					</div>
 
-					<aui:select changesContext="<%= true %>" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+						<aui:input name="description" />
 
-						<%
-						String[] templateLanguageTypes = {TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM, TemplateConstants.LANG_TYPE_XSL};
+						<c:if test="<%= ddmTemplate != null %>">
+							<aui:input helpMessage="template-key-help" name="ddmTemplateKey" type="resource" value="<%= ddmTemplate.getTemplateKey() %>" />
 
-						for (String curLangType : templateLanguageTypes) {
-							StringBundler sb = new StringBundler(6);
+							<portlet:resourceURL id="/journal/get_ddm_template" var="getDDMTemplateURL">
+								<portlet:param name="ddmTemplateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
+							</portlet:resourceURL>
 
-							sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
-							sb.append(StringPool.SPACE);
-							sb.append(StringPool.OPEN_PARENTHESIS);
-							sb.append(StringPool.PERIOD);
-							sb.append(curLangType);
-							sb.append(StringPool.CLOSE_PARENTHESIS);
-						%>
+							<aui:input name="url" type="resource" value="<%= getDDMTemplateURL %>" />
 
-							<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
+							<%
+							Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+							%>
 
-						<%
-						}
-						%>
+							<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
+						</c:if>
 
-					</aui:select>
+						<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
 
-					<c:if test="<%= !journalEditDDMTemplateDisplayContext.autogenerateDDMTemplateKey() %>">
-						<aui:input disabled="<%= ddmTemplate != null %>" name="ddmTemplateKey" />
-					</c:if>
+						<div id="<portlet:namespace />smallImageContainer">
+							<div class="lfr-ddm-small-image-header">
+								<aui:input name="smallImage" />
+							</div>
 
-					<aui:input name="description" />
+							<div class="lfr-ddm-small-image-content p-3 toggler-content-collapsed">
+								<aui:row>
+									<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) %>">
+										<aui:col width="<%= 50 %>">
+											<div class="aspect-ratio aspect-ratio-16-to-9">
+												<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+											</div>
+										</aui:col>
+									</c:if>
 
-					<c:if test="<%= ddmTemplate != null %>">
-						<aui:input helpMessage="template-key-help" name="ddmTemplateKey" type="resource" value="<%= ddmTemplate.getTemplateKey() %>" />
+									<aui:col width="<%= (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null)) ? 50 : 100 %>">
+										<aui:fieldset>
+											<aui:input cssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
 
-						<portlet:resourceURL id="/journal/get_ddm_template" var="getDDMTemplateURL">
-							<portlet:param name="ddmTemplateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
-						</portlet:resourceURL>
+											<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" title="small-image-url" />
+										</aui:fieldset>
 
-						<aui:input name="url" type="resource" value="<%= getDDMTemplateURL %>" />
+										<aui:fieldset>
+											<aui:input cssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
 
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-						%>
-
-						<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
-					</c:if>
-
-					<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
-
-					<div id="<portlet:namespace />smallImageContainer">
-						<div class="lfr-ddm-small-image-header">
-							<aui:input name="smallImage" />
-						</div>
-
-						<div class="lfr-ddm-small-image-content p-3 toggler-content-collapsed">
-							<aui:row>
-								<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) %>">
-									<aui:col width="<%= 50 %>">
-										<div class="aspect-ratio aspect-ratio-16-to-9">
-											<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-										</div>
+											<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
+										</aui:fieldset>
 									</aui:col>
-								</c:if>
-
-								<aui:col width="<%= (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null)) ? 50 : 100 %>">
-									<aui:fieldset>
-										<aui:input cssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
-
-										<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" title="small-image-url" />
-									</aui:fieldset>
-
-									<aui:fieldset>
-										<aui:input cssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
-
-										<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
-									</aui:fieldset>
-								</aui:col>
-							</aui:row>
+								</aui:row>
+							</div>
 						</div>
-					</div>
-				</liferay-frontend:fieldset>
+					</liferay-frontend:fieldset>
 
-				<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
-	</liferay-frontend:edit-form-body>
+					<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
+				</liferay-frontend:fieldset>
+			</liferay-frontend:fieldset-group>
+		</div>
+	</div>
 
 	<liferay-frontend:edit-form-footer>
 
@@ -190,7 +193,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 		<aui:button href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+</aui:form>
 
 <aui:script use="aui-toggler">
 	var container = A.one('#<portlet:namespace />smallImageContainer');

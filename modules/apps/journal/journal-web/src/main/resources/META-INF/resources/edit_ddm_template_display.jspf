@@ -16,12 +16,7 @@
 
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
 
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	id="templateScriptContainer"
-	label="script"
->
+<div id="templateScriptContainer">
 	<div class="form-group lfr-template-editor-container row">
 		<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 			<div class="col-md-3 lfr-template-palette-container" id="<portlet:namespace />templatePaletteContainer">
@@ -90,7 +85,7 @@
 			<aui:input inlineLabel="left" label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
 		</div>
 	</div>
-</liferay-frontend:fieldset>
+</div>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;

@@ -47,7 +47,7 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
 									label="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
 								>
-									<ul class="palette-item-content">
+									<ul class="list-unstyled palette-item-content">
 
 										<%
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {

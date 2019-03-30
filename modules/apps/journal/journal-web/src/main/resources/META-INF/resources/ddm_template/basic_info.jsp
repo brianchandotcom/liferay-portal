@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,25 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.journal.web.internal.constants;
-
-/**
- * @author Eudaldo Alonso
- */
-public class JournalWebConstants {
-
-	public static final String FORM_NAVIGATOR_ID_JOURNAL_DDM_STRUCTURE =
-		"journal.ddm.structure.form";
-
-	public static final String FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE =
-		"journal.ddm.template.form";
-
-	public static final String JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER =
-		"JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER";
-
-	public static final String
-		JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER =
-			"JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER";
-
-}
+<%@ include file="/init.jsp" %>

@@ -45,10 +45,6 @@
 		}
 	}
 
-	.lfr-structure-entry-details-container {
-		margin-top: 10px;
-	}
-
 	.lfr-translation-manager {
 		margin-bottom: 15px;
 	}
@@ -75,65 +71,21 @@
 		margin-bottom: 10px;
 	}
 
-	.lfr-template-editor-container {
-		.lfr-template-palette-container {
-			width: 265px;
+	.lfr-template-editor-container .lfr-template-palette-container .lfr-template-palette {
+		overflow: auto;
+		width: 100%;
 
-			.lfr-template-palette {
-				overflow: auto;
-				width: 100%;
-
-				.title-text {
-					font-weight: bold;
-					margin: 0.5em;
-				}
-
-				.palette-item-content .palette-item-container {
-					cursor: pointer;
-					line-height: 1.8em;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-
-					.palette-item {
-						padding-right: 13px;
-					}
-				}
-			}
-
-			.search-query {
-				margin-bottom: 26px;
-			}
+		.title-text {
+			font-weight: bold;
+			margin: 0.5em;
 		}
 
-		.lfr-editor-container {
-			margin-left: 275px;
-
-			.lfr-template-editor .lfr-rich-editor {
-				padding-left: 0.2em;
-			}
-		}
-
-		.lfr-editor-container-full {
-			margin-left: 0;
-		}
-	}
-
-	@include respond-to(phone) {
-		.lfr-template-editor-container {
-			.lfr-template-palette-container {
-				width: 100%;
-
-				.lfr-template-palette {
-					height: auto !important;
-					margin-bottom: 15px;
-				}
-			}
-
-			.lfr-editor-container {
-				clear: left;
-				margin-left: 0;
-			}
+		.palette-item-content .palette-item-container {
+			cursor: pointer;
+			line-height: 1.8em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 	}
 
@@ -170,10 +122,6 @@
 			direction: rtl;
 		}
 	}
-}
-
-textarea.script {
-	min-height: 200px !important;
 }
 
 .vertical-scrolling.nav {

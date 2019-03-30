@@ -22,11 +22,11 @@
 	id="templateScriptContainer"
 	label="script"
 >
-	<div class="form-group lfr-template-editor-container">
+	<div class="form-group lfr-template-editor-container row">
 		<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
-			<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
+			<div class="col-md-3 lfr-template-palette-container" id="<portlet:namespace />templatePaletteContainer">
 				<div class="search" id="<portlet:namespace />paletteSearchContainer">
-					<input class="col-md-12 field form-control search-query" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text" />
+					<input class="form-control mb-3" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text" />
 				</div>
 
 				<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
@@ -77,19 +77,19 @@
 		</c:if>
 
 		<%
-		String editorContainerClass = "lfr-editor-container";
+		String editorContainerClass = "col-md-9";
 
 		if (!journalEditDDMTemplateDisplayContext.isAutocompleteEnabled()) {
-			editorContainerClass += " lfr-editor-container-full";
+			editorContainerClass = "col-md-12";
 		}
 		%>
 
-		<div class="<%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
+		<div class="lfr-editor-container <%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
 			<div class="lfr-rich-editor" id="<portlet:namespace />richEditor"></div>
+
+			<aui:input inlineLabel="left" label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
 		</div>
 	</div>
-
-	<aui:input inlineLabel="left" label="script-file" name="script" type="file" />
 </liferay-frontend:fieldset>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">

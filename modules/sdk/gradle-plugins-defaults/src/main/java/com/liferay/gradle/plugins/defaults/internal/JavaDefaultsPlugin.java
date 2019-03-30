@@ -51,6 +51,16 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 	private JavaDefaultsPlugin() {
 	}
 
+	private void _configureTaskJarEnabled(Jar jar) {
+		Project project = jar.getProject();
+
+		String name = project.getName();
+
+		if (name.endsWith("-test")) {
+			jar.setEnabled(false);
+		}
+	}
+
 	private void _configureTasksJar(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -87,16 +97,6 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 				}
 
 			});
-	}
-
-	private void _configureTaskJarEnabled(Jar jar) {
-		Project project = jar.getProject();
-
-		String name = project.getName();
-
-		if (name.endsWith("-test")) {
-			jar.setEnabled(false);
-		}
 	}
 
 	private void _configureTaskTestLogging(Test test) {

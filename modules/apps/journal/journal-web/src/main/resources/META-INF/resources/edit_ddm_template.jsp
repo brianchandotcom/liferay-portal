@@ -60,39 +60,52 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 						%>
 
 						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClick %>" type="submit" value="save" />
+
+						<clay:button
+							icon="cog"
+							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+							size="sm"
+							style="borderless"
+						/>
 					</div>
 				</li>
 			</ul>
 		</div>
 	</nav>
 
-	<div class="container-fluid container-fluid-max-xl container-view">
-		<div class="sheet">
-			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-			<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
-			<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
-
-			<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
-			</liferay-ui:error>
-
-			<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-			</liferay-ui:error>
-
+	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+		<div class="sidebar-body">
 			<liferay-frontend:form-navigator
 				formModelBean="<%= ddmTemplate %>"
 				id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE %>"
 				showButtons="<%= false %>"
 			/>
+		</div>
+	</div>
 
-			<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
-				</div>
-			</c:if>
+	<div class="contextual-sidebar-content">
+		<div class="container-fluid container-fluid-max-xl container-view">
+			<div class="sheet">
+				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+				<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+				<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
 
-			<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
+				<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
+					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
+				</liferay-ui:error>
+
+				<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
+					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				</liferay-ui:error>
+
+				<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
+					<div class="alert alert-warning">
+						<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+					</div>
+				</c:if>
+
+				<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
+			</div>
 		</div>
 	</div>
 </aui:form>
@@ -104,4 +117,23 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 			submitForm(document.<portlet:namespace />fm);
 		}
 	);
+
+	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+
+	if (contextualSidebarButton) {
+		contextualSidebarButton.addEventListener(
+			'click',
+			function(event) {
+				var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
+
+				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
+					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
+
+				}
+				else {
+					contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+				}
+			}
+		);
+	}
 </aui:script>

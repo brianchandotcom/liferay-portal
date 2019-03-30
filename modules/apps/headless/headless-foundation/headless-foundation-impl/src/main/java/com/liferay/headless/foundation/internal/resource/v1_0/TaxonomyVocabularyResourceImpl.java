@@ -54,7 +54,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -150,9 +149,10 @@ public class TaxonomyVocabularyResourceImpl
 			throw new BadRequestException(
 				StringBundler.concat(
 					"Unable to patch taxonomy vocabulary with language ",
-					contextAcceptLanguage.getPreferredLanguageId(),
+					LocaleUtil.toW3cLanguageId(
+						contextAcceptLanguage.getPreferredLanguageId()),
 					" because it is only available in the following languages ",
-					Arrays.toString(
+					LocaleUtil.toW3cLanguageIds(
 						assetVocabulary.getAvailableLanguageIds())));
 		}
 

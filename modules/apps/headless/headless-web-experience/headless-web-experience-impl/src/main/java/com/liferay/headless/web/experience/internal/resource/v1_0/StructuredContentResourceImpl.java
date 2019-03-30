@@ -283,9 +283,11 @@ public class StructuredContentResourceImpl
 			throw new BadRequestException(
 				StringBundler.concat(
 					"Unable to patch structured content with language ",
-					contextAcceptLanguage.getPreferredLanguageId(),
+					LocaleUtil.toW3cLanguageId(
+						contextAcceptLanguage.getPreferredLanguageId()),
 					" because it is only available in the following languages ",
-					journalArticle.getAvailableLanguageIds()));
+					LocaleUtil.toW3cLanguageIds(
+						journalArticle.getAvailableLanguageIds())));
 		}
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();

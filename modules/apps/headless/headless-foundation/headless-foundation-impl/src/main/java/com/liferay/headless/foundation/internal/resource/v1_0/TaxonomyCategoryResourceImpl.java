@@ -50,7 +50,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletResponse;
@@ -166,9 +165,11 @@ public class TaxonomyCategoryResourceImpl
 			throw new BadRequestException(
 				StringBundler.concat(
 					"Unable to patch taxonomy category with language ",
-					contextAcceptLanguage.getPreferredLanguageId(),
+					LocaleUtil.toW3cLanguageId(
+						contextAcceptLanguage.getPreferredLanguageId()),
 					" because it is only available in the following languages ",
-					Arrays.toString(assetCategory.getAvailableLanguageIds())));
+					LocaleUtil.toW3cLanguageIds(
+						assetCategory.getAvailableLanguageIds())));
 		}
 
 		return _toTaxonomyCategory(

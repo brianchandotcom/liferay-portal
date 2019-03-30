@@ -96,14 +96,14 @@ if (Validator.isNotNull(keywords)) {
 <div class="add-content-button">
 
 	<%
-	PortletURL redirectURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE);
+	String redirectURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
-	redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+	redirectURL = HttpUtil.addParameter(redirectURL, "p_p_id", portletDisplay.getId());
 	%>
 
 	<liferay-asset:asset-add-button
-		redirect="<%= redirectURL.toString() %>"
+		redirect="<%= redirectURL %>"
+		useDialog="<%= false %>"
 	/>
 </div>
 

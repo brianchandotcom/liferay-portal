@@ -153,6 +153,10 @@ public class PermissionsPortletConfigurationIcon
 			showPermissionsIcon = false;
 		}
 
+		if (isEmbeddedPersonalApplicationLayout(layout)) {
+			showPermissionsIcon = false;
+		}
+
 		return showPermissionsIcon;
 	}
 

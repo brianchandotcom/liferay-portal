@@ -88,6 +88,10 @@ public class ConfigurationPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (isEmbeddedPersonalApplicationLayout(themeDisplay.getLayout())) {
+			return false;
+		}
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowConfigurationIcon();

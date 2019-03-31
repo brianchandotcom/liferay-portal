@@ -109,6 +109,10 @@ public class ExportImportPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (isEmbeddedPersonalApplicationLayout(themeDisplay.getLayout())) {
+			return false;
+		}
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (!portletDisplay.isShowExportImportIcon()) {

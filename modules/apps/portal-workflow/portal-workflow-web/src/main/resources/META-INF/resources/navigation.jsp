@@ -20,7 +20,9 @@
 WorkflowNavigationDisplayContext workflowNavigationDisplayContext = (WorkflowNavigationDisplayContext)request.getAttribute(WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
-/>
+<c:if test="<%= workflowPortletTabs.size() != 1 %>">
+	<clay:navigation-bar
+		inverted="<%= true %>"
+		navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
+	/>
+</c:if>

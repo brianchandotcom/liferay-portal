@@ -46,6 +46,15 @@ public class InitColumnProcessor implements ColumnProcessor {
 	}
 
 	@Override
+	public String processDynamicColumn(String columnId, String classNames)
+		throws Exception {
+
+		_columns.add(columnId);
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String processMax() {
 		return StringPool.BLANK;
 	}

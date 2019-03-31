@@ -259,6 +259,16 @@
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 
+<#assign
+	layout_friendly_url = layout.getFriendlyURL()
+
+	portlet_id = paramUtil.getString(request, "p_p_id")
+/>
+
+<#if validator.isNotNull(portlet_id) && layout.isSystem() && !layout.isTypeControlPanel() && stringUtil.equals(layout_friendly_url, "/manage")>
+	<#assign the_title = portalUtil.getPortletTitle(portlet_id, locale) />
+</#if>
+
 <#if the_title ?has_content && !stringUtil.equals(company_name, site_name) && !page_group.isLayoutPrototype()>
 	<#assign the_title = the_title + " - " + site_name />
 </#if>

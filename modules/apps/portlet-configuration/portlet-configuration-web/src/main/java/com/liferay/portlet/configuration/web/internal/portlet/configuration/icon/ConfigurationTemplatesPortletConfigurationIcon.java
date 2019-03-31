@@ -150,6 +150,10 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 			return false;
 		}
 
+		if (isEmbeddedPersonalApplicationLayout(layout)) {
+			return false;
+		}
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowConfigurationIcon();

@@ -146,6 +146,13 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	}
 
 	@Override
+	public String processDynamicColumn(String columnId, String classNames)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String processMax() throws Exception {
 		return StringPool.BLANK;
 	}

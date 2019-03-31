@@ -26,7 +26,6 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,11 +48,7 @@ public class ViewMyAccountMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		WindowState windowState = renderRequest.getWindowState();
-
-		if ((renderRequest.getRemoteUser() == null) ||
-			!windowState.equals(WindowState.MAXIMIZED)) {
-
+		if (renderRequest.getRemoteUser() == null) {
 			return "/null.jsp";
 		}
 

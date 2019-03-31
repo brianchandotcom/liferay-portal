@@ -21,7 +21,6 @@ SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsVie
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= sharedAssetsViewDisplayContext.getNavigationItems() %>"
 />
 

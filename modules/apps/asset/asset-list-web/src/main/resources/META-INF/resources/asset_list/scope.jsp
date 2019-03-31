@@ -22,11 +22,20 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
-<aui:input name="groupId" type="hidden" value="" />
+<liferay-util:buffer
+	var="removeLinkIcon"
+>
+	<liferay-ui:icon
+		icon="times-circle"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="none"
+	headerNames="name,type,null"
 	iteratorURL="<%= portletURL %>"
 	total="<%= selectedGroups.size() %>"
 >
@@ -51,18 +60,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<portlet:actionURL name="/asset_list/delete_scope_group" var="deleteScopeGroupURL">
-				<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-				<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
-				<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				icon="times-circle"
-				markupView="lexicon"
-				url="<%= deleteScopeGroupURL %>"
-			/>
+			<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -85,20 +83,14 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		if (selectedGroups.contains(group)) {
 			continue;
 		}
+
+		String onClick = "addRow('" + group.getGroupId() + "', '" + group.getDescriptiveName(themeDisplay.getLocale()) + "', '" + group.getScopeLabel(themeDisplay) + "');";
 	%>
 
-		<portlet:actionURL name="/asset_list/add_scope_group" var="addScopeGroupURL">
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
-		</portlet:actionURL>
-
 		<liferay-ui:icon
-			id='<%= "scope" + group.getGroupId() %>'
 			message="<%= group.getScopeDescriptiveName(themeDisplay) %>"
-			method="post"
-			url="<%= addScopeGroupURL %>"
+			onClick="<%= onClick %>"
+			url="javascript:;"
 		/>
 
 	<%
@@ -114,7 +106,23 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 	/>
 </liferay-ui:icon-menu>
 
-<aui:script>
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+
+	searchContainer.get('contentBox').delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+
+			var tr = link.ancestor('tr');
+
+			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+			searchContainer.updateDataStore();
+		},
+		'.modify-link'
+	);
+
 	var selectManageableGroupIcon = document.getElementById('<portlet:namespace />selectManageableGroup');
 
 	if (selectManageableGroupIcon) {
@@ -122,10 +130,6 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			'click',
 			function(event) {
 				event.preventDefault();
-
-				var form = document.<portlet:namespace />fm;
-
-				form.action = '<portlet:actionURL name="/asset_list/add_scope_group"><portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" /><portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" /></portlet:actionURL>';
 
 				Liferay.Util.selectEntity(
 					{
@@ -138,17 +142,32 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 						uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
 					},
 					function(event) {
-						Liferay.Util.postForm(
-							document.<portlet:namespace />fm,
-							{
-								data: {
-									groupId: event.groupid
-								}
-							}
-						);
+						var entityId = event.groupid;
+
+						var searchContainerData = searchContainer.getData();
+
+						if (searchContainerData.indexOf(entityId) == -1) {
+							addRow(entityId, event.groupdescriptivename, event.groupscopelabel);
+						}
 					}
 				);
 			}
 		);
 	}
+
+	Liferay.provide(
+		window,
+		'addRow',
+		function(groupId, name, scopeLabel) {
+			var rowColumns = [];
+
+			rowColumns.push('<span class="truncate-text">' + name + '</span>');
+			rowColumns.push(scopeLabel);
+			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>');
+
+			searchContainer.addRow(rowColumns, groupId);
+
+			searchContainer.updateDataStore();
+		}
+	);
 </aui:script>

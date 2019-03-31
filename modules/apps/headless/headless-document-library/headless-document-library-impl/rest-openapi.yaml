@@ -163,6 +163,29 @@ components:
             required:
                 - name
             type: object
+        Rating:
+            description: https://www.schema.org/Rating
+            properties:
+                bestRating:
+                    readOnly: true
+                    type: number
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                ratingValue:
+                    type: number
+                worstRating:
+                    readOnly: true
+                    type: number
+            type: object
 info:
     description: ""
     title: "Headless Document Library"
@@ -488,6 +511,46 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
+    "/documents/{document-id}/ratings":
+        get:
+            parameters:
+                - in: path
+                  name: document-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Rating"
+                                type: array
+                    description: ""
+            tags: ["Document"]
+        post:
+            parameters:
+                - in: path
+                  name: document-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["Document"]
     "/documents/{document-id}/comments":
         get:
             parameters:
@@ -735,3 +798,55 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description: ""
             tags: ["Folder"]
+    "/ratings/{rating-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: rating-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Rating"]
+        get:
+            parameters:
+                - in: path
+                  name: rating-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["Rating"]
+        put:
+            parameters:
+                - in: path
+                  name: rating-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["Rating"]

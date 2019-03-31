@@ -388,23 +388,6 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
-	public static void updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws RemoteException {
-
-		try {
-			AssetListEntryServiceUtil.
-				updateAssetListEntryTypeSettingsProperties(
-					assetListEntryId, segmentsEntryId, typeSettingsProperties);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		AssetListEntryServiceSoap.class);
 

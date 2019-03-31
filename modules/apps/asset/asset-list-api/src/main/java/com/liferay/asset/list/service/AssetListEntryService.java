@@ -136,9 +136,4 @@ public interface AssetListEntryService extends BaseService {
 			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws PortalException;
 
-	public void updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws PortalException;
-
 }

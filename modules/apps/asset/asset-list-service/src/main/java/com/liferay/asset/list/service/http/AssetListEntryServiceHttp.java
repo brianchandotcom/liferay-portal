@@ -712,43 +712,6 @@ public class AssetListEntryServiceHttp {
 		}
 	}
 
-	public static void updateAssetListEntryTypeSettingsProperties(
-			HttpPrincipal httpPrincipal, long assetListEntryId,
-			long segmentsEntryId, String typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AssetListEntryServiceUtil.class,
-				"updateAssetListEntryTypeSettingsProperties",
-				_updateAssetListEntryTypeSettingsPropertiesParameterTypes18);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, assetListEntryId, segmentsEntryId,
-				typeSettingsProperties);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		AssetListEntryServiceHttp.class);
 
@@ -814,8 +777,5 @@ public class AssetListEntryServiceHttp {
 		_updateAssetListEntryTypeSettingsParameterTypes17 = new Class[] {
 			long.class, long.class, String.class
 		};
-	private static final Class<?>[]
-		_updateAssetListEntryTypeSettingsPropertiesParameterTypes18 =
-			new Class[] {long.class, long.class, String.class};
 
 }

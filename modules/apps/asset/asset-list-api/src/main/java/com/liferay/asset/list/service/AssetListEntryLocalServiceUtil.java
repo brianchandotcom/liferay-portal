@@ -460,16 +460,6 @@ public class AssetListEntryLocalServiceUtil {
 			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntry
-			updateAssetListEntryTypeSettingsProperties(
-				long assetListEntryId, long segmentsEntryId,
-				String typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, segmentsEntryId, typeSettingsProperties);
-	}
-
 	public static AssetListEntryLocalService getService() {
 		return _serviceTracker.getService();
 	}

@@ -209,16 +209,6 @@ public class AssetListEntryServiceWrapper
 	}
 
 	@Override
-	public void updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_assetListEntryService.updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, segmentsEntryId, typeSettingsProperties);
-	}
-
-	@Override
 	public AssetListEntryService getWrappedService() {
 		return _assetListEntryService;
 	}

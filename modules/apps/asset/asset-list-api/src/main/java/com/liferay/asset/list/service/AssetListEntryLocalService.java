@@ -353,9 +353,4 @@ public interface AssetListEntryLocalService
 			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws PortalException;
 
-	public AssetListEntry updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws PortalException;
-
 }

@@ -495,18 +495,6 @@ public class AssetListEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.list.model.AssetListEntry
-			updateAssetListEntryTypeSettingsProperties(
-				long assetListEntryId, long segmentsEntryId,
-				String typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetListEntryLocalService.
-			updateAssetListEntryTypeSettingsProperties(
-				assetListEntryId, segmentsEntryId, typeSettingsProperties);
-	}
-
-	@Override
 	public AssetListEntryLocalService getWrappedService() {
 		return _assetListEntryLocalService;
 	}

@@ -194,15 +194,6 @@ public class AssetListEntryServiceUtil {
 			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
-	public static void updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, segmentsEntryId, typeSettingsProperties);
-	}
-
 	public static AssetListEntryService getService() {
 		return _serviceTracker.getService();
 	}

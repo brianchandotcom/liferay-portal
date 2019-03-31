@@ -831,7 +831,7 @@ paths:
                                     $ref: "#/components/schemas/Rating"
                                 type: array
                     description: ""
-            tags: ["StructuredContent"]
+            tags: ["Rating"]
         post:
             parameters:
                 - in: path
@@ -852,7 +852,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["StructuredContent"]
+            tags: ["Rating"]
     "/structured-contents/{structured-content-id}/rendered-content/{template-id}":
         get:
             parameters:

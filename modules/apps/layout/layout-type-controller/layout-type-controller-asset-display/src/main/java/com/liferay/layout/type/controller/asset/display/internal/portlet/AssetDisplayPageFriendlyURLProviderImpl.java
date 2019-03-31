@@ -58,19 +58,15 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
 				themeDisplay.getLayoutSet(), themeDisplay));
 
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
-
-		sb.append(
-			AssetDisplayPageFriendlyURLResolverConstants.
-				ASSET_DISPLAY_PAGE_URL_SEPARATOR);
-
 		String urlTitle = null;
+
+		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
 		if (assetRenderer != null) {
 			urlTitle = assetRenderer.getUrlTitle(themeDisplay.getLocale());
@@ -78,10 +74,12 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		if (Validator.isNotNull(urlTitle)) {
 			sb.append(assetDisplayContributor.getAssetURLSeparator());
-			sb.append(StringPool.SLASH);
 			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
 		}
 		else {
+			sb.append(
+				AssetDisplayPageFriendlyURLResolverConstants.
+					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
 			sb.append(assetEntry.getEntryId());
 		}
 

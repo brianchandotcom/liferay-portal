@@ -141,17 +141,28 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		MBMessage parentMBMessage = _mbMessageService.getMessage(
+		MBMessage originalMBMessage = _mbMessageService.getMessage(
 			messageBoardMessageId);
 
+		String headline = messageBoardMessage.getHeadline();
+
+		if (headline == null) {
+			MBMessage parentMBMessage = _mbMessageService.getMessage(
+				originalMBMessage.getParentMessageId());
+
+			headline =
+				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
+					parentMBMessage.getSubject();
+		}
+
 		MBMessage mbMessage = _mbMessageService.updateDiscussionMessage(
-			parentMBMessage.getClassName(), parentMBMessage.getClassPK(),
-			messageBoardMessageId, messageBoardMessage.getHeadline(),
+			originalMBMessage.getClassName(), originalMBMessage.getClassPK(),
+			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
 			ServiceContextUtil.createServiceContext(
 				messageBoardMessage.getKeywords(),
 				messageBoardMessage.getTaxonomyCategoryIds(),
-				parentMBMessage.getGroupId(),
+				originalMBMessage.getGroupId(),
 				messageBoardMessage.getViewableByAsString()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);

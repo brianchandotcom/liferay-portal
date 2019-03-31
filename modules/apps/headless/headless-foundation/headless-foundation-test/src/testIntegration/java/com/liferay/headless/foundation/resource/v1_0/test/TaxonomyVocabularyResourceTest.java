@@ -153,7 +153,7 @@ public class TaxonomyVocabularyResourceTest
 			return false;
 		}
 
-		if (assetTypes1.length != assetTypes1.length) {
+		if (assetTypes1.length != assetTypes2.length) {
 			return false;
 		}
 

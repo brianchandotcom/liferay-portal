@@ -66,7 +66,7 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	public String getAssetURLSeparator() {
-		return "web-content";
+		return "/wc/";
 	}
 
 	@Override

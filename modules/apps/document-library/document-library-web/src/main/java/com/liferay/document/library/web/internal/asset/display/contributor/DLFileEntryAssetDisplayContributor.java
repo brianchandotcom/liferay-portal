@@ -34,7 +34,7 @@ public class DLFileEntryAssetDisplayContributor
 
 	@Override
 	public String getAssetURLSeparator() {
-		return "document";
+		return "/d/";
 	}
 
 	@Override

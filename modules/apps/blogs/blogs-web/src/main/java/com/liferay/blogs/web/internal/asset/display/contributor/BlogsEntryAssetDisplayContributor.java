@@ -33,7 +33,7 @@ public class BlogsEntryAssetDisplayContributor
 
 	@Override
 	public String getAssetURLSeparator() {
-		return "blogs";
+		return "/b/";
 	}
 
 	@Override

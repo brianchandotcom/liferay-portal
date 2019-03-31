@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 
@@ -391,41 +390,6 @@ public class AssetListEntryLocalServiceImpl
 		_assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(
 				assetListEntryId, segmentsEntryId, typeSettings);
-	}
-
-	@Override
-	public AssetListEntry updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws PortalException {
-
-		AssetListEntry assetListEntry =
-			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
-
-		assetListEntry.setModifiedDate(new Date());
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			_assetListEntrySegmentsEntryRelLocalService.
-				getAssetListEntrySegmentsEntryRel(
-					assetListEntryId, segmentsEntryId);
-
-		UnicodeProperties existingProperties = new UnicodeProperties();
-
-		existingProperties.fastLoad(
-			assetListEntrySegmentsEntryRel.getTypeSettings());
-
-		UnicodeProperties newProperties = new UnicodeProperties();
-
-		newProperties.fastLoad(typeSettingsProperties);
-
-		existingProperties.putAll(newProperties);
-
-		_assetListEntrySegmentsEntryRelLocalService.
-			updateAssetListEntrySegmentsEntryRelTypeSettings(
-				assetListEntryId, segmentsEntryId,
-				existingProperties.toString());
-
-		return assetListEntryPersistence.update(assetListEntry);
 	}
 
 	private String _generateAssetListEntryKey(long groupId, String title) {

@@ -284,22 +284,6 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
-	@Override
-	public void updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, long segmentsEntryId,
-			String typeSettingsProperties)
-		throws PortalException {
-
-		AssetListEntry assetListEntry =
-			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
-
-		_assetListEntryModelResourcePermission.check(
-			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
-
-		assetListEntryLocalService.updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, segmentsEntryId, typeSettingsProperties);
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
 	)

@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
@@ -270,6 +271,8 @@ public class JournalArticleAssetRendererFactory
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
 			new JournalArticleAssetRenderer(article);
 
+		journalArticleAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
+			_assetDisplayPageFriendlyURLProvider);
 		journalArticleAssetRenderer.setFieldsToDDMFormValuesConverter(
 			_fieldsToDDMFormValuesConverter);
 		journalArticleAssetRenderer.setJournalContent(_journalContent);
@@ -310,6 +313,10 @@ public class JournalArticleAssetRendererFactory
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 

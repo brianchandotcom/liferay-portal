@@ -1347,6 +1347,7 @@ paths:
                       type: string
                 - in: path
                   name: knowledge-base-folder-id
+                  required: true
                   schema:
                       format: int64
                       type: integer

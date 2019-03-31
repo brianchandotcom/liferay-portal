@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,8 +44,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 	}
 
 	@Override
-	public Page<Email> getOrganizationEmailsPage(
-			Long organizationId)
+	public Page<Email> getOrganizationEmailsPage(Long organizationId)
 		throws Exception {
 
 		Organization organization = _organizationService.getOrganization(
@@ -61,8 +59,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 	}
 
 	@Override
-	public Page<Email> getUserAccountEmailsPage(
-			Long userAccountId)
+	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);

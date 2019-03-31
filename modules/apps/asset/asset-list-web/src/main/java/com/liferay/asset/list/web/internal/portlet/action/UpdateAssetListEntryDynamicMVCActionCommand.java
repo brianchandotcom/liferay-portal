@@ -17,7 +17,6 @@ package com.liferay.asset.list.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetQueryRule;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
@@ -36,11 +35,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.MutableRenderParameters;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,24 +91,6 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			}
 
 			SessionErrors.add(actionRequest, dqre.getClass(), dqre);
-
-			MutableRenderParameters renderParameters =
-				actionResponse.getRenderParameters();
-
-			Map<String, String[]> parameters = actionRequest.getParameterMap();
-
-			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-				renderParameters.setValues(entry.getKey(), entry.getValue());
-			}
-
-			renderParameters.setValue(
-				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
-			renderParameters.setValue(
-				"screenNavigationCategoryKey",
-				AssetListFormConstants.ENTRY_KEY_FILTER);
-			renderParameters.setValue(
-				"screenNavigationEntryKey",
-				AssetListFormConstants.ENTRY_KEY_FILTER);
 		}
 
 		UnicodeProperties typeSettingsProperties =

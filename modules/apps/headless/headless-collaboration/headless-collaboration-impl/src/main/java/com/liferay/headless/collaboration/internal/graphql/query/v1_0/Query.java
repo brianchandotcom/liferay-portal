@@ -24,6 +24,7 @@ import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
@@ -34,6 +35,7 @@ import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentRe
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.collaboration.resource.v1_0.RatingResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -141,6 +143,14 @@ public class Query {
 			messageBoardThreadResourceComponentServiceObjects;
 	}
 
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting getBlogPosting(
@@ -152,6 +162,24 @@ public class Query {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.getBlogPosting(
 				blogPostingId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Rating> getBlogPostingsRatingsPage(
+			@GraphQLName("blog-posting-id") Long blogPostingId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> {
+				Page paginationPage =
+					blogPostingResource.getBlogPostingsRatingsPage(
+						blogPostingId);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -305,6 +333,26 @@ public class Query {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.getKnowledgeBaseArticle(
 					knowledgeBaseArticleId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Rating> getKnowledgeBaseArticlesRatingsPage(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> {
+				Page paginationPage =
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseArticlesRatingsPage(
+							knowledgeBaseArticleId);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -529,6 +577,25 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Rating> getMessageBoardMessagesRatingsPage(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource -> {
+				Page paginationPage =
+					messageBoardMessageResource.
+						getMessageBoardMessagesRatingsPage(
+							messageBoardMessageId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@GraphQLName("message-board-message-id") Long
@@ -711,6 +778,35 @@ public class Query {
 					messageBoardThreadId));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Rating> getMessageBoardThreadsRatingsPage(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> {
+				Page paginationPage =
+					messageBoardThreadResource.
+						getMessageBoardThreadsRatingsPage(messageBoardThreadId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating getRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.getRating(ratingId));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -819,6 +915,14 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -839,5 +943,7 @@ public class Query {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

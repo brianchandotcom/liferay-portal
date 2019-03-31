@@ -26,6 +26,7 @@ import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentRe
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.collaboration.resource.v1_0.RatingResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -67,6 +68,8 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardSectionResourceComponentServiceObjects);
 		Mutation.setMessageBoardThreadResourceComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects);
+		Mutation.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 
 		Query.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
@@ -88,6 +91,8 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardSectionResourceComponentServiceObjects);
 		Query.setMessageBoardThreadResourceComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects);
+		Query.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -144,5 +149,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

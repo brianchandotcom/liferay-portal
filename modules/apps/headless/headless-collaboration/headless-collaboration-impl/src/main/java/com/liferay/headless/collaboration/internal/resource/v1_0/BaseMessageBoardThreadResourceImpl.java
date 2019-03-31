@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -267,6 +268,34 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 
 		return new MessageBoardThread();
+	}
+
+	@Override
+	@GET
+	@Path("/message-board-threads/{message-board-thread-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public Page<Rating> getMessageBoardThreadsRatingsPage(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/message-board-threads/{message-board-thread-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public Rating postMessageBoardThreadRating(
+			@NotNull @PathParam("message-board-thread-id") Long
+				messageBoardThreadId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	public void setContextCompany(Company contextCompany) {

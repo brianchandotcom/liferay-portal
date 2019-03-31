@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -233,6 +234,34 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
+	}
+
+	@Override
+	@GET
+	@Path("/knowledge-base-articles/{knowledge-base-article-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Page<Rating> getKnowledgeBaseArticlesRatingsPage(
+			@NotNull @PathParam("knowledge-base-article-id") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/knowledge-base-articles/{knowledge-base-article-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Rating postKnowledgeBaseArticleRating(
+			@NotNull @PathParam("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

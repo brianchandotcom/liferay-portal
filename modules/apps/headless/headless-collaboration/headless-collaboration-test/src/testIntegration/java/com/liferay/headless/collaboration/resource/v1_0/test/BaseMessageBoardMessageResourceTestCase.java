@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -429,6 +430,195 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetMessageBoardMessagesRatingsPage() throws Exception {
+		Long messageBoardMessageId =
+			testGetMessageBoardMessagesRatingsPage_getMessageBoardMessageId();
+		Long irrelevantMessageBoardMessageId =
+			testGetMessageBoardMessagesRatingsPage_getIrrelevantMessageBoardMessageId();
+
+		if ((irrelevantMessageBoardMessageId != null)) {
+			MessageBoardMessage irrelevantMessageBoardMessage =
+				testGetMessageBoardMessagesRatingsPage_addMessageBoardMessage(
+					irrelevantMessageBoardMessageId,
+					randomIrrelevantMessageBoardMessage());
+
+			Page<MessageBoardMessage> page =
+				invokeGetMessageBoardMessagesRatingsPage(
+					irrelevantMessageBoardMessageId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMessageBoardMessage),
+				(List<MessageBoardMessage>)page.getItems());
+			assertValid(page);
+		}
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetMessageBoardMessagesRatingsPage_addMessageBoardMessage(
+				messageBoardMessageId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetMessageBoardMessagesRatingsPage_addMessageBoardMessage(
+				messageBoardMessageId, randomMessageBoardMessage());
+
+		Page<MessageBoardMessage> page =
+			invokeGetMessageBoardMessagesRatingsPage(messageBoardMessageId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(page);
+	}
+
+	protected MessageBoardMessage
+			testGetMessageBoardMessagesRatingsPage_addMessageBoardMessage(
+				Long messageBoardMessageId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetMessageBoardMessagesRatingsPage_getMessageBoardMessageId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetMessageBoardMessagesRatingsPage_getIrrelevantMessageBoardMessageId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetMessageBoardMessagesRatingsPage(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{message-board-message-id}/ratings",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<MessageBoardMessage>>() {
+			});
+	}
+
+	protected Http.Response invokeGetMessageBoardMessagesRatingsPageResponse(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{message-board-message-id}/ratings",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostMessageBoardMessageRating() throws Exception {
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage postMessageBoardMessage =
+			testPostMessageBoardMessageRating_addMessageBoardMessage(
+				randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
+		assertValid(postMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPostMessageBoardMessageRating_addMessageBoardMessage(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostMessageBoardMessageRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{message-board-message-id}/ratings",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostMessageBoardMessageRatingResponse(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{message-board-message-id}/ratings",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

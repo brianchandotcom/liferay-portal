@@ -19,6 +19,7 @@ import com.liferay.headless.web.experience.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.web.experience.resource.v1_0.RatingResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -43,6 +44,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
+		Mutation.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 		Mutation.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
 
@@ -52,6 +55,8 @@ public class ServletDataImpl implements ServletData {
 			_contentListElementResourceComponentServiceObjects);
 		Query.setContentStructureResourceComponentServiceObjects(
 			_contentStructureResourceComponentServiceObjects);
+		Query.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 		Query.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
 	}
@@ -74,6 +79,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentResource>

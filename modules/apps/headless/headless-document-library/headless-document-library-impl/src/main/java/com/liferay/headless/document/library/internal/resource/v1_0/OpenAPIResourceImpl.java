@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 
 			add(FolderResourceImpl.class);
 
+			add(RatingResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

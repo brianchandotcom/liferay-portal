@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1358,6 +1359,195 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRatingsPage() throws Exception {
+		Long messageBoardThreadId =
+			testGetMessageBoardThreadsRatingsPage_getMessageBoardThreadId();
+		Long irrelevantMessageBoardThreadId =
+			testGetMessageBoardThreadsRatingsPage_getIrrelevantMessageBoardThreadId();
+
+		if ((irrelevantMessageBoardThreadId != null)) {
+			MessageBoardThread irrelevantMessageBoardThread =
+				testGetMessageBoardThreadsRatingsPage_addMessageBoardThread(
+					irrelevantMessageBoardThreadId,
+					randomIrrelevantMessageBoardThread());
+
+			Page<MessageBoardThread> page =
+				invokeGetMessageBoardThreadsRatingsPage(
+					irrelevantMessageBoardThreadId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMessageBoardThread),
+				(List<MessageBoardThread>)page.getItems());
+			assertValid(page);
+		}
+
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardThreadsRatingsPage_addMessageBoardThread(
+				messageBoardThreadId, randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardThreadsRatingsPage_addMessageBoardThread(
+				messageBoardThreadId, randomMessageBoardThread());
+
+		Page<MessageBoardThread> page = invokeGetMessageBoardThreadsRatingsPage(
+			messageBoardThreadId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardThread1, messageBoardThread2),
+			(List<MessageBoardThread>)page.getItems());
+		assertValid(page);
+	}
+
+	protected MessageBoardThread
+			testGetMessageBoardThreadsRatingsPage_addMessageBoardThread(
+				Long messageBoardThreadId,
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetMessageBoardThreadsRatingsPage_getMessageBoardThreadId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetMessageBoardThreadsRatingsPage_getIrrelevantMessageBoardThreadId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetMessageBoardThreadsRatingsPage(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{message-board-thread-id}/ratings",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<MessageBoardThread>>() {
+			});
+	}
+
+	protected Http.Response invokeGetMessageBoardThreadsRatingsPageResponse(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{message-board-thread-id}/ratings",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostMessageBoardThreadRating() throws Exception {
+		MessageBoardThread randomMessageBoardThread =
+			randomMessageBoardThread();
+
+		MessageBoardThread postMessageBoardThread =
+			testPostMessageBoardThreadRating_addMessageBoardThread(
+				randomMessageBoardThread);
+
+		assertEquals(randomMessageBoardThread, postMessageBoardThread);
+		assertValid(postMessageBoardThread);
+	}
+
+	protected MessageBoardThread
+			testPostMessageBoardThreadRating_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostMessageBoardThreadRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{message-board-thread-id}/ratings",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostMessageBoardThreadRatingResponse(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{message-board-thread-id}/ratings",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

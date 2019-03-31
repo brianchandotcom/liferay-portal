@@ -17,9 +17,11 @@ package com.liferay.headless.document.library.internal.graphql.mutation.v1_0;
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.document.library.dto.v1_0.Rating;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.headless.document.library.resource.v1_0.RatingResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -63,6 +65,14 @@ public class Mutation {
 
 		_folderResourceComponentServiceObjects =
 			folderResourceComponentServiceObjects;
+	}
+
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
 	}
 
 	@GraphQLInvokeDetached
@@ -170,6 +180,20 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating postDocumentRating(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postDocumentRating(
+				documentId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	@GraphQLName("postFolderDocumentFolderIdMultipartBody")
 	public Document postFolderDocument(
 			@GraphQLName("folder-id") Long folderId,
@@ -245,6 +269,28 @@ public class Mutation {
 				folderId, folder));
 	}
 
+	@GraphQLInvokeDetached
+	public void deleteRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.deleteRating(ratingId));
+	}
+
+	@GraphQLInvokeDetached
+	public Rating putRating(
+			@GraphQLName("rating-id") Long ratingId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.putRating(ratingId, rating));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -307,11 +353,21 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

@@ -17,9 +17,11 @@ package com.liferay.headless.document.library.internal.graphql.query.v1_0;
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.document.library.dto.v1_0.Rating;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.headless.document.library.resource.v1_0.RatingResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -68,6 +70,14 @@ public class Query {
 
 		_folderResourceComponentServiceObjects =
 			folderResourceComponentServiceObjects;
+	}
+
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -157,6 +167,23 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Rating> getDocumentsRatingsPage(
+			@GraphQLName("document-id") Long documentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> {
+				Page paginationPage = documentResource.getDocumentsRatingsPage(
+					documentId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Document> getFolderDocumentsPage(
 			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("filter") Filter filter,
@@ -228,6 +255,17 @@ public class Query {
 			});
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating getRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.getRating(ratingId));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -271,11 +309,21 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

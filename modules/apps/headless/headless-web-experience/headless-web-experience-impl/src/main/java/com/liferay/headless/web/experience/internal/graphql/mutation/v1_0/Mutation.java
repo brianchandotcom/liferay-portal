@@ -15,8 +15,10 @@
 package com.liferay.headless.web.experience.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
+import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
+import com.liferay.headless.web.experience.resource.v1_0.RatingResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -44,6 +46,14 @@ public class Mutation {
 
 		_commentResourceComponentServiceObjects =
 			commentResourceComponentServiceObjects;
+	}
+
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
 	}
 
 	public static void setStructuredContentResourceComponentServiceObjects(
@@ -102,6 +112,28 @@ public class Mutation {
 			this::_populateResourceContext,
 			commentResource -> commentResource.postStructuredContentComment(
 				structuredContentId, comment));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.deleteRating(ratingId));
+	}
+
+	@GraphQLInvokeDetached
+	public Rating putRating(
+			@GraphQLName("rating-id") Long ratingId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.putRating(ratingId, rating));
 	}
 
 	@GraphQLField
@@ -163,6 +195,21 @@ public class Mutation {
 					structuredContentId, structuredContent));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating postStructuredContentRating(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postStructuredContentRating(
+					structuredContentId, rating));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -209,6 +256,14 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
@@ -220,6 +275,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 

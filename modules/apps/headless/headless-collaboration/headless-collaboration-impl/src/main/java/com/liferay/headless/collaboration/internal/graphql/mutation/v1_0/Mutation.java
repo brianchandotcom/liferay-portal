@@ -24,6 +24,7 @@ import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
@@ -34,6 +35,7 @@ import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentRe
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.collaboration.resource.v1_0.RatingResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -136,6 +138,14 @@ public class Mutation {
 			messageBoardThreadResourceComponentServiceObjects;
 	}
 
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
+	}
+
 	@GraphQLInvokeDetached
 	public void deleteBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
@@ -172,6 +182,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.putBlogPosting(
 				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating postBlogPostingRating(
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postBlogPostingRating(
+				blogPostingId, rating));
 	}
 
 	@GraphQLField
@@ -329,6 +353,22 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
 					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating postKnowledgeBaseArticleRating(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postKnowledgeBaseArticleRating(
+					knowledgeBaseArticleId, rating));
 	}
 
 	@GraphQLField
@@ -574,6 +614,21 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating postMessageBoardMessageRating(
+			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.postMessageBoardMessageRating(
+					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
 			@GraphQLName("message-board-message-id") Long messageBoardMessageId,
 			@GraphQLName("MessageBoardMessage") MessageBoardMessage
@@ -758,6 +813,43 @@ public class Mutation {
 					messageBoardThreadId, messageBoardThread));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating postMessageBoardThreadRating(
+			@GraphQLName("message-board-thread-id") Long messageBoardThreadId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postMessageBoardThreadRating(
+					messageBoardThreadId, rating));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.deleteRating(ratingId));
+	}
+
+	@GraphQLInvokeDetached
+	public Rating putRating(
+			@GraphQLName("rating-id") Long ratingId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.putRating(ratingId, rating));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -885,6 +977,14 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -905,5 +1005,7 @@ public class Mutation {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

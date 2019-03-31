@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -187,6 +188,34 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		throws Exception {
 
 		return new MessageBoardMessage();
+	}
+
+	@Override
+	@GET
+	@Path("/message-board-messages/{message-board-message-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Page<Rating> getMessageBoardMessagesRatingsPage(
+			@NotNull @PathParam("message-board-message-id") Long
+				messageBoardMessageId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/message-board-messages/{message-board-message-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating postMessageBoardMessageRating(
+			@NotNull @PathParam("message-board-message-id") Long
+				messageBoardMessageId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

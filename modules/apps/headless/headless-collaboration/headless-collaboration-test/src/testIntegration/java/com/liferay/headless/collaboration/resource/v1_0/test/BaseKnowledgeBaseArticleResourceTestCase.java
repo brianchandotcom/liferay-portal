@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -907,6 +908,195 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticlesRatingsPage() throws Exception {
+		Long knowledgeBaseArticleId =
+			testGetKnowledgeBaseArticlesRatingsPage_getKnowledgeBaseArticleId();
+		Long irrelevantKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticlesRatingsPage_getIrrelevantKnowledgeBaseArticleId();
+
+		if ((irrelevantKnowledgeBaseArticleId != null)) {
+			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
+				testGetKnowledgeBaseArticlesRatingsPage_addKnowledgeBaseArticle(
+					irrelevantKnowledgeBaseArticleId,
+					randomIrrelevantKnowledgeBaseArticle());
+
+			Page<KnowledgeBaseArticle> page =
+				invokeGetKnowledgeBaseArticlesRatingsPage(
+					irrelevantKnowledgeBaseArticleId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantKnowledgeBaseArticle),
+				(List<KnowledgeBaseArticle>)page.getItems());
+			assertValid(page);
+		}
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			testGetKnowledgeBaseArticlesRatingsPage_addKnowledgeBaseArticle(
+				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGetKnowledgeBaseArticlesRatingsPage_addKnowledgeBaseArticle(
+				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+
+		Page<KnowledgeBaseArticle> page =
+			invokeGetKnowledgeBaseArticlesRatingsPage(knowledgeBaseArticleId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+			(List<KnowledgeBaseArticle>)page.getItems());
+		assertValid(page);
+	}
+
+	protected KnowledgeBaseArticle
+			testGetKnowledgeBaseArticlesRatingsPage_addKnowledgeBaseArticle(
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetKnowledgeBaseArticlesRatingsPage_getKnowledgeBaseArticleId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetKnowledgeBaseArticlesRatingsPage_getIrrelevantKnowledgeBaseArticleId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetKnowledgeBaseArticlesRatingsPage(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<KnowledgeBaseArticle>>() {
+			});
+	}
+
+	protected Http.Response invokeGetKnowledgeBaseArticlesRatingsPageResponse(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostKnowledgeBaseArticleRating() throws Exception {
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPostKnowledgeBaseArticleRating_addKnowledgeBaseArticle(
+				randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
+		assertValid(postKnowledgeBaseArticle);
+	}
+
+	protected KnowledgeBaseArticle
+			testPostKnowledgeBaseArticleRating_addKnowledgeBaseArticle(
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostKnowledgeBaseArticleRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostKnowledgeBaseArticleRatingResponse(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

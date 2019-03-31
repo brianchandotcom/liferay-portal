@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContentStructureResourceImpl.class);
 
+			add(RatingResourceImpl.class);
+
 			add(StructuredContentResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

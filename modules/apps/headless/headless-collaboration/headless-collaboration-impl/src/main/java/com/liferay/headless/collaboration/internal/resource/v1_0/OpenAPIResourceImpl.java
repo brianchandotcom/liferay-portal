@@ -96,6 +96,8 @@ public class OpenAPIResourceImpl {
 
 			add(MessageBoardThreadResourceImpl.class);
 
+			add(RatingResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

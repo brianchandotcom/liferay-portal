@@ -19,6 +19,7 @@ import com.liferay.headless.document.library.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.headless.document.library.resource.v1_0.RatingResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -46,6 +47,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Mutation.setFolderResourceComponentServiceObjects(
 			_folderResourceComponentServiceObjects);
+		Mutation.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
@@ -53,6 +56,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Query.setFolderResourceComponentServiceObjects(
 			_folderResourceComponentServiceObjects);
+		Query.setRatingResourceComponentServiceObjects(
+			_ratingResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -81,5 +86,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 
 }

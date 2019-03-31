@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -387,6 +388,180 @@ public abstract class BaseBlogPostingResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetBlogPostingsRatingsPage() throws Exception {
+		Long blogPostingId = testGetBlogPostingsRatingsPage_getBlogPostingId();
+		Long irrelevantBlogPostingId =
+			testGetBlogPostingsRatingsPage_getIrrelevantBlogPostingId();
+
+		if ((irrelevantBlogPostingId != null)) {
+			BlogPosting irrelevantBlogPosting =
+				testGetBlogPostingsRatingsPage_addBlogPosting(
+					irrelevantBlogPostingId, randomIrrelevantBlogPosting());
+
+			Page<BlogPosting> page = invokeGetBlogPostingsRatingsPage(
+				irrelevantBlogPostingId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantBlogPosting),
+				(List<BlogPosting>)page.getItems());
+			assertValid(page);
+		}
+
+		BlogPosting blogPosting1 =
+			testGetBlogPostingsRatingsPage_addBlogPosting(
+				blogPostingId, randomBlogPosting());
+
+		BlogPosting blogPosting2 =
+			testGetBlogPostingsRatingsPage_addBlogPosting(
+				blogPostingId, randomBlogPosting());
+
+		Page<BlogPosting> page = invokeGetBlogPostingsRatingsPage(
+			blogPostingId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(blogPosting1, blogPosting2),
+			(List<BlogPosting>)page.getItems());
+		assertValid(page);
+	}
+
+	protected BlogPosting testGetBlogPostingsRatingsPage_addBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetBlogPostingsRatingsPage_getBlogPostingId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetBlogPostingsRatingsPage_getIrrelevantBlogPostingId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetBlogPostingsRatingsPage(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<BlogPosting>>() {
+			});
+	}
+
+	protected Http.Response invokeGetBlogPostingsRatingsPageResponse(
+			Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostBlogPostingRating() throws Exception {
+		BlogPosting randomBlogPosting = randomBlogPosting();
+
+		BlogPosting postBlogPosting = testPostBlogPostingRating_addBlogPosting(
+			randomBlogPosting);
+
+		assertEquals(randomBlogPosting, postBlogPosting);
+		assertValid(postBlogPosting);
+	}
+
+	protected BlogPosting testPostBlogPostingRating_addBlogPosting(
+			BlogPosting blogPosting)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostBlogPostingRating(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostBlogPostingRatingResponse(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

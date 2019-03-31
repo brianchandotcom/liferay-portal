@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
@@ -1403,6 +1404,192 @@ public abstract class BaseStructuredContentResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetStructuredContentsRatingsPage() throws Exception {
+		Long structuredContentId =
+			testGetStructuredContentsRatingsPage_getStructuredContentId();
+		Long irrelevantStructuredContentId =
+			testGetStructuredContentsRatingsPage_getIrrelevantStructuredContentId();
+
+		if ((irrelevantStructuredContentId != null)) {
+			StructuredContent irrelevantStructuredContent =
+				testGetStructuredContentsRatingsPage_addStructuredContent(
+					irrelevantStructuredContentId,
+					randomIrrelevantStructuredContent());
+
+			Page<StructuredContent> page =
+				invokeGetStructuredContentsRatingsPage(
+					irrelevantStructuredContentId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantStructuredContent),
+				(List<StructuredContent>)page.getItems());
+			assertValid(page);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetStructuredContentsRatingsPage_addStructuredContent(
+				structuredContentId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetStructuredContentsRatingsPage_addStructuredContent(
+				structuredContentId, randomStructuredContent());
+
+		Page<StructuredContent> page = invokeGetStructuredContentsRatingsPage(
+			structuredContentId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(structuredContent1, structuredContent2),
+			(List<StructuredContent>)page.getItems());
+		assertValid(page);
+	}
+
+	protected StructuredContent
+			testGetStructuredContentsRatingsPage_addStructuredContent(
+				Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetStructuredContentsRatingsPage_getStructuredContentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetStructuredContentsRatingsPage_getIrrelevantStructuredContentId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetStructuredContentsRatingsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<StructuredContent>>() {
+			});
+	}
+
+	protected Http.Response invokeGetStructuredContentsRatingsPageResponse(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostStructuredContentRating() throws Exception {
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			testPostStructuredContentRating_addStructuredContent(
+				randomStructuredContent);
+
+		assertEquals(randomStructuredContent, postStructuredContent);
+		assertValid(postStructuredContent);
+	}
+
+	protected StructuredContent
+			testPostStructuredContentRating_addStructuredContent(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostStructuredContentRatingResponse(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

@@ -15,6 +15,7 @@
 package com.liferay.headless.document.library.resource.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
+import com.liferay.headless.document.library.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -52,6 +53,12 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Page<Rating> getDocumentsRatingsPage(Long documentId)
+		throws Exception;
+
+	public Rating postDocumentRating(Long documentId, Rating rating)
 		throws Exception;
 
 	public Page<Document> getFolderDocumentsPage(

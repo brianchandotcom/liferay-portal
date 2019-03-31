@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -58,6 +59,14 @@ public interface KnowledgeBaseArticleResource {
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Page<Rating> getKnowledgeBaseArticlesRatingsPage(
+			Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public Rating postKnowledgeBaseArticleRating(
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>

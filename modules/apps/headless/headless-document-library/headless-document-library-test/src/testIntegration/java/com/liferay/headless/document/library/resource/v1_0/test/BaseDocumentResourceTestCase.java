@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
+import com.liferay.headless.document.library.dto.v1_0.Rating;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -728,6 +729,171 @@ public abstract class BaseDocumentResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetDocumentsRatingsPage() throws Exception {
+		Long documentId = testGetDocumentsRatingsPage_getDocumentId();
+		Long irrelevantDocumentId =
+			testGetDocumentsRatingsPage_getIrrelevantDocumentId();
+
+		if ((irrelevantDocumentId != null)) {
+			Document irrelevantDocument =
+				testGetDocumentsRatingsPage_addDocument(
+					irrelevantDocumentId, randomIrrelevantDocument());
+
+			Page<Document> page = invokeGetDocumentsRatingsPage(
+				irrelevantDocumentId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantDocument),
+				(List<Document>)page.getItems());
+			assertValid(page);
+		}
+
+		Document document1 = testGetDocumentsRatingsPage_addDocument(
+			documentId, randomDocument());
+
+		Document document2 = testGetDocumentsRatingsPage_addDocument(
+			documentId, randomDocument());
+
+		Page<Document> page = invokeGetDocumentsRatingsPage(documentId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2),
+			(List<Document>)page.getItems());
+		assertValid(page);
+	}
+
+	protected Document testGetDocumentsRatingsPage_addDocument(
+			Long documentId, Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetDocumentsRatingsPage_getDocumentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetDocumentsRatingsPage_getIrrelevantDocumentId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetDocumentsRatingsPage(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{document-id}/ratings", documentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<Document>>() {
+			});
+	}
+
+	protected Http.Response invokeGetDocumentsRatingsPageResponse(
+			Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{document-id}/ratings", documentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostDocumentRating() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Document postDocument = testPostDocumentRating_addDocument(
+			randomDocument);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+	}
+
+	protected Document testPostDocumentRating_addDocument(Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostDocumentRating(Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{document-id}/ratings", documentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostDocumentRatingResponse(
+			Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{document-id}/ratings", documentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

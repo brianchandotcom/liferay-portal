@@ -17,10 +17,12 @@ package com.liferay.headless.web.experience.internal.graphql.query.v1_0;
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
 import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
+import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.web.experience.resource.v1_0.RatingResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -70,6 +72,14 @@ public class Query {
 
 		_contentStructureResourceComponentServiceObjects =
 			contentStructureResourceComponentServiceObjects;
+	}
+
+	public static void setRatingResourceComponentServiceObjects(
+		ComponentServiceObjects<RatingResource>
+			ratingResourceComponentServiceObjects) {
+
+		_ratingResourceComponentServiceObjects =
+			ratingResourceComponentServiceObjects;
 	}
 
 	public static void setStructuredContentResourceComponentServiceObjects(
@@ -193,6 +203,17 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating getRating(@GraphQLName("rating-id") Long ratingId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.getRating(ratingId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -286,6 +307,24 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Rating> getStructuredContentsRatingsPage(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource -> {
+				Page paginationPage =
+					structuredContentResource.getStructuredContentsRatingsPage(
+						structuredContentId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public String getStructuredContentRenderedContentTemplate(
 			@GraphQLName("structured-content-id") Long structuredContentId,
 			@GraphQLName("template-id") Long templateId)
@@ -345,6 +384,14 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(RatingResource ratingResource)
+		throws Exception {
+
+		ratingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
@@ -360,6 +407,8 @@ public class Query {
 		_contentListElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RatingResource>
+		_ratingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 

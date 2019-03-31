@@ -82,6 +82,12 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 
 			updateQueryLogic(actionRequest, properties);
 
+			UnicodeProperties typeSettingsProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--");
+
+			properties.putAll(typeSettingsProperties);
+
 			_assetListEntryService.updateAssetListEntryTypeSettings(
 				assetListEntryId, segmentsEntryId, properties.toString());
 		}
@@ -92,14 +98,6 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 
 			SessionErrors.add(actionRequest, dqre.getClass(), dqre);
 		}
-
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
-		_assetListEntryService.updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, segmentsEntryId,
-			typeSettingsProperties.toString());
 	}
 
 	protected AssetQueryRule getQueryRule(

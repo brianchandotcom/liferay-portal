@@ -46,7 +46,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 
 	@Override
 	public Page<Email> getOrganizationEmailsPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Organization organization = _organizationService.getOrganization(
@@ -62,7 +62,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 
 	@Override
 	public Page<Email> getUserAccountEmailsPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ public class KaleoDefinitionModelListener
 	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		_indexExecutor.execute(
+		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.addDocument(kaleoDefinition));
 	}
 
@@ -43,7 +43,7 @@ public class KaleoDefinitionModelListener
 	public void onAfterRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		_indexExecutor.execute(
+		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.deleteDocument(
 				kaleoDefinition));
 	}
@@ -52,15 +52,15 @@ public class KaleoDefinitionModelListener
 	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		_indexExecutor.execute(
+		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.updateDocument(
 				kaleoDefinition));
 	}
 
 	@Reference
-	private IndexExecutor _indexExecutor;
+	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
 
 	@Reference
-	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

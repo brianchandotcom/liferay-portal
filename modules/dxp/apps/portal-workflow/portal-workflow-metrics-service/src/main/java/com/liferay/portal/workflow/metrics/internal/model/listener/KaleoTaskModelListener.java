@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.model.listener;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,20 +31,20 @@ public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterCreate(KaleoTask kaleoTask) {
-		_indexExecutor.execute(
+		_workflowMetricsPortalExecutor.execute(
 			() -> _taskWorkflowMetricsIndexer.addDocument(kaleoTask));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
-		_indexExecutor.execute(
+		_workflowMetricsPortalExecutor.execute(
 			() -> _taskWorkflowMetricsIndexer.deleteDocument(kaleoTask));
 	}
 
 	@Reference
-	private IndexExecutor _indexExecutor;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	@Reference
-	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
+	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

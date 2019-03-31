@@ -12,14 +12,13 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.executor;
+package com.liferay.portal.workflow.metrics.internal.petra.executor;
 
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.workflow.metrics.internal.search.index.IndexExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -34,11 +33,11 @@ public class WorkflowMetricsPortalExecutorConfig extends PortalExecutorConfig {
 
 	public WorkflowMetricsPortalExecutorConfig() {
 		super(
-			IndexExecutor.class.getName(), 1, 1, 60, TimeUnit.SECONDS,
-			Integer.MAX_VALUE,
+			WorkflowMetricsPortalExecutor.class.getName(), 1, 1, 60,
+			TimeUnit.SECONDS, Integer.MAX_VALUE,
 			new NamedThreadFactory(
-				IndexExecutor.class.getName(), Thread.NORM_PRIORITY,
-				PortalClassLoaderUtil.getClassLoader()),
+				WorkflowMetricsPortalExecutor.class.getName(),
+				Thread.NORM_PRIORITY, PortalClassLoaderUtil.getClassLoader()),
 			new ThreadPoolExecutor.AbortPolicy(),
 			new ThreadPoolHandlerAdapter() {
 

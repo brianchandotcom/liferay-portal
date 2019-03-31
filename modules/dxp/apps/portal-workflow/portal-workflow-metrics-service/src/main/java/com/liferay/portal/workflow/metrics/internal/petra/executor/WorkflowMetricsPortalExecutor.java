@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.search.index;
+package com.liferay.portal.workflow.metrics.internal.petra.executor;
 
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = IndexExecutor.class)
-public class IndexExecutor {
+@Component(immediate = true, service = WorkflowMetricsPortalExecutor.class)
+public class WorkflowMetricsPortalExecutor {
 
 	public <T extends Throwable> void execute(
 		UnsafeRunnable<T> unsafeRunnable) {
@@ -54,7 +54,7 @@ public class IndexExecutor {
 	@Activate
 	protected void activate() {
 		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
-			IndexExecutor.class.getName());
+			WorkflowMetricsPortalExecutor.class.getName());
 	}
 
 	@Deactivate
@@ -62,7 +62,8 @@ public class IndexExecutor {
 		_noticeableExecutorService.shutdown();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(IndexExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowMetricsPortalExecutor.class);
 
 	private NoticeableExecutorService _noticeableExecutorService;
 

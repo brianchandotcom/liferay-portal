@@ -834,14 +834,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
             responses:
                 200:
                     content:
@@ -1465,14 +1457,6 @@ paths:
                   required: true
                   schema:
                       format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
                       type: integer
             responses:
                 200:

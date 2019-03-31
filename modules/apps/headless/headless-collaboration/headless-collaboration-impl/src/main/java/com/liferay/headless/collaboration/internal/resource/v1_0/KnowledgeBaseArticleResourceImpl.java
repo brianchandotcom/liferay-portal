@@ -18,13 +18,16 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.KnowledgeBaseArticleEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -33,6 +36,7 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -52,11 +56,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -146,6 +152,17 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	public Page<Rating> getKnowledgeBaseArticlesRatingsPage(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.getRatingsPage(knowledgeBaseArticleId);
+	}
+
+	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, Filter filter,
@@ -200,6 +217,19 @@ public class KnowledgeBaseArticleResourceImpl
 			kbArticle.getGroupId(), knowledgeBaseArticleId,
 			_classNameLocalService.fetchClassName(KBArticle.class.getName()),
 			knowledgeBaseArticle);
+	}
+
+	@Override
+	public Rating postKnowledgeBaseArticleRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.postRating(
+			knowledgeBaseArticleId,
+			GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
 	@Override
@@ -277,6 +307,14 @@ public class KnowledgeBaseArticleResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
 					WorkflowConstants.STATUS_APPROVED)),
 			sorts);
+	}
+
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			KBArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				ratingsEntry, _portal, _userLocalService),
+			_user);
 	}
 
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
@@ -360,7 +398,13 @@ public class KnowledgeBaseArticleResourceImpl
 	private Portal _portal;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Context
+	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

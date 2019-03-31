@@ -40,9 +40,11 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
+import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
@@ -54,6 +56,7 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructu
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
@@ -71,6 +74,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Sort;
@@ -106,6 +110,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.text.ParseException;
@@ -269,6 +274,17 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public Page<Rating> getStructuredContentsRatingsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.getRatingsPage(structuredContentId);
+	}
+
+	@Override
 	public StructuredContent patchStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
@@ -387,6 +403,18 @@ public class StructuredContentResourceImpl
 					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(), contentSpaceId,
 					structuredContent.getViewableByAsString())));
+	}
+
+	@Override
+	public Rating postStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.postRating(
+			structuredContentId, GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
 	@Override
@@ -528,6 +556,14 @@ public class StructuredContentResourceImpl
 		return transform(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> _getDDMFormField(ddmStructure, fieldName));
+	}
+
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			JournalArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				ratingsEntry, _portal, _userLocalService),
+			_user);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -1038,7 +1074,13 @@ public class StructuredContentResourceImpl
 	private Portal _portal;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Context
+	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

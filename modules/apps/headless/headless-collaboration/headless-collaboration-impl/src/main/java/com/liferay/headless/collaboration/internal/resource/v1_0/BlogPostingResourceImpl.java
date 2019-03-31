@@ -25,13 +25,17 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -48,6 +52,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
@@ -56,6 +61,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,6 +91,16 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	public Page<Rating> getBlogPostingsRatingsPage(Long blogPostingId)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.getRatingsPage(blogPostingId);
+	}
+
+	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -111,6 +127,17 @@ public class BlogPostingResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public Rating postBlogPostingRating(Long blogPostingId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.postRating(
+			blogPostingId, GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
 	@Override
@@ -235,6 +262,14 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			BlogsEntry.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				ratingsEntry, _portal, _userLocalService),
+			_user);
+	}
+
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return new BlogPosting() {
 			{
@@ -300,7 +335,13 @@ public class BlogPostingResourceImpl
 	private Portal _portal;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Context
+	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

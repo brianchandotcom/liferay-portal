@@ -18,12 +18,15 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.collaboration.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.collaboration.dto.v1_0.Rating;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -31,12 +34,14 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -47,10 +52,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Collections;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -102,6 +109,17 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
+	public Page<Rating> getMessageBoardMessagesRatingsPage(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.getRatingsPage(messageBoardMessageId);
+	}
+
+	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				Long messageBoardThreadId, Filter filter, Pagination pagination,
@@ -122,6 +140,19 @@ public class MessageBoardMessageResourceImpl
 
 		return _addMessageBoardThread(
 			messageBoardMessageId, messageBoardMessage);
+	}
+
+	@Override
+	public Rating postMessageBoardMessageRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> ratingSPIRatingResource =
+			_getSPIRatingResource();
+
+		return ratingSPIRatingResource.postRating(
+			messageBoardMessageId,
+			GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
 	@Override
@@ -224,6 +255,14 @@ public class MessageBoardMessageResourceImpl
 			sorts);
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			MBMessage.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				ratingsEntry, _portal, _userLocalService),
+			_user);
+	}
+
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
 		throws Exception {
 
@@ -306,7 +345,16 @@ public class MessageBoardMessageResourceImpl
 	private Portal _portal;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Context
+	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

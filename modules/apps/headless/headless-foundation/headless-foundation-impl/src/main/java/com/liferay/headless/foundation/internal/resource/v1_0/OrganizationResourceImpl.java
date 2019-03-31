@@ -29,6 +29,7 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.EmailUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
+import com.liferay.headless.foundation.internal.odata.entity.v1_0.OrganizationEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.OrganizationResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +38,12 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrgLaborService;
@@ -45,14 +52,20 @@ import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,7 +78,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/organization.properties",
 	scope = ServiceScope.PROTOTYPE, service = OrganizationResource.class
 )
-public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
+public class OrganizationResourceImpl
+	extends BaseOrganizationResourceImpl implements EntityModelResource {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
 
 	@Override
 	public Page<Organization> getMyUserAccountOrganizationsPage(
@@ -83,33 +104,19 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_organizationService.getOrganizations(
-					contextCompany.getCompanyId(), organizationId,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toOrganization),
-			pagination,
-			_organizationService.getOrganizationsCount(
-				contextCompany.getCompanyId(), organizationId));
+		return _getOrganizationsPage(organizationId, filter, pagination, sorts);
 	}
 
 	@Override
-	public Page<Organization> getOrganizationsPage(Pagination pagination)
+	public Page<Organization> getOrganizationsPage(
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_organizationService.getOrganizations(
-					contextCompany.getCompanyId(), 0,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toOrganization),
-			pagination,
-			_organizationService.getOrganizationsCount(
-				contextCompany.getCompanyId(), 0));
+		return _getOrganizationsPage(0L, filter, pagination, sorts);
 	}
 
 	@Override
@@ -159,6 +166,34 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		return Page.of(
 			transform(user.getOrganizations(), this::_toOrganization));
+	}
+
+	private Page<Organization> _getOrganizationsPage(
+			Long organizationId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"parentOrganizationId", String.valueOf(organizationId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, com.liferay.portal.kernel.model.Organization.class,
+			pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toOrganization(
+				_organizationService.getOrganization(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	private Organization _toOrganization(
@@ -299,6 +334,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new OrganizationEntityModel();
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

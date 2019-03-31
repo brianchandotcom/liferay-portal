@@ -19,6 +19,8 @@ import com.liferay.headless.foundation.resource.v1_0.OrganizationResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -80,15 +82,18 @@ public abstract class BaseOrganizationResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationsPage(
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -110,8 +115,10 @@ public abstract class BaseOrganizationResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/organizations/{organization-id}/organizations")
@@ -119,7 +126,8 @@ public abstract class BaseOrganizationResourceImpl
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
 			@NotNull @PathParam("organization-id") Long organizationId,
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

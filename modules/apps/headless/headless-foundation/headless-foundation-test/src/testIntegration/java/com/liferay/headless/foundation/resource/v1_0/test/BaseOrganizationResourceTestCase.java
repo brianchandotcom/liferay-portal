@@ -51,6 +51,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,7 +64,9 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -280,17 +284,21 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Page<Organization> invokeGetOrganizationsPage(
-			Pagination pagination)
+			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + _toPath("/organizations");
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -307,17 +315,21 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationsPageResponse(
-			Pagination pagination)
+			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + _toPath("/organizations");
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -400,7 +412,7 @@ public abstract class BaseOrganizationResourceTestCase {
 					irrelevantOrganizationId, randomIrrelevantOrganization());
 
 			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-				irrelevantOrganizationId, Pagination.of(1, 2));
+				irrelevantOrganizationId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -419,7 +431,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				organizationId, randomOrganization());
 
 		Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-			organizationId, Pagination.of(1, 2));
+			organizationId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -427,6 +439,84 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(organization1, organization2),
 			(List<Organization>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long organizationId =
+			testGetOrganizationOrganizationsPage_getOrganizationId();
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				organization1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization1);
+
+		Thread.sleep(1000);
+
+		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
+				organizationId,
+				getFilterString(entityField, "eq", organization1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long organizationId =
+			testGetOrganizationOrganizationsPage_getOrganizationId();
+
+		Organization organization1 =
+			testGetOrganizationOrganizationsPage_addOrganization(
+				organizationId, randomOrganization());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization2 =
+			testGetOrganizationOrganizationsPage_addOrganization(
+				organizationId, randomOrganization());
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
+				organizationId,
+				getFilterString(entityField, "eq", organization1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
 	}
 
 	@Test
@@ -449,7 +539,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				organizationId, randomOrganization());
 
 		Page<Organization> page1 = invokeGetOrganizationOrganizationsPage(
-			organizationId, Pagination.of(1, 2));
+			organizationId, null, Pagination.of(1, 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
@@ -458,7 +548,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			organizations1.toString(), 2, organizations1.size());
 
 		Page<Organization> page2 = invokeGetOrganizationOrganizationsPage(
-			organizationId, Pagination.of(2, 2));
+			organizationId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -476,6 +566,105 @@ public abstract class BaseOrganizationResourceTestCase {
 					addAll(organizations2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithSortDateTime()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long organizationId =
+			testGetOrganizationOrganizationsPage_getOrganizationId();
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				organization1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization1);
+
+		Thread.sleep(1000);
+
+		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> ascPage = invokeGetOrganizationOrganizationsPage(
+				organizationId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(organization1, organization2),
+				(List<Organization>)ascPage.getItems());
+
+			Page<Organization> descPage =
+				invokeGetOrganizationOrganizationsPage(
+					organizationId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(organization2, organization1),
+				(List<Organization>)descPage.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithSortString()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long organizationId =
+			testGetOrganizationOrganizationsPage_getOrganizationId();
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(organization1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(organization2, entityField.getName(), "Bbb");
+		}
+
+		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization1);
+
+		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
+			organizationId, organization2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> ascPage = invokeGetOrganizationOrganizationsPage(
+				organizationId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(organization1, organization2),
+				(List<Organization>)ascPage.getItems());
+
+			Page<Organization> descPage =
+				invokeGetOrganizationOrganizationsPage(
+					organizationId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(organization2, organization1),
+				(List<Organization>)descPage.getItems());
+		}
 	}
 
 	protected Organization testGetOrganizationOrganizationsPage_addOrganization(
@@ -501,7 +690,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Page<Organization> invokeGetOrganizationOrganizationsPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -512,10 +702,14 @@ public abstract class BaseOrganizationResourceTestCase {
 					"/organizations/{organization-id}/organizations",
 					organizationId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -532,7 +726,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationOrganizationsPageResponse(
-			Long organizationId, Pagination pagination)
+			Long organizationId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -543,10 +738,14 @@ public abstract class BaseOrganizationResourceTestCase {
 					"/organizations/{organization-id}/organizations",
 					organizationId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 

@@ -17,7 +17,6 @@ package com.liferay.headless.foundation.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -34,12 +33,10 @@ public interface EmailResource {
 
 	public Email getEmail(Long emailId) throws Exception;
 
-	public Page<Email> getOrganizationEmailsPage(
-			Long organizationId, Pagination pagination)
+	public Page<Email> getOrganizationEmailsPage(Long organizationId)
 		throws Exception;
 
-	public Page<Email> getUserAccountEmailsPage(
-			Long userAccountId, Pagination pagination)
+	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

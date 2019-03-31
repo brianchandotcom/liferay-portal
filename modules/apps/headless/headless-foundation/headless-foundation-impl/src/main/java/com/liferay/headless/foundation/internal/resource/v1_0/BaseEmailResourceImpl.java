@@ -21,12 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -69,18 +65,11 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/organizations/{organization-id}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getOrganizationEmailsPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("organization-id") Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -88,18 +77,11 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{user-account-id}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getUserAccountEmailsPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("user-account-id") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

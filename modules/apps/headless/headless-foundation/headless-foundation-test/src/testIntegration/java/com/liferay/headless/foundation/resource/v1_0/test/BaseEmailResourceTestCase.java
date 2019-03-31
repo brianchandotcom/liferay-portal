@@ -39,7 +39,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -168,7 +167,7 @@ public abstract class BaseEmailResourceTestCase {
 				irrelevantOrganizationId, randomIrrelevantEmail());
 
 			Page<Email> page = invokeGetOrganizationEmailsPage(
-				irrelevantOrganizationId, Pagination.of(1, 2));
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -183,53 +182,13 @@ public abstract class BaseEmailResourceTestCase {
 		Email email2 = testGetOrganizationEmailsPage_addEmail(
 			organizationId, randomEmail());
 
-		Page<Email> page = invokeGetOrganizationEmailsPage(
-			organizationId, Pagination.of(1, 2));
+		Page<Email> page = invokeGetOrganizationEmailsPage(organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(email1, email2), (List<Email>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetOrganizationEmailsPageWithPagination() throws Exception {
-		Long organizationId = testGetOrganizationEmailsPage_getOrganizationId();
-
-		Email email1 = testGetOrganizationEmailsPage_addEmail(
-			organizationId, randomEmail());
-
-		Email email2 = testGetOrganizationEmailsPage_addEmail(
-			organizationId, randomEmail());
-
-		Email email3 = testGetOrganizationEmailsPage_addEmail(
-			organizationId, randomEmail());
-
-		Page<Email> page1 = invokeGetOrganizationEmailsPage(
-			organizationId, Pagination.of(1, 2));
-
-		List<Email> emails1 = (List<Email>)page1.getItems();
-
-		Assert.assertEquals(emails1.toString(), 2, emails1.size());
-
-		Page<Email> page2 = invokeGetOrganizationEmailsPage(
-			organizationId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Email> emails2 = (List<Email>)page2.getItems();
-
-		Assert.assertEquals(emails2.toString(), 1, emails2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2, email3),
-			new ArrayList<Email>() {
-				{
-					addAll(emails1);
-					addAll(emails2);
-				}
-			});
 	}
 
 	protected Email testGetOrganizationEmailsPage_addEmail(
@@ -253,8 +212,7 @@ public abstract class BaseEmailResourceTestCase {
 		return null;
 	}
 
-	protected Page<Email> invokeGetOrganizationEmailsPage(
-			Long organizationId, Pagination pagination)
+	protected Page<Email> invokeGetOrganizationEmailsPage(Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -263,11 +221,6 @@ public abstract class BaseEmailResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organization-id}/emails", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -284,7 +237,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationEmailsPageResponse(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -293,11 +246,6 @@ public abstract class BaseEmailResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organization-id}/emails", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -317,7 +265,7 @@ public abstract class BaseEmailResourceTestCase {
 				irrelevantUserAccountId, randomIrrelevantEmail());
 
 			Page<Email> page = invokeGetUserAccountEmailsPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -332,53 +280,13 @@ public abstract class BaseEmailResourceTestCase {
 		Email email2 = testGetUserAccountEmailsPage_addEmail(
 			userAccountId, randomEmail());
 
-		Page<Email> page = invokeGetUserAccountEmailsPage(
-			userAccountId, Pagination.of(1, 2));
+		Page<Email> page = invokeGetUserAccountEmailsPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(email1, email2), (List<Email>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetUserAccountEmailsPageWithPagination() throws Exception {
-		Long userAccountId = testGetUserAccountEmailsPage_getUserAccountId();
-
-		Email email1 = testGetUserAccountEmailsPage_addEmail(
-			userAccountId, randomEmail());
-
-		Email email2 = testGetUserAccountEmailsPage_addEmail(
-			userAccountId, randomEmail());
-
-		Email email3 = testGetUserAccountEmailsPage_addEmail(
-			userAccountId, randomEmail());
-
-		Page<Email> page1 = invokeGetUserAccountEmailsPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<Email> emails1 = (List<Email>)page1.getItems();
-
-		Assert.assertEquals(emails1.toString(), 2, emails1.size());
-
-		Page<Email> page2 = invokeGetUserAccountEmailsPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Email> emails2 = (List<Email>)page2.getItems();
-
-		Assert.assertEquals(emails2.toString(), 1, emails2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2, email3),
-			new ArrayList<Email>() {
-				{
-					addAll(emails1);
-					addAll(emails2);
-				}
-			});
 	}
 
 	protected Email testGetUserAccountEmailsPage_addEmail(
@@ -402,8 +310,7 @@ public abstract class BaseEmailResourceTestCase {
 		return null;
 	}
 
-	protected Page<Email> invokeGetUserAccountEmailsPage(
-			Long userAccountId, Pagination pagination)
+	protected Page<Email> invokeGetUserAccountEmailsPage(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -412,11 +319,6 @@ public abstract class BaseEmailResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/user-accounts/{user-account-id}/emails", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -433,7 +335,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	protected Http.Response invokeGetUserAccountEmailsPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -442,11 +344,6 @@ public abstract class BaseEmailResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/user-accounts/{user-account-id}/emails", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

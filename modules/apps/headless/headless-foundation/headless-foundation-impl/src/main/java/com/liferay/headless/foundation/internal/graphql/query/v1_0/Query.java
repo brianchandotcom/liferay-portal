@@ -174,9 +174,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Email> getOrganizationEmailsPage(
-			@GraphQLName("organization-id") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organization-id") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -184,7 +182,7 @@ public class Query {
 			this::_populateResourceContext,
 			emailResource -> {
 				Page paginationPage = emailResource.getOrganizationEmailsPage(
-					organizationId, Pagination.of(pageSize, page));
+					organizationId);
 
 				return paginationPage.getItems();
 			});
@@ -193,9 +191,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Email> getUserAccountEmailsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("user-account-id") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -203,7 +199,7 @@ public class Query {
 			this::_populateResourceContext,
 			emailResource -> {
 				Page paginationPage = emailResource.getUserAccountEmailsPage(
-					userAccountId, Pagination.of(pageSize, page));
+					userAccountId);
 
 				return paginationPage.getItems();
 			});

@@ -47,7 +47,7 @@ public class LiferayK8sConnection {
 
 		try {
 			return new Pod(
-				_core.createNamespacedPod(
+				_coreV1Api.createNamespacedPod(
 					namespace, configuredMySQLPod.getV1Pod(), null));
 		}
 		catch (ApiException ae) {
@@ -64,11 +64,11 @@ public class LiferayK8sConnection {
 	}
 
 	public static LiferayK8sConnection getInstance() {
-		if (_liferayKubernetesApi == null) {
-			_liferayKubernetesApi = new LiferayK8sConnection();
+		if (_liferayK8sConnection == null) {
+			_liferayK8sConnection = new LiferayK8sConnection();
 		}
 
-		return _liferayKubernetesApi;
+		return _liferayK8sConnection;
 	}
 
 	public Pod createPod(String dockerBaseImageName, String dockerImageName) {
@@ -83,7 +83,7 @@ public class LiferayK8sConnection {
 		V1Status v1Status;
 
 		try {
-			v1Status = _core.deleteNamespacedPod(
+			v1Status = _coreV1Api.deleteNamespacedPod(
 				pod.getName(), namespace, new V1DeleteOptions(), null, 60, true,
 				null);
 		}
@@ -116,7 +116,7 @@ public class LiferayK8sConnection {
 
 		try {
 			return new Pod(
-				_core.readNamespacedPod(
+				_coreV1Api.readNamespacedPod(
 					configuredMySQLPod.getName(), namespace, null, true,
 					false));
 		}
@@ -137,7 +137,7 @@ public class LiferayK8sConnection {
 		V1PodList v1PodList;
 
 		try {
-			v1PodList = _core.listPodForAllNamespaces(
+			v1PodList = _coreV1Api.listPodForAllNamespaces(
 				null, null, null, null, null, null, null, null, null);
 		}
 		catch (ApiException ae) {
@@ -176,9 +176,9 @@ public class LiferayK8sConnection {
 	}
 
 	private static final ApiClient _apiClient;
-	private static final AppsV1Api _apps;
-	private static final CoreV1Api _core;
-	private static LiferayK8sConnection _liferayKubernetesApi;
+	private static final AppsV1Api _appsV1Api;
+	private static final CoreV1Api _coreV1Api;
+	private static LiferayK8sConnection _liferayK8sConnection;
 
 	static {
 		try {
@@ -188,8 +188,8 @@ public class LiferayK8sConnection {
 
 			_apiClient.setDebugging(true);
 
-			_apps = new AppsV1Api(_apiClient);
-			_core = new CoreV1Api(_apiClient);
+			_appsV1Api = new AppsV1Api(_apiClient);
+			_coreV1Api = new CoreV1Api(_apiClient);
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

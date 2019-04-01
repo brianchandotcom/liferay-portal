@@ -1,3 +1,4 @@
+import getCN from 'classnames';
 import React from 'react';
 
 /**
@@ -6,14 +7,15 @@ import React from 'react';
  */
 export default class Icon extends React.Component {
 	render() {
-		const { iconName } = this.props;
+		const { elementClasses, iconName } = this.props;
+		const classes = getCN(
+			'lexicon-icon',
+			`lexicon-icon-${iconName}`,
+			elementClasses
+		);
 
 		return (
-			<svg
-				className={`lexicon-icon lexicon-icon-${iconName}`}
-				focusable="false"
-				role="presentation"
-			>
+			<svg className={classes} focusable="false" role="presentation">
 				<use
 					href={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg#${iconName}`}
 				/>

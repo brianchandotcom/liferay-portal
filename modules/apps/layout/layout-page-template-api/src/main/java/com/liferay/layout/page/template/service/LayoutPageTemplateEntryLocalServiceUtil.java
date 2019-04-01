@@ -303,6 +303,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+		fetchDefaultLayoutPageTemplateEntry(
+			long groupId, long classNameId, long classTypeId) {
+
+		return getService().fetchDefaultLayoutPageTemplateEntry(
+			groupId, classNameId, classTypeId);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchFirstLayoutPageTemplateEntry(long layoutPrototypeId) {
 
 		return getService().fetchFirstLayoutPageTemplateEntry(

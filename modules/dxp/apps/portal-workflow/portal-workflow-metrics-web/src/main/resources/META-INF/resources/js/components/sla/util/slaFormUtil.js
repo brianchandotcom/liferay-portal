@@ -5,7 +5,7 @@ const hasErrors = errors => {
 };
 
 const validateDays = days => {
-	if (Number(days) === 0) {
+	if (days && Number(days) === 0) {
 		return sub(Liferay.Language.get('value-must-be-an-integer-above-x'), [0]);
 	}
 };
@@ -20,10 +20,9 @@ const validateDuration = (days, hours) => {
 
 const validateHours = hours => {
 	const hoursRegex = /([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/;
-	const validHours = hours.match(hoursRegex);
 
-	if (hours && !validHours) {
-		return Liferay.Language.get('hours-must-be-between');
+	if (hours && !hours.match(hoursRegex)) {
+		return Liferay.Language.get('value-must-be-an-hour-below');
 	}
 };
 

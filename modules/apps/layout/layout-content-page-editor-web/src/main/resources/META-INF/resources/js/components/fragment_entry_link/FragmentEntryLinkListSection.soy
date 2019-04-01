@@ -191,6 +191,7 @@
 						{param key: $column.columnId /}
 						{param lastColumn: isLast($column) /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
+						{param rowType: $row.type /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param store: $store /}
@@ -226,6 +227,7 @@
 	{@param? hoveredItemType: string}
 	{@param? lastColumn: bool}
 	{@param? mappingFieldsURL: string}
+	{@param? rowType: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -290,6 +292,7 @@
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param name: $fragmentEntryLink.name /}
+					{param rowType: $rowType /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 					{param _handleFragmentMove: $_handleFragmentMove /}
@@ -322,6 +325,7 @@
 	{@param store: ?}
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
+	{@param? rowType: ?}
 
 	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
 		{param content: $content /}
@@ -335,6 +339,7 @@
 		{param key: $key /}
 		{param name: $name /}
 		{param ref: $key /}
+		{param rowType: $rowType /}
 		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 		{param store: $store /}
 	{/call}

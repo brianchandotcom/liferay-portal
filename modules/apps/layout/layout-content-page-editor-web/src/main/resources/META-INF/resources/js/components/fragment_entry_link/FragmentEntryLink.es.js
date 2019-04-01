@@ -7,7 +7,7 @@ import templates from './FragmentEntryLink.soy';
 import {REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemMoveDirection, getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import {removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
@@ -36,10 +36,16 @@ class FragmentEntryLink extends Component {
 			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		);
 
-		const nextState = setIn(
+		let nextState = setIn(
 			state,
 			['_fragmentsEditorItemTypes'],
 			FRAGMENTS_EDITOR_ITEM_TYPES
+		);
+
+		nextState = setIn(
+			nextState,
+			['_fragmentsEditorRowTypes'],
+			FRAGMENTS_EDITOR_ROW_TYPES
 		);
 
 		return setIn(

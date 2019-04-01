@@ -6,6 +6,7 @@
 {template .render}
 	{@param fragmentEntryLinkId: string}
 	{@param? _fragmentsEditorItemTypes: ?}
+	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _hovered: bool}
@@ -23,6 +24,7 @@
 	{@param? languageId: string}
 	{@param? name: string}
 	{@param? portletNamespace: ?}
+	{@param? rowType: ?}
 	{@param? selectedMappingTypes: ?}
 	{@param? showControlBar: bool}
 	{@param? showMapping: bool}
@@ -34,10 +36,13 @@
 		{sp}fragments-editor__drag-source--fragment
 		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
-		{sp}fragments-editor__drop-target--sidebar-fragment
 		{sp}fragments-editor__drop-target--sidebar-widget
 		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__topper-wrapper
+
+		{if $rowType == $_fragmentsEditorRowTypes.componentRow}
+			{sp}fragments-editor__drop-target--sidebar-fragment
+		{/if}
 
 		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $_fragmentsEditorItemTypes.fragment}
 			{sp}{$dropTargetBorder}

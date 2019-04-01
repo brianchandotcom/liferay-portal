@@ -38,7 +38,7 @@ public class ElasticsearchRegistrationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetSearchEngineService() throws Exception {
+	public void testGetSearchEngineService() {
 		Class<? extends SearchEngine> searchEngineClass =
 			_searchEngine.getClass();
 

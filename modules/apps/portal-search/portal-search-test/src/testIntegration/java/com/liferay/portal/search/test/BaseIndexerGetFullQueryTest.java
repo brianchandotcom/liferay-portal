@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.internal.util.TestIndexer;
 
@@ -40,7 +41,7 @@ public class BaseIndexerGetFullQueryTest {
 	}
 
 	@Test
-	public void testGetFullQueryWithAttachments() throws Exception {
+	public void testGetFullQueryWithAttachments() throws SearchException {
 		_searchContext.setIncludeAttachments(true);
 
 		_indexer.getFullQuery(_searchContext);
@@ -50,12 +51,12 @@ public class BaseIndexerGetFullQueryTest {
 		Assert.assertNull(_searchContext.getAttribute("discussion"));
 		Assert.assertArrayEquals(
 			new String[] {_CLASS_NAME},
-			(String[])_searchContext.getAttribute("relatedEntryClassNames"));
+			(Object[])_searchContext.getAttribute("relatedEntryClassNames"));
 	}
 
 	@Test
 	public void testGetFullQueryWithoutAttachmentsOrDiscussions()
-		throws Exception {
+		throws SearchException {
 
 		_indexer.getFullQuery(_searchContext);
 

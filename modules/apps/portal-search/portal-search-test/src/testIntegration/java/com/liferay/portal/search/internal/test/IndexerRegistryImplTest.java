@@ -67,16 +67,16 @@ public class IndexerRegistryImplTest {
 	}
 
 	@Test
-	public void testGetIndexerByIndexerClassName() throws Exception {
+	public void testGetIndexerByIndexerClassName() {
 		Indexer<Object> testIndexer = _indexerRegistry.getIndexer(
 			TestIndexer.class.getName());
 
 		Assert.assertNotNull(testIndexer);
-		Assert.assertEquals(TestIndexer.class, testIndexer.getClass());
+		Assert.assertSame(TestIndexer.class, testIndexer.getClass());
 	}
 
 	@Test
-	public void testGetIndexerByModelClassName() throws Exception {
+	public void testGetIndexerByModelClassName() {
 		Indexer<Object> testIndexer = _indexerRegistry.getIndexer(_CLASS_NAME);
 
 		Assert.assertNotNull(testIndexer);

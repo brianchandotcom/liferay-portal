@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import javax.ws.rs.core.Context;
@@ -51,6 +52,27 @@ public class RatingResourceImpl extends BaseRatingResourceImpl {
 		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
 
 		return spiRatingResource.getRating(ratingId);
+	}
+
+	@Override
+	public Page<Rating> getStructuredContentRatingsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRatingsPage(structuredContentId);
+	}
+
+	@Override
+	public Rating postStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.postRating(
+			structuredContentId, GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
 	@Override

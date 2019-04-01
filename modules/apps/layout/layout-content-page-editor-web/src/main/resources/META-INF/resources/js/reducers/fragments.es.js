@@ -1,5 +1,5 @@
 import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
-import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {add, addSection, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropSectionPosition, getFragmentColumn} from '../utils/FragmentsEditorGetUtils.es';
@@ -68,6 +68,7 @@ function addFragment(
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLinkId,
+			fragmentEntryLinkType,
 			position
 		);
 	}
@@ -75,6 +76,7 @@ function addFragment(
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLinkId,
+			fragmentEntryLinkType,
 			layoutData.structure.length
 		);
 	}
@@ -683,35 +685,27 @@ function _addFragmentToColumn(
  *
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
+ * @param {string} fragmentEntryLinkType
  * @param {number} position
  * @return {object}
  */
-function _addSingleFragmentRow(layoutData, fragmentEntryLinkId, position) {
-	const nextColumnId = layoutData.nextColumnId || 0;
-	const nextRowId = layoutData.nextRowId || 0;
-	const nextStructure = [...layoutData.structure];
+function _addSingleFragmentRow(
+	layoutData,
+	fragmentEntryLinkId,
+	fragmentEntryLinkType,
+	position
+) {
+	const rowType = fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section ?
+		FRAGMENTS_EDITOR_ROW_TYPES.sectionRow :
+		FRAGMENTS_EDITOR_ROW_TYPES.componentRow;
 
-	nextStructure.splice(
+	return addSection(
+		['12'],
+		layoutData,
 		position,
-		0,
-		{
-			columns: [
-				{
-					columnId: `${nextColumnId}`,
-					fragmentEntryLinkIds: [fragmentEntryLinkId],
-					size: ''
-				}
-			],
-			rowId: `${nextRowId}`
-		}
+		[fragmentEntryLinkId],
+		rowType
 	);
-
-	let nextData = setIn(layoutData, ['structure'], nextStructure);
-
-	nextData = setIn(nextData, ['nextColumnId'], nextColumnId + 1);
-	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
-
-	return nextData;
 }
 
 /**

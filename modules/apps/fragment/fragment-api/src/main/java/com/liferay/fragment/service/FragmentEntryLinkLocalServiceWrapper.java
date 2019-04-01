@@ -278,6 +278,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
+	public int getClassModelFragmentEntryLinksCount(
+		long groupId, long classNameId, long classPK) {
+
+		return _fragmentEntryLinkLocalService.
+			getClassModelFragmentEntryLinksCount(groupId, classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

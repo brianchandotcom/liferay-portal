@@ -261,6 +261,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static int getClassModelFragmentEntryLinksCount(
+		long groupId, long classNameId, long classPK) {
+
+		return getService().getClassModelFragmentEntryLinksCount(
+			groupId, classNameId, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

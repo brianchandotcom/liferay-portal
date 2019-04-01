@@ -178,6 +178,14 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public int getClassModelFragmentEntryLinksCount(
+		long groupId, long classNameId, long classPK) {
+
+		return fragmentEntryLinkPersistence.countByG_C_C(
+			groupId, classNameId, classNameId);
+	}
+
+	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {

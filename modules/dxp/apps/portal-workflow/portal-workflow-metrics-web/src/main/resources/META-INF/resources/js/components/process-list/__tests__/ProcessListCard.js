@@ -114,7 +114,11 @@ test('Should change page size', () => {
 	const instance = component.find(ProcessListCard).instance();
 
 	instance
-		.setPageSize(20)
+		.requestData({
+			page: 1,
+			pageSize: 20,
+			sort: encodeURIComponent('title:asc')
+		})
 		.then(() => expect(component.state('pageSize')).toBe(20));
 });
 
@@ -127,7 +131,13 @@ test('Should change page', () => {
 	);
 	const instance = component.find(ProcessListCard).instance();
 
-	instance.setPage(10).then(() => expect(component.state('start')).toBe(2));
+	instance
+		.requestData({
+			page: 10,
+			pageSize: 20,
+			sort: encodeURIComponent('title:asc')
+		})
+		.then(() => expect(component.state('start')).toBe(2));
 });
 
 test('Should search', () => {
@@ -139,7 +149,27 @@ test('Should search', () => {
 	);
 	const instance = component.find(ProcessListCard).instance();
 
-	instance.onSearch('test').then(() => {
-		expect(instance.state['totalCount']).toBe(0);
-	});
+	instance
+		.requestData({
+			page: 1,
+			pageSize: 20,
+			search: 'test',
+			sort: encodeURIComponent('title:asc')
+		})
+		.then(() => {
+			expect(instance.state['totalCount']).toBe(0);
+		});
+});
+
+test('Should change state', () => {
+	const data = { items: [], totalCount: 0 };
+	const component = mount(
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
+	);
+	const instance = component.find(ProcessListCard).instance();
+
+	instance.setState(data);
+	expect(instance.state['totalCount']).toBe(0);
 });

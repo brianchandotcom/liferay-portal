@@ -1,9 +1,14 @@
 import PageLink from '../PageLink';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 
 test('Should render component as type default', () => {
-	const component = renderer.create(<PageLink page={1} />);
+	const component = renderer.create(
+		<Router>
+			<PageLink page={1} />
+		</Router>
+	);
 
 	const tree = component.toJSON();
 
@@ -11,7 +16,11 @@ test('Should render component as type default', () => {
 });
 
 test('Should render component as active', () => {
-	const component = renderer.create(<PageLink disabled page={1} />);
+	const component = renderer.create(
+		<Router>
+			<PageLink disabled page={1} />
+		</Router>
+	);
 
 	const tree = component.toJSON();
 
@@ -19,29 +28,21 @@ test('Should render component as active', () => {
 });
 
 test('Should change page', () => {
-	const onChangePage = () => () => 'test';
-
 	const component = shallow(
-		<PageLink onChangePage={onChangePage()} page={2} />
+		<Router>
+			<PageLink page={2} />
+		</Router>
 	);
-
-	const instance = component.instance();
-
-	instance.setPage();
 
 	expect(component).toMatchSnapshot();
 });
 
 test('Should test change page when disabled', () => {
-	const onChangePage = () => () => 'test';
-
 	const component = shallow(
-		<PageLink disabled onChangePage={onChangePage()} page={2} />
+		<Router>
+			<PageLink disabled page={2} />
+		</Router>
 	);
-
-	const instance = component.instance();
-
-	instance.setPage();
 
 	expect(component).toMatchSnapshot();
 });

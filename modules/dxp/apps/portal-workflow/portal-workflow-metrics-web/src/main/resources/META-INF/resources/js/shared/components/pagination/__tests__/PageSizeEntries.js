@@ -10,18 +10,9 @@ test('Should render component', () => {
 });
 
 test('Should change page size', () => {
-	const onSelectPageSize = () => pageSize => pageSize;
-
 	const component = shallow(
-		<PageSizeEntries
-			onSelectPageSize={onSelectPageSize()}
-			pageSizeEntries={[10, 20, 30, 40]}
-			selectedPageSize={30}
-		/>
+		<PageSizeEntries pageSizeEntries={[10, 20, 30, 40]} selectedPageSize={30} />
 	);
 
-	const instance = component.instance();
-
-	instance.setPageSize(30);
-	expect(component.state('selectedPageSize')).toBe(30);
+	expect(component).toMatchSnapshot();
 });

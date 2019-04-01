@@ -1,14 +1,17 @@
-import Pagination from '../Pagination';
+import { Pagination } from '../Pagination';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 
 test('Should render component', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
-			<Pagination onSelectPage={onSelectPage()} pageSize={1} totalCount={10} />
+			<Pagination
+				match={{ params: { page: 1 } }}
+				maxPages={10}
+				pageSize={1}
+				totalCount={10}
+			/>
 		</Router>
 	);
 
@@ -18,28 +21,26 @@ test('Should render component', () => {
 });
 
 test('Should change page', () => {
-	const onSelectPage = () => page => page;
-
 	const component = mount(
 		<Router>
-			<Pagination onSelectPage={onSelectPage()} pageSize={1} totalCount={10} />
+			<Pagination
+				match={{ params: { page: 1 } }}
+				maxPages={10}
+				pageSize={1}
+				totalCount={10}
+			/>
 		</Router>
 	);
 
-	const instance = component.find(Pagination).instance();
-
-	instance.goToPage(2);
 	expect(component).toMatchSnapshot();
 });
 
 test('Should render component at page 1', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
 			<Pagination
-				onSelectPage={onSelectPage()}
-				page={1}
+				match={{ params: { page: 1 } }}
+				maxPages={10}
 				pageSize={5}
 				totalCount={26}
 			/>
@@ -52,13 +53,11 @@ test('Should render component at page 1', () => {
 });
 
 test('Should render component at page 2', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
 			<Pagination
-				onSelectPage={onSelectPage()}
-				page={2}
+				match={{ params: { page: 2 } }}
+				maxPages={10}
 				pageSize={5}
 				totalCount={26}
 			/>
@@ -71,13 +70,11 @@ test('Should render component at page 2', () => {
 });
 
 test('Should render component at page 3', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
 			<Pagination
-				onSelectPage={onSelectPage()}
-				page={3}
+				match={{ params: { page: 3 } }}
+				maxPages={10}
 				pageSize={5}
 				totalCount={26}
 			/>
@@ -90,13 +87,11 @@ test('Should render component at page 3', () => {
 });
 
 test('Should render component at page 4', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
 			<Pagination
-				onSelectPage={onSelectPage()}
-				page={4}
+				match={{ params: { page: 4 } }}
+				maxPages={10}
 				pageSize={5}
 				totalCount={26}
 			/>
@@ -109,13 +104,11 @@ test('Should render component at page 4', () => {
 });
 
 test('Should render component at page 5', () => {
-	const onSelectPage = () => page => page;
-
 	const component = renderer.create(
 		<Router>
 			<Pagination
-				onSelectPage={onSelectPage()}
-				page={5}
+				match={{ params: { page: 5 } }}
+				maxPages={10}
 				pageSize={5}
 				totalCount={26}
 			/>
@@ -125,4 +118,53 @@ test('Should render component at page 5', () => {
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
+});
+
+test('Should test build menu', () => {
+	const component = mount(
+		<Router>
+			<Pagination
+				match={{ params: { page: 5 } }}
+				maxPages={5}
+				pageSize={5}
+				totalCount={400}
+			/>
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should test build menu', () => {
+	const component = mount(
+		<Router>
+			<div>
+				<Pagination
+					match={{ params: { page: 20 } }}
+					maxPages={5}
+					pageSize={5}
+					totalCount={400}
+				/>
+			</div>
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should test build menu with page 1', () => {
+	const component = mount(
+		<Router>
+			<div>
+				<Pagination
+					match={{ params: { page: 1 } }}
+					maxPages={5}
+					pageSize={5}
+					totalCount={400}
+				/>
+			</div>
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
 });

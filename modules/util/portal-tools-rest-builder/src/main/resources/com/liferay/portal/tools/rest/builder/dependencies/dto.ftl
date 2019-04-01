@@ -142,6 +142,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			try {
 				${propertyName} = ${propertyName}UnsafeSupplier.get();
 			}
+			catch (RuntimeException re) {
+				throw re;
+			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}

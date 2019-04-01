@@ -20,6 +20,7 @@
 	{@param? _removeExpirationDateError: any}
 	{@param? _tomorrowDate: string}
 	{@param? expirationDateError: bool}
+	{@param? expandedCollaboratorId: string}
 
 	<div id="{$id}">
 		<div class="inline-scroller modal-body">
@@ -50,6 +51,7 @@
 								{param _tomorrowDate: $_tomorrowDate /}
 								{param collaborator: $collaborator /}
 								{param spritemap: $spritemap /}
+								{param expandedCollaboratorId: $expandedCollaboratorId /}
 							{/call}
 						</li>
 					{/foreach}
@@ -108,6 +110,7 @@
 	{@param? _handleEnableExpirationDate: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
+	{@param? expandedCollaboratorId: string}
 
 	<div class="autofit-col">
 		{if $collaborator.portraitURL}
@@ -189,7 +192,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="{if not $collaborator.expanded}hide{/if}">
+		<div class="{if $collaborator.id != $expandedCollaboratorId}hide{/if}">
 			<div class="autofit-row autofit-row-center">
 				<div class="autofit-col">
 					<div class="form-group">

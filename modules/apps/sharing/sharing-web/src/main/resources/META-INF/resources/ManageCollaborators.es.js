@@ -273,18 +273,11 @@ class ManageCollaborators extends PortletBase {
 	/**
 	 * Expand configuration for sharing permissions and expiration
 	 *
+	 * @param {Event} event
 	 * @protected
 	 */
 	_hideShowExtraActions(event) {
-		const target = event.delegateTarget;
-		const collaboratorId = target.dataset.collaboratorid;
-		let collaborator = this._getCollaborator(collaboratorId);
-
-		if (collaborator && !collaborator.expanded) {
-			collaborator.expanded = true;
-
-			this.collaborators = this.collaborators;
-		}
+		this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid
 	}
 
 	/**
@@ -354,6 +347,13 @@ ManageCollaborators.STATE = {
 	 * @type {Array.<Object>}
 	 */
 	collaborators: Config.array().required(),
+
+	/**
+	 * Id of the expanded collaborator
+	 * @memberof ManageCollaborators
+	 * @type {String}
+	 */
+	expandedCollaboratorId: Config.string(),
 
 	/**
 	 * Id of the dialog

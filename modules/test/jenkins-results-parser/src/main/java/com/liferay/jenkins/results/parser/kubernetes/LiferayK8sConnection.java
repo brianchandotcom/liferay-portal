@@ -37,23 +37,17 @@ import java.util.List;
  */
 public class LiferayK8sConnection {
 
-	public static Pod createPod(
-		String dockerBaseImageName, String dockerImageName, String namespace) {
-
-		Pod configuredMySQLPod =
-			ResourceConfigurationFactory.newConfiguredMySQLPod(
-				dockerBaseImageName, dockerImageName);
-
+	public static Pod createPod(Pod configurationPod, String namespace) {
 		try {
 			return new Pod(
 				_coreV1Api.createNamespacedPod(
-					namespace, configuredMySQLPod.getV1Pod(), null));
+					namespace, configurationPod.getV1Pod(), null));
 		}
 		catch (ApiException ae) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create new pod with name '",
-					configuredMySQLPod.getName(), "' in namespace '", namespace,
+					configurationPod.getName(), "' in namespace '", namespace,
 					"'"));
 
 			ae.printStackTrace();
@@ -70,8 +64,8 @@ public class LiferayK8sConnection {
 		return _liferayK8sConnection;
 	}
 
-	public Pod createPod(String dockerBaseImageName, String dockerImageName) {
-		return createPod(dockerBaseImageName, dockerImageName, "default");
+	public Pod createPod(Pod configurationPod) {
+		return createPod(configurationPod, "default");
 	}
 
 	public boolean deletePod(Pod pod) {
@@ -106,25 +100,17 @@ public class LiferayK8sConnection {
 		return false;
 	}
 
-	public Pod getPod(
-		String dockerBaseImageName, String dockerImageName, String namespace) {
-
-		Pod configuredMySQLPod =
-			ResourceConfigurationFactory.newConfiguredMySQLPod(
-				dockerBaseImageName, dockerImageName);
-
+	public Pod getPod(Pod pod, String namespace) {
 		try {
 			return new Pod(
 				_coreV1Api.readNamespacedPod(
-					configuredMySQLPod.getName(), namespace, null, true,
-					false));
+					pod.getName(), namespace, null, true, false));
 		}
 		catch (ApiException ae) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Unable to get pod with name '",
-					configuredMySQLPod.getName(), "' in namespace '", namespace,
-					"'"));
+					"Unable to get pod with name '", pod.getName(),
+					"' in namespace '", namespace, "'"));
 
 			ae.printStackTrace();
 

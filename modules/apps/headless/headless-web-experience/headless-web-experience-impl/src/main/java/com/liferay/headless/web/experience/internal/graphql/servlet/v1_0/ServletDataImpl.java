@@ -20,6 +20,7 @@ import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.web.experience.resource.v1_0.RatingResource;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -48,6 +49,8 @@ public class ServletDataImpl implements ServletData {
 			_ratingResourceComponentServiceObjects);
 		Mutation.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
+		Mutation.setStructuredContentFolderResourceComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects);
 
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
@@ -59,6 +62,8 @@ public class ServletDataImpl implements ServletData {
 			_ratingResourceComponentServiceObjects);
 		Query.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
+		Query.setStructuredContentFolderResourceComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -87,6 +92,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<StructuredContentFolderResource>
+		_structuredContentFolderResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentListElementResource>

@@ -17,8 +17,10 @@ package com.liferay.headless.web.experience.internal.graphql.mutation.v1_0;
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
 import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.RatingResource;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -62,6 +64,15 @@ public class Mutation {
 
 		_structuredContentResourceComponentServiceObjects =
 			structuredContentResourceComponentServiceObjects;
+	}
+
+	public static void
+		setStructuredContentFolderResourceComponentServiceObjects(
+			ComponentServiceObjects<StructuredContentFolderResource>
+				structuredContentFolderResourceComponentServiceObjects) {
+
+		_structuredContentFolderResourceComponentServiceObjects =
+			structuredContentFolderResourceComponentServiceObjects;
 	}
 
 	@GraphQLInvokeDetached
@@ -166,6 +177,24 @@ public class Mutation {
 					contentSpaceId, structuredContent));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContent postStructuredContentFolderStructuredContent(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						structuredContentFolderId, structuredContent));
+	}
+
 	@GraphQLInvokeDetached
 	public void deleteStructuredContent(
 			@GraphQLName("structured-content-id") Long structuredContentId)
@@ -207,6 +236,72 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.putStructuredContent(
 					structuredContentId, structuredContent));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder postContentSpaceStructuredContentFolder(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("StructuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postContentSpaceStructuredContentFolder(
+						contentSpaceId, structuredContentFolder));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteStructuredContentFolder(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.deleteStructuredContentFolder(
+					structuredContentFolderId));
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContentFolder putStructuredContentFolder(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId,
+			@GraphQLName("StructuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.putStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				@GraphQLName("structured-content-folder-id") Long
+					structuredContentFolderId,
+				@GraphQLName("StructuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						structuredContentFolderId, structuredContentFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -272,11 +367,22 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			StructuredContentFolderResource structuredContentFolderResource)
+		throws Exception {
+
+		structuredContentFolderResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<RatingResource>
 		_ratingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentFolderResource>
+		_structuredContentFolderResourceComponentServiceObjects;
 
 }

@@ -46,6 +46,8 @@ export default class AppComponent extends React.Component {
 			<Component {...params} />
 		);
 
+		const { defaultDelta } = this.contextState;
+
 		return (
 			<Router>
 				<AppContext.Provider value={this.contextState}>
@@ -57,10 +59,16 @@ export default class AppComponent extends React.Component {
 
 					<div className="portal-workflow-metrics-app">
 						<Switch>
-							<Redirect exact from="/" to="/processes" />
+							<Redirect
+								exact
+								from="/"
+								to={`/processes/${defaultDelta}/1/${encodeURIComponent(
+									'overdueInstanceCount:asc'
+								)}`}
+							/>
 
 							<Route
-								path="/processes/:pageSize?/:page?"
+								path="/processes/:pageSize/:page/:sort/:search?"
 								render={withParams(ProcessListCard)}
 							/>
 

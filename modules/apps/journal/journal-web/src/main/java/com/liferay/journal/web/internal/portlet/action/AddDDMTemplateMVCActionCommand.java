@@ -35,6 +35,7 @@ import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,11 +78,22 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		String script = ActionUtil.getScript(uploadPortletRequest);
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");
-		boolean smallImage = ParamUtil.getBoolean(
-			uploadPortletRequest, "smallImage");
-		String smallImageURL = ParamUtil.getString(
-			uploadPortletRequest, "smallImageURL");
-		File smallImageFile = uploadPortletRequest.getFile("smallImageFile");
+
+		String smallImageSource = ParamUtil.getString(
+			uploadPortletRequest, "smallImageSource", "none");
+
+		boolean smallImage = !Objects.equals(smallImageSource, "none");
+
+		String smallImageURL = StringPool.BLANK;
+		File smallImageFile = null;
+
+		if (Objects.equals(smallImageSource, "url")) {
+			smallImageURL = ParamUtil.getString(
+				uploadPortletRequest, "smallImageURL");
+		}
+		else if (Objects.equals(smallImageSource, "file")) {
+			smallImageFile = uploadPortletRequest.getFile("smallImageFile");
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);

@@ -20,98 +20,47 @@
 JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request);
 
 DDMTemplate ddmTemplate = journalEditDDMTemplateDisplayContext.getDDMTemplate();
+
+String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSource();
 %>
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-<div id="<portlet:namespace />smallImageContainer">
-	<div class="lfr-ddm-small-image-header">
-		<aui:input name="smallImage" />
-	</div>
+<aui:select label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
+	<aui:option label="no-image" value="none" />
+	<aui:option label="from-url" value="url" />
+	<aui:option label="from-your-computer" value="file" />
+</aui:select>
 
-	<div class="lfr-ddm-small-image-content p-3 toggler-content-collapsed">
-		<aui:row>
-			<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) %>">
-				<aui:col width="<%= 50 %>">
-					<div class="aspect-ratio aspect-ratio-16-to-9">
-						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-					</div>
-				</aui:col>
-			</c:if>
+<div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace/>smallImageURLContainer">
+	<aui:input label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
 
-			<aui:col width="<%= (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null)) ? 50 : 100 %>">
-				<aui:fieldset>
-					<aui:input cssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
+	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && Validator.isNotNull(ddmTemplate.getSmallImageURL()) %>">
+		<p>
+			<strong><liferay-ui:message key="preview" /></strong>
+		</p>
 
-					<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" title="small-image-url" />
-				</aui:fieldset>
-
-				<aui:fieldset>
-					<aui:input cssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
-
-					<aui:input cssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
-				</aui:fieldset>
-			</aui:col>
-		</aui:row>
-	</div>
+		<div class="aspect-ratio aspect-ratio-16-to-9">
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+		</div>
+	</c:if>
 </div>
 
-<aui:script use="aui-toggler">
-	var container = A.one('#<portlet:namespace />smallImageContainer');
+<div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace/>smallImageFileContainer">
+	<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
 
-	var types = container.all('.lfr-ddm-small-image-type');
-	var values = container.all('.lfr-ddm-small-image-value');
+	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
+		<p>
+			<strong><liferay-ui:message key="preview" /></strong>
+		</p>
 
-	var selectSmallImageType = function(index) {
-		types.attr('checked', false);
+		<div class="aspect-ratio aspect-ratio-16-to-9">
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+		</div>
+	</c:if>
+</div>
 
-		types.item(index).attr('checked', true);
-
-		values.attr('disabled', true);
-
-		values.item(index).attr('disabled', false);
-	};
-
-	container.delegate(
-		'change',
-		function(event) {
-			var index = types.indexOf(event.currentTarget);
-
-			selectSmallImageType(index);
-		},
-		'.lfr-ddm-small-image-type'
-	);
-
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-content',
-			expanded: <%= journalEditDDMTemplateDisplayContext.isSmallImage() %>,
-			header: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
-
-					if (expanded) {
-						types.each(
-							function(item, index) {
-								if (item.get('checked')) {
-									values.item(index).attr('disabled', false);
-								}
-							}
-						);
-					}
-					else {
-						values.attr('disabled', true);
-					}
-				}
-			}
-		}
-	);
-
-	selectSmallImageType('<%= ((ddmTemplate != null) && Validator.isNotNull(ddmTemplate.getSmallImageURL())) ? 0 : 1 %>');
+<aui:script>
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'url', '<portlet:namespace />smallImageURLContainer');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'file', '<portlet:namespace />smallImageFileContainer');
 </aui:script>

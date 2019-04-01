@@ -155,6 +155,13 @@ public class StructuredContentSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"friendlyUrlPath\": ");
+
+		sb.append("\"");
+		sb.append(structuredContent.getFriendlyUrlPath());
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"id\": ");
 
 		sb.append(structuredContent.getId());
@@ -407,6 +414,12 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setFriendlyUrlPath(
 						(String)jsonParserFieldValue);
 				}
 			}

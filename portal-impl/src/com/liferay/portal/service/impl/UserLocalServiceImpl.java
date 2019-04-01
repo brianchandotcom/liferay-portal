@@ -6717,9 +6717,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		Set<Long> oldGroupIds = SetUtil.fromArray(getGroupPrimaryKeys(userId));
+		List<Long> oldGroupIds = ListUtil.toList(getGroupPrimaryKeys(userId));
 
-		oldGroupIds.removeAll(SetUtil.fromArray(newGroupIds));
+		for (long newGroupId : newGroupIds) {
+			oldGroupIds.remove(newGroupId);
+		}
 
 		if (!oldGroupIds.isEmpty()) {
 			unsetUserGroups(userId, ArrayUtil.toLongArray(oldGroupIds));
@@ -6748,10 +6750,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		Set<Long> oldOrganizationIds = SetUtil.fromArray(
+		List<Long> oldOrganizationIds = ListUtil.toList(
 			getOrganizationPrimaryKeys(userId));
 
-		oldOrganizationIds.removeAll(SetUtil.fromArray(newOrganizationIds));
+		for (long newOrganizationId : newOrganizationIds) {
+			oldOrganizationIds.remove(newOrganizationId);
+		}
 
 		if (!oldOrganizationIds.isEmpty()) {
 			unsetUserOrganizations(

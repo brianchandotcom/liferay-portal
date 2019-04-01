@@ -202,6 +202,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getDateModified());
 		}
 
+		if (Validator.isNotNull(messageBoardThread.getEncodingFormat())) {
+			existingMessageBoardThread.setEncodingFormat(
+				messageBoardThread.getEncodingFormat());
+		}
+
 		if (Validator.isNotNull(messageBoardThread.getHeadline())) {
 			existingMessageBoardThread.setHeadline(
 				messageBoardThread.getHeadline());

@@ -91,6 +91,13 @@ public class MessageBoardThreadSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"encodingFormat\": ");
+
+		sb.append("\"");
+		sb.append(messageBoardThread.getEncodingFormat());
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"headline\": ");
 
 		sb.append("\"");
@@ -283,6 +290,12 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setDateModified(
 						(Date)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setEncodingFormat(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {

@@ -94,8 +94,6 @@ public abstract class BaseMessageBodyReader implements MessageBodyReader {
 			_providers.getContextResolver(_contextType, _mediaType)
 		).map(
 			contextResolver -> contextResolver.getContext(clazz)
-		).map(
-			ObjectMapper::copy
 		).orElseThrow(
 			() -> new InternalServerErrorException(
 				"Unable to generate object mapper for class " + clazz)

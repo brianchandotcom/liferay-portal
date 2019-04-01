@@ -107,8 +107,6 @@ public abstract class BaseMessageBodyWriter
 		).map(
 			contextResolver -> contextResolver.getContext(clazz)
 		).map(
-			ObjectMapper::copy
-		).map(
 			this::_addFilter
 		).orElseThrow(
 			() -> new InternalServerErrorException(

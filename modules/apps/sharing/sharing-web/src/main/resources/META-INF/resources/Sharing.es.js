@@ -246,6 +246,25 @@ class Sharing extends PortletBase {
 			this._inputValue = invalidEmails.map(item => item.value).join(',');
 			this._inputValue = this._inputValue;
 		}
+		else {
+			this.fetch(
+				this.sharingUserCheckEmailURL,
+				{
+					email: item.value
+				}
+			).then(
+				response => response.json()
+			).then(
+				result => {
+					let {userEmail, userExists} = result;
+
+					if (!userExists) {
+						this.emailErrorMessage = userEmail + ' does not exists.';
+						this._inputValue = userEmail;
+					}
+				}
+			);
+		}
 
 		this._userEmailAddresses = selectedItems;
 	}
@@ -264,6 +283,7 @@ Sharing.STATE = {
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
 	sharingUserAutocompleteURL: Config.string().required(),
+	sharingUserCheckEmailURL: Config.string().required(),
 	spritemap: Config.string().required(),
 	submitting: Config.bool().value(false)
 };

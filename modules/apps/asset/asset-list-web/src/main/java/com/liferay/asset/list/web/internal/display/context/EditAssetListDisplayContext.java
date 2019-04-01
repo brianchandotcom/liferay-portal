@@ -77,6 +77,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -725,6 +726,16 @@ public class EditAssetListDisplayContext {
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
 		return _segmentsEntryId;
+	}
+
+	public long[] getSelectedGroupIds() throws PortalException {
+		List<Group> selectedGroups = getSelectedGroups();
+
+		Stream<Group> stream = selectedGroups.stream();
+
+		return stream.mapToLong(
+			Group::getGroupId
+		).toArray();
 	}
 
 	public List<Group> getSelectedGroups() throws PortalException {

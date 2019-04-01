@@ -22,6 +22,8 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
+<aui:input name="TypeSettingsProperties--groupIds--" type="hidden" value="<%= StringUtil.merge(editAssetListDisplayContext.getSelectedGroupIds()) %>" />
+
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
@@ -119,6 +121,8 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
 			searchContainer.updateDataStore();
+
+			updateGroupIds();
 		},
 		'.modify-link'
 	);
@@ -168,6 +172,22 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			searchContainer.addRow(rowColumns, groupId);
 
 			searchContainer.updateDataStore();
+
+			updateGroupIds();
+		}
+	);
+
+	Liferay.provide(
+		window,
+		'updateGroupIds',
+		function() {
+			var groupIds = document.getElementById('<portlet:namespace />groupIds');
+
+			if (groupIds) {
+				var searchContainerData = searchContainer.getData();
+
+				groupIds.setAttribute('value', searchContainerData.split(','));
+			}
 		}
 	);
 </aui:script>

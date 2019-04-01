@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.web.internal.dao.search;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
@@ -41,7 +41,7 @@ public class FragmentEntryResultRowSplitter implements ResultRowSplitter {
 			FragmentEntry fragmentEntry = (FragmentEntry)resultRow.getObject();
 
 			if (fragmentEntry.getType() ==
-					FragmentEntryTypeConstants.TYPE_COMPONENT) {
+					FragmentTypeConstants.TYPE_COMPONENT) {
 
 				fragmentEntryComponentsResultRows.add(resultRow);
 			}

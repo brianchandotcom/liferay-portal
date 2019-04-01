@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentEntryTypeConstants {
+public class FragmentTypeConstants {
 
 	public static final int TYPE_COMPONENT = 1;
 

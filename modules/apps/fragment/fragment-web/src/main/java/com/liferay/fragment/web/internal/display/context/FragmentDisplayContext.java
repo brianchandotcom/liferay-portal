@@ -15,8 +15,8 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.constants.FragmentTypeConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -293,10 +293,10 @@ public class FragmentDisplayContext {
 		int fragmentEntriesCount = 0;
 
 		if (isNavigationComponents() || isNavigationSections()) {
-			int type = FragmentEntryTypeConstants.TYPE_SECTION;
+			int type = FragmentTypeConstants.TYPE_SECTION;
 
 			if (isNavigationComponents()) {
-				type = FragmentEntryTypeConstants.TYPE_COMPONENT;
+				type = FragmentTypeConstants.TYPE_COMPONENT;
 			}
 
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntriesByType(

@@ -99,10 +99,19 @@ export const PADDING_OPTIONS = [
 ];
 
 /**
- * Section config defaults
+ * Default component row config
  */
-export const DEFAULT_CONFIG = {
+export const DEFAULT_COMPONENT_ROW_CONFIG = {
 	[CONFIG_KEYS.columnSpacing]: true,
 	[CONFIG_KEYS.paddingHorizontal]: DEFAULT_PADDING_SIZE,
 	[CONFIG_KEYS.paddingVertical]: DEFAULT_PADDING_SIZE
+};
+
+/**
+ * Default section row config
+ */
+export const DEFAULT_SECTION_ROW_CONFIG = {
+	[CONFIG_KEYS.columnSpacing]: true,
+	[CONFIG_KEYS.paddingHorizontal]: '0',
+	[CONFIG_KEYS.paddingVertical]: '0'
 };

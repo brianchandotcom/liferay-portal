@@ -1,5 +1,5 @@
 import {CLEAR_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
-import {DEFAULT_CONFIG} from './sectionConstants';
+import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './sectionConstants';
 import {FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
@@ -56,11 +56,14 @@ function addSection(
 		}
 	);
 
+	const defaultConfig = type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow ?
+		DEFAULT_SECTION_ROW_CONFIG : DEFAULT_COMPONENT_ROW_CONFIG;
+
 	const nextStructure = add(
 		layoutData.structure,
 		{
 			columns,
-			config: DEFAULT_CONFIG,
+			config: defaultConfig,
 			rowId: `${nextRowId}`,
 			type
 		},

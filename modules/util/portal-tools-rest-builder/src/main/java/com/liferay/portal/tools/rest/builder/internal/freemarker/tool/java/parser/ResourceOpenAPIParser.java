@@ -446,8 +446,7 @@ public class ResourceOpenAPIParser {
 			}
 			else if ((i == (pathSegments.length - 1)) &&
 					 StringUtil.startsWith(
-						 returnType,
-						 "com.liferay.portal.vulcan.pagination.Page<")) {
+						 returnType, Page.class.getName() + "<")) {
 
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);

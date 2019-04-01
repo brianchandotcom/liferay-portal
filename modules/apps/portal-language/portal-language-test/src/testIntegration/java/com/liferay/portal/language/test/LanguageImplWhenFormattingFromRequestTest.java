@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -27,14 +28,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Manuel de la Peña
@@ -146,17 +146,22 @@ public class LanguageImplWhenFormattingFromRequestTest {
 	}
 
 	private HttpServletRequest _createMockHttpServletRequest(Locale locale) {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		return new HttpServletRequestWrapper(
+			ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
 
-		themeDisplay.setLocale(locale);
+			public Object getAttribute(String name) {
+				if (name.equals(WebKeys.THEME_DISPLAY)) {
+					ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+					themeDisplay.setLocale(locale);
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+					return themeDisplay;
+				}
 
-		return mockHttpServletRequest;
+				return null;
+			}
+
+		};
 	}
 
 	@Inject

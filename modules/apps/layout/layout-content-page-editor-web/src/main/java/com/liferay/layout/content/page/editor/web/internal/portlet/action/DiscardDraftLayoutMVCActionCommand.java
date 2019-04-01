@@ -14,7 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -71,10 +74,17 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;
@@ -96,6 +106,24 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			Layout layout = _layoutLocalService.getLayout(
 				draftLayout.getClassPK());
+
+			int fragmentEntryLinksCount =
+				_fragmentEntryLinkLocalService.
+					getClassModelFragmentEntryLinksCount(
+						layout.getGroupId(),
+						_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			if ((fragmentEntryLinksCount == 0) &&
+				(layout.getClassNameId() == _portal.getClassNameId(
+					LayoutPageTemplateEntry.class))) {
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						getLayoutPageTemplateEntry(layout.getClassPK());
+
+				layout = _layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid());
+			}
 
 			_layoutCopyHelper.copyLayout(layout, draftLayout);
 

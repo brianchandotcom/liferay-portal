@@ -62,7 +62,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	disposed() {
-		document.removeEventListener('click', this._handleDocumentClick);
+		document.removeEventListener('click', this._handleDocumentClick, true);
 		document.removeEventListener('focusin', this._handleDocumentFocus);
 		document.removeEventListener('mouseover', this._handleDocumentMouseOver);
 	}

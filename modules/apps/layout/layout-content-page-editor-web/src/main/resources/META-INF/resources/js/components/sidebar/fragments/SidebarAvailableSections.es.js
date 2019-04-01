@@ -13,6 +13,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {
+	FRAGMENT_ENTRY_LINK_TYPES,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
@@ -144,6 +145,7 @@ class SidebarAvailableSections extends Component {
 					ADD_FRAGMENT_ENTRY_LINK,
 					{
 						fragmentEntryKey: itemId,
+						fragmentEntryLinkType: FRAGMENT_ENTRY_LINK_TYPES.section,
 						fragmentName: itemName
 					}
 				)
@@ -185,6 +187,7 @@ class SidebarAvailableSections extends Component {
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryKey: event.itemId,
+					fragmentEntryLinkType: FRAGMENT_ENTRY_LINK_TYPES.section,
 					fragmentName: event.itemName
 				}
 			)

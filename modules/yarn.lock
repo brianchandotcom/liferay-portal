@@ -2746,6 +2746,13 @@ babel-preset-liferay-standard@2.7.1:
     babel-plugin-transform-node-env-inline "0.2.0"
     babel-plugin-wrap-modules-amd "2.7.1"
 
+babel-preset-metal-jsx@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-metal-jsx/-/babel-preset-metal-jsx-0.1.1.tgz#a99dbe9055c672a7f04a8684bba0d068ee4a76d2"
+  integrity sha1-qZ2+kFXGcqfwSoaEu6DQaO5KdtI=
+  dependencies:
+    babel-plugin-incremental-dom "^3.3.0"
+
 babel-preset-metal-resolve-source@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/babel-preset-metal-resolve-source/-/babel-preset-metal-resolve-source-1.0.2.tgz#733e1eb8f9b14a51e31a5659f9f2bdccc50d572a"

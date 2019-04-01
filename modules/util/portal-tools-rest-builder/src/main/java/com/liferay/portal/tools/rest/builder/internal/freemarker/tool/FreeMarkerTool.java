@@ -212,6 +212,10 @@ public class FreeMarkerTool {
 			javaMethodParameters, operation, annotation);
 	}
 
+	public String getSchemaVarName(String schemaName) {
+		return OpenAPIParserUtil.getSchemaVarName(schemaName);
+	}
+
 	public boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 

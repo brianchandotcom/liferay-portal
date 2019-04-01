@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -295,6 +296,10 @@ public class OpenAPIParserUtil {
 		}
 
 		return schemaNames;
+	}
+
+	public static String getSchemaVarName(String schemaName) {
+		return TextFormatter.format(schemaName, TextFormatter.I);
 	}
 
 	public static boolean hasHTTPMethod(

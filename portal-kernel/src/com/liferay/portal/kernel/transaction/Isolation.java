@@ -19,10 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Defines how transations are visible to those outside the transaction.
+ *
  * @author Michael Young
  * @author Shuyang Zhou
- * @see Transactional
- * @review
+ * @see    Transactional
  */
 public enum Isolation {
 
@@ -31,7 +32,7 @@ public enum Isolation {
 	 */
 	COUNTER(TransactionDefinition.ISOLATION_COUNTER),
 	/**
-	 * Use the default isolation level of the underlying datastore.
+	 * Use the default isolation level of the underlying data store.
 	 */
 	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),
 	/**

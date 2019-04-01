@@ -22,15 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * When invoked by an AopInvocationHandler, the transaction advice is configured
- * by this annotation.
+ * Configures the transaction advice for methods that have this annotation when
+ * they're invoked by an
+ * <code>com.liferay.portal.spring.aop.AopInvocationHandler</code>.
  *
  * All Liferay aspect annotations are aware of their scope. Interface aspect
  * annotations can be overwritten by their implementations. Class level aspect
  * annotations can be overwritten by method annotations.
  *
  * @author Brian Wing Shun Chan
- * @review
  */
 @Documented
 @Inherited
@@ -39,50 +39,51 @@ import java.lang.annotation.Target;
 public @interface Transactional {
 
 	/**
-	 * A flag that can be set to false if no transaction is needed, allowing
-	 * for optimizations at runtime.
+	 * Whether a transaction is needed. Disabling transactions for a method
+	 * optimizes run time performance.
 	 */
 	public boolean enabled() default true;
 
 	/**
-	 * @see Isolation
+	 * Returns the {@link Isolation} setting.
 	 */
 	public Isolation isolation() default Isolation.DEFAULT;
 
 	/**
-	 * Exception classes that should not cause the transaction to be rolled
-	 * back.
+	 * Returns exception classes that should not cause the transaction to be
+	 * rolled back.
 	 */
 	public Class<? extends Throwable>[] noRollbackFor() default {};
 
 	/**
-	 * Exception names that should not cause the transaction to be rolled back.
+	 * Returns exception names that should not cause the transaction to be
+	 * rolled back.
 	 */
 	public String[] noRollbackForClassName() default {};
 
 	/**
-	 * @see Propagation
+	 * Returns the {@link Propagation} setting.
 	 */
 	public Propagation propagation() default Propagation.REQUIRED;
 
 	/**
-	 * A flag that can be set to true if the transaction is effectively
-	 * read-only, allowing for optimizations at runtime.
+	 * Whether the the transaction is effectively read-only, allowing for
+	 * optimizations at runtime.
 	 */
 	public boolean readOnly() default false;
 
 	/**
-	 * Exception classes that should cause the transaction to be rolled back.
+	 * Returns exception classes that cause the transaction to be rolled back.
 	 */
 	public Class<? extends Throwable>[] rollbackFor() default {};
 
 	/**
-	 * Exception names that should cause the transaction to be rolled back.
+	 * Returns exception names that cause the transaction to be rolled back.
 	 */
 	public String[] rollbackForClassName() default {};
 
 	/**
-	 * The timeout for this transaction in seconds.
+	 * Returns the transaction's timeout in seconds.
 	 */
 	public int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
 

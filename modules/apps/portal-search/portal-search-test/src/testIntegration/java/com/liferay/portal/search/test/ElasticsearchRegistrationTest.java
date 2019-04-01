@@ -17,20 +17,14 @@ package com.liferay.portal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Cristina González
@@ -45,34 +39,17 @@ public class ElasticsearchRegistrationTest {
 
 	@Test
 	public void testGetSearchEngineService() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ElasticsearchRegistrationTest.class);
+		Class<? extends SearchEngine> searchEngineClass =
+			_searchEngine.getClass();
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		String searchEngineClassName = searchEngineClass.getName();
 
-		Collection<ServiceReference<SearchEngine>> searchEngineReferences =
-			bundleContext.getServiceReferences(
-				SearchEngine.class, "(search.engine.id=SYSTEM_ENGINE)");
-
-		Assert.assertEquals(
-			searchEngineReferences.toString(), 1,
-			searchEngineReferences.size());
-
-		for (ServiceReference<SearchEngine> searchEngineReference :
-				searchEngineReferences) {
-
-			SearchEngine searchEngine = bundleContext.getService(
-				searchEngineReference);
-
-			Class<? extends SearchEngine> searchEngineClass =
-				searchEngine.getClass();
-
-			String searchEngineClassName = searchEngineClass.getName();
-
-			Assert.assertTrue(
-				"The registered search engine is " + searchEngineClassName,
-				searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
-		}
+		Assert.assertTrue(
+			"The registered search engine is " + searchEngineClassName,
+			searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
 	}
+
+	@Inject(filter = "search.engine.id=SYSTEM_ENGINE")
+	private SearchEngine _searchEngine;
 
 }

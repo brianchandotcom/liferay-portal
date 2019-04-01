@@ -18,11 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
@@ -73,7 +74,7 @@ public class IndexerRegistryUtilTest {
 
 	@Test
 	public void testGetIndexerByIndexerClassName() throws Exception {
-		Indexer<Object> testIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<Object> testIndexer = _indexerRegistry.getIndexer(
 			TestIndexer.class.getName());
 
 		Assert.assertNotNull(testIndexer);
@@ -82,8 +83,7 @@ public class IndexerRegistryUtilTest {
 
 	@Test
 	public void testGetIndexerByModelClassName() throws Exception {
-		Indexer<Object> testIndexer = IndexerRegistryUtil.getIndexer(
-			_CLASS_NAME);
+		Indexer<Object> testIndexer = _indexerRegistry.getIndexer(_CLASS_NAME);
 
 		Assert.assertNotNull(testIndexer);
 		Assert.assertEquals(_CLASS_NAME, testIndexer.getClassName());
@@ -92,6 +92,9 @@ public class IndexerRegistryUtilTest {
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
 	private static ServiceRegistration<Indexer> _serviceRegistration;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
 
 	private static class TestIndexer extends BaseIndexer<Object> {
 

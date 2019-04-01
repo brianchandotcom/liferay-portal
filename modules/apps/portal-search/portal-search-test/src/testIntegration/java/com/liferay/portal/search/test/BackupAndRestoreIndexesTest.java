@@ -16,12 +16,13 @@ package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.IndexAdminHelperUtil;
+import com.liferay.portal.kernel.search.IndexAdminHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 
@@ -54,7 +55,7 @@ public class BackupAndRestoreIndexesTest {
 
 			backupName = backupName + "-" + System.currentTimeMillis();
 
-			IndexAdminHelperUtil.backup(
+			_indexAdminHelper.backup(
 				companyId, SearchEngineHelper.SYSTEM_ENGINE_ID, backupName);
 
 			backupNames.put(companyId, backupName);
@@ -65,13 +66,16 @@ public class BackupAndRestoreIndexesTest {
 		for (Map.Entry<Long, String> entry : backupNames.entrySet()) {
 			String backupName = entry.getValue();
 
-			IndexAdminHelperUtil.restore(entry.getKey(), backupName);
+			_indexAdminHelper.restore(entry.getKey(), backupName);
 
-			IndexAdminHelperUtil.removeBackup(entry.getKey(), backupName);
+			_indexAdminHelper.removeBackup(entry.getKey(), backupName);
 		}
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private IndexAdminHelper _indexAdminHelper;
 
 }

@@ -19,7 +19,6 @@
 		}
 	},
 	"dependencies": {
-		"@babel/preset-env": "7.4.2",
 		"clay-alert": "2.11.1",
 		"clay-autocomplete": "2.11.1",
 		"clay-badge": "2.11.1",
@@ -53,6 +52,9 @@
 		"metal-events": "^2.16.5",
 		"metal-soy": "^2.16.0",
 		"metal-state": "^2.16.0"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "7.4.2"
 	},
 	"jest": {
 		"moduleNameMapper": {

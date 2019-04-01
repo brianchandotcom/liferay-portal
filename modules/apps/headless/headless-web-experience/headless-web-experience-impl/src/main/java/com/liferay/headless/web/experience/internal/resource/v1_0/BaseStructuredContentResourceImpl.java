@@ -50,6 +50,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -77,8 +78,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -146,6 +147,49 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path(
+		"/structured-content-folders/{structured-content-folder-id}/structured-contents"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Page<StructuredContent>
+			getStructuredContentFolderStructuredContentsPage(
+				@NotNull @PathParam("structured-content-folder-id") Long
+					structuredContentFolderId,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/structured-content-folders/{structured-content-folder-id}/structured-contents"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public StructuredContent postStructuredContentFolderStructuredContent(
+			@NotNull @PathParam("structured-content-folder-id") Long
+				structuredContentFolderId,
+			StructuredContent structuredContent)
+		throws Exception {
+
+		return new StructuredContent();
 	}
 
 	@Override

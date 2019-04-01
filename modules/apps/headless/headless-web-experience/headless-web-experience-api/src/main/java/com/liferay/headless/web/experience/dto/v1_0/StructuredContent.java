@@ -367,6 +367,9 @@ public class StructuredContent {
 		try {
 			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

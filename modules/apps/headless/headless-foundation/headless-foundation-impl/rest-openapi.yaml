@@ -96,6 +96,12 @@ components:
                             readOnly: true
                             type: array
                     type: object
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
                 id:
                     format: int64
                     type: integer

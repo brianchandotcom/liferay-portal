@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.asset;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
@@ -77,6 +78,8 @@ public class BlogsEntryAssetRendererFactory
 					getResourceBundleLoaderByBundleSymbolicName(
 						"com.liferay.blogs.web"));
 
+		blogsEntryAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
+			_assetDisplayPageFriendlyURLProvider);
 		blogsEntryAssetRenderer.setAssetRendererType(type);
 		blogsEntryAssetRenderer.setServletContext(_servletContext);
 
@@ -180,6 +183,10 @@ public class BlogsEntryAssetRendererFactory
 
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
 

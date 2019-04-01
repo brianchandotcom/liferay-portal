@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.asset;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.util.AssetHelper;
@@ -232,9 +233,24 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws Exception {
+
+		if (_assetDisplayPageFriendlyURLProvider != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					getClassName(), getClassPK(), themeDisplay);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				return friendlyURL;
+			}
+		}
 
 		return getURLViewInContext(
 			liferayPortletRequest, noSuchEntryRedirect, "/blogs/find_entry",
@@ -295,6 +311,16 @@ public class BlogsEntryAssetRenderer
 		return true;
 	}
 
+	public void setAssetDisplayPageFriendlyURLProvider(
+		AssetDisplayPageFriendlyURLProvider
+			assetDisplayPageFriendlyURLProvider) {
+
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+	}
+
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final BlogsEntry _entry;
 	private final ResourceBundleLoader _resourceBundleLoader;
 

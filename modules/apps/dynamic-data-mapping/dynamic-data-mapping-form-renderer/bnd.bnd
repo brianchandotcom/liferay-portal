@@ -6,5 +6,10 @@ Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
 		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	soy;\
+		filter:="(type=LiferayFormField)",\
+	soy;\
+		filter:="(type=LiferayForm)"
 Web-ContextPath: /dynamic-data-mapping-form-renderer
 -dsannotations-options: inherit

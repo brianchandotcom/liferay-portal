@@ -333,6 +333,8 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		CreationMenu creationMenu = new CreationMenu();
 
+		creationMenu.setItemsIconAlignment("left");
+
 		for (Menu menu : menus) {
 			List<URLMenuItem> urlMenuItems =
 				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
@@ -341,6 +343,7 @@ public class DLAdminManagementToolbarDisplayContext {
 				creationMenu.addDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(urlMenuItem.getURL());
+						dropdownItem.setIcon(urlMenuItem.getIcon());
 						dropdownItem.setLabel(urlMenuItem.getLabel());
 						dropdownItem.setSeparator(urlMenuItem.hasSeparator());
 					});

@@ -137,30 +137,34 @@ function getItemPath(itemId, itemType, structure) {
 		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
 			const [fragmentEntryLinkId] = itemId.split('-');
 
-			itemPath = [
-				...itemPath,
-				...getItemPath(
-					fragmentEntryLinkId,
-					FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-					structure
-				)
-			];
+			if (fragmentEntryLinkId) {
+				itemPath = [
+					...itemPath,
+					...getItemPath(
+						fragmentEntryLinkId,
+						FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+						structure
+					)
+				];
+			}
 		}
 		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 			const column = [].concat(
 				...structure.map(row => row.columns)
 			).find(
-				column => column.fragmentEntryLinkIds.indexOf(itemId) !== -1
+				_column => _column.fragmentEntryLinkIds.indexOf(itemId) !== -1
 			);
 
-			itemPath = [
-				...itemPath,
-				...getItemPath(
-					column.columnId,
-					FRAGMENTS_EDITOR_ITEM_TYPES.column,
-					structure
-				)
-			];
+			if (column) {
+				itemPath = [
+					...itemPath,
+					...getItemPath(
+						column.columnId,
+						FRAGMENTS_EDITOR_ITEM_TYPES.column,
+						structure
+					)
+				];
+			}
 		}
 		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
 			const section = structure.find(
@@ -169,14 +173,16 @@ function getItemPath(itemId, itemType, structure) {
 				)
 			);
 
-			itemPath = [
-				...itemPath,
-				...getItemPath(
-					section.rowId,
-					FRAGMENTS_EDITOR_ITEM_TYPES.section,
-					structure
-				)
-			];
+			if (section) {
+				itemPath = [
+					...itemPath,
+					...getItemPath(
+						section.rowId,
+						FRAGMENTS_EDITOR_ITEM_TYPES.section,
+						structure
+					)
+				];
+			}
 		}
 	}
 

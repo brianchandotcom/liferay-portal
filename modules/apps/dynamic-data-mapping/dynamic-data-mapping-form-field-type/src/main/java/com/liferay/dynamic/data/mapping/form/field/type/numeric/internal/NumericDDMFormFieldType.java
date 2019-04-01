@@ -31,8 +31,6 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=8",
 		"ddm.form.field.type.group=customized",
 		"ddm.form.field.type.icon=caret-double",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Numeric",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-numeric",
 		"ddm.form.field.type.label=numeric-field-type-label",
 		"ddm.form.field.type.name=numeric"
 	},
@@ -45,6 +43,11 @@ public class NumericDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return NumericDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Numeric/Numeric.es";
 	}
 
 	@Override

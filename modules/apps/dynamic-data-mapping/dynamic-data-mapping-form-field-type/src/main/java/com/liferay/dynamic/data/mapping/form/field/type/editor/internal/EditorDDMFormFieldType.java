@@ -26,10 +26,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.icon=icon-font",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Editor",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-editor",
-		"ddm.form.field.type.name=editor", "ddm.form.field.type.system=true"
+		"ddm.form.field.type.icon=icon-font", "ddm.form.field.type.name=editor",
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
@@ -40,6 +38,11 @@ public class EditorDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return EditorDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Editor/Editor.es";
 	}
 
 	@Override

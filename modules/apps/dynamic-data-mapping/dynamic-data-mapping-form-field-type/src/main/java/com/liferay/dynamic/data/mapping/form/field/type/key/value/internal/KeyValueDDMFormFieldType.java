@@ -27,8 +27,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-font",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.KeyValue",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-key-value",
 		"ddm.form.field.type.name=key_value", "ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
@@ -40,6 +38,12 @@ public class KeyValueDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return KeyValueDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/KeyValue" +
+			"/KeyValue.es";
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		// Layouts
@@ -130,7 +130,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet = publishDraft(draftLayoutSet);
 		}
 		else {
-			layoutSetPersistence.removeByG_P(groupId, privateLayout, true);
+			layoutSetPersistence.removeByG_P_Head(groupId, privateLayout, true);
 		}
 
 		// Virtual host
@@ -151,7 +151,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
 	public LayoutSet fetchLayoutSet(long groupId, boolean privateLayout) {
-		return layoutSetPersistence.fetchByG_P(groupId, privateLayout, true);
+		return layoutSetPersistence.fetchByG_P_Head(
+			groupId, privateLayout, true);
 	}
 
 	@Override
@@ -174,14 +175,16 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet fetchLayoutSetByLogoId(boolean privateLayout, long logoId)
 		throws PortalException {
 
-		return layoutSetPersistence.fetchByP_L(privateLayout, logoId);
+		return layoutSetPersistence.fetchByP_L_Head(
+			privateLayout, logoId, true);
 	}
 
 	@Override
 	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException {
 
-		return layoutSetPersistence.findByG_P(groupId, privateLayout, true);
+		return layoutSetPersistence.findByG_P_Head(
+			groupId, privateLayout, true);
 	}
 
 	@Override
@@ -208,8 +211,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public List<LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid) {
 
-		return layoutSetPersistence.findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid);
+		return layoutSetPersistence.findByLayoutSetPrototypeUuid_Head(
+			layoutSetPrototypeUuid, true);
 	}
 
 	@Override
@@ -236,7 +239,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			String layoutSetPrototypeUuid)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
@@ -286,7 +289,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
@@ -361,7 +364,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			String colorSchemeId, String css)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		if (Validator.isNull(themeId)) {
@@ -390,7 +393,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 					PropsKeys.THEME_SYNC_ON_GROUP,
 					PropsValues.THEME_SYNC_ON_GROUP)) {
 
-				LayoutSet otherLayoutSet = layoutSetPersistence.findByG_P(
+				LayoutSet otherLayoutSet = layoutSetPersistence.findByG_P_Head(
 					layoutSet.getGroupId(), layoutSet.isPrivateLayout(), true);
 
 				LayoutSet otherDraftLayoutSet = getDraft(otherLayoutSet);
@@ -427,9 +430,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
 		throws PortalException {
 
-		int pageCount = layoutPersistence.countByG_P(groupId, privateLayout);
+		int pageCount = layoutPersistence.countByG_P_Head(
+			groupId, privateLayout, true);
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		LayoutSet draftLayoutSet = getDraft(layoutSet);
@@ -449,7 +453,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		settingsProperties.fastLoad(settings);
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
@@ -493,7 +497,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			throw new LayoutSetVirtualHostException();
 		}
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, true);
 
 		if (Validator.isNotNull(virtualHostname)) {

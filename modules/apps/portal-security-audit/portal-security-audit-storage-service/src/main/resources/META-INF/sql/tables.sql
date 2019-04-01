@@ -9,7 +9,7 @@ create table Audit_AuditEvent (
 	classPK VARCHAR(75) null,
 	message STRING null,
 	clientHost VARCHAR(255) null,
-	clientIP VARCHAR(75) null,
+	clientIP VARCHAR(255) null,
 	serverName VARCHAR(255) null,
 	serverPort INTEGER,
 	sessionID VARCHAR(255) null,

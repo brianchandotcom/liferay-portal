@@ -19,9 +19,10 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.document.library.internal.dto.v1_0.converter.FolderDTOConverter;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.FolderEntityModel;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -29,22 +30,18 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Optional;
-
-import javax.ws.rs.core.MultivaluedMap;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+
+import javax.ws.rs.core.MultivaluedMap;
+import java.util.Optional;
 
 /**
  * @author Javier Gamarra
@@ -187,22 +184,10 @@ public class FolderResourceImpl
 			com.liferay.portal.kernel.repository.model.Folder folder)
 		throws Exception {
 
-		return new Folder() {
-			{
-				contentSpaceId = folder.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(folder.getUserId()));
-				dateCreated = folder.getCreateDate();
-				dateModified = folder.getModifiedDate();
-				description = folder.getDescription();
-				id = folder.getFolderId();
-				name = folder.getName();
-				numberOfDocuments = _dlAppService.getFileEntriesCount(
-					folder.getRepositoryId(), folder.getFolderId());
-				numberOfFolders = _dlAppService.getFoldersCount(
-					folder.getRepositoryId(), folder.getFolderId());
-			}
-		};
+		return _folderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				folder.getFolderId()));
 	}
 
 	private Folder _updateFolder(Long folderId, String name, String description)
@@ -219,9 +204,6 @@ public class FolderResourceImpl
 	private DLAppService _dlAppService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private FolderDTOConverter _folderDTOConverter;
 
 }

@@ -59,9 +59,18 @@ public class AopServiceResolver {
 			return;
 		}
 
-		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
-			aopServiceRegistrar.unregister();
+		AopServiceRegistrar[] aopServiceRegistrars =
+			_aopServiceRegistrars.toArray(
+				new AopServiceRegistrar[_aopServiceRegistrars.size()]);
 
+		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
+			aopServiceRegistrar.unregister();
+		}
+
+		aopServiceRegistrars = _aopServiceRegistrars.toArray(
+			new AopServiceRegistrar[_aopServiceRegistrars.size()]);
+
+		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
 			aopServiceRegistrar.register(
 				transactionExecutorHolder.getTransactionExecutor());
 		}
@@ -101,7 +110,11 @@ public class AopServiceResolver {
 			return;
 		}
 
-		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
+		AopServiceRegistrar[] aopServiceRegistrars =
+			_aopServiceRegistrars.toArray(
+				new AopServiceRegistrar[_aopServiceRegistrars.size()]);
+
+		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
 			aopServiceRegistrar.unregister();
 		}
 
@@ -112,7 +125,10 @@ public class AopServiceResolver {
 		TransactionExecutorHolder topRankingTransactionExecutorHolder =
 			_transactionExecutorHolders.get(0);
 
-		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
+		aopServiceRegistrars = _aopServiceRegistrars.toArray(
+			new AopServiceRegistrar[_aopServiceRegistrars.size()]);
+
+		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
 			aopServiceRegistrar.register(
 				topRankingTransactionExecutorHolder.getTransactionExecutor());
 		}

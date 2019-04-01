@@ -16,6 +16,7 @@ package com.liferay.headless.web.experience.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -49,6 +50,7 @@ import java.net.URL;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +104,190 @@ public abstract class BaseRatingResourceTestCase {
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testGetStructuredContentRatingsPage() throws Exception {
+		Long structuredContentId =
+			testGetStructuredContentRatingsPage_getStructuredContentId();
+		Long irrelevantStructuredContentId =
+			testGetStructuredContentRatingsPage_getIrrelevantStructuredContentId();
+
+		if ((irrelevantStructuredContentId != null)) {
+			Rating irrelevantRating =
+				testGetStructuredContentRatingsPage_addRating(
+					irrelevantStructuredContentId, randomIrrelevantRating());
+
+			Page<Rating> page = invokeGetStructuredContentRatingsPage(
+				irrelevantStructuredContentId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantRating), (List<Rating>)page.getItems());
+			assertValid(page);
+		}
+
+		Rating rating1 = testGetStructuredContentRatingsPage_addRating(
+			structuredContentId, randomRating());
+
+		Rating rating2 = testGetStructuredContentRatingsPage_addRating(
+			structuredContentId, randomRating());
+
+		Page<Rating> page = invokeGetStructuredContentRatingsPage(
+			structuredContentId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(rating1, rating2), (List<Rating>)page.getItems());
+		assertValid(page);
+	}
+
+	protected Rating testGetStructuredContentRatingsPage_addRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetStructuredContentRatingsPage_getStructuredContentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetStructuredContentRatingsPage_getIrrelevantStructuredContentId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Rating> invokeGetStructuredContentRatingsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<Rating>>() {
+			});
+	}
+
+	protected Http.Response invokeGetStructuredContentRatingsPageResponse(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostStructuredContentRating() throws Exception {
+		Rating randomRating = randomRating();
+
+		Rating postRating = testPostStructuredContentRating_addRating(
+			randomRating);
+
+		assertEquals(randomRating, postRating);
+		assertValid(postRating);
+	}
+
+	protected Rating testPostStructuredContentRating_addRating(Rating rating)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Rating invokePostStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(rating),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostStructuredContentRatingResponse(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(rating),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/ratings",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
 	}
 
 	@Test

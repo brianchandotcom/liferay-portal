@@ -14,7 +14,6 @@
 
 package com.liferay.headless.web.experience.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
@@ -69,14 +68,6 @@ public interface StructuredContentResource {
 
 	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
-		throws Exception;
-
-	public Page<Rating> getStructuredContentsRatingsPage(
-			Long structuredContentId)
-		throws Exception;
-
-	public Rating postStructuredContentRating(
-			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(

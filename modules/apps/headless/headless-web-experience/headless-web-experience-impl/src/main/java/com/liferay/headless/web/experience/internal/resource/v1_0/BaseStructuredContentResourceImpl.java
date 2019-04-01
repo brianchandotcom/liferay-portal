@@ -14,7 +14,6 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -279,34 +278,6 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return new StructuredContent();
-	}
-
-	@Override
-	@GET
-	@Path("/structured-contents/{structured-content-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public Page<Rating> getStructuredContentsRatingsPage(
-			@NotNull @PathParam("structured-content-id") Long
-				structuredContentId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/structured-contents/{structured-content-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public Rating postStructuredContentRating(
-			@NotNull @PathParam("structured-content-id") Long
-				structuredContentId,
-			Rating rating)
-		throws Exception {
-
-		return new Rating();
 	}
 
 	@Override

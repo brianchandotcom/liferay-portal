@@ -203,6 +203,24 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Rating> getStructuredContentRatingsPage(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> {
+				Page paginationPage =
+					ratingResource.getStructuredContentRatingsPage(
+						structuredContentId);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Rating getRating(@GraphQLName("rating-id") Long ratingId)
 		throws Exception {
 
@@ -303,24 +321,6 @@ public class Query {
 			structuredContentResource ->
 				structuredContentResource.getStructuredContent(
 					structuredContentId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getStructuredContentsRatingsPage(
-			@GraphQLName("structured-content-id") Long structuredContentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource -> {
-				Page paginationPage =
-					structuredContentResource.getStructuredContentsRatingsPage(
-						structuredContentId);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField

@@ -16,6 +16,7 @@ package com.liferay.headless.web.experience.resource.v1_0;
 
 import com.liferay.headless.web.experience.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import javax.annotation.Generated;
 
@@ -29,6 +30,14 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public interface RatingResource {
+
+	public Page<Rating> getStructuredContentRatingsPage(
+			Long structuredContentId)
+		throws Exception;
+
+	public Rating postStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception;
 
 	public void deleteRating(Long ratingId) throws Exception;
 

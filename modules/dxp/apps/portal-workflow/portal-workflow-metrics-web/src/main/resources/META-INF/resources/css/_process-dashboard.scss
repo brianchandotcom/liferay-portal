@@ -1,0 +1,77 @@
+$c: ".workflow-process-dashboard";
+
+#{$c} {
+    .dashboard-panel-header {
+        font-size: 18px;
+        color: #272833;
+        margin-top: 21px;
+        font-weight: 700;
+
+        svg {
+            font-size: 16px;
+            color: #A7A9BC;
+        }
+    }
+
+    .process-dashboard-summary-card {
+        border: 1px solid #E7E7ED;
+        border-radius: 4px;
+        color: #30313F !important;
+        display: inline-flex;
+        font-size: 14px;
+        min-height: 136px;
+        padding: 16px;
+        width: 276px;
+        margin-right: 24px;
+        text-decoration: none;
+
+
+        .body {
+            font-size: 40px;
+            line-height: 1;
+            margin: 8px 0;
+        }
+
+        .footer {
+            color: #6B6C7E;
+            pointer-events: none;
+            
+            .highlight-hover {
+                color: #0B5FFF;
+            }
+        }
+
+        &:hover {
+            border: none;
+            box-shadow: 0 0 0 2px #80acff;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        .iconBadge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            padding: 9px;
+            vertical-align: middle;
+        }
+        .icon-red {
+            color: #DA1414;
+            background: #FEEFEF;
+        }
+        .icon-orange {
+            color: #B95000;
+            background: #FFF4EC;
+        }
+        .icon-green {
+            color: #287D3C;
+            background: #EDF9F0;
+        }
+
+    }
+    
+}

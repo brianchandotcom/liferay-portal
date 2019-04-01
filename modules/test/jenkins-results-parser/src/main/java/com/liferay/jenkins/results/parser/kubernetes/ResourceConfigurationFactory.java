@@ -33,7 +33,7 @@ import java.util.Arrays;
  */
 public class ResourceConfigurationFactory {
 
-	public static LiferayK8sConnection.Pod newConfiguredMySQLPod(
+	public static LiferayK8sConnection.Pod newMySQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
 
 		V1Pod v1Pod = new V1Pod();
@@ -45,36 +45,37 @@ public class ResourceConfigurationFactory {
 		}
 
 		v1Pod.setMetadata(
-			newConfiguredMetaData(
+			newConfigurationMetaData(
 				JenkinsResultsParserUtil.combine(
 					hostname, "-", dockerBaseImageName)));
 
-		V1Container v1Container = newConfiguredContainer(
+		V1Container v1Container = newConfigurationContainer(
 			dockerBaseImageName, dockerImageName);
 
 		v1Container.setEnv(
 			new ArrayList<>(
 				Arrays.asList(
-					newConfiguredEnvVar("MYSQL_ROOT_PASSWORD", "password"))));
+					newConfigurationEnvVar(
+						"MYSQL_ROOT_PASSWORD", "password"))));
 
 		v1Container.setPorts(
 			new ArrayList<>(
 				Arrays.asList(
-					newConfiguredContainerPort(dockerBaseImageName, 3306))));
+					newConfigurationContainerPort(dockerBaseImageName, 3306))));
 
-		V1PodSpec v1PodSpec = newConfiguredPodSpec(v1Container);
+		V1PodSpec v1PodSpec = newConfigurationPodSpec(v1Container);
 
 		v1PodSpec.setVolumes(
 			new ArrayList<>(
 				Arrays.asList(
-					newConfiguredEmptyDirVolume(dockerBaseImageName))));
+					newEmptyDirConfigurationVolume(dockerBaseImageName))));
 
 		v1Pod.setSpec(v1PodSpec);
 
 		return new LiferayK8sConnection.Pod(v1Pod);
 	}
 
-	protected static V1Container newConfiguredContainer(
+	protected static V1Container newConfigurationContainer(
 		String dockerBaseImageName, String dockerImageName) {
 
 		V1Container v1Container = new V1Container();
@@ -86,7 +87,7 @@ public class ResourceConfigurationFactory {
 		return v1Container;
 	}
 
-	protected static V1ContainerPort newConfiguredContainerPort(
+	protected static V1ContainerPort newConfigurationContainerPort(
 		String dockerBaseImageName, int containerPort) {
 
 		V1ContainerPort v1ContainerPort = new V1ContainerPort();
@@ -98,7 +99,37 @@ public class ResourceConfigurationFactory {
 		return v1ContainerPort;
 	}
 
-	protected static V1Volume newConfiguredEmptyDirVolume(
+	protected static V1EnvVar newConfigurationEnvVar(
+		String variableName, String variableValue) {
+
+		V1EnvVar v1EnvVar = new V1EnvVar();
+
+		v1EnvVar.setName(variableName);
+
+		v1EnvVar.setValue(variableValue);
+
+		return v1EnvVar;
+	}
+
+	protected static V1ObjectMeta newConfigurationMetaData(
+		String metaDataName) {
+
+		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
+
+		v1ObjectMeta.setName(metaDataName);
+
+		return v1ObjectMeta;
+	}
+
+	protected static V1PodSpec newConfigurationPodSpec(V1Container container) {
+		V1PodSpec v1PodSpec = new V1PodSpec();
+
+		v1PodSpec.addContainersItem(container);
+
+		return v1PodSpec;
+	}
+
+	protected static V1Volume newEmptyDirConfigurationVolume(
 		String dockerImageName) {
 
 		V1Volume v1Volume = new V1Volume();
@@ -111,34 +142,6 @@ public class ResourceConfigurationFactory {
 		v1Volume.setEmptyDir(v1EmptyDirVolumeSource);
 
 		return v1Volume;
-	}
-
-	protected static V1EnvVar newConfiguredEnvVar(
-		String variableName, String variableValue) {
-
-		V1EnvVar v1EnvVar = new V1EnvVar();
-
-		v1EnvVar.setName(variableName);
-
-		v1EnvVar.setValue(variableValue);
-
-		return v1EnvVar;
-	}
-
-	protected static V1ObjectMeta newConfiguredMetaData(String metaDataName) {
-		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
-
-		v1ObjectMeta.setName(metaDataName);
-
-		return v1ObjectMeta;
-	}
-
-	protected static V1PodSpec newConfiguredPodSpec(V1Container container) {
-		V1PodSpec v1PodSpec = new V1PodSpec();
-
-		v1PodSpec.addContainersItem(container);
-
-		return v1PodSpec;
 	}
 
 }

@@ -24,11 +24,11 @@ public class ResourceConfigurations extends ResourceConfigurationFactory {
 	public static final LiferayK8sConnection.Pod mysql57PodConfiguration;
 
 	static {
-		mysql55PodConfiguration = newConfiguredMySQLPod(
+		mysql55PodConfiguration = newMySQLConfigurationPod(
 			"mysql55", "mysql:5.5.62");
-		mysql56PodConfiguration = newConfiguredMySQLPod(
+		mysql56PodConfiguration = newMySQLConfigurationPod(
 			"mysql56", "mysql:5.6.43");
-		mysql57PodConfiguration = newConfiguredMySQLPod(
+		mysql57PodConfiguration = newMySQLConfigurationPod(
 			"mysql57", "mysql:5.7.25");
 	}
 

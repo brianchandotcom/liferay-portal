@@ -170,7 +170,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		FormRecord randomFormRecord = randomFormRecord();
 
 		FormRecord putFormRecord = invokePutFormRecord(
-			postFormRecord.getId(), randomFormRecord);
+			postFormRecord.getId(), null);
 
 		assertEquals(randomFormRecord, putFormRecord);
 		assertValid(putFormRecord);

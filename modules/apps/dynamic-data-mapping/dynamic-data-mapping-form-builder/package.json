@@ -111,8 +111,6 @@
 		"eslint-plugin-react": "^7.4.0",
 		"jest": "^24.5.0",
 		"jest-fetch-mock": "^1.6.6",
-		"liferay-jest-junit-reporter": "1.0.1",
-		"liferay-npm-bundler": "2.7.0",
 		"metal-jest-serializer": "^2.0.0",
 		"metal-tools-soy": "^6.0.0",
 		"opn-cli": "^3.1.0",

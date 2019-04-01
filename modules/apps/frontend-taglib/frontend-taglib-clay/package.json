@@ -54,9 +54,6 @@
 		"metal-soy": "^2.16.0",
 		"metal-state": "^2.16.0"
 	},
-	"devDependencies": {
-		"liferay-npm-bundler-preset-standard": "2.7.0"
-	},
 	"jest": {
 		"moduleNameMapper": {
 			"(.*)\\.soy": "$1.soy.js"

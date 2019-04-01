@@ -1,6 +1,10 @@
 {
 	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
+		"liferay-jest-junit-reporter": "1.0.1",
+		"liferay-npm-bridge-generator": "2.7.1",
+		"liferay-npm-bundler": "2.7.1",
+		"liferay-npm-bundler-preset-standard": "2.7.1",
+		"liferay-npm-scripts": "1.4.10"
 	},
 	"private": true,
 	"scripts": {

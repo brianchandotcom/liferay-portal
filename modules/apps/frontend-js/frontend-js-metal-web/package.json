@@ -34,9 +34,6 @@
 		"metal-useragent": "3.0.1",
 		"metal-web-component": "^2.16.7"
 	},
-	"devDependencies": {
-		"liferay-npm-bundler-preset-standard": "2.7.0"
-	},
 	"name": "frontend-js-metal-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --bundler --bridge",

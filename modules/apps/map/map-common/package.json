@@ -8,8 +8,6 @@
 		"@babel/cli": "^7.2.3",
 		"@babel/preset-env": "^7.4.2",
 		"jest": "^24.5.0",
-		"liferay-jest-junit-reporter": "1.0.1",
-		"liferay-npm-bundler": "2.7.0",
 		"metal-jest-serializer": "^1.0.1"
 	},
 	"jest": {

@@ -74,8 +74,6 @@
 		"eslint-config-liferay": "^2.0.8",
 		"eslint-plugin-react": "^7.4.0",
 		"jest": "^24.5.0",
-		"liferay-jest-junit-reporter": "1.0.1",
-		"liferay-npm-bundler": "2.7.0",
 		"metal-jest-serializer": "^2.0.0",
 		"metal-soy-critic": "^2.4.0",
 		"metal-tools-soy": "^6.0.0",

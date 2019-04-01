@@ -19,6 +19,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
 import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.web.experience.internal.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -77,7 +78,9 @@ public class ContentListElementResourceImpl
 						}
 
 						return dtoConverter.toDTO(
-							contextAcceptLanguage, assetEntry, contextUriInfo);
+							new DefaultDTOConverterContext(
+								contextAcceptLanguage.getPreferredLocale(),
+								assetEntry.getClassPK(), contextUriInfo));
 					});
 			}
 		};

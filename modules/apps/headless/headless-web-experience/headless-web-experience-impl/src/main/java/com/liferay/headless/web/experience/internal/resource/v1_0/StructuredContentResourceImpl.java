@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.web.experience.internal.dto.v1_0.converter.StructuredContentDTOConverter;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
@@ -675,7 +676,9 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _structuredContentDTOConverter.toDTO(
-			contextAcceptLanguage, journalArticle, contextUriInfo);
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				journalArticle.getResourcePrimKey(), contextUriInfo));
 	}
 
 	private void _validateFomFieldValues(DDMFormValues ddmFormValues) {

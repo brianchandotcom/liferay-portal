@@ -14,18 +14,13 @@
 
 package com.liferay.headless.web.experience.dto.v1_0.converter;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import javax.ws.rs.core.UriInfo;
-
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
  */
 public interface DTOConverter {
 
-	public Object toDTO(
-		AcceptLanguage acceptLanguage, AssetEntry assetEntry, UriInfo uriInfo);
+	public Object toDTO(DTOConverterContext dtoConverterContext)
+		throws Exception;
 
 }

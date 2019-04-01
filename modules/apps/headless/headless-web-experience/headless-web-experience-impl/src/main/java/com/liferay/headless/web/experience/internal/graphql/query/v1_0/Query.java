@@ -116,6 +116,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -126,7 +127,8 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
-					commentId, filter, Pagination.of(pageSize, page), sorts);
+					commentId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -136,6 +138,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getStructuredContentCommentsPage(
 			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -147,7 +150,7 @@ public class Query {
 			commentResource -> {
 				Page paginationPage =
 					commentResource.getStructuredContentCommentsPage(
-						structuredContentId, filter,
+						structuredContentId, search, filter,
 						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -179,6 +182,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -191,7 +195,7 @@ public class Query {
 				Page paginationPage =
 					contentStructureResource.
 						getContentSpaceContentStructuresPage(
-							contentSpaceId, filter,
+							contentSpaceId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -246,6 +250,7 @@ public class Query {
 	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -258,7 +263,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentResource.
 						getContentSpaceStructuredContentsPage(
-							contentSpaceId, flatten, filter,
+							contentSpaceId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -301,6 +306,7 @@ public class Query {
 	public Collection<StructuredContent>
 			getContentStructureStructuredContentsPage(
 				@GraphQLName("content-structure-id") Long contentStructureId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -314,7 +320,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentResource.
 						getContentStructureStructuredContentsPage(
-							contentStructureId, filter,
+							contentStructureId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -327,6 +333,7 @@ public class Query {
 			getStructuredContentFolderStructuredContentsPage(
 				@GraphQLName("structured-content-folder-id") Long
 					structuredContentFolderId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -340,7 +347,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentResource.
 						getStructuredContentFolderStructuredContentsPage(
-							structuredContentFolderId, filter,
+							structuredContentFolderId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -383,6 +390,7 @@ public class Query {
 			getContentSpaceStructuredContentFoldersPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -396,7 +404,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentFolderResource.
 						getContentSpaceStructuredContentFoldersPage(
-							contentSpaceId, flatten, filter,
+							contentSpaceId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -424,6 +432,7 @@ public class Query {
 			getStructuredContentFolderStructuredContentFoldersPage(
 				@GraphQLName("structured-content-folder-id") Long
 					structuredContentFolderId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -437,7 +446,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentFolderResource.
 						getStructuredContentFolderStructuredContentFoldersPage(
-							structuredContentFolderId, filter,
+							structuredContentFolderId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

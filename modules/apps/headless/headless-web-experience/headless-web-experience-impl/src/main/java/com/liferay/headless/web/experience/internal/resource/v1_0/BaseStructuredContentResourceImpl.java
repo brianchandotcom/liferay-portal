@@ -78,7 +78,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten,
+			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -142,8 +143,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			@NotNull @PathParam("content-structure-id") Long contentStructureId,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -168,8 +169,8 @@ public abstract class BaseStructuredContentResourceImpl
 			getStructuredContentFolderStructuredContentsPage(
 				@NotNull @PathParam("structured-content-folder-id") Long
 					structuredContentFolderId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

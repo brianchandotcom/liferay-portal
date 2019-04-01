@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface StructuredContentResource {
 
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -52,13 +52,13 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			Long contentStructureId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentStructureId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				Long structuredContentFolderId, Filter filter,
+				Long structuredContentFolderId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 

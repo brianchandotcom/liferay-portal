@@ -38,12 +38,12 @@ public interface UserAccountResource {
 	public UserAccount getMyUserAccount(Long userAccountId) throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<UserAccount> getUserAccountsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public UserAccount postUserAccount(UserAccount userAccount)
@@ -61,7 +61,8 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long webSiteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

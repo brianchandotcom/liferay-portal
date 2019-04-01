@@ -49,8 +49,8 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long taxonomyCategoryId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long taxonomyCategoryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
@@ -58,8 +58,8 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long taxonomyVocabularyId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(

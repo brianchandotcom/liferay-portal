@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -60,7 +60,7 @@ public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				Long messageBoardSectionId, Filter filter,
+				Long messageBoardSectionId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 

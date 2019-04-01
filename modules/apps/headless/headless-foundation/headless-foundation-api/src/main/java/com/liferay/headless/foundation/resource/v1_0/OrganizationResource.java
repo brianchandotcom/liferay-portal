@@ -39,14 +39,14 @@ public interface OrganizationResource {
 		throws Exception;
 
 	public Page<Organization> getOrganizationsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Organization getOrganization(Long organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long organizationId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<Organization> getUserAccountOrganizationsPage(

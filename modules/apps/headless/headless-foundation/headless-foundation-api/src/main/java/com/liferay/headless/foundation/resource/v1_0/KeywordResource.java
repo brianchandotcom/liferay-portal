@@ -35,8 +35,8 @@ import javax.annotation.Generated;
 public interface KeywordResource {
 
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)

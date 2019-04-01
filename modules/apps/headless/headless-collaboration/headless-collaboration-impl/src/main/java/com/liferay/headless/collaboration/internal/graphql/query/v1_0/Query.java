@@ -168,6 +168,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<BlogPosting> getContentSpaceBlogPostingsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -179,8 +180,8 @@ public class Query {
 			blogPostingResource -> {
 				Page paginationPage =
 					blogPostingResource.getContentSpaceBlogPostingsPage(
-						contentSpaceId, filter, Pagination.of(pageSize, page),
-						sorts);
+						contentSpaceId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -204,6 +205,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -216,7 +218,7 @@ public class Query {
 				Page paginationPage =
 					blogPostingImageResource.
 						getContentSpaceBlogPostingImagesPage(
-							contentSpaceId, filter,
+							contentSpaceId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -227,6 +229,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getBlogPostingCommentsPage(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -238,8 +241,8 @@ public class Query {
 			commentResource -> {
 				Page paginationPage =
 					commentResource.getBlogPostingCommentsPage(
-						blogPostingId, filter, Pagination.of(pageSize, page),
-						sorts);
+						blogPostingId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -260,6 +263,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -270,7 +274,8 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
-					commentId, filter, Pagination.of(pageSize, page), sorts);
+					commentId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -282,6 +287,7 @@ public class Query {
 			getContentSpaceKnowledgeBaseArticlesPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -295,7 +301,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getContentSpaceKnowledgeBaseArticlesPage(
-							contentSpaceId, flatten, filter,
+							contentSpaceId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -323,6 +329,7 @@ public class Query {
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledge-base-article-id") Long
 					knowledgeBaseArticleId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -336,7 +343,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							knowledgeBaseArticleId, filter,
+							knowledgeBaseArticleId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -350,6 +357,7 @@ public class Query {
 				@GraphQLName("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
 				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -363,7 +371,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-							knowledgeBaseFolderId, flatten, filter,
+							knowledgeBaseFolderId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -543,6 +551,7 @@ public class Query {
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@GraphQLName("message-board-message-id") Long
 					messageBoardMessageId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -556,7 +565,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardMessageResource.
 						getMessageBoardMessageMessageBoardMessagesPage(
-							messageBoardMessageId, filter,
+							messageBoardMessageId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -569,6 +578,7 @@ public class Query {
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@GraphQLName("message-board-thread-id") Long
 					messageBoardThreadId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -582,7 +592,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardMessageResource.
 						getMessageBoardThreadMessageBoardMessagesPage(
-							messageBoardThreadId, filter,
+							messageBoardThreadId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -595,6 +605,7 @@ public class Query {
 			getContentSpaceMessageBoardSectionsPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -608,7 +619,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardSectionResource.
 						getContentSpaceMessageBoardSectionsPage(
-							contentSpaceId, flatten, filter,
+							contentSpaceId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -635,6 +646,7 @@ public class Query {
 			getMessageBoardSectionMessageBoardSectionsPage(
 				@GraphQLName("message-board-section-id") Long
 					messageBoardSectionId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -648,7 +660,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardSectionResource.
 						getMessageBoardSectionMessageBoardSectionsPage(
-							messageBoardSectionId, filter,
+							messageBoardSectionId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -661,6 +673,7 @@ public class Query {
 			getContentSpaceMessageBoardThreadsPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -674,7 +687,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardThreadResource.
 						getContentSpaceMessageBoardThreadsPage(
-							contentSpaceId, flatten, filter,
+							contentSpaceId, flatten, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -687,6 +700,7 @@ public class Query {
 			getMessageBoardSectionMessageBoardThreadsPage(
 				@GraphQLName("message-board-section-id") Long
 					messageBoardSectionId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -700,7 +714,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardThreadResource.
 						getMessageBoardSectionMessageBoardThreadsPage(
-							messageBoardSectionId, filter,
+							messageBoardSectionId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

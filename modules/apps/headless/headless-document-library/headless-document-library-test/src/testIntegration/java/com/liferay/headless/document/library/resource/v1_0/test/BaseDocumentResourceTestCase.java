@@ -123,7 +123,7 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantContentSpaceId, randomIrrelevantDocument());
 
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+				irrelevantContentSpaceId, null, null, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -141,7 +141,7 @@ public abstract class BaseDocumentResourceTestCase {
 			contentSpaceId, randomDocument());
 
 		Page<Document> page = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -184,7 +184,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null,
+				contentSpaceId, null, null,
 				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -217,7 +217,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null,
+				contentSpaceId, null, null,
 				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -244,14 +244,14 @@ public abstract class BaseDocumentResourceTestCase {
 			contentSpaceId, randomDocument());
 
 		Page<Document> page1 = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
 		Page<Document> page2 = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, Pagination.of(2, 2), null);
+			contentSpaceId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -302,7 +302,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -310,7 +310,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -349,7 +349,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -357,7 +357,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -388,8 +388,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Page<Document> invokeGetContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, String filterString,
-			Pagination pagination, String sortString)
+			Long contentSpaceId, Boolean flatten, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -424,8 +424,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
-			Long contentSpaceId, Boolean flatten, String filterString,
-			Pagination pagination, String sortString)
+			Long contentSpaceId, Boolean flatten, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -746,7 +746,7 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantFolderId, randomIrrelevantDocument());
 
 			Page<Document> page = invokeGetFolderDocumentsPage(
-				irrelevantFolderId, null, Pagination.of(1, 2), null);
+				irrelevantFolderId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -763,7 +763,7 @@ public abstract class BaseDocumentResourceTestCase {
 			folderId, randomDocument());
 
 		Page<Document> page = invokeGetFolderDocumentsPage(
-			folderId, null, Pagination.of(1, 2), null);
+			folderId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -803,7 +803,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetFolderDocumentsPage(
-				folderId, getFilterString(entityField, "eq", document1),
+				folderId, null, getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -834,7 +834,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetFolderDocumentsPage(
-				folderId, getFilterString(entityField, "eq", document1),
+				folderId, null, getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -857,14 +857,14 @@ public abstract class BaseDocumentResourceTestCase {
 			folderId, randomDocument());
 
 		Page<Document> page1 = invokeGetFolderDocumentsPage(
-			folderId, null, Pagination.of(1, 2), null);
+			folderId, null, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
 		Page<Document> page2 = invokeGetFolderDocumentsPage(
-			folderId, null, Pagination.of(2, 2), null);
+			folderId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -910,7 +910,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetFolderDocumentsPage(
-				folderId, null, Pagination.of(1, 2),
+				folderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -918,7 +918,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetFolderDocumentsPage(
-				folderId, null, Pagination.of(1, 2),
+				folderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -952,7 +952,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetFolderDocumentsPage(
-				folderId, null, Pagination.of(1, 2),
+				folderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -960,7 +960,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetFolderDocumentsPage(
-				folderId, null, Pagination.of(1, 2),
+				folderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -989,8 +989,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Page<Document> invokeGetFolderDocumentsPage(
-			Long folderId, String filterString, Pagination pagination,
-			String sortString)
+			Long folderId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1022,8 +1022,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetFolderDocumentsPageResponse(
-			Long folderId, String filterString, Pagination pagination,
-			String sortString)
+			Long folderId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

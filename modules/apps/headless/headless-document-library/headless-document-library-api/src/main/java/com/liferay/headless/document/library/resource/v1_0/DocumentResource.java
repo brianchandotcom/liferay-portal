@@ -36,7 +36,7 @@ import javax.annotation.Generated;
 public interface DocumentResource {
 
 	public Page<Document> getContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -55,7 +55,8 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<Document> getFolderDocumentsPage(
-			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Document postFolderDocument(

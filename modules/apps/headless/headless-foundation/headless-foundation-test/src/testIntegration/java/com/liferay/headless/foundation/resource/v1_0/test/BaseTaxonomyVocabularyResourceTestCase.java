@@ -126,7 +126,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 			Page<TaxonomyVocabulary> page =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+					irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -146,7 +147,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page =
 			invokeGetContentSpaceTaxonomyVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -192,7 +193,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
 
@@ -228,7 +229,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId,
+					contentSpaceId, null,
 					getFilterString(entityField, "eq", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
 
@@ -259,7 +260,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page1 =
 			invokeGetContentSpaceTaxonomyVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2), null);
+				contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<TaxonomyVocabulary> taxonomyVocabularies1 =
 			(List<TaxonomyVocabulary>)page1.getItems();
@@ -269,7 +270,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page2 =
 			invokeGetContentSpaceTaxonomyVocabulariesPage(
-				contentSpaceId, null, Pagination.of(2, 2), null);
+				contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -326,7 +327,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> ascPage =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -335,7 +336,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 			Page<TaxonomyVocabulary> descPage =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -379,7 +380,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> ascPage =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -388,7 +389,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 			Page<TaxonomyVocabulary> descPage =
 				invokeGetContentSpaceTaxonomyVocabulariesPage(
-					contentSpaceId, null, Pagination.of(1, 2),
+					contentSpaceId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -422,8 +423,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	protected Page<TaxonomyVocabulary>
 			invokeGetContentSpaceTaxonomyVocabulariesPage(
-				Long contentSpaceId, String filterString, Pagination pagination,
-				String sortString)
+				Long contentSpaceId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -459,8 +460,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceTaxonomyVocabulariesPageResponse(
-				Long contentSpaceId, String filterString, Pagination pagination,
-				String sortString)
+				Long contentSpaceId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

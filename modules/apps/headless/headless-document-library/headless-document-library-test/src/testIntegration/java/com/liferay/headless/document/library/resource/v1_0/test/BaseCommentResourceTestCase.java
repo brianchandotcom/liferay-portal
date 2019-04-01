@@ -301,7 +301,7 @@ public abstract class BaseCommentResourceTestCase {
 				irrelevantCommentId, randomIrrelevantComment());
 
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				irrelevantCommentId, null, Pagination.of(1, 2), null);
+				irrelevantCommentId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -318,7 +318,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentId, randomComment());
 
 		Page<Comment> page = invokeGetCommentCommentsPage(
-			commentId, null, Pagination.of(1, 2), null);
+			commentId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -357,7 +357,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				commentId, getFilterString(entityField, "eq", comment1),
+				commentId, null, getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -388,7 +388,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				commentId, getFilterString(entityField, "eq", comment1),
+				commentId, null, getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -411,14 +411,14 @@ public abstract class BaseCommentResourceTestCase {
 			commentId, randomComment());
 
 		Page<Comment> page1 = invokeGetCommentCommentsPage(
-			commentId, null, Pagination.of(1, 2), null);
+			commentId, null, null, Pagination.of(1, 2), null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
 		Assert.assertEquals(comments1.toString(), 2, comments1.size());
 
 		Page<Comment> page2 = invokeGetCommentCommentsPage(
-			commentId, null, Pagination.of(2, 2), null);
+			commentId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -464,7 +464,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetCommentCommentsPage(
-				commentId, null, Pagination.of(1, 2),
+				commentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -472,7 +472,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetCommentCommentsPage(
-				commentId, null, Pagination.of(1, 2),
+				commentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -506,7 +506,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetCommentCommentsPage(
-				commentId, null, Pagination.of(1, 2),
+				commentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -514,7 +514,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetCommentCommentsPage(
-				commentId, null, Pagination.of(1, 2),
+				commentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -543,8 +543,8 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Page<Comment> invokeGetCommentCommentsPage(
-			Long commentId, String filterString, Pagination pagination,
-			String sortString)
+			Long commentId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -577,8 +577,8 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-			Long commentId, String filterString, Pagination pagination,
-			String sortString)
+			Long commentId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -687,7 +687,7 @@ public abstract class BaseCommentResourceTestCase {
 				irrelevantDocumentId, randomIrrelevantComment());
 
 			Page<Comment> page = invokeGetDocumentCommentsPage(
-				irrelevantDocumentId, null, Pagination.of(1, 2), null);
+				irrelevantDocumentId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -704,7 +704,7 @@ public abstract class BaseCommentResourceTestCase {
 			documentId, randomComment());
 
 		Page<Comment> page = invokeGetDocumentCommentsPage(
-			documentId, null, Pagination.of(1, 2), null);
+			documentId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -743,7 +743,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetDocumentCommentsPage(
-				documentId, getFilterString(entityField, "eq", comment1),
+				documentId, null, getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -774,7 +774,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetDocumentCommentsPage(
-				documentId, getFilterString(entityField, "eq", comment1),
+				documentId, null, getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -797,14 +797,14 @@ public abstract class BaseCommentResourceTestCase {
 			documentId, randomComment());
 
 		Page<Comment> page1 = invokeGetDocumentCommentsPage(
-			documentId, null, Pagination.of(1, 2), null);
+			documentId, null, null, Pagination.of(1, 2), null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
 		Assert.assertEquals(comments1.toString(), 2, comments1.size());
 
 		Page<Comment> page2 = invokeGetDocumentCommentsPage(
-			documentId, null, Pagination.of(2, 2), null);
+			documentId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -850,7 +850,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetDocumentCommentsPage(
-				documentId, null, Pagination.of(1, 2),
+				documentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -858,7 +858,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetDocumentCommentsPage(
-				documentId, null, Pagination.of(1, 2),
+				documentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -892,7 +892,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetDocumentCommentsPage(
-				documentId, null, Pagination.of(1, 2),
+				documentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -900,7 +900,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetDocumentCommentsPage(
-				documentId, null, Pagination.of(1, 2),
+				documentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -931,8 +931,8 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Page<Comment> invokeGetDocumentCommentsPage(
-			Long documentId, String filterString, Pagination pagination,
-			String sortString)
+			Long documentId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -965,8 +965,8 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetDocumentCommentsPageResponse(
-			Long documentId, String filterString, Pagination pagination,
-			String sortString)
+			Long documentId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

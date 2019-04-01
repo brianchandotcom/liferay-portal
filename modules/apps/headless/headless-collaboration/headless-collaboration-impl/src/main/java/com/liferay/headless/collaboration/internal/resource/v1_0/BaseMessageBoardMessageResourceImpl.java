@@ -49,6 +49,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -209,8 +210,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@NotNull @PathParam("message-board-message-id") Long
 					messageBoardMessageId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -252,8 +253,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@NotNull @PathParam("message-board-thread-id") Long
 					messageBoardThreadId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

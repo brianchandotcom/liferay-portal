@@ -47,8 +47,8 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public BlogPosting postContentSpaceBlogPosting(

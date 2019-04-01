@@ -452,8 +452,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					irrelevantMessageBoardMessageId, null, Pagination.of(1, 2),
-					null);
+					irrelevantMessageBoardMessageId, null, null,
+					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -473,7 +473,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page =
 			invokeGetMessageBoardMessageMessageBoardMessagesPage(
-				messageBoardMessageId, null, Pagination.of(1, 2), null);
+				messageBoardMessageId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -519,7 +519,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId,
+					messageBoardMessageId, null,
 					getFilterString(entityField, "eq", messageBoardMessage1),
 					Pagination.of(1, 2), null);
 
@@ -555,7 +555,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId,
+					messageBoardMessageId, null,
 					getFilterString(entityField, "eq", messageBoardMessage1),
 					Pagination.of(1, 2), null);
 
@@ -586,7 +586,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page1 =
 			invokeGetMessageBoardMessageMessageBoardMessagesPage(
-				messageBoardMessageId, null, Pagination.of(1, 2), null);
+				messageBoardMessageId, null, null, Pagination.of(1, 2), null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
@@ -596,7 +596,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page2 =
 			invokeGetMessageBoardMessageMessageBoardMessagesPage(
-				messageBoardMessageId, null, Pagination.of(2, 2), null);
+				messageBoardMessageId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -654,7 +654,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> ascPage =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId, null, Pagination.of(1, 2),
+					messageBoardMessageId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -663,7 +663,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> descPage =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId, null, Pagination.of(1, 2),
+					messageBoardMessageId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -707,7 +707,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> ascPage =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId, null, Pagination.of(1, 2),
+					messageBoardMessageId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -716,7 +716,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> descPage =
 				invokeGetMessageBoardMessageMessageBoardMessagesPage(
-					messageBoardMessageId, null, Pagination.of(1, 2),
+					messageBoardMessageId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -752,7 +752,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected Page<MessageBoardMessage>
 			invokeGetMessageBoardMessageMessageBoardMessagesPage(
-				Long messageBoardMessageId, String filterString,
+				Long messageBoardMessageId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -789,7 +789,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected Http.Response
 			invokeGetMessageBoardMessageMessageBoardMessagesPageResponse(
-				Long messageBoardMessageId, String filterString,
+				Long messageBoardMessageId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -924,8 +924,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					irrelevantMessageBoardThreadId, null, Pagination.of(1, 2),
-					null);
+					irrelevantMessageBoardThreadId, null, null,
+					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -945,7 +945,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page =
 			invokeGetMessageBoardThreadMessageBoardMessagesPage(
-				messageBoardThreadId, null, Pagination.of(1, 2), null);
+				messageBoardThreadId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -991,7 +991,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId,
+					messageBoardThreadId, null,
 					getFilterString(entityField, "eq", messageBoardMessage1),
 					Pagination.of(1, 2), null);
 
@@ -1027,7 +1027,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> page =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId,
+					messageBoardThreadId, null,
 					getFilterString(entityField, "eq", messageBoardMessage1),
 					Pagination.of(1, 2), null);
 
@@ -1058,7 +1058,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page1 =
 			invokeGetMessageBoardThreadMessageBoardMessagesPage(
-				messageBoardThreadId, null, Pagination.of(1, 2), null);
+				messageBoardThreadId, null, null, Pagination.of(1, 2), null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
@@ -1068,7 +1068,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page2 =
 			invokeGetMessageBoardThreadMessageBoardMessagesPage(
-				messageBoardThreadId, null, Pagination.of(2, 2), null);
+				messageBoardThreadId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1126,7 +1126,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> ascPage =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1135,7 +1135,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> descPage =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -1179,7 +1179,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardMessage> ascPage =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1188,7 +1188,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			Page<MessageBoardMessage> descPage =
 				invokeGetMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -1224,7 +1224,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected Page<MessageBoardMessage>
 			invokeGetMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, String filterString,
+				Long messageBoardThreadId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -1261,7 +1261,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected Http.Response
 			invokeGetMessageBoardThreadMessageBoardMessagesPageResponse(
-				Long messageBoardThreadId, String filterString,
+				Long messageBoardThreadId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 

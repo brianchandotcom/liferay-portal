@@ -406,7 +406,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 					irrelevantContentSpaceId, randomIrrelevantBlogPosting());
 
 			Page<BlogPosting> page = invokeGetContentSpaceBlogPostingsPage(
-				irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+				irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -425,7 +426,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				contentSpaceId, randomBlogPosting());
 
 		Page<BlogPosting> page = invokeGetContentSpaceBlogPostingsPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -468,7 +469,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> page = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId,
+				contentSpaceId, null,
 				getFilterString(entityField, "eq", blogPosting1),
 				Pagination.of(1, 2), null);
 
@@ -503,7 +504,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> page = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId,
+				contentSpaceId, null,
 				getFilterString(entityField, "eq", blogPosting1),
 				Pagination.of(1, 2), null);
 
@@ -533,14 +534,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 				contentSpaceId, randomBlogPosting());
 
 		Page<BlogPosting> page1 = invokeGetContentSpaceBlogPostingsPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<BlogPosting> blogPostings1 = (List<BlogPosting>)page1.getItems();
 
 		Assert.assertEquals(blogPostings1.toString(), 2, blogPostings1.size());
 
 		Page<BlogPosting> page2 = invokeGetContentSpaceBlogPostingsPage(
-			contentSpaceId, null, Pagination.of(2, 2), null);
+			contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -591,7 +592,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> ascPage = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -599,7 +600,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				(List<BlogPosting>)ascPage.getItems());
 
 			Page<BlogPosting> descPage = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -638,7 +639,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> ascPage = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -646,7 +647,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				(List<BlogPosting>)ascPage.getItems());
 
 			Page<BlogPosting> descPage = invokeGetContentSpaceBlogPostingsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -677,8 +678,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected Page<BlogPosting> invokeGetContentSpaceBlogPostingsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -713,8 +714,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceBlogPostingsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

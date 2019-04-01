@@ -114,6 +114,9 @@ public class Organization {
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -137,6 +140,9 @@ public class Organization {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

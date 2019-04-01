@@ -77,7 +77,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("flatten") Boolean flatten, @Context Filter filter,
+			@QueryParam("flatten") Boolean flatten,
+			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -255,8 +256,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@NotNull @PathParam("knowledge-base-article-id") Long
 					knowledgeBaseArticleId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -298,7 +299,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@NotNull @PathParam("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
-				@QueryParam("flatten") Boolean flatten, @Context Filter filter,
+				@QueryParam("flatten") Boolean flatten,
+				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

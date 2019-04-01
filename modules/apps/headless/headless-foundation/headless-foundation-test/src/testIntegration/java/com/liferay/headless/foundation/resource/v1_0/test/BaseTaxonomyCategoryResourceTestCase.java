@@ -442,8 +442,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					irrelevantTaxonomyCategoryId, null, Pagination.of(1, 2),
-					null);
+					irrelevantTaxonomyCategoryId, null, null,
+					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -463,7 +463,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, Pagination.of(1, 2), null);
+				taxonomyCategoryId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -509,7 +509,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId,
+					taxonomyCategoryId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -545,7 +545,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId,
+					taxonomyCategoryId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -576,7 +576,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page1 =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, Pagination.of(1, 2), null);
+				taxonomyCategoryId, null, null, Pagination.of(1, 2), null);
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
@@ -586,7 +586,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page2 =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, Pagination.of(2, 2), null);
+				taxonomyCategoryId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -643,7 +643,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, Pagination.of(1, 2),
+					taxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -652,7 +652,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, Pagination.of(1, 2),
+					taxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -696,7 +696,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, Pagination.of(1, 2),
+					taxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -705,7 +705,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, Pagination.of(1, 2),
+					taxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -740,7 +740,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Page<TaxonomyCategory>
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				Long taxonomyCategoryId, String filterString,
+				Long taxonomyCategoryId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -777,7 +777,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Http.Response
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPageResponse(
-				Long taxonomyCategoryId, String filterString,
+				Long taxonomyCategoryId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -905,8 +905,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					irrelevantTaxonomyVocabularyId, null, Pagination.of(1, 2),
-					null);
+					irrelevantTaxonomyVocabularyId, null, null,
+					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -926,7 +926,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page =
 			invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-				taxonomyVocabularyId, null, Pagination.of(1, 2), null);
+				taxonomyVocabularyId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -972,7 +972,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId,
+					taxonomyVocabularyId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -1008,7 +1008,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId,
+					taxonomyVocabularyId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -1039,7 +1039,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page1 =
 			invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-				taxonomyVocabularyId, null, Pagination.of(1, 2), null);
+				taxonomyVocabularyId, null, null, Pagination.of(1, 2), null);
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
@@ -1049,7 +1049,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page2 =
 			invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-				taxonomyVocabularyId, null, Pagination.of(2, 2), null);
+				taxonomyVocabularyId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1106,7 +1106,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId, null, Pagination.of(1, 2),
+					taxonomyVocabularyId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1115,7 +1115,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId, null, Pagination.of(1, 2),
+					taxonomyVocabularyId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -1159,7 +1159,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId, null, Pagination.of(1, 2),
+					taxonomyVocabularyId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1168,7 +1168,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-					taxonomyVocabularyId, null, Pagination.of(1, 2),
+					taxonomyVocabularyId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -1203,7 +1203,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Page<TaxonomyCategory>
 			invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
-				Long taxonomyVocabularyId, String filterString,
+				Long taxonomyVocabularyId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 
@@ -1240,7 +1240,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Http.Response
 			invokeGetTaxonomyVocabularyTaxonomyCategoriesPageResponse(
-				Long taxonomyVocabularyId, String filterString,
+				Long taxonomyVocabularyId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
 

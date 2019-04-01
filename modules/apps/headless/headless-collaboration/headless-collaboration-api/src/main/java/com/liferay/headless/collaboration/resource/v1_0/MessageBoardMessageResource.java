@@ -51,7 +51,7 @@ public interface MessageBoardMessageResource {
 
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				Long messageBoardMessageId, Filter filter,
+				Long messageBoardMessageId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -61,8 +61,8 @@ public interface MessageBoardMessageResource {
 
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				Long messageBoardThreadId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(

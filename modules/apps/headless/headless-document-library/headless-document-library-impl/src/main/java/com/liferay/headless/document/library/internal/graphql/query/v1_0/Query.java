@@ -95,6 +95,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -105,7 +106,8 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
-					commentId, filter, Pagination.of(pageSize, page), sorts);
+					commentId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -115,6 +117,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getDocumentCommentsPage(
 			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -125,7 +128,8 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getDocumentCommentsPage(
-					documentId, filter, Pagination.of(pageSize, page), sorts);
+					documentId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -136,6 +140,7 @@ public class Query {
 	public Collection<Document> getContentSpaceDocumentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -147,7 +152,7 @@ public class Query {
 			documentResource -> {
 				Page paginationPage =
 					documentResource.getContentSpaceDocumentsPage(
-						contentSpaceId, flatten, filter,
+						contentSpaceId, flatten, search, filter,
 						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -169,6 +174,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Document> getFolderDocumentsPage(
 			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -179,7 +185,8 @@ public class Query {
 			this::_populateResourceContext,
 			documentResource -> {
 				Page paginationPage = documentResource.getFolderDocumentsPage(
-					folderId, filter, Pagination.of(pageSize, page), sorts);
+					folderId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -190,6 +197,7 @@ public class Query {
 	public Collection<Folder> getContentSpaceFoldersPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -200,7 +208,7 @@ public class Query {
 			this::_populateResourceContext,
 			folderResource -> {
 				Page paginationPage = folderResource.getContentSpaceFoldersPage(
-					contentSpaceId, flatten, filter,
+					contentSpaceId, flatten, search, filter,
 					Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -222,6 +230,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Folder> getFolderFoldersPage(
 			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -232,7 +241,8 @@ public class Query {
 			this::_populateResourceContext,
 			folderResource -> {
 				Page paginationPage = folderResource.getFolderFoldersPage(
-					folderId, filter, Pagination.of(pageSize, page), sorts);
+					folderId, search, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});

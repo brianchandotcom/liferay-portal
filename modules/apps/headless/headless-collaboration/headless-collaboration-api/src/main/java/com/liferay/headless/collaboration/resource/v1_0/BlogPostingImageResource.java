@@ -42,8 +42,8 @@ public interface BlogPostingImageResource {
 		throws Exception;
 
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public BlogPostingImage postContentSpaceBlogPostingImage(

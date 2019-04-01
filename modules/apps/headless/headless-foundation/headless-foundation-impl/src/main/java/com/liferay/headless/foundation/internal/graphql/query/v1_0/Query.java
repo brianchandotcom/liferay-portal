@@ -209,6 +209,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Keyword> getContentSpaceKeywordsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -220,8 +221,8 @@ public class Query {
 			keywordResource -> {
 				Page paginationPage =
 					keywordResource.getContentSpaceKeywordsPage(
-						contentSpaceId, filter, Pagination.of(pageSize, page),
-						sorts);
+						contentSpaceId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -261,6 +262,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationsPage(
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -271,7 +273,7 @@ public class Query {
 			this::_populateResourceContext,
 			organizationResource -> {
 				Page paginationPage = organizationResource.getOrganizationsPage(
-					filter, Pagination.of(pageSize, page), sorts);
+					search, filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -294,6 +296,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
 			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -305,8 +308,8 @@ public class Query {
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getOrganizationOrganizationsPage(
-						organizationId, filter, Pagination.of(pageSize, page),
-						sorts);
+						organizationId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -580,6 +583,7 @@ public class Query {
 	public Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
 				@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -593,7 +597,7 @@ public class Query {
 				Page paginationPage =
 					taxonomyCategoryResource.
 						getTaxonomyCategoryTaxonomyCategoriesPage(
-							taxonomyCategoryId, filter,
+							taxonomyCategoryId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -606,6 +610,7 @@ public class Query {
 			getTaxonomyVocabularyTaxonomyCategoriesPage(
 				@GraphQLName("taxonomy-vocabulary-id") Long
 					taxonomyVocabularyId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -619,7 +624,7 @@ public class Query {
 				Page paginationPage =
 					taxonomyCategoryResource.
 						getTaxonomyVocabularyTaxonomyCategoriesPage(
-							taxonomyVocabularyId, filter,
+							taxonomyVocabularyId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -631,6 +636,7 @@ public class Query {
 	public Collection<TaxonomyVocabulary>
 			getContentSpaceTaxonomyVocabulariesPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -644,7 +650,7 @@ public class Query {
 				Page paginationPage =
 					taxonomyVocabularyResource.
 						getContentSpaceTaxonomyVocabulariesPage(
-							contentSpaceId, filter,
+							contentSpaceId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -682,6 +688,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getOrganizationUserAccountsPage(
 			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -693,8 +700,8 @@ public class Query {
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getOrganizationUserAccountsPage(
-						organizationId, filter, Pagination.of(pageSize, page),
-						sorts);
+						organizationId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -703,6 +710,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getUserAccountsPage(
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -713,7 +721,7 @@ public class Query {
 			this::_populateResourceContext,
 			userAccountResource -> {
 				Page paginationPage = userAccountResource.getUserAccountsPage(
-					filter, Pagination.of(pageSize, page), sorts);
+					search, filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -736,6 +744,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getWebSiteUserAccountsPage(
 			@GraphQLName("web-site-id") Long webSiteId,
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -747,8 +756,8 @@ public class Query {
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getWebSiteUserAccountsPage(
-						webSiteId, filter, Pagination.of(pageSize, page),
-						sorts);
+						webSiteId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});

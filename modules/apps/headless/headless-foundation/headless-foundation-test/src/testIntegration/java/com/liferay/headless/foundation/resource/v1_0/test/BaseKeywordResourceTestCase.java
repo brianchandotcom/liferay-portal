@@ -124,7 +124,8 @@ public abstract class BaseKeywordResourceTestCase {
 					irrelevantContentSpaceId, randomIrrelevantKeyword());
 
 			Page<Keyword> page = invokeGetContentSpaceKeywordsPage(
-				irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
+				irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -141,7 +142,7 @@ public abstract class BaseKeywordResourceTestCase {
 			contentSpaceId, randomKeyword());
 
 		Page<Keyword> page = invokeGetContentSpaceKeywordsPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -183,7 +184,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, getFilterString(entityField, "eq", keyword1),
+				contentSpaceId, null,
+				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -215,7 +217,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, getFilterString(entityField, "eq", keyword1),
+				contentSpaceId, null,
+				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -241,14 +244,14 @@ public abstract class BaseKeywordResourceTestCase {
 			contentSpaceId, randomKeyword());
 
 		Page<Keyword> page1 = invokeGetContentSpaceKeywordsPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+			contentSpaceId, null, null, Pagination.of(1, 2), null);
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
 		Assert.assertEquals(keywords1.toString(), 2, keywords1.size());
 
 		Page<Keyword> page2 = invokeGetContentSpaceKeywordsPage(
-			contentSpaceId, null, Pagination.of(2, 2), null);
+			contentSpaceId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -299,7 +302,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> ascPage = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -307,7 +310,7 @@ public abstract class BaseKeywordResourceTestCase {
 				(List<Keyword>)ascPage.getItems());
 
 			Page<Keyword> descPage = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -346,7 +349,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> ascPage = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -354,7 +357,7 @@ public abstract class BaseKeywordResourceTestCase {
 				(List<Keyword>)ascPage.getItems());
 
 			Page<Keyword> descPage = invokeGetContentSpaceKeywordsPage(
-				contentSpaceId, null, Pagination.of(1, 2),
+				contentSpaceId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -384,8 +387,8 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Page<Keyword> invokeGetContentSpaceKeywordsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -420,8 +423,8 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceKeywordsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+			Long contentSpaceId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

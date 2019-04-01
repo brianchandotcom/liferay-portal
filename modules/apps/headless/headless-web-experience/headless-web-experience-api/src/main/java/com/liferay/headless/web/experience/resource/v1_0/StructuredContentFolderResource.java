@@ -36,8 +36,8 @@ public interface StructuredContentFolderResource {
 
 	public Page<StructuredContentFolder>
 			getContentSpaceStructuredContentFoldersPage(
-				Long contentSpaceId, Boolean flatten, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long contentSpaceId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public StructuredContentFolder postContentSpaceStructuredContentFolder(
@@ -59,7 +59,7 @@ public interface StructuredContentFolderResource {
 
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				Long structuredContentFolderId, Filter filter,
+				Long structuredContentFolderId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 

@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface FolderResource {
 
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -51,7 +51,8 @@ public interface FolderResource {
 	public Folder putFolder(Long folderId, Folder folder) throws Exception;
 
 	public Page<Folder> getFolderFoldersPage(
-			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Folder postFolderFolder(Long folderId, Folder folder)

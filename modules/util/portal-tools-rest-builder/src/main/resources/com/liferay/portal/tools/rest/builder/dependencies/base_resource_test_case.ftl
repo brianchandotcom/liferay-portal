@@ -692,7 +692,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							post${schemaName}.
 
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName?lower_case + "Id")>
+							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								getId
 							<#else>
 								get${javaMethodParameter.parameterName?cap_first}

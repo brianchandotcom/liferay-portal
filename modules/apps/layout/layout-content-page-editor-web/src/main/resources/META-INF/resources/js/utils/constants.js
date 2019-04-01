@@ -149,6 +149,16 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 };
 
 /**
+ * Fragment Entry Link types
+ * @review
+ * @type {!object}
+ */
+export const FRAGMENT_ENTRY_LINK_TYPES = {
+	component: 'fragment-entry-link-component',
+	section: 'fragment-entry-link-section'
+};
+
+/**
  * Fragments Editor item borders
  * @review
  * @type {!object}
@@ -169,6 +179,16 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	fragment: 'fragments-editor-fragment',
 	fragmentList: 'fragments-editor-fragment-list',
 	section: 'fragments-editor-section'
+};
+
+/**
+ * Fragments Editor row types
+ * @review
+ * @type {!object}
+ */
+export const FRAGMENTS_EDITOR_ROW_TYPES = {
+	componentRow: 'fragments-editor-component-row',
+	sectionRow: 'fragments-editor-section-row'
 };
 
 /**

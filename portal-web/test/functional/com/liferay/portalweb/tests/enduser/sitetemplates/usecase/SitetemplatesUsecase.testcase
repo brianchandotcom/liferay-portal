@@ -537,6 +537,8 @@ definition {
 
 	@priority = "3"
 	test SitesTemplateResourceInheritance {
+		property portal.release = "false";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

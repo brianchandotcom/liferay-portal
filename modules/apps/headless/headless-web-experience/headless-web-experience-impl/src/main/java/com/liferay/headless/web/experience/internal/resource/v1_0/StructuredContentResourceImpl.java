@@ -344,6 +344,13 @@ public class StructuredContentResourceImpl
 							structuredContent.getDescription());
 					}
 				},
+				new HashMap<Locale, String>() {
+					{
+						put(
+							contextAcceptLanguage.getPreferredLocale(),
+							structuredContent.getFriendlyUrlPath());
+					}
+				},
 				_createJournalArticleContent(
 					DDMFormValuesUtil.toDDMFormValues(
 						structuredContent.getContentFields(),
@@ -358,7 +365,8 @@ public class StructuredContentResourceImpl
 				localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, null,
+				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+				null,
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(), contentSpaceId,
@@ -396,7 +404,7 @@ public class StructuredContentResourceImpl
 					journalArticle.getFriendlyURLMap(),
 					new AbstractMap.SimpleEntry<>(
 						contextAcceptLanguage.getPreferredLocale(),
-						structuredContent.getTitle())),
+						structuredContent.getFriendlyUrlPath())),
 				_journalConverter.getContent(
 					ddmStructure,
 					_toFields(

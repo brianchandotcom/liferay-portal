@@ -128,6 +128,8 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				datePublished = journalArticle.getDisplayDate();
 				description = journalArticle.getDescription(
 					acceptLanguage.getPreferredLocale());
+				friendlyUrlPath = journalArticle.getUrlTitle(
+					acceptLanguage.getPreferredLocale());
 				id = journalArticle.getResourcePrimKey();
 				key = journalArticle.getArticleId();
 				keywords = ListUtil.toArray(

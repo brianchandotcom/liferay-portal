@@ -17,19 +17,22 @@ package com.liferay.jenkins.results.parser.k8s;
 /**
  * @author Kenji Heigel
  */
-public class ResourceConfigurations extends ResourceConfigurationFactory {
+public class ResourceConfigurations {
 
 	public static final LiferayK8sConnection.Pod mysql55PodConfiguration;
 	public static final LiferayK8sConnection.Pod mysql56PodConfiguration;
 	public static final LiferayK8sConnection.Pod mysql57PodConfiguration;
 
 	static {
-		mysql55PodConfiguration = newMySQLConfigurationPod(
-			"mysql55", "mysql:5.5.62");
-		mysql56PodConfiguration = newMySQLConfigurationPod(
-			"mysql56", "mysql:5.6.43");
-		mysql57PodConfiguration = newMySQLConfigurationPod(
-			"mysql57", "mysql:5.7.25");
+		mysql55PodConfiguration =
+			ResourceConfigurationFactory.newMySQLConfigurationPod(
+				"mysql55", "mysql:5.5.62");
+		mysql56PodConfiguration =
+			ResourceConfigurationFactory.newMySQLConfigurationPod(
+				"mysql56", "mysql:5.6.43");
+		mysql57PodConfiguration =
+			ResourceConfigurationFactory.newMySQLConfigurationPod(
+				"mysql57", "mysql:5.7.25");
 	}
 
 }

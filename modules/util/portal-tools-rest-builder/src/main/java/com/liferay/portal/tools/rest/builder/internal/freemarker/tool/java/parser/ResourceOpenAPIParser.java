@@ -451,7 +451,16 @@ public class ResourceOpenAPIParser {
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
-				if (!pathName.endsWith(pluralSchemaName) &&
+				String pageClassName = Page.class.getName();
+
+				String elementClassName = returnType.substring(
+					pageClassName.length() + 1, returnType.length() - 1);
+
+				String elementSimpleClassName = elementClassName.substring(
+					elementClassName.lastIndexOf(".") + 1);
+
+				if (Objects.equals(elementSimpleClassName, schemaName) &&
+					!pathName.endsWith(pluralSchemaName) &&
 					previousMethodNameSegment.endsWith(schemaName)) {
 
 					String string = StringUtil.replaceLast(

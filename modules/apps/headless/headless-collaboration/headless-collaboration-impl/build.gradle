@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:headless:headless-collaboration:headless-collaboration-api")
 	compileOnly project(":apps:headless:headless-common-spi")
+	compileOnly project(":apps:headless:headless-web-experience:headless-web-experience-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

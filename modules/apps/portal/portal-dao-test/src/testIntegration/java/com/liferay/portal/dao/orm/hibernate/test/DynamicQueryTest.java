@@ -24,9 +24,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -54,13 +55,13 @@ public class DynamicQueryTest {
 
 	@Before
 	public void setUp() {
-		_allClassNames = ClassNameLocalServiceUtil.getClassNames(
+		_allClassNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Test
 	public void testCriterion() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
@@ -69,7 +70,7 @@ public class DynamicQueryTest {
 
 		dynamicQuery.add(classNameIdProperty.eq(className.getClassNameId()));
 
-		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+		List<ClassName> classNames = _classNameLocalService.dynamicQuery(
 			dynamicQuery);
 
 		Assert.assertEquals(classNames.toString(), 1, classNames.size());
@@ -78,7 +79,7 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testInRestrictionCriterion() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		List<Long> values = new ArrayList<>(2);
 
@@ -90,7 +91,7 @@ public class DynamicQueryTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
 
-		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+		List<ClassName> classNames = _classNameLocalService.dynamicQuery(
 			dynamicQuery);
 
 		Assert.assertEquals(classNames.toString(), 2, classNames.size());
@@ -108,7 +109,7 @@ public class DynamicQueryTest {
 			restrictionsFactory, "_databaseInMaxParameters",
 			_DATABASE_IN_MAX_PARAMETERS);
 
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		List<Long> values = new ArrayList<>(_DATABASE_IN_MAX_PARAMETERS + 1);
 
@@ -128,7 +129,7 @@ public class DynamicQueryTest {
 
 		dynamicQuery.add(restrictionsFactory.in("classNameId", values));
 
-		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+		List<ClassName> classNames = _classNameLocalService.dynamicQuery(
 			dynamicQuery);
 
 		Assert.assertEquals(classNames.toString(), 2, classNames.size());
@@ -140,36 +141,36 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testLowerBound() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(10, _allClassNames.size());
 
 		Assert.assertEquals(
 			_allClassNames.subList(10, _allClassNames.size()),
-			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
+			_classNameLocalService.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
 	public void testLowerUpperBound() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(10, _allClassNames.size());
 
 		Assert.assertEquals(
 			_allClassNames.subList(10, _allClassNames.size()),
-			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
+			_classNameLocalService.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
 	public void testNegativeBoundaries() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.setLimit(-1985, -625);
 
 		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+			_classNameLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertTrue(
 			dynamicQueryClassNames.toString(),
@@ -178,24 +179,24 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testNegativeLowerBound() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(-50, _allClassNames.size());
 
 		Assert.assertEquals(
 			_allClassNames,
-			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
+			_classNameLocalService.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
 	public void testNegativeUpperBound() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, -50);
 
 		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+			_classNameLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertTrue(
 			dynamicQueryClassNames.toString(),
@@ -204,11 +205,11 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testNoLimit() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 
-		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+		List<ClassName> classNames = _classNameLocalService.dynamicQuery(
 			dynamicQuery);
 
 		for (ClassName className : _allClassNames) {
@@ -220,12 +221,12 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testNoResults() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.setLimit(10, 10);
 
 		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+			_classNameLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertTrue(
 			dynamicQueryClassNames.toString(),
@@ -234,7 +235,7 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testOrderBy() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
@@ -252,18 +253,18 @@ public class DynamicQueryTest {
 
 		Assert.assertEquals(
 			_allClassNames,
-			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
+			_classNameLocalService.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
 	public void testSingleResult() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(10, 11);
 
 		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+			_classNameLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(
 			dynamicQueryClassNames.toString(), 1,
@@ -274,12 +275,12 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testStartHigherThanEnd() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.setLimit(1984, 309);
 
 		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+			_classNameLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertTrue(
 			dynamicQueryClassNames.toString(),
@@ -288,18 +289,21 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testUpperBound() {
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, 10);
 
 		Assert.assertEquals(
 			_allClassNames.subList(0, 10),
-			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
+			_classNameLocalService.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;
 
 	private List<ClassName> _allClassNames;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 }

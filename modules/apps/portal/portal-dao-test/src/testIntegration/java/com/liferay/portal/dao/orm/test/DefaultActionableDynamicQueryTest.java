@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class DefaultActionableDynamicQueryTest {
 	@Test
 	public void testOrderByDescending() throws Exception {
 		List<ClassName> expectedClassNames = new ArrayList<>(
-			ClassNameLocalServiceUtil.getClassNames(
+			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		Assert.assertTrue(
@@ -61,7 +62,7 @@ public class DefaultActionableDynamicQueryTest {
 			expectedClassNames.size());
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			ClassNameLocalServiceUtil.getActionableDynamicQuery();
+			_classNameLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -113,5 +114,8 @@ public class DefaultActionableDynamicQueryTest {
 			}
 
 		};
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 }

@@ -15,7 +15,9 @@
 package com.liferay.portal.dao.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,10 +51,18 @@ public class DBInspectorTest {
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
+
+		_db = DBManagerUtil.getDB();
+
+		_db.runSQL(
+			_connection,
+			"create table DBInspectorTest (id LONG not null primary key)");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		_db.runSQL(_connection, "drop table DBInspectorTest");
+
 		DataAccess.cleanUp(_connection);
 	}
 
@@ -126,15 +136,16 @@ public class DBInspectorTest {
 				StringUtil.toUpperCase(_TABLE_NAME_EXISTING)));
 	}
 
-	private static final String _COLUMN_NAME_EXISTING = "releaseId";
+	private static final String _COLUMN_NAME_EXISTING = "id";
 
 	private static final String _COLUMN_NAME_NONEXISTING = "nonexistingColumn";
 
-	private static final String _TABLE_NAME_EXISTING = "Release_";
+	private static final String _TABLE_NAME_EXISTING = "DBInspectorTest";
 
 	private static final String _TABLE_NAME_NONEXISTING = "NonexistingTable";
 
 	private static Connection _connection;
+	private static DB _db;
 	private static DBInspector _dbInspector;
 
 }

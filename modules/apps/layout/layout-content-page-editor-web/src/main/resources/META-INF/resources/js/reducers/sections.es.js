@@ -1,6 +1,6 @@
 import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
-import {DEFAULT_CONFIG, MAX_COLUMNS} from '../utils/sectionConstants';
-import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {MAX_COLUMNS} from '../utils/sectionConstants';
+import {add, addSection, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
@@ -23,7 +23,7 @@ function addSectionReducer(state, actionType, payload) {
 					nextState.dropTargetBorder
 				);
 
-				const nextData = _addSection(
+				const nextData = addSection(
 					payload.layoutColumns,
 					nextState.layoutData,
 					position
@@ -474,53 +474,6 @@ function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) 
 			return columns;
 		}
 	);
-
-	return nextData;
-}
-
-/**
- * Returns a new layoutData with the given columns inserted as a new section
- * at the given position
- *
- * @param {Array} layoutColumns
- * @param {object} layoutData
- * @param {number} position
- * @return {object}
- */
-function _addSection(layoutColumns, layoutData, position) {
-	let nextColumnId = layoutData.nextColumnId || 0;
-	const nextRowId = layoutData.nextRowId || 0;
-
-	const columns = [];
-
-	layoutColumns.forEach(
-		columnSize => {
-			columns.push(
-				{
-					columnId: `${nextColumnId}`,
-					fragmentEntryLinkIds: [],
-					size: columnSize
-				}
-			);
-
-			nextColumnId += 1;
-		}
-	);
-
-	const nextStructure = add(
-		layoutData.structure,
-		{
-			columns,
-			config: DEFAULT_CONFIG,
-			rowId: `${nextRowId}`
-		},
-		position
-	);
-
-	let nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);
-
-	nextData = setIn(nextData, ['structure'], nextStructure);
-	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
 
 	return nextData;
 }

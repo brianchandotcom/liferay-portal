@@ -1,4 +1,6 @@
 import {CLEAR_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
+import {DEFAULT_CONFIG} from './sectionConstants';
+import {FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
 /**
@@ -15,6 +17,62 @@ function add(array, element, position) {
 	newArray.splice(position, 0, element);
 
 	return newArray;
+}
+
+/**
+ * Returns a new layoutData with the given columns inserted as a new section
+ * at the given position
+ *
+ * @param {Array} layoutColumns
+ * @param {object} layoutData
+ * @param {number} position
+ * @param {Array} fragmentEntryLinkIds
+ * @param {string} type
+ * @return {object}
+ */
+function addSection(
+	layoutColumns,
+	layoutData,
+	position,
+	fragmentEntryLinkIds = [],
+	type = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+) {
+	let nextColumnId = layoutData.nextColumnId || 0;
+	const nextRowId = layoutData.nextRowId || 0;
+
+	const columns = [];
+
+	layoutColumns.forEach(
+		columnSize => {
+			columns.push(
+				{
+					columnId: `${nextColumnId}`,
+					fragmentEntryLinkIds,
+					size: columnSize
+				}
+			);
+
+			nextColumnId += 1;
+		}
+	);
+
+	const nextStructure = add(
+		layoutData.structure,
+		{
+			columns,
+			config: DEFAULT_CONFIG,
+			rowId: `${nextRowId}`,
+			type
+		},
+		position
+	);
+
+	let nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);
+
+	nextData = setIn(nextData, ['structure'], nextStructure);
+	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
+
+	return nextData;
 }
 
 /**
@@ -283,6 +341,7 @@ function updateWidgets(state, fragmentEntryLinkId) {
 
 export {
 	add,
+	addSection,
 	moveItem,
 	remove,
 	removeItem,

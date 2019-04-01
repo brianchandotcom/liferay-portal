@@ -19,7 +19,9 @@ export default class ProcessListItem extends React.Component {
 		return (
 			<tr>
 				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
-					<span title={title}>{title}</span>
+					<ChildLink to={`/process-dashboard/${id}`}>
+						<span title={title}>{title}</span>
+					</ChildLink>
 				</td>
 
 				<td>{overdueInstanceCount}</td>

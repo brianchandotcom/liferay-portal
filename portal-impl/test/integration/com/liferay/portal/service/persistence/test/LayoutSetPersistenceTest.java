@@ -202,6 +202,14 @@ public class LayoutSetPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId_Head() throws Exception {
+		_persistence.countByGroupId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByGroupId_Head(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByLayoutSetPrototypeUuid() throws Exception {
 		_persistence.countByLayoutSetPrototypeUuid("");
 
@@ -211,12 +219,32 @@ public class LayoutSetPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLayoutSetPrototypeUuid_Head() throws Exception {
+		_persistence.countByLayoutSetPrototypeUuid_Head(
+			"", RandomTestUtil.randomBoolean());
+
+		_persistence.countByLayoutSetPrototypeUuid_Head(
+			"null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByLayoutSetPrototypeUuid_Head(
+			(String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_P() throws Exception {
 		_persistence.countByG_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_P_Head() throws Exception {
+		_persistence.countByG_P_Head(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_P(
+		_persistence.countByG_P_Head(
 			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
@@ -226,6 +254,16 @@ public class LayoutSetPersistenceTest {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
 		_persistence.countByP_L(RandomTestUtil.randomBoolean(), 0L);
+	}
+
+	@Test
+	public void testCountByP_L_Head() throws Exception {
+		_persistence.countByP_L_Head(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByP_L_Head(
+			RandomTestUtil.randomBoolean(), 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

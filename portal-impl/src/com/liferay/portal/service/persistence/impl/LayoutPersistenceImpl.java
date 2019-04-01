@@ -640,8 +640,1689 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_UUID_3 =
 		"(layout.uuid IS NULL OR layout.uuid = '')";
 
-	private FinderPath _finderPathFetchByUUID_G_P;
+	private FinderPath _finderPathWithPaginationFindByUuid_Head;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
+	private FinderPath _finderPathCountByUuid_Head;
+
+	/**
+	 * Returns all the layouts where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_Head(String uuid, boolean head) {
+		return findByUuid_Head(
+			uuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where uuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_Head(
+		String uuid, boolean head, int start, int end) {
+
+		return findByUuid_Head(uuid, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_Head(
+		String uuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByUuid_Head(uuid, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_Head(
+		String uuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByUuid_Head;
+			finderArgs = new Object[] {uuid, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByUuid_Head;
+			finderArgs = new Object[] {
+				uuid, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!uuid.equals(layout.getUuid()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_HEAD_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_HEAD_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUuid_Head_First(
+			String uuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUuid_Head_First(uuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUuid_Head_First(
+		String uuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByUuid_Head(
+			uuid, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUuid_Head_Last(
+			String uuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUuid_Head_Last(uuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUuid_Head_Last(
+		String uuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByUuid_Head(uuid, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByUuid_Head(
+			uuid, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByUuid_Head_PrevAndNext(
+			long plid, String uuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		uuid = Objects.toString(uuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByUuid_Head_PrevAndNext(
+				session, layout, uuid, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByUuid_Head_PrevAndNext(
+				session, layout, uuid, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByUuid_Head_PrevAndNext(
+		Session session, Layout layout, String uuid, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_HEAD_UUID_3);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_HEAD_UUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where uuid = &#63; and head = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 */
+	@Override
+	public void removeByUuid_Head(String uuid, boolean head) {
+		for (Layout layout :
+				findByUuid_Head(
+					uuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where uuid = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByUuid_Head(String uuid, boolean head) {
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = _finderPathCountByUuid_Head;
+
+		Object[] finderArgs = new Object[] {uuid, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_HEAD_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_HEAD_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_HEAD_UUID_2 =
+		"layout.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_HEAD_UUID_3 =
+		"(layout.uuid IS NULL OR layout.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_HEAD_HEAD_2 =
+		"layout.head = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUUID_G_P;
+	private FinderPath _finderPathWithoutPaginationFindByUUID_G_P;
 	private FinderPath _finderPathCountByUUID_G_P;
+
+	/**
+	 * Returns all the layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout) {
+
+		return findByUUID_G_P(
+			uuid, groupId, privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout, int start, int end) {
+
+		return findByUUID_G_P(uuid, groupId, privateLayout, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByUUID_G_P(
+			uuid, groupId, privateLayout, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByUUID_G_P;
+			finderArgs = new Object[] {uuid, groupId, privateLayout};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByUUID_G_P;
+			finderArgs = new Object[] {
+				uuid, groupId, privateLayout, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!uuid.equals(layout.getUuid()) ||
+						(groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUUID_G_P_First(
+			String uuid, long groupId, boolean privateLayout,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUUID_G_P_First(
+			uuid, groupId, privateLayout, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUUID_G_P_First(
+		String uuid, long groupId, boolean privateLayout,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByUUID_G_P(
+			uuid, groupId, privateLayout, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUUID_G_P_Last(
+			String uuid, long groupId, boolean privateLayout,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUUID_G_P_Last(
+			uuid, groupId, privateLayout, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUUID_G_P_Last(
+		String uuid, long groupId, boolean privateLayout,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByUUID_G_P(uuid, groupId, privateLayout);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByUUID_G_P(
+			uuid, groupId, privateLayout, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByUUID_G_P_PrevAndNext(
+			long plid, String uuid, long groupId, boolean privateLayout,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		uuid = Objects.toString(uuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByUUID_G_P_PrevAndNext(
+				session, layout, uuid, groupId, privateLayout,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByUUID_G_P_PrevAndNext(
+				session, layout, uuid, groupId, privateLayout,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByUUID_G_P_PrevAndNext(
+		Session session, Layout layout, String uuid, long groupId,
+		boolean privateLayout, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout) {
+
+		return filterFindByUUID_G_P(
+			uuid, groupId, privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout, int start, int end) {
+
+		return filterFindByUUID_G_P(
+			uuid, groupId, privateLayout, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByUUID_G_P(
+				uuid, groupId, privateLayout, start, end, orderByComparator);
+		}
+
+		uuid = Objects.toString(uuid, "");
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByUUID_G_P_PrevAndNext(
+			long plid, String uuid, long groupId, boolean privateLayout,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByUUID_G_P_PrevAndNext(
+				plid, uuid, groupId, privateLayout, orderByComparator);
+		}
+
+		uuid = Objects.toString(uuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByUUID_G_P_PrevAndNext(
+				session, layout, uuid, groupId, privateLayout,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByUUID_G_P_PrevAndNext(
+				session, layout, uuid, groupId, privateLayout,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByUUID_G_P_PrevAndNext(
+		Session session, Layout layout, String uuid, long groupId,
+		boolean privateLayout, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 */
+	@Override
+	public void removeByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout) {
+
+		for (Layout layout :
+				findByUUID_G_P(
+					uuid, groupId, privateLayout, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout) {
+
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = _finderPathCountByUUID_G_P;
+
+		Object[] finderArgs = new Object[] {uuid, groupId, privateLayout};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByUUID_G_P(
+		String uuid, long groupId, boolean privateLayout) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByUUID_G_P(uuid, groupId, privateLayout);
+		}
+
+		uuid = Objects.toString(uuid, "");
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_G_P_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2 =
+		"layout.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_3 =
+		"(layout.uuid IS NULL OR layout.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2_SQL =
+		"layout.uuid_ = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_3_SQL =
+		"(layout.uuid_ IS NULL OR layout.uuid_ = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_P_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ?";
+
+	private FinderPath _finderPathFetchByUUID_G_P_Head;
+	private FinderPath _finderPathCountByUUID_G_P_Head;
 
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -654,11 +2335,12 @@ public class LayoutPersistenceImpl
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByUUID_G_P(
+	public Layout findByUUID_G_P_Head(
 			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByUUID_G_P(uuid, groupId, privateLayout, head);
+		Layout layout = fetchByUUID_G_P_Head(
+			uuid, groupId, privateLayout, head);
 
 		if (layout == null) {
 			StringBundler msg = new StringBundler(10);
@@ -699,10 +2381,10 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByUUID_G_P(
+	public Layout fetchByUUID_G_P_Head(
 		String uuid, long groupId, boolean privateLayout, boolean head) {
 
-		return fetchByUUID_G_P(uuid, groupId, privateLayout, head, true);
+		return fetchByUUID_G_P_Head(uuid, groupId, privateLayout, head, true);
 	}
 
 	/**
@@ -716,7 +2398,7 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByUUID_G_P(
+	public Layout fetchByUUID_G_P_Head(
 		String uuid, long groupId, boolean privateLayout, boolean head,
 		boolean retrieveFromCache) {
 
@@ -728,7 +2410,7 @@ public class LayoutPersistenceImpl
 
 		if (retrieveFromCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G_P, finderArgs, this);
+				_finderPathFetchByUUID_G_P_Head, finderArgs, this);
 		}
 
 		if (result instanceof Layout) {
@@ -751,19 +2433,19 @@ public class LayoutPersistenceImpl
 			boolean bindUuid = false;
 
 			if (uuid.isEmpty()) {
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_G_P_HEAD_UUID_3);
 			}
 			else {
 				bindUuid = true;
 
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_G_P_HEAD_UUID_2);
 			}
 
-			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_PRIVATELAYOUT_2);
 
-			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -790,7 +2472,7 @@ public class LayoutPersistenceImpl
 
 				if (list.isEmpty()) {
 					FinderCacheUtil.putResult(
-						_finderPathFetchByUUID_G_P, finderArgs, list);
+						_finderPathFetchByUUID_G_P_Head, finderArgs, list);
 				}
 				else {
 					Layout layout = list.get(0);
@@ -802,7 +2484,7 @@ public class LayoutPersistenceImpl
 			}
 			catch (Exception e) {
 				FinderCacheUtil.removeResult(
-					_finderPathFetchByUUID_G_P, finderArgs);
+					_finderPathFetchByUUID_G_P_Head, finderArgs);
 
 				throw processException(e);
 			}
@@ -829,11 +2511,11 @@ public class LayoutPersistenceImpl
 	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByUUID_G_P(
+	public Layout removeByUUID_G_P_Head(
 			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = findByUUID_G_P(uuid, groupId, privateLayout, head);
+		Layout layout = findByUUID_G_P_Head(uuid, groupId, privateLayout, head);
 
 		return remove(layout);
 	}
@@ -848,12 +2530,12 @@ public class LayoutPersistenceImpl
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByUUID_G_P(
+	public int countByUUID_G_P_Head(
 		String uuid, long groupId, boolean privateLayout, boolean head) {
 
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G_P;
+		FinderPath finderPath = _finderPathCountByUUID_G_P_Head;
 
 		Object[] finderArgs = new Object[] {uuid, groupId, privateLayout, head};
 
@@ -868,19 +2550,19 @@ public class LayoutPersistenceImpl
 			boolean bindUuid = false;
 
 			if (uuid.isEmpty()) {
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_G_P_HEAD_UUID_3);
 			}
 			else {
 				bindUuid = true;
 
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_G_P_HEAD_UUID_2);
 			}
 
-			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_PRIVATELAYOUT_2);
 
-			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_2);
+			query.append(_FINDER_COLUMN_UUID_G_P_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -920,19 +2602,19 @@ public class LayoutPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2 =
+	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_UUID_2 =
 		"layout.uuid = ? AND ";
 
-	private static final String _FINDER_COLUMN_UUID_G_P_UUID_3 =
+	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_UUID_3 =
 		"(layout.uuid IS NULL OR layout.uuid = '') AND ";
 
-	private static final String _FINDER_COLUMN_UUID_G_P_GROUPID_2 =
+	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2 =
+	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_PRIVATELAYOUT_2 =
 		"layout.privateLayout = ? AND ";
 
-	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_2 =
+	private static final String _FINDER_COLUMN_UUID_G_P_HEAD_HEAD_2 =
 		"layout.head = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
@@ -1523,6 +3205,635 @@ public class LayoutPersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"layout.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
+	private FinderPath _finderPathCountByUuid_C_Head;
+
+	/**
+	 * Returns all the layouts where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_C_Head(
+		String uuid, long companyId, boolean head) {
+
+		return findByUuid_C_Head(
+			uuid, companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_C_Head(
+		String uuid, long companyId, boolean head, int start, int end) {
+
+		return findByUuid_C_Head(uuid, companyId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_C_Head(
+		String uuid, long companyId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByUuid_C_Head(
+			uuid, companyId, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_C_Head(
+		String uuid, long companyId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByUuid_C_Head;
+			finderArgs = new Object[] {uuid, companyId, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByUuid_C_Head;
+			finderArgs = new Object[] {
+				uuid, companyId, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!uuid.equals(layout.getUuid()) ||
+						(companyId != layout.getCompanyId()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(companyId);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUuid_C_Head_First(
+			String uuid, long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUuid_C_Head_First(
+			uuid, companyId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUuid_C_Head_First(
+		String uuid, long companyId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByUuid_C_Head(
+			uuid, companyId, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByUuid_C_Head_Last(
+			String uuid, long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByUuid_C_Head_Last(
+			uuid, companyId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByUuid_C_Head_Last(
+		String uuid, long companyId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByUuid_C_Head(uuid, companyId, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByUuid_C_Head(
+			uuid, companyId, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByUuid_C_Head_PrevAndNext(
+			long plid, String uuid, long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		uuid = Objects.toString(uuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByUuid_C_Head_PrevAndNext(
+				session, layout, uuid, companyId, head, orderByComparator,
+				true);
+
+			array[1] = layout;
+
+			array[2] = getByUuid_C_Head_PrevAndNext(
+				session, layout, uuid, companyId, head, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByUuid_C_Head_PrevAndNext(
+		Session session, Layout layout, String uuid, long companyId,
+		boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_3);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_C_HEAD_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_UUID_C_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(companyId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 */
+	@Override
+	public void removeByUuid_C_Head(String uuid, long companyId, boolean head) {
+		for (Layout layout :
+				findByUuid_C_Head(
+					uuid, companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where uuid = &#63; and companyId = &#63; and head = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByUuid_C_Head(String uuid, long companyId, boolean head) {
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = _finderPathCountByUuid_C_Head;
+
+		Object[] finderArgs = new Object[] {uuid, companyId, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_C_HEAD_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_UUID_C_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(companyId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_C_HEAD_UUID_2 =
+		"layout.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_HEAD_UUID_3 =
+		"(layout.uuid IS NULL OR layout.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_HEAD_COMPANYID_2 =
+		"layout.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_HEAD_HEAD_2 =
+		"layout.head = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
@@ -2397,6 +4708,950 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2_SQL =
 		"layout.groupId = ? AND layout.system_ = [$FALSE$]";
 
+	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
+	private FinderPath _finderPathCountByGroupId_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByGroupId_Head(long groupId, boolean head) {
+		return findByGroupId_Head(
+			groupId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByGroupId_Head(
+		long groupId, boolean head, int start, int end) {
+
+		return findByGroupId_Head(groupId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByGroupId_Head(
+		long groupId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByGroupId_Head(
+			groupId, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByGroupId_Head(
+		long groupId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByGroupId_Head;
+			finderArgs = new Object[] {groupId, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByGroupId_Head;
+			finderArgs = new Object[] {
+				groupId, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByGroupId_Head_First(
+			long groupId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByGroupId_Head_First(
+			groupId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByGroupId_Head_First(
+		long groupId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByGroupId_Head(
+			groupId, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByGroupId_Head_Last(
+			long groupId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByGroupId_Head_Last(
+			groupId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByGroupId_Head_Last(
+		long groupId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByGroupId_Head(groupId, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByGroupId_Head(
+			groupId, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByGroupId_Head_PrevAndNext(
+			long plid, long groupId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByGroupId_Head_PrevAndNext(
+				session, layout, groupId, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByGroupId_Head_PrevAndNext(
+				session, layout, groupId, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByGroupId_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByGroupId_Head(long groupId, boolean head) {
+		return filterFindByGroupId_Head(
+			groupId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByGroupId_Head(
+		long groupId, boolean head, int start, int end) {
+
+		return filterFindByGroupId_Head(groupId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByGroupId_Head(
+		long groupId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId_Head(
+				groupId, head, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByGroupId_Head_PrevAndNext(
+			long plid, long groupId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId_Head_PrevAndNext(
+				plid, groupId, head, orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByGroupId_Head_PrevAndNext(
+				session, layout, groupId, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByGroupId_Head_PrevAndNext(
+				session, layout, groupId, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByGroupId_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 */
+	@Override
+	public void removeByGroupId_Head(long groupId, boolean head) {
+		for (Layout layout :
+				findByGroupId_Head(
+					groupId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByGroupId_Head(long groupId, boolean head) {
+		FinderPath finderPath = _finderPathCountByGroupId_Head;
+
+		Object[] finderArgs = new Object[] {groupId, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByGroupId_Head(long groupId, boolean head) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByGroupId_Head(groupId, head);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_GROUPID_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_GROUPID_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_GROUPID_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_GROUPID_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -2900,6 +6155,555 @@ public class LayoutPersistenceImpl
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"layout.companyId = ? AND layout.system = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByCompanyId_Head;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId_Head;
+	private FinderPath _finderPathCountByCompanyId_Head;
+
+	/**
+	 * Returns all the layouts where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByCompanyId_Head(long companyId, boolean head) {
+		return findByCompanyId_Head(
+			companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByCompanyId_Head(
+		long companyId, boolean head, int start, int end) {
+
+		return findByCompanyId_Head(companyId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByCompanyId_Head(
+		long companyId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByCompanyId_Head(
+			companyId, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where companyId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByCompanyId_Head(
+		long companyId, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByCompanyId_Head;
+			finderArgs = new Object[] {companyId, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByCompanyId_Head;
+			finderArgs = new Object[] {
+				companyId, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((companyId != layout.getCompanyId()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_HEAD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_COMPANYID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByCompanyId_Head_First(
+			long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByCompanyId_Head_First(
+			companyId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByCompanyId_Head_First(
+		long companyId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByCompanyId_Head(
+			companyId, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByCompanyId_Head_Last(
+			long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByCompanyId_Head_Last(
+			companyId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByCompanyId_Head_Last(
+		long companyId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByCompanyId_Head(companyId, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByCompanyId_Head(
+			companyId, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where companyId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByCompanyId_Head_PrevAndNext(
+			long plid, long companyId, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByCompanyId_Head_PrevAndNext(
+				session, layout, companyId, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByCompanyId_Head_PrevAndNext(
+				session, layout, companyId, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByCompanyId_Head_PrevAndNext(
+		Session session, Layout layout, long companyId, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_HEAD_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_COMPANYID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where companyId = &#63; and head = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 */
+	@Override
+	public void removeByCompanyId_Head(long companyId, boolean head) {
+		for (Layout layout :
+				findByCompanyId_Head(
+					companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where companyId = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByCompanyId_Head(long companyId, boolean head) {
+		FinderPath finderPath = _finderPathCountByCompanyId_Head;
+
+		Object[] finderArgs = new Object[] {companyId, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_HEAD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_COMPANYID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_HEAD_COMPANYID_2 =
+		"layout.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_COMPANYID_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindByParentPlid;
 	private FinderPath _finderPathWithoutPaginationFindByParentPlid;
@@ -3407,87 +7211,689 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_PARENTPLID_PARENTPLID_2 =
 		"layout.parentPlid = ? AND layout.system = [$FALSE$]";
 
-	private FinderPath _finderPathFetchByIconImageId;
-	private FinderPath _finderPathCountByIconImageId;
+	private FinderPath _finderPathWithPaginationFindByParentPlid_Head;
+	private FinderPath _finderPathWithoutPaginationFindByParentPlid_Head;
+	private FinderPath _finderPathCountByParentPlid_Head;
 
 	/**
-	 * Returns the layout where iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns all the layouts where parentPlid = &#63; and head = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
-	 * @return the matching layout
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByParentPlid_Head(long parentPlid, boolean head) {
+		return findByParentPlid_Head(
+			parentPlid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where parentPlid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByParentPlid_Head(
+		long parentPlid, boolean head, int start, int end) {
+
+		return findByParentPlid_Head(parentPlid, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where parentPlid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByParentPlid_Head(
+		long parentPlid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByParentPlid_Head(
+			parentPlid, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where parentPlid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByParentPlid_Head(
+		long parentPlid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByParentPlid_Head;
+			finderArgs = new Object[] {parentPlid, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByParentPlid_Head;
+			finderArgs = new Object[] {
+				parentPlid, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((parentPlid != layout.getParentPlid()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTPLID_HEAD_PARENTPLID_2);
+
+			query.append(_FINDER_COLUMN_PARENTPLID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentPlid);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where parentPlid = &#63; and head = &#63;.
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByIconImageId(long iconImageId)
+	public Layout findByParentPlid_Head_First(
+			long parentPlid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByIconImageId(iconImageId);
+		Layout layout = fetchByParentPlid_Head_First(
+			parentPlid, head, orderByComparator);
 
-		if (layout == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("iconImageId=");
-			msg.append(iconImageId);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchLayoutException(msg.toString());
+		if (layout != null) {
+			return layout;
 		}
 
-		return layout;
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("parentPlid=");
+		msg.append(parentPlid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
 	}
 
 	/**
-	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first layout in the ordered set where parentPlid = &#63; and head = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByIconImageId(long iconImageId) {
-		return fetchByIconImageId(iconImageId, true);
+	public Layout fetchByParentPlid_Head_First(
+		long parentPlid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByParentPlid_Head(
+			parentPlid, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
 	}
 
 	/**
-	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last layout in the ordered set where parentPlid = &#63; and head = &#63;.
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByParentPlid_Head_Last(
+			long parentPlid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByParentPlid_Head_Last(
+			parentPlid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("parentPlid=");
+		msg.append(parentPlid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where parentPlid = &#63; and head = &#63;.
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByParentPlid_Head_Last(
+		long parentPlid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByParentPlid_Head(parentPlid, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByParentPlid_Head(
+			parentPlid, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where parentPlid = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByParentPlid_Head_PrevAndNext(
+			long plid, long parentPlid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByParentPlid_Head_PrevAndNext(
+				session, layout, parentPlid, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByParentPlid_Head_PrevAndNext(
+				session, layout, parentPlid, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByParentPlid_Head_PrevAndNext(
+		Session session, Layout layout, long parentPlid, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_PARENTPLID_HEAD_PARENTPLID_2);
+
+		query.append(_FINDER_COLUMN_PARENTPLID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(parentPlid);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where parentPlid = &#63; and head = &#63; from the database.
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 */
+	@Override
+	public void removeByParentPlid_Head(long parentPlid, boolean head) {
+		for (Layout layout :
+				findByParentPlid_Head(
+					parentPlid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where parentPlid = &#63; and head = &#63;.
+	 *
+	 * @param parentPlid the parent plid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByParentPlid_Head(long parentPlid, boolean head) {
+		FinderPath finderPath = _finderPathCountByParentPlid_Head;
+
+		Object[] finderArgs = new Object[] {parentPlid, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTPLID_HEAD_PARENTPLID_2);
+
+			query.append(_FINDER_COLUMN_PARENTPLID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentPlid);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PARENTPLID_HEAD_PARENTPLID_2 =
+		"layout.parentPlid = ? AND ";
+
+	private static final String _FINDER_COLUMN_PARENTPLID_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByIconImageId;
+	private FinderPath _finderPathWithoutPaginationFindByIconImageId;
+	private FinderPath _finderPathCountByIconImageId;
+
+	/**
+	 * Returns all the layouts where iconImageId = &#63;.
 	 *
 	 * @param iconImageId the icon image ID
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByIconImageId(long iconImageId) {
+		return findByIconImageId(
+			iconImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByIconImageId(
+		long iconImageId, int start, int end) {
+
+		return findByIconImageId(iconImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByIconImageId(
+		long iconImageId, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByIconImageId(
+			iconImageId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public Layout fetchByIconImageId(
-		long iconImageId, boolean retrieveFromCache) {
+	public List<Layout> findByIconImageId(
+		long iconImageId, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
 
-		Object[] finderArgs = new Object[] {iconImageId};
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Object result = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByIconImageId;
+			finderArgs = new Object[] {iconImageId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByIconImageId;
+			finderArgs = new Object[] {
+				iconImageId, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByIconImageId, finderArgs, this);
-		}
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-		if (result instanceof Layout) {
-			Layout layout = (Layout)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((iconImageId != layout.getIconImageId())) {
+						list = null;
 
-			if ((iconImageId != layout.getIconImageId())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
 			query.append(_FINDER_COLUMN_ICONIMAGEID_ICONIMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -3502,34 +7908,25 @@ public class LayoutPersistenceImpl
 
 				qPos.add(iconImageId);
 
-				List<Layout> list = q.list();
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByIconImageId, finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"LayoutPersistenceImpl.fetchByIconImageId(long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					Layout layout = list.get(0);
-
-					result = layout;
-
-					cacheResult(layout);
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByIconImageId, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3538,27 +7935,283 @@ public class LayoutPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where iconImageId = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByIconImageId_First(
+			long iconImageId, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByIconImageId_First(
+			iconImageId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("iconImageId=");
+		msg.append(iconImageId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where iconImageId = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByIconImageId_First(
+		long iconImageId, OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByIconImageId(
+			iconImageId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where iconImageId = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByIconImageId_Last(
+			long iconImageId, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByIconImageId_Last(iconImageId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("iconImageId=");
+		msg.append(iconImageId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where iconImageId = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByIconImageId_Last(
+		long iconImageId, OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByIconImageId(iconImageId);
+
+		if (count == 0) {
 			return null;
 		}
+
+		List<Layout> list = findByIconImageId(
+			iconImageId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where iconImageId = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByIconImageId_PrevAndNext(
+			long plid, long iconImageId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByIconImageId_PrevAndNext(
+				session, layout, iconImageId, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByIconImageId_PrevAndNext(
+				session, layout, iconImageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByIconImageId_PrevAndNext(
+		Session session, Layout layout, long iconImageId,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
 		else {
-			return (Layout)result;
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_ICONIMAGEID_ICONIMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(iconImageId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
 	/**
-	 * Removes the layout where iconImageId = &#63; from the database.
+	 * Removes all the layouts where iconImageId = &#63; from the database.
 	 *
 	 * @param iconImageId the icon image ID
-	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByIconImageId(long iconImageId)
-		throws NoSuchLayoutException {
+	public void removeByIconImageId(long iconImageId) {
+		for (Layout layout :
+				findByIconImageId(
+					iconImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-		Layout layout = findByIconImageId(iconImageId);
-
-		return remove(layout);
+			remove(layout);
+		}
 	}
 
 	/**
@@ -3615,6 +8268,236 @@ public class LayoutPersistenceImpl
 
 	private static final String _FINDER_COLUMN_ICONIMAGEID_ICONIMAGEID_2 =
 		"layout.iconImageId = ?";
+
+	private FinderPath _finderPathFetchByIconImageId_Head;
+	private FinderPath _finderPathCountByIconImageId_Head;
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByIconImageId_Head(long iconImageId, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByIconImageId_Head(iconImageId, head);
+
+		if (layout == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("iconImageId=");
+			msg.append(iconImageId);
+
+			msg.append(", head=");
+			msg.append(head);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutException(msg.toString());
+		}
+
+		return layout;
+	}
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByIconImageId_Head(long iconImageId, boolean head) {
+		return fetchByIconImageId_Head(iconImageId, head, true);
+	}
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByIconImageId_Head(
+		long iconImageId, boolean head, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {iconImageId, head};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByIconImageId_Head, finderArgs, this);
+		}
+
+		if (result instanceof Layout) {
+			Layout layout = (Layout)result;
+
+			if ((iconImageId != layout.getIconImageId()) ||
+				(head != layout.isHead())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_ICONIMAGEID_HEAD_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_ICONIMAGEID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(iconImageId);
+
+				qPos.add(head);
+
+				List<Layout> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(
+						_finderPathFetchByIconImageId_Head, finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutPersistenceImpl.fetchByIconImageId_Head(long, boolean, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Layout layout = list.get(0);
+
+					result = layout;
+
+					cacheResult(layout);
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByIconImageId_Head, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Layout)result;
+		}
+	}
+
+	/**
+	 * Removes the layout where iconImageId = &#63; and head = &#63; from the database.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @return the layout that was removed
+	 */
+	@Override
+	public Layout removeByIconImageId_Head(long iconImageId, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByIconImageId_Head(iconImageId, head);
+
+		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where iconImageId = &#63; and head = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByIconImageId_Head(long iconImageId, boolean head) {
+		FinderPath finderPath = _finderPathCountByIconImageId_Head;
+
+		Object[] finderArgs = new Object[] {iconImageId, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_ICONIMAGEID_HEAD_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_ICONIMAGEID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(iconImageId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ICONIMAGEID_HEAD_ICONIMAGEID_2 =
+		"layout.iconImageId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ICONIMAGEID_HEAD_HEAD_2 =
+		"layout.head = ?";
 
 	private FinderPath _finderPathWithPaginationFindByLayoutPrototypeUuid;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutPrototypeUuid;
@@ -4182,6 +9065,620 @@ public class LayoutPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
 			"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND layout.system = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByLayoutPrototypeUuid_Head;
+	private FinderPath
+		_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head;
+	private FinderPath _finderPathCountByLayoutPrototypeUuid_Head;
+
+	/**
+	 * Returns all the layouts where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head) {
+
+		return findByLayoutPrototypeUuid_Head(
+			layoutPrototypeUuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head, int start, int end) {
+
+		return findByLayoutPrototypeUuid_Head(
+			layoutPrototypeUuid, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByLayoutPrototypeUuid_Head(
+			layoutPrototypeUuid, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath =
+				_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head;
+			finderArgs = new Object[] {layoutPrototypeUuid, head};
+		}
+		else {
+			finderPath =
+				_finderPathWithPaginationFindByLayoutPrototypeUuid_Head;
+			finderArgs = new Object[] {
+				layoutPrototypeUuid, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!layoutPrototypeUuid.equals(
+							layout.getLayoutPrototypeUuid()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			boolean bindLayoutPrototypeUuid = false;
+
+			if (layoutPrototypeUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_3);
+			}
+			else {
+				bindLayoutPrototypeUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindLayoutPrototypeUuid) {
+					qPos.add(layoutPrototypeUuid);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByLayoutPrototypeUuid_Head_First(
+			String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByLayoutPrototypeUuid_Head_First(
+			layoutPrototypeUuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("layoutPrototypeUuid=");
+		msg.append(layoutPrototypeUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByLayoutPrototypeUuid_Head_First(
+		String layoutPrototypeUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByLayoutPrototypeUuid_Head(
+			layoutPrototypeUuid, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByLayoutPrototypeUuid_Head_Last(
+			String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByLayoutPrototypeUuid_Head_Last(
+			layoutPrototypeUuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("layoutPrototypeUuid=");
+		msg.append(layoutPrototypeUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByLayoutPrototypeUuid_Head_Last(
+		String layoutPrototypeUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByLayoutPrototypeUuid_Head(layoutPrototypeUuid, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByLayoutPrototypeUuid_Head(
+			layoutPrototypeUuid, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByLayoutPrototypeUuid_Head_PrevAndNext(
+			long plid, String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByLayoutPrototypeUuid_Head_PrevAndNext(
+				session, layout, layoutPrototypeUuid, head, orderByComparator,
+				true);
+
+			array[1] = layout;
+
+			array[2] = getByLayoutPrototypeUuid_Head_PrevAndNext(
+				session, layout, layoutPrototypeUuid, head, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByLayoutPrototypeUuid_Head_PrevAndNext(
+		Session session, Layout layout, String layoutPrototypeUuid,
+		boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		boolean bindLayoutPrototypeUuid = false;
+
+		if (layoutPrototypeUuid.isEmpty()) {
+			query.append(
+				_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_3);
+		}
+		else {
+			bindLayoutPrototypeUuid = true;
+
+			query.append(
+				_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindLayoutPrototypeUuid) {
+			qPos.add(layoutPrototypeUuid);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where layoutPrototypeUuid = &#63; and head = &#63; from the database.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 */
+	@Override
+	public void removeByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head) {
+
+		for (Layout layout :
+				findByLayoutPrototypeUuid_Head(
+					layoutPrototypeUuid, head, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByLayoutPrototypeUuid_Head(
+		String layoutPrototypeUuid, boolean head) {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		FinderPath finderPath = _finderPathCountByLayoutPrototypeUuid_Head;
+
+		Object[] finderArgs = new Object[] {layoutPrototypeUuid, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			boolean bindLayoutPrototypeUuid = false;
+
+			if (layoutPrototypeUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_3);
+			}
+			else {
+				bindLayoutPrototypeUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindLayoutPrototypeUuid) {
+					qPos.add(layoutPrototypeUuid);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_2 =
+			"layout.layoutPrototypeUuid = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_LAYOUTPROTOTYPEUUID_3 =
+			"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindBySourcePrototypeLayoutUuid;
 	private FinderPath
@@ -4765,6 +10262,629 @@ public class LayoutPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3 =
 			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '') AND layout.system = [$FALSE$]";
+
+	private FinderPath
+		_finderPathWithPaginationFindBySourcePrototypeLayoutUuid_Head;
+	private FinderPath
+		_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head;
+	private FinderPath _finderPathCountBySourcePrototypeLayoutUuid_Head;
+
+	/**
+	 * Returns all the layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head) {
+
+		return findBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head, int start, int end) {
+
+		return findBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath =
+				_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head;
+			finderArgs = new Object[] {sourcePrototypeLayoutUuid, head};
+		}
+		else {
+			finderPath =
+				_finderPathWithPaginationFindBySourcePrototypeLayoutUuid_Head;
+			finderArgs = new Object[] {
+				sourcePrototypeLayoutUuid, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!sourcePrototypeLayoutUuid.equals(
+							layout.getSourcePrototypeLayoutUuid()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			boolean bindSourcePrototypeLayoutUuid = false;
+
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
+			else {
+				bindSourcePrototypeLayoutUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSourcePrototypeLayoutUuid) {
+					qPos.add(sourcePrototypeLayoutUuid);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findBySourcePrototypeLayoutUuid_Head_First(
+			String sourcePrototypeLayoutUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchBySourcePrototypeLayoutUuid_Head_First(
+			sourcePrototypeLayoutUuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sourcePrototypeLayoutUuid=");
+		msg.append(sourcePrototypeLayoutUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchBySourcePrototypeLayoutUuid_Head_First(
+		String sourcePrototypeLayoutUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findBySourcePrototypeLayoutUuid_Head_Last(
+			String sourcePrototypeLayoutUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchBySourcePrototypeLayoutUuid_Head_Last(
+			sourcePrototypeLayoutUuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sourcePrototypeLayoutUuid=");
+		msg.append(sourcePrototypeLayoutUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchBySourcePrototypeLayoutUuid_Head_Last(
+		String sourcePrototypeLayoutUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findBySourcePrototypeLayoutUuid_Head(
+			sourcePrototypeLayoutUuid, head, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findBySourcePrototypeLayoutUuid_Head_PrevAndNext(
+			long plid, String sourcePrototypeLayoutUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getBySourcePrototypeLayoutUuid_Head_PrevAndNext(
+				session, layout, sourcePrototypeLayoutUuid, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getBySourcePrototypeLayoutUuid_Head_PrevAndNext(
+				session, layout, sourcePrototypeLayoutUuid, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getBySourcePrototypeLayoutUuid_Head_PrevAndNext(
+		Session session, Layout layout, String sourcePrototypeLayoutUuid,
+		boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		boolean bindSourcePrototypeLayoutUuid = false;
+
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
+			query.append(
+				_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
+		else {
+			bindSourcePrototypeLayoutUuid = true;
+
+			query.append(
+				_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindSourcePrototypeLayoutUuid) {
+			qPos.add(sourcePrototypeLayoutUuid);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63; from the database.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 */
+	@Override
+	public void removeBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head) {
+
+		for (Layout layout :
+				findBySourcePrototypeLayoutUuid_Head(
+					sourcePrototypeLayoutUuid, head, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countBySourcePrototypeLayoutUuid_Head(
+		String sourcePrototypeLayoutUuid, boolean head) {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		FinderPath finderPath =
+			_finderPathCountBySourcePrototypeLayoutUuid_Head;
+
+		Object[] finderArgs = new Object[] {sourcePrototypeLayoutUuid, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			boolean bindSourcePrototypeLayoutUuid = false;
+
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
+			else {
+				bindSourcePrototypeLayoutUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSourcePrototypeLayoutUuid) {
+					qPos.add(sourcePrototypeLayoutUuid);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_2 =
+			"layout.sourcePrototypeLayoutUuid = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_SOURCEPROTOTYPELAYOUTUUID_3 =
+			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_HEAD_HEAD_2 =
+			"layout.head = ? AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
@@ -5713,6 +11833,1022 @@ public class LayoutPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2_SQL =
 		"layout.privateLayout = ? AND layout.system_ = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByG_P_Head;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_Head;
+	private FinderPath _finderPathCountByG_P_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_Head(
+		long groupId, boolean privateLayout, boolean head) {
+
+		return findByG_P_Head(
+			groupId, privateLayout, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_Head(
+		long groupId, boolean privateLayout, boolean head, int start, int end) {
+
+		return findByG_P_Head(groupId, privateLayout, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_Head(
+		long groupId, boolean privateLayout, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_Head(
+			groupId, privateLayout, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_Head(
+		long groupId, boolean privateLayout, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_Head;
+			finderArgs = new Object[] {groupId, privateLayout, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_Head;
+			finderArgs = new Object[] {
+				groupId, privateLayout, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_Head_First(
+			long groupId, boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_Head_First(
+			groupId, privateLayout, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_Head_First(
+		long groupId, boolean privateLayout, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_Head(
+			groupId, privateLayout, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_Head_Last(
+			long groupId, boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_Head_Last(
+			groupId, privateLayout, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_Head_Last(
+		long groupId, boolean privateLayout, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_Head(groupId, privateLayout, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_Head(
+			groupId, privateLayout, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_Head(
+		long groupId, boolean privateLayout, boolean head) {
+
+		return filterFindByG_P_Head(
+			groupId, privateLayout, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_Head(
+		long groupId, boolean privateLayout, boolean head, int start, int end) {
+
+		return filterFindByG_P_Head(
+			groupId, privateLayout, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_Head(
+		long groupId, boolean privateLayout, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_Head(
+				groupId, privateLayout, head, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_Head_PrevAndNext(
+				plid, groupId, privateLayout, head, orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_P_Head(
+		long groupId, boolean privateLayout, boolean head) {
+
+		for (Layout layout :
+				findByG_P_Head(
+					groupId, privateLayout, head, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_Head(
+		long groupId, boolean privateLayout, boolean head) {
+
+		FinderPath finderPath = _finderPathCountByG_P_Head;
+
+		Object[] finderArgs = new Object[] {groupId, privateLayout, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_Head(
+		long groupId, boolean privateLayout, boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_Head(groupId, privateLayout, head);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_PRIVATELAYOUT_2_SQL =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindByG_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_T;
@@ -6737,6 +13873,1091 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL =
 		"(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
 
+	private FinderPath _finderPathWithPaginationFindByG_T_Head;
+	private FinderPath _finderPathWithoutPaginationFindByG_T_Head;
+	private FinderPath _finderPathCountByG_T_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_T_Head(
+		long groupId, String type, boolean head) {
+
+		return findByG_T_Head(
+			groupId, type, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_T_Head(
+		long groupId, String type, boolean head, int start, int end) {
+
+		return findByG_T_Head(groupId, type, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_T_Head(
+		long groupId, String type, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_T_Head(
+			groupId, type, head, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_T_Head(
+		long groupId, String type, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		type = Objects.toString(type, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_T_Head;
+			finderArgs = new Object[] {groupId, type, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_T_Head;
+			finderArgs = new Object[] {
+				groupId, type, head, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						!type.equals(layout.getType()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2);
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_T_Head_First(
+			long groupId, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_T_Head_First(
+			groupId, type, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_T_Head_First(
+		long groupId, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_T_Head(
+			groupId, type, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_T_Head_Last(
+			long groupId, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_T_Head_Last(
+			groupId, type, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_T_Head_Last(
+		long groupId, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_T_Head(groupId, type, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_T_Head(
+			groupId, type, head, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_T_Head_PrevAndNext(
+			long plid, long groupId, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		type = Objects.toString(type, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_T_Head_PrevAndNext(
+				session, layout, groupId, type, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_T_Head_PrevAndNext(
+				session, layout, groupId, type, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_T_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindType) {
+			qPos.add(type);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_T_Head(
+		long groupId, String type, boolean head) {
+
+		return filterFindByG_T_Head(
+			groupId, type, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_T_Head(
+		long groupId, String type, boolean head, int start, int end) {
+
+		return filterFindByG_T_Head(groupId, type, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_T_Head(
+		long groupId, String type, boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_Head(
+				groupId, type, head, start, end, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_T_Head_PrevAndNext(
+			long plid, long groupId, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_Head_PrevAndNext(
+				plid, groupId, type, head, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_T_Head_PrevAndNext(
+				session, layout, groupId, type, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_T_Head_PrevAndNext(
+				session, layout, groupId, type, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_T_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindType) {
+			qPos.add(type);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and type = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_T_Head(long groupId, String type, boolean head) {
+		for (Layout layout :
+				findByG_T_Head(
+					groupId, type, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_T_Head(long groupId, String type, boolean head) {
+		type = Objects.toString(type, "");
+
+		FinderPath finderPath = _finderPathCountByG_T_Head;
+
+		Object[] finderArgs = new Object[] {groupId, type, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2);
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_T_Head(long groupId, String type, boolean head) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_T_Head(groupId, type, head);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_GROUPID_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_TYPE_2 =
+		"layout.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_TYPE_3 =
+		"(layout.type IS NULL OR layout.type = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_TYPE_2_SQL =
+		"layout.type_ = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_TYPE_3_SQL =
+		"(layout.type_ IS NULL OR layout.type_ = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_T_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
 	private FinderPath _finderPathCountByC_L;
@@ -7335,97 +15556,791 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3 =
 		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND layout.system = [$FALSE$]";
 
-	private FinderPath _finderPathFetchByP_I;
-	private FinderPath _finderPathCountByP_I;
+	private FinderPath _finderPathWithPaginationFindByC_L_Head;
+	private FinderPath _finderPathWithoutPaginationFindByC_L_Head;
+	private FinderPath _finderPathCountByC_L_Head;
 
 	/**
-	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
 	 *
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @return the matching layout
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head) {
+
+		return findByC_L_Head(
+			companyId, layoutPrototypeUuid, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head, int start,
+		int end) {
+
+		return findByC_L_Head(
+			companyId, layoutPrototypeUuid, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
+
+		return findByC_L_Head(
+			companyId, layoutPrototypeUuid, head, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head, int start,
+		int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByC_L_Head;
+			finderArgs = new Object[] {companyId, layoutPrototypeUuid, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByC_L_Head;
+			finderArgs = new Object[] {
+				companyId, layoutPrototypeUuid, head, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((companyId != layout.getCompanyId()) ||
+						!layoutPrototypeUuid.equals(
+							layout.getLayoutPrototypeUuid()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_L_HEAD_COMPANYID_2);
+
+			boolean bindLayoutPrototypeUuid = false;
+
+			if (layoutPrototypeUuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_3);
+			}
+			else {
+				bindLayoutPrototypeUuid = true;
+
+				query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_L_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindLayoutPrototypeUuid) {
+					qPos.add(layoutPrototypeUuid);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByP_I(boolean privateLayout, long iconImageId)
+	public Layout findByC_L_Head_First(
+			long companyId, String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByP_I(privateLayout, iconImageId);
+		Layout layout = fetchByC_L_Head_First(
+			companyId, layoutPrototypeUuid, head, orderByComparator);
 
-		if (layout == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", iconImageId=");
-			msg.append(iconImageId);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchLayoutException(msg.toString());
+		if (layout != null) {
+			return layout;
 		}
 
-		return layout;
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", layoutPrototypeUuid=");
+		msg.append(layoutPrototypeUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
 	}
 
 	/**
-	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
 	 *
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByP_I(boolean privateLayout, long iconImageId) {
-		return fetchByP_I(privateLayout, iconImageId, true);
+	public Layout fetchByC_L_Head_First(
+		long companyId, String layoutPrototypeUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByC_L_Head(
+			companyId, layoutPrototypeUuid, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
 	}
 
 	/**
-	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByC_L_Head_Last(
+			long companyId, String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByC_L_Head_Last(
+			companyId, layoutPrototypeUuid, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", layoutPrototypeUuid=");
+		msg.append(layoutPrototypeUuid);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_L_Head_Last(
+		long companyId, String layoutPrototypeUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByC_L_Head(companyId, layoutPrototypeUuid, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByC_L_Head(
+			companyId, layoutPrototypeUuid, head, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByC_L_Head_PrevAndNext(
+			long plid, long companyId, String layoutPrototypeUuid, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByC_L_Head_PrevAndNext(
+				session, layout, companyId, layoutPrototypeUuid, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByC_L_Head_PrevAndNext(
+				session, layout, companyId, layoutPrototypeUuid, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByC_L_Head_PrevAndNext(
+		Session session, Layout layout, long companyId,
+		String layoutPrototypeUuid, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_C_L_HEAD_COMPANYID_2);
+
+		boolean bindLayoutPrototypeUuid = false;
+
+		if (layoutPrototypeUuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_3);
+		}
+		else {
+			bindLayoutPrototypeUuid = true;
+
+			query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_C_L_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (bindLayoutPrototypeUuid) {
+			qPos.add(layoutPrototypeUuid);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 */
+	@Override
+	public void removeByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head) {
+
+		for (Layout layout :
+				findByC_L_Head(
+					companyId, layoutPrototypeUuid, head, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where companyId = &#63; and layoutPrototypeUuid = &#63; and head = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByC_L_Head(
+		long companyId, String layoutPrototypeUuid, boolean head) {
+
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
+		FinderPath finderPath = _finderPathCountByC_L_Head;
+
+		Object[] finderArgs = new Object[] {
+			companyId, layoutPrototypeUuid, head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_L_HEAD_COMPANYID_2);
+
+			boolean bindLayoutPrototypeUuid = false;
+
+			if (layoutPrototypeUuid.isEmpty()) {
+				query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_3);
+			}
+			else {
+				bindLayoutPrototypeUuid = true;
+
+				query.append(_FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_L_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindLayoutPrototypeUuid) {
+					qPos.add(layoutPrototypeUuid);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_L_HEAD_COMPANYID_2 =
+		"layout.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_2 =
+		"layout.layoutPrototypeUuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_L_HEAD_LAYOUTPROTOTYPEUUID_3 =
+		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_L_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByP_I;
+	private FinderPath _finderPathWithoutPaginationFindByP_I;
+	private FinderPath _finderPathCountByP_I;
+
+	/**
+	 * Returns all the layouts where privateLayout = &#63; and iconImageId = &#63;.
 	 *
 	 * @param privateLayout the private layout
 	 * @param iconImageId the icon image ID
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByP_I(boolean privateLayout, long iconImageId) {
+		return findByP_I(
+			privateLayout, iconImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByP_I(
+		boolean privateLayout, long iconImageId, int start, int end) {
+
+		return findByP_I(privateLayout, iconImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByP_I(
+		boolean privateLayout, long iconImageId, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByP_I(
+			privateLayout, iconImageId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public Layout fetchByP_I(
-		boolean privateLayout, long iconImageId, boolean retrieveFromCache) {
+	public List<Layout> findByP_I(
+		boolean privateLayout, long iconImageId, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
 
-		Object[] finderArgs = new Object[] {privateLayout, iconImageId};
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Object result = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByP_I;
+			finderArgs = new Object[] {privateLayout, iconImageId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByP_I;
+			finderArgs = new Object[] {
+				privateLayout, iconImageId, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_I, finderArgs, this);
-		}
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-		if (result instanceof Layout) {
-			Layout layout = (Layout)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((privateLayout != layout.isPrivateLayout()) ||
+						(iconImageId != layout.getIconImageId())) {
 
-			if ((privateLayout != layout.isPrivateLayout()) ||
-				(iconImageId != layout.getIconImageId())) {
+						list = null;
 
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
 			query.append(_FINDER_COLUMN_P_I_PRIVATELAYOUT_2);
 
 			query.append(_FINDER_COLUMN_P_I_ICONIMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -7442,33 +16357,25 @@ public class LayoutPersistenceImpl
 
 				qPos.add(iconImageId);
 
-				List<Layout> list = q.list();
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByP_I, finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"LayoutPersistenceImpl.fetchByP_I(boolean, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					Layout layout = list.get(0);
-
-					result = layout;
-
-					cacheResult(layout);
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByP_I, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7477,28 +16384,307 @@ public class LayoutPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByP_I_First(
+			boolean privateLayout, long iconImageId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByP_I_First(
+			privateLayout, iconImageId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", iconImageId=");
+		msg.append(iconImageId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByP_I_First(
+		boolean privateLayout, long iconImageId,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByP_I(
+			privateLayout, iconImageId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByP_I_Last(
+			boolean privateLayout, long iconImageId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByP_I_Last(
+			privateLayout, iconImageId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", iconImageId=");
+		msg.append(iconImageId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByP_I_Last(
+		boolean privateLayout, long iconImageId,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByP_I(privateLayout, iconImageId);
+
+		if (count == 0) {
 			return null;
 		}
+
+		List<Layout> list = findByP_I(
+			privateLayout, iconImageId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByP_I_PrevAndNext(
+			long plid, boolean privateLayout, long iconImageId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByP_I_PrevAndNext(
+				session, layout, privateLayout, iconImageId, orderByComparator,
+				true);
+
+			array[1] = layout;
+
+			array[2] = getByP_I_PrevAndNext(
+				session, layout, privateLayout, iconImageId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByP_I_PrevAndNext(
+		Session session, Layout layout, boolean privateLayout, long iconImageId,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
 		else {
-			return (Layout)result;
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_P_I_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_P_I_ICONIMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(privateLayout);
+
+		qPos.add(iconImageId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
 	/**
-	 * Removes the layout where privateLayout = &#63; and iconImageId = &#63; from the database.
+	 * Removes all the layouts where privateLayout = &#63; and iconImageId = &#63; from the database.
 	 *
 	 * @param privateLayout the private layout
 	 * @param iconImageId the icon image ID
-	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByP_I(boolean privateLayout, long iconImageId)
-		throws NoSuchLayoutException {
+	public void removeByP_I(boolean privateLayout, long iconImageId) {
+		for (Layout layout :
+				findByP_I(
+					privateLayout, iconImageId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-		Layout layout = findByP_I(privateLayout, iconImageId);
-
-		return remove(layout);
+			remove(layout);
+		}
 	}
 
 	/**
@@ -7564,33 +16750,38 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_P_I_ICONIMAGEID_2 =
 		"layout.iconImageId = ?";
 
-	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
+	private FinderPath _finderPathFetchByP_I_Head;
+	private FinderPath _finderPathCountByP_I_Head;
 
 	/**
-	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByC_C(long classNameId, long classPK)
+	public Layout findByP_I_Head(
+			boolean privateLayout, long iconImageId, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByC_C(classNameId, classPK);
+		Layout layout = fetchByP_I_Head(privateLayout, iconImageId, head);
 
 		if (layout == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("classNameId=");
-			msg.append(classNameId);
+			msg.append("privateLayout=");
+			msg.append(privateLayout);
 
-			msg.append(", classPK=");
-			msg.append(classPK);
+			msg.append(", iconImageId=");
+			msg.append(iconImageId);
+
+			msg.append(", head=");
+			msg.append(head);
 
 			msg.append("}");
 
@@ -7605,56 +16796,64 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
+	public Layout fetchByP_I_Head(
+		boolean privateLayout, long iconImageId, boolean head) {
+
+		return fetchByP_I_Head(privateLayout, iconImageId, head, true);
 	}
 
 	/**
-	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache) {
+	public Layout fetchByP_I_Head(
+		boolean privateLayout, long iconImageId, boolean head,
+		boolean retrieveFromCache) {
 
-		Object[] finderArgs = new Object[] {classNameId, classPK};
+		Object[] finderArgs = new Object[] {privateLayout, iconImageId, head};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_C, finderArgs, this);
+				_finderPathFetchByP_I_Head, finderArgs, this);
 		}
 
 		if (result instanceof Layout) {
 			Layout layout = (Layout)result;
 
-			if ((classNameId != layout.getClassNameId()) ||
-				(classPK != layout.getClassPK())) {
+			if ((privateLayout != layout.isPrivateLayout()) ||
+				(iconImageId != layout.getIconImageId()) ||
+				(head != layout.isHead())) {
 
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_P_I_HEAD_PRIVATELAYOUT_2);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_P_I_HEAD_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_P_I_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -7667,15 +16866,17 @@ public class LayoutPersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(classNameId);
+				qPos.add(privateLayout);
 
-				qPos.add(classPK);
+				qPos.add(iconImageId);
+
+				qPos.add(head);
 
 				List<Layout> list = q.list();
 
 				if (list.isEmpty()) {
 					FinderCacheUtil.putResult(
-						_finderPathFetchByC_C, finderArgs, list);
+						_finderPathFetchByP_I_Head, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -7683,7 +16884,7 @@ public class LayoutPersistenceImpl
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"LayoutPersistenceImpl.fetchByC_C(long, long, boolean) with parameters (" +
+								"LayoutPersistenceImpl.fetchByP_I_Head(boolean, long, boolean, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -7697,7 +16898,8 @@ public class LayoutPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_C, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByP_I_Head, finderArgs);
 
 				throw processException(e);
 			}
@@ -7715,19 +16917,581 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Removes the layout where classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the layout where privateLayout = &#63; and iconImageId = &#63; and head = &#63; from the database.
 	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByC_C(long classNameId, long classPK)
+	public Layout removeByP_I_Head(
+			boolean privateLayout, long iconImageId, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = findByC_C(classNameId, classPK);
+		Layout layout = findByP_I_Head(privateLayout, iconImageId, head);
 
 		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where privateLayout = &#63; and iconImageId = &#63; and head = &#63;.
+	 *
+	 * @param privateLayout the private layout
+	 * @param iconImageId the icon image ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByP_I_Head(
+		boolean privateLayout, long iconImageId, boolean head) {
+
+		FinderPath finderPath = _finderPathCountByP_I_Head;
+
+		Object[] finderArgs = new Object[] {privateLayout, iconImageId, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_P_I_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_P_I_HEAD_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_P_I_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(privateLayout);
+
+				qPos.add(iconImageId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_P_I_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_P_I_HEAD_ICONIMAGEID_2 =
+		"layout.iconImageId = ? AND ";
+
+	private static final String _FINDER_COLUMN_P_I_HEAD_HEAD_2 =
+		"layout.head = ?";
+
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
+
+	/**
+	 * Returns all the layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_C(long classNameId, long classPK) {
+		return findByC_C(
+			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return findByC_C(classNameId, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByC_C(
+			classNameId, classPK, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByC_C;
+			finderArgs = new Object[] {classNameId, classPK};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByC_C;
+			finderArgs = new Object[] {
+				classNameId, classPK, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((classNameId != layout.getClassNameId()) ||
+						(classPK != layout.getClassPK())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByC_C_First(
+			long classNameId, long classPK,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByC_C_First(
+			classNameId, classPK, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C_First(
+		long classNameId, long classPK,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByC_C(
+			classNameId, classPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByC_C_Last(
+			long classNameId, long classPK,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByC_C_Last(
+			classNameId, classPK, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C_Last(
+		long classNameId, long classPK,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByC_C(
+			classNameId, classPK, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByC_C_PrevAndNext(
+			long plid, long classNameId, long classPK,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByC_C_PrevAndNext(
+				session, layout, classNameId, classPK, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByC_C_PrevAndNext(
+				session, layout, classNameId, classPK, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByC_C_PrevAndNext(
+		Session session, Layout layout, long classNameId, long classPK,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	@Override
+	public void removeByC_C(long classNameId, long classPK) {
+		for (Layout layout :
+				findByC_C(
+					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(layout);
+		}
 	}
 
 	/**
@@ -7793,8 +17557,1272 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
 		"layout.classPK = ?";
 
-	private FinderPath _finderPathFetchByG_P_L;
+	private FinderPath _finderPathFetchByC_C_Head;
+	private FinderPath _finderPathCountByC_C_Head;
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param head the head
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByC_C_Head(long classNameId, long classPK, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByC_C_Head(classNameId, classPK, head);
+
+		if (layout == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", head=");
+			msg.append(head);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutException(msg.toString());
+		}
+
+		return layout;
+	}
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param head the head
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C_Head(
+		long classNameId, long classPK, boolean head) {
+
+		return fetchByC_C_Head(classNameId, classPK, head, true);
+	}
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param head the head
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C_Head(
+		long classNameId, long classPK, boolean head,
+		boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {classNameId, classPK, head};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_C_Head, finderArgs, this);
+		}
+
+		if (result instanceof Layout) {
+			Layout layout = (Layout)result;
+
+			if ((classNameId != layout.getClassNameId()) ||
+				(classPK != layout.getClassPK()) || (head != layout.isHead())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(head);
+
+				List<Layout> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_C_Head, finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutPersistenceImpl.fetchByC_C_Head(long, long, boolean, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Layout layout = list.get(0);
+
+					result = layout;
+
+					cacheResult(layout);
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_C_Head, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Layout)result;
+		}
+	}
+
+	/**
+	 * Removes the layout where classNameId = &#63; and classPK = &#63; and head = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param head the head
+	 * @return the layout that was removed
+	 */
+	@Override
+	public Layout removeByC_C_Head(long classNameId, long classPK, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByC_C_Head(classNameId, classPK, head);
+
+		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where classNameId = &#63; and classPK = &#63; and head = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByC_C_Head(long classNameId, long classPK, boolean head) {
+		FinderPath finderPath = _finderPathCountByC_C_Head;
+
+		Object[] finderArgs = new Object[] {classNameId, classPK, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_HEAD_CLASSNAMEID_2 =
+		"layout.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_HEAD_CLASSPK_2 =
+		"layout.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_HEAD_HEAD_2 =
+		"layout.head = ?";
+
+	private FinderPath _finderPathWithPaginationFindByG_P_L;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_L;
 	private FinderPath _finderPathCountByG_P_L;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_L(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		return findByG_P_L(
+			groupId, privateLayout, layoutId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, int start,
+		int end) {
+
+		return findByG_P_L(groupId, privateLayout, layoutId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_L(
+			groupId, privateLayout, layoutId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_L;
+			finderArgs = new Object[] {groupId, privateLayout, layoutId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_L;
+			finderArgs = new Object[] {
+				groupId, privateLayout, layoutId, start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						(layoutId != layout.getLayoutId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(layoutId);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_L_First(
+			long groupId, boolean privateLayout, long layoutId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_L_First(
+			groupId, privateLayout, layoutId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_L_First(
+		long groupId, boolean privateLayout, long layoutId,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_L(
+			groupId, privateLayout, layoutId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_L_Last(
+			long groupId, boolean privateLayout, long layoutId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_L_Last(
+			groupId, privateLayout, layoutId, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_L_Last(
+		long groupId, boolean privateLayout, long layoutId,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_L(groupId, privateLayout, layoutId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_L(
+			groupId, privateLayout, layoutId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_L_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long layoutId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_L_PrevAndNext(
+				session, layout, groupId, privateLayout, layoutId,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_L_PrevAndNext(
+				session, layout, groupId, privateLayout, layoutId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_L_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long layoutId, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(layoutId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_L(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		return filterFindByG_P_L(
+			groupId, privateLayout, layoutId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, int start,
+		int end) {
+
+		return filterFindByG_P_L(
+			groupId, privateLayout, layoutId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_L(
+				groupId, privateLayout, layoutId, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(layoutId);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_L_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long layoutId,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_L_PrevAndNext(
+				plid, groupId, privateLayout, layoutId, orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_L_PrevAndNext(
+				session, layout, groupId, privateLayout, layoutId,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_L_PrevAndNext(
+				session, layout, groupId, privateLayout, layoutId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_L_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long layoutId, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(layoutId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 */
+	@Override
+	public void removeByG_P_L(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		for (Layout layout :
+				findByG_P_L(
+					groupId, privateLayout, layoutId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_L(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		FinderPath finderPath = _finderPathCountByG_P_L;
+
+		Object[] finderArgs = new Object[] {groupId, privateLayout, layoutId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(layoutId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_L(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_L(groupId, privateLayout, layoutId);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(layoutId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_L_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_L_LAYOUTID_2 =
+		"layout.layoutId = ?";
+
+	private FinderPath _finderPathFetchByG_P_L_Head;
+	private FinderPath _finderPathCountByG_P_L_Head;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -7807,11 +18835,12 @@ public class LayoutPersistenceImpl
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_P_L(
+	public Layout findByG_P_L_Head(
 			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_L(groupId, privateLayout, layoutId, head);
+		Layout layout = fetchByG_P_L_Head(
+			groupId, privateLayout, layoutId, head);
 
 		if (layout == null) {
 			StringBundler msg = new StringBundler(10);
@@ -7852,10 +18881,10 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_L(
+	public Layout fetchByG_P_L_Head(
 		long groupId, boolean privateLayout, long layoutId, boolean head) {
 
-		return fetchByG_P_L(groupId, privateLayout, layoutId, head, true);
+		return fetchByG_P_L_Head(groupId, privateLayout, layoutId, head, true);
 	}
 
 	/**
@@ -7869,7 +18898,7 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_L(
+	public Layout fetchByG_P_L_Head(
 		long groupId, boolean privateLayout, long layoutId, boolean head,
 		boolean retrieveFromCache) {
 
@@ -7881,7 +18910,7 @@ public class LayoutPersistenceImpl
 
 		if (retrieveFromCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_P_L, finderArgs, this);
+				_finderPathFetchByG_P_L_Head, finderArgs, this);
 		}
 
 		if (result instanceof Layout) {
@@ -7901,13 +18930,13 @@ public class LayoutPersistenceImpl
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_PRIVATELAYOUT_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_LAYOUTID_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_HEAD_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -7932,7 +18961,7 @@ public class LayoutPersistenceImpl
 
 				if (list.isEmpty()) {
 					FinderCacheUtil.putResult(
-						_finderPathFetchByG_P_L, finderArgs, list);
+						_finderPathFetchByG_P_L_Head, finderArgs, list);
 				}
 				else {
 					Layout layout = list.get(0);
@@ -7944,7 +18973,7 @@ public class LayoutPersistenceImpl
 			}
 			catch (Exception e) {
 				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_P_L, finderArgs);
+					_finderPathFetchByG_P_L_Head, finderArgs);
 
 				throw processException(e);
 			}
@@ -7971,11 +19000,12 @@ public class LayoutPersistenceImpl
 	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByG_P_L(
+	public Layout removeByG_P_L_Head(
 			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = findByG_P_L(groupId, privateLayout, layoutId, head);
+		Layout layout = findByG_P_L_Head(
+			groupId, privateLayout, layoutId, head);
 
 		return remove(layout);
 	}
@@ -7990,10 +19020,10 @@ public class LayoutPersistenceImpl
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByG_P_L(
+	public int countByG_P_L_Head(
 		long groupId, boolean privateLayout, long layoutId, boolean head) {
 
-		FinderPath finderPath = _finderPathCountByG_P_L;
+		FinderPath finderPath = _finderPathCountByG_P_L_Head;
 
 		Object[] finderArgs = new Object[] {
 			groupId, privateLayout, layoutId, head
@@ -8007,13 +19037,13 @@ public class LayoutPersistenceImpl
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_PRIVATELAYOUT_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_LAYOUTID_2);
 
-			query.append(_FINDER_COLUMN_G_P_L_HEAD_2);
+			query.append(_FINDER_COLUMN_G_P_L_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -8051,16 +19081,17 @@ public class LayoutPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_P_L_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_P_L_HEAD_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2 =
+	private static final String _FINDER_COLUMN_G_P_L_HEAD_PRIVATELAYOUT_2 =
 		"layout.privateLayout = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_L_LAYOUTID_2 =
+	private static final String _FINDER_COLUMN_G_P_L_HEAD_LAYOUTID_2 =
 		"layout.layoutId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_L_HEAD_2 = "layout.head = ?";
+	private static final String _FINDER_COLUMN_G_P_L_HEAD_HEAD_2 =
+		"layout.head = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P;
@@ -9731,6 +20762,1786 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL =
 		"layout.parentLayoutId IN (";
 
+	private FinderPath _finderPathWithPaginationFindByG_P_P_Head;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_P_Head;
+	private FinderPath _finderPathCountByG_P_P_Head;
+	private FinderPath _finderPathWithPaginationCountByG_P_P_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean head) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		int start, int end) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_P_Head;
+			finderArgs = new Object[] {
+				groupId, privateLayout, parentLayoutId, head
+			};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_P_Head;
+			finderArgs = new Object[] {
+				groupId, privateLayout, parentLayoutId, head, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						(parentLayoutId != layout.getParentLayoutId()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(parentLayoutId);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_P_Head_First(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_P_Head_First(
+			groupId, privateLayout, parentLayoutId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", parentLayoutId=");
+		msg.append(parentLayoutId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_P_Head_First(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_P_Head_Last(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_P_Head_Last(
+			groupId, privateLayout, parentLayoutId, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", parentLayoutId=");
+		msg.append(parentLayoutId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_P_Head_Last(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_P_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long parentLayoutId,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_P_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long parentLayoutId, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(parentLayoutId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean head) {
+
+		return filterFindByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		int start, int end) {
+
+		return filterFindByG_P_P_Head(
+			groupId, privateLayout, parentLayoutId, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_P_Head(
+				groupId, privateLayout, parentLayoutId, head, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(parentLayoutId);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_P_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long parentLayoutId,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_P_Head_PrevAndNext(
+				plid, groupId, privateLayout, parentLayoutId, head,
+				orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_P_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_P_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long parentLayoutId, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(parentLayoutId);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head) {
+
+		return filterFindByG_P_P_Head(
+			groupId, privateLayout, parentLayoutIds, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end) {
+
+		return filterFindByG_P_P_Head(
+			groupId, privateLayout, parentLayoutIds, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_P_Head(
+				groupId, privateLayout, parentLayoutIds, head, start, end,
+				orderByComparator);
+		}
+
+		if (parentLayoutIds == null) {
+			parentLayoutIds = new long[0];
+		}
+		else if (parentLayoutIds.length > 1) {
+			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
+
+			Arrays.sort(parentLayoutIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7_SQL);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL);
+
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND layout.system_ = [$FALSE$]");
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutIds, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutIds, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_P_Head(
+			groupId, privateLayout, parentLayoutIds, head, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		if (parentLayoutIds == null) {
+			parentLayoutIds = new long[0];
+		}
+		else if (parentLayoutIds.length > 1) {
+			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
+
+			Arrays.sort(parentLayoutIds);
+		}
+
+		if (parentLayoutIds.length == 1) {
+			return findByG_P_P_Head(
+				groupId, privateLayout, parentLayoutIds[0], head, start, end,
+				orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderArgs = new Object[] {
+				groupId, privateLayout, StringUtil.merge(parentLayoutIds), head
+			};
+		}
+		else {
+			finderArgs = new Object[] {
+				groupId, privateLayout, StringUtil.merge(parentLayoutIds), head,
+				start, end, orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByG_P_P_Head, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						!ArrayUtil.contains(
+							parentLayoutIds, layout.getParentLayoutId()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			try {
+				if ((start == QueryUtil.ALL_POS) &&
+					(end == QueryUtil.ALL_POS) &&
+					(databaseInMaxParameters > 0) &&
+					(parentLayoutIds.length > databaseInMaxParameters)) {
+
+					list = new ArrayList<Layout>();
+
+					long[][] parentLayoutIdsPages = (long[][])ArrayUtil.split(
+						parentLayoutIds, databaseInMaxParameters);
+
+					for (long[] parentLayoutIdsPage : parentLayoutIdsPages) {
+						list.addAll(
+							_findByG_P_P_Head(
+								groupId, privateLayout, parentLayoutIdsPage,
+								head, start, end, orderByComparator,
+								pagination));
+					}
+
+					Collections.sort(list, orderByComparator);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = _findByG_P_P_Head(
+						groupId, privateLayout, parentLayoutIds, head, start,
+						end, orderByComparator, pagination);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByG_P_P_Head, finderArgs,
+					list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByG_P_P_Head, finderArgs);
+
+				throw processException(e);
+			}
+		}
+
+		return list;
+	}
+
+	private List<Layout> _findByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean pagination) {
+
+		List<Layout> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2);
+
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND layout.system = [$FALSE$]");
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(
+				query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+		}
+		else if (pagination) {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			if (!pagination) {
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
+			}
+			else {
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean head) {
+
+		for (Layout layout :
+				findByG_P_P_Head(
+					groupId, privateLayout, parentLayoutId, head,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean head) {
+
+		FinderPath finderPath = _finderPathCountByG_P_P_Head;
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, parentLayoutId, head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(parentLayoutId);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head) {
+
+		if (parentLayoutIds == null) {
+			parentLayoutIds = new long[0];
+		}
+		else if (parentLayoutIds.length > 1) {
+			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
+
+			Arrays.sort(parentLayoutIds);
+		}
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, StringUtil.merge(parentLayoutIds), head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathWithPaginationCountByG_P_P_Head, finderArgs, this);
+
+		if (count == null) {
+			try {
+				if ((databaseInMaxParameters > 0) &&
+					(parentLayoutIds.length > databaseInMaxParameters)) {
+
+					count = Long.valueOf(0);
+
+					long[][] parentLayoutIdsPages = (long[][])ArrayUtil.split(
+						parentLayoutIds, databaseInMaxParameters);
+
+					for (long[] parentLayoutIdsPage : parentLayoutIdsPages) {
+						count += Long.valueOf(
+							_countByG_P_P_Head(
+								groupId, privateLayout, parentLayoutIdsPage,
+								head));
+					}
+				}
+				else {
+					count = Long.valueOf(
+						_countByG_P_P_Head(
+							groupId, privateLayout, parentLayoutIds, head));
+				}
+
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationCountByG_P_P_Head, finderArgs,
+					count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationCountByG_P_P_Head, finderArgs);
+
+				throw processException(e);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head) {
+
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2);
+
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND layout.system = [$FALSE$]");
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_P_Head(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_P_Head(
+				groupId, privateLayout, parentLayoutId, head);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(parentLayoutId);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutIds the parent layout IDs
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_P_Head(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_P_Head(
+				groupId, privateLayout, parentLayoutIds, head);
+		}
+
+		if (parentLayoutIds == null) {
+			parentLayoutIds = new long[0];
+		}
+		else if (parentLayoutIds.length > 1) {
+			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
+
+			Arrays.sort(parentLayoutIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7_SQL);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL);
+
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND layout.system_ = [$FALSE$]");
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PRIVATELAYOUT_2_SQL =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2 =
+		"layout.parentLayoutId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7 =
+		"layout.parentLayoutId IN (";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_2_SQL =
+		"layout.parentLayoutId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_PARENTLAYOUTID_7_SQL =
+		"layout.parentLayoutId IN (";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_P_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByG_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_T;
 	private FinderPath _finderPathCountByG_P_T;
@@ -10829,8 +23640,2265 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_SQL =
 		"(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
 
-	private FinderPath _finderPathFetchByG_P_F;
+	private FinderPath _finderPathWithPaginationFindByG_P_T_Head;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_T_Head;
+	private FinderPath _finderPathCountByG_P_T_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head) {
+
+		return findByG_P_T_Head(
+			groupId, privateLayout, type, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head,
+		int start, int end) {
+
+		return findByG_P_T_Head(
+			groupId, privateLayout, type, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_T_Head(
+			groupId, privateLayout, type, head, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		type = Objects.toString(type, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_T_Head;
+			finderArgs = new Object[] {groupId, privateLayout, type, head};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_T_Head;
+			finderArgs = new Object[] {
+				groupId, privateLayout, type, head, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						!type.equals(layout.getType()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2);
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_T_Head_First(
+			long groupId, boolean privateLayout, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_T_Head_First(
+			groupId, privateLayout, type, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_T_Head_First(
+		long groupId, boolean privateLayout, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_T_Head(
+			groupId, privateLayout, type, head, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_T_Head_Last(
+			long groupId, boolean privateLayout, String type, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_T_Head_Last(
+			groupId, privateLayout, type, head, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_T_Head_Last(
+		long groupId, boolean privateLayout, String type, boolean head,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_T_Head(groupId, privateLayout, type, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_T_Head(
+			groupId, privateLayout, type, head, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_T_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, String type,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		type = Objects.toString(type, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_T_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, type, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_T_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, type, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_T_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String type, boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindType) {
+			qPos.add(type);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head) {
+
+		return filterFindByG_P_T_Head(
+			groupId, privateLayout, type, head, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head,
+		int start, int end) {
+
+		return filterFindByG_P_T_Head(
+			groupId, privateLayout, type, head, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_T_Head(
+				groupId, privateLayout, type, head, start, end,
+				orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_T_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, String type,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_T_Head_PrevAndNext(
+				plid, groupId, privateLayout, type, head, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_T_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, type, head,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_T_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, type, head,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_T_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String type, boolean head, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindType) {
+			qPos.add(type);
+		}
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head) {
+
+		for (Layout layout :
+				findByG_P_T_Head(
+					groupId, privateLayout, type, head, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head) {
+
+		type = Objects.toString(type, "");
+
+		FinderPath finderPath = _finderPathCountByG_P_T_Head;
+
+		Object[] finderArgs = new Object[] {groupId, privateLayout, type, head};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2);
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_T_Head(
+		long groupId, boolean privateLayout, String type, boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_T_Head(groupId, privateLayout, type, head);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_P_T_HEAD_TYPE_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_T_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_PRIVATELAYOUT_2_SQL =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_TYPE_2 =
+		"layout.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_TYPE_3 =
+		"(layout.type IS NULL OR layout.type = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_TYPE_2_SQL =
+		"layout.type_ = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_TYPE_3_SQL =
+		"(layout.type_ IS NULL OR layout.type_ = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_T_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByG_P_F;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_F;
 	private FinderPath _finderPathCountByG_P_F;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
+		return findByG_P_F(
+			groupId, privateLayout, friendlyURL, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL, int start,
+		int end) {
+
+		return findByG_P_F(
+			groupId, privateLayout, friendlyURL, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_F(
+			groupId, privateLayout, friendlyURL, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL, int start,
+		int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_F;
+			finderArgs = new Object[] {groupId, privateLayout, friendlyURL};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_F;
+			finderArgs = new Object[] {
+				groupId, privateLayout, friendlyURL, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						!friendlyURL.equals(layout.getFriendlyURL())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindFriendlyURL) {
+					qPos.add(friendlyURL);
+				}
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_F_First(
+			long groupId, boolean privateLayout, String friendlyURL,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_F_First(
+			groupId, privateLayout, friendlyURL, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", friendlyURL=");
+		msg.append(friendlyURL);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_F_First(
+		long groupId, boolean privateLayout, String friendlyURL,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_F(
+			groupId, privateLayout, friendlyURL, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_F_Last(
+			long groupId, boolean privateLayout, String friendlyURL,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_F_Last(
+			groupId, privateLayout, friendlyURL, orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", friendlyURL=");
+		msg.append(friendlyURL);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_F_Last(
+		long groupId, boolean privateLayout, String friendlyURL,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_F(groupId, privateLayout, friendlyURL);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_F(
+			groupId, privateLayout, friendlyURL, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_F_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, String friendlyURL,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_F_PrevAndNext(
+				session, layout, groupId, privateLayout, friendlyURL,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_F_PrevAndNext(
+				session, layout, groupId, privateLayout, friendlyURL,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_F_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String friendlyURL, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+		boolean bindFriendlyURL = false;
+
+		if (friendlyURL.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+		}
+		else {
+			bindFriendlyURL = true;
+
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindFriendlyURL) {
+			qPos.add(friendlyURL);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
+		return filterFindByG_P_F(
+			groupId, privateLayout, friendlyURL, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL, int start,
+		int end) {
+
+		return filterFindByG_P_F(
+			groupId, privateLayout, friendlyURL, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_F(
+				groupId, privateLayout, friendlyURL, start, end,
+				orderByComparator);
+		}
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+		boolean bindFriendlyURL = false;
+
+		if (friendlyURL.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+		}
+		else {
+			bindFriendlyURL = true;
+
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindFriendlyURL) {
+				qPos.add(friendlyURL);
+			}
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_F_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, String friendlyURL,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_F_PrevAndNext(
+				plid, groupId, privateLayout, friendlyURL, orderByComparator);
+		}
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_F_PrevAndNext(
+				session, layout, groupId, privateLayout, friendlyURL,
+				orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_F_PrevAndNext(
+				session, layout, groupId, privateLayout, friendlyURL,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_F_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String friendlyURL, OrderByComparator<Layout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+		boolean bindFriendlyURL = false;
+
+		if (friendlyURL.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+		}
+		else {
+			bindFriendlyURL = true;
+
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindFriendlyURL) {
+			qPos.add(friendlyURL);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 */
+	@Override
+	public void removeByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
+		for (Layout layout :
+				findByG_P_F(
+					groupId, privateLayout, friendlyURL, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		FinderPath finderPath = _finderPathCountByG_P_F;
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, friendlyURL
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindFriendlyURL) {
+					qPos.add(friendlyURL);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_F(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_F(groupId, privateLayout, friendlyURL);
+		}
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+
+		boolean bindFriendlyURL = false;
+
+		if (friendlyURL.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+		}
+		else {
+			bindFriendlyURL = true;
+
+			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindFriendlyURL) {
+				qPos.add(friendlyURL);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 =
+		"layout.friendlyURL = ?";
+
+	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 =
+		"(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
+
+	private FinderPath _finderPathFetchByG_P_F_Head;
+	private FinderPath _finderPathCountByG_P_F_Head;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -10843,12 +25911,13 @@ public class LayoutPersistenceImpl
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_P_F(
+	public Layout findByG_P_F_Head(
 			long groupId, boolean privateLayout, String friendlyURL,
 			boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_F(groupId, privateLayout, friendlyURL, head);
+		Layout layout = fetchByG_P_F_Head(
+			groupId, privateLayout, friendlyURL, head);
 
 		if (layout == null) {
 			StringBundler msg = new StringBundler(10);
@@ -10889,10 +25958,11 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_F(
+	public Layout fetchByG_P_F_Head(
 		long groupId, boolean privateLayout, String friendlyURL, boolean head) {
 
-		return fetchByG_P_F(groupId, privateLayout, friendlyURL, head, true);
+		return fetchByG_P_F_Head(
+			groupId, privateLayout, friendlyURL, head, true);
 	}
 
 	/**
@@ -10906,7 +25976,7 @@ public class LayoutPersistenceImpl
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_F(
+	public Layout fetchByG_P_F_Head(
 		long groupId, boolean privateLayout, String friendlyURL, boolean head,
 		boolean retrieveFromCache) {
 
@@ -10920,7 +25990,7 @@ public class LayoutPersistenceImpl
 
 		if (retrieveFromCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_P_F, finderArgs, this);
+				_finderPathFetchByG_P_F_Head, finderArgs, this);
 		}
 
 		if (result instanceof Layout) {
@@ -10940,22 +26010,22 @@ public class LayoutPersistenceImpl
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_PRIVATELAYOUT_2);
 
 			boolean bindFriendlyURL = false;
 
 			if (friendlyURL.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+				query.append(_FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_3);
 			}
 			else {
 				bindFriendlyURL = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_2);
 			}
 
-			query.append(_FINDER_COLUMN_G_P_F_HEAD_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -10982,7 +26052,7 @@ public class LayoutPersistenceImpl
 
 				if (list.isEmpty()) {
 					FinderCacheUtil.putResult(
-						_finderPathFetchByG_P_F, finderArgs, list);
+						_finderPathFetchByG_P_F_Head, finderArgs, list);
 				}
 				else {
 					Layout layout = list.get(0);
@@ -10994,7 +26064,7 @@ public class LayoutPersistenceImpl
 			}
 			catch (Exception e) {
 				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_P_F, finderArgs);
+					_finderPathFetchByG_P_F_Head, finderArgs);
 
 				throw processException(e);
 			}
@@ -11021,12 +26091,13 @@ public class LayoutPersistenceImpl
 	 * @return the layout that was removed
 	 */
 	@Override
-	public Layout removeByG_P_F(
+	public Layout removeByG_P_F_Head(
 			long groupId, boolean privateLayout, String friendlyURL,
 			boolean head)
 		throws NoSuchLayoutException {
 
-		Layout layout = findByG_P_F(groupId, privateLayout, friendlyURL, head);
+		Layout layout = findByG_P_F_Head(
+			groupId, privateLayout, friendlyURL, head);
 
 		return remove(layout);
 	}
@@ -11041,12 +26112,12 @@ public class LayoutPersistenceImpl
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByG_P_F(
+	public int countByG_P_F_Head(
 		long groupId, boolean privateLayout, String friendlyURL, boolean head) {
 
 		friendlyURL = Objects.toString(friendlyURL, "");
 
-		FinderPath finderPath = _finderPathCountByG_P_F;
+		FinderPath finderPath = _finderPathCountByG_P_F_Head;
 
 		Object[] finderArgs = new Object[] {
 			groupId, privateLayout, friendlyURL, head
@@ -11060,22 +26131,22 @@ public class LayoutPersistenceImpl
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_PRIVATELAYOUT_2);
 
 			boolean bindFriendlyURL = false;
 
 			if (friendlyURL.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+				query.append(_FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_3);
 			}
 			else {
 				bindFriendlyURL = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_2);
 			}
 
-			query.append(_FINDER_COLUMN_G_P_F_HEAD_2);
+			query.append(_FINDER_COLUMN_G_P_F_HEAD_HEAD_2);
 
 			String sql = query.toString();
 
@@ -11115,126 +26186,168 @@ public class LayoutPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_P_F_HEAD_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 =
+	private static final String _FINDER_COLUMN_G_P_F_HEAD_PRIVATELAYOUT_2 =
 		"layout.privateLayout = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 =
+	private static final String _FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_2 =
 		"layout.friendlyURL = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 =
+	private static final String _FINDER_COLUMN_G_P_F_HEAD_FRIENDLYURL_3 =
 		"(layout.friendlyURL IS NULL OR layout.friendlyURL = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_P_F_HEAD_2 = "layout.head = ?";
+	private static final String _FINDER_COLUMN_G_P_F_HEAD_HEAD_2 =
+		"layout.head = ?";
 
-	private FinderPath _finderPathFetchByG_P_SPLU;
+	private FinderPath _finderPathWithPaginationFindByG_P_SPLU;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_SPLU;
 	private FinderPath _finderPathCountByG_P_SPLU;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the matching layout
-	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 * @return the matching layouts
 	 */
 	@Override
-	public Layout findByG_P_SPLU(
-			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid)
-		throws NoSuchLayoutException {
-
-		Layout layout = fetchByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid);
-
-		if (layout == null) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", sourcePrototypeLayoutUuid=");
-			msg.append(sourcePrototypeLayoutUuid);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchLayoutException(msg.toString());
-		}
-
-		return layout;
-	}
-
-	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchByG_P_SPLU(
+	public List<Layout> findByG_P_SPLU(
 		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
 
-		return fetchByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, true);
+		return findByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
 	 */
 	@Override
-	public Layout fetchByG_P_SPLU(
+	public List<Layout> findByG_P_SPLU(
 		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		int start, int end) {
+
+		return findByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean retrieveFromCache) {
 
 		sourcePrototypeLayoutUuid = Objects.toString(
 			sourcePrototypeLayoutUuid, "");
 
-		Object[] finderArgs = new Object[] {
-			groupId, privateLayout, sourcePrototypeLayoutUuid
-		};
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Object result = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_P_SPLU, finderArgs, this);
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByG_P_SPLU;
+			finderArgs = new Object[] {
+				groupId, privateLayout, sourcePrototypeLayoutUuid
+			};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByG_P_SPLU;
+			finderArgs = new Object[] {
+				groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+				orderByComparator
+			};
 		}
 
-		if (result instanceof Layout) {
-			Layout layout = (Layout)result;
+		List<Layout> list = null;
 
-			if ((groupId != layout.getGroupId()) ||
-				(privateLayout != layout.isPrivateLayout()) ||
-				!Objects.equals(
-					sourcePrototypeLayoutUuid,
-					layout.getSourcePrototypeLayoutUuid())) {
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-				result = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						!sourcePrototypeLayoutUuid.equals(
+							layout.getSourcePrototypeLayoutUuid())) {
+
+						list = null;
+
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
@@ -11253,6 +26366,14 @@ public class LayoutPersistenceImpl
 
 				query.append(
 					_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -11274,34 +26395,25 @@ public class LayoutPersistenceImpl
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
-				List<Layout> list = q.list();
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_P_SPLU, finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"LayoutPersistenceImpl.fetchByG_P_SPLU(long, boolean, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					Layout layout = list.get(0);
-
-					result = layout;
-
-					cacheResult(layout);
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_P_SPLU, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11310,32 +26422,736 @@ public class LayoutPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Layout)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the layout that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout removeByG_P_SPLU(
+	public Layout findByG_P_SPLU_First(
 			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid)
+			String sourcePrototypeLayoutUuid,
+			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = findByG_P_SPLU(
+		Layout layout = fetchByG_P_SPLU_First(
+			groupId, privateLayout, sourcePrototypeLayoutUuid,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", sourcePrototypeLayoutUuid=");
+		msg.append(sourcePrototypeLayoutUuid);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_SPLU_First(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_SPLU_Last(
+			long groupId, boolean privateLayout,
+			String sourcePrototypeLayoutUuid,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_SPLU_Last(
+			groupId, privateLayout, sourcePrototypeLayoutUuid,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", sourcePrototypeLayoutUuid=");
+		msg.append(sourcePrototypeLayoutUuid);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_SPLU_Last(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_SPLU(
 			groupId, privateLayout, sourcePrototypeLayoutUuid);
 
-		return remove(layout);
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_SPLU_PrevAndNext(
+			long plid, long groupId, boolean privateLayout,
+			String sourcePrototypeLayoutUuid,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_SPLU_PrevAndNext(
+				session, layout, groupId, privateLayout,
+				sourcePrototypeLayoutUuid, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_SPLU_PrevAndNext(
+				session, layout, groupId, privateLayout,
+				sourcePrototypeLayoutUuid, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_SPLU_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String sourcePrototypeLayoutUuid,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+
+		boolean bindSourcePrototypeLayoutUuid = false;
+
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
+		else {
+			bindSourcePrototypeLayoutUuid = true;
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindSourcePrototypeLayoutUuid) {
+			qPos.add(sourcePrototypeLayoutUuid);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+
+		return filterFindByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		int start, int end) {
+
+		return filterFindByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_SPLU(
+				groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+				orderByComparator);
+		}
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+
+		boolean bindSourcePrototypeLayoutUuid = false;
+
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
+		else {
+			bindSourcePrototypeLayoutUuid = true;
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindSourcePrototypeLayoutUuid) {
+				qPos.add(sourcePrototypeLayoutUuid);
+			}
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_SPLU_PrevAndNext(
+			long plid, long groupId, boolean privateLayout,
+			String sourcePrototypeLayoutUuid,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_SPLU_PrevAndNext(
+				plid, groupId, privateLayout, sourcePrototypeLayoutUuid,
+				orderByComparator);
+		}
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_SPLU_PrevAndNext(
+				session, layout, groupId, privateLayout,
+				sourcePrototypeLayoutUuid, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_SPLU_PrevAndNext(
+				session, layout, groupId, privateLayout,
+				sourcePrototypeLayoutUuid, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_SPLU_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		String sourcePrototypeLayoutUuid,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+
+		boolean bindSourcePrototypeLayoutUuid = false;
+
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
+		else {
+			bindSourcePrototypeLayoutUuid = true;
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		if (bindSourcePrototypeLayoutUuid) {
+			qPos.add(sourcePrototypeLayoutUuid);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 */
+	@Override
+	public void removeByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+
+		for (Layout layout :
+				findByG_P_SPLU(
+					groupId, privateLayout, sourcePrototypeLayoutUuid,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
 	}
 
 	/**
@@ -11420,6 +27236,81 @@ public class LayoutPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_SPLU(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_SPLU(
+				groupId, privateLayout, sourcePrototypeLayoutUuid);
+		}
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+
+		boolean bindSourcePrototypeLayoutUuid = false;
+
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
+		else {
+			bindSourcePrototypeLayoutUuid = true;
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (bindSourcePrototypeLayoutUuid) {
+				qPos.add(sourcePrototypeLayoutUuid);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_G_P_SPLU_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
@@ -11433,6 +27324,333 @@ public class LayoutPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =
 			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '')";
+
+	private FinderPath _finderPathFetchByG_P_SPLU_Head;
+	private FinderPath _finderPathCountByG_P_SPLU_Head;
+
+	/**
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_SPLU_Head(
+			long groupId, boolean privateLayout,
+			String sourcePrototypeLayoutUuid, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_SPLU_Head(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, head);
+
+		if (layout == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", privateLayout=");
+			msg.append(privateLayout);
+
+			msg.append(", sourcePrototypeLayoutUuid=");
+			msg.append(sourcePrototypeLayoutUuid);
+
+			msg.append(", head=");
+			msg.append(head);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutException(msg.toString());
+		}
+
+		return layout;
+	}
+
+	/**
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_SPLU_Head(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		boolean head) {
+
+		return fetchByG_P_SPLU_Head(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, head, true);
+	}
+
+	/**
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_SPLU_Head(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		boolean head, boolean retrieveFromCache) {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, sourcePrototypeLayoutUuid, head
+		};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByG_P_SPLU_Head, finderArgs, this);
+		}
+
+		if (result instanceof Layout) {
+			Layout layout = (Layout)result;
+
+			if ((groupId != layout.getGroupId()) ||
+				(privateLayout != layout.isPrivateLayout()) ||
+				!Objects.equals(
+					sourcePrototypeLayoutUuid,
+					layout.getSourcePrototypeLayoutUuid()) ||
+				(head != layout.isHead())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_PRIVATELAYOUT_2);
+
+			boolean bindSourcePrototypeLayoutUuid = false;
+
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
+			else {
+				bindSourcePrototypeLayoutUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindSourcePrototypeLayoutUuid) {
+					qPos.add(sourcePrototypeLayoutUuid);
+				}
+
+				qPos.add(head);
+
+				List<Layout> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(
+						_finderPathFetchByG_P_SPLU_Head, finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutPersistenceImpl.fetchByG_P_SPLU_Head(long, boolean, String, boolean, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Layout layout = list.get(0);
+
+					result = layout;
+
+					cacheResult(layout);
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByG_P_SPLU_Head, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Layout)result;
+		}
+	}
+
+	/**
+	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the layout that was removed
+	 */
+	@Override
+	public Layout removeByG_P_SPLU_Head(
+			long groupId, boolean privateLayout,
+			String sourcePrototypeLayoutUuid, boolean head)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByG_P_SPLU_Head(
+			groupId, privateLayout, sourcePrototypeLayoutUuid, head);
+
+		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_SPLU_Head(
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		boolean head) {
+
+		sourcePrototypeLayoutUuid = Objects.toString(
+			sourcePrototypeLayoutUuid, "");
+
+		FinderPath finderPath = _finderPathCountByG_P_SPLU_Head;
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, sourcePrototypeLayoutUuid, head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_PRIVATELAYOUT_2);
+
+			boolean bindSourcePrototypeLayoutUuid = false;
+
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
+			else {
+				bindSourcePrototypeLayoutUuid = true;
+
+				query.append(
+					_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_P_SPLU_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				if (bindSourcePrototypeLayoutUuid) {
+					qPos.add(sourcePrototypeLayoutUuid);
+				}
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_P_SPLU_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_SPLU_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_2 =
+			"layout.sourcePrototypeLayoutUuid = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_SPLU_HEAD_SOURCEPROTOTYPELAYOUTUUID_3 =
+			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_P_SPLU_HEAD_HEAD_2 =
+		"layout.head = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_GtLP_LtRP;
 	private FinderPath _finderPathWithPaginationCountByG_P_GtLP_LtRP;
@@ -12506,6 +28724,1151 @@ public class LayoutPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2_SQL =
 			"layout.privateLayout = ? AND layout.system_ = [$FALSE$]";
+
+	private FinderPath _finderPathWithPaginationFindByG_P_GtLP_LtRP_Head;
+	private FinderPath _finderPathWithPaginationCountByG_P_GtLP_LtRP_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head) {
+
+		return findByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, int start, int end) {
+
+		return findByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByG_P_GtLP_LtRP_Head;
+		finderArgs = new Object[] {
+			groupId, leftPlid, rightPlid, privateLayout, head, start, end,
+			orderByComparator
+		};
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(leftPlid >= layout.getLeftPlid()) ||
+						(rightPlid <= layout.getRightPlid()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(7);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(leftPlid);
+
+				qPos.add(rightPlid);
+
+				qPos.add(privateLayout);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_GtLP_LtRP_Head_First(
+			long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_GtLP_LtRP_Head_First(
+			groupId, leftPlid, rightPlid, privateLayout, head,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", leftPlid=");
+		msg.append(leftPlid);
+
+		msg.append(", rightPlid=");
+		msg.append(rightPlid);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_GtLP_LtRP_Head_First(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_GtLP_LtRP_Head_Last(
+			long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+			boolean head, OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_GtLP_LtRP_Head_Last(
+			groupId, leftPlid, rightPlid, privateLayout, head,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", leftPlid=");
+		msg.append(leftPlid);
+
+		msg.append(", rightPlid=");
+		msg.append(rightPlid);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_GtLP_LtRP_Head_Last(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_GtLP_LtRP_Head_PrevAndNext(
+			long plid, long groupId, long leftPlid, long rightPlid,
+			boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_GtLP_LtRP_Head_PrevAndNext(
+				session, layout, groupId, leftPlid, rightPlid, privateLayout,
+				head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_GtLP_LtRP_Head_PrevAndNext(
+				session, layout, groupId, leftPlid, rightPlid, privateLayout,
+				head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_GtLP_LtRP_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, long leftPlid,
+		long rightPlid, boolean privateLayout, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(leftPlid);
+
+		qPos.add(rightPlid);
+
+		qPos.add(privateLayout);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head) {
+
+		return filterFindByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, int start, int end) {
+
+		return filterFindByG_P_GtLP_LtRP_Head(
+			groupId, leftPlid, rightPlid, privateLayout, head, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_GtLP_LtRP_Head(
+				groupId, leftPlid, rightPlid, privateLayout, head, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(leftPlid);
+
+			qPos.add(rightPlid);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_GtLP_LtRP_Head_PrevAndNext(
+			long plid, long groupId, long leftPlid, long rightPlid,
+			boolean privateLayout, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_GtLP_LtRP_Head_PrevAndNext(
+				plid, groupId, leftPlid, rightPlid, privateLayout, head,
+				orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_GtLP_LtRP_Head_PrevAndNext(
+				session, layout, groupId, leftPlid, rightPlid, privateLayout,
+				head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_GtLP_LtRP_Head_PrevAndNext(
+				session, layout, groupId, leftPlid, rightPlid, privateLayout,
+				head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_GtLP_LtRP_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, long leftPlid,
+		long rightPlid, boolean privateLayout, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(leftPlid);
+
+		qPos.add(rightPlid);
+
+		qPos.add(privateLayout);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head) {
+
+		for (Layout layout :
+				findByG_P_GtLP_LtRP_Head(
+					groupId, leftPlid, rightPlid, privateLayout, head,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head) {
+
+		FinderPath finderPath =
+			_finderPathWithPaginationCountByG_P_GtLP_LtRP_Head;
+
+		Object[] finderArgs = new Object[] {
+			groupId, leftPlid, rightPlid, privateLayout, head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(leftPlid);
+
+				qPos.add(rightPlid);
+
+				qPos.add(privateLayout);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and leftPlid &gt; &#63; and rightPlid &lt; &#63; and privateLayout = &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param leftPlid the left plid
+	 * @param rightPlid the right plid
+	 * @param privateLayout the private layout
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_GtLP_LtRP_Head(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_GtLP_LtRP_Head(
+				groupId, leftPlid, rightPlid, privateLayout, head);
+		}
+
+		StringBundler query = new StringBundler(6);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(leftPlid);
+
+			qPos.add(rightPlid);
+
+			qPos.add(privateLayout);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_GROUPID_2_SQL =
+			"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2 =
+		"layout.leftPlid > ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_LEFTPLID_2_SQL =
+			"layout.leftPlid > ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2 =
+		"layout.rightPlid < ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_RIGHTPLID_2_SQL =
+			"layout.rightPlid < ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2 =
+			"layout.privateLayout = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_PRIVATELAYOUT_2_SQL =
+			"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P_LtP;
 	private FinderPath _finderPathWithPaginationCountByG_P_P_LtP;
@@ -13586,6 +30949,1149 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_LTP_PRIORITY_2_SQL =
 		"layout.priority <= ? AND layout.system_ = [$FALSE$]";
 
+	private FinderPath _finderPathWithPaginationFindByG_P_P_LtP_Head;
+	private FinderPath _finderPathWithPaginationCountByG_P_P_LtP_Head;
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head) {
+
+		return findByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, int start, int end) {
+
+		return findByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByG_P_P_LtP_Head;
+		finderArgs = new Object[] {
+			groupId, privateLayout, parentLayoutId, priority, head, start, end,
+			orderByComparator
+		};
+
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						(parentLayoutId != layout.getParentLayoutId()) ||
+						(priority < layout.getPriority()) ||
+						(head != layout.isHead())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(7);
+			}
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(parentLayoutId);
+
+				qPos.add(priority);
+
+				qPos.add(head);
+
+				if (!pagination) {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Layout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_P_LtP_Head_First(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			int priority, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_P_LtP_Head_First(
+			groupId, privateLayout, parentLayoutId, priority, head,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", parentLayoutId=");
+		msg.append(parentLayoutId);
+
+		msg.append(", priority=");
+		msg.append(priority);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_P_LtP_Head_First(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, OrderByComparator<Layout> orderByComparator) {
+
+		List<Layout> list = findByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByG_P_P_LtP_Head_Last(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			int priority, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByG_P_P_LtP_Head_Last(
+			groupId, privateLayout, parentLayoutId, priority, head,
+			orderByComparator);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", parentLayoutId=");
+		msg.append(parentLayoutId);
+
+		msg.append(", priority=");
+		msg.append(priority);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append("}");
+
+		throw new NoSuchLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByG_P_P_LtP_Head_Last(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, OrderByComparator<Layout> orderByComparator) {
+
+		int count = countByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Layout> list = findByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] findByG_P_P_LtP_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long parentLayoutId,
+			int priority, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = getByG_P_P_LtP_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId,
+				priority, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = getByG_P_P_LtP_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId,
+				priority, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout getByG_P_P_LtP_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long parentLayoutId, int priority, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(parentLayoutId);
+
+		qPos.add(priority);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head) {
+
+		return filterFindByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, int start, int end) {
+
+		return filterFindByG_P_P_LtP_Head(
+			groupId, privateLayout, parentLayoutId, priority, head, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_P_LtP_Head(
+				groupId, privateLayout, parentLayoutId, priority, head, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(parentLayoutId);
+
+			qPos.add(priority);
+
+			qPos.add(head);
+
+			return (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param plid the primary key of the current layout
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout
+	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
+	 */
+	@Override
+	public Layout[] filterFindByG_P_P_LtP_Head_PrevAndNext(
+			long plid, long groupId, boolean privateLayout, long parentLayoutId,
+			int priority, boolean head,
+			OrderByComparator<Layout> orderByComparator)
+		throws NoSuchLayoutException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_P_LtP_Head_PrevAndNext(
+				plid, groupId, privateLayout, parentLayoutId, priority, head,
+				orderByComparator);
+		}
+
+		Layout layout = findByPrimaryKey(plid);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Layout[] array = new LayoutImpl[3];
+
+			array[0] = filterGetByG_P_P_LtP_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId,
+				priority, head, orderByComparator, true);
+
+			array[1] = layout;
+
+			array[2] = filterGetByG_P_P_LtP_Head_PrevAndNext(
+				session, layout, groupId, privateLayout, parentLayoutId,
+				priority, head, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Layout filterGetByG_P_P_LtP_Head_PrevAndNext(
+		Session session, Layout layout, long groupId, boolean privateLayout,
+		long parentLayoutId, int priority, boolean head,
+		OrderByComparator<Layout> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(privateLayout);
+
+		qPos.add(parentLayoutId);
+
+		qPos.add(priority);
+
+		qPos.add(head);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(layout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Layout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 */
+	@Override
+	public void removeByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head) {
+
+		for (Layout layout :
+				findByG_P_P_LtP_Head(
+					groupId, privateLayout, parentLayoutId, priority, head,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layout);
+		}
+	}
+
+	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head) {
+
+		FinderPath finderPath = _finderPathWithPaginationCountByG_P_P_LtP_Head;
+
+		Object[] finderArgs = new Object[] {
+			groupId, privateLayout, parentLayoutId, priority, head
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2);
+
+			query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(privateLayout);
+
+				qPos.add(parentLayoutId);
+
+				qPos.add(priority);
+
+				qPos.add(head);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; and head = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param priority the priority
+	 * @param head the head
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_P_LtP_Head(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority,
+		boolean head) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_P_LtP_Head(
+				groupId, privateLayout, parentLayoutId, priority, head);
+		}
+
+		StringBundler query = new StringBundler(6);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			qPos.add(parentLayoutId);
+
+			qPos.add(priority);
+
+			qPos.add(head);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2 =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2 =
+		"layout.privateLayout = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_P_LTP_HEAD_PRIVATELAYOUT_2_SQL =
+			"layout.privateLayout = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2 =
+		"layout.parentLayoutId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_P_P_LTP_HEAD_PARENTLAYOUTID_2_SQL =
+			"layout.parentLayoutId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2 =
+		"layout.priority <= ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_PRIORITY_2_SQL =
+		"layout.priority <= ? AND ";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2 =
+		"layout.head = ? AND layout.system = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_P_LTP_HEAD_HEAD_2_SQL =
+		"layout.head = ? AND layout.system_ = [$FALSE$]";
+
 	private FinderPath _finderPathFetchByHeadId;
 	private FinderPath _finderPathCountByHeadId;
 
@@ -13807,7 +32313,7 @@ public class LayoutPersistenceImpl
 			layout.getPrimaryKey(), layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByUUID_G_P,
+			_finderPathFetchByUUID_G_P_Head,
 			new Object[] {
 				layout.getUuid(), layout.getGroupId(), layout.isPrivateLayout(),
 				layout.isHead()
@@ -13815,21 +32321,26 @@ public class LayoutPersistenceImpl
 			layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByIconImageId,
-			new Object[] {layout.getIconImageId()}, layout);
+			_finderPathFetchByIconImageId_Head,
+			new Object[] {layout.getIconImageId(), layout.isHead()}, layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByP_I,
-			new Object[] {layout.isPrivateLayout(), layout.getIconImageId()},
+			_finderPathFetchByP_I_Head,
+			new Object[] {
+				layout.isPrivateLayout(), layout.getIconImageId(),
+				layout.isHead()
+			},
 			layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {layout.getClassNameId(), layout.getClassPK()},
+			_finderPathFetchByC_C_Head,
+			new Object[] {
+				layout.getClassNameId(), layout.getClassPK(), layout.isHead()
+			},
 			layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_L,
+			_finderPathFetchByG_P_L_Head,
 			new Object[] {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.isHead()
@@ -13837,7 +32348,7 @@ public class LayoutPersistenceImpl
 			layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_F,
+			_finderPathFetchByG_P_F_Head,
 			new Object[] {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getFriendlyURL(), layout.isHead()
@@ -13845,10 +32356,10 @@ public class LayoutPersistenceImpl
 			layout);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_SPLU,
+			_finderPathFetchByG_P_SPLU_Head,
 			new Object[] {
 				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getSourcePrototypeLayoutUuid()
+				layout.getSourcePrototypeLayoutUuid(), layout.isHead()
 			},
 			layout);
 
@@ -13935,34 +32446,38 @@ public class LayoutPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByUUID_G_P, args, Long.valueOf(1), false);
+			_finderPathCountByUUID_G_P_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByUUID_G_P, args, layoutModelImpl, false);
-
-		args = new Object[] {layoutModelImpl.getIconImageId()};
-
-		FinderCacheUtil.putResult(
-			_finderPathCountByIconImageId, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByIconImageId, args, layoutModelImpl, false);
+			_finderPathFetchByUUID_G_P_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {
-			layoutModelImpl.isPrivateLayout(), layoutModelImpl.getIconImageId()
+			layoutModelImpl.getIconImageId(), layoutModelImpl.isHead()
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByP_I, args, Long.valueOf(1), false);
+			_finderPathCountByIconImageId_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByP_I, args, layoutModelImpl, false);
+			_finderPathFetchByIconImageId_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {
-			layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
+			layoutModelImpl.isPrivateLayout(), layoutModelImpl.getIconImageId(),
+			layoutModelImpl.isHead()
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByC_C, args, Long.valueOf(1), false);
+			_finderPathCountByP_I_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C, args, layoutModelImpl, false);
+			_finderPathFetchByP_I_Head, args, layoutModelImpl, false);
+
+		args = new Object[] {
+			layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK(),
+			layoutModelImpl.isHead()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_C_Head, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {
 			layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
@@ -13970,9 +32485,9 @@ public class LayoutPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByG_P_L, args, Long.valueOf(1), false);
+			_finderPathCountByG_P_L_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_L, args, layoutModelImpl, false);
+			_finderPathFetchByG_P_L_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {
 			layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
@@ -13980,19 +32495,20 @@ public class LayoutPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByG_P_F, args, Long.valueOf(1), false);
+			_finderPathCountByG_P_F_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_F, args, layoutModelImpl, false);
+			_finderPathFetchByG_P_F_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {
 			layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
-			layoutModelImpl.getSourcePrototypeLayoutUuid()
+			layoutModelImpl.getSourcePrototypeLayoutUuid(),
+			layoutModelImpl.isHead()
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByG_P_SPLU, args, Long.valueOf(1), false);
+			_finderPathCountByG_P_SPLU_Head, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_SPLU, args, layoutModelImpl, false);
+			_finderPathFetchByG_P_SPLU_Head, args, layoutModelImpl, false);
 
 		args = new Object[] {layoutModelImpl.getHeadId()};
 
@@ -14011,12 +32527,12 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.isPrivateLayout(), layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G_P, args);
+			FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G_P_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUUID_G_P.getColumnBitmask()) != 0) {
+			 _finderPathFetchByUUID_G_P_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalUuid(),
@@ -14025,69 +32541,79 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G_P, args);
+			FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G_P_Head, args);
 		}
 
 		if (clearCurrent) {
-			Object[] args = new Object[] {layoutModelImpl.getIconImageId()};
+			Object[] args = new Object[] {
+				layoutModelImpl.getIconImageId(), layoutModelImpl.isHead()
+			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByIconImageId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByIconImageId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathCountByIconImageId_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathFetchByIconImageId_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByIconImageId.getColumnBitmask()) != 0) {
+			 _finderPathFetchByIconImageId_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				layoutModelImpl.getOriginalIconImageId()
+				layoutModelImpl.getOriginalIconImageId(),
+				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByIconImageId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByIconImageId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathCountByIconImageId_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathFetchByIconImageId_Head, args);
 		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				layoutModelImpl.isPrivateLayout(),
-				layoutModelImpl.getIconImageId()
+				layoutModelImpl.getIconImageId(), layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByP_I, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByP_I, args);
+			FinderCacheUtil.removeResult(_finderPathCountByP_I_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByP_I_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByP_I.getColumnBitmask()) != 0) {
+			 _finderPathFetchByP_I_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalPrivateLayout(),
-				layoutModelImpl.getOriginalIconImageId()
+				layoutModelImpl.getOriginalIconImageId(),
+				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByP_I, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByP_I, args);
+			FinderCacheUtil.removeResult(_finderPathCountByP_I_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByP_I_Head, args);
 		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
+				layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK(),
+				layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
+			 _finderPathFetchByC_C_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalClassNameId(),
-				layoutModelImpl.getOriginalClassPK()
+				layoutModelImpl.getOriginalClassPK(),
+				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C_Head, args);
 		}
 
 		if (clearCurrent) {
@@ -14096,12 +32622,12 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getLayoutId(), layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_L, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_L, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_L_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_L_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_P_L.getColumnBitmask()) != 0) {
+			 _finderPathFetchByG_P_L_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalGroupId(),
@@ -14110,8 +32636,8 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_L, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_L, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_L_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_L_Head, args);
 		}
 
 		if (clearCurrent) {
@@ -14120,12 +32646,12 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getFriendlyURL(), layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_F, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_F, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_F_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_F_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_P_F.getColumnBitmask()) != 0) {
+			 _finderPathFetchByG_P_F_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalGroupId(),
@@ -14134,31 +32660,33 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_F, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_F, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_F_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_F_Head, args);
 		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
-				layoutModelImpl.getSourcePrototypeLayoutUuid()
+				layoutModelImpl.getSourcePrototypeLayoutUuid(),
+				layoutModelImpl.isHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_SPLU, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_SPLU_Head, args);
 		}
 
 		if ((layoutModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_P_SPLU.getColumnBitmask()) != 0) {
+			 _finderPathFetchByG_P_SPLU_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				layoutModelImpl.getOriginalGroupId(),
 				layoutModelImpl.getOriginalPrivateLayout(),
-				layoutModelImpl.getOriginalSourcePrototypeLayoutUuid()
+				layoutModelImpl.getOriginalSourcePrototypeLayoutUuid(),
+				layoutModelImpl.getOriginalHead()
 			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_P_SPLU, args);
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU_Head, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByG_P_SPLU_Head, args);
 		}
 
 		if (clearCurrent) {
@@ -14402,6 +32930,23 @@ public class LayoutPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				layoutModelImpl.getUuid(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUuid_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid_Head, args);
+
+			args = new Object[] {
+				layoutModelImpl.getUuid(), layoutModelImpl.getGroupId(),
+				layoutModelImpl.isPrivateLayout()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUUID_G_P, args);
+
+			args = new Object[] {
 				layoutModelImpl.getUuid(), layoutModelImpl.getCompanyId()
 			};
 
@@ -14409,11 +32954,28 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
 
+			args = new Object[] {
+				layoutModelImpl.getUuid(), layoutModelImpl.getCompanyId(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUuid_C_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C_Head, args);
+
 			args = new Object[] {layoutModelImpl.getGroupId()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByGroupId, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByGroupId_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByGroupId_Head, args);
 
 			args = new Object[] {layoutModelImpl.getCompanyId()};
 
@@ -14421,11 +32983,35 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByCompanyId, args);
 
+			args = new Object[] {
+				layoutModelImpl.getCompanyId(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountByCompanyId_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByCompanyId_Head, args);
+
 			args = new Object[] {layoutModelImpl.getParentPlid()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByParentPlid, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByParentPlid, args);
+
+			args = new Object[] {
+				layoutModelImpl.getParentPlid(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountByParentPlid_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByParentPlid_Head, args);
+
+			args = new Object[] {layoutModelImpl.getIconImageId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByIconImageId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByIconImageId, args);
 
 			args = new Object[] {layoutModelImpl.getLayoutPrototypeUuid()};
 
@@ -14433,6 +33019,17 @@ public class LayoutPersistenceImpl
 				_finderPathCountByLayoutPrototypeUuid, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByLayoutPrototypeUuid, args);
+
+			args = new Object[] {
+				layoutModelImpl.getLayoutPrototypeUuid(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountByLayoutPrototypeUuid_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head,
+				args);
 
 			args = new Object[] {
 				layoutModelImpl.getSourcePrototypeLayoutUuid()
@@ -14445,12 +33042,32 @@ public class LayoutPersistenceImpl
 				args);
 
 			args = new Object[] {
+				layoutModelImpl.getSourcePrototypeLayoutUuid(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountBySourcePrototypeLayoutUuid_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head,
+				args);
+
+			args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout()
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_P, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByG_P, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_Head, args);
 
 			args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.getType()
@@ -14461,6 +33078,15 @@ public class LayoutPersistenceImpl
 				_finderPathWithoutPaginationFindByG_T, args);
 
 			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.getType(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_T_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_T_Head, args);
+
+			args = new Object[] {
 				layoutModelImpl.getCompanyId(),
 				layoutModelImpl.getLayoutPrototypeUuid()
 			};
@@ -14468,6 +33094,42 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.removeResult(_finderPathCountByC_L, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByC_L, args);
+
+			args = new Object[] {
+				layoutModelImpl.getCompanyId(),
+				layoutModelImpl.getLayoutPrototypeUuid(),
+				layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_L_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_L_Head, args);
+
+			args = new Object[] {
+				layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getIconImageId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByP_I, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByP_I, args);
+
+			args = new Object[] {
+				layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_C, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getLayoutId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_L, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_L, args);
 
 			args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
@@ -14480,12 +33142,48 @@ public class LayoutPersistenceImpl
 
 			args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getParentLayoutId(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_P_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_P_Head, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
 				layoutModelImpl.getType()
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_P_T, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByG_P_T, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getType(), layoutModelImpl.isHead()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_T_Head, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_T_Head, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getFriendlyURL()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_F, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_F, args);
+
+			args = new Object[] {
+				layoutModelImpl.getGroupId(), layoutModelImpl.isPrivateLayout(),
+				layoutModelImpl.getSourcePrototypeLayoutUuid()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByG_P_SPLU, args);
 
 			FinderCacheUtil.removeResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY);
@@ -14513,6 +33211,52 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalUuid(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getUuid(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUUID_G_P.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalUuid(),
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUUID_G_P, args);
+
+				args = new Object[] {
+					layoutModelImpl.getUuid(), layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUUID_G_P, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUUID_G_P, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
 					 0) {
 
@@ -14535,6 +33279,32 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalUuid(),
+					layoutModelImpl.getOriginalCompanyId(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByUuid_C_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getUuid(), layoutModelImpl.getCompanyId(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByUuid_C_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByGroupId.
 					 getColumnBitmask()) != 0) {
 
@@ -14554,6 +33324,30 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByGroupId_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByGroupId_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByGroupId_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByGroupId_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByGroupId_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByCompanyId.
 					 getColumnBitmask()) != 0) {
 
@@ -14570,6 +33364,30 @@ public class LayoutPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByCompanyId, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCompanyId_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalCompanyId(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCompanyId_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getCompanyId(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCompanyId_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId_Head, args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -14594,6 +33412,51 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByParentPlid_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalParentPlid(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByParentPlid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByParentPlid_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getParentPlid(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByParentPlid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByParentPlid_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByIconImageId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalIconImageId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByIconImageId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByIconImageId, args);
+
+				args = new Object[] {layoutModelImpl.getIconImageId()};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByIconImageId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByIconImageId, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByLayoutPrototypeUuid.
 					 getColumnBitmask()) != 0) {
 
@@ -14613,6 +33476,33 @@ public class LayoutPersistenceImpl
 					_finderPathCountByLayoutPrototypeUuid, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByLayoutPrototypeUuid,
+					args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalLayoutPrototypeUuid(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByLayoutPrototypeUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head,
+					args);
+
+				args = new Object[] {
+					layoutModelImpl.getLayoutPrototypeUuid(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByLayoutPrototypeUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head,
 					args);
 			}
 
@@ -14642,6 +33532,33 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalSourcePrototypeLayoutUuid(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountBySourcePrototypeLayoutUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head,
+					args);
+
+				args = new Object[] {
+					layoutModelImpl.getSourcePrototypeLayoutUuid(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountBySourcePrototypeLayoutUuid_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head,
+					args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByG_P.getColumnBitmask()) !=
 					 0) {
 
@@ -14662,6 +33579,30 @@ public class LayoutPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByG_P, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByG_P, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_Head, args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -14687,6 +33628,30 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_T_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalType(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_T_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_T_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(), layoutModelImpl.getType(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_T_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_T_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByC_L.getColumnBitmask()) !=
 					 0) {
 
@@ -14707,6 +33672,102 @@ public class LayoutPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByC_L, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByC_L, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_L_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalCompanyId(),
+					layoutModelImpl.getOriginalLayoutPrototypeUuid(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_L_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_L_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getCompanyId(),
+					layoutModelImpl.getLayoutPrototypeUuid(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_L_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_L_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByP_I.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalIconImageId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByP_I, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByP_I, args);
+
+				args = new Object[] {
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getIconImageId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByP_I, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByP_I, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalClassNameId(),
+					layoutModelImpl.getOriginalClassPK()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+
+				args = new Object[] {
+					layoutModelImpl.getClassNameId(),
+					layoutModelImpl.getClassPK()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_L.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalLayoutId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_L, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_L, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getLayoutId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_L, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_L, args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -14735,6 +33796,35 @@ public class LayoutPersistenceImpl
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_P_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalParentLayoutId(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByG_P_P_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_P_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getParentLayoutId(),
+					layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByG_P_P_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_P_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByG_P_T.getColumnBitmask()) !=
 					 0) {
 
@@ -14756,6 +33846,84 @@ public class LayoutPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByG_P_T, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByG_P_T, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_T_Head.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalType(),
+					layoutModelImpl.getOriginalHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByG_P_T_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_T_Head, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getType(), layoutModelImpl.isHead()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByG_P_T_Head, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_T_Head, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_F.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalFriendlyURL()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_F, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_F, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getFriendlyURL()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_F, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_F, args);
+			}
+
+			if ((layoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_P_SPLU.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout(),
+					layoutModelImpl.getOriginalSourcePrototypeLayoutUuid()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_SPLU, args);
+
+				args = new Object[] {
+					layoutModelImpl.getGroupId(),
+					layoutModelImpl.isPrivateLayout(),
+					layoutModelImpl.getSourcePrototypeLayoutUuid()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByG_P_SPLU, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByG_P_SPLU, args);
 			}
 		}
 
@@ -15362,10 +34530,69 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()});
 
-		_finderPathFetchByUUID_G_P = new FinderPath(
+		_finderPathWithPaginationFindByUuid_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_P",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
+			new String[] {
+				String.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Head",
+			new String[] {String.class.getName(), Boolean.class.getName()},
+			LayoutModelImpl.UUID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Head",
+			new String[] {String.class.getName(), Boolean.class.getName()});
+
+		_finderPathWithPaginationFindByUUID_G_P = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G_P",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUUID_G_P = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G_P",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.UUID_COLUMN_BITMASK |
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G_P = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_P",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+
+		_finderPathFetchByUUID_G_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_P_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
@@ -15375,10 +34602,10 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutModelImpl.HEAD_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G_P = new FinderPath(
+		_finderPathCountByUUID_G_P_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_P_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
@@ -15410,6 +34637,39 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
+		_finderPathWithPaginationFindByUuid_C_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Head",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.UUID_COLUMN_BITMASK |
+			LayoutModelImpl.COMPANYID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Head",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15433,6 +34693,32 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByGroupId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByGroupId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15458,6 +34744,32 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()});
 
+		_finderPathWithPaginationFindByCompanyId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCompanyId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			LayoutModelImpl.COMPANYID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
+
 		_finderPathWithPaginationFindByParentPlid = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15482,18 +34794,70 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParentPlid",
 			new String[] {Long.class.getName()});
 
-		_finderPathFetchByIconImageId = new FinderPath(
+		_finderPathWithPaginationFindByParentPlid_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByIconImageId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentPlid_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByParentPlid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByParentPlid_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			LayoutModelImpl.PARENTPLID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByParentPlid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParentPlid_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
+
+		_finderPathWithPaginationFindByIconImageId = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIconImageId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByIconImageId = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIconImageId",
 			new String[] {Long.class.getName()},
-			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK);
+			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByIconImageId = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIconImageId",
 			new String[] {Long.class.getName()});
+
+		_finderPathFetchByIconImageId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByIconImageId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK);
+
+		_finderPathCountByIconImageId_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByIconImageId_Head",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByLayoutPrototypeUuid = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15519,6 +34883,37 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLayoutPrototypeUuid",
 			new String[] {String.class.getName()});
+
+		_finderPathWithPaginationFindByLayoutPrototypeUuid_Head =
+			new FinderPath(
+				LayoutModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLayoutPrototypeUuid_Head",
+				new String[] {
+					String.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByLayoutPrototypeUuid_Head =
+			new FinderPath(
+				LayoutModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByLayoutPrototypeUuid_Head",
+				new String[] {String.class.getName(), Boolean.class.getName()},
+				LayoutModelImpl.LAYOUTPROTOTYPEUUID_COLUMN_BITMASK |
+				LayoutModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+				LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByLayoutPrototypeUuid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByLayoutPrototypeUuid_Head",
+			new String[] {String.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindBySourcePrototypeLayoutUuid =
 			new FinderPath(
@@ -15549,6 +34944,37 @@ public class LayoutPersistenceImpl
 			"countBySourcePrototypeLayoutUuid",
 			new String[] {String.class.getName()});
 
+		_finderPathWithPaginationFindBySourcePrototypeLayoutUuid_Head =
+			new FinderPath(
+				LayoutModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findBySourcePrototypeLayoutUuid_Head",
+				new String[] {
+					String.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid_Head =
+			new FinderPath(
+				LayoutModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findBySourcePrototypeLayoutUuid_Head",
+				new String[] {String.class.getName(), Boolean.class.getName()},
+				LayoutModelImpl.SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK |
+				LayoutModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+				LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountBySourcePrototypeLayoutUuid_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySourcePrototypeLayoutUuid_Head",
+			new String[] {String.class.getName(), Boolean.class.getName()});
+
 		_finderPathWithPaginationFindByG_P = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15574,6 +35000,39 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
+
+		_finderPathWithPaginationFindByG_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			});
 
 		_finderPathWithPaginationFindByG_T = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15601,6 +35060,39 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
 			new String[] {Long.class.getName(), String.class.getName()});
 
+		_finderPathWithPaginationFindByG_T_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_T_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.TYPE_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_T_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
+
 		_finderPathWithPaginationFindByC_L = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15627,13 +35119,58 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
 			new String[] {Long.class.getName(), String.class.getName()});
 
-		_finderPathFetchByP_I = new FinderPath(
+		_finderPathWithPaginationFindByC_L_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_L_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.COMPANYID_COLUMN_BITMASK |
+			LayoutModelImpl.LAYOUTPROTOTYPEUUID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByC_L_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L_Head",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationFindByP_I = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_I",
+			new String[] {
+				Boolean.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByP_I = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_I",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK);
+			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByP_I = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15641,13 +35178,46 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I",
 			new String[] {Boolean.class.getName(), Long.class.getName()});
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByP_I_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_Head",
+			new String[] {
+				Boolean.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK);
+
+		_finderPathCountByP_I_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I_Head",
+			new String[] {
+				Boolean.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			LayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			LayoutModelImpl.CLASSPK_COLUMN_BITMASK);
+			LayoutModelImpl.CLASSPK_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15655,10 +35225,64 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
-		_finderPathFetchByG_P_L = new FinderPath(
+		_finderPathFetchByC_C_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_Head",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			LayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			LayoutModelImpl.CLASSPK_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_Head",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_P_L = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.LAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_L = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName()
+			});
+
+		_finderPathFetchByG_P_L_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L_Head",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
@@ -15668,10 +35292,10 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.LAYOUTID_COLUMN_BITMASK |
 			LayoutModelImpl.HEAD_COLUMN_BITMASK);
 
-		_finderPathCountByG_P_L = new FinderPath(
+		_finderPathCountByG_P_L_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_Head",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
@@ -15718,6 +35342,49 @@ public class LayoutPersistenceImpl
 				Long.class.getName()
 			});
 
+		_finderPathWithPaginationFindByG_P_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Boolean.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationCountByG_P_P_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_P_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Boolean.class.getName()
+			});
+
 		_finderPathWithPaginationFindByG_P_T = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15751,10 +35418,78 @@ public class LayoutPersistenceImpl
 				String.class.getName()
 			});
 
-		_finderPathFetchByG_P_F = new FinderPath(
+		_finderPathWithPaginationFindByG_P_T_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_F",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_T_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_T_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_T_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Boolean.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.TYPE_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_T_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_T_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_P_F = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_F",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_F = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_F",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.FRIENDLYURL_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_F = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			});
+
+		_finderPathFetchByG_P_F_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_F_Head",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Boolean.class.getName()
@@ -15764,26 +35499,38 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.FRIENDLYURL_COLUMN_BITMASK |
 			LayoutModelImpl.HEAD_COLUMN_BITMASK);
 
-		_finderPathCountByG_P_F = new FinderPath(
+		_finderPathCountByG_P_F_Head = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F_Head",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Boolean.class.getName()
 			});
 
-		_finderPathFetchByG_P_SPLU = new FinderPath(
+		_finderPathWithPaginationFindByG_P_SPLU = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_SPLU",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_SPLU",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_P_SPLU = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_SPLU",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
 			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutModelImpl.SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK);
+			LayoutModelImpl.SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK |
+			LayoutModelImpl.PARENTLAYOUTID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_SPLU = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -15792,6 +35539,28 @@ public class LayoutPersistenceImpl
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
+			});
+
+		_finderPathFetchByG_P_SPLU_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_SPLU_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Boolean.class.getName()
+			},
+			LayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutModelImpl.SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK |
+			LayoutModelImpl.HEAD_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_SPLU_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_SPLU_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Boolean.class.getName()
 			});
 
 		_finderPathWithPaginationFindByG_P_GtLP_LtRP = new FinderPath(
@@ -15814,6 +35583,27 @@ public class LayoutPersistenceImpl
 				Long.class.getName(), Boolean.class.getName()
 			});
 
+		_finderPathWithPaginationFindByG_P_GtLP_LtRP_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_GtLP_LtRP_Head",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByG_P_GtLP_LtRP_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_GtLP_LtRP_Head",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			});
+
 		_finderPathWithPaginationFindByG_P_P_LtP = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -15832,6 +35622,27 @@ public class LayoutPersistenceImpl
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), Integer.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_P_P_LtP_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_P_LtP_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByG_P_P_LtP_Head = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_P_LtP_Head",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Boolean.class.getName()
 			});
 
 		_finderPathFetchByHeadId = new FinderPath(

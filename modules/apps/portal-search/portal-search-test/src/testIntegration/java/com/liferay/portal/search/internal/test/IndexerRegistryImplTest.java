@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.indexer.test;
+package com.liferay.portal.search.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.BaseIndexer;

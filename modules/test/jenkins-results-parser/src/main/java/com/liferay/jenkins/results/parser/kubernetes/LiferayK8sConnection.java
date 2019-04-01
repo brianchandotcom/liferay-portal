@@ -38,9 +38,6 @@ import java.util.List;
  */
 public class LiferayK8sConnection {
 
-	public static AppsV1Api apps;
-	public static CoreV1Api core;
-
 	public static Pod createPod(
 		String dockerBaseImageName, String dockerImageName, String namespace) {
 
@@ -50,7 +47,7 @@ public class LiferayK8sConnection {
 
 		try {
 			return new Pod(
-				core.createNamespacedPod(
+				_core.createNamespacedPod(
 					namespace, configuredMySQLPod.getV1Pod(), null));
 		}
 		catch (ApiException ae) {
@@ -86,7 +83,7 @@ public class LiferayK8sConnection {
 		V1Status v1Status;
 
 		try {
-			v1Status = core.deleteNamespacedPod(
+			v1Status = _core.deleteNamespacedPod(
 				pod.getName(), namespace, new V1DeleteOptions(), null, 60, true,
 				null);
 		}
@@ -119,7 +116,7 @@ public class LiferayK8sConnection {
 
 		try {
 			return new Pod(
-				core.readNamespacedPod(
+				_core.readNamespacedPod(
 					configuredMySQLPod.getName(), namespace, null, true,
 					false));
 		}
@@ -140,7 +137,7 @@ public class LiferayK8sConnection {
 		V1PodList v1PodList;
 
 		try {
-			v1PodList = core.listPodForAllNamespaces(
+			v1PodList = _core.listPodForAllNamespaces(
 				null, null, null, null, null, null, null, null, null);
 		}
 		catch (ApiException ae) {
@@ -149,8 +146,7 @@ public class LiferayK8sConnection {
 
 		List<V1Pod> v1Pods = v1PodList.getItems();
 
-		List<LiferayK8sConnection.Pod> pods = new ArrayList<>(
-			v1Pods.size());
+		List<LiferayK8sConnection.Pod> pods = new ArrayList<>(v1Pods.size());
 
 		for (V1Pod v1Pod : v1Pods) {
 			pods.add(new Pod(v1Pod));
@@ -180,6 +176,8 @@ public class LiferayK8sConnection {
 	}
 
 	private static final ApiClient _apiClient;
+	private static final AppsV1Api _apps;
+	private static final CoreV1Api _core;
 	private static LiferayK8sConnection _liferayKubernetesApi;
 
 	static {
@@ -190,8 +188,8 @@ public class LiferayK8sConnection {
 
 			_apiClient.setDebugging(true);
 
-			apps = new AppsV1Api(_apiClient);
-			core = new CoreV1Api(_apiClient);
+			_apps = new AppsV1Api(_apiClient);
+			_core = new CoreV1Api(_apiClient);
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

@@ -558,9 +558,8 @@ definition {
 			var rowEntry = "${dmFolderName}";
 
 			AssertClick(
-				locator1 = "Card#SPECIFIC_TITLE_TEXT",
-				value1 = "${rowEntry}",
-				key_cardText = "${rowEntry}"
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+				value1 = "${dmFolderName}"
 			);
 		}
 		else {

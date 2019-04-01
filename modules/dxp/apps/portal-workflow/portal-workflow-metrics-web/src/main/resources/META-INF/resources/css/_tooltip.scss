@@ -1,0 +1,49 @@
+$c: ".workflow-tooltip";
+
+#{$c} {
+    position: relative;
+
+    #{$c}-top {
+        bottom: 100%;
+        left: 50%;
+        padding-bottom: 9px;
+        transform: translateX(-50%);
+
+        #{$c}-arrow {
+            padding-bottom: 9px;
+        }
+    }
+
+    #{$c}-bottom {
+        top: 100%;
+        left: 50%;
+        padding-top: 9px;
+        transform: translateX(-50%);
+
+        #{$c}-arrow {
+            padding-top: 9px;
+        }
+    }
+
+    #{$c}-left {
+        top: 50%;
+        right: 100%;
+        padding-right: 9px;
+        transform: translateY(-50%);
+
+        #{$c}-arrow {
+            padding-right: 9px;
+        }
+    }
+
+    #{$c}-right {
+        top: 50%;
+        left: 100%;
+        padding-left: 9px;
+        transform: translateY(-50%);
+
+        #{$c}-arrow {
+            padding-left: 9px;
+        }
+    }
+}

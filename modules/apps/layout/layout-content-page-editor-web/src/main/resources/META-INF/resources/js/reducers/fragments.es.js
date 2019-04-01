@@ -1,7 +1,7 @@
 import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
+import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropSectionPosition, getFragmentColumn} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
@@ -11,6 +11,7 @@ import {getColumn, getDropSectionPosition, getFragmentColumn} from '../utils/Fra
  * @param {string} dropTargetItemId
  * @param {string} dropTargetItemType
  * @param {object} layoutData
+ * @param {string} fragmentEntryLinkType
  * @private
  * @return {object}
  * @review
@@ -20,7 +21,8 @@ function addFragment(
 	dropTargetBorder,
 	dropTargetItemId,
 	dropTargetItemType,
-	layoutData
+	layoutData,
+	fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component
 ) {
 	let nextData = layoutData;
 
@@ -115,7 +117,8 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 								nextState.dropTargetBorder,
 								nextState.dropTargetItemId,
 								nextState.dropTargetItemType,
-								nextState.layoutData
+								nextState.layoutData,
+								payload.fragmentEntryLinkType
 							);
 
 							return updateLayoutData(

@@ -1,7 +1,12 @@
 @import "variables";
 
 .fragments-editor__floating-toolbar {
-	display: inline-block;
+	display: block;
+	height: 0;
+	left: -1px;
+	position: absolute;
+	top: -1px;
+	width: 0;
 
 	&-buttons,
 	&-panel {
@@ -26,6 +31,7 @@
 		& > .popover {
 			padding: $fragmentsEditorSpacing;
 			position: static;
+			white-space: nowrap;
 		}
 	}
 

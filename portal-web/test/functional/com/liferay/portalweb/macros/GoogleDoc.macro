@@ -8,7 +8,7 @@ definition {
 	}
 
 	macro editTitleInGoogleDoc {
-		SelectFrame(locator1 = "IFrame#GOOGLE_DOC");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
 
 		Click(locator1 = "GoogleDoc#TITLE");
 

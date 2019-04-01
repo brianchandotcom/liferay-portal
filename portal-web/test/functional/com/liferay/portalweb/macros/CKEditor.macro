@@ -1,6 +1,6 @@
 definition {
 	macro addContent {
-		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		KeyPress(locator1 = "CKEditor#BODY", value1 = "${content}");
 

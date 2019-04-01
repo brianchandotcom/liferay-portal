@@ -458,7 +458,7 @@ definition {
 
 		BlogsEntry.viewTitle(entryTitle = "CKEditor Entry Title");
 
-		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		CKEditor.viewEntryContent(content = "CKEditor Entry Content");
 	}

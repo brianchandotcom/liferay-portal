@@ -5,9 +5,6 @@
 		"metal-soy": "^2.16.5",
 		"metal-state": "^2.16.5"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "document-library-preview-audio",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

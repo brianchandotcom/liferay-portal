@@ -8,9 +8,6 @@
 		"metal-soy": "^2.16.7",
 		"metal-state": "^2.16.7"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "document-library-preview-image",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",

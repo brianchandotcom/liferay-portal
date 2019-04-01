@@ -4,9 +4,6 @@
 		"metal-dom": "^2.16.7",
 		"metal-state": "^2.16.7"
 	},
-	"devDependencies": {
-		"liferay-npm-scripts": "1.4.9"
-	},
 	"name": "map-openstreetmap",
 	"private": true,
 	"scripts": {

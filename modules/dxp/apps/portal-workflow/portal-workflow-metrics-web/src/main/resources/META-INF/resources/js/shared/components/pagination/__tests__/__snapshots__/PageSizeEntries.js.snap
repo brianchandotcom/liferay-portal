@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Should change page size 1`] = `
+<div
+  className="dropdown pagination-items-per-page"
+>
+  <a
+    aria-expanded="false"
+    aria-haspopup="true"
+    className="dropdown-toggle"
+    data-toggle="dropdown"
+    href="#1"
+    role="button"
+  >
+    30 Entries
+    <Icon
+      iconName="caret-double-l"
+    />
+  </a>
+  <div
+    className="dropdown-menu dropdown-menu-top"
+  >
+    <withRouter(PageSizeItem)
+      key="0_10"
+      pageSize={10}
+    />
+    <withRouter(PageSizeItem)
+      key="1_20"
+      pageSize={20}
+    />
+    <withRouter(PageSizeItem)
+      key="2_30"
+      pageSize={30}
+    />
+    <withRouter(PageSizeItem)
+      key="3_40"
+      pageSize={40}
+    />
+  </div>
+</div>
+`;
+
 exports[`Should render component 1`] = `
 <div
   className="dropdown pagination-items-per-page"
@@ -22,22 +62,18 @@ exports[`Should render component 1`] = `
   >
     <withRouter(PageSizeItem)
       key="0_10"
-      onChangePageSize={[Function]}
       pageSize={10}
     />
     <withRouter(PageSizeItem)
       key="1_20"
-      onChangePageSize={[Function]}
       pageSize={20}
     />
     <withRouter(PageSizeItem)
       key="2_30"
-      onChangePageSize={[Function]}
       pageSize={30}
     />
     <withRouter(PageSizeItem)
       key="3_40"
-      onChangePageSize={[Function]}
       pageSize={40}
     />
   </div>

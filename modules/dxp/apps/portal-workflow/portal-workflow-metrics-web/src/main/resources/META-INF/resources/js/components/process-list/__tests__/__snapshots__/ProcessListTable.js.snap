@@ -17,7 +17,32 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Process Name
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate"
+              data-title="Process Name"
+              title="Process Name"
+            >
+              Process Name
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -27,7 +52,32 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Overdue
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate"
+              data-title="Overdue"
+              title="Overdue"
+            >
+              Overdue
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -37,7 +87,32 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          On Time
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate"
+              data-title="On Time"
+              title="On Time"
+            >
+              On Time
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -47,7 +122,32 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Total Pending
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate"
+              data-title="Total Pending"
+              title="Total Pending"
+            >
+              Total Pending
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
         </th>
         <th />
       </tr>
@@ -55,25 +155,23 @@ exports[`Should render component 1`] = `
     <tbody>
       <tr>
         <td
-          className="table-cell-expand"
+          className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
         >
-          <div
-            className="table-list-title"
+          <span
+            title="test"
           >
-            <span
-              className="text-truncate-inline"
-            >
-              <span
-                title="test"
-              >
-                test
-              </span>
-            </span>
-          </div>
+            test
+          </span>
         </td>
-        <td />
-        <td />
-        <td />
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
         <td>
           <div
             className="dropdown dropdown-action"
@@ -104,7 +202,7 @@ exports[`Should render component 1`] = `
               <li>
                 <a
                   className="dropdown-item"
-                  href="/slas/36401?backPath=%2F%3FbackPath%3D%252F"
+                  href="/slas/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                   onClick={[Function]}
                 >
                   Set Up SLAs

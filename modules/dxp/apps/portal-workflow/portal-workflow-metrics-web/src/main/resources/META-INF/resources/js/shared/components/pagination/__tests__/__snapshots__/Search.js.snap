@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should change search value 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "REPLACE",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <withRouter(Search)>
+        <Route>
+          <Search
+            history={
+              Object {
+                "action": "REPLACE",
+                "block": [Function],
+                "canGo": [Function],
+                "createHref": [Function],
+                "entries": Array [
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  },
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  },
+                  Object {
+                    "hash": "",
+                    "pathname": "/slas/1234",
+                    "search": "?backPath=%2Fprocesses",
+                  },
+                ],
+                "go": [Function],
+                "goBack": [Function],
+                "goForward": [Function],
+                "index": 0,
+                "length": 3,
+                "listen": [Function],
+                "location": Object {
+                  "hash": "",
+                  "pathname": "/",
+                  "search": "?backPath=%2F",
+                },
+                "push": [Function],
+                "replace": [Function],
+              }
+            }
+            location={
+              Object {
+                "hash": "",
+                "pathname": "/",
+                "search": "?backPath=%2F",
+              }
+            }
+            match={
+              Object {
+                "isExact": true,
+                "params": Object {},
+                "path": "/",
+                "url": "/",
+              }
+            }
+          >
+            <form
+              method="GET"
+              onSubmit={[Function]}
+              role="search"
+            >
+              <div
+                className="input-group"
+              >
+                <div
+                  className="input-group-item"
+                >
+                  <input
+                    className="form-control input-group-inset input-group-inset-after"
+                    defaultValue="test"
+                    onKeyPress={[Function]}
+                    placeholder="Search for..."
+                    type="text"
+                  />
+                  <span
+                    className="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      className="btn btn-unstyled"
+                      type="submit"
+                    >
+                      <Icon
+                        iconName="search"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-search"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                          />
+                        </svg>
+                      </Icon>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </Search>
+        </Route>
+      </withRouter(Search)>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component 1`] = `
+<form
+  method="GET"
+  onSubmit={[Function]}
+  role="search"
+>
+  <div
+    className="input-group"
+  >
+    <div
+      className="input-group-item"
+    >
+      <input
+        className="form-control input-group-inset input-group-inset-after"
+        defaultValue=""
+        disabled={true}
+        onKeyPress={[Function]}
+        placeholder="Search for..."
+        type="text"
+      />
+      <span
+        className="input-group-inset-item input-group-inset-item-after"
+      >
+        <button
+          className="btn btn-unstyled"
+          disabled={true}
+          type="submit"
+        >
+          <svg
+            className="lexicon-icon lexicon-icon-search"
+            focusable="false"
+            role="presentation"
+          >
+            <use
+              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+            />
+          </svg>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
+`;

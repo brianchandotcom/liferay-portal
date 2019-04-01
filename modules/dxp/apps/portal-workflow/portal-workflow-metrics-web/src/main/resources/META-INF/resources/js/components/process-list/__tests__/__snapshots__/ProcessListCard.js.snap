@@ -12,6 +12,7 @@ exports[`Should render component 1`] = `
         className="navbar-form navbar-form-autofit"
       >
         <form
+          method="GET"
           onSubmit={[Function]}
           role="search"
         >
@@ -23,11 +24,11 @@ exports[`Should render component 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
+                defaultValue=""
                 disabled={false}
-                onChange={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Search for..."
                 type="text"
-                value=""
               />
               <span
                 className="input-group-inset-item input-group-inset-item-after"
@@ -79,6 +80,7 @@ exports[`Should render component with 4 records 1`] = `
         className="navbar-form navbar-form-autofit"
       >
         <form
+          method="GET"
           onSubmit={[Function]}
           role="search"
         >
@@ -90,11 +92,11 @@ exports[`Should render component with 4 records 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
+                defaultValue=""
                 disabled={false}
-                onChange={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Search for..."
                 type="text"
-                value=""
               />
               <span
                 className="input-group-inset-item input-group-inset-item-after"
@@ -146,6 +148,7 @@ exports[`Should render component with 10 records 1`] = `
         className="navbar-form navbar-form-autofit"
       >
         <form
+          method="GET"
           onSubmit={[Function]}
           role="search"
         >
@@ -157,11 +160,11 @@ exports[`Should render component with 10 records 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
+                defaultValue=""
                 disabled={false}
-                onChange={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Search for..."
                 type="text"
-                value=""
               />
               <span
                 className="input-group-inset-item input-group-inset-item-after"

@@ -14,11 +14,18 @@ exports[`Should remove a item 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -39,12 +46,19 @@ exports[`Should remove a item 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -61,7 +75,14 @@ exports[`Should remove a item 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -101,55 +122,137 @@ exports[`Should remove a item 1`] = `
               <div
                 className="navbar-form navbar-form-autofit"
               >
-                <Search
+                <withRouter(Search)
                   disabled={false}
                   onSearch={[Function]}
                 >
-                  <form
-                    onSubmit={[Function]}
-                    role="search"
-                  >
-                    <div
-                      className="input-group"
+                  <Route>
+                    <Search
+                      disabled={false}
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      onSearch={[Function]}
                     >
-                      <div
-                        className="input-group-item"
+                      <form
+                        method="GET"
+                        onSubmit={[Function]}
+                        role="search"
                       >
-                        <input
-                          className="form-control input-group-inset input-group-inset-after"
-                          disabled={false}
-                          onChange={[Function]}
-                          placeholder="Search for..."
-                          type="text"
-                          value=""
-                        />
-                        <span
-                          className="input-group-inset-item input-group-inset-item-after"
+                        <div
+                          className="input-group"
                         >
-                          <button
-                            className="btn btn-unstyled"
-                            disabled={false}
-                            type="submit"
+                          <div
+                            className="input-group-item"
                           >
-                            <Icon
-                              iconName="search"
+                            <input
+                              className="form-control input-group-inset input-group-inset-after"
+                              defaultValue=""
+                              disabled={false}
+                              onKeyPress={[Function]}
+                              placeholder="Search for..."
+                              type="text"
+                            />
+                            <span
+                              className="input-group-inset-item input-group-inset-item-after"
                             >
-                              <svg
-                                className="lexicon-icon lexicon-icon-search"
-                                focusable="false"
-                                role="presentation"
+                              <button
+                                className="btn btn-unstyled"
+                                disabled={false}
+                                type="submit"
                               >
-                                <use
-                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                                />
-                              </svg>
-                            </Icon>
-                          </button>
-                        </span>
-                      </div>
-                    </div>
-                  </form>
-                </Search>
+                                <Icon
+                                  iconName="search"
+                                >
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-search"
+                                    focusable="false"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </form>
+                    </Search>
+                  </Route>
+                </withRouter(Search)>
               </div>
               <ul
                 className="navbar-nav"
@@ -173,12 +276,19 @@ exports[`Should remove a item 1`] = `
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -195,7 +305,14 @@ exports[`Should remove a item 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -205,13 +322,20 @@ exports[`Should remove a item 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -225,13 +349,13 @@ exports[`Should remove a item 1`] = `
                           to={
                             Object {
                               "pathname": "/sla/new/undefined",
-                              "search": "backPath=%2F%3FbackPath%3D%252F",
+                              "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
                         >
                           <a
                             className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-                            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+                            href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                             onClick={[Function]}
                           >
                             <Icon
@@ -354,6 +478,7 @@ exports[`Should render component 1`] = `
         className="navbar-form navbar-form-autofit"
       >
         <form
+          method="GET"
           onSubmit={[Function]}
           role="search"
         >
@@ -365,11 +490,11 @@ exports[`Should render component 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
+                defaultValue=""
                 disabled={false}
-                onChange={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Search for..."
                 type="text"
-                value=""
               />
               <span
                 className="input-group-inset-item input-group-inset-item-after"
@@ -402,7 +527,7 @@ exports[`Should render component 1`] = `
         >
           <a
             className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+            href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             <svg
@@ -505,6 +630,7 @@ exports[`Should render component after item was removed 1`] = `
         className="navbar-form navbar-form-autofit"
       >
         <form
+          method="GET"
           onSubmit={[Function]}
           role="search"
         >
@@ -516,11 +642,11 @@ exports[`Should render component after item was removed 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
+                defaultValue=""
                 disabled={false}
-                onChange={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Search for..."
                 type="text"
-                value=""
               />
               <span
                 className="input-group-inset-item input-group-inset-item-after"
@@ -553,7 +679,7 @@ exports[`Should render component after item was removed 1`] = `
         >
           <a
             className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+            href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             <svg

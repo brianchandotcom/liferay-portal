@@ -6,11 +6,18 @@ exports[`Should change page 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -31,12 +38,19 @@ exports[`Should change page 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -53,7 +67,14 @@ exports[`Should change page 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -62,7 +83,14 @@ exports[`Should change page 1`] = `
       }
     >
       <Pagination
-        onSelectPage={[Function]}
+        match={
+          Object {
+            "params": Object {
+              "page": 1,
+            },
+          }
+        }
+        maxPages={10}
         pageSize={1}
         totalCount={10}
       >
@@ -71,9 +99,8 @@ exports[`Should change page 1`] = `
         >
           <withRouter(PageItem)
             disabled={true}
-            key="process_list_pag_prev_-1"
-            onChangePage={[Function]}
-            page={-1}
+            key="process_list_pag_prev_0"
+            page={1}
             type="prev"
           >
             <Route>
@@ -88,12 +115,19 @@ exports[`Should change page 1`] = `
                     "entries": Array [
                       Object {
                         "hash": "",
-                        "pathname": "/",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
                       Object {
                         "hash": "",
-                        "pathname": "/processes",
+                        "pathname": "/",
                         "search": "?backPath=%2F",
                       },
                       Object {
@@ -110,7 +144,14 @@ exports[`Should change page 1`] = `
                     "listen": [Function],
                     "location": Object {
                       "hash": "",
-                      "pathname": "/",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
                     "push": [Function],
@@ -120,25 +161,919 @@ exports[`Should change page 1`] = `
                 location={
                   Object {
                     "hash": "",
-                    "pathname": "/",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
                   }
                 }
                 match={
                   Object {
-                    "isExact": true,
+                    "isExact": false,
                     "params": Object {},
                     "path": "/",
                     "url": "/",
                   }
                 }
-                onChangePage={[Function]}
-                page={-1}
+                page={1}
                 type="prev"
               >
                 <li
                   className="page-item disabled"
-                  onClick={[Function]}
+                >
+                  <a
+                    className="page-link"
+                    href="javascript:;"
+                  >
+                    <Icon
+                      iconName="angle-left"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-angle-left"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+                        />
+                      </svg>
+                    </Icon>
+                    <span
+                      className="sr-only"
+                    >
+                      Previous
+                    </span>
+                  </a>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            highlighted={true}
+            key="process_list_pag_1"
+            page={1}
+          >
+            <Route>
+              <PageItem
+                highlighted={true}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={1}
+              >
+                <li
+                  className="page-item active"
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      1
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            disabled={true}
+            key="process_list_pag_next_2"
+            page={2}
+            type="next"
+          >
+            <Route>
+              <PageItem
+                disabled={true}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={2}
+                type="next"
+              >
+                <li
+                  className="page-item disabled"
+                >
+                  <a
+                    className="page-link"
+                    href="javascript:;"
+                  >
+                    <Icon
+                      iconName="angle-right"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-angle-right"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+                        />
+                      </svg>
+                    </Icon>
+                    <span
+                      className="sr-only"
+                    >
+                      Next
+                    </span>
+                  </a>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+        </ul>
+      </Pagination>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item active"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 1 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item active"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      2
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 2 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      2
+    </a>
+  </li>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 3 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      2
+    </a>
+  </li>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 4 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      2
+    </a>
+  </li>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 5 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item"
+  >
+    <a
+      className="page-link"
+      href="/?backPath=%2F"
+      onClick={[Function]}
+    >
+      2
+    </a>
+  </li>
+  <li
+    className="page-item disabled"
+  >
+    <a
+      className="page-link"
+      href="javascript:;"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should test build menu 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Pagination
+        match={
+          Object {
+            "params": Object {
+              "page": 5,
+            },
+          }
+        }
+        maxPages={5}
+        pageSize={5}
+        totalCount={400}
+      >
+        <ul
+          className="pagination pull-right"
+        >
+          <withRouter(PageItem)
+            disabled={false}
+            key="process_list_pag_prev_4"
+            page={4}
+            type="prev"
+          >
+            <Route>
+              <PageItem
+                disabled={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={4}
+                type="prev"
+              >
+                <li
+                  className="page-item"
                 >
                   <Link
                     className="page-link"
@@ -182,7 +1117,6 @@ exports[`Should change page 1`] = `
           <withRouter(PageItem)
             highlighted={false}
             key="process_list_pag_1"
-            onChangePage={[Function]}
             page={1}
           >
             <Route>
@@ -197,12 +1131,19 @@ exports[`Should change page 1`] = `
                     "entries": Array [
                       Object {
                         "hash": "",
-                        "pathname": "/",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
                       Object {
                         "hash": "",
-                        "pathname": "/processes",
+                        "pathname": "/",
                         "search": "?backPath=%2F",
                       },
                       Object {
@@ -219,7 +1160,14 @@ exports[`Should change page 1`] = `
                     "listen": [Function],
                     "location": Object {
                       "hash": "",
-                      "pathname": "/",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
                     "push": [Function],
@@ -229,204 +1177,29 @@ exports[`Should change page 1`] = `
                 location={
                   Object {
                     "hash": "",
-                    "pathname": "/",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
                   }
                 }
                 match={
                   Object {
-                    "isExact": true,
+                    "isExact": false,
                     "params": Object {},
                     "path": "/",
                     "url": "/",
                   }
                 }
-                onChangePage={[Function]}
                 page={1}
               >
                 <li
                   className="page-item"
-                  onClick={[Function]}
-                >
-                  <Link
-                    className="page-link"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
-                  >
-                    <a
-                      className="page-link"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      1
-                    </a>
-                  </Link>
-                </li>
-              </PageItem>
-            </Route>
-          </withRouter(PageItem)>
-          <withRouter(PageItem)
-            highlighted={true}
-            key="process_list_pag_active_0"
-            onChangePage={[Function]}
-            page={0}
-          >
-            <Route>
-              <PageItem
-                highlighted={true}
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      },
-                      Object {
-                        "hash": "",
-                        "pathname": "/processes",
-                        "search": "?backPath=%2F",
-                      },
-                      Object {
-                        "hash": "",
-                        "pathname": "/slas/1234",
-                        "search": "?backPath=%2Fprocesses",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 3,
-                    "listen": [Function],
-                    "location": Object {
-                      "hash": "",
-                      "pathname": "/",
-                      "search": "?backPath=%2F",
-                    },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
-                    "hash": "",
-                    "pathname": "/",
-                    "search": "?backPath=%2F",
-                  }
-                }
-                match={
-                  Object {
-                    "isExact": true,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                onChangePage={[Function]}
-                page={0}
-              >
-                <li
-                  className="page-item active"
-                  onClick={[Function]}
-                >
-                  <Link
-                    className="page-link"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
-                  >
-                    <a
-                      className="page-link"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      0
-                    </a>
-                  </Link>
-                </li>
-              </PageItem>
-            </Route>
-          </withRouter(PageItem)>
-          <withRouter(PageItem)
-            key="process_list_pag_plus_1"
-            onChangePage={[Function]}
-            page={1}
-          >
-            <Route>
-              <PageItem
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      },
-                      Object {
-                        "hash": "",
-                        "pathname": "/processes",
-                        "search": "?backPath=%2F",
-                      },
-                      Object {
-                        "hash": "",
-                        "pathname": "/slas/1234",
-                        "search": "?backPath=%2Fprocesses",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 3,
-                    "listen": [Function],
-                    "location": Object {
-                      "hash": "",
-                      "pathname": "/",
-                      "search": "?backPath=%2F",
-                    },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
-                    "hash": "",
-                    "pathname": "/",
-                    "search": "?backPath=%2F",
-                  }
-                }
-                match={
-                  Object {
-                    "isExact": true,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                onChangePage={[Function]}
-                page={1}
-              >
-                <li
-                  className="page-item"
-                  onClick={[Function]}
                 >
                   <Link
                     className="page-link"
@@ -456,6 +1229,7 @@ exports[`Should change page 1`] = `
           >
             <a
               className="dropdown-toggle page-link"
+              data-senna-off={true}
               data-toggle="dropdown"
               href="javascript:;"
             >
@@ -476,178 +1250,235 @@ exports[`Should change page 1`] = `
                 data-current-index="2"
                 key="process_list_pag_sublist_2"
               >
-                <PageLink
+                <withRouter(PageLink)
                   key="process_list_pag_sublist_item_2"
-                  onChangePage={[Function]}
                   page={2}
                 >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#2"
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={2}
                     >
-                      <span
-                        className="sr-only"
-                      />
-                      2
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            2
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+                <withRouter(PageLink)
                   key="process_list_pag_sublist_item_3"
-                  onChangePage={[Function]}
                   page={3}
                 >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#3"
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={3}
                     >
-                      <span
-                        className="sr-only"
-                      />
-                      3
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_4"
-                  onChangePage={[Function]}
-                  page={4}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#4"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      4
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_5"
-                  onChangePage={[Function]}
-                  page={5}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#5"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      5
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_6"
-                  onChangePage={[Function]}
-                  page={6}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#6"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      6
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_7"
-                  onChangePage={[Function]}
-                  page={7}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#7"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      7
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_8"
-                  onChangePage={[Function]}
-                  page={8}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#8"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      8
-                    </a>
-                  </li>
-                </PageLink>
-                <PageLink
-                  key="process_list_pag_sublist_item_9"
-                  onChangePage={[Function]}
-                  page={9}
-                >
-                  <li
-                    className="page-item"
-                    onClick={[Function]}
-                  >
-                    <a
-                      className="page-link"
-                      href="#9"
-                    >
-                      <span
-                        className="sr-only"
-                      />
-                      9
-                    </a>
-                  </li>
-                </PageLink>
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            3
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
               </ul>
             </div>
           </li>
           <withRouter(PageItem)
-            highlighted={false}
-            key="process_list_pag_last_10"
-            onChangePage={[Function]}
-            page={10}
+            key="process_list_pag_sublist_4"
+            page={4}
           >
             <Route>
               <PageItem
-                highlighted={false}
                 history={
                   Object {
                     "action": "POP",
@@ -657,12 +1488,19 @@ exports[`Should change page 1`] = `
                     "entries": Array [
                       Object {
                         "hash": "",
-                        "pathname": "/",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
                       Object {
                         "hash": "",
-                        "pathname": "/processes",
+                        "pathname": "/",
                         "search": "?backPath=%2F",
                       },
                       Object {
@@ -679,7 +1517,14 @@ exports[`Should change page 1`] = `
                     "listen": [Function],
                     "location": Object {
                       "hash": "",
-                      "pathname": "/",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
                     "push": [Function],
@@ -689,24 +1534,29 @@ exports[`Should change page 1`] = `
                 location={
                   Object {
                     "hash": "",
-                    "pathname": "/",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
                   }
                 }
                 match={
                   Object {
-                    "isExact": true,
+                    "isExact": false,
                     "params": Object {},
                     "path": "/",
                     "url": "/",
                   }
                 }
-                onChangePage={[Function]}
-                page={10}
+                page={4}
               >
                 <li
                   className="page-item"
-                  onClick={[Function]}
                 >
                   <Link
                     className="page-link"
@@ -723,7 +1573,7 @@ exports[`Should change page 1`] = `
                       href="/?backPath=%2F"
                       onClick={[Function]}
                     >
-                      10
+                      4
                     </a>
                   </Link>
                 </li>
@@ -731,15 +1581,13 @@ exports[`Should change page 1`] = `
             </Route>
           </withRouter(PageItem)>
           <withRouter(PageItem)
-            disabled={false}
-            key="process_list_pag_next_1"
-            onChangePage={[Function]}
-            page={1}
-            type="next"
+            highlighted={true}
+            key="process_list_pag_active_5"
+            page={5}
           >
             <Route>
               <PageItem
-                disabled={false}
+                highlighted={true}
                 history={
                   Object {
                     "action": "POP",
@@ -749,12 +1597,19 @@ exports[`Should change page 1`] = `
                     "entries": Array [
                       Object {
                         "hash": "",
-                        "pathname": "/",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
                       Object {
                         "hash": "",
-                        "pathname": "/processes",
+                        "pathname": "/",
                         "search": "?backPath=%2F",
                       },
                       Object {
@@ -771,7 +1626,14 @@ exports[`Should change page 1`] = `
                     "listen": [Function],
                     "location": Object {
                       "hash": "",
-                      "pathname": "/",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
                     "push": [Function],
@@ -781,25 +1643,936 @@ exports[`Should change page 1`] = `
                 location={
                   Object {
                     "hash": "",
-                    "pathname": "/",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
                   }
                 }
                 match={
                   Object {
-                    "isExact": true,
+                    "isExact": false,
                     "params": Object {},
                     "path": "/",
                     "url": "/",
                   }
                 }
-                onChangePage={[Function]}
-                page={1}
+                page={5}
+              >
+                <li
+                  className="page-item active"
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      5
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            key="process_list_pag_plus_6"
+            page={6}
+          >
+            <Route>
+              <PageItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={6}
+              >
+                <li
+                  className="page-item"
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      6
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <li
+            className="dropdown page-item"
+            key="process_list_pag_7"
+          >
+            <a
+              className="dropdown-toggle page-link"
+              data-senna-off={true}
+              data-toggle="dropdown"
+              href="javascript:;"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ...
+              </span>
+              <span
+                className="sr-only"
+              />
+            </a>
+            <div
+              className="dropdown-menu dropdown-menu-top-center"
+            >
+              <ul
+                className="inline-scroller link-list"
+                data-current-index="7"
+                key="process_list_pag_sublist_7"
+              >
+                <withRouter(PageLink)
+                  key="process_list_pag_sublist_item_7"
+                  page={7}
+                >
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={7}
+                    >
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            7
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+                <withRouter(PageLink)
+                  key="process_list_pag_sublist_item_8"
+                  page={8}
+                >
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={8}
+                    >
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            8
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+                <withRouter(PageLink)
+                  key="process_list_pag_sublist_item_9"
+                  page={9}
+                >
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={9}
+                    >
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            9
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+                <withRouter(PageLink)
+                  key="process_list_pag_sublist_item_10"
+                  page={10}
+                >
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={10}
+                    >
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            10
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+                <withRouter(PageLink)
+                  key="process_list_pag_sublist_item_11"
+                  page={11}
+                >
+                  <Route>
+                    <PageLink
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      page={11}
+                    >
+                      <li
+                        className="page-item"
+                      >
+                        <Link
+                          className="page-link"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                        >
+                          <a
+                            className="page-link"
+                            href="/?backPath=%2F"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="sr-only"
+                            />
+                            11
+                          </a>
+                        </Link>
+                      </li>
+                    </PageLink>
+                  </Route>
+                </withRouter(PageLink)>
+              </ul>
+            </div>
+          </li>
+          <withRouter(PageItem)
+            highlighted={false}
+            key="process_list_pag_last_20"
+            page={20}
+          >
+            <Route>
+              <PageItem
+                highlighted={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={20}
+              >
+                <li
+                  className="page-item"
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      20
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            disabled={false}
+            key="process_list_pag_next_6"
+            page={6}
+            type="next"
+          >
+            <Route>
+              <PageItem
+                disabled={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                page={6}
                 type="next"
               >
                 <li
                   className="page-item"
-                  onClick={[Function]}
                 >
                   <Link
                     className="page-link"
@@ -847,1158 +2620,2074 @@ exports[`Should change page 1`] = `
 </MockRouter>
 `;
 
-exports[`Should render component 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
+exports[`Should test build menu 2`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      0
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="2"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
+      <div>
+        <Pagination
+          match={
+            Object {
+              "params": Object {
+                "page": 20,
+              },
+            }
+          }
+          maxPages={5}
+          pageSize={5}
+          totalCount={400}
         >
-          <a
-            className="page-link"
-            href="#2"
+          <ul
+            className="pagination pull-right"
           >
-            <span
-              className="sr-only"
-            />
-            2
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#3"
-          >
-            <span
-              className="sr-only"
-            />
-            3
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#4"
-          >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#6"
-          >
-            <span
-              className="sr-only"
-            />
-            6
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#7"
-          >
-            <span
-              className="sr-only"
-            />
-            7
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#8"
-          >
-            <span
-              className="sr-only"
-            />
-            8
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#9"
-          >
-            <span
-              className="sr-only"
-            />
-            9
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      10
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
+            <withRouter(PageItem)
+              disabled={false}
+              key="process_list_pag_prev_19"
+              page={19}
+              type="prev"
+            >
+              <Route>
+                <PageItem
+                  disabled={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={19}
+                  type="prev"
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        <Icon
+                          iconName="angle-left"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-angle-left"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+                            />
+                          </svg>
+                        </Icon>
+                        <span
+                          className="sr-only"
+                        >
+                          Previous
+                        </span>
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_1"
+              page={1}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={1}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        1
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <li
+              className="dropdown page-item"
+              key="process_list_pag_2"
+            >
+              <a
+                className="dropdown-toggle page-link"
+                data-senna-off={true}
+                data-toggle="dropdown"
+                href="javascript:;"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ...
+                </span>
+                <span
+                  className="sr-only"
+                />
+              </a>
+              <div
+                className="dropdown-menu dropdown-menu-top-center"
+              >
+                <ul
+                  className="inline-scroller link-list"
+                  data-current-index="2"
+                  key="process_list_pag_sublist_2"
+                >
+                  <withRouter(PageLink)
+                    key="process_list_pag_sublist_item_2"
+                    page={2}
+                  >
+                    <Route>
+                      <PageLink
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        page={2}
+                      >
+                        <li
+                          className="page-item"
+                        >
+                          <Link
+                            className="page-link"
+                            replace={false}
+                            to={
+                              Object {
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              }
+                            }
+                          >
+                            <a
+                              className="page-link"
+                              href="/?backPath=%2F"
+                              onClick={[Function]}
+                            >
+                              <span
+                                className="sr-only"
+                              />
+                              2
+                            </a>
+                          </Link>
+                        </li>
+                      </PageLink>
+                    </Route>
+                  </withRouter(PageLink)>
+                  <withRouter(PageLink)
+                    key="process_list_pag_sublist_item_3"
+                    page={3}
+                  >
+                    <Route>
+                      <PageLink
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        page={3}
+                      >
+                        <li
+                          className="page-item"
+                        >
+                          <Link
+                            className="page-link"
+                            replace={false}
+                            to={
+                              Object {
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              }
+                            }
+                          >
+                            <a
+                              className="page-link"
+                              href="/?backPath=%2F"
+                              onClick={[Function]}
+                            >
+                              <span
+                                className="sr-only"
+                              />
+                              3
+                            </a>
+                          </Link>
+                        </li>
+                      </PageLink>
+                    </Route>
+                  </withRouter(PageLink)>
+                  <withRouter(PageLink)
+                    key="process_list_pag_sublist_item_4"
+                    page={4}
+                  >
+                    <Route>
+                      <PageLink
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        page={4}
+                      >
+                        <li
+                          className="page-item"
+                        >
+                          <Link
+                            className="page-link"
+                            replace={false}
+                            to={
+                              Object {
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              }
+                            }
+                          >
+                            <a
+                              className="page-link"
+                              href="/?backPath=%2F"
+                              onClick={[Function]}
+                            >
+                              <span
+                                className="sr-only"
+                              />
+                              4
+                            </a>
+                          </Link>
+                        </li>
+                      </PageLink>
+                    </Route>
+                  </withRouter(PageLink)>
+                </ul>
+              </div>
+            </li>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_sublist_18"
+              page={18}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={18}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        18
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_sublist_19"
+              page={19}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={19}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        19
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={true}
+              key="process_list_pag_sublist_20"
+              page={20}
+            >
+              <Route>
+                <PageItem
+                  highlighted={true}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={20}
+                >
+                  <li
+                    className="page-item active"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        20
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              disabled={true}
+              key="process_list_pag_next_21"
+              page={21}
+              type="next"
+            >
+              <Route>
+                <PageItem
+                  disabled={true}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={21}
+                  type="next"
+                >
+                  <li
+                    className="page-item disabled"
+                  >
+                    <a
+                      className="page-link"
+                      href="javascript:;"
+                    >
+                      <Icon
+                        iconName="angle-right"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-angle-right"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+                          />
+                        </svg>
+                      </Icon>
+                      <span
+                        className="sr-only"
+                      >
+                        Next
+                      </span>
+                    </a>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+          </ul>
+        </Pagination>
+      </div>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
-exports[`Should render component at page 1 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
+exports[`Should test build menu with page 1 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      2
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      3
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="4"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
+      <div>
+        <Pagination
+          match={
+            Object {
+              "params": Object {
+                "page": 1,
+              },
+            }
+          }
+          maxPages={5}
+          pageSize={5}
+          totalCount={400}
         >
-          <a
-            className="page-link"
-            href="#4"
+          <ul
+            className="pagination pull-right"
           >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      6
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
-`;
-
-exports[`Should render component at page 2 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      0
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="2"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#2"
-          >
-            <span
-              className="sr-only"
-            />
-            2
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#3"
-          >
-            <span
-              className="sr-only"
-            />
-            3
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#4"
-          >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      6
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
-`;
-
-exports[`Should render component at page 3 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      0
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="2"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#2"
-          >
-            <span
-              className="sr-only"
-            />
-            2
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#3"
-          >
-            <span
-              className="sr-only"
-            />
-            3
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#4"
-          >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      6
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
-`;
-
-exports[`Should render component at page 4 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      0
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="2"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#2"
-          >
-            <span
-              className="sr-only"
-            />
-            2
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#3"
-          >
-            <span
-              className="sr-only"
-            />
-            3
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#4"
-          >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      6
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
-`;
-
-exports[`Should render component at page 5 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <li
-    className="page-item disabled"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-left"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Previous
-      </span>
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="page-item active"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      0
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      1
-    </a>
-  </li>
-  <li
-    className="dropdown page-item"
-  >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="2"
-      >
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#2"
-          >
-            <span
-              className="sr-only"
-            />
-            2
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#3"
-          >
-            <span
-              className="sr-only"
-            />
-            3
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#4"
-          >
-            <span
-              className="sr-only"
-            />
-            4
-          </a>
-        </li>
-        <li
-          className="page-item"
-          onClick={[Function]}
-        >
-          <a
-            className="page-link"
-            href="#5"
-          >
-            <span
-              className="sr-only"
-            />
-            5
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      6
-    </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="/?backPath=%2F"
-      onClick={[Function]}
-    >
-      <svg
-        className="lexicon-icon lexicon-icon-angle-right"
-        focusable="false"
-        role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
-      <span
-        className="sr-only"
-      >
-        Next
-      </span>
-    </a>
-  </li>
-</ul>
+            <withRouter(PageItem)
+              disabled={true}
+              key="process_list_pag_prev_0"
+              page={1}
+              type="prev"
+            >
+              <Route>
+                <PageItem
+                  disabled={true}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={1}
+                  type="prev"
+                >
+                  <li
+                    className="page-item disabled"
+                  >
+                    <a
+                      className="page-link"
+                      href="javascript:;"
+                    >
+                      <Icon
+                        iconName="angle-left"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-angle-left"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+                          />
+                        </svg>
+                      </Icon>
+                      <span
+                        className="sr-only"
+                      >
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={true}
+              key="process_list_pag_sublist_1"
+              page={1}
+            >
+              <Route>
+                <PageItem
+                  highlighted={true}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={1}
+                >
+                  <li
+                    className="page-item active"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        1
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_sublist_2"
+              page={2}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={2}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        2
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_sublist_3"
+              page={3}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={3}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        3
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <li
+              className="dropdown page-item"
+              key="process_list_pag_4"
+            >
+              <a
+                className="dropdown-toggle page-link"
+                data-senna-off={true}
+                data-toggle="dropdown"
+                href="javascript:;"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ...
+                </span>
+                <span
+                  className="sr-only"
+                />
+              </a>
+              <div
+                className="dropdown-menu dropdown-menu-top-center"
+              >
+                <ul
+                  className="inline-scroller link-list"
+                  data-current-index="4"
+                  key="process_list_pag_sublist_4"
+                >
+                  <withRouter(PageLink)
+                    key="process_list_pag_sublist_item_4"
+                    page={4}
+                  >
+                    <Route>
+                      <PageLink
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        page={4}
+                      >
+                        <li
+                          className="page-item"
+                        >
+                          <Link
+                            className="page-link"
+                            replace={false}
+                            to={
+                              Object {
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              }
+                            }
+                          >
+                            <a
+                              className="page-link"
+                              href="/?backPath=%2F"
+                              onClick={[Function]}
+                            >
+                              <span
+                                className="sr-only"
+                              />
+                              4
+                            </a>
+                          </Link>
+                        </li>
+                      </PageLink>
+                    </Route>
+                  </withRouter(PageLink)>
+                </ul>
+              </div>
+            </li>
+            <withRouter(PageItem)
+              highlighted={false}
+              key="process_list_pag_20"
+              page={20}
+            >
+              <Route>
+                <PageItem
+                  highlighted={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={20}
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        20
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+            <withRouter(PageItem)
+              disabled={false}
+              key="process_list_pag_next_2"
+              page={2}
+              type="next"
+            >
+              <Route>
+                <PageItem
+                  disabled={false}
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        },
+                        Object {
+                          "hash": "",
+                          "pathname": "/slas/1234",
+                          "search": "?backPath=%2Fprocesses",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 3,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  page={2}
+                  type="next"
+                >
+                  <li
+                    className="page-item"
+                  >
+                    <Link
+                      className="page-link"
+                      replace={false}
+                      to={
+                        Object {
+                          "pathname": "/",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                    >
+                      <a
+                        className="page-link"
+                        href="/?backPath=%2F"
+                        onClick={[Function]}
+                      >
+                        <Icon
+                          iconName="angle-right"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-angle-right"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+                            />
+                          </svg>
+                        </Icon>
+                        <span
+                          className="sr-only"
+                        >
+                          Next
+                        </span>
+                      </a>
+                    </Link>
+                  </li>
+                </PageItem>
+              </Route>
+            </withRouter(PageItem)>
+          </ul>
+        </Pagination>
+      </div>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;

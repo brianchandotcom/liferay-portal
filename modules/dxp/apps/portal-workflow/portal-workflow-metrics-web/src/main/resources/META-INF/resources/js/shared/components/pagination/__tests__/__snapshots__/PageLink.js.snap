@@ -1,30 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should change page 1`] = `
-<li
-  className="page-item"
-  onClick={[Function]}
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "match": Object {
+          "params": Object {
+            "page": 1,
+            "search": undefined,
+            "sort": undefined,
+          },
+        },
+        "pathname": "/processes/1/10/title%3Aasc",
+        "search": "?backPath=%2F",
+      },
+      Object {
+        "pathname": "/",
+        "search": "?backPath=%2F",
+      },
+      Object {
+        "pathname": "/slas/1234",
+        "search": "?backPath=%2Fprocesses",
+      },
+    ]
+  }
+  keyLength={0}
 >
-  <a
-    className="page-link"
-    href="#2"
+  <ContextProvider
+    value={
+      Object {
+        "client": undefined,
+        "companyId": 1,
+        "defaultDelta": 20,
+        "deltas": Array [
+          10,
+          20,
+          30,
+          50,
+        ],
+        "maxPages": 3,
+        "page": 1,
+        "search": undefined,
+        "setTitle": [Function],
+        "sort": undefined,
+      }
+    }
   >
-    <span
-      className="sr-only"
+    <withRouter(PageLink)
+      page={2}
     />
-    2
-  </a>
-</li>
+  </ContextProvider>
+</MemoryRouter>
 `;
 
 exports[`Should render component as active 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"
-    href="#1"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     <span
       className="sr-only"
@@ -37,11 +74,11 @@ exports[`Should render component as active 1`] = `
 exports[`Should render component as type default 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"
-    href="#1"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     <span
       className="sr-only"
@@ -52,18 +89,56 @@ exports[`Should render component as type default 1`] = `
 `;
 
 exports[`Should test change page when disabled 1`] = `
-<li
-  className="page-item"
-  onClick={[Function]}
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "match": Object {
+          "params": Object {
+            "page": 1,
+            "search": undefined,
+            "sort": undefined,
+          },
+        },
+        "pathname": "/processes/1/10/title%3Aasc",
+        "search": "?backPath=%2F",
+      },
+      Object {
+        "pathname": "/",
+        "search": "?backPath=%2F",
+      },
+      Object {
+        "pathname": "/slas/1234",
+        "search": "?backPath=%2Fprocesses",
+      },
+    ]
+  }
+  keyLength={0}
 >
-  <a
-    className="page-link"
-    href="#2"
+  <ContextProvider
+    value={
+      Object {
+        "client": undefined,
+        "companyId": 1,
+        "defaultDelta": 20,
+        "deltas": Array [
+          10,
+          20,
+          30,
+          50,
+        ],
+        "maxPages": 3,
+        "page": 1,
+        "search": undefined,
+        "setTitle": [Function],
+        "sort": undefined,
+      }
+    }
   >
-    <span
-      className="sr-only"
+    <withRouter(PageLink)
+      disabled={true}
+      page={2}
     />
-    2
-  </a>
-</li>
+  </ContextProvider>
+</MemoryRouter>
 `;

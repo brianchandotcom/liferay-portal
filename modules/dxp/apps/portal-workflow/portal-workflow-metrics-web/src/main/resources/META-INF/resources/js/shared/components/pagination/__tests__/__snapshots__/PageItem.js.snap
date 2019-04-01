@@ -17,7 +17,6 @@ exports[`Should change page 1`] = `
 exports[`Should render component as active 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"
@@ -32,7 +31,6 @@ exports[`Should render component as active 1`] = `
 exports[`Should render component as type Next 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"
@@ -60,7 +58,6 @@ exports[`Should render component as type Next 1`] = `
 exports[`Should render component as type Previous 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"
@@ -88,7 +85,6 @@ exports[`Should render component as type Previous 1`] = `
 exports[`Should render component as type default 1`] = `
 <li
   className="page-item"
-  onClick={[Function]}
 >
   <a
     className="page-link"

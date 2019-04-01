@@ -14,11 +14,18 @@ exports[`Should display error on alert when receive a server error after submit 
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -39,12 +46,19 @@ exports[`Should display error on alert when receive a server error after submit 
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -61,7 +75,14 @@ exports[`Should display error on alert when receive a server error after submit 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -322,12 +343,19 @@ exports[`Should display error on alert when receive a server error after submit 
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -344,7 +372,14 @@ exports[`Should display error on alert when receive a server error after submit 
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -354,13 +389,20 @@ exports[`Should display error on alert when receive a server error after submit 
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -408,11 +450,18 @@ exports[`Should display error on field when receive a server error after submit 
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -433,12 +482,19 @@ exports[`Should display error on field when receive a server error after submit 
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -455,7 +511,14 @@ exports[`Should display error on field when receive a server error after submit 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -716,12 +779,19 @@ exports[`Should display error on field when receive a server error after submit 
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -738,7 +808,14 @@ exports[`Should display error on field when receive a server error after submit 
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -748,13 +825,20 @@ exports[`Should display error on field when receive a server error after submit 
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -794,11 +878,18 @@ exports[`Should display error when submitting the form with empty name 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -819,12 +910,19 @@ exports[`Should display error when submitting the form with empty name 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -841,7 +939,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -1102,12 +1207,19 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -1124,7 +1236,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -1134,13 +1253,20 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -1180,11 +1306,18 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -1205,12 +1338,19 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -1227,7 +1367,14 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -1488,12 +1635,19 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -1510,7 +1664,14 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -1520,13 +1681,20 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -1566,11 +1734,18 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -1591,12 +1766,19 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -1613,7 +1795,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -1874,12 +2063,19 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -1896,7 +2092,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -1906,13 +2109,20 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -1952,11 +2162,18 @@ exports[`Should display errors when input blur with invalid values 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -1977,12 +2194,19 @@ exports[`Should display errors when input blur with invalid values 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -1999,7 +2223,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -2260,12 +2491,19 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -2282,7 +2520,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -2292,13 +2537,20 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -2338,11 +2590,18 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -2363,12 +2622,19 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -2385,7 +2651,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -2646,12 +2919,19 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -2668,7 +2948,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -2678,13 +2965,20 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -3108,11 +3402,18 @@ exports[`Should submit the form with valid values 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -3139,7 +3440,7 @@ exports[`Should submit the form with valid values 1`] = `
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -3424,7 +3725,7 @@ exports[`Should submit the form with valid values 1`] = `
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -3452,13 +3753,20 @@ exports[`Should submit the form with valid values 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",
@@ -3498,11 +3806,18 @@ exports[`Should update state after input changes 1`] = `
     initialEntries={
       Array [
         Object {
-          "pathname": "/",
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
         Object {
-          "pathname": "/processes",
+          "pathname": "/",
           "search": "?backPath=%2F",
         },
         Object {
@@ -3523,12 +3838,19 @@ exports[`Should update state after input changes 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
             Object {
               "hash": "",
-              "pathname": "/processes",
+              "pathname": "/",
               "search": "?backPath=%2F",
             },
             Object {
@@ -3545,7 +3867,14 @@ exports[`Should update state after input changes 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -3836,12 +4165,19 @@ exports[`Should update state after input changes 1`] = `
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "pathname": "/",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
                               Object {
                                 "hash": "",
-                                "pathname": "/processes",
+                                "pathname": "/",
                                 "search": "?backPath=%2F",
                               },
                               Object {
@@ -3858,7 +4194,14 @@ exports[`Should update state after input changes 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "pathname": "/",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
                             "push": [Function],
@@ -3868,13 +4211,20 @@ exports[`Should update state after input changes 1`] = `
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           }
                         }
                         match={
                           Object {
-                            "isExact": true,
+                            "isExact": false,
                             "params": Object {},
                             "path": "/",
                             "url": "/",

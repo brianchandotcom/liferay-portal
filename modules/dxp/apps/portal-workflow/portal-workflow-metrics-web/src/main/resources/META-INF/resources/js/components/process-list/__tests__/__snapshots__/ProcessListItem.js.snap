@@ -3,21 +3,13 @@
 exports[`Should render component with 1 instance count 1`] = `
 <tr>
   <td
-    className="table-cell-expand"
+    className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
   >
-    <div
-      className="table-list-title"
+    <span
+      title="Process test"
     >
-      <span
-        className="text-truncate-inline"
-      >
-        <span
-          title="Process test"
-        >
-          Process test
-        </span>
-      </span>
-    </div>
+      Process test
+    </span>
   </td>
   <td>
     5
@@ -58,7 +50,7 @@ exports[`Should render component with 1 instance count 1`] = `
         <li>
           <a
             className="dropdown-item"
-            href="/slas/36401?backPath=%2F%3FbackPath%3D%252F"
+            href="/slas/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             Set Up SLAs
@@ -73,21 +65,13 @@ exports[`Should render component with 1 instance count 1`] = `
 exports[`Should render component with one list item 1`] = `
 <tr>
   <td
-    className="table-cell-expand"
+    className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
   >
-    <div
-      className="table-list-title"
+    <span
+      title="Process test"
     >
-      <span
-        className="text-truncate-inline"
-      >
-        <span
-          title="Process test"
-        >
-          Process test
-        </span>
-      </span>
-    </div>
+      Process test
+    </span>
   </td>
   <td>
     5
@@ -128,7 +112,7 @@ exports[`Should render component with one list item 1`] = `
         <li>
           <a
             className="dropdown-item"
-            href="/slas/36401?backPath=%2F%3FbackPath%3D%252F"
+            href="/slas/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             Set Up SLAs

@@ -52,9 +52,6 @@ public class AssetDisplayPageFormProcessorImpl
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				themeDisplay.getScopeGroupId(), classNameId, classPK);
 
-		long assetDisplayPageId = ParamUtil.getLong(
-			portletRequest, "assetDisplayPageId");
-
 		int displayPageType = ParamUtil.getInteger(
 			portletRequest, "displayPageType");
 
@@ -63,8 +60,14 @@ public class AssetDisplayPageFormProcessorImpl
 				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
 					themeDisplay.getScopeGroupId(), classNameId, classPK);
 			}
+
+			return;
 		}
-		else if (assetDisplayPageEntry == null) {
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			portletRequest, "assetDisplayPageId");
+
+		if (assetDisplayPageEntry == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				className, portletRequest);
 
@@ -72,12 +75,13 @@ public class AssetDisplayPageFormProcessorImpl
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				classNameId, classPK, assetDisplayPageId, displayPageType,
 				serviceContext);
+
+			return;
 		}
-		else {
-			_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
-				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
-				assetDisplayPageId, displayPageType);
-		}
+
+		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+			assetDisplayPageEntry.getAssetDisplayPageEntryId(),
+			assetDisplayPageId, displayPageType);
 	}
 
 	@Reference

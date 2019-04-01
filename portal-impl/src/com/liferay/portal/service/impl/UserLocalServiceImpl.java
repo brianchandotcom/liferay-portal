@@ -6729,11 +6729,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userPersistence.setGroups(userId, newGroupIds);
 
-		if (newGroupIds != null) {
-			for (long newGroupId : newGroupIds) {
-				if (!oldGroupIds.contains(newGroupId)) {
-					addDefaultRolesAndTeams(newGroupId, new long[] {userId});
-				}
+		for (long newGroupId : newGroupIds) {
+			if (!oldGroupIds.contains(newGroupId)) {
+				addDefaultRolesAndTeams(newGroupId, new long[] {userId});
 			}
 		}
 

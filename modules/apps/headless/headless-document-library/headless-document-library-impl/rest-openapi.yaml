@@ -266,6 +266,10 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
                   name: sort
                   schema:
                       type: string
@@ -325,6 +329,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:
@@ -391,6 +399,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:
@@ -532,6 +544,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:
@@ -702,6 +718,10 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
                   name: sort
                   schema:
                       type: string
@@ -763,6 +783,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:

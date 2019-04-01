@@ -75,8 +75,8 @@ public class BlogPostingImageResourceImpl
 
 	@Override
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
@@ -87,6 +87,7 @@ public class BlogPostingImageResourceImpl
 			filter, DLFileEntry.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setFolderIds(new long[] {folder.getFolderId()});

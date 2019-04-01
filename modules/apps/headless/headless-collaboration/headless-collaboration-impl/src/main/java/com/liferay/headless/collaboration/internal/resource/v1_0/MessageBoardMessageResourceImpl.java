@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -49,7 +48,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Collections;
@@ -97,26 +95,26 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				Long messageBoardMessageId, Filter filter,
+				Long messageBoardMessageId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
-			messageBoardMessageId, filter, pagination, sorts);
+			messageBoardMessageId, search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				Long messageBoardThreadId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
 		return _getMessageBoardMessagesPage(
-			mbThread.getRootMessageId(), filter, pagination, sorts);
+			mbThread.getRootMessageId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -207,8 +205,8 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
-			Long messageBoardMessageId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long messageBoardMessageId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -230,6 +228,7 @@ public class MessageBoardMessageResourceImpl
 			filter, MBMessage.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
@@ -322,16 +321,10 @@ public class MessageBoardMessageResourceImpl
 	private Portal _portal;
 
 	@Reference
-	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Context
 	private User _user;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

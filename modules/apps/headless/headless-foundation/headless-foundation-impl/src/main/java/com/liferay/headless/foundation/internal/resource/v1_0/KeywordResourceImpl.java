@@ -61,8 +61,8 @@ public class KeywordResourceImpl
 
 	@Override
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -71,6 +71,7 @@ public class KeywordResourceImpl
 			filter, AssetTag.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

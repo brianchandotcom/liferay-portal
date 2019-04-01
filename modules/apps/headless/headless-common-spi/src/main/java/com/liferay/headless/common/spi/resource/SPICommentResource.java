@@ -83,15 +83,16 @@ public class SPICommentResource<T> {
 	}
 
 	public Page<T> getCommentCommentsPage(
-			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long commentId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
-		return _getComments(commentId, filter, pagination, sorts);
+		return _getComments(commentId, search, filter, pagination, sorts);
 	}
 
 	public Page<T> getEntityCommentsPage(
-			long groupId, long classPK, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			long groupId, long classPK, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Discussion discussion = _commentManager.getDiscussion(
@@ -102,7 +103,8 @@ public class SPICommentResource<T> {
 			discussion.getRootDiscussionComment();
 
 		return _getComments(
-			rootDiscussionComment.getCommentId(), filter, pagination, sorts);
+			rootDiscussionComment.getCommentId(), search, filter, pagination,
+			sorts);
 	}
 
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -183,8 +185,8 @@ public class SPICommentResource<T> {
 	}
 
 	private Page<T> _getComments(
-			Long parentCommentId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long parentCommentId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -200,6 +202,7 @@ public class SPICommentResource<T> {
 			filter, MBMessage.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setAttribute("discussion", Boolean.TRUE);
 				searchContext.setAttribute(

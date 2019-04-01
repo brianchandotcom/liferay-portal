@@ -51,8 +51,8 @@ public class ContentStructureResourceImpl
 
 	@Override
 	public Page<ContentStructure> getContentSpaceContentStructuresPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -61,6 +61,7 @@ public class ContentStructureResourceImpl
 			filter, DDMStructure.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);

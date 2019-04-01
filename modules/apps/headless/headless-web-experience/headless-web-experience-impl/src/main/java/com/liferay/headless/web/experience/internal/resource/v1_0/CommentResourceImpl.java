@@ -63,14 +63,15 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getCommentCommentsPage(
-			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long commentId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
 		return spiCommentResource.getCommentCommentsPage(
-			commentId, filter, pagination, sorts);
+			commentId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -83,8 +84,8 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getStructuredContentCommentsPage(
-			Long structuredContentId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long structuredContentId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -94,7 +95,7 @@ public class CommentResourceImpl
 			structuredContentId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			journalArticle.getGroupId(), structuredContentId, filter,
+			journalArticle.getGroupId(), structuredContentId, search, filter,
 			pagination, sorts);
 	}
 

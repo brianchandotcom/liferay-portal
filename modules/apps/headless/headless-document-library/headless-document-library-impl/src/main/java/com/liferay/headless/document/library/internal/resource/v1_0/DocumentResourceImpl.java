@@ -93,7 +93,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -118,7 +118,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -135,7 +135,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getFolderDocumentsPage(
-			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -150,7 +151,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -378,13 +379,14 @@ public class DocumentResourceImpl
 
 	private Page<Document> _getDocumentsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQueryUnsafeConsumer, filter, DLFileEntry.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			document -> _toDocument(

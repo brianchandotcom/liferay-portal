@@ -161,7 +161,7 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -180,13 +180,13 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			contentSpaceId, filter, pagination, sorts);
+			contentSpaceId, search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			Long contentStructureId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentStructureId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -203,7 +203,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			null, filter, pagination, sorts);
+			null, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class StructuredContentResourceImpl
 	@Override
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				Long structuredContentFolderId, Filter filter,
+				Long structuredContentFolderId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -258,7 +258,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			null, filter, pagination, sorts);
+			null, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -596,8 +596,8 @@ public class StructuredContentResourceImpl
 
 	private Page<StructuredContent> _getStructuredContentsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -606,6 +606,7 @@ public class StructuredContentResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				com.liferay.portal.kernel.search.Field.ARTICLE_ID,
 				com.liferay.portal.kernel.search.Field.SCOPE_GROUP_ID),
+			search,
 			searchContext -> {
 				searchContext.setAttribute(
 					com.liferay.portal.kernel.search.Field.STATUS,

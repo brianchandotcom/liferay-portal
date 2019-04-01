@@ -63,7 +63,7 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -74,7 +74,7 @@ public class FolderResourceImpl
 		}
 
 		return _getFoldersPage(
-			contentSpaceId, filter, folderId, pagination, sorts);
+			contentSpaceId, search, filter, folderId, pagination, sorts);
 	}
 
 	@Override
@@ -89,14 +89,15 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getFolderFoldersPage(
-			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
 
 		return _getFoldersPage(
-			parentFolder.getContentSpaceId(), filter, parentFolder.getId(),
-			pagination, sorts);
+			parentFolder.getContentSpaceId(), search, filter,
+			parentFolder.getId(), pagination, sorts);
 	}
 
 	@Override
@@ -154,8 +155,8 @@ public class FolderResourceImpl
 	}
 
 	private Page<Folder> _getFoldersPage(
-			Long contentSpaceId, Filter filter, Long parentFolderId,
-			Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Long parentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -173,6 +174,7 @@ public class FolderResourceImpl
 			filter, DLFolder.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

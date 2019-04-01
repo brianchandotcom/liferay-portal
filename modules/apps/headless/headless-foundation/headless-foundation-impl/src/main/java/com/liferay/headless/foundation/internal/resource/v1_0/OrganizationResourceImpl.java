@@ -104,19 +104,20 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long organizationId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getOrganizationsPage(organizationId, filter, pagination, sorts);
+		return _getOrganizationsPage(
+			organizationId, search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<Organization> getOrganizationsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getOrganizationsPage(0L, filter, pagination, sorts);
+		return _getOrganizationsPage(0L, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -169,8 +170,8 @@ public class OrganizationResourceImpl
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-			Long organizationId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -187,9 +188,9 @@ public class OrganizationResourceImpl
 			pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
+			search,
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
 			document -> _toOrganization(
 				_organizationService.getOrganization(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),

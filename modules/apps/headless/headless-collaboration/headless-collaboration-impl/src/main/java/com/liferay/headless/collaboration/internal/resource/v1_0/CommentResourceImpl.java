@@ -55,8 +55,8 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getBlogPostingCommentsPage(
-			Long blogPostingId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long blogPostingId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -65,7 +65,8 @@ public class CommentResourceImpl
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			blogsEntry.getGroupId(), blogPostingId, filter, pagination, sorts);
+			blogsEntry.getGroupId(), blogPostingId, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -78,14 +79,15 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getCommentCommentsPage(
-			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long commentId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
 		return spiCommentResource.getCommentCommentsPage(
-			commentId, filter, pagination, sorts);
+			commentId, search, filter, pagination, sorts);
 	}
 
 	@Override

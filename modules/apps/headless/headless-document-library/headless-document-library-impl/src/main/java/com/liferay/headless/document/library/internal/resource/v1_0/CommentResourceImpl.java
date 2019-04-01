@@ -63,19 +63,21 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getCommentCommentsPage(
-			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long commentId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
 		return spiCommentResource.getCommentCommentsPage(
-			commentId, filter, pagination, sorts);
+			commentId, search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<Comment> getDocumentCommentsPage(
-			Long documentId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long documentId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -84,7 +86,8 @@ public class CommentResourceImpl
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			dlFileEntry.getGroupId(), documentId, filter, pagination, sorts);
+			dlFileEntry.getGroupId(), documentId, search, filter, pagination,
+			sorts);
 	}
 
 	@Override

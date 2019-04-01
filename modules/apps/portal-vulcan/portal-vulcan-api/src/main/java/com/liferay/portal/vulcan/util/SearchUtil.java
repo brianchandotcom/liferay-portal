@@ -49,6 +49,7 @@ public class SearchUtil {
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Filter filter, Class<?> indexerClass, Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			String search,
 			UnsafeConsumer<SearchContext, Exception>
 				searchContextUnsafeConsumer,
 			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
@@ -67,7 +68,7 @@ public class SearchUtil {
 
 		SearchContext searchContext = _createSearchContext(
 			_getBooleanClause(booleanQueryUnsafeConsumer, filter), pagination,
-			queryConfigUnsafeConsumer, sorts);
+			queryConfigUnsafeConsumer, search, sorts);
 
 		searchContextUnsafeConsumer.accept(searchContext);
 
@@ -84,16 +85,33 @@ public class SearchUtil {
 		return Page.of(items, pagination, indexer.searchCount(searchContext));
 	}
 
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts)
+		throws Exception {
+
+		return search(
+			booleanQueryUnsafeConsumer, filter, indexerClass, pagination,
+			queryConfigUnsafeConsumer, "", searchContextUnsafeConsumer,
+			transformUnsafeFunction, sorts);
+	}
+
 	private static SearchContext _createSearchContext(
 			BooleanClause<?> booleanClause, Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			Sort[] sorts)
+			String search, Sort[] sorts)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 		searchContext.setEnd(pagination.getEndPosition());
+		searchContext.setKeywords(search);
 		searchContext.setSorts(sorts);
 		searchContext.setStart(pagination.getStartPosition());
 

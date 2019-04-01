@@ -93,8 +93,8 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Override
 	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -103,6 +103,7 @@ public class TaxonomyVocabularyResourceImpl
 			filter, AssetVocabulary.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ASSET_VOCABULARY_ID),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

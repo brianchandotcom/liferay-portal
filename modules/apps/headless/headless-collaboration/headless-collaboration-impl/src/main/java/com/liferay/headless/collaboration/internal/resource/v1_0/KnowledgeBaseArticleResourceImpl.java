@@ -33,7 +33,6 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -52,13 +51,11 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.List;
 import java.util.Optional;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,7 +82,7 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -103,7 +100,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			contentSpaceId, filter, pagination, sorts);
+			contentSpaceId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -126,7 +123,7 @@ public class KnowledgeBaseArticleResourceImpl
 	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, Filter filter,
+				Long knowledgeBaseArticleId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -144,14 +141,14 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
-			kbArticle.getGroupId(), filter, pagination, sorts);
+			kbArticle.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				Long knowledgeBaseFolderId, Boolean flatten, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long knowledgeBaseFolderId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
@@ -175,7 +172,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			kbFolder.getGroupId(), filter, pagination, sorts);
+			kbFolder.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -259,20 +256,24 @@ public class KnowledgeBaseArticleResourceImpl
 
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQueryUnsafeConsumer, filter, KBArticle.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});
-				searchContext.setKeywords("");
+
+				if (search == null) {
+					searchContext.setKeywords("");
+				}
 			},
 			document -> _toKBArticle(
 				_kbArticleService.getLatestKBArticle(
@@ -363,13 +364,7 @@ public class KnowledgeBaseArticleResourceImpl
 	private Portal _portal;
 
 	@Reference
-	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

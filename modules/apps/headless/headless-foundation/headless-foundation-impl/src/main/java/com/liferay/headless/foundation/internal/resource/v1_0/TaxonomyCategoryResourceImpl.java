@@ -101,8 +101,8 @@ public class TaxonomyCategoryResourceImpl
 
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long taxonomyCategoryId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long taxonomyCategoryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getCategoriesPage(
@@ -118,13 +118,13 @@ public class TaxonomyCategoryResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long taxonomyVocabularyId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getCategoriesPage(
@@ -147,7 +147,7 @@ public class TaxonomyCategoryResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -258,13 +258,14 @@ public class TaxonomyCategoryResourceImpl
 
 	private Page<TaxonomyCategory> _getCategoriesPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQueryUnsafeConsumer, filter, AssetCategory.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ASSET_CATEGORY_ID),
+			search,
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			document -> _toTaxonomyCategory(

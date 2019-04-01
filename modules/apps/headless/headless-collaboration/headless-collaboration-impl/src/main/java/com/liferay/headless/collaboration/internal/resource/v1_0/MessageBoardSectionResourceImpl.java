@@ -66,7 +66,7 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean flatten, Filter filter,
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -81,7 +81,7 @@ public class MessageBoardSectionResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class MessageBoardSectionResourceImpl
 	@Override
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				Long messageBoardSectionId, Filter filter,
+				Long messageBoardSectionId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -121,7 +121,7 @@ public class MessageBoardSectionResourceImpl
 						String.valueOf(mbCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -180,13 +180,14 @@ public class MessageBoardSectionResourceImpl
 
 	private Page<MessageBoardSection> _getContentSpaceMessageBoardSectionsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQueryUnsafeConsumer, filter, MBCategory.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},

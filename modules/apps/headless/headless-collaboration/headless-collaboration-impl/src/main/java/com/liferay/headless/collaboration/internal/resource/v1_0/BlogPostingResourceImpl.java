@@ -49,7 +49,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
@@ -89,8 +88,8 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -99,6 +98,7 @@ public class BlogPostingResourceImpl
 			filter, BlogsEntry.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
@@ -301,9 +301,6 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

@@ -107,8 +107,8 @@ public class UserAccountResourceImpl
 
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getUserAccountsPage(
@@ -121,7 +121,7 @@ public class UserAccountResourceImpl
 						"organizationIds", String.valueOf(organizationId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class UserAccountResourceImpl
 
 	@Override
 	public Page<UserAccount> getUserAccountsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -144,12 +144,13 @@ public class UserAccountResourceImpl
 		return _getUserAccountsPage(
 			booleanQuery -> {
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, Filter filter, Pagination pagination, Sort[] sorts)
+			Long webSiteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getUserAccountsPage(
@@ -161,7 +162,7 @@ public class UserAccountResourceImpl
 					new TermFilter("groupId", String.valueOf(webSiteId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, pagination, sorts);
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -304,16 +305,16 @@ public class UserAccountResourceImpl
 
 	private Page<UserAccount> _getUserAccountsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQueryUnsafeConsumer, filter, User.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
+			search,
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
 			document -> _toUserAccount(
 				_userService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),

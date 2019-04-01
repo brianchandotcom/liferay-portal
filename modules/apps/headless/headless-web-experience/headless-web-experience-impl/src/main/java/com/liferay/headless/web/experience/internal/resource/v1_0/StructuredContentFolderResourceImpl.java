@@ -68,8 +68,8 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public Page<StructuredContentFolder>
 			getContentSpaceStructuredContentFoldersPage(
-				Long contentSpaceId, Boolean flatten, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long contentSpaceId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Long folderId = null;
@@ -79,7 +79,7 @@ public class StructuredContentFolderResourceImpl
 		}
 
 		return _getFoldersPage(
-			contentSpaceId, filter, pagination, folderId, sorts);
+			contentSpaceId, search, filter, pagination, folderId, sorts);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				Long structuredContentFolderId, Filter filter,
+				Long structuredContentFolderId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -107,7 +107,7 @@ public class StructuredContentFolderResourceImpl
 			structuredContentFolderId);
 
 		return _getFoldersPage(
-			journalFolder.getGroupId(), filter, pagination,
+			journalFolder.getGroupId(), search, filter, pagination,
 			structuredContentFolderId, sorts);
 	}
 
@@ -173,8 +173,8 @@ public class StructuredContentFolderResourceImpl
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Long parentFolderId, Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Long parentFolderId, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -192,6 +192,7 @@ public class StructuredContentFolderResourceImpl
 			filter, JournalFolder.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
+			search,
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

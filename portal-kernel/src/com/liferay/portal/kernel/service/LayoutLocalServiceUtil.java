@@ -1028,6 +1028,12 @@ public class LayoutLocalServiceUtil {
 			uuid, groupId, privateLayout);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutVersion
+		fetchLayoutVersion(long layoutVersionId) {
+
+		return getService().fetchLayoutVersion(layoutVersionId);
+	}
+
 	public static com.liferay.portal.kernel.model.Layout fetchPublished(
 		com.liferay.portal.kernel.model.Layout layout) {
 

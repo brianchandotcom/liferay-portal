@@ -861,6 +861,9 @@ public interface LayoutLocalService
 	public Layout fetchLayoutByUuidAndGroupId(
 		String uuid, long groupId, boolean privateLayout);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutVersion fetchLayoutVersion(long layoutVersionId);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchPublished(Layout layout);

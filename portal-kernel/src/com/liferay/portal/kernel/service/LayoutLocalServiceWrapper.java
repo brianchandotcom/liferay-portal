@@ -1071,6 +1071,13 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.LayoutVersion fetchLayoutVersion(
+		long layoutVersionId) {
+
+		return _layoutLocalService.fetchLayoutVersion(layoutVersionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Layout fetchPublished(
 		com.liferay.portal.kernel.model.Layout layout) {
 

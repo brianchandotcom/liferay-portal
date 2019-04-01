@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_file_entry",
-		"path=/document_library/view_file_entry"
+		"path=/document_library/edit_file_entry"
 	},
 	service = PortletConfigurationIcon.class
 )

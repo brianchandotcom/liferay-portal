@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -130,7 +131,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataActionKeys.ADD_DATA_DEFINITION, contentSpaceId,
 			_groupLocalService);
 
-		return DataDefinitionUtil.toDataDefinition(
+		ServiceContext serviceContext = new ServiceContext();
+
+		dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.addStructure(
 				PrincipalThreadLocal.getUserId(), contentSpaceId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -139,7 +142,15 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				LocalizedValueUtil.toLocalizationMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
-				dataDefinition.getStorageType(), new ServiceContext()));
+				dataDefinition.getStorageType(), serviceContext));
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), contentSpaceId,
+			PrincipalThreadLocal.getUserId(),
+			InternalDataDefinition.class.getName(), dataDefinition.getId(),
+			serviceContext.getModelPermissions());
+
+		return dataDefinition;
 	}
 
 	@Override
@@ -289,16 +300,16 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public DataDefinition putDataDefinition(
-			Long contentSpaceId, DataDefinition dataDefinition)
+			Long dataDefinitionId, DataDefinition dataDefinition)
 		throws Exception {
 
 		_modelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			dataDefinition.getId(), ActionKeys.UPDATE);
+			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
+			ActionKeys.UPDATE);
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.updateStructure(
-				PrincipalThreadLocal.getUserId(), dataDefinition.getId(),
+				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocalizationMap(
@@ -336,6 +347,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

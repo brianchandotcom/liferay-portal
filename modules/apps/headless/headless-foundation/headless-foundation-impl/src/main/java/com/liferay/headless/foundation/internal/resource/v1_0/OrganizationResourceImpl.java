@@ -232,6 +232,8 @@ public class OrganizationResourceImpl
 							WebUrlUtil::toWebUrl, WebUrl.class);
 					}
 				};
+				dateCreated = organization.getCreateDate();
+				dateModified = organization.getModifiedDate();
 				id = organization.getOrganizationId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(

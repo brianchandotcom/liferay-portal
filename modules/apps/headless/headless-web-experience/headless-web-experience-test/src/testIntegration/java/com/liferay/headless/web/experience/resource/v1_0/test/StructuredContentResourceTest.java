@@ -27,6 +27,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -67,6 +69,11 @@ public class StructuredContentResourceTest
 
 		_ddmStructure = _addDDMStructure(testGroup);
 		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
+
+		_journalFolder = JournalTestUtil.addFolder(
+			testGroup.getGroupId(), RandomTestUtil.randomString());
+		_irrelevantJournalFolder = JournalTestUtil.addFolder(
+			irrelevantGroup.getGroupId(), RandomTestUtil.randomString());
 	}
 
 	@After
@@ -210,6 +217,31 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
+			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+				Long structuredContentFolderId,
+				StructuredContent structuredContent)
+		throws Exception {
+
+		return invokePostStructuredContentFolderStructuredContent(
+			structuredContentFolderId, structuredContent);
+	}
+
+	@Override
+	protected Long
+		testGetStructuredContentFolderStructuredContentsPage_getIrrelevantStructuredContentFolderId() {
+
+		return _irrelevantJournalFolder.getFolderId();
+	}
+
+	@Override
+	protected Long
+		testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId() {
+
+		return _journalFolder.getFolderId();
+	}
+
+	@Override
+	protected StructuredContent
 			testPatchStructuredContent_addStructuredContent()
 		throws Exception {
 
@@ -220,6 +252,16 @@ public class StructuredContentResourceTest
 	@Override
 	protected StructuredContent
 			testPostContentSpaceStructuredContent_addStructuredContent(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), structuredContent);
+	}
+
+	@Override
+	protected StructuredContent
+			testPostStructuredContentFolderStructuredContent_addStructuredContent(
 				StructuredContent structuredContent)
 		throws Exception {
 
@@ -281,6 +323,8 @@ public class StructuredContentResourceTest
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMStructure _ddmStructure;
 	private DDMStructure _irrelevantDDMStructure;
+	private JournalFolder _irrelevantJournalFolder;
+	private JournalFolder _journalFolder;
 	private ServiceReference<DDMFormDeserializerTracker> _serviceReference;
 
 }

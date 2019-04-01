@@ -26,6 +26,16 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
+<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
+
+<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
+	<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <aui:select label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
 	<aui:option label="no-image" value="none" />
 	<aui:option label="from-url" value="url" />

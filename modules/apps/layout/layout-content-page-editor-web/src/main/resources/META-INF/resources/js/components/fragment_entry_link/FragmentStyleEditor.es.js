@@ -54,7 +54,8 @@ class FragmentStyleEditor extends State {
 				this._tooltip = new FragmentEditableFieldTooltip(
 					{
 						alignElement: this.node,
-						buttons: this._styleEditor.getButtons(this.showMapping)
+						buttons: this._styleEditor.getButtons(this.showMapping),
+						store: this.store
 					}
 				);
 

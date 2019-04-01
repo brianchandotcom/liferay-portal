@@ -5,6 +5,7 @@ import debounce from 'metal-debounce';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import templates from './FragmentEditableFieldTooltip.soy';
 
 /**
@@ -153,6 +154,7 @@ FragmentEditableFieldTooltip.STATE = {
 	buttons: Config.arrayOf(
 		Config.shapeOf(
 			{
+				icon: Config.string().required(),
 				id: Config.string().required(),
 				label: Config.string().required()
 			}
@@ -160,7 +162,12 @@ FragmentEditableFieldTooltip.STATE = {
 	)
 };
 
-Soy.register(FragmentEditableFieldTooltip, templates);
+const ConnectedFragmentEditableFieldTooltip = getConnectedComponent(
+	FragmentEditableFieldTooltip,
+	['spritemap']
+);
 
-export {FragmentEditableFieldTooltip};
-export default FragmentEditableFieldTooltip;
+Soy.register(ConnectedFragmentEditableFieldTooltip, templates);
+
+export {ConnectedFragmentEditableFieldTooltip, FragmentEditableFieldTooltip};
+export default ConnectedFragmentEditableFieldTooltip;

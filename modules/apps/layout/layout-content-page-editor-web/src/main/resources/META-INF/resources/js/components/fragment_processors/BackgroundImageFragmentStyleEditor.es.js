@@ -61,6 +61,7 @@ function destroy() {
 function getButtons(showMapping) {
 	const buttons = [
 		{
+			icon: 'pencil',
 			id: 'select',
 			label: Liferay.Language.get('select-background')
 		}
@@ -69,6 +70,7 @@ function getButtons(showMapping) {
 	if (showMapping) {
 		buttons.push(
 			{
+				icon: 'bolt',
 				id: 'map',
 				label: Liferay.Language.get('map-background')
 			}

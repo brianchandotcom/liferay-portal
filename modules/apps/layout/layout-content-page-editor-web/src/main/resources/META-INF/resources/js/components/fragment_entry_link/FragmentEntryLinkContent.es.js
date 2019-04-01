@@ -287,7 +287,8 @@ class FragmentEntryLinkContent extends Component {
 	 * @param {Object} event
 	 */
 	_handleStyleChanged(event) {
-		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) || prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
+		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) ||
+			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
 		this.store.dispatchAction(
 			UPDATE_EDITABLE_VALUE,

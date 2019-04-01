@@ -4,9 +4,13 @@
  * FragmentEditableFieldTooltip
  */
 {template .render}
-	{@param buttons: list<[id: string, label: string]>}
-	{@param? label: string}
+	{@param buttons: list<[
+		icon: string,
+		id: string,
+		label: string
+	]>}
 	{@param? _handleButtonClick: any}
+	{@param? spritemap: string}
 
 	<div
 		class="clay-tooltip-top lfr-editable-field-tooltip show tooltip"
@@ -16,20 +20,20 @@
 		<div class="arrow"></div>
 		<div class="tooltip-inner">
 			<div class="lfr-editable-field-tooltip__btn-group">
-				{if $label}
-					{$label}
-				{else}
-					{foreach $button in $buttons}
-						<button
-							class="btn btn-outline-light"
-							data-onclick="{$_handleButtonClick}"
-							data-tooltip-button-id="{$button.id}"
-							type="button"
-						>
-							{$button.label}
-						</button>
-					{/foreach}
-				{/if}
+				{foreach $button in $buttons}
+					<button
+						class="btn btn-outline-borderless btn-outline-light btn-monospaced btn-sm lfr-portal-tooltip"
+						key="{$button.id}"
+						data-onclick="{$_handleButtonClick}"
+						data-title="{$button.label}"
+						data-tooltip-button-id="{$button.id}"
+						type="button"
+					>
+						<svg class="lexicon-icon lexicon-icon-{$button.icon}">
+							<use xlink:href="{$spritemap}#{$button.icon}"></use>
+						</svg>
+					</button>
+				{/foreach}
 			</div>
 		</div>
 	</div>

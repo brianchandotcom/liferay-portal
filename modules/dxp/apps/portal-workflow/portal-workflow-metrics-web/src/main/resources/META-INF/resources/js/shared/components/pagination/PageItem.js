@@ -1,23 +1,13 @@
 import { Link, withRouter } from 'react-router-dom';
-import autobind from 'autobind-decorator';
+import React, { Fragment } from 'react';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
-import React from 'react';
 
 /**
  * @class
  * @memberof shared/components
  */
 class PageItem extends React.Component {
-	@autobind
-	setPage() {
-		const { disabled, onChangePage, page } = this.props;
-
-		if (!disabled) {
-			onChangePage(page);
-		}
-	}
-
 	render() {
 		const {
 			disabled,
@@ -28,8 +18,6 @@ class PageItem extends React.Component {
 			type
 		} = this.props;
 		const classNames = ['page-item'];
-		const params = Object.assign({}, match.params, { page });
-		const path = pathToRegexp.compile(match.path);
 
 		if (disabled) {
 			classNames.push('disabled');
@@ -39,34 +27,53 @@ class PageItem extends React.Component {
 		}
 
 		const renderLink = () => {
+			const pathname = pathToRegexp.compile(match.path)(
+				Object.assign({}, match.params, { page })
+			);
+
 			if (type) {
 				const isNext = type === 'next';
 
 				const iconType = isNext ? 'angle-right' : 'angle-left';
-				const displayType = isNext
-					? Liferay.Language.get('next')
-					: Liferay.Language.get('previous');
+				const displayType = isNext ? 'Next' : 'Previous';
 
-				return (
-					<Link
-						className="page-link"
-						to={{
-							pathname: path(params),
-							search
-						}}
-					>
-						<Icon iconName={iconType} />
+				const renderLink = () => {
+					const children = () => (
+						<Fragment>
+							<Icon iconName={iconType} />
+							<span className="sr-only">{displayType}</span>
+						</Fragment>
+					);
 
-						<span className="sr-only">{displayType}</span>
-					</Link>
-				);
+					if (disabled) {
+						return (
+							<a className="page-link" href="javascript:;">
+								{children()}
+							</a>
+						);
+					}
+
+					return (
+						<Link
+							className="page-link"
+							to={{
+								pathname,
+								search
+							}}
+						>
+							{children()}
+						</Link>
+					);
+				};
+
+				return renderLink();
 			}
 
 			return (
 				<Link
 					className="page-link"
 					to={{
-						pathname: path(params),
+						pathname,
 						search
 					}}
 				>
@@ -75,11 +82,7 @@ class PageItem extends React.Component {
 			);
 		};
 
-		return (
-			<li className={classNames.join(' ')} onClick={this.setPage}>
-				{renderLink()}
-			</li>
-		);
+		return <li className={classNames.join(' ')}>{renderLink()}</li>;
 	}
 }
 

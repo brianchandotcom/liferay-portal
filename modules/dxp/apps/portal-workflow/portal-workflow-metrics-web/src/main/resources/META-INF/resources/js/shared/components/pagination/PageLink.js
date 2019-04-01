@@ -1,30 +1,32 @@
-import autobind from 'autobind-decorator';
+import { Link, withRouter } from 'react-router-dom';
+import pathToRegexp from 'path-to-regexp';
 import React from 'react';
 
 /**
  * @class
  * @memberof shared/components
  */
-export default class PageLink extends React.Component {
-	@autobind
-	setPage() {
-		const { disabled, onChangePage, page } = this.props;
-
-		if (!disabled) {
-			onChangePage(page);
-		}
-	}
-
+class PageLink extends React.Component {
 	render() {
-		const { page } = this.props;
+		const {
+			location: { search },
+			match: { params, path },
+			page
+		} = this.props;
+
+		const pathname = pathToRegexp.compile(path)(
+			Object.assign({}, params, { page })
+		);
 
 		return (
-			<li className="page-item" onClick={this.setPage}>
-				<a className="page-link" href={`#${page}`}>
+			<li className="page-item">
+				<Link className="page-link" to={{ pathname, search }}>
 					<span className="sr-only" />
 					{page}
-				</a>
+				</Link>
 			</li>
 		);
 	}
 }
+
+export default withRouter(PageLink);

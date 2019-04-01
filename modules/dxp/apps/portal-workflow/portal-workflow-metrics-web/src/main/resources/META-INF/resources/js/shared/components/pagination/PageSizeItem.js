@@ -1,5 +1,4 @@
 import { Link, withRouter } from 'react-router-dom';
-import autobind from 'autobind-decorator';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
 
@@ -8,28 +7,22 @@ import React from 'react';
  * @memberof shared/components
  */
 class PageSizeItem extends React.Component {
-	@autobind
-	setPageSize() {
-		const { onChangePageSize, pageSize } = this.props;
-
-		onChangePageSize(pageSize);
-	}
-
 	render() {
 		const {
 			location: { search },
 			match,
 			pageSize
 		} = this.props;
+
 		const params = Object.assign({}, match.params, { page: 1, pageSize });
-		const path = pathToRegexp.compile(match.path);
+
+		const pathname = pathToRegexp.compile(match.path)(params);
 
 		return (
 			<Link
 				className="dropdown-item"
-				onClick={this.setPageSize}
 				to={{
-					pathname: path(params),
+					pathname,
 					search
 				}}
 			>

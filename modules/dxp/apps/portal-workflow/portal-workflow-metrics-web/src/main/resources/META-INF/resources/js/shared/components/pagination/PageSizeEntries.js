@@ -1,4 +1,4 @@
-import autobind from 'autobind-decorator';
+import { AppContext } from '../../../components/AppContext';
 import Icon from '../Icon';
 import PageSizeItem from './PageSizeItem';
 import React from 'react';
@@ -7,25 +7,10 @@ import React from 'react';
  * @class
  * @memberof shared/components
  */
-export default class PageSizeEntries extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selectedPageSize: props.selectedPageSize
-		};
-	}
-
-	@autobind
-	setPageSize(pageSize) {
-		const { onSelectPageSize } = this.props;
-
-		this.setState({ selectedPageSize: pageSize });
-		onSelectPageSize(pageSize);
-	}
-
+class PageSizeEntries extends React.Component {
 	render() {
-		const { pageSizeEntries } = this.props;
-		const { selectedPageSize } = this.state;
+		const { deltas } = this.context;
+		const { pageSizeEntries = deltas, selectedPageSize } = this.props;
 
 		return (
 			<div className="dropdown pagination-items-per-page">
@@ -37,15 +22,14 @@ export default class PageSizeEntries extends React.Component {
 					href="#1"
 					role="button"
 				>
-					{`${selectedPageSize} ${Liferay.Language.get('entries')}`}
+					{`${selectedPageSize} ${'Entries'}`}
 					<Icon iconName="caret-double-l" />
 				</a>
 				<div className="dropdown-menu dropdown-menu-top">
-					{pageSizeEntries.map((pageSize, index) => (
+					{pageSizeEntries.map((pageSizeKey, index) => (
 						<PageSizeItem
-							key={`${index}_${pageSize}`}
-							onChangePageSize={this.setPageSize}
-							pageSize={pageSize}
+							key={`${index}_${pageSizeKey}`}
+							pageSize={pageSizeKey}
 						/>
 					))}
 				</div>
@@ -53,3 +37,6 @@ export default class PageSizeEntries extends React.Component {
 		);
 	}
 }
+
+PageSizeEntries.contextType = AppContext;
+export default PageSizeEntries;

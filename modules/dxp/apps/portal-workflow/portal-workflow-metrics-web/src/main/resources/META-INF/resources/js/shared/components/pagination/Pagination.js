@@ -1,28 +1,32 @@
-import autobind from 'autobind-decorator';
 import PageItem from './PageItem';
 import PageLink from './PageLink';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 /**
  * @class
  * @memberof shared/components
  */
-export default class Pagination extends React.Component {
+class Pagination extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			activePage: 0,
-			pages: 1
-		};
+		this.state = {};
 	}
 
-	@autobind
-	goToPage(activePage) {
-		const { onSelectPage } = this.props;
+	getProps() {
+		const {
+			match: { params },
+			maxPages,
+			totalCount
+		} = this.props;
+		const { page = 1, pageSize = 20 } = params || {};
 
-		onSelectPage(activePage);
-		this.setState({ activePage });
+		return {
+			maxPages,
+			page: Number(page),
+			pageSize: Number(pageSize),
+			totalCount
+		};
 	}
 
 	buildDropMenu(initCount, condition, functionIterator) {
@@ -41,6 +45,7 @@ export default class Pagination extends React.Component {
 			<li className="dropdown page-item" key={`process_list_pag_${initCount}`}>
 				<a
 					className="dropdown-toggle page-link"
+					data-senna-off
 					data-toggle="dropdown"
 					href="javascript:;"
 				>
@@ -57,7 +62,6 @@ export default class Pagination extends React.Component {
 						{data.map(page => (
 							<PageLink
 								key={`process_list_pag_sublist_item_${page}`}
-								onChangePage={this.goToPage}
 								page={page}
 							/>
 						))}
@@ -68,9 +72,13 @@ export default class Pagination extends React.Component {
 	}
 
 	render() {
-		const { page, pageSize, totalCount } = this.props;
+		const {
+			maxPages,
+			page: activePage,
+			pageSize,
+			totalCount
+		} = this.getProps();
 
-		const activePage = page === 1 ? page : this.state.activePage;
 		const lastPage = Math.ceil(totalCount / pageSize);
 
 		const nextPage = activePage + 1;
@@ -79,20 +87,26 @@ export default class Pagination extends React.Component {
 		const hasNextPage = nextPage <= lastPage;
 		const hasPreviousPage = prevPage > 0;
 
-		const maxDelta = 25;
-
 		const pages = lastPage;
 
 		const renderPageItems = () => {
-			const rows = [];
+			const rows = {};
+
+			const wasAdded = page => Object.keys(rows).indexOf(page) > -1;
+
+			const addPage = (page, component) => {
+				if (page > 0 && !wasAdded(page)) {
+					rows[page] = component;
+				}
+			};
 
 			if (pages <= 5) {
 				for (let i = 1; i <= pages; i++) {
-					rows.push(
+					addPage(
+						i,
 						<PageItem
-							highlighted={i === activePage ? true : false}
+							highlighted={i === activePage}
 							key={`process_list_pag_${i}`}
-							onChangePage={this.goToPage}
 							page={i}
 						/>
 					);
@@ -100,90 +114,93 @@ export default class Pagination extends React.Component {
 			}
 			else if (activePage === 1) {
 				for (let i = 1; i <= 3; i++) {
-					rows.push(
+					addPage(
+						i,
 						<PageItem
 							highlighted={i === activePage ? true : false}
 							key={`process_list_pag_sublist_${i}`}
-							onChangePage={this.goToPage}
 							page={i}
 						/>
 					);
 				}
 
-				rows.push(
-					this.buildDropMenu(4, maxDelta, (data, i) => {
+				addPage(
+					4,
+					this.buildDropMenu(4, maxPages, (data, i) => {
 						if (i < pages) {
 							data.push(i);
 						}
 					})
 				);
 
-				rows.push(
+				addPage(
+					lastPage,
 					<PageItem
 						highlighted={lastPage === activePage ? true : false}
 						key={`process_list_pag_${lastPage}`}
-						onChangePage={this.goToPage}
 						page={lastPage}
 					/>
 				);
 			}
 			else if (activePage === pages) {
-				rows.push(
+				addPage(
+					1,
 					<PageItem
 						highlighted={1 === activePage ? true : false}
 						key={'process_list_pag_1'}
-						onChangePage={this.goToPage}
 						page={1}
 					/>
 				);
 
-				rows.push(
+				addPage(
+					2,
 					this.buildDropMenu(
 						2,
-						maxDelta > activePage - 2 ? activePage - 2 : maxDelta
+						maxPages > activePage - 2 ? activePage - 2 : maxPages
 					)
 				);
 
 				for (let i = pages - 2; i <= pages; i++) {
-					rows.push(
+					addPage(
+						i,
 						<PageItem
 							highlighted={i === activePage ? true : false}
 							key={`process_list_pag_sublist_${i}`}
-							onChangePage={this.goToPage}
 							page={i}
 						/>
 					);
 				}
 			}
 			else {
-				rows.push(
+				addPage(
+					1,
 					<PageItem
 						highlighted={activePage === 1 ? true : false}
 						key={'process_list_pag_1'}
-						onChangePage={this.goToPage}
 						page={1}
 					/>
 				);
 				if (activePage - 3 > 1) {
-					rows.push(
+					addPage(
+						2,
 						this.buildDropMenu(
 							2,
-							maxDelta > activePage - 1 ? activePage - 1 : maxDelta
+							maxPages > activePage - 1 ? activePage - 1 : maxPages
 						)
 					);
 				}
 				else {
 					for (
 						let i = 2,
-							x = maxDelta > activePage - 1 ? activePage - 1 : maxDelta;
+							x = maxPages > activePage - 1 ? activePage - 1 : maxPages;
 						i < x;
 						i++
 					) {
-						rows.push(
+						addPage(
+							i,
 							<PageItem
 								highlighted={i === activePage ? true : false}
 								key={`process_list_pag_sublist_${i}`}
-								onChangePage={this.goToPage}
 								page={i}
 							/>
 						);
@@ -191,63 +208,66 @@ export default class Pagination extends React.Component {
 				}
 
 				if (activePage - 1 > 1) {
-					rows.push(
+					addPage(
+						activePage - 1,
 						<PageItem
 							key={`process_list_pag_sublist_${activePage - 1}`}
-							onChangePage={this.goToPage}
 							page={activePage - 1}
 						/>
 					);
 				}
 
-				rows.push(
+				addPage(
+					activePage,
 					<PageItem
 						highlighted={activePage !== 1 ? true : false}
 						key={`process_list_pag_active_${activePage}`}
-						onChangePage={this.goToPage}
 						page={activePage}
 					/>
 				);
 
 				if (activePage + 1 < pages) {
-					rows.push(
+					addPage(
+						activePage + 1,
 						<PageItem
 							key={`process_list_pag_plus_${activePage + 1}`}
-							onChangePage={this.goToPage}
 							page={activePage + 1}
 						/>
 					);
 				}
 				const remainingPages =
-					pages - activePage + 2 < maxDelta ? pages : activePage + 2 + maxDelta;
+					pages - activePage + 2 < maxPages ? pages : activePage + 2 + maxPages;
 
 				if (activePage + 3 < pages) {
-					rows.push(this.buildDropMenu(activePage + 2, remainingPages));
+					addPage(
+						activePage + 2,
+						this.buildDropMenu(activePage + 2, remainingPages)
+					);
 				}
 				else {
 					for (let i = activePage + 2; i < remainingPages; i++) {
-						rows.push(
+						addPage(
+							i,
 							<PageItem
-								highlighted={i === activePage ? true : false}
+								highlighted={i === activePage}
 								key={`process_list_pag_sublist_${i}`}
-								onChangePage={this.goToPage}
 								page={i}
 							/>
 						);
 					}
 				}
 
-				rows.push(
+				addPage(
+					lastPage,
 					<PageItem
-						highlighted={lastPage === activePage ? true : false}
+						highlighted={lastPage === activePage}
 						key={`process_list_pag_last_${lastPage}`}
-						onChangePage={this.goToPage}
 						page={lastPage}
 					/>
 				);
 			}
 
-			return rows;
+			return Object.keys(rows).map(key => rows[key]);
 		};
 
 		return (
@@ -255,8 +275,7 @@ export default class Pagination extends React.Component {
 				<PageItem
 					disabled={!hasPreviousPage}
 					key={`process_list_pag_prev_${prevPage}`}
-					onChangePage={this.goToPage}
-					page={prevPage}
+					page={hasPreviousPage ? prevPage : 1}
 					type="prev"
 				/>
 
@@ -265,7 +284,6 @@ export default class Pagination extends React.Component {
 				<PageItem
 					disabled={!hasNextPage}
 					key={`process_list_pag_next_${nextPage}`}
-					onChangePage={this.goToPage}
 					page={nextPage}
 					type="next"
 				/>
@@ -273,3 +291,7 @@ export default class Pagination extends React.Component {
 		);
 	}
 }
+
+export default withRouter(Pagination);
+
+export { Pagination };

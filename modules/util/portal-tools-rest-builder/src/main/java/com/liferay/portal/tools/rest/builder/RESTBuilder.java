@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
@@ -688,7 +689,7 @@ public class RESTBuilder {
 		context.put(
 			"schemaPath", TextFormatter.format(schemaName, TextFormatter.K));
 
-		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
+		String schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
 
 		context.put("schemaVarName", schemaVarName);
 		context.put(

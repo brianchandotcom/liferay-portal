@@ -42,8 +42,8 @@ public class Mutation {
 	/>
 
 	<#list schemaNames as schemaName>
-		public static void set${schemaName}ResourceComponentServiceObjects(ComponentServiceObjects<${schemaName}Resource> ${schemaName?uncap_first}ResourceComponentServiceObjects) {
-			_${schemaName?uncap_first}ResourceComponentServiceObjects = ${schemaName?uncap_first}ResourceComponentServiceObjects;
+		public static void set${schemaName}ResourceComponentServiceObjects(ComponentServiceObjects<${schemaName}Resource> ${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects) {
+			_${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects = ${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects;
 		}
 	</#list>
 
@@ -52,18 +52,18 @@ public class Mutation {
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#if javaMethodSignature.returnType?contains("Collection<")>
 				return _applyComponentServiceObjects(
-					_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext,
-					${javaMethodSignature.schemaName?uncap_first}Resource -> {
+					_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,
+					${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> {
 						<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
-						Page paginationPage = ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
+						Page paginationPage = ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
 						return paginationPage.getItems();
 					});
 			<#elseif javaMethodSignature.returnType?contains("void")>
-				_applyVoidComponentServiceObjects(_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext,${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
+				_applyVoidComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			<#else>
-				return _applyComponentServiceObjects(_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext,${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
+				return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			</#if>
 		}
 	</#list>
@@ -95,13 +95,13 @@ public class Mutation {
 	}
 
 	<#list schemaNames as schemaName>
-		private void _populateResourceContext(${schemaName}Resource ${schemaName?uncap_first}Resource) throws Exception {
-			${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
+			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 		}
 	</#list>
 
 	<#list schemaNames as schemaName>
-		private static ComponentServiceObjects<${schemaName}Resource> _${schemaName?uncap_first}ResourceComponentServiceObjects;
+		private static ComponentServiceObjects<${schemaName}Resource> _${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects;
 	</#list>
 
 }

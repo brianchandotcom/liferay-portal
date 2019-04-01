@@ -303,8 +303,8 @@ public class ResourceOpenAPIParser {
 					String simpleClassName = parameterType.substring(
 						parameterType.lastIndexOf(".") + 1);
 
-					String parameterName = StringUtil.lowerCaseFirstLetter(
-						simpleClassName);
+					String parameterName = TextFormatter.format(
+						simpleClassName, TextFormatter.I);
 
 					if (parameterType.startsWith("[")) {
 						String elementClassName =
@@ -315,7 +315,8 @@ public class ResourceOpenAPIParser {
 							elementClassName.lastIndexOf(".") + 1);
 
 						parameterName = TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(simpleClassName));
+							TextFormatter.format(
+								simpleClassName, TextFormatter.I));
 					}
 
 					javaMethodParameters.add(

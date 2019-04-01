@@ -55,6 +55,9 @@ public class ParentKnowledgeBaseFolder {
 		try {
 			folderId = folderIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class ParentKnowledgeBaseFolder {
 
 		try {
 			folderName = folderNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

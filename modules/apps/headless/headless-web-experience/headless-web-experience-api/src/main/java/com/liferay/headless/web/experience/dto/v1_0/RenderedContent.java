@@ -55,6 +55,9 @@ public class RenderedContent {
 		try {
 			renderedContentURL = renderedContentURLUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class RenderedContent {
 
 		try {
 			templateName = templateNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

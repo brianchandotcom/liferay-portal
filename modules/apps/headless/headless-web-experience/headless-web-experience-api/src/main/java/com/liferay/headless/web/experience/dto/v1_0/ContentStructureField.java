@@ -55,6 +55,9 @@ public class ContentStructureField {
 		try {
 			dataType = dataTypeUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class ContentStructureField {
 
 		try {
 			inputControl = inputControlUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,6 +109,9 @@ public class ContentStructureField {
 		try {
 			label = labelUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -126,6 +135,9 @@ public class ContentStructureField {
 
 		try {
 			localizable = localizableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -151,6 +163,9 @@ public class ContentStructureField {
 		try {
 			multiple = multipleUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -172,6 +187,9 @@ public class ContentStructureField {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -201,6 +219,9 @@ public class ContentStructureField {
 			nestedContentStructureFields =
 				nestedContentStructureFieldsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -224,6 +245,9 @@ public class ContentStructureField {
 
 		try {
 			options = optionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -249,6 +273,9 @@ public class ContentStructureField {
 		try {
 			predefinedValue = predefinedValueUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -272,6 +299,9 @@ public class ContentStructureField {
 
 		try {
 			repeatable = repeatableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -297,6 +327,9 @@ public class ContentStructureField {
 		try {
 			required = requiredUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -320,6 +353,9 @@ public class ContentStructureField {
 
 		try {
 			showLabel = showLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

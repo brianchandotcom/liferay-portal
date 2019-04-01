@@ -92,6 +92,9 @@ public class KnowledgeBaseArticle {
 		try {
 			aggregateRating = aggregateRatingUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -115,6 +118,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			articleBody = articleBodyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -140,6 +146,9 @@ public class KnowledgeBaseArticle {
 		try {
 			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -163,6 +172,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -188,6 +200,9 @@ public class KnowledgeBaseArticle {
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -211,6 +226,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -236,6 +254,9 @@ public class KnowledgeBaseArticle {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -259,6 +280,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -284,6 +308,9 @@ public class KnowledgeBaseArticle {
 		try {
 			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -305,6 +332,9 @@ public class KnowledgeBaseArticle {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -330,6 +360,9 @@ public class KnowledgeBaseArticle {
 		try {
 			keywords = keywordsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -353,6 +386,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -382,6 +418,9 @@ public class KnowledgeBaseArticle {
 			numberOfKnowledgeBaseArticles =
 				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -409,6 +448,9 @@ public class KnowledgeBaseArticle {
 		try {
 			parentKnowledgeBaseFolder =
 				parentKnowledgeBaseFolderUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -438,6 +480,9 @@ public class KnowledgeBaseArticle {
 			parentKnowledgeBaseFolderId =
 				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -463,6 +508,9 @@ public class KnowledgeBaseArticle {
 		try {
 			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -487,6 +535,9 @@ public class KnowledgeBaseArticle {
 		try {
 			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -510,6 +561,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			title = titleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -543,6 +597,9 @@ public class KnowledgeBaseArticle {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

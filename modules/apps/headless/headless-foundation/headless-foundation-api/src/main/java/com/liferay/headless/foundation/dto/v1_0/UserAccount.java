@@ -60,6 +60,9 @@ public class UserAccount {
 		try {
 			additionalName = additionalNameUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -84,6 +87,9 @@ public class UserAccount {
 		try {
 			alternateName = alternateNameUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -107,6 +113,9 @@ public class UserAccount {
 
 		try {
 			birthDate = birthDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -134,6 +143,9 @@ public class UserAccount {
 		try {
 			contactInformation = contactInformationUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -158,6 +170,9 @@ public class UserAccount {
 		try {
 			dashboardURL = dashboardURLUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -181,6 +196,9 @@ public class UserAccount {
 
 		try {
 			email = emailUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -207,6 +225,9 @@ public class UserAccount {
 		try {
 			familyName = familyNameUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -231,6 +252,9 @@ public class UserAccount {
 
 		try {
 			givenName = givenNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -257,6 +281,9 @@ public class UserAccount {
 		try {
 			honorificPrefix = honorificPrefixUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -281,6 +308,9 @@ public class UserAccount {
 		try {
 			honorificSuffix = honorificSuffixUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -302,6 +332,9 @@ public class UserAccount {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -327,6 +360,9 @@ public class UserAccount {
 		try {
 			image = imageUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -351,6 +387,9 @@ public class UserAccount {
 		try {
 			jobTitle = jobTitleUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -374,6 +413,9 @@ public class UserAccount {
 
 		try {
 			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -400,6 +442,9 @@ public class UserAccount {
 		try {
 			myOrganizations = myOrganizationsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -424,6 +469,9 @@ public class UserAccount {
 		try {
 			myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -445,6 +493,9 @@ public class UserAccount {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -470,6 +521,9 @@ public class UserAccount {
 		try {
 			profileURL = profileURLUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -493,6 +547,9 @@ public class UserAccount {
 
 		try {
 			roles = rolesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -518,6 +575,9 @@ public class UserAccount {
 		try {
 			rolesIds = rolesIdsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -541,6 +601,9 @@ public class UserAccount {
 
 		try {
 			tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -566,6 +629,9 @@ public class UserAccount {
 
 		try {
 			tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

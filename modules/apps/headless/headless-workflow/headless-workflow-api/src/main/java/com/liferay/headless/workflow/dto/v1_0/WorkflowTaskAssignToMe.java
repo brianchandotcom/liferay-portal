@@ -56,6 +56,9 @@ public class WorkflowTaskAssignToMe {
 		try {
 			comment = commentUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class WorkflowTaskAssignToMe {
 
 		try {
 			dueDate = dueDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

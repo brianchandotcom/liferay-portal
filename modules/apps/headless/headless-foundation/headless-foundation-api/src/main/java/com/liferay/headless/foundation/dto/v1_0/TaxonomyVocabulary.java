@@ -91,6 +91,9 @@ public class TaxonomyVocabulary {
 		try {
 			assetTypes = assetTypesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -114,6 +117,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			availableLanguages = availableLanguagesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -139,6 +145,9 @@ public class TaxonomyVocabulary {
 		try {
 			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -162,6 +171,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -187,6 +199,9 @@ public class TaxonomyVocabulary {
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -210,6 +225,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -235,6 +253,9 @@ public class TaxonomyVocabulary {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -257,6 +278,9 @@ public class TaxonomyVocabulary {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -278,6 +302,9 @@ public class TaxonomyVocabulary {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -306,6 +333,9 @@ public class TaxonomyVocabulary {
 		try {
 			numberOfTaxonomyCategories =
 				numberOfTaxonomyCategoriesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -339,6 +369,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

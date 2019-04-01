@@ -55,6 +55,9 @@ public class AggregateRating {
 		try {
 			bestRating = bestRatingUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class AggregateRating {
 
 		try {
 			ratingCount = ratingCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,6 +109,9 @@ public class AggregateRating {
 		try {
 			ratingValue = ratingValueUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -126,6 +135,9 @@ public class AggregateRating {
 
 		try {
 			worstRating = worstRatingUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

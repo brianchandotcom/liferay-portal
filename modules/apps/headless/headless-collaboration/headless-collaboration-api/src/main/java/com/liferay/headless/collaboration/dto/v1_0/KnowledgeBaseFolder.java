@@ -56,6 +56,9 @@ public class KnowledgeBaseFolder {
 		try {
 			creator = creatorUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class KnowledgeBaseFolder {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -104,6 +110,9 @@ public class KnowledgeBaseFolder {
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -128,6 +137,9 @@ public class KnowledgeBaseFolder {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -150,6 +162,9 @@ public class KnowledgeBaseFolder {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -171,6 +186,9 @@ public class KnowledgeBaseFolder {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -200,6 +218,9 @@ public class KnowledgeBaseFolder {
 			numberOfKnowledgeBaseArticles =
 				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -227,6 +248,9 @@ public class KnowledgeBaseFolder {
 		try {
 			numberOfKnowledgeBaseFolders =
 				numberOfKnowledgeBaseFoldersUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -256,6 +280,9 @@ public class KnowledgeBaseFolder {
 			parentKnowledgeBaseFolder =
 				parentKnowledgeBaseFolderUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -283,6 +310,9 @@ public class KnowledgeBaseFolder {
 		try {
 			parentKnowledgeBaseFolderId =
 				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

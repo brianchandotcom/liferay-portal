@@ -96,6 +96,9 @@ public class StructuredContent {
 		try {
 			aggregateRating = aggregateRatingUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -119,6 +122,9 @@ public class StructuredContent {
 
 		try {
 			availableLanguages = availableLanguagesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -144,6 +150,9 @@ public class StructuredContent {
 		try {
 			contentFields = contentFieldsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -168,6 +177,9 @@ public class StructuredContent {
 		try {
 			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -191,6 +203,9 @@ public class StructuredContent {
 
 		try {
 			contentStructureId = contentStructureIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -217,6 +232,9 @@ public class StructuredContent {
 		try {
 			creator = creatorUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -240,6 +258,9 @@ public class StructuredContent {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -265,6 +286,9 @@ public class StructuredContent {
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -288,6 +312,9 @@ public class StructuredContent {
 
 		try {
 			datePublished = datePublishedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -313,6 +340,9 @@ public class StructuredContent {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -335,6 +365,9 @@ public class StructuredContent {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -356,6 +389,9 @@ public class StructuredContent {
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
 			key = keyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -381,6 +417,9 @@ public class StructuredContent {
 		try {
 			keywords = keywordsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -405,6 +444,9 @@ public class StructuredContent {
 		try {
 			lastReviewed = lastReviewedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -428,6 +470,9 @@ public class StructuredContent {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -455,6 +500,9 @@ public class StructuredContent {
 		try {
 			renderedContents = renderedContentsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -480,6 +528,9 @@ public class StructuredContent {
 		try {
 			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -503,6 +554,9 @@ public class StructuredContent {
 
 		try {
 			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -528,6 +582,9 @@ public class StructuredContent {
 		try {
 			title = titleUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -549,6 +606,9 @@ public class StructuredContent {
 	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
 		try {
 			uuid = uuidUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -582,6 +642,9 @@ public class StructuredContent {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

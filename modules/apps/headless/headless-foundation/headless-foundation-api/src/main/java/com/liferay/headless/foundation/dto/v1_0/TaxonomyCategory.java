@@ -93,6 +93,9 @@ public class TaxonomyCategory {
 		try {
 			availableLanguages = availableLanguagesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -116,6 +119,9 @@ public class TaxonomyCategory {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -141,6 +147,9 @@ public class TaxonomyCategory {
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -164,6 +173,9 @@ public class TaxonomyCategory {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -189,6 +201,9 @@ public class TaxonomyCategory {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -211,6 +226,9 @@ public class TaxonomyCategory {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -232,6 +250,9 @@ public class TaxonomyCategory {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -262,6 +283,9 @@ public class TaxonomyCategory {
 			numberOfTaxonomyCategories =
 				numberOfTaxonomyCategoriesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -288,6 +312,9 @@ public class TaxonomyCategory {
 
 		try {
 			parentTaxonomyCategory = parentTaxonomyCategoryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -317,6 +344,9 @@ public class TaxonomyCategory {
 			parentTaxonomyVocabulary =
 				parentTaxonomyVocabularyUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -340,6 +370,9 @@ public class TaxonomyCategory {
 
 		try {
 			parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -373,6 +406,9 @@ public class TaxonomyCategory {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

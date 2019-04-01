@@ -56,6 +56,9 @@ public class WorkflowTaskAssignToUser {
 		try {
 			assigneeId = assigneeIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -80,6 +83,9 @@ public class WorkflowTaskAssignToUser {
 		try {
 			comment = commentUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -103,6 +109,9 @@ public class WorkflowTaskAssignToUser {
 
 		try {
 			dueDate = dueDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

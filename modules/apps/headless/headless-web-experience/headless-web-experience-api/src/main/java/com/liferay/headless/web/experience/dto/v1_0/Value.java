@@ -55,6 +55,9 @@ public class Value {
 		try {
 			data = dataUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class Value {
 
 		try {
 			document = documentUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,6 +109,9 @@ public class Value {
 		try {
 			documentId = documentIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -125,6 +134,9 @@ public class Value {
 	public void setGeo(UnsafeSupplier<Geo, Exception> geoUnsafeSupplier) {
 		try {
 			geo = geoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -150,6 +162,9 @@ public class Value {
 		try {
 			image = imageUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -173,6 +188,9 @@ public class Value {
 
 		try {
 			imageDescription = imageDescriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -198,6 +216,9 @@ public class Value {
 		try {
 			imageId = imageIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -219,6 +240,9 @@ public class Value {
 	public void setLink(UnsafeSupplier<String, Exception> linkUnsafeSupplier) {
 		try {
 			link = linkUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -243,6 +267,9 @@ public class Value {
 
 		try {
 			structuredContentId = structuredContentIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -270,6 +297,9 @@ public class Value {
 
 		try {
 			structuredContentLink = structuredContentLinkUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

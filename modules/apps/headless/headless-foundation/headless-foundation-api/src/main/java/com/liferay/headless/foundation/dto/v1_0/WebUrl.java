@@ -53,6 +53,9 @@ public class WebUrl {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -74,6 +77,9 @@ public class WebUrl {
 	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
 		try {
 			url = urlUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -98,6 +104,9 @@ public class WebUrl {
 
 		try {
 			urlType = urlTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

@@ -55,6 +55,9 @@ public class KnowledgeBaseAttachment {
 		try {
 			contentUrl = contentUrlUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class KnowledgeBaseAttachment {
 
 		try {
 			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,6 +109,9 @@ public class KnowledgeBaseAttachment {
 		try {
 			fileExtension = fileExtensionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -124,6 +133,9 @@ public class KnowledgeBaseAttachment {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -149,6 +161,9 @@ public class KnowledgeBaseAttachment {
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -172,6 +187,9 @@ public class KnowledgeBaseAttachment {
 
 		try {
 			title = titleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

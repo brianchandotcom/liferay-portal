@@ -55,6 +55,9 @@ public class ContactInformation {
 		try {
 			emails = emailsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class ContactInformation {
 		try {
 			facebook = facebookUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -100,6 +106,9 @@ public class ContactInformation {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -124,6 +133,9 @@ public class ContactInformation {
 
 		try {
 			jabber = jabberUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -150,6 +162,9 @@ public class ContactInformation {
 		try {
 			postalAddresses = postalAddressesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -174,6 +189,9 @@ public class ContactInformation {
 		try {
 			skype = skypeUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -195,6 +213,9 @@ public class ContactInformation {
 	public void setSms(UnsafeSupplier<String, Exception> smsUnsafeSupplier) {
 		try {
 			sms = smsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -220,6 +241,9 @@ public class ContactInformation {
 		try {
 			telephones = telephonesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -244,6 +268,9 @@ public class ContactInformation {
 		try {
 			twitter = twitterUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -267,6 +294,9 @@ public class ContactInformation {
 
 		try {
 			webUrls = webUrlsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

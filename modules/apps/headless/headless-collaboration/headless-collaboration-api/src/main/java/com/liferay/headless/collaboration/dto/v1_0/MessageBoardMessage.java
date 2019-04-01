@@ -92,6 +92,9 @@ public class MessageBoardMessage {
 		try {
 			aggregateRating = aggregateRatingUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -115,6 +118,9 @@ public class MessageBoardMessage {
 
 		try {
 			anonymous = anonymousUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -140,6 +146,9 @@ public class MessageBoardMessage {
 		try {
 			articleBody = articleBodyUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -163,6 +172,9 @@ public class MessageBoardMessage {
 
 		try {
 			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -188,6 +200,9 @@ public class MessageBoardMessage {
 		try {
 			creator = creatorUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -211,6 +226,9 @@ public class MessageBoardMessage {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -236,6 +254,9 @@ public class MessageBoardMessage {
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -259,6 +280,9 @@ public class MessageBoardMessage {
 
 		try {
 			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -284,6 +308,9 @@ public class MessageBoardMessage {
 		try {
 			headline = headlineUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -305,6 +332,9 @@ public class MessageBoardMessage {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -329,6 +359,9 @@ public class MessageBoardMessage {
 
 		try {
 			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -358,6 +391,9 @@ public class MessageBoardMessage {
 			numberOfMessageBoardAttachments =
 				numberOfMessageBoardAttachmentsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -386,6 +422,9 @@ public class MessageBoardMessage {
 			numberOfMessageBoardMessages =
 				numberOfMessageBoardMessagesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -409,6 +448,9 @@ public class MessageBoardMessage {
 
 		try {
 			showAsAnswer = showAsAnswerUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -435,6 +477,9 @@ public class MessageBoardMessage {
 		try {
 			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -458,6 +503,9 @@ public class MessageBoardMessage {
 
 		try {
 			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -491,6 +539,9 @@ public class MessageBoardMessage {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

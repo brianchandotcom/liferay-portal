@@ -55,6 +55,9 @@ public class ChangeTransition {
 		try {
 			transition = transitionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

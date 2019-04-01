@@ -39,8 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENTS_CLI_LINK</td>
-	<td>//a[@title='Fragments CLI']</td>
+	<td>FRAGMENTS_TOOLKIT_LINK</td>
+	<td>//a[@title='Fragments Toolkit']</td>
 	<td></td>
 </tr>
 </tbody>

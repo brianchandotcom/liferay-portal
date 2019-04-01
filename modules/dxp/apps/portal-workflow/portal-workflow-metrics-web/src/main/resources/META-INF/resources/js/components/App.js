@@ -7,6 +7,7 @@ import {
 import { AppContext } from './AppContext';
 import fetch from '../shared/rest/fetch';
 import HeaderController from '../shared/components/header-controller/HeaderController';
+import ProcessDashboard from './process-dashboard/ProcessDashboard';
 import ProcessListCard from './process-list/ProcessListCard';
 import React from 'react';
 import SLAForm from './sla/SLAForm';
@@ -70,6 +71,11 @@ export default class AppComponent extends React.Component {
 							<Route
 								path="/processes/:pageSize/:page/:sort/:search?"
 								render={withParams(ProcessListCard)}
+							/>
+
+							<Route
+								path="/process-dashboard/:processId"
+								render={withParams(ProcessDashboard)}
 							/>
 
 							<Route

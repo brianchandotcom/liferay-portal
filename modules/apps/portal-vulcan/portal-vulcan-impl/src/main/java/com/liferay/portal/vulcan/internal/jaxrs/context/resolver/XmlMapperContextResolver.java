@@ -30,15 +30,13 @@ public class XmlMapperContextResolver implements ContextResolver<XmlMapper> {
 
 	@Override
 	public XmlMapper getContext(Class<?> clazz) {
-		return _XML_MAPPER;
-	}
+		XmlMapper xmlMapper = new XmlMapper();
 
-	private static final XmlMapper _XML_MAPPER = new XmlMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			setDateFormat(new ISO8601DateFormat());
-			setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-		}
-	};
+		xmlMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		xmlMapper.setDateFormat(new ISO8601DateFormat());
+		xmlMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+
+		return xmlMapper;
+	}
 
 }

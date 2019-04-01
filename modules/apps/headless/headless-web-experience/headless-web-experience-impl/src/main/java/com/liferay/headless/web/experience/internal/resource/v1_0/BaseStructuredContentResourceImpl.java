@@ -224,6 +224,11 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getDescription());
 		}
 
+		if (Validator.isNotNull(structuredContent.getFriendlyUrlPath())) {
+			existingStructuredContent.setFriendlyUrlPath(
+				structuredContent.getFriendlyUrlPath());
+		}
+
 		if (Validator.isNotNull(structuredContent.getKey())) {
 			existingStructuredContent.setKey(structuredContent.getKey());
 		}

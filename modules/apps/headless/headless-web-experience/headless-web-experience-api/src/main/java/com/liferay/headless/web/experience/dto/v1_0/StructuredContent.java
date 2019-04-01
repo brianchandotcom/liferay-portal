@@ -322,6 +322,30 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	public String getFriendlyUrlPath() {
+		return friendlyUrlPath;
+	}
+
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
+
+		try {
+			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyUrlPath;
+
 	public Long getId() {
 		return id;
 	}
@@ -708,6 +732,13 @@ public class StructuredContent {
 
 		sb.append("\"");
 		sb.append(description);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"friendlyUrlPath\": ");
+
+		sb.append("\"");
+		sb.append(friendlyUrlPath);
 		sb.append("\"");
 		sb.append(", ");
 

@@ -159,20 +159,16 @@
 	"name": "dynamic-data-mapping-form-web",
 	"private": true,
 	"scripts": {
-		"build": "npm run build-soy && npm run build-js && npm run bundler && npm run clean",
+		"build": "npm run build-js && npm run bundler",
 		"build-js": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
-		"build-soy": "metalsoy --externalMsgFormat \"Liferay.Language.get('\\$2')\" --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\"",
-		"build-soy-tests": "npm run build-soy && metalsoy -s \"test/**/*.soy\" -d \"test\"",
 		"bundler": "liferay-npm-bundler",
 		"checkFormat": "npm run csf",
-		"clean": "npm run clean-soy",
-		"clean-soy": "rimraf \"src/**/*.soy.js\" \"test/**/*.soy.js\"",
 		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",
+		"test": "cross-env NODE_ENV=test jest --coverage",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "NODE_ENV=test jest --coverage -u"
 	},
 	"version": "2.0.0"
 }

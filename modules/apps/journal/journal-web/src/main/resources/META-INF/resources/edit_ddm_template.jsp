@@ -88,15 +88,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 			<div class="sheet">
 				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 				<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
-				<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
-
-				<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
-					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalEditDDMTemplateDisplayContext.imageExtensions(), StringPool.COMMA)) %>.
-				</liferay-ui:error>
-
-				<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
-					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
 
 				<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
 					<div class="alert alert-warning">

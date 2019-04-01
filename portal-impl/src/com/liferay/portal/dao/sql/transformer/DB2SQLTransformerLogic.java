@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -58,6 +59,21 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
+	}
+
+	@Override
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("BEGIN ");
+		sb.append("DECLARE CONTINUE HANDLER FOR SQLSTATE '42704' ");
+		sb.append("BEGIN END; ")
+		sb.append("EXECUTE IMMEDIATE 'DROP TABLE $1'; ");
+		sb.append("END");
+
+		String dropTableIfExists = sb.toString();
+
+		return matcher.replaceAll(dropTableIfExists);
 	}
 
 	private Function<String, String> _getAlterColumnTypeFunction() {

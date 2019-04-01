@@ -25,17 +25,16 @@
 				<span class="sticker">
 					<span class="inline-item">
 						<liferay-ui:user-portrait
+							cssClass="sticker-lg"
 							user="<%= user %>"
 						/>
 					</span>
+
 					<c:if test="<%= themeDisplay.isImpersonated() %>">
 						<span class="sticker sticker-bottom-right sticker-circle sticker-outside sticker-sm sticker-user-icon">
 							<aui:icon image="user" markupView="lexicon" />
 						</span>
 					</c:if>
-				</span>
-				<span class="user-full-name">
-					<%= HtmlUtil.escape(user.getFullName()) %>
 				</span>
 			</liferay-util:buffer>
 

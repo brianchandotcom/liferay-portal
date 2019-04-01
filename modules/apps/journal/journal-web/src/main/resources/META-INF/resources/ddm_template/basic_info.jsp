@@ -30,13 +30,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 	<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" />
 
 	<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
-		<liferay-ui:icon
-			iconCssClass="icon-search"
-			label="<%= true %>"
-			linkCssClass="btn btn-default"
-			message="select"
-			url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-		/>
+		<aui:button id="selectDDMStructure" value="select" />
 	</c:if>
 </div>
 
@@ -90,23 +84,30 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
 	<aui:script>
-		function <portlet:namespace />openDDMStructureSelector() {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectDDMStructure',
-					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
-				},
-				function(event) {
-					if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
-						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
+		var selectDDMStructure = document.getElementById('<portlet:namespace />selectDDMStructure');
 
-						Liferay.fire('<portlet:namespace />refreshEditor');
-					}
+		if (selectDDMStructure) {
+			selectDDMStructure.addEventListener(
+				'click',
+				function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								modal: true
+							},
+							eventName: '<portlet:namespace />selectDDMStructure',
+							title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+						},
+						function(event) {
+							if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
+								document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
+
+								Liferay.fire('<portlet:namespace />refreshEditor');
+							}
+						}
+					);
 				}
 			);
 		}

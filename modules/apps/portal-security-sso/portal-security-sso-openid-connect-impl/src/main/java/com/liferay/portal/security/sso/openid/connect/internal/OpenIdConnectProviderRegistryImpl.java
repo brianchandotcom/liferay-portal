@@ -149,15 +149,15 @@ public class OpenIdConnectProviderRegistryImpl
 				openIdConnectMetadataFactory =
 					new OpenIdConnectMetadataFactoryImpl(
 						openIdConnectProviderConfiguration.providerName(),
+						openIdConnectProviderConfiguration.
+							idTokenSigningAlgValues(),
 						openIdConnectProviderConfiguration.issuerURL(),
 						openIdConnectProviderConfiguration.subjectTypes(),
 						openIdConnectProviderConfiguration.jwksURI(),
 						openIdConnectProviderConfiguration.
 							authorizationEndPoint(),
 						openIdConnectProviderConfiguration.tokenEndPoint(),
-						openIdConnectProviderConfiguration.userInfoEndPoint(),
-						openIdConnectProviderConfiguration.
-							idTokenSigningAlgValues());
+						openIdConnectProviderConfiguration.userInfoEndPoint());
 			}
 		}
 		catch (Exception e) {

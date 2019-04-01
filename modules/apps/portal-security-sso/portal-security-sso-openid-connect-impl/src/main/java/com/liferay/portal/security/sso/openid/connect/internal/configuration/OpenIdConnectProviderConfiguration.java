@@ -87,16 +87,16 @@ public interface OpenIdConnectProviderConfiguration {
 	public String jwksURI();
 
 	@Meta.AD(
-		deflt = "", description = "subject-types-help", name = "subject-types",
-		required = false
-	)
-	public String[] subjectTypes();
-
-	@Meta.AD(
 		deflt = "RS256", description = "id-token-signing-alg-values-help",
 		name = "id-token-signing-alg-values", required = false
 	)
 	public String[] idTokenSigningAlgValues();
+
+	@Meta.AD(
+		deflt = "", description = "subject-types-help", name = "subject-types",
+		required = false
+	)
+	public String[] subjectTypes();
 
 	@Meta.AD(
 		deflt = "", description = "token-endpoint-help",

@@ -34,14 +34,10 @@ DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructu
 
 <aui:input name="parentDDMStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureId() %>" />
 
-<label class="control-label" for="<portlet:namespace />parentDDMStructureName">
-	<liferay-ui:message key="parent-structure" />
-</label>
+<aui:input disabled="<%= true %>" label="parent-structure" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" />
 
-<aui:input disabled="<%= true %>" label="" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" />
-
-<div class="btn-group">
-	<div class="btn-group-item">
+<div class="btn-group mb-3">
+	<div class="btn-group-item mr-3">
 		<aui:button onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
 	</div>
 

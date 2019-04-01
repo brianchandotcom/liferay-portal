@@ -17,7 +17,12 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -69,6 +74,38 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	protected Job getJob() {
 		return _job;
+	}
+
+	protected List<JSONObject> getPreviousBuildJSONObjects() {
+		if (_previousBuildJSONObjects != null) {
+			return _previousBuildJSONObjects;
+		}
+
+		_previousBuildJSONObjects = new ArrayList<>();
+
+		BuildData buildData = getBuildData();
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(buildData.getJobURL()) +
+					"api/json");
+
+			JSONArray buildsJSONArray = jsonObject.getJSONArray("builds");
+
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+				_previousBuildJSONObjects.add(
+					JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(
+							buildJSONObject.getString("url") + "api/json")));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		return _previousBuildJSONObjects;
 	}
 
 	protected abstract void initWorkspace();
@@ -181,6 +218,7 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	private final T _buildData;
 	private final Job _job;
+	private List<JSONObject> _previousBuildJSONObjects;
 	private S _workspace;
 
 }

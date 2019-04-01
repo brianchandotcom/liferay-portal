@@ -16,13 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -102,38 +99,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return portalBranchSHA.substring(0, 7);
 	}
 
-	private List<JSONObject> _getPreviousBuildJSONObjects() {
-		if (_previousBuildJSONObjects != null) {
-			return _previousBuildJSONObjects;
-		}
-
-		_previousBuildJSONObjects = new ArrayList<>();
-
-		BuildData buildData = getBuildData();
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(buildData.getJobURL()) +
-					"api/json");
-
-			JSONArray buildsJSONArray = jsonObject.getJSONArray("builds");
-
-			for (int i = 0; i < buildsJSONArray.length(); i++) {
-				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
-
-				_previousBuildJSONObjects.add(
-					JenkinsResultsParserUtil.toJSONObject(
-						JenkinsResultsParserUtil.getLocalURL(
-							buildJSONObject.getString("url") + "api/json")));
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		return _previousBuildJSONObjects;
-	}
-
 	private String _getTestSuiteName() {
 		BuildData buildData = getBuildData();
 
@@ -208,7 +173,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		String portalBranchSHA = _getPortalBranchAbbreviatedSHA();
 
 		for (JSONObject previousBuildJSONObject :
-				_getPreviousBuildJSONObjects()) {
+				getPreviousBuildJSONObjects()) {
 
 			String description = previousBuildJSONObject.optString(
 				"description", "");
@@ -223,7 +188,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	private boolean _previousBuildHasExistingInvocation() {
 		for (JSONObject previousBuildJSONObject :
-				_getPreviousBuildJSONObjects()) {
+				getPreviousBuildJSONObjects()) {
 
 			String description = previousBuildJSONObject.optString(
 				"description", "");
@@ -245,6 +210,5 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		"[^\\(]+\\((?<branchName>[^_]+)_(?<testSuiteName>[^\\)]+)\\)");
 
 	private String _invocationURL;
-	private List<JSONObject> _previousBuildJSONObjects;
 
 }

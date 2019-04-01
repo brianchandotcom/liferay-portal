@@ -284,18 +284,18 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		var bodyContentDiv = A.one('#<portlet:namespace />edit-client-id-modal');
 		var clientIdPadlock = A.one('#<portlet:namespace />clientIdPadlock');
 		var applyField = A.one('#<portlet:namespace />newClientId');
-		var populateField = A.one('#<portlet:namespace />clientId');
+		var populateFieldClientId = A.one('#<portlet:namespace />clientId');
 
-		<portlet:namespace />showModal('<%= UnicodeLanguageUtil.get(request, "edit-client-id") %>', bodyContentDiv, clientIdPadlock, applyField, populateField);
+		<portlet:namespace />showModal('<%= UnicodeLanguageUtil.get(request, "edit-client-id") %>', bodyContentDiv, clientIdPadlock, applyField, populateFieldClientId);
 	}
 
 	<portlet:namespace />showEditClientSecretModal = function() {
 		var bodyContentDiv = A.one('#<portlet:namespace />edit-client-secret-modal');
 		var clientSecretPadlock = A.one('#<portlet:namespace />clientSecretPadlock');
 		var applyField = A.one('#<portlet:namespace />newClientSecret');
-		var populateField = A.one('#<portlet:namespace />clientSecret')
+		var populateFieldClientSecret = A.one('#<portlet:namespace />clientSecret')
 
-		<portlet:namespace />showModal('<%= UnicodeLanguageUtil.get(request, "edit-client-secret") %>', bodyContentDiv, clientSecretPadlock, applyField, populateField);
+		<portlet:namespace />showModal('<%= UnicodeLanguageUtil.get(request, "edit-client-secret") %>', bodyContentDiv, clientSecretPadlock, applyField, populateFieldClientSecret);
 	}
 
 	<portlet:namespace />showModal = function(title, bodyContent, footerContent, applyField, populateField) {

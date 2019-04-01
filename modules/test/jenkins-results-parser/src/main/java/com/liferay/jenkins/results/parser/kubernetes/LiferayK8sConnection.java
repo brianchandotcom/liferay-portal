@@ -19,7 +19,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
-import io.kubernetes.client.apis.AppsV1Api;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1DeleteOptions;
 import io.kubernetes.client.models.V1ObjectMeta;
@@ -176,7 +175,6 @@ public class LiferayK8sConnection {
 	}
 
 	private static final ApiClient _apiClient;
-	private static final AppsV1Api _appsV1Api;
 	private static final CoreV1Api _coreV1Api;
 	private static LiferayK8sConnection _liferayK8sConnection;
 
@@ -188,7 +186,6 @@ public class LiferayK8sConnection {
 
 			_apiClient.setDebugging(true);
 
-			_appsV1Api = new AppsV1Api(_apiClient);
 			_coreV1Api = new CoreV1Api(_apiClient);
 		}
 		catch (IOException ioe) {

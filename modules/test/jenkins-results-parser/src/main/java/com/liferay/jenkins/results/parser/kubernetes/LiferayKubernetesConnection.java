@@ -25,21 +25,21 @@ import java.io.IOException;
 /**
  * @author Kenji Heigel
  */
-public class LiferayKubernetesApi {
+public class LiferayKubernetesConnection {
 
 	public static AppsV1Api apps;
 	public static CoreV1Api core;
 
-	public static LiferayKubernetesApi getInstance() {
+	public static LiferayKubernetesConnection getInstance() {
 		if (_liferayKubernetesApi == null) {
-			_liferayKubernetesApi = new LiferayKubernetesApi();
+			_liferayKubernetesApi = new LiferayKubernetesConnection();
 		}
 
 		return _liferayKubernetesApi;
 	}
 
 	private static final ApiClient _apiClient;
-	private static LiferayKubernetesApi _liferayKubernetesApi;
+	private static LiferayKubernetesConnection _liferayKubernetesApi;
 
 	static {
 		try {

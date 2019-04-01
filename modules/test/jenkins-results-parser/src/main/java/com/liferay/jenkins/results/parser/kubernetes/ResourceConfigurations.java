@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser.kubernetes;
 
 import io.kubernetes.client.models.V1Pod;
 
-import java.net.UnknownHostException;
-
 /**
  * @author Kenji Heigel
  */
@@ -28,17 +26,12 @@ public class ResourceConfigurations extends ResourceConfigurationFactory {
 	public static final V1Pod mysql57PodConfiguration;
 
 	static {
-		try {
-			mysql55PodConfiguration = newMySQLPodConfiguration(
-				"mysql55", "mysql:5.5.62");
-			mysql56PodConfiguration = newMySQLPodConfiguration(
-				"mysql56", "mysql:5.6.43");
-			mysql57PodConfiguration = newMySQLPodConfiguration(
-				"mysql57", "mysql:5.7.25");
-		}
-		catch (UnknownHostException uhe) {
-			throw new ExceptionInInitializerError(uhe);
-		}
+		mysql55PodConfiguration = newConfiguredMySQLPod(
+			"mysql55", "mysql:5.5.62");
+		mysql56PodConfiguration = newConfiguredMySQLPod(
+			"mysql56", "mysql:5.6.43");
+		mysql57PodConfiguration = newConfiguredMySQLPod(
+			"mysql57", "mysql:5.7.25");
 	}
 
 }

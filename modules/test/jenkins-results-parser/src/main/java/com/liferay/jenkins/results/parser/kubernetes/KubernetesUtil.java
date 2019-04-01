@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Kenji Heigel
  */
-public class ResourceManager {
+public class KubernetesUtil {
 
 	public static V1Pod createPod(V1Pod podConfiguration) throws ApiException {
 		return createPod(podConfiguration, "default");
@@ -38,7 +38,7 @@ public class ResourceManager {
 		throws ApiException {
 
 		try {
-			return _liferayKubernetesApi.core.createNamespacedPod(
+			return _liferayKubernetesConnection.core.createNamespacedPod(
 				namespace, podConfiguration, null);
 		}
 		catch (ApiException ae) {
@@ -68,7 +68,7 @@ public class ResourceManager {
 		throws ApiException {
 
 		try {
-			return _liferayKubernetesApi.core.deleteNamespacedPod(
+			return _liferayKubernetesConnection.core.deleteNamespacedPod(
 				getPodName(podConfiguration), namespace, new V1DeleteOptions(),
 				null, 60, true, null);
 		}
@@ -114,7 +114,7 @@ public class ResourceManager {
 		throws ApiException {
 
 		try {
-			return _liferayKubernetesApi.core.readNamespacedPod(
+			return _liferayKubernetesConnection.core.readNamespacedPod(
 				getPodName(pod), namespace, null, true, false);
 		}
 		catch (ApiException ae) {
@@ -134,8 +134,9 @@ public class ResourceManager {
 	}
 
 	public static List<V1Pod> getPods() throws ApiException {
-		V1PodList podList = _liferayKubernetesApi.core.listPodForAllNamespaces(
-			null, null, null, null, null, null, null, null, null);
+		V1PodList podList =
+			_liferayKubernetesConnection.core.listPodForAllNamespaces(
+				null, null, null, null, null, null, null, null, null);
 
 		return podList.getItems();
 	}
@@ -146,7 +147,8 @@ public class ResourceManager {
 		return meta.getName();
 	}
 
-	private static final LiferayKubernetesApi _liferayKubernetesApi =
-		LiferayKubernetesApi.getInstance();
+	private static final LiferayKubernetesConnection
+		_liferayKubernetesConnection =
+			LiferayKubernetesConnection.getInstance();
 
 }

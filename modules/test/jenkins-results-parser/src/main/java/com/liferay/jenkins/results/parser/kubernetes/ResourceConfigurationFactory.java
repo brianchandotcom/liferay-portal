@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.kubernetes;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import io.kubernetes.client.models.V1Container;
 import io.kubernetes.client.models.V1ContainerPort;
 import io.kubernetes.client.models.V1EmptyDirVolumeSource;
@@ -23,9 +25,6 @@ import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodSpec;
 import io.kubernetes.client.models.V1Volume;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,62 +33,77 @@ import java.util.Arrays;
  */
 public class ResourceConfigurationFactory {
 
-	public static V1Pod newMySQLPodConfiguration(String baseName, String image)
-		throws UnknownHostException {
+	public static LiferayKubernetesConnection.Pod newConfiguredMySQLPod(
+		String dockerBaseImageName, String dockerImageName) {
 
-		V1Pod podConfiguration = new V1Pod();
+		V1Pod v1Pod = new V1Pod();
 
-		String name = getSystemSimpleHostName() + "-" + baseName;
+		String hostname = JenkinsResultsParserUtil.getHostName(null);
 
-		podConfiguration.setMetadata(createMetaData(name));
+		if (hostname == null) {
+			throw new RuntimeException("Unable to determine hostname");
+		}
 
-		V1Container container = createContainer(baseName, image);
+		v1Pod.setMetadata(
+			newConfiguredMetaData(
+				JenkinsResultsParserUtil.combine(
+					hostname, "-", dockerBaseImageName)));
 
-		container.setEnv(
+		V1Container v1Container = newConfiguredContainer(
+			dockerBaseImageName, dockerImageName);
+
+		v1Container.setEnv(
 			new ArrayList<>(
 				Arrays.asList(
-					createEnvVar("MYSQL_ROOT_PASSWORD", "password"))));
+					newConfiguredEnvVar("MYSQL_ROOT_PASSWORD", "password"))));
 
-		container.setPorts(
+		v1Container.setPorts(
 			new ArrayList<>(
-				Arrays.asList(createContainerPort(baseName, 3306))));
+				Arrays.asList(
+					newConfiguredContainerPort(dockerBaseImageName, 3306))));
 
-		V1PodSpec podSpec = createPodSpec(container);
+		V1PodSpec v1PodSpec = newConfiguredPodSpec(v1Container);
 
-		podSpec.setVolumes(
-			new ArrayList<>(Arrays.asList(createEmptyDirVolume(baseName))));
+		v1PodSpec.setVolumes(
+			new ArrayList<>(
+				Arrays.asList(
+					newConfiguredEmptyDirVolume(dockerBaseImageName))));
 
-		podConfiguration.setSpec(podSpec);
+		v1Pod.setSpec(v1PodSpec);
 
-		return podConfiguration;
+		return new LiferayKubernetesConnection.Pod(v1Pod);
 	}
 
-	protected static V1Container createContainer(String name, String image) {
+	protected static V1Container newConfiguredContainer(
+		String dockerBaseImageName, String dockerImageName) {
+
 		V1Container v1Container = new V1Container();
 
-		v1Container.setName(name);
+		v1Container.setName(dockerBaseImageName);
 
-		v1Container.setImage(image);
+		v1Container.setImage(dockerImageName);
 
 		return v1Container;
 	}
 
-	protected static V1ContainerPort createContainerPort(
-		String name, int containerPort) {
+	protected static V1ContainerPort newConfiguredContainerPort(
+		String dockerBaseImageName, int containerPort) {
 
 		V1ContainerPort v1ContainerPort = new V1ContainerPort();
 
-		v1ContainerPort.setName(name);
+		v1ContainerPort.setName(dockerBaseImageName);
 
 		v1ContainerPort.setContainerPort(containerPort);
 
 		return v1ContainerPort;
 	}
 
-	protected static V1Volume createEmptyDirVolume(String name) {
+	protected static V1Volume newConfiguredEmptyDirVolume(
+		String dockerImageName) {
+
 		V1Volume v1Volume = new V1Volume();
 
-		v1Volume.setName(name);
+		v1Volume.setName(dockerImageName);
 
 		V1EmptyDirVolumeSource v1EmptyDirVolumeSource =
 			new V1EmptyDirVolumeSource();
@@ -99,46 +113,32 @@ public class ResourceConfigurationFactory {
 		return v1Volume;
 	}
 
-	protected static V1EnvVar createEnvVar(String name, String value) {
+	protected static V1EnvVar newConfiguredEnvVar(
+		String variableName, String variableValue) {
+
 		V1EnvVar v1EnvVar = new V1EnvVar();
 
-		v1EnvVar.setName(name);
+		v1EnvVar.setName(variableName);
 
-		v1EnvVar.setValue(value);
+		v1EnvVar.setValue(variableValue);
 
 		return v1EnvVar;
 	}
 
-	protected static V1ObjectMeta createMetaData(String name) {
-		V1ObjectMeta meta = new V1ObjectMeta();
+	protected static V1ObjectMeta newConfiguredMetaData(String metaDataName) {
+		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
 
-		meta.setName(name);
+		v1ObjectMeta.setName(metaDataName);
 
-		return meta;
+		return v1ObjectMeta;
 	}
 
-	protected static V1PodSpec createPodSpec(V1Container container) {
+	protected static V1PodSpec newConfiguredPodSpec(V1Container container) {
 		V1PodSpec v1PodSpec = new V1PodSpec();
 
 		v1PodSpec.addContainersItem(container);
 
 		return v1PodSpec;
-	}
-
-	protected static String getSystemSimpleHostName()
-		throws UnknownHostException {
-
-		InetAddress localHost = InetAddress.getLocalHost();
-
-		String hostName = localHost.getHostName();
-
-		if (hostName.contains(".")) {
-			int index = hostName.indexOf(".");
-
-			hostName = hostName.substring(0, index);
-		}
-
-		return hostName;
 	}
 
 }

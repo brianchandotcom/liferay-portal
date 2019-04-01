@@ -74,6 +74,12 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 	</nav>
 
 	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+		<div class="sidebar-header">
+			<h4 class="component-title">
+				<liferay-ui:message key="properties" />
+			</h4>
+		</div>
+
 		<div class="sidebar-body">
 			<liferay-frontend:form-navigator
 				formModelBean="<%= ddmStructure %>"

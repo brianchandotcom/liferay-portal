@@ -16,8 +16,8 @@ package com.liferay.document.library.opener.google.drive.web.internal.connected.
 
 import com.google.api.client.auth.oauth2.Credential;
 
-import com.liferay.connected.apps.ConnectedApp;
-import com.liferay.connected.apps.ConnectedAppProvider;
+import com.liferay.connected.app.ConnectedApp;
+import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.document.library.opener.google.drive.web.internal.OAuth2Manager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

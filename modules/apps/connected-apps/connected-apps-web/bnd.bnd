@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Connected Apps Web
-Bundle-SymbolicName: com.liferay.connected.apps.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /connected-apps-web
--dsannotations-options: inherit

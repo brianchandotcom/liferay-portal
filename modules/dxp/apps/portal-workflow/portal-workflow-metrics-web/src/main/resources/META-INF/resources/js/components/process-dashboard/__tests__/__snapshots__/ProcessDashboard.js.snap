@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProcessDashboard Should render component 1`] = `
+<div
+  className="workflow-process-dashboard"
+>
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div
+      className="panel panel-secondary"
+    >
+      <div
+        className="panel-header dashboard-panel-header"
+      >
+        <div>
+          <div>
+            <span
+              className="mr-3"
+            >
+              Pending Items
+            </span>
+            <span
+              className="workflow-tooltip"
+              onMouseLeave={[Function]}
+            >
+              <span
+                className="tooltip-trigger"
+                onMouseOver={[Function]}
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-question-circle-full"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="panel-body"
+      >
+        <div
+          className="pt-1 pb-4 d-flex"
+        >
+          <a
+            className="process-dashboard-summary-card"
+            href="#"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <div>
+              <div
+                className="header"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-exclamation-circle iconBadge icon-red mr-3"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
+                  />
+                </svg>
+                Overdue
+              </div>
+              <div
+                className="body"
+              >
+                0
+              </div>
+              <div
+                className="footer"
+              >
+                0%
+              </div>
+            </div>
+          </a>
+          <a
+            className="process-dashboard-summary-card"
+            href="#"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <div>
+              <div
+                className="header"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-warning iconBadge icon-orange mr-3"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#warning"
+                  />
+                </svg>
+                Due in 7 days
+              </div>
+              <div
+                className="body"
+              >
+                0
+              </div>
+              <div
+                className="footer"
+              >
+                0%
+              </div>
+            </div>
+          </a>
+          <a
+            className="process-dashboard-summary-card"
+            href="#"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <div>
+              <div
+                className="header"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-check-circle iconBadge icon-green mr-3"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
+                  />
+                </svg>
+                Due after 7 days
+              </div>
+              <div
+                className="body"
+              >
+                0
+              </div>
+              <div
+                className="footer"
+              >
+                0%
+              </div>
+            </div>
+          </a>
+          <a
+            className="process-dashboard-summary-card"
+            href="#"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <div>
+              <div
+                className="header"
+              >
+                Total Pending
+              </div>
+              <div
+                className="body"
+              >
+                0
+              </div>
+              <div
+                className="footer"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

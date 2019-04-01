@@ -1005,7 +1005,7 @@ information.
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute default="" name="junit.jvm.override" />
-		<attribute default="${java.specification.version}" name="junit.jvm.override.version" />
+		<attribute default="" name="junit.jvm.override.version" />
 		<attribute name="test.type" />
 		<element name="misc" optional="yes" />
 		<element name="test.classes" />
@@ -1013,6 +1013,11 @@ information.
 		<sequential>
 			<local name="aspectj.weaver.enabled" />
 			<local name="junit.java.gc" />
+			<local name="junit.jvm.override.version" />
+
+			<condition else="@{junit.jvm.override.version}" property="junit.jvm.override.version" value="${java.specification.version}">
+				<equals arg1="@{junit.jvm.override.version}" arg2="" />
+			</condition>
 
 			<if>
 				<equals arg1="@{test.type}" arg2="unit" />
@@ -1802,8 +1807,8 @@ rerun your task.
 		<attribute name="test.includes" />
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
-		<attribute default="${junit.jvm}" name="junit.jvm.override" />
-		<attribute default="${java.specification.version}" name="junit.jvm.override.version" />
+		<attribute default="" name="junit.jvm.override" />
+		<attribute default="" name="junit.jvm.override.version" />
 
 		<sequential>
 			<if>
@@ -2355,7 +2360,7 @@ rerun your task.
 				<isset property="junit.jvm.override" />
 			</not>
 			<then>
-				<property name="junit.jvm.override" value="${junit.jvm}" />
+				<property name="junit.jvm.override" value="" />
 			</then>
 		</if>
 
@@ -2364,7 +2369,7 @@ rerun your task.
 				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.override.version" value="${java.specification.version}" />
+				<property name="junit.jvm.override.version" value="" />
 			</then>
 		</if>
 
@@ -2409,7 +2414,7 @@ rerun your task.
 				<isset property="junit.jvm.override" />
 			</not>
 			<then>
-				<property name="junit.jvm.override" value="${junit.jvm}" />
+				<property name="junit.jvm.override" value="" />
 			</then>
 		</if>
 
@@ -2418,7 +2423,7 @@ rerun your task.
 				<isset property="junit.jvm.override.version}" />
 			</not>
 			<then>
-				<property name="junit.jvm.override.version" value="${java.specification.version}" />
+				<property name="junit.jvm.override.version" value="" />
 			</then>
 		</if>
 

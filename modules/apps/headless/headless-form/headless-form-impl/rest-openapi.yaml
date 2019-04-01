@@ -214,6 +214,8 @@ components:
                                                         type: object
                                                     type: array
                                             type: object
+                                        hasFormRules:
+                                            type: boolean
                                         id:
                                             format: int64
                                             type: integer
@@ -231,8 +233,6 @@ components:
                                             type: boolean
                                         name:
                                             type: string
-                                        hasFormRules:
-                                            type: boolean
                                         options:
                                             description: https://www.schema.org/FormFieldOption
                                             items:

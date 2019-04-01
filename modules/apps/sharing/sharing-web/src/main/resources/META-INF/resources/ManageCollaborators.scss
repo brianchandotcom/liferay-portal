@@ -25,28 +25,18 @@
 		}
 	}
 
-	h4 {
-		margin-bottom: 0;
-	}
 
 	input[type="date"] {
 		font-size: 0.875rem;
 		height: 2rem;
 		padding-top: 0.5em;
-		width: 165px;
 	}
 
 	.list-group-item {
 		border: 0;
 		padding: 0.5rem 20px;
 
-		.expiration-icon.hidden {
-			visibility: hidden;
-		}
 
-		&.active .expiration-icon.hidden {
-			visibility: visible;
-		}
 	}
 
 	.modal-body.inline-scroller {
@@ -56,12 +46,12 @@
 	.modal-footer {
 		bottom: 0;
 		position: absolute;
-		rigth: 0;
+		right: 0;
 		width: 100%;
 	}
 
 	select.form-control:not([multiple]):not([size]) {
-		background-color: transparent;
+		background-color: #FFF;
 		font-size: 0.875rem;
 		height: 2rem;
 		padding-top: 0.25em;
@@ -69,6 +59,5 @@
 
 	ul.list-group {
 		margin-bottom: 0;
-		margin-top: 1em;
 	}
 }

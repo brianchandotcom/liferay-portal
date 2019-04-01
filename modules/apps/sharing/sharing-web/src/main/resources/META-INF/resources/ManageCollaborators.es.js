@@ -21,6 +21,7 @@ class ManageCollaborators extends PortletBase {
 		this._deleteSharingEntryIds = [];
 		this._sharingEntryIdsAndPermissions = new Map();
 		this._sharingEntryIdsAndExpirationDate = new Map();
+		this._sharingEntryIdsAndShareables = new Map();
 
 		let tomorrow = new Date();
 		tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
@@ -37,7 +38,7 @@ class ManageCollaborators extends PortletBase {
 	 * is after today, false in other case.
 	 */
 	_checkExpirationDate(expirationDate) {
-		let date = new Date(expirationDate);
+		const date = new Date(expirationDate);
 		return date >= new Date(this._tomorrowDate);
 	}
 
@@ -126,7 +127,34 @@ class ManageCollaborators extends PortletBase {
 		collaborator.sharingEntryExpirationDateError = dateError;
 
 		this.collaborators = this.collaborators;
-		this._findExpirationDateError();
+
+		setTimeout(
+			() => this._findExpirationDateError(),
+			dateError ? 250 : 0
+		);
+	}
+
+	/**
+	 * Get shareable permissions
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
+	_handleChangeShareable(event) {
+		const target = event.delegateTarget;
+		const collaboratorId = target.dataset.collaboratorId;
+		const sharingEntryId = target.dataset.sharingentryId;
+		const shareable = target.checked;
+
+		let collaborator = this._getCollaborator(collaboratorId);
+
+		if (collaborator) {
+			collaborator.shareable = shareable;
+
+			this.collaborators = this.collaborators;
+		}
+
+		this._sharingEntryIdsAndShareables.set(sharingEntryId, shareable);
 	}
 
 	/**
@@ -136,8 +164,11 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleDeleteCollaborator(event) {
-		let collaboratorId = event.delegateTarget.dataset.collaboratorId;
-		let sharingEntryId = event.delegateTarget.dataset.sharingentryId;
+		const target = event.delegateTarget;
+		const collaboratorId = target.dataset.collaboratorId;
+		const sharingEntryId = target.dataset.sharingentryId;
+
+		event.preventDefault();
 
 		this.collaborators = this.collaborators.filter(
 			collaborator => collaborator.id != collaboratorId
@@ -146,29 +177,29 @@ class ManageCollaborators extends PortletBase {
 		this._deleteSharingEntryIds.push(sharingEntryId);
 	}
 
+
 	/**
-	 * Remove the expiration date
+	 * Enable and disable the expiration date field
 	 * @param  {Event} event
 	 * @protected
 	 */
-	_handleDeleteExpirationDate(event) {
-		let collaboratorId = event.currentTarget.dataset.collaboratorid;
-
+	_handleEnableExpirationDate(event) {
+		const target = event.delegateTarget || event.currentTarget;
+		const collaboratorId = target.dataset.collaboratorId;
+		const enabled = target.checked;
 		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
-			let sharingEntryExpirationDate = null;
+			collaborator.enabledExpirationDate = enabled;
 
-			collaborator.expanded = false;
-			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
-			collaborator.sharingEntryExpirationDateError = false;
-			collaborator.sharingEntryExpirationDateTooltip = null;
-
-			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
+			if (enabled) {
+				collaborator.sharingEntryExpirationDate = this._tomorrowDate;
+			} else {
+				collaborator.sharingEntryExpirationDate = "";
+				collaborator.sharingEntryExpirationDateError = false;
+			}
 
 			this.collaborators = this.collaborators;
-
-			this._findExpirationDateError();
 		}
 	}
 
@@ -189,8 +220,9 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleSaveButtonClick() {
-		let expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, (id, date) => id + ',' + date);
-		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + ',' + key);
+		const expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, pair => pair.join(','));
+		const permissions = Array.from(this._sharingEntryIdsAndPermissions, pair => pair.join(','));
+		const shareables = Array.from(this._sharingEntryIdsAndShareables, pair => pair.join(','));
 
 		if (this._findExpirationDateError()) {
 			return;
@@ -201,7 +233,8 @@ class ManageCollaborators extends PortletBase {
 			{
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
 				sharingEntryIdActionIdPairs: permissions,
-				sharingEntryIdExpirationDatePairs: expirationDates
+				sharingEntryIdExpirationDatePairs: expirationDates,
+				sharingEntryIdsAndShareables: shareables,
 			}
 		)
 			.then(
@@ -238,30 +271,20 @@ class ManageCollaborators extends PortletBase {
 	}
 
 	/**
-	 * Hides or show the block where the expiration
-	 * date can be edited.
+	 * Expand configuration for sharing permissions and expiration
 	 *
-	 * @param  {Event} event
 	 * @protected
 	 */
-	_hideShowExpirationDateBlock(event) {
-		let collaboratorId = event.currentTarget.dataset.collaboratorid;
-
+	_hideShowExtraActions(event) {
+		const target = event.delegateTarget;
+		const collaboratorId = target.dataset.collaboratorid;
 		let collaborator = this._getCollaborator(collaboratorId);
 
-		collaborator.expanded = !collaborator.expanded;
+		if (collaborator && !collaborator.expanded) {
+			collaborator.expanded = true;
 
-		if (collaborator.expanded && !collaborator.sharingEntryExpirationDate) {
-			collaborator.sharingEntryExpirationDate = this._tomorrowDate;
-			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(this._tomorrowDate);
-
-			this._sharingEntryIdsAndExpirationDate.set(
-				collaborator.sharingEntryId,
-				collaborator.sharingEntryExpirationDate
-			);
+			this.collaborators = this.collaborators;
 		}
-
-		this.collaborators = this.collaborators;
 	}
 
 	/**

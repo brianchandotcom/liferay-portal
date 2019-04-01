@@ -4,21 +4,22 @@
  *
  */
 {template .render}
-	{@param id: string}
 	{@param collaborators: ?}
+	{@param id: string}
 	{@param spritemap: string}
-	{@param? expirationDateError: bool}
 	{@param? _handleBlurExpirationDate: any}
-	{@param? _handleChangePermission: any}
-	{@param? _handleDeleteCollaborator: any}
-	{@param? _handleDeleteExpirationDate: any}
-	{@param? _handleHoverCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
+	{@param? _handleChangePermission: any}
+	{@param? _handleChangeShareable: any}
+	{@param? _handleDeleteCollaborator: any}
+	{@param? _handleEnableExpirationDate: any}
+	{@param? _handleHoverCollaborator: any}
 	{@param? _handleSaveButtonClick: any}
-	{@param? _hideShowExpirationDateBlock: any}
-	{@param? _removeExpirationDateError: any}
+	{@param? _hideShowExtraActions: any}
 	{@param? _loadingResponse: bool}
+	{@param? _removeExpirationDateError: any}
 	{@param? _tomorrowDate: string}
+	{@param? expirationDateError: bool}
 
 	<div id="{$id}">
 		<div class="inline-scroller modal-body">
@@ -31,17 +32,24 @@
 				{/if}
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
-						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.userId}">
+						<li
+							class="list-group-item list-group-item-flex"
+							data-collaboratorid="{$collaborator.id}"
+							data-onclick="{$_hideShowExtraActions}"
+							data-onmouseout="{$_handleHoverCollaborator}"
+							data-onmouseover="{$_handleHoverCollaborator}"
+							id="collaborator{$collaborator.id}"
+						>
 							{call .collaborator}
 								{param _handleBlurExpirationDate: $_handleBlurExpirationDate /}
 								{param _handleChangePermission: $_handleChangePermission /}
+								{param _handleChangeShareable: $_handleChangeShareable /}
 								{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
-								{param _handleDeleteExpirationDate: $_handleDeleteExpirationDate /}
-								{param _hideShowExpirationDateBlock: $_hideShowExpirationDateBlock /}
+								{param _handleEnableExpirationDate: $_handleEnableExpirationDate /}
 								{param _loadingResponse: $_loadingResponse /}
 								{param _tomorrowDate: $_tomorrowDate /}
-								{param spritemap: $spritemap /}
 								{param collaborator: $collaborator /}
+								{param spritemap: $spritemap /}
 							{/call}
 						</li>
 					{/foreach}
@@ -91,15 +99,15 @@
 {/template}
 
 {template .collaborator}
-	{@param? _handleBlurExpirationDate: any}
-	{@param? _handleChangePermission: any}
-	{@param? _handleDeleteCollaborator: any}
-	{@param? _handleDeleteExpirationDate: any}
-	{@param? _hideShowExpirationDateBlock: any}
-	{@param? _loadingResponse: bool}
-	{@param? _tomorrowDate: string}
 	{@param collaborator: ?}
 	{@param spritemap: string}
+	{@param? _handleBlurExpirationDate: any}
+	{@param? _handleChangePermission: any}
+	{@param? _handleChangeShareable: any}
+	{@param? _handleDeleteCollaborator: any}
+	{@param? _handleEnableExpirationDate: any}
+	{@param? _loadingResponse: bool}
+	{@param? _tomorrowDate: string}
 
 	<div class="autofit-col">
 		{if $collaborator.portraitURL}
@@ -122,35 +130,40 @@
 
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
-				<h4>{$collaborator.fullName}</h4>
+				<strong class="list-group-title">{$collaborator.name}</strong>
 			</div>
 
-			<div class="autofit-col expiration-icon {if not $collaborator.sharingEntryExpirationDate}hidden {/if}
-				{if $collaborator.expanded}hide{/if}">
-				{let $expirationDateMsg kind="text"}
-					{msg desc=""}set-expiration-date{/msg}
-				{/let}
-				{let $untilMsg kind="text"}
-					{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
-				{/let}
-				{let $tooltipMessage:
-					$collaborator.sharingEntryExpirationDateTooltip ? $untilMsg : $expirationDateMsg /}
+			{if $collaborator.sharingEntryExpirationDate}
+				<div class="autofit-col">
+					{let $untilMsg kind="text"}
+						{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
+					{/let}
+					{let $tooltipMessage: $untilMsg /}
+					{call ClayIcon.render}
+						{param data: [
+							'title': $tooltipMessage
+						] /}
+						{param spritemap: $spritemap /}
+						{param symbol: 'time' /}
+					{/call}
+				</div>
+			{/if}
 
-				{call ClayButton.render}
-					{param events: [
-						'click': $_hideShowExpirationDateBlock
-					] /}
-					{param data: [
-						'collaboratorid': $collaborator.userId,
-						'title': $tooltipMessage
-					] /}
-					{param elementClasses: 'text-muted' /}
-					{param icon: 'time' /}
-					{param monospaced: true /}
-					{param spritemap: $spritemap /}
-					{param style: 'link' /}
-				{/call}
-			</div>
+			{if $collaborator.shareable}
+				<div class="autofit-col">
+					{let $tooltipMessage kind="text"}
+						{msg desc=""}can-share-and-manage-permissions{/msg}
+					{/let}
+
+					{call ClayIcon.render}
+						{param data: [
+							'title': $tooltipMessage
+						] /}
+						{param spritemap: $spritemap /}
+						{param symbol: 'users' /}
+					{/call}
+				</div>
+			{/if}
 
 			<div class="autofit-col">
 				{call ClaySelect.render}
@@ -176,41 +189,68 @@
 				</button>
 			</div>
 		</div>
+		<div class="{if not $collaborator.expanded}hide{/if}">
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col">
+					<div class="form-group">
+						<div class="custom-control custom-checkbox">
+							<label>
+								<input
+									{if $collaborator.shareabled}
+										checked
+									{/if}
+									class="custom-control-input"
+									name="shareable"
+									type="checkbox"
+									data-collaborator-id="{$collaborator.id}"
+									data-sharingentry-id="{$collaborator.sharingEntryId}"
+									data-onchange="{$_handleChangeShareable}"
+								/>
 
-		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.userId}">
-			<div class="autofit-col">
-				<span>{msg desc=""}has-permissions-until{/msg}</span>
+								<span class="custom-control-label">
+									<span class="custom-control-label-text">{msg desc=""}allow-the-document-to-be-shared-with-other-users{/msg}</span>
+								</span>
+							</label>
+						</div>
+					</div>
+				</div>
 			</div>
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col">
+					<div class="form-group">
+						<div class="custom-control custom-checkbox">
+							<label>
+								<input
+									class="custom-control-input"
+									type="checkbox"
+									data-collaborator-id="{$collaborator.id}"
+									data-onchange="{$_handleEnableExpirationDate}"
+									{if $collaborator.sharingEntryExpirationDate}
+										checked
+									{/if}
+								/>
 
-			<div class="autofit-col no-padding {if $collaborator.sharingEntryExpirationDateError}has-error{/if}">
-				<input
-					class="form-control"
-					data-onblur="{$_handleBlurExpirationDate}"
-					data-collaborator-id="{$collaborator.userId}"
-					data-sharingentry-id="{$collaborator.sharingEntryId}"
-					min="{$_tomorrowDate}"
-					type="date"
-					{if $collaborator.sharingEntryExpirationDate}
-						value="{$collaborator.sharingEntryExpirationDate}"
-					{/if}
-				/>
-			</div>
-
-			<div class="autofit-col no-padding">
-				{let $cancelMsg kind="text"}
-					{msg desc=""}cancel-expiration{/msg}
-				{/let}
-
-				{call ClayButton.render}
-					{param events: [
-						'click': $_handleDeleteExpirationDate
-					] /}
-					{param data: ['collaboratorId': $collaborator.userId] /}
-					{param elementClasses: 'text-muted' /}
-					{param label: $cancelMsg /}
-					{param size: 'sm' /}
-					{param style: 'link' /}
-				{/call}
+								<span class="custom-control-label">
+									<span class="custom-control-label-text">{msg desc=""}set-expiration-date{/msg}</span>
+								</span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="autofit-col no-padding {if $collaborator.sharingEntryExpirationDateError}has-error{/if}">
+					<input
+						class="form-control"
+						data-collaborator-id="{$collaborator.id}"
+						data-onblur="{$_handleBlurExpirationDate}"
+						data-sharingentry-id="{$collaborator.sharingEntryId}"
+						min="{$_tomorrowDate}"
+						type="date"
+						{if not $collaborator.sharingEntryExpirationDate}
+							disabled
+						{/if}
+						value="{$collaborator.sharingEntryExpirationDate ?: ''}"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>

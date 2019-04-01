@@ -45,7 +45,8 @@ public class ElasticsearchRegistrationTest {
 
 	@Test
 	public void testGetSearchEngineService() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+		Bundle bundle = FrameworkUtil.getBundle(
+			ElasticsearchRegistrationTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

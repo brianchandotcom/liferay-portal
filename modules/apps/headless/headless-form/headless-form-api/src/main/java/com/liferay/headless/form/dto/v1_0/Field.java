@@ -26,8 +26,6 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.Objects;
-
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -57,9 +55,6 @@ public class Field {
 		try {
 			autocomplete = autocompleteUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -83,9 +78,6 @@ public class Field {
 
 		try {
 			dataSourceType = dataSourceTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -111,9 +103,6 @@ public class Field {
 		try {
 			dataType = dataTypeUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -138,9 +127,6 @@ public class Field {
 		try {
 			displayStyle = displayStyleUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -164,9 +150,6 @@ public class Field {
 		try {
 			grid = gridUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -175,6 +158,30 @@ public class Field {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Grid grid;
+
+	public Boolean getHasFormRules() {
+		return hasFormRules;
+	}
+
+	public void setHasFormRules(Boolean hasFormRules) {
+		this.hasFormRules = hasFormRules;
+	}
+
+	@JsonIgnore
+	public void setHasFormRules(
+		UnsafeSupplier<Boolean, Exception> hasFormRulesUnsafeSupplier) {
+
+		try {
+			hasFormRules = hasFormRulesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hasFormRules;
 
 	public Long getId() {
 		return id;
@@ -188,9 +195,6 @@ public class Field {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -216,9 +220,6 @@ public class Field {
 		try {
 			immutable = immutableUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -242,9 +243,6 @@ public class Field {
 
 		try {
 			inline = inlineUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -270,9 +268,6 @@ public class Field {
 		try {
 			inputControl = inputControlUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -296,9 +291,6 @@ public class Field {
 
 		try {
 			label = labelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -324,9 +316,6 @@ public class Field {
 		try {
 			localizable = localizableUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -351,9 +340,6 @@ public class Field {
 		try {
 			multiple = multipleUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -376,9 +362,6 @@ public class Field {
 		try {
 			name = nameUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -388,51 +371,21 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public Boolean getNumberOfFormRules() {
-		return numberOfFormRules;
-	}
-
-	public void setNumberOfFormRules(Boolean numberOfFormRules) {
-		this.numberOfFormRules = numberOfFormRules;
-	}
-
-	@JsonIgnore
-	public void setNumberOfFormRules(
-		UnsafeSupplier<Boolean, Exception> numberOfFormRulesUnsafeSupplier) {
-
-		try {
-			numberOfFormRules = numberOfFormRulesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean numberOfFormRules;
-
 	@Schema(description = "https://www.schema.org/FormFieldOption")
-	public Option getOption() {
-		return option;
+	public Option[] getOptions() {
+		return options;
 	}
 
-	public void setOption(Option option) {
-		this.option = option;
+	public void setOptions(Option[] options) {
+		this.options = options;
 	}
 
 	@JsonIgnore
-	public void setOption(
-		UnsafeSupplier<Option, Exception> optionUnsafeSupplier) {
+	public void setOptions(
+		UnsafeSupplier<Option[], Exception> optionsUnsafeSupplier) {
 
 		try {
-			option = optionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
+			options = optionsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -441,7 +394,7 @@ public class Field {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Option option;
+	protected Option[] options;
 
 	public String getPlaceholder() {
 		return placeholder;
@@ -457,9 +410,6 @@ public class Field {
 
 		try {
 			placeholder = placeholderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -485,9 +435,6 @@ public class Field {
 		try {
 			predefinedValue = predefinedValueUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -511,9 +458,6 @@ public class Field {
 
 		try {
 			readOnly = readOnlyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -539,9 +483,6 @@ public class Field {
 		try {
 			repeatable = repeatableUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -565,9 +506,6 @@ public class Field {
 
 		try {
 			required = requiredUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -593,9 +531,6 @@ public class Field {
 		try {
 			showAsSwitcher = showAsSwitcherUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -619,9 +554,6 @@ public class Field {
 
 		try {
 			showLabel = showLabelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -647,9 +579,6 @@ public class Field {
 		try {
 			style = styleUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -671,9 +600,6 @@ public class Field {
 	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
 		try {
 			text = textUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -698,9 +624,6 @@ public class Field {
 
 		try {
 			tooltip = tooltipUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -727,9 +650,6 @@ public class Field {
 		try {
 			validation = validationUnsafeSupplier.get();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -738,28 +658,6 @@ public class Field {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Validation validation;
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof Field)) {
-			return false;
-		}
-
-		Field field = (Field)object;
-
-		return Objects.equals(toString(), field.toString());
-	}
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
-	}
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -795,6 +693,11 @@ public class Field {
 		sb.append("\"grid\": ");
 
 		sb.append(grid);
+		sb.append(", ");
+
+		sb.append("\"hasFormRules\": ");
+
+		sb.append(hasFormRules);
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -843,14 +746,25 @@ public class Field {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"numberOfFormRules\": ");
+		sb.append("\"options\": ");
 
-		sb.append(numberOfFormRules);
-		sb.append(", ");
+		if (options == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
 
-		sb.append("\"option\": ");
+			for (int i = 0; i < options.length; i++) {
+				sb.append(options[i]);
 
-		sb.append(option);
+				if ((i + 1) < options.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"placeholder\": ");

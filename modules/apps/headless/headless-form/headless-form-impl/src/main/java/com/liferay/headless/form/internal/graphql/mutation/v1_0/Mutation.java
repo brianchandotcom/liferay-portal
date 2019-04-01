@@ -15,7 +15,9 @@
 package com.liferay.headless.form.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
@@ -23,6 +25,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -77,14 +80,16 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form postFormUploadFile(
-			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
+	public FormDocument postFormUploadFile(
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formResource -> formResource.postFormUploadFile(formId, form));
+			formResource -> formResource.postFormUploadFile(
+				formId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
@@ -102,28 +107,28 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("form-record-id") Long formRecordId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
+			@GraphQLName("FormRecordForm") FormRecordForm formRecordForm)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			formRecordResource -> formRecordResource.putFormRecord(
-				formRecordId, formRecord));
+				formRecordId, formRecordForm));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord(
 			@GraphQLName("form-id") Long formId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
+			@GraphQLName("FormRecordForm") FormRecordForm formRecordForm)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			formRecordResource -> formRecordResource.postFormFormRecord(
-				formId, formRecord));
+				formId, formRecordForm));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

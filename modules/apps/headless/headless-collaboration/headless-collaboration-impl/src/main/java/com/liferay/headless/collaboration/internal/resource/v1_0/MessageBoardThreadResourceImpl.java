@@ -257,6 +257,7 @@ public class MessageBoardThreadResourceImpl
 					_portal, _userService.getUserById(mbThread.getUserId()));
 				dateCreated = mbThread.getCreateDate();
 				dateModified = mbThread.getModifiedDate();
+				encodingFormat = mbMessage.getFormat();
 				headline = mbMessage.getSubject();
 				id = mbThread.getThreadId();
 				keywords = ListUtil.toArray(

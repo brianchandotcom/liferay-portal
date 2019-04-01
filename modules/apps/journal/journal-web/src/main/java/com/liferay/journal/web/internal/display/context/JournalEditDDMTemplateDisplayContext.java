@@ -193,6 +193,40 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _script;
 	}
 
+	public String getSmallImageSource() {
+		if (Validator.isNotNull(_smallImageSource)) {
+			return _smallImageSource;
+		}
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate == null) {
+			_smallImageSource = "none";
+
+			return _smallImageSource;
+		}
+
+		_smallImageSource = ParamUtil.getString(_request, "smallImageSource");
+
+		if (Validator.isNotNull(_smallImageSource)) {
+			return _smallImageSource;
+		}
+
+		if (!ddmTemplate.isSmallImage()) {
+			_smallImageSource = "none";
+		}
+		else if (Validator.isNotNull(ddmTemplate.getSmallImageURL())) {
+			_smallImageSource = "url";
+		}
+		else if ((ddmTemplate.getSmallImageId() > 0) &&
+				 Validator.isNull(ddmTemplate.getSmallImageURL())) {
+
+			_smallImageSource = "file";
+		}
+
+		return _smallImageSource;
+	}
+
 	public ResourceBundle getTemplateHandlerResourceBundle() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -308,5 +342,6 @@ public class JournalEditDDMTemplateDisplayContext {
 	private final HttpServletRequest _request;
 	private String _script;
 	private Boolean _smallImage;
+	private String _smallImageSource;
 
 }

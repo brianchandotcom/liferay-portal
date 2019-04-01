@@ -14,14 +14,15 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
+<%
+JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request);
+%>
+
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
 
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	id="templateScriptContainer"
-	label="script"
->
+<div id="templateScriptContainer">
 	<div class="form-group lfr-template-editor-container row">
 		<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 			<div class="col-md-3 lfr-template-palette-container" id="<portlet:namespace />templatePaletteContainer">
@@ -31,46 +32,47 @@
 
 				<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
 					<div id="<portlet:namespace />paletteData">
+						<liferay-frontend:fieldset-group>
 
-						<%
-						for (TemplateVariableGroup templateVariableGroup : journalEditDDMTemplateDisplayContext.getTemplateVariableGroups()) {
-							if (templateVariableGroup.isEmpty()) {
-								continue;
+							<%
+							for (TemplateVariableGroup templateVariableGroup : journalEditDDMTemplateDisplayContext.getTemplateVariableGroups()) {
+								if (templateVariableGroup.isEmpty()) {
+									continue;
+								}
+							%>
+
+								<liferay-frontend:fieldset
+									collapsible="<%= true %>"
+									cssClass="palette-section"
+									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
+									label="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
+								>
+									<ul class="list-unstyled palette-item-content">
+
+										<%
+										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
+										%>
+
+											<li class="palette-item-container">
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
+													<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
+
+													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
+												</span>
+											</li>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</liferay-frontend:fieldset>
+
+							<%
 							}
-						%>
+							%>
 
-							<liferay-ui:panel
-								collapsible="<%= true %>"
-								cssClass="palette-section"
-								extended="<%= false %>"
-								id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
-								title="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
-							>
-								<ul class="palette-item-content">
-
-									<%
-									for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
-									%>
-
-										<li class="palette-item-container">
-											<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
-												<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
-
-												<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
-											</span>
-										</li>
-
-									<%
-									}
-									%>
-
-								</ul>
-							</liferay-ui:panel>
-
-						<%
-						}
-						%>
-
+						</liferay-frontend:fieldset-group>
 					</div>
 				</div>
 			</div>
@@ -87,10 +89,10 @@
 		<div class="lfr-editor-container <%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
 			<div class="lfr-rich-editor" id="<portlet:namespace />richEditor"></div>
 
-			<aui:input inlineLabel="left" label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
+			<aui:input label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
 		</div>
 	</div>
-</liferay-frontend:fieldset>
+</div>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
@@ -421,7 +423,7 @@
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
-			<c:if test="<%= ddmTemplate == null %>">
+			<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
 				else {
 					editorContentElement.val(STR_EMPTY);
 				}

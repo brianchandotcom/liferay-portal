@@ -22,6 +22,9 @@ public class JournalWebConstants {
 	public static final String FORM_NAVIGATOR_ID_JOURNAL_DDM_STRUCTURE =
 		"journal.ddm.structure.form";
 
+	public static final String FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE =
+		"journal.ddm.template.form";
+
 	public static final String JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER =
 		"JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER";
 

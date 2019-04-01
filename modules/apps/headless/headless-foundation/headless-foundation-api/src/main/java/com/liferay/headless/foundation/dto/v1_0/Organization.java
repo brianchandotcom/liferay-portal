@@ -26,6 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -91,6 +92,54 @@ public class Organization {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContactInformation contactInformation;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateModified;
 
 	public Long getId() {
 		return id;
@@ -344,6 +393,20 @@ public class Organization {
 		sb.append("\"contactInformation\": ");
 
 		sb.append(contactInformation);
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		sb.append("\"");
+		sb.append(dateCreated);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		sb.append("\"");
+		sb.append(dateModified);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"id\": ");

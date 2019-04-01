@@ -19,6 +19,7 @@ import com.liferay.headless.foundation.client.dto.v1_0.Service;
 import com.liferay.headless.foundation.client.json.BaseJSONParser;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -64,6 +65,20 @@ public class OrganizationSerDes {
 		sb.append("\"contactInformation\": ");
 
 		sb.append(organization.getContactInformation());
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		sb.append("\"");
+		sb.append(organization.getDateCreated());
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		sb.append("\"");
+		sb.append(organization.getDateModified());
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -201,6 +216,16 @@ public class OrganizationSerDes {
 					organization.setContactInformation(
 						ContactInformationSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					organization.setDateCreated((Date)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					organization.setDateModified((Date)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

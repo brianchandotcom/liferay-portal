@@ -1062,6 +1062,18 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dateCreated")) {
+			sb.append(_dateFormat.format(organization.getDateCreated()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			sb.append(_dateFormat.format(organization.getDateModified()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1121,6 +1133,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		return new Organization() {
 			{
 				comment = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();

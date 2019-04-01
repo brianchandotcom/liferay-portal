@@ -16,6 +16,8 @@ package com.liferay.headless.foundation.client.dto.v1_0;
 
 import com.liferay.headless.foundation.client.function.UnsafeSupplier;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 /**
@@ -67,6 +69,48 @@ public class Organization {
 	}
 
 	protected ContactInformation contactInformation;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
 
 	public Long getId() {
 		return id;

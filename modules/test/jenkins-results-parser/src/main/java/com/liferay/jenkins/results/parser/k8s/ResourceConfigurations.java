@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.kubernetes;
+package com.liferay.jenkins.results.parser.k8s;
 
 /**
  * @author Kenji Heigel

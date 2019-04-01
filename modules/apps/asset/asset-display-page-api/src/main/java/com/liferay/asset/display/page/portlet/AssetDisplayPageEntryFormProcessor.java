@@ -23,7 +23,8 @@ import javax.portlet.PortletRequest;
  */
 public interface AssetDisplayPageEntryFormProcessor {
 
-	public void process(String className, long classPK, PortletRequest request)
+	public void process(
+			String className, long classPK, PortletRequest portletRequest)
 		throws PortalException;
 
 }

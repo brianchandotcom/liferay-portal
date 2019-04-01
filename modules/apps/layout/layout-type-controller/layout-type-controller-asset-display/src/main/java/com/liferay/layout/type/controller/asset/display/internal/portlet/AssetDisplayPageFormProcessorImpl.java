@@ -43,22 +43,24 @@ public class AssetDisplayPageFormProcessorImpl
 	implements AssetDisplayPageEntryFormProcessor {
 
 	@Override
-	public void process(String className, long classPK, PortletRequest request)
+	public void process(
+			String className, long classPK, PortletRequest portletRequest)
 		throws PortalException {
 
-		long classNameId = _portal.getClassNameId(className);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long classNameId = _portal.getClassNameId(className);
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				themeDisplay.getScopeGroupId(), classNameId, classPK);
 
 		long assetDisplayPageId = ParamUtil.getLong(
-			request, "assetDisplayPageId");
+			portletRequest, "assetDisplayPageId");
 
-		int displayPageType = ParamUtil.getInteger(request, "displayPageType");
+		int displayPageType = ParamUtil.getInteger(
+			portletRequest, "displayPageType");
 
 		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
 			if (assetDisplayPageEntry != null) {
@@ -68,7 +70,7 @@ public class AssetDisplayPageFormProcessorImpl
 		}
 		else if (assetDisplayPageEntry == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				className, request);
+				className, portletRequest);
 
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),

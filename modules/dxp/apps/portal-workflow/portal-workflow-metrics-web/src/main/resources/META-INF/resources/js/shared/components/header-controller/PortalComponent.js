@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class PortalComponent extends React.Component {
@@ -17,6 +17,6 @@ export default class PortalComponent extends React.Component {
 			return null;
 		}
 
-		return ReactDOM.createPortal(children, container);
+		return <Fragment>{ReactDOM.createPortal(children, container)}</Fragment>;
 	}
 }

@@ -1508,10 +1508,10 @@ alloy-ui@^3.1.0-deprecated.1, alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.0.0-beta.3:
-  version "2.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0-beta.3.tgz#a5f844fdde5b958b5fe0bcd2b4678f19cbc1f092"
-  integrity sha512-IWNFggUxYav8sYLEWH1hlauwJ3G9D/H0x5c1mYmPa1i9RluOZsJ0wVNPSic98yBpLOOwiaQpX+MkomhS3SkzzQ==
+alloyeditor@2.0.0-beta.6:
+  version "2.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0-beta.6.tgz#8179f8edc928d25727a282f5753b768848f92372"
+  integrity sha512-76uXL261RESskOc/YR9IiUKGgi8GxD/yXcd6iEYWNi+SB1/Ra+p8qgCuiEC6J++8r/zbXlpprQT9fgDDD+WmyA==
   dependencies:
     clay-css "2.5.1"
     prop-types "^15.6.2"

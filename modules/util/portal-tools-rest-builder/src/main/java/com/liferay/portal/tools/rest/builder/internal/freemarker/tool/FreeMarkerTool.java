@@ -208,7 +208,7 @@ public class FreeMarkerTool {
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {
 
-		return ResourceOpenAPIParser.getParameters(
+		return ResourceTestCaseOpenAPIParser.getParameters(
 			javaMethodParameters, operation, annotation);
 	}
 

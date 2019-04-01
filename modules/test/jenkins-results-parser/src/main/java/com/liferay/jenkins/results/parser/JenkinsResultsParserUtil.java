@@ -2449,33 +2449,18 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void updateBuildDescription(
-		String buildURL, String buildDescription) {
-
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
-
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid build url " + buildURL);
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
-		sb.append(matcher.group("jobName"));
-		sb.append("\"); ");
-
-		sb.append("def build = job.getBuildByNumber(");
-		sb.append(matcher.group("buildNumber"));
-		sb.append("); ");
+		String buildDescription, int buildNumber, String jobName,
+		String masterHostname) {
 
 		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
 		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
 
-		sb.append("build.description = \"");
-		sb.append(buildDescription);
-		sb.append("\";");
+		String jenkinsScript = combine(
+			"def job = Jenkins.instance.getItemByFullName(\"", jobName, "\"); ",
+			"def build = job.getBuildByNumber(", String.valueOf(buildNumber),
+			"); ", "build.description = \"", buildDescription, "\";");
 
-		executeJenkinsScript(
-			matcher.group("masterHostname"), "script=" + sb.toString());
+		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
 	}
 
 	public static void write(File file, String content) throws IOException {
@@ -2892,10 +2877,6 @@ public class JenkinsResultsParserUtil {
 
 	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;
-	private static final Pattern _buildURLPattern = Pattern.compile(
-		combine(
-			"https?://(?<masterHostname>test-\\d+-\\d+)(\\.liferay\\.com)?",
-			"(/.*)?/job/(?<jobName>[^/]+)/(?<buildNumber>\\d+)/?"));
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
 	private static final Pattern _javaVersionPattern = Pattern.compile(

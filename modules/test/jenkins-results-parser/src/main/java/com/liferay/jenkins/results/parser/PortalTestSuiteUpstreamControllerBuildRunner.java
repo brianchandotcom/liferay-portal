@@ -71,8 +71,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				"<strong>GIT ID</strong> - ", _getPortalBranchAbbreviatedSHA(),
 				" - <a href=\"", _getInvocationURL(), "\">Invocation URL</a>"));
 
-		JenkinsResultsParserUtil.updateBuildDescription(
-			buildData.getBuildURL(), buildData.getBuildDescription());
+		super.updateBuildDescription();
 	}
 
 	private String _getInvocationURL() {

@@ -175,7 +175,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	protected void updateBuildDescription() {
 		JenkinsResultsParserUtil.updateBuildDescription(
-			_buildData.getBuildURL(), _buildData.getBuildDescription());
+			_buildData.getBuildDescription(), _buildData.getBuildNumber(),
+			_buildData.getJobName(), _buildData.getMasterHostname());
 	}
 
 	private final T _buildData;

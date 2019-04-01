@@ -15,13 +15,13 @@
 package com.liferay.portal.aop;
 
 /**
- * Interface used to declare a service should be intercepted and proxied by an
- * AOP and re-registered.
+ * Declares implementations to be intercepted and proxied by an aspect and
+ * re-registered as providing the services they implement.
  *
  * <p>
- * It is important that services required to be intercepted are only registered
- * as a <code>AopService</code> so service listeners do not see the service
- * before it is proxied.
+ * <strong>Important:</strong> A service implementation should only register as
+ * an <code>AopService</code> so that service listeners see the service only
+ * when it's proxied.
  * </p>
  *
  * @author Preston Crary
@@ -30,20 +30,48 @@ package com.liferay.portal.aop;
 public interface AopService {
 
 	/**
-	 * The interfaces under which to register this AopService.
+	 * Returns the services that the service proxy registers into OSGi for this
+	 * <code>AopService</code>.
 	 *
-	 * If null or empty, the service types for this AopService are all the
-	 * <i>directly</i> implemented interfaces of the AopService. If the
-	 * AopService is registered under OSGi prototype scope, then the result of
-	 * this method must be the same for <code>PrototypeServiceFactory</code>
-	 * service instances.
+	 * <p>
+	 * If the method is not overridden, all the services this
+	 * <code>AopService</code> directly implements, except
+	 * <code>AopService</code>, are returned and registered into OSGi by the
+	 * service proxy.
+	 * </p>
+	 *
+	 * <p>
+	 * Here are the restraints:
+	 * </p>
+	 *
+	 * <ul>
+	 * <li>
+	 * The services cannot include <code>AopService</code>
+	 * </li>
+	 * <li>
+	 * The service list must not change
+	 * </li>
+	 * <li>
+	 * The service list can only contain interfaces
+	 * </li>
+	 * <li>
+	 * This <code>AopService</code> implementation must implement each service
+	 * interface
+	 * </li>
+	 * <li>
+	 * This <code>AopService</code> implementation must implement something in
+	 * addition to <code>AopService</code>
+	 * </li>
+	 * </ul>
 	 */
 	public default Class<?>[] getAopInterfaces() {
 		return null;
 	}
 
 	/**
-	 * @param aopProxy the enclosing AOP proxy for this service
+	 * Sets this service's enclosing AOP proxy.
+	 *
+	 * @param aopProxy this service's enclosing AOP proxy
 	 */
 	public default void setAopProxy(Object aopProxy) {
 	}

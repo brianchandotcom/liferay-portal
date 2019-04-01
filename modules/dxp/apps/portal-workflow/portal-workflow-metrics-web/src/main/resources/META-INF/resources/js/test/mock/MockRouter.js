@@ -3,20 +3,38 @@ import React from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
 
 export class MockRouter extends React.Component {
-	render() {
+	constructor(props) {
+		super(props);
+
 		const { client, page = 1, search, sort } = this.props;
 
-		const contextState = {
+		this.contextState = {
 			client,
 			companyId: 1,
 			defaultDelta: 20,
 			deltas: [5, 10, 20, 30, 50, 75],
 			maxPages: 3,
+			namespace: 'workflow_',
 			page,
 			search,
-			setTitle: () => {},
-			sort
+			setStatus: this.setStatus.bind(this),
+			setTitle: this.setTitle.bind(this),
+			sort,
+			status: null,
+			title: null
 		};
+	}
+
+	setStatus(status) {
+		this.contextState.status = status;
+	}
+
+	setTitle(title) {
+		this.contextState.title = title;
+	}
+
+	render() {
+		const { page = 1, search, sort } = this.props;
 
 		const initialEntries = [
 			{
@@ -36,7 +54,7 @@ export class MockRouter extends React.Component {
 
 		return (
 			<Router initialEntries={initialEntries} keyLength={0}>
-				<AppContext.Provider value={contextState}>
+				<AppContext.Provider value={this.contextState}>
 					{this.props.children}
 				</AppContext.Provider>
 			</Router>

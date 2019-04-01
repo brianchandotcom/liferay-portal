@@ -4,49 +4,51 @@ import React from 'react';
 
 class BackLinkWrapper extends React.Component {
 	render() {
-		return (
-			<Link
-				children={this.props.children}
-				className={this.props.className}
-				to={getBackPathFromProps(this.props)}
-			/>
-		);
+		const { backPath, children, className } = this.props;
+
+		return <Link children={children} className={className} to={backPath} />;
 	}
 }
 
 class BackRedirectWrapper extends React.Component {
 	render() {
-		return <Redirect to={getBackPathFromProps(this.props)} />;
+		const { backPath } = this.props;
+
+		return <Redirect to={backPath} />;
 	}
 }
 
 class ChildLinkWrapper extends React.Component {
 	render() {
-		const backPath = this.props.location.pathname + this.props.location.search;
+		const { children, className, currentPath, to } = this.props;
 
 		return (
 			<Link
-				children={this.props.children}
-				className={this.props.className}
+				children={children}
+				className={className}
 				to={{
-					pathname: this.props.to,
-					search: stringify({ backPath })
+					pathname: to,
+					search: stringify({ backPath: currentPath })
 				}}
 			/>
 		);
 	}
 }
 
-function getBackPathFromProps(props) {
-	const {
-		location: { search }
-	} = props;
+const withParams = Component =>
+	withRouter(
+		({ location: { pathname, search }, match: { params }, ...props }) => (
+			<Component
+				{...params}
+				{...parse(search)}
+				{...props}
+				currentPath={pathname + search}
+			/>
+		)
+	);
 
-	return parse(search).backPath;
-}
-
-const BackLink = withRouter(BackLinkWrapper);
-const BackRedirect = withRouter(BackRedirectWrapper);
-const ChildLink = withRouter(ChildLinkWrapper);
+const BackLink = withParams(BackLinkWrapper);
+const BackRedirect = withParams(BackRedirectWrapper);
+const ChildLink = withParams(ChildLinkWrapper);
 
 export { BackLink, BackRedirect, ChildLink };

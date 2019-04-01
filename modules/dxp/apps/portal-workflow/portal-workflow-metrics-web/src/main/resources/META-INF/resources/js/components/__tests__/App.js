@@ -23,9 +23,6 @@ beforeAll(() => {
 	});
 
 	global.Liferay = {
-		ControlMenu: {
-			_namespace: 'workflow_'
-		},
 		Language: {
 			get: key => key
 		},
@@ -40,7 +37,7 @@ afterAll(() => {
 });
 
 test('Should render default component', () => {
-	const component = renderer.create(<App />);
+	const component = renderer.create(<App namespace="workflow_" />);
 
 	const tree = component.toJSON();
 
@@ -55,4 +52,14 @@ test('Should render default component without custom header', () => {
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
+});
+
+test('Should set status', () => {
+	const component = renderer.create(<App />);
+
+	const instance = component.getInstance();
+
+	instance.setStatus('sla-updated');
+
+	expect(instance.state.status).toEqual('sla-updated');
 });

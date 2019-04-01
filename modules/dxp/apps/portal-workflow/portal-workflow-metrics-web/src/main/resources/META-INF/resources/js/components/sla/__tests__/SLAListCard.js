@@ -6,6 +6,7 @@ import SLAListCard from '../SLAListCard';
 
 test('Should change page', () => {
 	const data = { items: [], totalCount: 0 };
+
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -18,6 +19,7 @@ test('Should change page', () => {
 
 test('Should change page size', () => {
 	const data = { items: [], totalCount: 0 };
+
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -31,7 +33,17 @@ test('Should change page size', () => {
 });
 
 test('Should render component', () => {
-	const data = { items: [], totalCount: 0 };
+	const data = {
+		items: [
+			{
+				description: 'Total time to complete the request.',
+				duration: 1553879089,
+				name: 'Total resolution time'
+			}
+		],
+		totalCount: 0
+	};
+
 	const component = renderer.create(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -55,8 +67,49 @@ test('Should render component after item was removed', () => {
 	expect(tree).toMatchSnapshot();
 });
 
+test('Should render toast with SLA saved message', () => {
+	const data = { items: [], totalCount: 0 };
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+
+	const instance = component.find(SLAListCard).instance();
+
+	instance.context = {
+		setStatus: () => {},
+		status: 'sla-saved'
+	};
+	instance.showStatusMessage();
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should render toast with SLA updated message', () => {
+	const data = { items: [], totalCount: 0 };
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+
+	const instance = component.find(SLAListCard).instance();
+
+	instance.context = {
+		setStatus: () => {},
+		status: 'sla-updated'
+	};
+	instance.showStatusMessage();
+
+	expect(component).toMatchSnapshot();
+});
+
 test('Should remove a item', () => {
 	const data = { items: [], totalCount: 0 };
+
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -66,18 +119,4 @@ test('Should remove a item', () => {
 
 	instance.removeItem();
 	expect(component).toMatchSnapshot();
-});
-
-test('Should search', () => {
-	const data = { items: [], totalCount: 0 };
-	const component = mount(
-		<Router client={fetch(data)}>
-			<SLAListCard />
-		</Router>
-	);
-	const instance = component.find(SLAListCard).instance();
-
-	instance.onSearch('test').then(() => {
-		expect(instance.state['totalCount']).toBe(0);
-	});
 });

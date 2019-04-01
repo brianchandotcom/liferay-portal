@@ -1,11 +1,82 @@
+import fetch from '../../../test/mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import SLAConfirmDialog from '../SLAConfirmDialog';
+import SLAListCard from '../SLAListCard';
+
+jest.useFakeTimers();
 
 test('Should render component', () => {
-	const component = renderer.create(<SLAConfirmDialog item={'test'} />);
+	const component = renderer.create(<SLAConfirmDialog itemToRemove={1234} />);
 
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
+});
+
+test('Should cancel dialog', () => {
+	const component = mount(
+		<Router>
+			<SLAConfirmDialog itemToRemove={1234} />
+		</Router>
+	);
+
+	const dialog = component.find(SLAConfirmDialog).instance();
+
+	dialog.context = {
+		hideConfirmDialog: () => {}
+	};
+
+	dialog.cancel();
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should cancel dialog through SLA List', () => {
+	const data = {
+		items: [
+			{
+				description: 'Total time to complete the request.',
+				duration: 1553879089,
+				id: 1234,
+				name: 'Total resolution time'
+			}
+		],
+		totalCount: 0
+	};
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+
+	const { slaContextState } = component.find(SLAListCard).instance();
+
+	slaContextState.showConfirmDialog(1234);
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
+
+	slaContextState.hideConfirmDialog();
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
+});
+
+test('Should remove item', () => {
+	const component = mount(
+		<Router>
+			<SLAConfirmDialog itemToRemove={1234} />
+		</Router>
+	);
+
+	const dialog = component.find(SLAConfirmDialog).instance();
+
+	dialog.context = {
+		removeItem: () => {}
+	};
+
+	dialog.removeItem();
+
+	expect(component).toMatchSnapshot();
 });

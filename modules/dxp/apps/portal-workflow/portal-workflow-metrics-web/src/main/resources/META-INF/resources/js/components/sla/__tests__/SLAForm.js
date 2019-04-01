@@ -6,6 +6,7 @@ import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import SLAForm from '../SLAForm';
 
 jest.mock('../../AppContext');
+jest.useFakeTimers();
 
 test('Should render component', () => {
 	const component = renderer.create(
@@ -20,21 +21,29 @@ test('Should render component', () => {
 });
 
 test('Should render component in edit mode', () => {
-	const component = renderer.create(
-		<Router>
+	const data = {
+		description: 'Total time to complete the request.',
+		duration: 1553879089,
+		name: 'Total resolution time'
+	};
+
+	const component = mount(
+		<Router client={fetch(data)}>
 			<SLAForm id={1234} />
 		</Router>
 	);
 
-	const tree = component.toJSON();
+	expect(component).toMatchSnapshot();
 
-	expect(tree).toMatchSnapshot();
+	jest.runAllTimers();
+
+	expect(component).toMatchSnapshot();
 });
 
-test('Should submit the form with valid values', () => {
+test('Should submit a new SLA with valid values', () => {
 	const data = {
 		description: 'Total time to complete the request.',
-		duration: '4d 6h 30min',
+		duration: 1553879089,
 		name: 'Total resolution time'
 	};
 
@@ -50,6 +59,32 @@ test('Should submit the form with valid values', () => {
 		days: 3,
 		hours: '10:50',
 		name: 'New SLA'
+	});
+
+	instance.handleSubmit().then(() => {
+		expect(component).toMatchSnapshot();
+	});
+});
+
+test('Should edit the SLA with valid values', () => {
+	const data = {
+		duration: 1553879089,
+		name: 'Total resolution time'
+	};
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAForm id={1234} />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.setState({
+		days: 4,
+		description: 'Total time to complete the request.',
+		hours: '10:50',
+		name: 'Total resolution time'
 	});
 
 	instance.handleSubmit().then(() => {
@@ -77,7 +112,7 @@ test('Should display errors when input blur with invalid values', () => {
 	const { errors } = instance.state;
 
 	expect(errors.days).toBe('Value must be an integer above 0.');
-	expect(errors.hours).toBe('Hours must be between 00:00 and 24:00.');
+	expect(errors.hours).toBe('Value must be an hour below 23:59.');
 	expect(component).toMatchSnapshot();
 });
 
@@ -138,7 +173,11 @@ test('Should display error when submitting the form with empty name', () => {
 
 test('Should display error on alert when receive a server error after submit', () => {
 	const error = {
-		message: 'Error during SLA creation.'
+		response: {
+			data: {
+				message: 'Error during SLA creation.'
+			}
+		}
 	};
 	const component = mount(
 		<Router client={fetchFailure(error)}>
@@ -163,9 +202,14 @@ test('Should display error on alert when receive a server error after submit', (
 
 test('Should display error on field when receive a server error after submit', () => {
 	const error = {
-		fieldName: 'name',
-		message: 'An SLA with the same name already exists.'
+		response: {
+			data: {
+				fieldName: 'name',
+				message: 'An SLA with the same name already exists.'
+			}
+		}
 	};
+
 	const component = mount(
 		<Router client={fetchFailure(error)}>
 			<SLAForm />
@@ -206,8 +250,31 @@ test('Should display error when submitting the form with invalid hours', () => {
 
 	const { errors } = instance.state;
 
-	expect(errors.hours).toBe('Hours must be between 00:00 and 24:00.');
+	expect(errors.hours).toBe('Value must be an hour below 23:59.');
 	expect(component).toMatchSnapshot();
+});
+
+test('Should display error when the server returns a failure', () => {
+	const data = {
+		message: 'Internal server error'
+	};
+
+	const component = mount(
+		<Router client={fetchFailure(data)}>
+			<SLAForm />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.setState({
+		days: 3,
+		name: 'New SLA'
+	});
+
+	instance.handleSubmit().then(() => {
+		expect(component).toMatchSnapshot();
+	});
 });
 
 test('Should update state after input changes', () => {
@@ -238,4 +305,23 @@ test('Should update state after input changes', () => {
 
 	expect(emptyName).toBe('');
 	expect(component).toMatchSnapshot();
+});
+
+test('Should redirect to SLA list', () => {
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.setState(
+		{
+			redirectToSlaList: true
+		},
+		() => {
+			expect(component).toMatchSnapshot();
+		}
+	);
 });

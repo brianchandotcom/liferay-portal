@@ -53,6 +53,15 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>' wrapperCssClass="article-content-title mb-0" />
 				</li>
+				<li class="tbar-item">
+					<div class="journal-article-button-row tbar-section text-right">
+						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= HtmlUtil.escape(redirect) %>">
+							<liferay-ui:message key="cancel" />
+						</a>
+
+						<aui:button cssClass="btn-sm mr-3" type="submit" value="save" />
+					</div>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -185,12 +194,6 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 			</liferay-frontend:fieldset-group>
 		</div>
 	</div>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" value="save" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
 </aui:form>
 
 <aui:script>

@@ -1,8 +1,4 @@
 {
-    "ignore": [
-        "**/__tests__/**",
-        "**/test/**"
-    ],
     "plugins": [
         "babel-plugin-transform-decorators-legacy",
         [

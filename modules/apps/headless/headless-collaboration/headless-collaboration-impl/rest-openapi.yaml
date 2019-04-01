@@ -398,6 +398,8 @@ components:
                 dateModified:
                     format: date-time
                     type: string
+                encodingFormat:
+                    type: string
                 headline:
                     type: string
                 id:

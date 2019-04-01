@@ -4855,13 +4855,17 @@ public class ServiceBuilder {
 
 		List<String> mappingPKEntityColumnDBNames = new ArrayList<>();
 
-		// Skip Company
-
-		for (int i = 1; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			Entity entity = getEntity(entityMapping.getEntityName(i));
 
 			if (entity == null) {
 				return null;
+			}
+
+			String entityName = entity.getName();
+
+			if (entityName.equals("Company")) {
+				continue;
 			}
 
 			mappingPKEntityColumnDBNames.addAll(

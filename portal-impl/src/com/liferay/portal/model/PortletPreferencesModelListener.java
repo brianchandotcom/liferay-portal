@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.LayoutVersion;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
+import com.liferay.portal.kernel.util.LayoutVersioningThreadLocal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
@@ -122,14 +124,25 @@ public class PortletPreferencesModelListener
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
 					 (portletPreferences.getPlid() > 0)) {
 
+				if (LayoutVersioningThreadLocal.isLayoutUpgradeInProgres()) {
+					return;
+				}
+
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(
 					portletPreferences.getPlid());
 
 				if (layout == null) {
-					return;
-				}
+					LayoutVersion layoutVersion =
+						LayoutLocalServiceUtil.fetchLayoutVersion(
+							portletPreferences.getPlid());
 
-				layout.setModifiedDate(new Date());
+					if (layoutVersion == null) {
+						return;
+					}
+
+					layout = LayoutLocalServiceUtil.getLayout(
+						layoutVersion.getPlid());
+				}
 
 				LayoutLocalServiceUtil.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),

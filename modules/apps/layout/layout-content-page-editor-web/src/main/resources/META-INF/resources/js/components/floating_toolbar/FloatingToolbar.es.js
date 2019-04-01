@@ -119,14 +119,6 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
-	 * @private
-	 * @review
-	 */
-	_handleButtonsTransitionEnd() {
-		this._alignPanel();
-	}
-
-	/**
 	 * Handle panel button click
 	 * @param {MouseEvent} event Click event
 	 */

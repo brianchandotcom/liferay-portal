@@ -14,7 +14,6 @@
 		title: string,
 		type: string
 	]>}
-	{@param? _handleButtonsTransitionEnd: any}
 	{@param? _handlePanelButtonClick: any}
 	{@param? classes: string}
 	{@param? fixSelectedPanel: bool}
@@ -30,11 +29,7 @@
 	>
 		{if $spritemap and $buttons and (length($buttons) > 0)}
 			{if (not $selectedPanelId) or (not $fixSelectedPanel)}
-				<div
-					class="fragments-editor__floating-toolbar-buttons"
-					data-ontransitionend="{$_handleButtonsTransitionEnd}"
-					ref="buttons"
-				>
+				<div class="fragments-editor__floating-toolbar-buttons" ref="buttons">
 					<div class="popover">
 						{foreach $button in $buttons}
 							{call .button}

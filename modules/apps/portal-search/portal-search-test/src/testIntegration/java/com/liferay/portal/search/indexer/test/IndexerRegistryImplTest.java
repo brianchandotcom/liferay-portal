@@ -48,7 +48,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Gregory Amerson
  */
 @RunWith(Arquillian.class)
-public class IndexerRegistryUtilTest {
+public class IndexerRegistryImplTest {
 
 	@ClassRule
 	@Rule
@@ -57,7 +57,7 @@ public class IndexerRegistryUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Bundle bundle = FrameworkUtil.getBundle(IndexerRegistryUtilTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(IndexerRegistryImplTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

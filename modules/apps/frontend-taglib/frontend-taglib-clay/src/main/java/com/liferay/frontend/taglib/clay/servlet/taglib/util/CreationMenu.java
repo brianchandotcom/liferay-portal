@@ -91,6 +91,10 @@ public class CreationMenu extends HashMap {
 		put("helpText", helpText);
 	}
 
+	public void setItemsIconAlignment(String itemsIconAlignment) {
+		put("itemsIconAlignment", itemsIconAlignment);
+	}
+
 	public void setViewMoreURL(String viewMoreURL) {
 		put("viewMoreURL", viewMoreURL);
 	}

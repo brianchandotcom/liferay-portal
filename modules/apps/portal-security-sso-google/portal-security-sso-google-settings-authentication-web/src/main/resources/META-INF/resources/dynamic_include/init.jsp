@@ -20,16 +20,12 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration" %><%@
 page import="com.liferay.portal.security.sso.google.constants.GoogleConstants" %><%@
 page import="com.liferay.portal.security.sso.google.settings.authentication.web.internal.constants.PortalSettingsGoogleConstants" %>
-
-<%@ page import="javax.portlet.ActionRequest" %>
 
 <liferay-theme:defineObjects />
 

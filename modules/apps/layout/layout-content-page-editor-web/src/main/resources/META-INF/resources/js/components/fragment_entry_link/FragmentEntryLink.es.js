@@ -7,7 +7,7 @@ import templates from './FragmentEntryLink.soy';
 import {REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemMoveDirection, getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
+import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import {removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
@@ -93,11 +93,18 @@ class FragmentEntryLink extends Component {
 	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
+		let fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component;
+
+		if (this.rowType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+			fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.section;
+		}
+
 		removeItem(
 			this.store,
 			REMOVE_FRAGMENT_ENTRY_LINK,
 			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				fragmentEntryLinkType
 			}
 		);
 	}
@@ -133,6 +140,16 @@ FragmentEntryLink.STATE = {
 	 */
 	name: Config.string()
 		.value(''),
+
+	/**
+	 * Type of the fragment's row
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {string}
+	 */
+	rowType: Config.string(),
 
 	/**
 	 * Shows FragmentEntryLink control toolbar

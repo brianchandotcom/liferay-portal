@@ -14,8 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.blogs.constants.BlogsPortletKeys;
@@ -556,31 +555,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				smallImageFileEntryId);
 		}
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(BlogsEntry.class), entry.getEntryId());
-
-		long assetDisplayPageId = ParamUtil.getLong(
-			actionRequest, "assetDisplayPageId");
-
-		int displayPageType = ParamUtil.getInteger(
-			actionRequest, "displayPageType");
-
-		if (assetDisplayPageEntry == null) {
-			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(BlogsEntry.class), entry.getEntryId(),
-				assetDisplayPageId, displayPageType, serviceContext);
-		}
-		else {
-			assetDisplayPageEntry.setLayoutPageTemplateEntryId(
-				assetDisplayPageId);
-			assetDisplayPageEntry.setType(displayPageType);
-
-			_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
-				assetDisplayPageEntry);
-		}
+		_assetDisplayPageEntryFormProcessor.process(
+			BlogsEntry.class.getName(), entry.getEntryId(), actionRequest);
 
 		return entry;
 	}
@@ -604,8 +580,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
+	private AssetDisplayPageEntryFormProcessor
+		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private AttachmentContentUpdater _attachmentContentUpdater;

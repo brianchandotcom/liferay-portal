@@ -210,10 +210,14 @@ AUI.add(
 
 						var namespace = instance.NS;
 
-						var dialogTitle = Lang.sub(
-							Liferay.Language.get('select-destination-folder-for-x-items'),
-							[selectedItems]
-						);
+						var dialogTitle = '';
+
+						if (selectedItems == 1) {
+							dialogTitle = Liferay.Language.get('select-destination-folder-for-x-item');
+						}
+						else {
+							dialogTitle = Liferay.Language.get('select-destination-folder-for-x-items');
+						}
 
 						Liferay.Util.selectEntity(
 							{
@@ -224,7 +228,7 @@ AUI.add(
 									width: 680
 								},
 								id: namespace + 'selectFolder',
-								title: dialogTitle,
+								title: Lang.sub(dialogTitle, [selectedItems]),
 								uri: instance.get('selectFolderURL')
 							},
 							function(event) {

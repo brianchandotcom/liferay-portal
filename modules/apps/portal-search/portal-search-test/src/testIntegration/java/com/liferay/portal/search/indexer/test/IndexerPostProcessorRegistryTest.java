@@ -22,26 +22,20 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.search.test.internal.util.TestIndexer;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -195,46 +189,8 @@ public class IndexerPostProcessorRegistryTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		Indexer<?> sampleIndexer = new BaseIndexer<Object>() {
-
-			@Override
-			public String getClassName() {
-				return "com.liferay.portal.test.SampleModel";
-			}
-
-			@Override
-			protected void doDelete(Object object) throws Exception {
-			}
-
-			@Override
-			protected Document doGetDocument(Object object) throws Exception {
-				return null;
-			}
-
-			@Override
-			protected Summary doGetSummary(
-					Document document, Locale locale, String snippet,
-					PortletRequest portletRequest,
-					PortletResponse portletResponse)
-				throws Exception {
-
-				return null;
-			}
-
-			@Override
-			protected void doReindex(Object object) throws Exception {
-			}
-
-			@Override
-			protected void doReindex(String className, long classPK)
-				throws Exception {
-			}
-
-			@Override
-			protected void doReindex(String[] ids) throws Exception {
-			}
-
-		};
+		Indexer<?> sampleIndexer = new TestIndexer(
+			"com.liferay.portal.test.SampleModel");
 
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(

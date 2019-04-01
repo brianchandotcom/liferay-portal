@@ -16,18 +16,12 @@ package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.test.internal.util.TestIndexer;
 
 import java.util.Arrays;
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +36,7 @@ public class BaseIndexerGetFullQueryTest {
 
 	@Before
 	public void setUp() {
-		_indexer = new TestIndexer();
+		_indexer = new TestIndexer(_CLASS_NAME);
 	}
 
 	@Test
@@ -87,45 +81,5 @@ public class BaseIndexerGetFullQueryTest {
 
 	private Indexer<Object> _indexer;
 	private final SearchContext _searchContext = new SearchContext();
-
-	private static class TestIndexer extends BaseIndexer<Object> {
-
-		@Override
-		public String getClassName() {
-			return _CLASS_NAME;
-		}
-
-		@Override
-		protected void doDelete(Object object) throws Exception {
-		}
-
-		@Override
-		protected Document doGetDocument(Object object) throws Exception {
-			return null;
-		}
-
-		@Override
-		protected Summary doGetSummary(
-				Document document, Locale locale, String snippet,
-				PortletRequest portletRequest, PortletResponse portletResponse)
-			throws Exception {
-
-			return null;
-		}
-
-		@Override
-		protected void doReindex(Object object) throws Exception {
-		}
-
-		@Override
-		protected void doReindex(String className, long classPK)
-			throws Exception {
-		}
-
-		@Override
-		protected void doReindex(String[] ids) throws Exception {
-		}
-
-	}
 
 }

@@ -15,21 +15,14 @@
 package com.liferay.portal.search.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.search.test.internal.util.TestIndexer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -62,7 +55,8 @@ public class IndexerRegistryImplTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
-			Indexer.class, new TestIndexer(), new HashMapDictionary<>());
+			Indexer.class, new TestIndexer(_CLASS_NAME),
+			new HashMapDictionary<>());
 	}
 
 	@AfterClass
@@ -95,45 +89,5 @@ public class IndexerRegistryImplTest {
 
 	@Inject
 	private IndexerRegistry _indexerRegistry;
-
-	private static class TestIndexer extends BaseIndexer<Object> {
-
-		@Override
-		public String getClassName() {
-			return _CLASS_NAME;
-		}
-
-		@Override
-		protected void doDelete(Object object) throws Exception {
-		}
-
-		@Override
-		protected Document doGetDocument(Object object) throws Exception {
-			return null;
-		}
-
-		@Override
-		protected Summary doGetSummary(
-				Document document, Locale locale, String snippet,
-				PortletRequest portletRequest, PortletResponse portletResponse)
-			throws Exception {
-
-			return null;
-		}
-
-		@Override
-		protected void doReindex(Object object) throws Exception {
-		}
-
-		@Override
-		protected void doReindex(String className, long classPK)
-			throws Exception {
-		}
-
-		@Override
-		protected void doReindex(String[] ids) throws Exception {
-		}
-
-	}
 
 }

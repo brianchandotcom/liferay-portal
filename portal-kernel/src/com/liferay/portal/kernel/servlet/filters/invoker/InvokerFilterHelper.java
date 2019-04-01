@@ -511,13 +511,21 @@ public class InvokerFilterHelper {
 
 			Set<Dispatcher> dispatchers = new HashSet<>();
 
-			String[] dispatcherStrings = (String[])serviceReference.getProperty(
+			Object dispatcherProperty = serviceReference.getProperty(
 				"dispatcher");
+			List<String> dispatcherStrings = new ArrayList<>();
 
-			if (dispatcherStrings != null) {
-				for (String dispatcher : dispatcherStrings) {
-					dispatchers.add(Dispatcher.valueOf(dispatcher));
+			if (dispatcherProperty != null) {
+				if (dispatcherProperty instanceof String[]) {
+					dispatcherStrings = StringPlus.asList(dispatcherProperty);
 				}
+				else {
+					dispatcherStrings.add(dispatcherProperty.toString());
+				}
+			}
+
+			for (String dispatcher : dispatcherStrings) {
+				dispatchers.add(Dispatcher.valueOf(dispatcher));
 			}
 
 			FilterMapping filterMapping = new FilterMapping(

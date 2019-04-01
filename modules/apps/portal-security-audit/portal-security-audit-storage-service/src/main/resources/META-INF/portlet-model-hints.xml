@@ -20,7 +20,9 @@
 		<field name="clientHost" type="String">
 			<hint name="max-length">255</hint>
 		</field>
-		<field name="clientIP" type="String" />
+		<field name="clientIP" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="serverName" type="String">
 			<hint name="max-length">255</hint>
 		</field>

@@ -360,7 +360,11 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					[...nextState.layoutData.structure]
 				);
 
-				nextData = _removeFragment(nextData, fragmentEntryLinkId);
+				nextData = _removeFragment(
+					nextData,
+					fragmentEntryLinkId,
+					payload.fragmentEntryLinkType
+				);
 
 				_removeFragmentEntryLink(
 					nextState.deleteFragmentEntryLinkURL,
@@ -773,10 +777,15 @@ function _moveFragmentEntryLink(
 /**
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
+ * @param {string} fragmentEntryLinkType
  * @return {Promise}
  * @review
  */
-function _removeFragment(layoutData, fragmentEntryLinkId) {
+function _removeFragment(
+	layoutData,
+	fragmentEntryLinkId,
+	fragmentEntryLinkType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+) {
 	const {structure} = layoutData;
 
 	const column = getFragmentColumn(structure, fragmentEntryLinkId);
@@ -792,20 +801,36 @@ function _removeFragment(layoutData, fragmentEntryLinkId) {
 	);
 	const sectionIndex = structure.indexOf(section);
 
-	return updateIn(
-		layoutData,
-		[
-			'structure',
-			sectionIndex,
-			'columns',
-			columnIndex,
-			'fragmentEntryLinkIds'
-		],
-		fragmentEntryLinkIds => remove(
-			fragmentEntryLinkIds,
-			fragmentIndex
-		)
-	);
+	let nextData = null;
+
+	if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+		nextData = updateIn(
+			layoutData,
+			['structure'],
+			structure => remove(
+				structure,
+				sectionIndex
+			)
+		);
+	}
+	else {
+		nextData = updateIn(
+			layoutData,
+			[
+				'structure',
+				sectionIndex,
+				'columns',
+				columnIndex,
+				'fragmentEntryLinkIds'
+			],
+			fragmentEntryLinkIds => remove(
+				fragmentEntryLinkIds,
+				fragmentIndex
+			)
+		);
+	}
+
+	return nextData;
 }
 
 /**

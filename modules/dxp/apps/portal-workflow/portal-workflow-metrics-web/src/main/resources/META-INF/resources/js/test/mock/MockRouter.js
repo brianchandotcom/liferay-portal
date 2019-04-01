@@ -10,7 +10,7 @@ export class MockRouter extends React.Component {
 			client,
 			companyId: 1,
 			defaultDelta: 20,
-			deltas: [10, 20, 30, 50],
+			deltas: [5, 10, 20, 30, 50, 75],
 			maxPages: 3,
 			page,
 			search,

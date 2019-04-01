@@ -38,6 +38,7 @@ class Search extends React.Component {
 			const values = { page: 1 };
 
 			delete params.search;
+
 			if (value && value.trim()) {
 				values.search = encodeURIComponent(value);
 			}

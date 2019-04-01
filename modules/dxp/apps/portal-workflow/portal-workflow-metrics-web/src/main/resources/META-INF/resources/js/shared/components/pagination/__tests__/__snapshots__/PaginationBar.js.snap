@@ -34,6 +34,13 @@ exports[`Should render component 1`] = `
         href="/?backPath=%2F"
         onClick={[Function]}
       >
+        5
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
         10
       </a>
       <a
@@ -56,6 +63,13 @@ exports[`Should render component 1`] = `
         onClick={[Function]}
       >
         50
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        75
       </a>
     </div>
   </div>

@@ -92,10 +92,8 @@ class Pagination extends React.Component {
 		const renderPageItems = () => {
 			const rows = {};
 
-			const wasAdded = page => Object.keys(rows).indexOf(page) > -1;
-
 			const addPage = (page, component) => {
-				if (page > 0 && !wasAdded(page)) {
+				if (page > 0 && Object.keys(rows).indexOf(page) < 0) {
 					rows[page] = component;
 				}
 			};
@@ -236,7 +234,7 @@ class Pagination extends React.Component {
 					);
 				}
 				const remainingPages =
-					pages - activePage + 2 < maxPages ? pages : activePage + 2 + maxPages;
+					pages - activePage + 2 < maxPages ? pages : activePage + maxPages + 2;
 
 				if (activePage + 3 < pages) {
 					addPage(

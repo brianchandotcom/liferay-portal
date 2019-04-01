@@ -165,6 +165,13 @@ public class AssetListEntryWrapper
 	}
 
 	@Override
+	public int getAssetEntriesCount(long[] segmentsEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAssetEntriesCount(segmentsEntryIds);
+	}
+
+	@Override
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
 		getAssetEntryQuery(long segmentsEntryId) {
 

@@ -2,21 +2,6 @@
 
 exports[`Should render component 1`] = `
 <tr>
-  <td>
-    <div
-      className="custom-control custom-checkbox"
-    >
-      <label>
-        <input
-          className="custom-control-input"
-          type="checkbox"
-        />
-        <span
-          className="custom-control-label"
-        />
-      </label>
-    </div>
-  </td>
   <td
     className="table-cell-expand"
   >
@@ -64,19 +49,340 @@ exports[`Should render component 1`] = `
         <li>
           <a
             className="dropdown-item"
-            href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            href="/sla/edit/undefined/1234?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             Edit
           </a>
         </li>
         <li>
-          <a>
+          <button
+            className="dropdown-item"
+            onClick={[Function]}
+          >
             Delete
-          </a>
+          </button>
         </li>
       </ul>
     </div>
   </td>
 </tr>
+`;
+
+exports[`Should render component 2`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListItem
+        instancesCount="10"
+        onTime="5"
+        overdue="5"
+        processName="Process test"
+      >
+        <tr>
+          <td
+            className="table-cell-expand"
+          >
+            <div
+              className="table-list-title"
+            >
+              <span
+                className="text-truncate-inline"
+              >
+                <span />
+              </span>
+            </div>
+          </td>
+          <td />
+          <td />
+          <td>
+            <div
+              className="dropdown dropdown-action"
+            >
+              <a
+                aria-expanded="false"
+                aria-haspopup="true"
+                className="component-action dropdown-toggle"
+                data-toggle="dropdown"
+                href="#1"
+                id="dropdownAction1"
+                role="button"
+              >
+                <Icon
+                  iconName="ellipsis-v"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-ellipsis-v"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                    />
+                  </svg>
+                </Icon>
+              </a>
+              <ul
+                aria-labelledby=""
+                className="dropdown-menu dropdown-menu-right"
+              >
+                <li>
+                  <withRouter()
+                    className="dropdown-item"
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <Route>
+                      <Component
+                        className="dropdown-item"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        to="/sla/edit/undefined/undefined"
+                      >
+                        <ChildLinkWrapper
+                          backPath="/"
+                          className="dropdown-item"
+                          currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                                Object {
+                                  "hash": "",
+                                  "pathname": "/",
+                                  "search": "?backPath=%2F",
+                                },
+                                Object {
+                                  "hash": "",
+                                  "pathname": "/slas/1234",
+                                  "search": "?backPath=%2Fprocesses",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 3,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          to="/sla/edit/undefined/undefined"
+                        >
+                          <Link
+                            className="dropdown-item"
+                            replace={false}
+                            to={
+                              Object {
+                                "pathname": "/sla/edit/undefined/undefined",
+                                "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
+                          >
+                            <a
+                              className="dropdown-item"
+                              href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
+                            >
+                              Edit
+                            </a>
+                          </Link>
+                        </ChildLinkWrapper>
+                      </Component>
+                    </Route>
+                  </withRouter()>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={[Function]}
+                  >
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </SLAListItem>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;

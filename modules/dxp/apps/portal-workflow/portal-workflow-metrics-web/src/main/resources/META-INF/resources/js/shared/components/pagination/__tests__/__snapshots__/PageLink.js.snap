@@ -42,10 +42,14 @@ exports[`Should change page 1`] = `
           75,
         ],
         "maxPages": 3,
+        "namespace": "workflow_",
         "page": 1,
         "search": undefined,
+        "setStatus": [Function],
         "setTitle": [Function],
         "sort": undefined,
+        "status": null,
+        "title": null,
       }
     }
   >
@@ -132,10 +136,14 @@ exports[`Should test change page when disabled 1`] = `
           75,
         ],
         "maxPages": 3,
+        "namespace": "workflow_",
         "page": 1,
         "search": undefined,
+        "setStatus": [Function],
         "setTitle": [Function],
         "sort": undefined,
+        "status": null,
+        "title": null,
       }
     }
   >

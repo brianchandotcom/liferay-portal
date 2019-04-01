@@ -1,75 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render default component 1`] = `
-<div
-  className="portal-workflow-metrics-app"
->
-  <div>
-    <nav
-      className="management-bar management-bar-light navbar navbar-expand-md"
-    >
-      <div
-        className="container-fluid container-fluid-max-xl"
+Array [
+  "metrics",
+  <div
+    className="portal-workflow-metrics-app"
+  >
+    <div>
+      <nav
+        className="management-bar management-bar-light navbar navbar-expand-md"
       >
         <div
-          className="navbar-form navbar-form-autofit"
+          className="container-fluid container-fluid-max-xl"
         >
-          <form
-            method="GET"
-            onSubmit={[Function]}
-            role="search"
+          <div
+            className="navbar-form navbar-form-autofit"
           >
-            <div
-              className="input-group"
+            <form
+              method="GET"
+              onSubmit={[Function]}
+              role="search"
             >
               <div
-                className="input-group-item"
+                className="input-group"
               >
-                <input
-                  className="form-control input-group-inset input-group-inset-after"
-                  defaultValue=""
-                  disabled={false}
-                  onKeyPress={[Function]}
-                  placeholder="search-for"
-                  type="text"
-                />
-                <span
-                  className="input-group-inset-item input-group-inset-item-after"
+                <div
+                  className="input-group-item"
                 >
-                  <button
-                    className="btn btn-unstyled"
+                  <input
+                    className="form-control input-group-inset input-group-inset-after"
+                    defaultValue=""
                     disabled={false}
-                    type="submit"
+                    onKeyPress={[Function]}
+                    placeholder="search-for"
+                    type="text"
+                  />
+                  <span
+                    className="input-group-inset-item input-group-inset-item-after"
                   >
-                    <svg
-                      className="lexicon-icon lexicon-icon-search"
-                      focusable="false"
-                      role="presentation"
+                    <button
+                      className="btn btn-unstyled"
+                      disabled={false}
+                      type="submit"
                     >
-                      <use
-                        href="//lexicon/icons.svg#search"
-                      />
-                    </svg>
-                  </button>
-                </span>
+                      <svg
+                        className="lexicon-icon lexicon-icon-search"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="//lexicon/icons.svg#search"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div
+        className="lfr-search-container-wrapper container-fluid-1280"
+      >
+        <div>
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
         </div>
       </div>
-    </nav>
-    <div
-      className="lfr-search-container-wrapper container-fluid-1280"
-    >
-      <div>
-        <span
-          aria-hidden="true"
-          className="loading-animation"
-        />
-      </div>
     </div>
-  </div>
-</div>
+  </div>,
+]
 `;
 
 exports[`Should render default component without custom header 1`] = `

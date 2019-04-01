@@ -157,11 +157,16 @@ exports[`Should render component 1`] = `
         <td
           className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
         >
-          <span
-            title="test"
+          <a
+            href="/process-dashboard/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            onClick={[Function]}
           >
-            test
-          </span>
+            <span
+              title="test"
+            >
+              test
+            </span>
+          </a>
         </td>
         <td>
           -

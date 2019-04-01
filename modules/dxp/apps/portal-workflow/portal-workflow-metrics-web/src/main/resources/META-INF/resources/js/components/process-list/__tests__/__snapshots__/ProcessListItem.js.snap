@@ -5,11 +5,16 @@ exports[`Should render component with 1 instance count 1`] = `
   <td
     className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
   >
-    <span
-      title="Process test"
+    <a
+      href="/process-dashboard/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+      onClick={[Function]}
     >
-      Process test
-    </span>
+      <span
+        title="Process test"
+      >
+        Process test
+      </span>
+    </a>
   </td>
   <td>
     5
@@ -67,11 +72,16 @@ exports[`Should render component with one list item 1`] = `
   <td
     className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
   >
-    <span
-      title="Process test"
+    <a
+      href="/process-dashboard/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+      onClick={[Function]}
     >
-      Process test
-    </span>
+      <span
+        title="Process test"
+      >
+        Process test
+      </span>
+    </a>
   </td>
   <td>
     5

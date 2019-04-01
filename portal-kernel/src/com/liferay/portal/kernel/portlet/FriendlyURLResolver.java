@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 

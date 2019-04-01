@@ -1138,20 +1138,18 @@ public class PortalImpl implements Portal {
 
 			long companyId = PortalInstances.getCompanyId(request);
 
-			Collection<FriendlyURLResolver> friendlyURLResolvers =
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection();
+			for (String urlSeparator :
+					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
 
-			for (FriendlyURLResolver friendlyURLResolver :
-					friendlyURLResolvers) {
-
-				if (!friendlyURL.startsWith(
-						friendlyURLResolver.getURLSeparator())) {
-
+				if (!friendlyURL.startsWith(urlSeparator)) {
 					continue;
 				}
 
 				try {
+					FriendlyURLResolver friendlyURLResolver =
+						FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+							urlSeparator);
+
 					actualURL = friendlyURLResolver.getActualURL(
 						companyId, groupId, privateLayout, mainPath,
 						friendlyURL, params, requestContext);
@@ -3032,20 +3030,18 @@ public class PortalImpl implements Portal {
 
 			long companyId = PortalInstances.getCompanyId(request);
 
-			Collection<FriendlyURLResolver> friendlyURLResolvers =
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection();
+			for (String urlSeparator :
+					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
 
-			for (FriendlyURLResolver friendlyURLResolver :
-					friendlyURLResolvers) {
-
-				if (!friendlyURL.startsWith(
-						friendlyURLResolver.getURLSeparator())) {
-
+				if (!friendlyURL.startsWith(urlSeparator)) {
 					continue;
 				}
 
 				try {
+					FriendlyURLResolver friendlyURLResolver =
+						FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+							urlSeparator);
+
 					layoutFriendlyURLSeparatorComposite =
 						friendlyURLResolver.
 							getLayoutFriendlyURLSeparatorComposite(

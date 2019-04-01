@@ -22,8 +22,8 @@
 		elementClasses="btn-sm"
 		href="https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli"
 		icon="download"
-		label='<%= LanguageUtil.get(resourceBundle, "fragments-cli") %>'
+		label='<%= LanguageUtil.get(resourceBundle, "fragments-toolkit") %>'
 		target="_blank"
-		title='<%= LanguageUtil.get(resourceBundle, "fragments-cli") %>'
+		title='<%= LanguageUtil.get(resourceBundle, "fragments-toolkit") %>'
 	/>
 </label>

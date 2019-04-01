@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -376,6 +377,21 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			lfurle.setKeywordConflict(Portal.FRIENDLY_URL_SEPARATOR);
 
 			throw lfurle;
+		}
+
+		String[] urlSeparators =
+			FriendlyURLResolverRegistryUtil.getURLSeparators();
+
+		for (String urlSeparator : urlSeparators) {
+			if (friendlyURL.contains(urlSeparator)) {
+				LayoutFriendlyURLException lfurle =
+					new LayoutFriendlyURLException(
+						LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+				lfurle.setKeywordConflict(urlSeparator);
+
+				throw lfurle;
+			}
 		}
 
 		List<FriendlyURLMapper> friendlyURLMappers =

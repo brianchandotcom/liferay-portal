@@ -167,7 +167,7 @@
 		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "cross-env NODE_ENV=test jest --coverage",
+		"test_DISABLED": "cross-env NODE_ENV=test jest --coverage",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "NODE_ENV=test jest --coverage -u"
 	},

@@ -62,7 +62,7 @@ class ProcessDashboard extends React.Component {
 	render() {
 		const { loading, process } = this.state;
 
-		if(loading) {
+		if (loading) {
 			return <LoadingState />;
 		}
 
@@ -105,7 +105,7 @@ class ProcessDashboard extends React.Component {
 												? `${getPercentage(
 													process[addressedToField],
 													process[totalField]
-												)}%`
+												  )}%`
 												: false
 										}
 										title={title}

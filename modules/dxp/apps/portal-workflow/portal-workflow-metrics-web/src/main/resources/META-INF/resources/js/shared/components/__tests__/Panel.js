@@ -5,7 +5,7 @@ describe('Panel', () => {
 	let component;
 
 	afterEach(() => {
-		if(component) {
+		if (component) {
 			component.unmount();
 		}
 	});
@@ -25,8 +25,8 @@ describe('Panel', () => {
 	it('Should not render component child components without content', () => {
 		component = shallow(
 			<Panel>
-				<Panel.Body/>
-				<Panel.Footer/>
+				<Panel.Body />
+				<Panel.Footer />
 			</Panel>
 		);
 
@@ -46,9 +46,13 @@ describe('Panel', () => {
 	it('Should render class passed by props', () => {
 		component = shallow(
 			<Panel elementClass={'custom-class'}>
-				<Panel.Header elementClass={'custom-class-header'}>{'Header'}</Panel.Header>
+				<Panel.Header elementClass={'custom-class-header'}>
+					{'Header'}
+				</Panel.Header>
 				<Panel.Body elementClass={'custom-class-body'}>{'Body'}</Panel.Body>
-				<Panel.Footer elementClass={'custom-class-footer'}>{'Footer'}</Panel.Footer>
+				<Panel.Footer elementClass={'custom-class-footer'}>
+					{'Footer'}
+				</Panel.Footer>
 			</Panel>
 		);
 

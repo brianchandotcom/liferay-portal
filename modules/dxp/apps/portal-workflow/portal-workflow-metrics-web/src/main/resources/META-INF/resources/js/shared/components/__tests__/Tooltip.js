@@ -1,4 +1,4 @@
-import Tooltip, {TooltipBase} from '../Tooltip';
+import Tooltip, { TooltipBase } from '../Tooltip';
 import React from 'react';
 
 describe('Tooltip', () => {
@@ -11,7 +11,7 @@ describe('Tooltip', () => {
 	};
 
 	afterEach(() => {
-		if(component) {
+		if (component) {
 			component.unmount();
 		}
 	});
@@ -30,16 +30,23 @@ describe('Tooltip', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-		
 	it('Should render component with tooltip after mouse over', () => {
-		component = shallow(<Tooltip {...props} position={'right'}>{'Target'}</Tooltip>);
+		component = shallow(
+			<Tooltip {...props} position={'right'}>
+				{'Target'}
+			</Tooltip>
+		);
 		component.find('.tooltip-trigger').simulate('mouseover');
 
 		expect(component).toMatchSnapshot();
 	});
-	
+
 	it('Should render component without tooltip after mouse leave', () => {
-		component = shallow(<Tooltip {...props} position={'right'}>{'Target'}</Tooltip>);
+		component = shallow(
+			<Tooltip {...props} position={'right'}>
+				{'Target'}
+			</Tooltip>
+		);
 		component.find('.tooltip-trigger').simulate('mouseover');
 		component.find('.workflow-tooltip').simulate('mouseleave');
 
@@ -57,8 +64,12 @@ describe('Tooltip', () => {
 
 	it('Should render component with tooltip with bottom position', () => {
 		jest.useFakeTimers();
-		
-		component = shallow(<Tooltip {...props} position={'bottom'}>{'Target'}</Tooltip>);
+
+		component = shallow(
+			<Tooltip {...props} position={'bottom'}>
+				{'Target'}
+			</Tooltip>
+		);
 		const instance = component.instance();
 
 		instance.showTooltip();
@@ -66,7 +77,11 @@ describe('Tooltip', () => {
 	});
 
 	it('Should render component with tooltip with right position', () => {
-		component = shallow(<Tooltip {...props} position={'right'}>{'Target'}</Tooltip>);
+		component = shallow(
+			<Tooltip {...props} position={'right'}>
+				{'Target'}
+			</Tooltip>
+		);
 		const instance = component.instance();
 
 		instance.showTooltip();
@@ -74,11 +89,14 @@ describe('Tooltip', () => {
 	});
 
 	it('Should render component with tooltip with left position', () => {
-		component = shallow(<Tooltip {...props} position={'right'}>{'Target'}</Tooltip>);
+		component = shallow(
+			<Tooltip {...props} position={'right'}>
+				{'Target'}
+			</Tooltip>
+		);
 		const instance = component.instance();
 
 		instance.showTooltip();
 		expect(component.find(TooltipBase).render()).toMatchSnapshot();
 	});
-
 });

@@ -11,11 +11,13 @@
 		}
 	},
 	"exclude": {
-		"bootstrap": [
-			"Gruntfile.js", "grunt/**/*"
-		],
+		"bootstrap": true,
 		"querystring": [
 			"test/**/*"
+		],
+		"xss-filters": [
+			"dist/**/*",
+			"tests/**/*"
 		]
 	},
 	"output": "classes/META-INF/resources",

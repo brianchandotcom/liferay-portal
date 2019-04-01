@@ -4,22 +4,28 @@ import { MemoryRouter as Router } from 'react-router-dom';
 
 export class MockRouter extends React.Component {
 	render() {
+		const { client, page = 1, search, sort } = this.props;
+
 		const contextState = {
-			client: this.props.client,
+			client,
 			companyId: 1,
 			defaultDelta: 20,
 			deltas: [10, 20, 30, 50],
 			maxPages: 3,
-			setTitle: () => {}
+			page,
+			search,
+			setTitle: () => {},
+			sort
 		};
 
 		const initialEntries = [
 			{
-				pathname: '/',
+				match: { params: { page, search, sort } },
+				pathname: `/processes/1/10/${encodeURIComponent('title:asc')}`,
 				search: '?backPath=%2F'
 			},
 			{
-				pathname: '/processes',
+				pathname: '/',
 				search: '?backPath=%2F'
 			},
 			{

@@ -4,28 +4,12 @@
 		"metal-dom": "^2.13.2",
 		"metal-state": "^2.13.2"
 	},
-	"devDependencies": {
-		"@babel/cli": "^7.2.3",
-		"@babel/preset-env": "^7.4.2",
-		"jest": "^24.5.0",
-		"metal-jest-serializer": "^1.0.1"
-	},
-	"jest": {
-		"globals": {
-			"Liferay": {}
-		},
-		"testMatch": [
-			"**/test/**/*.js"
-		],
-		"testResultsProcessor": "liferay-jest-junit-reporter",
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*clay.*).*$"
-		]
-	},
 	"name": "map-common",
 	"scripts": {
-		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"test": "jest"
+		"build": "liferay-npm-scripts build --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "4.0.0"
 }

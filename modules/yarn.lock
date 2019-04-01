@@ -12602,13 +12602,6 @@ metal-incremental-dom@2.16.7, metal-incremental-dom@^2.16.0, metal-incremental-d
     metal-component "^2.16.7"
     metal-dom "^2.16.7"
 
-metal-jest-serializer@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/metal-jest-serializer/-/metal-jest-serializer-1.0.1.tgz#ec111863670d1c028fb9374a5b1a224052e03af4"
-  integrity sha1-7BEYY2cNHAKPuTdKWxoiQFLgOvQ=
-  dependencies:
-    js-beautify "^1.6.11"
-
 metal-jest-serializer@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/metal-jest-serializer/-/metal-jest-serializer-2.0.0.tgz#b10a095af1ca1d7d157c080b101f0ab8595f4f07"

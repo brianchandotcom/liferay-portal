@@ -21,19 +21,22 @@ export default class AppComponent extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.contextState = {
+		this.state = {
 			client: fetch,
 			companyId: props.companyId,
 			defaultDelta: props.defaultDelta,
 			deltas: props.deltas,
 			maxPages: props.maxPages,
 			namespace: props.namespace,
-			setTitle: this.setTitle.bind(this)
-		};
-
-		this.state = {
+			setStatus: this.setStatus.bind(this),
+			setTitle: this.setTitle.bind(this),
+			status: null,
 			title: null
 		};
+	}
+
+	setStatus(status, callback) {
+		this.setState({ status }, callback);
 	}
 
 	setTitle(title) {
@@ -41,17 +44,14 @@ export default class AppComponent extends React.Component {
 	}
 
 	render() {
-		const { namespace } = this.contextState;
-		const { title } = this.state;
+		const { defaultDelta, namespace, title } = this.state;
 		const withParams = Component => ({ match: { params } }) => (
 			<Component {...params} />
 		);
 
-		const { defaultDelta } = this.contextState;
-
 		return (
 			<Router>
-				<AppContext.Provider value={this.contextState}>
+				<AppContext.Provider value={this.state}>
 					<HeaderController
 						basePath="/processes"
 						namespace={namespace}

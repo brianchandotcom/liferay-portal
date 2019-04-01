@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines how transations are visible to those outside the transaction.
+ * Defines the isolation level from other transactions.
  *
  * @author Michael Young
  * @author Shuyang Zhou

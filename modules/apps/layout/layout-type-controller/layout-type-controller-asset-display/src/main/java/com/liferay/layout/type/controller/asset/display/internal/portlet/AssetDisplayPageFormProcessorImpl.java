@@ -18,8 +18,6 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -27,8 +25,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Date;
 
 import javax.portlet.PortletRequest;
 
@@ -82,26 +78,11 @@ public class AssetDisplayPageFormProcessorImpl
 				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
 				assetDisplayPageId, displayPageType);
 		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				assetDisplayPageId);
-
-		if (layoutPageTemplateEntry != null) {
-			layoutPageTemplateEntry.setModifiedDate(new Date());
-
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
-		}
 	}
 
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

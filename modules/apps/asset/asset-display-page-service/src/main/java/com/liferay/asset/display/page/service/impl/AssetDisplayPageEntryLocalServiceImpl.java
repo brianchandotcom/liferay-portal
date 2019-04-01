@@ -87,6 +87,19 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 
+		// Layout Page Template Entry
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				assetDisplayPageEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
+
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
+		}
+
 		return assetDisplayPageEntry;
 	}
 
@@ -159,6 +172,19 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setPlid(plid);
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
+
+		// Layout Page Template Entry
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				assetDisplayPageEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
+
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
+		}
 
 		return assetDisplayPageEntry;
 	}

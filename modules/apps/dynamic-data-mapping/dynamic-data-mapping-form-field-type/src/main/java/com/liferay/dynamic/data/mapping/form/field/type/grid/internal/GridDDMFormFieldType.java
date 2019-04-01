@@ -30,8 +30,6 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.description=grid-field-type-description",
 		"ddm.form.field.type.display.order:Integer=7",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=table2",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Grid",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-grid",
 		"ddm.form.field.type.label=grid-field-type-label",
 		"ddm.form.field.type.name=grid"
 	},
@@ -44,6 +42,11 @@ public class GridDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return GridDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Grid/Grid.es";
 	}
 
 	@Override

@@ -26,13 +26,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Options",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-options",
-		"ddm.form.field.type.label=options-field-type-label",
 		"ddm.form.field.type.name=options", "ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
 public class OptionsDDMFormFieldType extends BaseDDMFormFieldType {
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Options/Options.es";
+	}
 
 	@Override
 	public String getName() {

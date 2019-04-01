@@ -30,8 +30,6 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=9",
 		"ddm.form.field.type.group=customized",
 		"ddm.form.field.type.icon=upload",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.DocumentLibrary",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-document-library",
 		"ddm.form.field.type.label=document-library-field-type-label",
 		"ddm.form.field.type.name=document_library"
 	},
@@ -44,6 +42,12 @@ public class DocumentLibraryDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return DocumentLibraryDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/DocumentLibrary" +
+			"/DocumentLibrary.es";
 	}
 
 	@Override

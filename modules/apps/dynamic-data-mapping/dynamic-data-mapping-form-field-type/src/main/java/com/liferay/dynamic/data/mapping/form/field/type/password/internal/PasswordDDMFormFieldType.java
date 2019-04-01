@@ -28,8 +28,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"ddm.form.field.type.display.order:Integer=9",
 		"ddm.form.field.type.icon=password-policies",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Password",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-password",
 		"ddm.form.field.type.label=password-field-type-label",
 		"ddm.form.field.type.name=password", "ddm.form.field.type.system=true"
 	},
@@ -42,6 +40,12 @@ public class PasswordDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return PasswordDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Password" +
+			"/Password.es";
 	}
 
 	@Override

@@ -31,8 +31,6 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=7",
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=select-from-list",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.CheckboxMultiple",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-checkbox-multiple",
 		"ddm.form.field.type.label=checkbox-multiple-field-type-label",
 		"ddm.form.field.type.name=checkbox_multiple"
 	},
@@ -45,6 +43,12 @@ public class CheckboxMultipleDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return CheckboxMultipleDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/CheckboxMultiple" +
+			"/CheckboxMultiple.es";
 	}
 
 	@Override

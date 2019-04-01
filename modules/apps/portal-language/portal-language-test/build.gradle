@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

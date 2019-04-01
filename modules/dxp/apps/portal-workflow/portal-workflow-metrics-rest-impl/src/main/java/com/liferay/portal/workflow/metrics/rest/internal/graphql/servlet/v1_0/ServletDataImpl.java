@@ -40,12 +40,12 @@ public class ServletDataImpl implements ServletData {
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		Mutation.setSLAResourceComponentServiceObjects(
-			_sLAResourceComponentServiceObjects);
+			_slaResourceComponentServiceObjects);
 
 		Query.setProcessResourceComponentServiceObjects(
 			_processResourceComponentServiceObjects);
 		Query.setSLAResourceComponentServiceObjects(
-			_sLAResourceComponentServiceObjects);
+			_slaResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SLAResource>
-		_sLAResourceComponentServiceObjects;
+		_slaResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProcessResource>

@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -29,8 +28,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-
-import java.net.URI;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -49,7 +46,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -86,7 +82,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA postProcessSLA(
-			@NotNull @PathParam("process-id") Long processId, SLA sLA)
+			@NotNull @PathParam("process-id") Long processId, SLA sla)
 		throws Exception {
 
 		return new SLA();
@@ -118,7 +114,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putSLA(@NotNull @PathParam("sla-id") Long slaId, SLA sLA)
+	public SLA putSLA(@NotNull @PathParam("sla-id") Long slaId, SLA sla)
 		throws Exception {
 
 		return new SLA();
@@ -128,28 +124,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected String getJAXRSLink(String methodName, Object... values) {
-		String baseURIString = String.valueOf(contextUriInfo.getBaseUri());
-
-		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
-			baseURIString = baseURIString.substring(
-				0, baseURIString.length() - 1);
-		}
-
-		URI resourceURI = UriBuilder.fromResource(
-			BaseSLAResourceImpl.class
-		).build();
-
-		URI methodURI = UriBuilder.fromMethod(
-			BaseSLAResourceImpl.class, methodName
-		).build(
-			values
-		);
-
-		return baseURIString + resourceURI.toString() + methodURI.toString();
-	}
-
-	protected void preparePatch(SLA sLA) {
+	protected void preparePatch(SLA sla) {
 	}
 
 	protected <T, R> List<R> transform(

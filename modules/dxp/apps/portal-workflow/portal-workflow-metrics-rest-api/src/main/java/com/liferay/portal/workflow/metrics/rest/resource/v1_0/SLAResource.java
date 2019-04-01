@@ -35,13 +35,13 @@ public interface SLAResource {
 	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
 		throws Exception;
 
-	public SLA postProcessSLA(Long processId, SLA sLA) throws Exception;
+	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
 
 	public void deleteSLA(Long slaId) throws Exception;
 
 	public SLA getSLA(Long slaId) throws Exception;
 
-	public SLA putSLA(Long slaId, SLA sLA) throws Exception;
+	public SLA putSLA(Long slaId, SLA sla) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

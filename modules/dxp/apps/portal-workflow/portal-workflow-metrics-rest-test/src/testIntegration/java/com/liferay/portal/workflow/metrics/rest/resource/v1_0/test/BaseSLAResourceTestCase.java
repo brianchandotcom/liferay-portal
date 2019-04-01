@@ -127,9 +127,9 @@ public abstract class BaseSLAResourceTestCase {
 			assertValid(page);
 		}
 
-		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sla1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page = invokeGetProcessSLAsPage(
 			processId, Pagination.of(1, 2));
@@ -137,7 +137,7 @@ public abstract class BaseSLAResourceTestCase {
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(sLA1, sLA2), (List<SLA>)page.getItems());
+			Arrays.asList(sla1, sla2), (List<SLA>)page.getItems());
 		assertValid(page);
 	}
 
@@ -145,39 +145,39 @@ public abstract class BaseSLAResourceTestCase {
 	public void testGetProcessSLAsPageWithPagination() throws Exception {
 		Long processId = testGetProcessSLAsPage_getProcessId();
 
-		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sla1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		SLA sLA3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sla3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page1 = invokeGetProcessSLAsPage(
 			processId, Pagination.of(1, 2));
 
-		List<SLA> sLAs1 = (List<SLA>)page1.getItems();
+		List<SLA> slas1 = (List<SLA>)page1.getItems();
 
-		Assert.assertEquals(sLAs1.toString(), 2, sLAs1.size());
+		Assert.assertEquals(slas1.toString(), 2, slas1.size());
 
 		Page<SLA> page2 = invokeGetProcessSLAsPage(
 			processId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<SLA> sLAs2 = (List<SLA>)page2.getItems();
+		List<SLA> slas2 = (List<SLA>)page2.getItems();
 
-		Assert.assertEquals(sLAs2.toString(), 1, sLAs2.size());
+		Assert.assertEquals(slas2.toString(), 1, slas2.size());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(sLA1, sLA2, sLA3),
+			Arrays.asList(sla1, sla2, sla3),
 			new ArrayList<SLA>() {
 				{
-					addAll(sLAs1);
-					addAll(sLAs2);
+					addAll(slas1);
+					addAll(slas2);
 				}
 			});
 	}
 
-	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sLA)
+	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -254,18 +254,18 @@ public abstract class BaseSLAResourceTestCase {
 		assertValid(postSLA);
 	}
 
-	protected SLA testPostProcessSLA_addSLA(SLA sLA) throws Exception {
+	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokePostProcessSLA(Long processId, SLA sLA)
+	protected SLA invokePostProcessSLA(Long processId, SLA sla)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sLA),
+			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -292,13 +292,13 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected Http.Response invokePostProcessSLAResponse(
-			Long processId, SLA sLA)
+			Long processId, SLA sla)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sLA),
+			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -315,11 +315,11 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testDeleteSLA() throws Exception {
-		SLA sLA = testDeleteSLA_addSLA();
+		SLA sla = testDeleteSLA_addSLA();
 
-		assertResponseCode(204, invokeDeleteSLAResponse(sLA.getId()));
+		assertResponseCode(204, invokeDeleteSLAResponse(sla.getId()));
 
-		assertResponseCode(404, invokeGetSLAResponse(sLA.getId()));
+		assertResponseCode(404, invokeGetSLAResponse(sla.getId()));
 	}
 
 	protected SLA testDeleteSLA_addSLA() throws Exception {
@@ -431,11 +431,11 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokePutSLA(Long slaId, SLA sLA) throws Exception {
+	protected SLA invokePutSLA(Long slaId, SLA sla) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sLA),
+			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
@@ -460,13 +460,13 @@ public abstract class BaseSLAResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePutSLAResponse(Long slaId, SLA sLA)
+	protected Http.Response invokePutSLAResponse(Long slaId, SLA sla)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sLA),
+			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
@@ -487,40 +487,40 @@ public abstract class BaseSLAResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertEquals(SLA sLA1, SLA sLA2) {
-		Assert.assertTrue(sLA1 + " does not equal " + sLA2, equals(sLA1, sLA2));
+	protected void assertEquals(SLA sla1, SLA sla2) {
+		Assert.assertTrue(sla1 + " does not equal " + sla2, equals(sla1, sla2));
 	}
 
-	protected void assertEquals(List<SLA> sLAs1, List<SLA> sLAs2) {
-		Assert.assertEquals(sLAs1.size(), sLAs2.size());
+	protected void assertEquals(List<SLA> slas1, List<SLA> slas2) {
+		Assert.assertEquals(slas1.size(), slas2.size());
 
-		for (int i = 0; i < sLAs1.size(); i++) {
-			SLA sLA1 = sLAs1.get(i);
-			SLA sLA2 = sLAs2.get(i);
+		for (int i = 0; i < slas1.size(); i++) {
+			SLA sla1 = slas1.get(i);
+			SLA sla2 = slas2.get(i);
 
-			assertEquals(sLA1, sLA2);
+			assertEquals(sla1, sla2);
 		}
 	}
 
-	protected void assertEqualsIgnoringOrder(List<SLA> sLAs1, List<SLA> sLAs2) {
-		Assert.assertEquals(sLAs1.size(), sLAs2.size());
+	protected void assertEqualsIgnoringOrder(List<SLA> slas1, List<SLA> slas2) {
+		Assert.assertEquals(slas1.size(), slas2.size());
 
-		for (SLA sLA1 : sLAs1) {
+		for (SLA sla1 : slas1) {
 			boolean contains = false;
 
-			for (SLA sLA2 : sLAs2) {
-				if (equals(sLA1, sLA2)) {
+			for (SLA sla2 : slas2) {
+				if (equals(sla1, sla2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(sLAs2 + " does not contain " + sLA1, contains);
+			Assert.assertTrue(slas2 + " does not contain " + sla1, contains);
 		}
 	}
 
-	protected void assertValid(SLA sLA) {
+	protected void assertValid(SLA sla) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -528,9 +528,9 @@ public abstract class BaseSLAResourceTestCase {
 	protected void assertValid(Page<SLA> page) {
 		boolean valid = false;
 
-		Collection<SLA> sLAs = page.getItems();
+		Collection<SLA> slas = page.getItems();
 
-		int size = sLAs.size();
+		int size = slas.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -542,8 +542,8 @@ public abstract class BaseSLAResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(SLA sLA1, SLA sLA2) {
-		if (sLA1 == sLA2) {
+	protected boolean equals(SLA sla1, SLA sla2) {
+		if (sla1 == sla2) {
 			return true;
 		}
 
@@ -551,13 +551,13 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_sLAResource instanceof EntityModelResource)) {
+		if (!(_slaResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_sLAResource;
+			(EntityModelResource)_slaResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -583,7 +583,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, SLA sLA) {
+		EntityField entityField, String operator, SLA sla) {
 
 		StringBundler sb = new StringBundler();
 
@@ -597,7 +597,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
-			sb.append(String.valueOf(sLA.getDescription()));
+			sb.append(String.valueOf(sla.getDescription()));
 			sb.append("'");
 
 			return sb.toString();
@@ -615,7 +615,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(sLA.getName()));
+			sb.append(String.valueOf(sla.getName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -781,7 +781,7 @@ public abstract class BaseSLAResourceTestCase {
 	};
 
 	@Inject
-	private SLAResource _sLAResource;
+	private SLAResource _slaResource;
 
 	private URL _resourceURL;
 

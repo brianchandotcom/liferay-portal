@@ -38,39 +38,39 @@ public class Mutation {
 
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
-			sLAResourceComponentServiceObjects) {
+			slaResourceComponentServiceObjects) {
 
-		_sLAResourceComponentServiceObjects =
-			sLAResourceComponentServiceObjects;
+		_slaResourceComponentServiceObjects =
+			slaResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public SLA postProcessSLA(
 			@GraphQLName("process-id") Long processId,
-			@GraphQLName("SLA") SLA sLA)
+			@GraphQLName("SLA") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.postProcessSLA(processId, sLA));
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.postProcessSLA(processId, sla));
 	}
 
 	@GraphQLInvokeDetached
 	public void deleteSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
 		_applyVoidComponentServiceObjects(
-			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.deleteSLA(slaId));
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.deleteSLA(slaId));
 	}
 
 	@GraphQLInvokeDetached
 	public SLA putSLA(
-			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sLA)
+			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.putSLA(slaId, sLA));
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.putSLA(slaId, sla));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -111,15 +111,15 @@ public class Mutation {
 		}
 	}
 
-	private void _populateResourceContext(SLAResource sLAResource)
+	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
-		sLAResource.setContextCompany(
+		slaResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
 	private static ComponentServiceObjects<SLAResource>
-		_sLAResourceComponentServiceObjects;
+		_slaResourceComponentServiceObjects;
 
 }

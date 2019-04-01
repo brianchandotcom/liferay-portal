@@ -53,10 +53,10 @@ public class Query {
 
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
-			sLAResourceComponentServiceObjects) {
+			slaResourceComponentServiceObjects) {
 
-		_sLAResourceComponentServiceObjects =
-			sLAResourceComponentServiceObjects;
+		_slaResourceComponentServiceObjects =
+			slaResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -98,9 +98,9 @@ public class Query {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> {
-				Page paginationPage = sLAResource.getProcessSLAsPage(
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> {
+				Page paginationPage = slaResource.getProcessSLAsPage(
 					processId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -111,8 +111,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public SLA getSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
 		return _applyComponentServiceObjects(
-			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
-			sLAResource -> sLAResource.getSLA(slaId));
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.getSLA(slaId));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -142,10 +142,10 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(SLAResource sLAResource)
+	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
-		sLAResource.setContextCompany(
+		slaResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -153,6 +153,6 @@ public class Query {
 	private static ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
-		_sLAResourceComponentServiceObjects;
+		_slaResourceComponentServiceObjects;
 
 }

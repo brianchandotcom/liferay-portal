@@ -238,9 +238,9 @@ public class SLA {
 			return false;
 		}
 
-		SLA sLA = (SLA)object;
+		SLA sla = (SLA)object;
 
-		return Objects.equals(toString(), sLA.toString());
+		return Objects.equals(toString(), sla.toString());
 	}
 
 	@Override

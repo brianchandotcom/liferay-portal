@@ -24,7 +24,9 @@ LayoutPageTemplateStructure layoutPageTemplateStructure = null;
 JSONArray structureJSONArray = null;
 
 if (assetEntry != null) {
-	layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName()), assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId(), true);
+	LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId());
+
+	layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), layoutPageTemplateEntry.getPlid(), true);
 
 	String data = layoutPageTemplateStructure.getData();
 

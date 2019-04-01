@@ -10,20 +10,16 @@ export default class ProcessListItem extends React.Component {
 	render() {
 		const {
 			id,
-			instanceCount,
-			onTimeInstanceCount,
-			overdueInstanceCount,
+			instanceCount = '-',
+			onTimeInstanceCount = '-',
+			overdueInstanceCount = '-',
 			title
 		} = this.props;
 
 		return (
 			<tr>
-				<td className="table-cell-expand">
-					<div className="table-list-title">
-						<span className="text-truncate-inline">
-							<span title={title}>{title}</span>
-						</span>
-					</div>
+				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
+					<span title={title}>{title}</span>
 				</td>
 
 				<td>{overdueInstanceCount}</td>

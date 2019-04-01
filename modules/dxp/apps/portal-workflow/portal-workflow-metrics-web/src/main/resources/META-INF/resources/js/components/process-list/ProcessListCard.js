@@ -3,11 +3,8 @@ import {
 	REQUEST_ORIGIN_TYPE_SEARCH
 } from './Constants';
 import { AppContext } from '../AppContext';
-import autobind from 'autobind-decorator';
-import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import ListView from '../../shared/components/list/ListView';
-import PageSizeEntries from '../../shared/components/pagination/PageSizeEntries';
-import Pagination from '../../shared/components/pagination/Pagination';
+import PaginationBar from '../../shared/components/pagination/PaginationBar';
 import ProcessListTable from './ProcessListTable';
 import React from 'react';
 import Search from '../../shared/components/pagination/Search';
@@ -20,22 +17,19 @@ class ProcessListCard extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { page = 1, pageSize = 20 } = this.props;
-
 		this.requestOriginType = null;
-
 		this.state = {
 			items: [],
-			page,
-			pageSize,
 			totalCount: 0
 		};
 	}
 
-	componentDidMount() {
-		const { page, pageSize } = this.state;
+	componentWillMount() {
+		this.context.setTitle(Liferay.Language.get('metrics'));
+	}
 
-		this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
+	componentWillReceiveProps(nextProps) {
+		this.requestData(nextProps).then(({ items, totalCount }) =>
 			this.setState({
 				items,
 				totalCount
@@ -43,63 +37,39 @@ class ProcessListCard extends React.Component {
 		);
 	}
 
-	componentWillMount() {
-		this.context.setTitle(Liferay.Language.get('metrics'));
-	}
-
 	/**
-	 * @param {Object} configuration
-	 * @param {number} configuration.page
-	 * @param {number} configuration.pageSize
-	 * @param {string} configuration.title
+	 * @desc request data
 	 */
-	requestData({ page, pageSize, title }) {
+	requestData({ page, pageSize, search, sort }) {
 		const { client } = this.context;
-		const isSearch = typeof title === 'string';
-		let urlRequest = `/processes?page=${page}&pageSize=${pageSize}`;
 
-		if (isSearch) {
-			urlRequest += `&title=${encodeURIComponent(title)}`;
+		const isSearching = typeof search === 'string' && search ? true : false;
+
+		const params = {
+			page,
+			pageSize,
+			sort: decodeURIComponent(sort)
+		};
+
+		if (isSearching) {
+			params.title = decodeURIComponent(search);
 		}
 
-		this.requestOriginType = isSearch
-			? REQUEST_ORIGIN_TYPE_SEARCH
-			: REQUEST_ORIGIN_TYPE_FETCH;
+		return client.get('/processes', { params }).then(({ data }) => {
+			if (data && data.totalCount === 0) {
+				this.requestOriginType = isSearching
+					? REQUEST_ORIGIN_TYPE_SEARCH
+					: REQUEST_ORIGIN_TYPE_FETCH;
+			}
 
-		return client.get(urlRequest).then(({ data }) => data);
-	}
-
-	@autobind
-	onSearch(title) {
-		const { pageSize } = this.state;
-		const page = 1;
-
-		return this.requestData({ page, pageSize, title }).then(
-			({ items, totalCount }) => this.setState({ items, page, totalCount })
-		);
-	}
-
-	@autobind
-	setPage(page) {
-		const { pageSize } = this.state;
-
-		return this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
-			this.setState({ items, page, totalCount })
-		);
-	}
-
-	@autobind
-	setPageSize(pageSize) {
-		const page = 1;
-
-		return this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
-			this.setState({ items, page, pageSize, totalCount })
-		);
+			return data;
+		});
 	}
 
 	render() {
 		const { requestOriginType } = this;
-		const { items, page, pageSize, totalCount } = this.state;
+		const { items = [], totalCount } = this.state;
+		const { page, pageSize } = this.props;
 
 		const emptyTitleText = Liferay.Language.get('no-current-metrics');
 		const isFetching =
@@ -114,14 +84,12 @@ class ProcessListCard extends React.Component {
 				'once-there-are-active-processes-metrics-will-appear-here'
 			  );
 
-		const pageSizes = [5, 10, 20, 30, 50, 75];
-
 		return (
 			<div>
 				<nav className="management-bar management-bar-light navbar navbar-expand-md">
 					<div className="container-fluid container-fluid-max-xl">
 						<div className="navbar-form navbar-form-autofit">
-							<Search disabled={isFetching} onSearch={this.onSearch} />
+							<Search disabled={isFetching} />
 						</div>
 					</div>
 				</nav>
@@ -136,29 +104,12 @@ class ProcessListCard extends React.Component {
 					>
 						<ProcessListTable items={items} />
 
-						{totalCount > pageSizes[0] && (
-							<div className="pagination-bar">
-								<PageSizeEntries
-									onSelectPageSize={this.setPageSize}
-									pageSizeEntries={pageSizes}
-									selectedPageSize={pageSize}
-								/>
-
-								<DisplayResult
-									page={page}
-									pageCount={items.length}
-									pageSize={pageSize}
-									totalCount={totalCount}
-								/>
-
-								<Pagination
-									onSelectPage={this.setPage}
-									page={page}
-									pageSize={pageSize}
-									totalCount={totalCount}
-								/>
-							</div>
-						)}
+						<PaginationBar
+							page={page}
+							pageCount={items.length}
+							pageSize={pageSize}
+							totalCount={totalCount}
+						/>
 					</ListView>
 				</div>
 			</div>

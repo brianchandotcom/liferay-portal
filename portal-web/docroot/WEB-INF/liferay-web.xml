@@ -583,6 +583,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Header Filter</filter-name>
+		<url-pattern>/o/js_bundle_config</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Header Filter</filter-name>
 		<url-pattern>*.css</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

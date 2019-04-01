@@ -10,8 +10,6 @@ export default class SLAListTable extends React.Component {
 				<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
 					<thead>
 						<tr>
-							<th />
-
 							<th
 								className="table-cell-expand table-head-title"
 								style={{ width: '40%' }}

@@ -1,15 +1,15 @@
-import { AppContext } from '../AppContext';
+import { AppContext, AppStatus } from '../AppContext';
+import { openErrorToast, openSuccessToast } from '../../shared/util/toast';
 import autobind from 'autobind-decorator';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
 import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import EmptyContent from '../../shared/components/EmptyContent';
 import Icon from '../../shared/components/Icon';
-import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import PageSizeEntries from '../../shared/components/pagination/PageSizeEntries';
 import Pagination from '../../shared/components/pagination/Pagination';
 import React from 'react';
-import Search from '../../shared/components/pagination/Search';
 import SLAConfirmDialog from './SLAConfirmDialog';
+import SLAListCardContext from './SLAListCardContext';
 import SLAListTable from './SLAListTable';
 
 const REQUEST_ORIGIN_TYPE_FETCH = 'REQUEST_ORIGIN_TYPE_FETCH';
@@ -23,15 +23,37 @@ class SLAListCard extends React.Component {
 
 		this.state = {
 			items: [],
+			itemToRemove: null,
 			page,
 			pageSize,
 			processId,
 			requestOriginType: null,
+			showConfirmDialog: false,
+			showSLAsUpdatingAlert: false,
 			totalCount: 0
+		};
+
+		this.slaContextState = {
+			hideConfirmDialog: () => this.setConfirmDialogVisibility(null, false),
+			removeItem: this.removeItem.bind(this),
+			showConfirmDialog: (id, callback) =>
+				this.setConfirmDialogVisibility(id, true, callback)
 		};
 	}
 
 	componentDidMount() {
+		this.loadData();
+	}
+
+	componentWillMount() {
+		this.context.setTitle(Liferay.Language.get('slas'));
+	}
+
+	componentWillUpdate() {
+		this.showStatusMessage();
+	}
+
+	loadData() {
 		const { page, pageSize, processId } = this.state;
 
 		this.requestData({
@@ -46,20 +68,47 @@ class SLAListCard extends React.Component {
 		);
 	}
 
-	componentDidUpdate() {
-		const { itemRemoved } = this.props;
+	removeItem(id) {
+		const { client } = this.context;
 
-		if (itemRemoved) {
-			this.removeItem();
+		client
+			.delete(`/slas/${id}`)
+			.then(() => {
+				this.loadData();
+				openSuccessToast(Liferay.Language.get('sla-deleted'));
+			})
+			.catch(openErrorToast);
+
+		this.setState({
+			itemToRemove: null,
+			showConfirmDialog: false
+		});
+	}
+
+	setConfirmDialogVisibility(id, visible, callback) {
+		this.setState(
+			{
+				itemToRemove: id,
+				showConfirmDialog: visible
+			},
+			callback
+		);
+	}
+
+	showStatusMessage() {
+		const { status } = this.context;
+
+		if (status === AppStatus.slaUpdated || status === AppStatus.slaSaved) {
+			if (status === AppStatus.slaUpdated) {
+				openSuccessToast(Liferay.Language.get('sla-updated'));
+			}
+			else {
+				openSuccessToast(Liferay.Language.get('sla-saved'));
+			}
+
+			this.state.showSLAsUpdatingAlert = true;
+			this.context.setStatus(null);
 		}
-	}
-
-	componentWillMount() {
-		this.context.setTitle(Liferay.Language.get('slas'));
-	}
-
-	removeItem() {
-		openToast({ message: Liferay.Language.get('sla-was-deleted') });
 	}
 
 	/**
@@ -79,18 +128,8 @@ class SLAListCard extends React.Component {
 
 		return client
 			.get(`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`)
-			.then(({ data }) => data);
-	}
-
-	@autobind
-	onSearch(title) {
-		const { pageSize } = this.state;
-		const { processId } = this.props;
-		const page = 1;
-
-		return this.requestData({ page, pageSize, processId, title }).then(
-			({ items, totalCount }) => this.setState({ items, page, totalCount })
-		);
+			.then(({ data }) => data)
+			.catch(openErrorToast);
 	}
 
 	@autobind
@@ -114,9 +153,18 @@ class SLAListCard extends React.Component {
 	}
 
 	render() {
-		const { items, page, pageSize, requestOriginType, totalCount } = this.state;
+		const {
+			itemToRemove,
+			items,
+			page,
+			pageSize,
+			requestOriginType,
+			showConfirmDialog,
+			showSLAsUpdatingAlert,
+			totalCount
+		} = this.state;
 		const pageSizes = [5, 10, 20, 30, 50, 75];
-		const { itemToRemove, processId } = this.props;
+		const { processId } = this.props;
 
 		const emptySearchRender = secondaryRender =>
 			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0 ? (
@@ -143,7 +191,9 @@ class SLAListCard extends React.Component {
 		const listRender = secondaryRender =>
 			totalCount > 0 ? (
 				<div>
-					{itemToRemove && <SLAConfirmDialog item={itemToRemove} />}
+					{showConfirmDialog && (
+						<SLAConfirmDialog itemToRemove={itemToRemove} />
+					)}
 
 					<SLAListTable sla={items} />
 
@@ -180,33 +230,11 @@ class SLAListCard extends React.Component {
 		);
 
 		return (
-			<div>
+			<SLAListCardContext.Provider value={this.slaContextState}>
 				<nav className="management-bar management-bar-light navbar navbar-expand-md">
 					<div className="container-fluid container-fluid-max-xl">
-						<ul className="navbar-nav">
-							<li className="nav-item">
-								<div className="custom-control custom-checkbox">
-									<label>
-										<input className="custom-control-input" type="checkbox" />
-
-										<span className="custom-control-label" />
-									</label>
-								</div>
-							</li>
-						</ul>
-
-						<div className="navbar-form navbar-form-autofit">
-							<Search
-								disabled={
-									requestOriginType === REQUEST_ORIGIN_TYPE_FETCH &&
-									totalCount === 0
-								}
-								onSearch={this.onSearch}
-							/>
-						</div>
-
-						<ul className="navbar-nav">
-							<li className="nav-item">
+						<ul className="navbar-nav autofit-row">
+							<li className="nav-item autofit-col-expand autofit-float-end">
 								<ChildLink
 									className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
 									to={`/sla/new/${processId}`}
@@ -219,32 +247,35 @@ class SLAListCard extends React.Component {
 				</nav>
 
 				<div className="container-fluid-1280">
-					<div className="alert alert-dismissible alert-info" role="alert">
-						<span className="alert-indicator">
-							<Icon iconName="reload" />
-						</span>
+					{showSLAsUpdatingAlert && (
+						<div className="alert alert-dismissible alert-info" role="alert">
+							<span className="alert-indicator">
+								<Icon iconName="reload" />
+							</span>
 
-						<strong className="lead">{Liferay.Language.get('updating')}</strong>
+							<strong className="lead">{Liferay.Language.get('info')}</strong>
 
-						<span>
-							{Liferay.Language.get(
-								'instances-in-this-process-are-being-updated-according-to-sla-changes'
-							)}
-						</span>
+							<span>
+								{Liferay.Language.get('one-or-more-slas-are-being-updated')}{' '}
+								{Liferay.Language.get(
+									'there-may-be-a-delay-before-sla-changes-are-fully-propagated'
+								)}
+							</span>
 
-						<button
-							aria-label="Close"
-							className="close"
-							data-dismiss="alert"
-							type="button"
-						>
-							<Icon iconName="times" />
-						</button>
-					</div>
+							<button
+								aria-label="Close"
+								className="close"
+								data-dismiss="alert"
+								type="button"
+							>
+								<Icon iconName="times" />
+							</button>
+						</div>
+					)}
 
 					{emptySearchRender(emptyContentRender(listRender(loadingRender())))}
 				</div>
-			</div>
+			</SLAListCardContext.Provider>
 		);
 	}
 }

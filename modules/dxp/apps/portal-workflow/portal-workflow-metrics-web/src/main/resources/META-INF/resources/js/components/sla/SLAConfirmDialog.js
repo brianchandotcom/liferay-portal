@@ -1,9 +1,21 @@
+import autobind from 'autobind-decorator';
 import React from 'react';
+import SLAListCardContext from './SLAListCardContext';
 
-export default class SLAConfirmDialog extends React.Component {
+class SLAConfirmDialog extends React.Component {
+	@autobind
+	cancel() {
+		this.context.hideConfirmDialog();
+	}
+
+	@autobind
+	removeItem() {
+		const { itemToRemove } = this.props;
+
+		this.context.removeItem(itemToRemove);
+	}
+
 	render() {
-		const { item: itemRemoved } = this.props;
-
 		return (
 			<div className="modal" role="dialog" tabIndex="-1">
 				<div className="modal-dialog modal-lg">
@@ -20,13 +32,22 @@ export default class SLAConfirmDialog extends React.Component {
 							<div className="modal-item-last">
 								<div className="btn-group">
 									<div className="btn-group-item">
-										<button className="btn btn-secondary" type="button">
+										<button
+											className="btn btn-secondary"
+											onClick={this.cancel}
+											type="button"
+										>
 											{Liferay.Language.get('cancel')}
 										</button>
 									</div>
 
 									<div className="btn-group-item">
-										<button className="btn btn-secondary" type="button">
+										<button
+											className="btn btn-secondary"
+											id="remove_sla_button"
+											onClick={this.removeItem}
+											type="button"
+										>
 											{Liferay.Language.get('ok')}
 										</button>
 									</div>
@@ -39,3 +60,6 @@ export default class SLAConfirmDialog extends React.Component {
 		);
 	}
 }
+
+SLAConfirmDialog.contextType = SLAListCardContext;
+export default SLAConfirmDialog;

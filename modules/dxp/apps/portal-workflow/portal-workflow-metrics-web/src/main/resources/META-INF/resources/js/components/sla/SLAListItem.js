@@ -1,24 +1,24 @@
+import autobind from 'autobind-decorator';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
 import { formatDuration } from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
 import React from 'react';
+import SLAListCardContext from './SLAListCardContext';
 
-export default class SLAListItem extends React.Component {
+class SLAListItem extends React.Component {
+	@autobind
+	showConfirmDialog() {
+		const { id } = this.props;
+
+		this.context.showConfirmDialog(id);
+	}
+
 	render() {
 		const { description, duration, id, name, processId } = this.props;
 		const durationString = formatDuration(duration);
 
 		return (
 			<tr>
-				<td>
-					<div className="custom-control custom-checkbox">
-						<label>
-							<input className="custom-control-input" type="checkbox" />
-							<span className="custom-control-label" />
-						</label>
-					</div>
-				</td>
-
 				<td className="table-cell-expand">
 					<div className="table-list-title">
 						<span className="text-truncate-inline">
@@ -59,7 +59,12 @@ export default class SLAListItem extends React.Component {
 							</li>
 
 							<li>
-								<a>{Liferay.Language.get('delete')}</a>
+								<button
+									className="dropdown-item"
+									onClick={this.showConfirmDialog}
+								>
+									{Liferay.Language.get('delete')}
+								</button>
 							</li>
 						</ul>
 					</div>
@@ -68,3 +73,6 @@ export default class SLAListItem extends React.Component {
 		);
 	}
 }
+
+SLAListItem.contextType = SLAListCardContext;
+export default SLAListItem;

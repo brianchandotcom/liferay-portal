@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -122,11 +123,38 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(
+		_addEditInGoogleDocsUIItem(
+			menuItems,
 			_createEditInGoogleDocsMenuItem(
 				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
 		return menu;
+	}
+
+	/**
+	 * @see com.liferay.frontend.image.editor.integration.document.library.internal.display.context.ImageEditorDLViewFileVersionDisplayContext#_addEditWithImageEditorUIItem
+	 */
+	private <T extends BaseUIItem> List<T> _addEditInGoogleDocsUIItem(
+		List<T> uiItems, T editInGoogleDocsUIItem) {
+
+		int i = 1;
+
+		for (T uiItem : uiItems) {
+			if (DLUIItemKeys.EDIT.equals(uiItem.getKey())) {
+				break;
+			}
+
+			i++;
+		}
+
+		if (i >= uiItems.size()) {
+			uiItems.add(editInGoogleDocsUIItem);
+		}
+		else {
+			uiItems.add(i, editInGoogleDocsUIItem);
+		}
+
+		return uiItems;
 	}
 
 	private MenuItem _createEditInGoogleDocsMenuItem(String cmd)

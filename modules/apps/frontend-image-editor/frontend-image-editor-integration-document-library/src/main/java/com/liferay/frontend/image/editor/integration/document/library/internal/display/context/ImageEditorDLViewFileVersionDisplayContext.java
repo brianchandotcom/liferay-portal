@@ -86,6 +86,9 @@ public class ImageEditorDLViewFileVersionDisplayContext
 				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
 	}
 
+	/**
+	 * @see com.liferay.document.library.opener.google.drive.web.internal.display.context.DLOpenerGoogleDriveDLViewFileVersionDisplayContext#_addEditInGoogleDocsUIItem
+	 */
 	private <T extends BaseUIItem> List<T> _addEditWithImageEditorUIItem(
 		List<T> uiItems, T editWithImageEditorUIItem) {
 

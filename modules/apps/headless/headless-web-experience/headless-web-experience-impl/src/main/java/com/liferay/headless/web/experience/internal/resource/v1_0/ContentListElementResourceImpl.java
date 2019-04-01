@@ -53,7 +53,7 @@ public class ContentListElementResourceImpl
 			_assetListEntryService.fetchAssetListEntry(contentListId);
 
 		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+			_segmentsEntryLocalService.getSegmentsEntry(
 				assetListEntry.getGroupId());
 
 		return Page.of(

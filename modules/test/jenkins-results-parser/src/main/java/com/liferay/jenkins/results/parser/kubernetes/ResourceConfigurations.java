@@ -19,9 +19,9 @@ package com.liferay.jenkins.results.parser.kubernetes;
  */
 public class ResourceConfigurations extends ResourceConfigurationFactory {
 
-	public static final LiferayKubernetesConnection.Pod mysql55PodConfiguration;
-	public static final LiferayKubernetesConnection.Pod mysql56PodConfiguration;
-	public static final LiferayKubernetesConnection.Pod mysql57PodConfiguration;
+	public static final LiferayK8sConnection.Pod mysql55PodConfiguration;
+	public static final LiferayK8sConnection.Pod mysql56PodConfiguration;
+	public static final LiferayK8sConnection.Pod mysql57PodConfiguration;
 
 	static {
 		mysql55PodConfiguration = newConfiguredMySQLPod(

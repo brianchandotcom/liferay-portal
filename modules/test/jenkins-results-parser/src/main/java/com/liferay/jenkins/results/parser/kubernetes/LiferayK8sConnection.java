@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Kenji Heigel
  */
-public class LiferayKubernetesConnection {
+public class LiferayK8sConnection {
 
 	public static AppsV1Api apps;
 	public static CoreV1Api core;
@@ -66,9 +66,9 @@ public class LiferayKubernetesConnection {
 		}
 	}
 
-	public static LiferayKubernetesConnection getInstance() {
+	public static LiferayK8sConnection getInstance() {
 		if (_liferayKubernetesApi == null) {
-			_liferayKubernetesApi = new LiferayKubernetesConnection();
+			_liferayKubernetesApi = new LiferayK8sConnection();
 		}
 
 		return _liferayKubernetesApi;
@@ -149,7 +149,7 @@ public class LiferayKubernetesConnection {
 
 		List<V1Pod> v1Pods = v1PodList.getItems();
 
-		List<LiferayKubernetesConnection.Pod> pods = new ArrayList<>(
+		List<LiferayK8sConnection.Pod> pods = new ArrayList<>(
 			v1Pods.size());
 
 		for (V1Pod v1Pod : v1Pods) {
@@ -180,7 +180,7 @@ public class LiferayKubernetesConnection {
 	}
 
 	private static final ApiClient _apiClient;
-	private static LiferayKubernetesConnection _liferayKubernetesApi;
+	private static LiferayK8sConnection _liferayKubernetesApi;
 
 	static {
 		try {

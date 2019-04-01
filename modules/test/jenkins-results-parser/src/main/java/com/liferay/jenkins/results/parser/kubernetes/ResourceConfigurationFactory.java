@@ -33,7 +33,7 @@ import java.util.Arrays;
  */
 public class ResourceConfigurationFactory {
 
-	public static LiferayKubernetesConnection.Pod newConfiguredMySQLPod(
+	public static LiferayK8sConnection.Pod newConfiguredMySQLPod(
 		String dockerBaseImageName, String dockerImageName) {
 
 		V1Pod v1Pod = new V1Pod();
@@ -71,7 +71,7 @@ public class ResourceConfigurationFactory {
 
 		v1Pod.setSpec(v1PodSpec);
 
-		return new LiferayKubernetesConnection.Pod(v1Pod);
+		return new LiferayK8sConnection.Pod(v1Pod);
 	}
 
 	protected static V1Container newConfiguredContainer(

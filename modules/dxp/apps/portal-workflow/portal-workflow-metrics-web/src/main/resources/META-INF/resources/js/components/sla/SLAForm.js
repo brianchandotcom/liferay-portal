@@ -1,8 +1,14 @@
 import { ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME } from './Constants';
+import { AppContext, AppStatus } from '../AppContext';
 import {
 	BackLink,
 	BackRedirect
 } from '../../shared/components/router/routerWrapper';
+import {
+	durationAsMilliseconds,
+	formatHours,
+	getDurationValues
+} from '../../shared/util/duration';
 import {
 	hasErrors,
 	validateDays,
@@ -10,14 +16,14 @@ import {
 	validateHours,
 	validateName
 } from './util/slaFormUtil';
-import { AppContext } from '../AppContext';
 import autobind from 'autobind-decorator';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { durationAsMilliseconds } from '../../shared/util/duration';
 import FieldError from './form/fieldError';
 import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
+import LoadingState from '../../shared/components/empty-state/LoadingState';
 import MaskedInput from 'react-text-mask';
+import { openErrorToast } from '../../shared/util/toast';
 import React from 'react';
 
 /**
@@ -33,6 +39,7 @@ class SLAForm extends React.Component {
 			description: '',
 			errors: {},
 			hours: '',
+			loading: false,
 			name: '',
 			redirectToSlaList: false
 		};
@@ -40,7 +47,7 @@ class SLAForm extends React.Component {
 
 	componentWillMount() {
 		if (this.props.id) {
-			this.context.setTitle(Liferay.Language.get('edit-sla'));
+			return this.loadData();
 		}
 		else {
 			this.context.setTitle(Liferay.Language.get('new-sla'));
@@ -76,28 +83,75 @@ class SLAForm extends React.Component {
 		}
 		else {
 			const { client } = this.context;
-			const { processId } = this.props;
+			const { id, processId } = this.props;
 			const duration = durationAsMilliseconds(days, hours);
+
+			let submit;
+
+			if (id) {
+				submit = body => client.put(`/slas/${id}`, body);
+			}
+			else {
+				submit = body => client.post(`/processes/${processId}/slas`, body);
+			}
 
 			errors[ALERT_MESSAGE] = '';
 
-			return client
-				.post(`/processes/${processId}/slas`, {
-					description,
-					duration,
-					name,
-					processId
-				})
+			return submit({
+				description,
+				duration,
+				name,
+				processId
+			})
 				.then(() => {
-					this.setState({ redirectToSlaList: true });
-				})
-				.catch(errorResponse => {
-					const errorKey = errorResponse.fieldName || ALERT_MESSAGE;
+					const status = id ? AppStatus.slaUpdated : AppStatus.slaSaved;
 
-					errors[errorKey] = errorResponse.message;
-					this.setState({ errors });
+					this.context.setStatus(status, () => {
+						this.setState({ redirectToSlaList: true });
+					});
+				})
+				.catch(result => {
+					const {
+						response: { data }
+					} = result;
+
+					if (data) {
+						const errorKey = data.fieldName || ALERT_MESSAGE;
+
+						errors[errorKey] = data.message;
+						this.setState({ errors });
+					}
+					else {
+						openErrorToast(result);
+					}
 				});
 		}
+	}
+
+	loadData() {
+		const { client } = this.context;
+		const { id } = this.props;
+
+		this.setState({ loading: true });
+
+		return client
+			.get(`/slas/${id}`)
+			.then(result => {
+				const { description = '', duration, name } = result.data;
+				const { days, hours, minutes } = getDurationValues(duration);
+				const formattedHours = formatHours(hours, minutes);
+
+				this.context.setTitle(Liferay.Language.get(name));
+
+				this.setState({
+					days,
+					description,
+					hours: formattedHours,
+					loading: false,
+					name
+				});
+			})
+			.catch(openErrorToast);
 	}
 
 	@autobind
@@ -145,17 +199,22 @@ class SLAForm extends React.Component {
 			includeThousandsSeparator: false,
 			prefix: ''
 		});
-		const { errors, redirectToSlaList } = this.state;
+		const { id } = this.props;
+		const { errors, loading, redirectToSlaList } = this.state;
 		const onChangeHandler = validationFunc => evt => {
 			this.handleChange(evt, validationFunc);
 		};
+
+		if (loading === true) {
+			return <LoadingState />;
+		}
 
 		if (redirectToSlaList === true) {
 			return <BackRedirect />;
 		}
 
 		return (
-			<div>
+			<div className="sla-form">
 				{(errors[ALERT_MESSAGE] || errors[DURATION]) && (
 					<div className="alert-container">
 						<div className="alert alert-danger" role="alert">
@@ -297,7 +356,9 @@ class SLAForm extends React.Component {
 									onClick={this.handleSubmit}
 									type="button"
 								>
-									{Liferay.Language.get('save')}
+									{id
+										? Liferay.Language.get('update')
+										: Liferay.Language.get('save')}
 								</button>
 							</div>
 

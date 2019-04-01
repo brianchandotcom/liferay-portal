@@ -35,13 +35,14 @@ public class ObjectMapperContextResolver
 		return _OBJECT_MAPPER;
 	}
 
-	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			enable(SerializationFeature.INDENT_OUTPUT);
-			setDateFormat(new ISO8601DateFormat());
-			setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-		}
-	};
+	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper();
+
+	static {
+		_OBJECT_MAPPER.configure(
+			MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		_OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+		_OBJECT_MAPPER.setDateFormat(new ISO8601DateFormat());
+		_OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+	}
 
 }

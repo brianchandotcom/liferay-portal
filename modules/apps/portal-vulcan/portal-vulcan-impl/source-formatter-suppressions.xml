@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="StaticBlockCheck" files="com/liferay/portal/vulcan/internal/jaxrs/context/resolver/*" />
+	</checkstyle>
+</suppressions>

@@ -78,7 +78,9 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 				}
 			}
 
-			_destinationNames = destinationNames;
+			if (!destinationNames.isEmpty()) {
+				_destinationNames = destinationNames;
+			}
 		}
 	}
 
@@ -105,7 +107,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 		String destinationName = null;
 
-		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
+		if (_destinationNames != null) {
 			destinationName = _destinationNames.get(targetClass.getName());
 		}
 

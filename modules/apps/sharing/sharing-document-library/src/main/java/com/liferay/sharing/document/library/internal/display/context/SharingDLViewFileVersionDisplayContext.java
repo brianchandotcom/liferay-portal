@@ -16,11 +16,13 @@ package com.liferay.sharing.document.library.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
@@ -81,7 +83,8 @@ public class SharingDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(
+		_addSharingUIItem(
+			menuItems,
 			_sharingMenuItemFactory.createShareMenuItem(
 				DLFileEntryConstants.getClassName(),
 				_fileEntry.getFileEntryId(), _request));
@@ -97,7 +100,8 @@ public class SharingDLViewFileVersionDisplayContext
 			return toolbarItems;
 		}
 
-		toolbarItems.add(
+		_addSharingUIItem(
+			toolbarItems,
 			_sharingToolbarItemFactory.createShareToolbarItem(
 				DLFileEntryConstants.getClassName(),
 				_fileEntry.getFileEntryId(), _request));
@@ -116,6 +120,32 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		return false;
+	}
+
+	/**
+	 * @see com.liferay.frontend.image.editor.integration.document.library.internal.display.context.ImageEditorDLViewFileVersionDisplayContext#_addEditWithImageEditorUIItem
+	 */
+	private <T extends BaseUIItem> List<T> _addSharingUIItem(
+		List<T> uiItems, T sharingUIItem) {
+
+		int i = 1;
+
+		for (T uiItem : uiItems) {
+			if (DLUIItemKeys.DOWNLOAD.equals(uiItem.getKey())) {
+				break;
+			}
+
+			i++;
+		}
+
+		if (i >= uiItems.size()) {
+			uiItems.add(sharingUIItem);
+		}
+		else {
+			uiItems.add(i, sharingUIItem);
+		}
+
+		return uiItems;
 	}
 
 	private boolean _isShowActions() throws PortalException {

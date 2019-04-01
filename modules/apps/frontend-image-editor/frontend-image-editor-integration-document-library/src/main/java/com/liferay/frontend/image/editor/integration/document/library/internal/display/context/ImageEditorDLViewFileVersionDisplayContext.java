@@ -88,6 +88,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 	/**
 	 * @see com.liferay.document.library.opener.google.drive.web.internal.display.context.DLOpenerGoogleDriveDLViewFileVersionDisplayContext#_addEditInGoogleDocsUIItem
+	 * @see com.liferay.sharing.document.library.internal.display.context.SharingDLViewFileVersionDisplayContext#_addSharingUIItem
 	 */
 	private <T extends BaseUIItem> List<T> _addEditWithImageEditorUIItem(
 		List<T> uiItems, T editWithImageEditorUIItem) {

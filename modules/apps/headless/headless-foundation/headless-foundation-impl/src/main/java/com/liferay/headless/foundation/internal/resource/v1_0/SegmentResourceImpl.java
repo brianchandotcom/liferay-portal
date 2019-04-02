@@ -35,7 +35,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -51,7 +50,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SegmentResource.class
 )
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
-
 
 	@Override
 	public Page<Segment> getContentSpaceSegmentsPage(

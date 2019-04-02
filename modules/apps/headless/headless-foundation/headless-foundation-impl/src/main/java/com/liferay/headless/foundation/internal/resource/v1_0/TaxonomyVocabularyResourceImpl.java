@@ -92,7 +92,6 @@ public class TaxonomyVocabularyResourceImpl
 		_assetVocabularyService.deleteVocabulary(taxonomyVocabularyId);
 	}
 
-
 	@Override
 	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
 			String search, ContentSpace contentSpace, Filter filter,

@@ -512,46 +512,46 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "19"
+			line = "17"
 		);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<duration>5</duration>''',
-			line = "22"
+			line = "20"
 		);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<scale>hour</scale>''',
-			line = "23"
+			line = "21"
 		);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<duration>6</duration>''',
-			line = "26"
+			line = "24"
 		);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<scale>hour</scale>''',
-			line = "27"
+			line = "25"
 		);
 
-		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''<timer-action>''', line = "31");
+		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''<timer-action>''', line = "29");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Blocker Name</name>''',
-			line = "32"
+			line = "30"
 		);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<description>Blocker Description</description>''',
-			line = "33"
+			line = "31"
 		);
 
-		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''Test Script''', line = "35");
+		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''Test Script''', line = "33");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<blocking>true</blocking>''',
-			line = "29"
+			line = "27"
 		);
 	}
 

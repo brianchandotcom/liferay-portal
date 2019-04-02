@@ -164,9 +164,6 @@ public class LayoutIndexerIndexedFieldsTest {
 		map.put(Field.TYPE, layout.getType());
 		map.put(Field.USER_ID, String.valueOf(layout.getUserId()));
 		map.put(Field.USER_NAME, StringUtil.toLowerCase(layout.getUserName()));
-		map.put("leftPlid", String.valueOf(layout.getLeftPlid()));
-		map.put(
-			"leftPlid_Number_sortable", String.valueOf(layout.getLeftPlid()));
 		map.put("privateLayout", "false");
 		map.put("title_ja_JP", layout.getName(Locale.JAPAN));
 

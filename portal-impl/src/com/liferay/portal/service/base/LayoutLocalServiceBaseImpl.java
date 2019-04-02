@@ -1768,8 +1768,6 @@ public abstract class LayoutLocalServiceBaseImpl
 		draftLayout.setCreateDate(publishedLayout.getCreateDate());
 		draftLayout.setModifiedDate(publishedLayout.getModifiedDate());
 		draftLayout.setParentPlid(publishedLayout.getParentPlid());
-		draftLayout.setLeftPlid(publishedLayout.getLeftPlid());
-		draftLayout.setRightPlid(publishedLayout.getRightPlid());
 		draftLayout.setPrivateLayout(publishedLayout.getPrivateLayout());
 		draftLayout.setLayoutId(publishedLayout.getLayoutId());
 		draftLayout.setParentLayoutId(publishedLayout.getParentLayoutId());

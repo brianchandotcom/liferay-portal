@@ -296,8 +296,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		draftLayout.setExpandoBridgeAttributes(serviceContext);
 
-		layoutPersistence.setRebuildTreeEnabled(true);
-
 		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)draftLayout.getLayoutType();
@@ -1936,15 +1934,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, true, start, end, obc);
 	}
 
-	@Override
-	public List<Layout> getLayouts(
-		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
-		int start, int end, OrderByComparator<Layout> obc) {
-
-		return layoutPersistence.findByG_P_GtLP_LtRP_Head(
-			groupId, leftPlid, rightPlid, privateLayout, true, start, end, obc);
-	}
-
 	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
@@ -2153,14 +2142,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public int getLayoutsCount(long groupId) {
 		return layoutPersistence.countByGroupId_Head(groupId, true);
-	}
-
-	@Override
-	public int getLayoutsCount(
-		long groupId, long leftPlid, long rightPlid, boolean privateLayout) {
-
-		return layoutPersistence.countByG_P_GtLP_LtRP_Head(
-			groupId, leftPlid, rightPlid, privateLayout, true);
 	}
 
 	@Override
@@ -3117,25 +3098,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return publishDraft(getDraft(layout));
 	}
 
-	@Override
-	public Layout updateLayout(Layout layout, boolean rebuildTree) {
-		try {
-			layoutPersistence.setRebuildTreeEnabled(rebuildTree);
-
-			Layout draftLayout = getDraft(layout);
-
-			layoutPersistence.update(draftLayout);
-
-			return publishDraft(draftLayout);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-		finally {
-			layoutPersistence.setRebuildTreeEnabled(true);
-		}
-	}
-
 	/**
 	 * Updates the layout replacing its draft publish date.
 	 *
@@ -3257,8 +3219,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
-		boolean rebuildTree = false;
-
 		Date now = new Date();
 
 		Layout layout = layoutPersistence.findByG_P_L_Head(
@@ -3275,8 +3235,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				draftLayout.getSourcePrototypeLayoutUuid(), -1);
 
 			draftLayout.setPriority(priority);
-
-			rebuildTree = true;
 		}
 
 		draftLayout.setModifiedDate(serviceContext.getModifiedDate(now));
@@ -3324,7 +3282,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		draftLayout.setExpandoBridgeAttributes(serviceContext);
 
-		layout = layoutLocalService.updateLayout(draftLayout, rebuildTree);
+		layout = layoutLocalService.updateLayout(draftLayout);
 
 		// Layout friendly URLs
 
@@ -3527,8 +3485,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
-		boolean rebuildTree = false;
-
 		Date now = new Date();
 
 		Layout layout = layoutPersistence.findByG_P_L_Head(
@@ -3545,14 +3501,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				draftLayout.getSourcePrototypeLayoutUuid(), -1);
 
 			draftLayout.setPriority(priority);
-
-			rebuildTree = true;
 		}
 
 		draftLayout.setModifiedDate(now);
 		draftLayout.setParentLayoutId(parentLayoutId);
 
-		return layoutLocalService.updateLayout(draftLayout, rebuildTree);
+		return layoutLocalService.updateLayout(draftLayout);
 	}
 
 	/**
@@ -3611,7 +3565,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		draftLayout.setParentPlid(parentPlid);
 		draftLayout.setParentLayoutId(parentLayoutId);
 
-		return layoutLocalService.updateLayout(draftLayout, true);
+		return layoutLocalService.updateLayout(draftLayout);
 	}
 
 	/**

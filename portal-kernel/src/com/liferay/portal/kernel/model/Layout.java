@@ -28,8 +28,7 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutImpl")
 @ProviderType
-public interface Layout
-	extends LayoutModel, NestedSetsTreeNodeModel, PersistedModel {
+public interface Layout extends LayoutModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

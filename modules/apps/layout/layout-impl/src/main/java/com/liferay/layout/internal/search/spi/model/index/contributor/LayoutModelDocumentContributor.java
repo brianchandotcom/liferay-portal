@@ -67,7 +67,6 @@ public class LayoutModelDocumentContributor
 		document.addText(
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());
-		document.addNumberSortable("leftPlid", layout.getLeftPlid());
 		document.addText(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 		document.addText(Field.TYPE, layout.getType());

@@ -65,7 +65,7 @@ public class LayoutVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(77);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("{layoutVersionId=");
 		sb.append(layoutVersionId);
@@ -89,10 +89,6 @@ public class LayoutVersionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", parentPlid=");
 		sb.append(parentPlid);
-		sb.append(", leftPlid=");
-		sb.append(leftPlid);
-		sb.append(", rightPlid=");
-		sb.append(rightPlid);
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
@@ -189,8 +185,6 @@ public class LayoutVersionCacheModel
 		}
 
 		layoutVersionImpl.setParentPlid(parentPlid);
-		layoutVersionImpl.setLeftPlid(leftPlid);
-		layoutVersionImpl.setRightPlid(rightPlid);
 		layoutVersionImpl.setPrivateLayout(privateLayout);
 		layoutVersionImpl.setLayoutId(layoutId);
 		layoutVersionImpl.setParentLayoutId(parentLayoutId);
@@ -338,10 +332,6 @@ public class LayoutVersionCacheModel
 
 		parentPlid = objectInput.readLong();
 
-		leftPlid = objectInput.readLong();
-
-		rightPlid = objectInput.readLong();
-
 		privateLayout = objectInput.readBoolean();
 
 		layoutId = objectInput.readLong();
@@ -410,10 +400,6 @@ public class LayoutVersionCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(parentPlid);
-
-		objectOutput.writeLong(leftPlid);
-
-		objectOutput.writeLong(rightPlid);
 
 		objectOutput.writeBoolean(privateLayout);
 
@@ -541,8 +527,6 @@ public class LayoutVersionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long parentPlid;
-	public long leftPlid;
-	public long rightPlid;
 	public boolean privateLayout;
 	public long layoutId;
 	public long parentLayoutId;

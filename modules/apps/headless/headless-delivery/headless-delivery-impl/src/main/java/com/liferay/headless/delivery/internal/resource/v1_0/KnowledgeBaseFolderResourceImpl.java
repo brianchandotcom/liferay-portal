@@ -21,8 +21,6 @@ import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -138,10 +136,7 @@ public class KnowledgeBaseFolderResourceImpl
 	}
 
 	private long _getClassNameId() {
-		ClassName className = _classNameLocalService.fetchClassName(
-			KBFolder.class.getName());
-
-		return className.getClassNameId();
+		return _portal.getClassNameId(KBFolder.class.getName());
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
@@ -172,9 +167,6 @@ public class KnowledgeBaseFolderResourceImpl
 			}
 		};
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private KBArticleService _kbArticleService;

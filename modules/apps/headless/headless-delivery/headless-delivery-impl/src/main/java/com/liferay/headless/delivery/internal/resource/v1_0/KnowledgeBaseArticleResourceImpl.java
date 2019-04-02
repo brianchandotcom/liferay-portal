@@ -26,7 +26,6 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -34,8 +33,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -168,9 +167,8 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _getKnowledgeBaseArticle(
-			contentSpaceId, 0L,
-			_classNameLocalService.fetchClassName(KBFolder.class.getName()),
-			knowledgeBaseArticle);
+			contentSpaceId, _portal.getClassNameId(KBFolder.class.getName()),
+			0L, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -183,9 +181,9 @@ public class KnowledgeBaseArticleResourceImpl
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticle(
-			kbArticle.getGroupId(), knowledgeBaseArticleId,
-			_classNameLocalService.fetchClassName(KBArticle.class.getName()),
-			knowledgeBaseArticle);
+			kbArticle.getGroupId(),
+			_portal.getClassNameId(KBArticle.class.getName()),
+			knowledgeBaseArticleId, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -197,9 +195,9 @@ public class KnowledgeBaseArticleResourceImpl
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
 		return _getKnowledgeBaseArticle(
-			kbFolder.getGroupId(), knowledgeBaseFolderId,
-			_classNameLocalService.fetchClassName(KBFolder.class.getName()),
-			knowledgeBaseArticle);
+			kbFolder.getGroupId(),
+			_portal.getClassNameId(KBFolder.class.getName()),
+			knowledgeBaseFolderId, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -221,16 +219,15 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	private KnowledgeBaseArticle _getKnowledgeBaseArticle(
-			Long contentSpaceId, Long resourcePrimaryKey,
-			ClassName resourceClassName,
+			Long contentSpaceId, long parentResourceClassNameId,
+			Long parentResourcePrimaryKey,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _toKBArticle(
 			_kbArticleService.addKBArticle(
-				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
-				resourceClassName.getClassNameId(), resourcePrimaryKey,
-				knowledgeBaseArticle.getTitle(),
+				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, parentResourceClassNameId,
+				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null,
@@ -290,9 +287,6 @@ public class KnowledgeBaseArticleResourceImpl
 		new KnowledgeBaseArticleEntityModel();
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private KBArticleService _kbArticleService;
 
 	@Reference
@@ -300,5 +294,8 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Reference
 	private KnowledgeBaseArticleDTOConverter _knowledgeBaseArticleDTOConverter;
+
+	@Reference
+	private Portal _portal;
 
 }

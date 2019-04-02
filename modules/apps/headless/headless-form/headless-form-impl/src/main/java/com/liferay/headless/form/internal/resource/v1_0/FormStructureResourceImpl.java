@@ -19,8 +19,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.internal.dto.v1_0.util.StructureUtil;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -69,14 +67,8 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 	}
 
 	private long _getClassNameId() {
-		ClassName className = _classNameLocalService.fetchClassName(
-			DDMFormInstance.class.getName());
-
-		return className.getClassNameId();
+		return _portal.getClassNameId(DDMFormInstance.class.getName());
 	}
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

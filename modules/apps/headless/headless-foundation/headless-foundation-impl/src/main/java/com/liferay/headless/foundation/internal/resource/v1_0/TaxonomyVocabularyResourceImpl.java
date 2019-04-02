@@ -28,7 +28,6 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -232,9 +230,6 @@ public class TaxonomyVocabularyResourceImpl
 		long groupId, long classNameId, long classTypePK,
 		long[] requiredClassNameIds) {
 
-		ClassName className = _classNameLocalService.fetchByClassNameId(
-			classNameId);
-
 		return new AssetType() {
 			{
 				required = ArrayUtil.contains(
@@ -250,7 +245,7 @@ public class TaxonomyVocabularyResourceImpl
 						AssetRendererFactory assetRendererFactory =
 							AssetRendererFactoryRegistryUtil.
 								getAssetRendererFactoryByClassName(
-									className.getClassName());
+									_portal.getClassName(classNameId));
 
 						ClassTypeReader classTypeReader =
 							assetRendererFactory.getClassTypeReader();
@@ -283,7 +278,7 @@ public class TaxonomyVocabularyResourceImpl
 						}
 
 						return _classNameToAssetTypeTypes.get(
-							className.getClassName());
+							_portal.getClassName(classNameId));
 					});
 			}
 		};
@@ -327,10 +322,8 @@ public class TaxonomyVocabularyResourceImpl
 				"Invalid asset type: " + assetTypeType);
 		}
 
-		ClassName className = _classNameLocalService.fetchClassName(
+		return _portal.getClassNameId(
 			_assetTypeTypeToClassNames.get(assetTypeType));
-
-		return className.getClassNameId();
 	}
 
 	private long _getClassTypePK(long classNameId, String subtype, long groupId)
@@ -343,12 +336,9 @@ public class TaxonomyVocabularyResourceImpl
 			return AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 		}
 
-		ClassName className = _classNameLocalService.fetchByClassNameId(
-			classNameId);
-
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className.getClassName());
+				_portal.getClassName(classNameId));
 
 		ClassTypeReader classTypeReader =
 			assetRendererFactory.getClassTypeReader();
@@ -470,9 +460,6 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Context
 	private HttpServletResponse _httpServletResponse;

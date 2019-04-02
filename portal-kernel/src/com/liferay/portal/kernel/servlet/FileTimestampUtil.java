@@ -98,7 +98,18 @@ public class FileTimestampUtil {
 		return timestamp;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #reset(ServletContext)
+	 */
+	@Deprecated
 	public static void reset() {
+	}
+
+	public static void reset(ServletContext servletContext) {
+		String timestampsCacheKey = FileTimestampUtil.class.getName();
+
+		servletContext.removeAttribute(timestampsCacheKey);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

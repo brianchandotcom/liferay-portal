@@ -37,11 +37,11 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			return;
 		}
 
-		_invokeJob();
-
 		updateBuildDescription();
 
 		keepLogs(true);
+
+		_invokeJob();
 	}
 
 	@Override
@@ -64,9 +64,25 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		buildData.setBuildDescription(
 			JenkinsResultsParserUtil.combine(
 				"<strong>GIT ID</strong> - ", _getPortalBranchAbbreviatedSHA(),
-				" - <a href=\"", _getInvocationURL(), "\">Invocation URL</a>"));
+				" - <a href=\"",
+				JenkinsResultsParserUtil.getRemoteURL(_getInvocationURL()),
+				"\">Invocation URL</a>"));
 
 		super.updateBuildDescription();
+	}
+
+	private String _getInvocationCohortName() {
+		String invocationCorhortName = System.getenv("INVOCATION_COHORT_NAME");
+
+		if ((invocationCorhortName != null) &&
+			!invocationCorhortName.isEmpty()) {
+
+			return invocationCorhortName;
+		}
+
+		BuildData buildData = getBuildData();
+
+		return buildData.getCohortName();
 	}
 
 	private String _getInvocationURL() {
@@ -77,7 +93,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		String baseInvocationURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
-					"http://" + _INVOCATION_COHORT_NAME + ".liferay.com"),
+					"http://" + _getInvocationCohortName() + ".liferay.com"),
 				1);
 
 		S buildData = getBuildData();
@@ -179,8 +195,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		return false;
 	}
-
-	private static final String _INVOCATION_COHORT_NAME = "test-5";
 
 	private String _invocationURL;
 

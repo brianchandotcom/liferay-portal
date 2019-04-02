@@ -841,7 +841,7 @@ definition {
 
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-			value1 = "Specific Display Page"
+			value1 = "Specific Display Page Template"
 		);
 
 		Click(

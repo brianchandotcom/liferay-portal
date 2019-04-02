@@ -242,12 +242,12 @@ definition {
 
 			AssertSelectedLabel(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-				value1 = "Default Display Page"
+				value1 = "Default Display Page Template"
 			);
 
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
-				value1 = "Display Page Name"
+				value1 = "Display Page Name Template"
 			);
 		}
 

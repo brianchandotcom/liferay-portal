@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -102,6 +104,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			DataActionKeys.ADD_DATA_LAYOUT, ddmStructure.getGroupId(),
 			_groupLocalService);
 
+		ServiceContext serviceContext = new ServiceContext();
+
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
@@ -109,9 +113,15 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 				LocalizedValueUtil.toLocalizationMap(dataLayout.getName()),
 				LocalizedValueUtil.toLocalizationMap(
 					dataLayout.getDescription()),
-				DataLayoutUtil.toJSON(dataLayout), new ServiceContext());
+				DataLayoutUtil.toJSON(dataLayout), serviceContext);
 
 		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), ddmStructure.getGroupId(),
+			PrincipalThreadLocal.getUserId(),
+			InternalDataLayout.class.getName(), dataLayout.getId(),
+			serviceContext.getModelPermissions());
 
 		return dataLayout;
 	}
@@ -206,5 +216,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	private ModelResourcePermission<InternalDataRecordCollection>
 		_modelResourcePermission;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

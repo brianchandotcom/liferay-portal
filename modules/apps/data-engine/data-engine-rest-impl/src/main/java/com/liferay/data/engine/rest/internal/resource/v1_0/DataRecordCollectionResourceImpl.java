@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -242,7 +243,9 @@ public class DataRecordCollectionResourceImpl
 			DataActionKeys.ADD_DATA_RECORD_COLLECTION,
 			ddmStructure.getGroupId(), _groupLocalService);
 
-		return DataRecordCollectionUtil.toDataRecordCollection(
+		ServiceContext serviceContext = new ServiceContext();
+
+		dataRecordCollection = DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				dataDefinitionId, null,
@@ -250,8 +253,15 @@ public class DataRecordCollectionResourceImpl
 					dataRecordCollection.getName()),
 				LocalizedValueUtil.toLocalizationMap(
 					dataRecordCollection.getDescription()),
-				0, DDLRecordSetConstants.SCOPE_DATA_ENGINE,
-				new ServiceContext()));
+				0, DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext));
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), ddmStructure.getGroupId(),
+			PrincipalThreadLocal.getUserId(),
+			InternalDataRecordCollection.class.getName(),
+			dataRecordCollection.getId(), serviceContext.getModelPermissions());
+
+		return dataRecordCollection;
 	}
 
 	@Override
@@ -375,6 +385,9 @@ public class DataRecordCollectionResourceImpl
 
 	private ModelResourcePermission<InternalDataRecordCollection>
 		_modelResourcePermission;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

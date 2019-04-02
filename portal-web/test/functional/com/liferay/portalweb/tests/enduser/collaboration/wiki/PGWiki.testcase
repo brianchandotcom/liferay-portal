@@ -990,6 +990,8 @@ definition {
 
 	@priority = "3"
 	test RemoveRedirectLinkFromWikiPage {
+		property test.name.skip.portal.instance = "PGWiki#RemoveRedirectLinkFromWikiPage";
+
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiNavigator.gotoAllPagesPG();

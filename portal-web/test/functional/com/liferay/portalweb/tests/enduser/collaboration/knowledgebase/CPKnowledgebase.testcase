@@ -168,6 +168,8 @@ definition {
 
 	@priority = "3"
 	test AddKBArticleViaTemplateCP {
+		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleViaTemplateCP";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -242,6 +244,8 @@ definition {
 
 	@priority = "3"
 	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
+		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -426,6 +430,8 @@ definition {
 
 	@priority = "3"
 	test AddKBArticleWithoutRequiredCategory {
+		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithoutRequiredCategory";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -542,6 +548,8 @@ definition {
 
 	@priority = "3"
 	test CancelAddKBArticle {
+		property test.name.skip.portal.instance = "CPKnowledgebase#CancelAddKBArticle";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -560,6 +568,8 @@ definition {
 
 	@priority = "3"
 	test CancelEditKBArticle {
+		property test.name.skip.portal.instance = "CPKnowledgebase#CancelEditKBArticle";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

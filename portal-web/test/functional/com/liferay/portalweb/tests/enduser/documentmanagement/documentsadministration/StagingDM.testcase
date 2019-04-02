@@ -181,6 +181,8 @@ definition {
 	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."
 	@priority = "5"
 	test PublishSubfolderWithDocumentsViaSAP {
+		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
+
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 1"

@@ -339,11 +339,12 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!string} payload.fragmentEntryLinkId
- * @return {object}
+ * @param {object} state
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {string} payload.fragmentEntryLinkId
+ * @param {string} payload.fragmentEntryLinkType
+ * @return {Promise<object>}
  * @review
  */
 function removeFragmentEntryLinkReducer(state, actionType, payload) {
@@ -777,8 +778,8 @@ function _moveFragmentEntryLink(
 /**
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
- * @param {string} fragmentEntryLinkType
- * @return {Promise}
+ * @param {string} [fragmentEntryLinkType=FRAGMENTS_EDITOR_ROW_TYPES.componentRow]
+ * @return {object} Next layout data
  * @review
  */
 function _removeFragment(

@@ -136,10 +136,18 @@
 {deltemplate ClayAutocomplete.ItemContent variant="'sharingUser'"}
 	{@param data: ?}
 
-	{call ClaySticker.render}
-		{param size: 'lg' /}
-		{param imageSrc: $data.data.portraitURL /}
-		{param shape: 'circle' /}
-	{/call}
-	<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
+	<div class="autofit-row autofit-row-center">
+		<div class="autofit-col inline-item-before">
+			{call ClaySticker.render}
+				{param size: 'lg' /}
+				{param imageSrc: $data.data.portraitURL /}
+				{param shape: 'circle' /}
+			{/call}
+		</div>
+
+		<div class="autofit-col autofit-col-expand">
+			<strong>{$data.data.fullName}</strong>
+			<span>{$data.data.emailAddress}</span>
+		</div>
+	</div>
 {/deltemplate}

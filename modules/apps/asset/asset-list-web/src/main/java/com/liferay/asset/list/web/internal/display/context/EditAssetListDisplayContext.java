@@ -29,13 +29,16 @@ import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -59,11 +62,14 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
@@ -75,6 +81,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -131,6 +138,22 @@ public class EditAssetListDisplayContext {
 		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
 
 		return _assetListEntryId;
+	}
+
+	public List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRels() {
+
+		if (_assetListEntrySegmentsEntryRels != null) {
+			return _assetListEntrySegmentsEntryRels;
+		}
+
+		_assetListEntrySegmentsEntryRels =
+			AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				getAssetListEntrySegmentsEntryRels(
+					getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+		return _assetListEntrySegmentsEntryRels;
 	}
 
 	public int getAssetListEntryType() {
@@ -705,6 +728,17 @@ public class EditAssetListDisplayContext {
 		return _searchContainer;
 	}
 
+	public SegmentsEntry getSegmentsEntry() {
+		if (_segmentsEntry != null) {
+			return _segmentsEntry;
+		}
+
+		_segmentsEntry = SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(
+			getSegmentsEntryId());
+
+		return _segmentsEntry;
+	}
+
 	public long getSegmentsEntryId() {
 		if (_segmentsEntryId != null) {
 			return _segmentsEntryId;
@@ -715,6 +749,19 @@ public class EditAssetListDisplayContext {
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
 		return _segmentsEntryId;
+	}
+
+	public String getSegmentsEntryName(Locale locale) {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry != null) {
+			return segmentsEntry.getName(locale);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, SegmentsConstants.class);
+
+		return LanguageUtil.get(resourceBundle, "default-segment-name");
 	}
 
 	public long[] getSelectedGroupIds() throws PortalException {
@@ -923,6 +970,8 @@ public class EditAssetListDisplayContext {
 	private Boolean _anyAssetType;
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
+	private List<AssetListEntrySegmentsEntryRel>
+		_assetListEntrySegmentsEntryRels;
 	private Integer _assetListEntryType;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
@@ -942,6 +991,7 @@ public class EditAssetListDisplayContext {
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
+	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;

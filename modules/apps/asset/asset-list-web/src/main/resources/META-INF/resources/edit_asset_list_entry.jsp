@@ -31,6 +31,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
+
+List<AssetListEntrySegmentsEntryRel> assetEntryListSegmentsEntryRels = editAssetListDisplayContext.getAssetListEntrySegmentsEntryRels();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
@@ -39,6 +41,57 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
+						<c:choose>
+							<c:when test="<%= assetEntryListSegmentsEntryRels.size() > 1 %>">
+								<div class="autofit-row autofit-row-center">
+									<div class="autofit-col autofit-col-expand">
+										<strong class="text-uppercase">
+											<liferay-ui:message key="personalized-variations" />
+										</strong>
+									</div>
+								</div>
+
+								<ul class="nav nav-stacked">
+
+									<%
+									for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel : assetEntryListSegmentsEntryRels) {
+									%>
+
+										<li class="nav-item">
+
+											<%
+											PortletURL editAssetListEntryURL = renderResponse.createRenderURL();
+
+											editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+											editAssetListEntryURL.setParameter("redirect", currentURL);
+											editAssetListEntryURL.setParameter("assetListEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getAssetListEntryId()));
+											editAssetListEntryURL.setParameter("segmentsEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getSegmentsEntryId()));
+											%>
+
+											<a class="nav-link truncate-text <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>" href="<%= editAssetListEntryURL.toString() %>">
+												<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(locale)) %>
+											</a>
+										</li>
+
+									<%
+									}
+									%>
+
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<p class="text-uppercase">
+									<strong><liferay-ui:message key="personalized-variations" /></strong>
+								</p>
+
+								<liferay-frontend:empty-result-message
+									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
+									componentId='<%= renderResponse.getNamespace() + "emptyResultMessageComponent" %>'
+									description='<%= LanguageUtil.get(request, "no-personalized-variations-were-found") %>'
+									elementType='<%= LanguageUtil.get(request, "personalized-variations") %>'
+								/>
+							</c:otherwise>
+						</c:choose>
 					</li>
 				</ul>
 			</nav>

@@ -28,14 +28,12 @@ import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
 import com.liferay.document.library.opener.google.drive.web.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -168,10 +166,8 @@ public class OAuth2Manager {
 			_getDlOpenerGoogleDriveConfiguration(long companyId)
 		throws ConfigurationException {
 
-		return _configurationProvider.getConfiguration(
-			DLOpenerGoogleDriveCompanyConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, DLOpenerGoogleDriveConstants.SERVICE_NAME));
+		return _configurationProvider.getCompanyConfiguration(
+			DLOpenerGoogleDriveCompanyConfiguration.class, companyId);
 	}
 
 	private synchronized GoogleAuthorizationCodeFlow

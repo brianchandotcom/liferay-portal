@@ -513,7 +513,7 @@ public class ResourceOpenAPIParser {
 		String parameterType = javaMethodParameter.getParameterType();
 
 		if (Objects.equals(parameterType, ContentSpace.class.getName())) {
-			return "@Context";
+			return "@PathParam(\"content-space-id\")";
 		}
 
 		if (Objects.equals(parameterType, Filter.class.getName()) &&

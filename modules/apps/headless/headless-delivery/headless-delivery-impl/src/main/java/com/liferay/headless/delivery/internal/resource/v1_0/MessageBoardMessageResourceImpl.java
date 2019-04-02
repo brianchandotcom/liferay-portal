@@ -14,21 +14,15 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardMessageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.model.User;
@@ -38,17 +32,12 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Collections;
 
@@ -240,48 +229,8 @@ public class MessageBoardMessageResourceImpl
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
 		throws Exception {
 
-		return new MessageBoardMessage() {
-			{
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						MBMessage.class.getName(), mbMessage.getMessageId()));
-				anonymous = mbMessage.isAnonymous();
-				articleBody = mbMessage.getBody();
-				contentSpaceId = mbMessage.getGroupId();
-				dateCreated = mbMessage.getCreateDate();
-				dateModified = mbMessage.getModifiedDate();
-				encodingFormat = mbMessage.getFormat();
-				headline = mbMessage.getSubject();
-				id = mbMessage.getMessageId();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						MBMessage.class.getName(), mbMessage.getMessageId()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfMessageBoardAttachments =
-					mbMessage.getAttachmentsFileEntriesCount();
-				numberOfMessageBoardMessages =
-					_mbMessageLocalService.getChildMessagesCount(
-						mbMessage.getMessageId(),
-						WorkflowConstants.STATUS_APPROVED);
-				showAsAnswer = mbMessage.isAnswer();
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						MBMessage.class.getName(), mbMessage.getMessageId()),
-					TaxonomyCategoryUtil::toTaxonomyCategory,
-					TaxonomyCategory.class);
-
-				setCreator(
-					() -> {
-						if (mbMessage.isAnonymous()) {
-							return null;
-						}
-
-						return CreatorUtil.toCreator(
-							_portal,
-							_userService.getUserById(mbMessage.getUserId()));
-					});
-			}
-		};
+		return _messageBoardMessageDTOConverter.toDTO(
+			new DefaultDTOConverterContext(null, mbMessage.getPrimaryKey()));
 	}
 
 	private void _updateAnswer(
@@ -302,30 +251,15 @@ public class MessageBoardMessageResourceImpl
 		new MessageBoardMessageEntityModel();
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
 	private MBMessageService _mbMessageService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RatingsStatsLocalService _ratingsStatsLocalService;
+	private MessageBoardMessageDTOConverter _messageBoardMessageDTOConverter;
 
 	@Context
 	private User _user;
-
-	@Reference
-	private UserService _userService;
 
 }

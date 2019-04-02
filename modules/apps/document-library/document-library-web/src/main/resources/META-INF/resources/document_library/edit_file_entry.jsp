@@ -451,7 +451,7 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 				</c:if>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
 					<liferay-asset:select-asset-display-page
 						classNameId="<%= PortalUtil.getClassNameId(DLFileEntry.class) %>"
 						classPK="<%= (fileEntry != null) ? fileEntry.getFileEntryId() : 0 %>"

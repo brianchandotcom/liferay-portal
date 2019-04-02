@@ -143,7 +143,7 @@ public class FragmentEntryLinkDisplayContext {
 		if (layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-			return "display-page";
+			return "display-page-template";
 		}
 
 		return "page-template";
@@ -306,7 +306,7 @@ public class FragmentEntryLinkDisplayContext {
 					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class),
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 		}
-		else if (Objects.equals(getNavigation(), "display-pages")) {
+		else if (Objects.equals(getNavigation(), "display-page-templates")) {
 			fragmentEntryLinks =
 				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 					fragmentEntry.getGroupId(), getFragmentEntryId(),

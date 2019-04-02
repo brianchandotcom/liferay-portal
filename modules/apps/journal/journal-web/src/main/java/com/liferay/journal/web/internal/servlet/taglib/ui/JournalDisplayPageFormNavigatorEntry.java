@@ -34,7 +34,7 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "display-page";
+		return "display-page-template";
 	}
 
 	@Reference(target = "(view=private)", unbind = "-")

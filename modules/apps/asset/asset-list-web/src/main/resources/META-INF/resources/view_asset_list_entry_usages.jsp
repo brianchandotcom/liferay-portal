@@ -85,11 +85,11 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 								<%
 								PortletURL displayPagesNavigationURL = assetListEntryUsagesDisplayContext.getPortletURL();
 
-								displayPagesNavigationURL.setParameter("navigation", "display-pages");
+								displayPagesNavigationURL.setParameter("navigation", "display-page-templates");
 								%>
 
-								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 								</a>
 							</li>
 						</ul>
@@ -108,8 +108,8 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") %>'>
 							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 						</c:when>
-						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-pages") %>'>
-							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates") %>'>
+							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />

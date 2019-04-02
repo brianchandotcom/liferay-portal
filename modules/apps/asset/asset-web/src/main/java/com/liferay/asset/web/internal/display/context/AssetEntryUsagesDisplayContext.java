@@ -160,7 +160,7 @@ public class AssetEntryUsagesDisplayContext {
 		if (classNameId == PortalUtil.getClassNameId(
 				AssetDisplayPageEntry.class)) {
 
-			return "display-page";
+			return "display-page-template";
 		}
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
@@ -306,7 +306,7 @@ public class AssetEntryUsagesDisplayContext {
 
 			assetEntryUsagesCount = getDisplayPagesUsageCount();
 		}
-		else if (Objects.equals(getNavigation(), "display-pages")) {
+		else if (Objects.equals(getNavigation(), "display-page-templates")) {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					getAssetEntryId(),

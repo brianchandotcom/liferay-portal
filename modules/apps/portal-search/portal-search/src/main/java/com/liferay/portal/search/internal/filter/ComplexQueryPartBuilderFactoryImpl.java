@@ -12,38 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.query;
+package com.liferay.portal.search.internal.filter;
 
-import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilder;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public abstract class BaseQueryImpl implements Query {
+@Component(service = ComplexQueryPartBuilderFactory.class)
+public class ComplexQueryPartBuilderFactoryImpl
+	implements ComplexQueryPartBuilderFactory {
 
 	@Override
-	public Float getBoost() {
-		return _boost;
+	public ComplexQueryPartBuilder builder() {
+		return new ComplexQueryPartImpl.Builder();
 	}
-
-	@Override
-	public String getQueryName() {
-		return _queryName;
-	}
-
-	@Override
-	public void setBoost(Float boost) {
-		_boost = boost;
-	}
-
-	@Override
-	public void setQueryName(String queryName) {
-		_queryName = queryName;
-	}
-
-	private static final long serialVersionUID = 1L;
-
-	private Float _boost;
-	private String _queryName;
 
 }

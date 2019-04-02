@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.facet.custom;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.search.facet.Facet;
@@ -92,6 +93,20 @@ public class CustomFacetSearchContributorImpl
 		}
 
 		@Override
+		public CustomFacetBuilder frequencyThreshold(int frequencyThreshold) {
+			_frequencyThreshold = frequencyThreshold;
+
+			return this;
+		}
+
+		@Override
+		public CustomFacetBuilder maxTerms(int maxTerms) {
+			_maxTerms = maxTerms;
+
+			return this;
+		}
+
+		@Override
 		public CustomFacetBuilder selectedValues(String... selectedValues) {
 			_selectedValues = selectedValues;
 
@@ -106,11 +121,18 @@ public class CustomFacetSearchContributorImpl
 			facetConfiguration.setStatic(false);
 			facetConfiguration.setWeight(1.1);
 
+			JSONObject jsonObject = facetConfiguration.getData();
+
+			jsonObject.put("frequencyThreshold", _frequencyThreshold);
+			jsonObject.put("maxTerms", _maxTerms);
+
 			return facetConfiguration;
 		}
 
 		private String _aggregationName;
 		private String _fieldToAggregate;
+		private int _frequencyThreshold;
+		private int _maxTerms;
 		private final SearchContext _searchContext;
 		private String[] _selectedValues;
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.FacetContext;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -48,20 +49,35 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
-	public void addAggregation(Aggregation aggregation) {
+	public SearchRequestBuilder addAggregation(Aggregation aggregation) {
 		Map<String, Aggregation> map = getSearchContextKeyAggregationsMap();
 
 		map.put(aggregation.getName(), aggregation);
+
+		return this;
 	}
 
 	@Override
-	public void addPipelineAggregation(
+	public SearchRequestBuilder addComplexQueryPart(
+		ComplexQueryPart complexQueryPart) {
+
+		List<ComplexQueryPart> list = getSearchContextKeyComplexQueryParts();
+
+		list.add(complexQueryPart);
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder addPipelineAggregation(
 		PipelineAggregation pipelineAggregation) {
 
 		Map<String, PipelineAggregation> map =
 			getSearchContextKeyPipelineAggregationsMap();
 
 		map.put(pipelineAggregation.getName(), pipelineAggregation);
+
+		return this;
 	}
 
 	@Override
@@ -114,6 +130,13 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		else {
 			_modelIndexerClasses = Collections.emptyList();
 		}
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder postFilterQuery(Query query) {
+		_postFilterQuery = query;
 
 		return this;
 	}
@@ -198,6 +221,19 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		}
 
 		@Override
+		public List<ComplexQueryPart> getComplexQueryParts() {
+			List<ComplexQueryPart> list =
+				(List<ComplexQueryPart>)_searchContext.getAttribute(
+					_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS);
+
+			if (list != null) {
+				return list;
+			}
+
+			return Collections.emptyList();
+		}
+
+		@Override
 		public List<String> getEntryClassNames() {
 			return Arrays.asList(_searchContext.getEntryClassNames());
 		}
@@ -218,6 +254,11 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 			}
 
 			return map;
+		}
+
+		@Override
+		public Query getPostFilterQuery() {
+			return _postFilterQuery;
 		}
 
 		@Override
@@ -294,6 +335,25 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		}
 	}
 
+	protected List<ComplexQueryPart> getSearchContextKeyComplexQueryParts() {
+		synchronized (_searchContext) {
+			ArrayList<ComplexQueryPart> list =
+				(ArrayList<ComplexQueryPart>)_searchContext.getAttribute(
+					_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS);
+
+			if (list != null) {
+				return list;
+			}
+
+			list = new ArrayList<>();
+
+			_searchContext.setAttribute(
+				_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS, list);
+
+			return list;
+		}
+	}
+
 	protected Map<String, PipelineAggregation>
 		getSearchContextKeyPipelineAggregationsMap() {
 
@@ -319,6 +379,9 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	private static final String _SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP =
 		"search.request.aggregations.map";
 
+	private static final String _SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS =
+		"search.request.complex.query.parts";
+
 	private static final String _SEARCH_CONTEXT_KEY_EXPLAIN =
 		"search.request.explain";
 
@@ -342,6 +405,7 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	private final FacetContext _facetContext;
 	private List<Class<?>> _modelIndexerClasses = Collections.emptyList();
+	private Query _postFilterQuery;
 	private final SearchContext _searchContext;
 
 }

@@ -47,94 +47,116 @@ public class SimpleStringQueryImpl
 		return queryVisitor.visit(this);
 	}
 
+	@Override
 	public void addField(String field, float boost) {
 		_fieldBoostMap.put(field, boost);
 	}
 
+	@Override
 	public void addFields(String... fields) {
 		for (String field : fields) {
-			_fieldBoostMap.put(field, BOOST_DEFAULT);
+			_fieldBoostMap.put(field, null);
 		}
 	}
 
+	@Override
 	public String getAnalyzer() {
 		return _analyzer;
 	}
 
+	@Override
 	public Boolean getAnalyzeWildcard() {
 		return _analyzeWildcard;
 	}
 
+	@Override
 	public Boolean getAutoGenerateSynonymsPhraseQuery() {
 		return _autoGenerateSynonymsPhraseQuery;
 	}
 
+	@Override
 	public Operator getDefaultOperator() {
 		return _defaultOperator;
 	}
 
+	@Override
 	public Map<String, Float> getFieldBoostMap() {
 		return Collections.unmodifiableMap(_fieldBoostMap);
 	}
 
+	@Override
 	public Integer getFuzzyMaxExpansions() {
 		return _fuzzyMaxExpansions;
 	}
 
+	@Override
 	public Integer getFuzzyPrefixLength() {
 		return _fuzzyPrefixLength;
 	}
 
+	@Override
 	public Boolean getFuzzyTranspositions() {
 		return _fuzzyTranspositions;
 	}
 
+	@Override
 	public Boolean getLenient() {
 		return _lenient;
 	}
 
+	@Override
 	public String getQuery() {
 		return _query;
 	}
 
+	@Override
 	public String getQuoteFieldSuffix() {
 		return _quoteFieldSuffix;
 	}
 
+	@Override
 	public void setAnalyzer(String analyzer) {
 		_analyzer = analyzer;
 	}
 
+	@Override
 	public void setAnalyzeWildcard(Boolean analyzeWildcard) {
 		_analyzeWildcard = analyzeWildcard;
 	}
 
+	@Override
 	public void setAutoGenerateSynonymsPhraseQuery(
 		Boolean autoGenerateSynonymsPhraseQuery) {
 
 		_autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
 	}
 
+	@Override
 	public void setDefaultOperator(Operator defaultOperator) {
 		_defaultOperator = defaultOperator;
 	}
 
+	@Override
 	public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions) {
 		_fuzzyMaxExpansions = fuzzyMaxExpansions;
 	}
 
+	@Override
 	public void setFuzzyPrefixLength(Integer fuzzyPrefixLength) {
 		_fuzzyPrefixLength = fuzzyPrefixLength;
 	}
 
+	@Override
 	public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
 		_fuzzyTranspositions = fuzzyTranspositions;
 	}
 
+	@Override
 	public void setLenient(Boolean lenient) {
 		_lenient = lenient;
 	}
 
+	@Override
 	public void setQuoteFieldSuffix(String quoteFieldSuffix) {
 		_quoteFieldSuffix = quoteFieldSuffix;
 	}
@@ -162,7 +184,7 @@ public class SimpleStringQueryImpl
 	private Boolean _analyzeWildcard;
 	private Boolean _autoGenerateSynonymsPhraseQuery;
 	private Operator _defaultOperator;
-	private Map<String, Float> _fieldBoostMap = new HashMap<>();
+	private final Map<String, Float> _fieldBoostMap = new HashMap<>();
 	private Integer _fuzzyMaxExpansions;
 	private Integer _fuzzyPrefixLength;
 	private Boolean _fuzzyTranspositions;

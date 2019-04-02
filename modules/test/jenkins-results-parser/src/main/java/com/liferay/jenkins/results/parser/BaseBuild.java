@@ -1681,7 +1681,8 @@ public abstract class BaseBuild implements Build {
 					"return toggleStopwatchRecordExpander(\'", namespace,
 					"\', \'", getName(), "\')"));
 			expanderAnchorElement.addAttribute(
-				"style", "text-decoration: none");
+				"style",
+				"font-family: monospace, monospace; text-decoration: none");
 
 			return expanderAnchorElement;
 		}
@@ -2611,7 +2612,7 @@ public abstract class BaseBuild implements Build {
 				"\', \'\')"));
 
 		stopWatchRecordsExpanderAnchorElement.addAttribute(
-			"style", "text-decoration: none");
+			"style", "font-family: monospace, monospace; text-decoration: none");
 
 		return stopWatchRecordsExpanderAnchorElement;
 	}

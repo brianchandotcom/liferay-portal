@@ -80,6 +80,31 @@ public abstract class BaseRatingResourceImpl implements RatingResource {
 
 	@Override
 	@GET
+	@Path("/documents/{document-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Rating")})
+	public Page<Rating> getDocumentRatingsPage(
+			@NotNull @PathParam("document-id") Long documentId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/documents/{document-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Rating")})
+	public Rating postDocumentRating(
+			@NotNull @PathParam("document-id") Long documentId, Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@GET
 	@Path("/knowledge-base-articles/{knowledge-base-article-id}/ratings")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Rating")})
@@ -190,31 +215,6 @@ public abstract class BaseRatingResourceImpl implements RatingResource {
 	@Tags(value = {@Tag(name = "Rating")})
 	public Rating putRating(
 			@NotNull @PathParam("rating-id") Long ratingId, Rating rating)
-		throws Exception {
-
-		return new Rating();
-	}
-
-	@Override
-	@GET
-	@Path("/documents/{document-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Rating")})
-	public Page<Rating> getDocumentRatingsPage(
-			@NotNull @PathParam("document-id") Long documentId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/documents/{document-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Rating")})
-	public Rating postDocumentRating(
-			@NotNull @PathParam("document-id") Long documentId, Rating rating)
 		throws Exception {
 
 		return new Rating();

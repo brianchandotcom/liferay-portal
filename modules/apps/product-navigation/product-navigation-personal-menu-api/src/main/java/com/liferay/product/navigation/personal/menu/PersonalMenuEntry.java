@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -64,12 +66,17 @@ public interface PersonalMenuEntry {
 	 * Returns <code>true</code> if the entry should be displayed in the
 	 * user personal menu.
 	 *
+	 *
+	 * @param  portletRequest the portlet request
 	 * @param  permissionChecker the permission checker
 	 * @return <code>true</code> if the entry should be displayed in the user
 	 *         personal menu; <code>false</code> otherwise
 	 * @review
 	 */
-	public default boolean isShow(PermissionChecker permissionChecker) {
+	public default boolean isShow(
+			PortletRequest portletRequest, PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return true;
 	}
 

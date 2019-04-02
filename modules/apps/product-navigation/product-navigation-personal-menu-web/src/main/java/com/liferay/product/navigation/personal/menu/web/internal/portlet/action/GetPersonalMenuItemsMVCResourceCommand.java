@@ -33,10 +33,10 @@ import com.liferay.product.navigation.personal.menu.web.internal.PersonalMenuEnt
 
 import java.util.List;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,7 +68,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 			JSONArray jsonArray = _getPersonalMenuItemsJSONArray(
-				_portal.getHttpServletRequest(resourceRequest));
+				resourceRequest);
 
 			ServletResponseUtil.write(
 				httpServletResponse, jsonArray.toString());
@@ -79,18 +79,18 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	}
 
 	private JSONArray _getPersonalMenuEntriesAsJSONArray(
-		HttpServletRequest httpServletRequest,
-		List<PersonalMenuEntry> personalMenuEntries) {
+			PortletRequest portletRequest,
+			List<PersonalMenuEntry> personalMenuEntries)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		for (PersonalMenuEntry personalMenuEntry : personalMenuEntries) {
 			if (!personalMenuEntry.isShow(
-					themeDisplay.getPermissionChecker())) {
+					portletRequest, themeDisplay.getPermissionChecker())) {
 
 				continue;
 			}
@@ -100,7 +100,8 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			try {
 				jsonObject.put(
 					"href",
-					personalMenuEntry.getPortletURL(httpServletRequest));
+					personalMenuEntry.getPortletURL(
+						_portal.getHttpServletRequest(portletRequest)));
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);
@@ -116,7 +117,8 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	}
 
 	private JSONArray _getPersonalMenuItemsJSONArray(
-		HttpServletRequest httpServletRequest) {
+			PortletRequest portletRequest)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -129,7 +131,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			jsonObject.put(
 				"items",
 				_getPersonalMenuEntriesAsJSONArray(
-					httpServletRequest, groupedPersonalMenuEntries.get(i)));
+					portletRequest, groupedPersonalMenuEntries.get(i)));
 
 			if (i < (groupedPersonalMenuEntries.size() - 1)) {
 				jsonObject.put("separator", true);

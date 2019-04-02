@@ -33,17 +33,32 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
+
+boolean isFormPublished = ddmFormAdminDisplayContext.isFormPublished();
+boolean isFormSaved = formInstance != null ? true : false;
+String disableCopyBtnClass = "";
+
+if (!isFormPublished && isFormSaved) {
+	disableCopyBtnClass = "ddm-btn-disabled";
+}
 %>
 
-<div class="loading-animation" id="<portlet:namespace />loader"></div>
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, "/o/dynamic-data-mapping-form-builder/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
 <portlet:actionURL name="saveFormInstance" var="saveFormInstanceURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
 </portlet:actionURL>
 
-<div class="hide portlet-forms" id="<portlet:namespace />formContainer">
+<div class="lfr-alert-container">
+	<div class="container-fluid-1280 lfr-alert-wrapper"></div>
+</div>
+
+<div class="portlet-forms" id="<portlet:namespace />formContainer">
 	<clay:navigation-bar
 		componentId="formsNavigationBar"
+		elementClasses="forms-management-bar"
 		inverted="<%= true %>"
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>
@@ -56,14 +71,14 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 			<ul class="navbar-nav toolbar-group-field">
 				<li class="nav-item">
-					<button class="btn btn-secondary nav-btn nav-btn-monospaced publish-icon <%= (formInstance == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<liferay-ui:message key="copy-url" />" type="button">
+					<button class="btn btn-secondary lfr-ddm-share-url-button nav-btn nav-btn-monospaced share-form-icon <%= disableCopyBtnClass %> <%= (!isFormPublished && !isFormSaved) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<%= (disableCopyBtnClass == "") ? LanguageUtil.get(request, "copy-url") : LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") %>" type="button">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>link" />
 						</svg>
 					</button>
 				</li>
 				<li class="nav-item">
-					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced">
+					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 						</svg>
@@ -73,7 +88,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		</div>
 	</nav>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid-1280 ddm-translation-manager">
 		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 	</div>
 
@@ -82,6 +97,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedName() %>" />
+		<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>" />
+		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= serializedFormBuilderContext %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
@@ -100,8 +118,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					/>
 				</h1>
 
-				<aui:input name="name" type="hidden" />
-
 				<h5>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
@@ -113,234 +129,199 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						showSource="<%= false %>"
 					/>
 				</h5>
-
-				<aui:input name="description" type="hidden" />
 			</div>
 		</div>
 
-		<div class="container-fluid-1280 ddm-form-builder-app">
-			<aui:input name="serializedFormBuilderContext" type="hidden" />
-
-			<div id="<portlet:namespace />formBuilder"></div>
-			<div id="<portlet:namespace />ruleBuilder"></div>
-		</div>
-
-		<div class="container-fluid-1280">
-			<aui:button-row cssClass="ddm-form-builder-buttons">
-				<aui:button cssClass="btn-primary ddm-button" id="publish" value='<%= ddmFormAdminDisplayContext.isFormPublished() ? "unpublish-form": "publish-form" %>' />
-
-				<aui:button cssClass="ddm-button" id="save" value="save-form" />
-
-				<aui:button cssClass="btn-link" id="preview" value="preview-form" />
-			</aui:button-row>
-		</div>
-
-		<portlet:actionURL name="publishFormInstance" var="publishFormInstanceURL">
-			<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
-		</portlet:actionURL>
-
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
-
-		<liferay-form:ddm-form-builder
-			ddmStructureVersionId="<%= ddmFormAdminDisplayContext.getLatestDDMStructureVersionId() %>"
-			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
-			editingLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
-			fieldSetClassNameId="<%= PortalUtil.getClassNameId(DDMFormInstance.class) %>"
-			refererPortletNamespace="<%= liferayPortletResponse.getNamespace() %>"
-		/>
-
-		<aui:script use="aui-promise,liferay-ddm-form-portlet">
-			Liferay.namespace('DDM').FormSettings = {
-				autosaveInterval: '<%= ddmFormAdminDisplayContext.getAutosaveInterval() %>',
-				autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
-				portletNamespace: '<portlet:namespace />',
-				publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-				restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
-				sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
-				showPagination: true
-			};
-
-			A.Promise.all(
-				[
-					new A.Promise(
-						function(resolve) {
-							var formRegisteredHandler = Liferay.after(
-								'form:registered',
-								function(event) {
-									if (event.formName === '<portlet:namespace />editForm') {
-										formRegisteredHandler.detach();
-
-										resolve(event.form);
-									}
-								}
-							);
-						}
-					),
-					new A.Promise(
-						function(resolve) {
-							var formBuilderRegisteredHandler = Liferay.after(
-								'<portlet:namespace />formBuilder:registered',
-								function(event) {
-									formBuilderRegisteredHandler.detach();
-
-									resolve();
-								}
-							);
-						}
-					),
-					new A.Promise(
-						function(resolve) {
-							var ruleBuilderRegisteredHandler = Liferay.after(
-								'<portlet:namespace />ruleBuilder:registered',
-								function(event) {
-									ruleBuilderRegisteredHandler.detach();
-
-									resolve();
-								}
-							);
-						}
-					),
-					new A.Promise(
-						function(resolve) {
-							if (Liferay.DMMFieldTypesReady) {
-								resolve();
-							}
-							else {
-								var fieldTypesHandler = Liferay.onceAfter(
-									'DMMFieldTypesReady',
-									function() {
-										fieldTypesHandler.detach();
-
-										resolve();
-									}
-								);
-							}
-						}
-					)
-				]
-			).then(
-				function(result) {
-					var form = result[0];
-
-					Liferay.component(
-						'formPortlet',
-						new Liferay.DDM.FormPortlet(
-							{
-								defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-								editForm: form,
-								editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-								formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
-								formInstanceId: <%= formInstanceId %>,
-								localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
-								localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-								namespace: '<portlet:namespace />',
-								published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
-								publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-								ruleBuilder: Liferay.component('<portlet:namespace />ruleBuilder'),
-								showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
-								translationManager: Liferay.component('<portlet:namespace />translationManager')
-							}
-						)
-					);
-				}
-			).catch(
-				function(error) {
-					throw error;
-				}
-			);
-
-			Liferay.namespace('FormPortlet').destroySettings = function() {
-				var settingsNode = A.one('#<portlet:namespace />settingsModal');
-
-				if (settingsNode) {
-					Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
-				}
-			};
-
-			Liferay.namespace('DDM').openSettings = function() {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							cssClass: 'ddm-form-settings-modal',
-							height: 700,
-							resizable: false,
-							'toolbars.footer': [
-								{
-									cssClass: 'btn-link',
-									label: '<liferay-ui:message key="cancel" />',
-									on: {
-										click: function() {
-											Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
-										}
-									}
-								},
-								{
-									cssClass: 'btn-primary',
-									label: '<liferay-ui:message key="done" />',
-									on: {
-										click: function() {
-											var ddmForm = Liferay.component('settingsDDMForm');
-
-											ddmForm.validate(
-												function(hasErrors) {
-													if (!hasErrors) {
-														Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
-													}
-												}
-											);
-										}
-									}
-								}
-							],
-							width: 720
-						},
-						id: '<portlet:namespace />settingsModal',
-						title: '<liferay-ui:message key="form-settings" />'
-					},
-					function(dialogWindow) {
-						var bodyNode = dialogWindow.bodyNode;
-
-						var settingsNode = A.one('#<portlet:namespace />settings');
-
-						settingsNode.show();
-
-						bodyNode.append(settingsNode);
-					}
-				);
-			};
-
-			var clearPortletHandlers = function(event) {
-				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-					Liferay.detach('destroyPortlet', clearPortletHandlers);
-					Liferay.namespace('FormPortlet').destroySettings();
-
-					Liferay.destroyComponents(
-						function(component) {
-							var destroy = false;
-
-							if (
-								component === Liferay.component('<portlet:namespace />formBuilder') ||
-								component === Liferay.component('<portlet:namespace />ruleBuilder') ||
-								component === Liferay.component('<portlet:namespace />translationManager') ||
-								component === Liferay.component('formPortlet') ||
-								component === Liferay.component('settingsDDMForm')
-							) {
-								destroy = true;
-							}
-
-							return destroy;
-						}
-					);
-				}
-			};
-
-			Liferay.on('destroyPortlet', clearPortletHandlers);
-		</aui:script>
+		<div id="<portlet:namespace />-container"></div>
 	</aui:form>
 
 	<div class="container-fluid-1280 ddm-form-instance-settings hide" id="<portlet:namespace />settings">
 		<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
 	</div>
-
-	<%@ include file="/admin/copy_form_publish_url.jspf" %>
 </div>
+
+<portlet:actionURL name="publishFormInstance" var="publishFormInstanceURL">
+	<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
+</portlet:actionURL>
+
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
+
+<aui:script>
+	var rawModuleName = '<%= mainRequire %>'.split(' ')[0];
+
+	Liferay.namespace('DDM').FormSettings = {
+		autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
+		autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
+		portletNamespace: '<portlet:namespace />',
+		publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
+		restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
+		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
+		showPagination: true,
+		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+	};
+
+	Liferay.Forms.App = {
+		dispose: function() {
+			if (Liferay.Forms.instance) {
+				Liferay.Forms.instance.dispose();
+				Liferay.Forms.instance = null;
+			}
+		},
+		reset: function() {
+			var pages;
+
+			if (Liferay.Forms.instance) {
+				pages = Liferay.Forms.instance.state.pages;
+			}
+
+			this.dispose();
+			this.start(pages);
+		},
+		start: function(initialPages) {
+			Liferay.Loader.require(
+				rawModuleName,
+				function(packageName) {
+					var context = <%= serializedFormBuilderContext %>;
+
+					if (context.pages.length === 0 && initialPages) {
+						context.pages = initialPages;
+					}
+
+					Liferay.Forms.instance = new packageName.Form(
+						{
+							context: context,
+							dataProviderInstanceParameterSettingsURL: '<%= dataProviderInstanceParameterSettingsURL %>',
+							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
+							formInstanceId: '<%= formInstanceId %>',
+							functionsMetadata: <%= functionsMetadata %>,
+							functionsURL: '<%= functionsURL %>',
+							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
+							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
+							namespace: '<portlet:namespace />',
+							published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
+							rolesURL: '<%= rolesURL %>',
+							rules: <%= serializedDDMFormRules %>,
+							saved: <%= formInstance != null %>,
+							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
+							spritemap: Liferay.DDM.FormSettings.spritemap,
+							strings: Liferay.DDM.FormSettings.strings
+						},
+						'#<portlet:namespace />-container'
+					);
+				},
+				function(error) {
+				}
+			);
+		}
+	};
+
+	var clearPortletHandlers = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.Forms.App.dispose();
+
+			var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+			Liferay.destroyComponents(
+				function(component) {
+					var destroy = false;
+
+					if (component === translationManager) {
+						destroy = true;
+					}
+
+					return destroy;
+				}
+			);
+
+			Liferay.detach('destroyPortlet', clearPortletHandlers);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearPortletHandlers);
+
+	if (Liferay.DMMFieldTypesReady) {
+		Liferay.Forms.App.start();
+	}
+	else {
+		Liferay.onceAfter(
+			'DMMFieldTypesReady',
+			function() {
+				Liferay.Forms.App.start();
+			}
+		);
+	}
+</aui:script>
+
+<aui:script use="aui-base">
+	Liferay.namespace('FormPortlet').destroySettings = function() {
+		var settingsNode = A.one('#<portlet:namespace />settingsModal');
+
+		if (settingsNode) {
+			Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
+		}
+	};
+
+	Liferay.namespace('DDM').openSettings = function() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					cssClass: 'ddm-form-settings-modal',
+					height: 700,
+					resizable: false,
+					'toolbars.footer': [
+						{
+							cssClass: 'btn-link',
+							label: '<liferay-ui:message key="cancel" />',
+							on: {
+								click: function() {
+									Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
+								}
+							}
+						},
+						{
+							cssClass: 'btn-primary',
+							label: '<liferay-ui:message key="done" />',
+							on: {
+								click: function() {
+									var ddmForm = Liferay.component('settingsDDMForm');
+
+									ddmForm.validate(
+										function(hasErrors) {
+											if (!hasErrors) {
+												Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
+											}
+										}
+									);
+								}
+							}
+						}
+					],
+					width: 720
+				},
+				id: '<portlet:namespace />settingsModal',
+				title: '<liferay-ui:message key="form-settings" />'
+			},
+			function(dialogWindow) {
+				var bodyNode = dialogWindow.bodyNode;
+
+				var settingsNode = A.one('#<portlet:namespace />settings');
+
+				settingsNode.show();
+
+				bodyNode.append(settingsNode);
+			}
+		);
+	};
+
+	var clearPortletHandlers = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.namespace('FormPortlet').destroySettings();
+
+			Liferay.detach('destroyPortlet', clearPortletHandlers);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearPortletHandlers);
+</aui:script>

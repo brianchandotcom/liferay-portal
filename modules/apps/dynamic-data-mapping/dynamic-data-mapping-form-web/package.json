@@ -129,7 +129,7 @@
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
 			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
-			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/admin/js/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/build/",
@@ -156,7 +156,7 @@
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]
 	},
-	"main": "metal/js/main.es.js",
+	"main": "admin/js/main.es.js",
 	"name": "dynamic-data-mapping-form-web",
 	"private": true,
 	"scripts": {

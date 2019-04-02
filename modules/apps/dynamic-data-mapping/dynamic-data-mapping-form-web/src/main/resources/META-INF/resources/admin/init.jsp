@@ -84,6 +84,15 @@ page import="java.util.Set" %>
 
 <%
 DDMFormAdminDisplayContext ddmFormAdminDisplayContext = (DDMFormAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+String dataProviderInstanceParameterSettingsURL = ddmFormAdminDisplayContext.getDataProviderInstanceParameterSettingsURL();
+String dataProviderInstancesURL = ddmFormAdminDisplayContext.getDataProviderInstancesURL();
+String functionsMetadata = ddmFormAdminDisplayContext.getFunctionsMetadata();
+String functionsURL = ddmFormAdminDisplayContext.getFunctionsURL();
+String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
+String rolesURL = ddmFormAdminDisplayContext.getRolesURL();
+String serializedDDMFormRules = ddmFormAdminDisplayContext.getSerializedDDMFormRules();
+String serializedFormBuilderContext = ddmFormAdminDisplayContext.getSerializedFormBuilderContext();
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

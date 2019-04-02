@@ -62,6 +62,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 			structureJSONObject.put("rowId", String.valueOf(i));
 
+			structureJSONObject.put("type", fragmentEntryLink.getType());
+
 			structureJSONArray.put(structureJSONObject);
 		}
 
@@ -71,7 +73,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 		if (!fragmentEntryLinks.isEmpty()) {
 			jsonObject.put(
-				"rowId", String.valueOf(fragmentEntryLinks.size() - 1));
+				"nextRowId", String.valueOf(fragmentEntryLinks.size() - 1));
 		}
 
 		jsonObject.put("structure", structureJSONArray);

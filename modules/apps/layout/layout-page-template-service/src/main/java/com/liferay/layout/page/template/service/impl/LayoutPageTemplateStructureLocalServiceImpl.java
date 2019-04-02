@@ -155,6 +155,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 			columnsJSONObject.put("rowId", String.valueOf(i));
 
+			columnsJSONObject.put("type", fragmentEntryLink.getType());
+
 			structureJSONArray.put(columnsJSONObject);
 		}
 

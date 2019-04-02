@@ -1120,6 +1120,7 @@ public class ModulesStructureTest {
 				Assert.assertFalse(
 					sb.toString(),
 					!_gitRepoGradlePropertiesKeys.contains(key) &&
+					!key.endsWith(".ignore.local") &&
 					!key.endsWith(".version") && !matcher.matches());
 			}
 

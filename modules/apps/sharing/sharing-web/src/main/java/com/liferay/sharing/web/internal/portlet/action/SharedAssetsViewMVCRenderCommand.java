@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
@@ -48,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -173,10 +171,6 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_portal.getLocale(request));
-
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
 			new ArrayList<>();
 
@@ -184,7 +178,7 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 
 		return new SharedAssetsViewDisplayContext(
 			liferayPortletRequest, liferayPortletResponse, request,
-			resourceBundle, sharedAssetsFilterItems, _sharingEntryLocalService,
+			sharedAssetsFilterItems, _sharingEntryLocalService,
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingMenuItemFactory, _sharingEntryMenuItemContributorRegistry,
 			_sharingPermission);
@@ -213,9 +207,6 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private ServiceTrackerList<SharedAssetsFilterItem, SharedAssetsFilterItem>
 		_serviceTrackerList;

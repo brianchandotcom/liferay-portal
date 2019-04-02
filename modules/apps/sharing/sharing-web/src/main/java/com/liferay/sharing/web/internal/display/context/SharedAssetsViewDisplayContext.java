@@ -71,7 +71,7 @@ public class SharedAssetsViewDisplayContext {
 	public SharedAssetsViewDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, ResourceBundle resourceBundle,
+		HttpServletRequest request,
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems,
 		SharingEntryLocalService sharingEntryLocalService,
 		Function<SharingEntry, SharingEntryInterpreter>

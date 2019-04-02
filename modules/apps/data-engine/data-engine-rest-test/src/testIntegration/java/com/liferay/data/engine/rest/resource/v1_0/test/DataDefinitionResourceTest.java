@@ -34,11 +34,6 @@ public class DataDefinitionResourceTest
 
 	@Ignore
 	@Override
-	public void testDeleteDataDefinition() throws Exception {
-	}
-
-	@Ignore
-	@Override
 	public void testGetDataDefinition() throws Exception {
 	}
 

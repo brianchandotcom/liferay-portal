@@ -4,8 +4,11 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.8"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

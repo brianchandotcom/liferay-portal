@@ -24,10 +24,14 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -73,7 +77,27 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
 			ActionKeys.DELETE);
 
-		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		if (_ddlRecordSetLocalService.getRecordSetsCount(
+				ddmStructure.getGroupId(), dataDefinitionId, false) > 0) {
+
+			throw new RequiredStructureException.
+				MustNotDeleteStructureReferencedByStructureLinks(
+					dataDefinitionId);
+		}
+
+		List<DDMStructureVersion> structureVersions =
+			_ddmStructureVersionLocalService.getStructureVersions(
+				dataDefinitionId);
+
+		for (DDMStructureVersion structureVersion : structureVersions) {
+			_ddmStructureVersionLocalService.deleteDDMStructureVersion(
+				structureVersion);
+		}
+
+		_ddmStructureLocalService.deleteDDMStructure(dataDefinitionId);
 	}
 
 	@Override
@@ -334,10 +358,16 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Reference
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

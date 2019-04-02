@@ -30,8 +30,8 @@
 		data-hovered-item-id="{$hoveredItemId}"
 		data-layout-data="{$layoutData}"
 	>
-		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-			<div class="collapse menubar-collapse">
+		<nav>
+			<div class="collapse show">
 				{if $spritemap and $structure}
 					{call .treeNode}
 						{param handleElementRemoveButtonClick: $_handleElementRemoveButtonClick /}

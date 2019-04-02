@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
@@ -41,7 +42,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.time.LocalDateTime;
 
-import java.util.Date;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
@@ -177,12 +177,38 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
-	protected void preparePatch(BlogPosting blogPosting) {
-		blogPosting.setContentSpaceId((Long)null);
-		blogPosting.setDateCreated((Date)null);
-		blogPosting.setDateModified((Date)null);
-		blogPosting.setEncodingFormat((String)null);
-		blogPosting.setNumberOfComments((Number)null);
+	protected void preparePatch(
+		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
+
+		TaxonomyCategory[] taxonomyCategories =
+			blogPosting.getTaxonomyCategories();
+
+		if (taxonomyCategories != null) {
+			blogPosting.setTaxonomyCategoryIds(
+				transform(
+					taxonomyCategories, TaxonomyCategory::getTaxonomyCategoryId,
+					Long[].class));
+		}
+
+		Image image = blogPosting.getImage();
+		Image existingImage = existingBlogPosting.getImage();
+
+		existingBlogPosting.setImage(
+			new Image() {
+				{
+					caption = Optional.ofNullable(
+						image.getCaption()
+					).orElse(
+						existingImage.getCaption()
+					);
+
+					imageId = Optional.ofNullable(
+						image.getImageId()
+					).orElse(
+						existingImage.getImageId()
+					);
+				}
+			});
 	}
 
 	private ImageSelector _getImageSelector(Long imageId) {

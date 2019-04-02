@@ -183,9 +183,7 @@ public class NestableFlushEventListenerTest {
 		}
 	}
 
-	private void _assignKeys(List<ClassName> classNames, long[] keys)
-		throws Exception {
-
+	private void _assignKeys(List<ClassName> classNames, long[] keys) {
 		Stream<ClassName> classNameStream = classNames.stream();
 
 		Stream<Long> classNameIdStream = classNameStream.map(
@@ -205,9 +203,7 @@ public class NestableFlushEventListenerTest {
 		}
 	}
 
-	private void _assignValues(List<ClassName> classNames, String[] values)
-		throws Exception {
-
+	private void _assignValues(List<ClassName> classNames, String[] values) {
 		Stream<ClassName> classNameStream = classNames.stream();
 
 		Stream<String> classNameValueStream = classNameStream.map(

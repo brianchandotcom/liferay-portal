@@ -37,15 +37,15 @@ public class RandomTestUtil {
 		return new Date();
 	}
 
-	public static double nextDouble() throws Exception {
+	public static double nextDouble() {
 		return CounterLocalServiceUtil.increment();
 	}
 
-	public static int nextInt() throws Exception {
+	public static int nextInt() {
 		return (int)CounterLocalServiceUtil.increment();
 	}
 
-	public static long nextLong() throws Exception {
+	public static long nextLong() {
 		return CounterLocalServiceUtil.increment();
 	}
 

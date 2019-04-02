@@ -15,20 +15,33 @@
 package com.liferay.document.library.opener.google.drive.web.internal.connected.app;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.About;
 
 import com.liferay.connected.app.ConnectedApp;
 import com.liferay.connected.app.ConnectedAppProvider;
+import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.OAuth2Manager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+
+import java.io.IOException;
+
+import java.security.GeneralSecurityException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,7 +78,15 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					locale, getClass());
 
-				return LanguageUtil.get(resourceBundle, "google-drive");
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(LanguageUtil.get(resourceBundle, "google-drive"));
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(_getGoogleDriveUserEmailAddress(credential));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				return sb.toString();
 			}
 
 			@Override
@@ -76,6 +97,41 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 
 		};
 	}
+
+	@Activate
+	protected void activate() throws GeneralSecurityException, IOException {
+		_jsonFactory = JacksonFactory.getDefaultInstance();
+		_netHttpTransport = GoogleNetHttpTransport.newTrustedTransport();
+	}
+
+	private String _getGoogleDriveUserEmailAddress(Credential credential) {
+		try {
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, credential
+			).build();
+
+			Drive.About driveAbout = drive.about();
+
+			Drive.About.Get getRequest = driveAbout.get();
+
+			getRequest.setFields("user");
+
+			About about = getRequest.execute();
+
+			com.google.api.services.drive.model.User user = about.getUser();
+
+			return user.getEmailAddress();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	@Reference
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	private JacksonFactory _jsonFactory;
+	private NetHttpTransport _netHttpTransport;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

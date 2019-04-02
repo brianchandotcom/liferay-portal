@@ -17,6 +17,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,8 +42,16 @@ public class UnrecognizedPropertyExceptionMapper
 
 		Stream<JsonMappingException.Reference> stream = references.stream();
 
-		String path = stream.map(
-			JsonMappingException.Reference::getFieldName
+		String entity = stream.map(
+			reference -> {
+				Object from = reference.getFrom();
+
+				Class<?> clazz = from.getClass();
+
+				return StringBundler.concat(
+					"Property: ", reference.getFieldName(),
+					" is not defined in ", clazz.getSimpleName());
+			}
 		).collect(
 			Collectors.joining(".")
 		);
@@ -49,7 +59,7 @@ public class UnrecognizedPropertyExceptionMapper
 		return Response.status(
 			Response.Status.BAD_REQUEST
 		).entity(
-			"Unrecognized JSON path: " + path
+			entity
 		).type(
 			MediaType.TEXT_PLAIN
 		).build();

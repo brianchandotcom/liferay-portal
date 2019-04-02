@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -45,6 +46,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -78,6 +80,19 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Path("/content-spaces/{content-space-id}/data-layout-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public void postContentSpaceDataLayoutPermission(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @QueryParam("operation") String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
 	@Path("/data-definitions/{dataDefinitionId}/data-layouts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
@@ -87,6 +102,19 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 		throws Exception {
 
 		return new DataLayout();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/data-layout/{data-layout-id}/data-layout-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public void postDataLayoutDataLayoutPermission(
+			@NotNull @PathParam("data-layout-id") Long dataLayoutId,
+			@NotNull @QueryParam("operation") String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
 	}
 
 	@Override

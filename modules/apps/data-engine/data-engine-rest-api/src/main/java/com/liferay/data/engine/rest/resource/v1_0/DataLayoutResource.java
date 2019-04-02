@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -36,8 +37,18 @@ public interface DataLayoutResource {
 			Long contentSpaceId, Pagination pagination)
 		throws Exception;
 
+	public void postContentSpaceDataLayoutPermission(
+			Long contentSpaceId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception;
+
 	public DataLayout postDataDefinitionDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
+		throws Exception;
+
+	public void postDataLayoutDataLayoutPermission(
+			Long dataLayoutId, String operation,
+			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
 	public void deleteDataLayout(Long dataLayoutId) throws Exception;

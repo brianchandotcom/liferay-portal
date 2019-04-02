@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.internal.graphql.mutation.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
@@ -153,6 +154,23 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public void postContentSpaceDataLayoutPermission(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataLayoutPermission") DataLayoutPermission
+				dataLayoutPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource ->
+				dataLayoutResource.postContentSpaceDataLayoutPermission(
+					contentSpaceId, operation, dataLayoutPermission));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public DataLayout postDataDefinitionDataLayout(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("DataLayout") DataLayout dataLayout)
@@ -164,6 +182,23 @@ public class Mutation {
 			dataLayoutResource ->
 				dataLayoutResource.postDataDefinitionDataLayout(
 					dataDefinitionId, dataLayout));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public void postDataLayoutDataLayoutPermission(
+			@GraphQLName("data-layout-id") Long dataLayoutId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataLayoutPermission") DataLayoutPermission
+				dataLayoutPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource ->
+				dataLayoutResource.postDataLayoutDataLayoutPermission(
+					dataLayoutId, operation, dataLayoutPermission));
 	}
 
 	@GraphQLInvokeDetached

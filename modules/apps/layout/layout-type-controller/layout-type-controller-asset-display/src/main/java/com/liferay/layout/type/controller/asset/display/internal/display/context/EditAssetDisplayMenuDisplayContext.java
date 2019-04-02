@@ -134,7 +134,7 @@ public class EditAssetDisplayMenuDisplayContext {
 		}
 
 		editAssetEntryURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+			"portletResource", assetRendererFactory.getPortletId());
 
 		return editAssetEntryURL.toString();
 	}

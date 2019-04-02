@@ -20,7 +20,19 @@ definition {
 			PortletEntry.inputDescription(description = "${dmFolderDescription}");
 		}
 
-		PortletEntry.save();
+		Button.clickSave();
+
+		if ("${dmFolder}" == "Duplicate") {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "Please enter a unique folder name."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 
 		if (isSet(siteName)) {
 			ProductMenu.gotoSite(site = "${siteName}");

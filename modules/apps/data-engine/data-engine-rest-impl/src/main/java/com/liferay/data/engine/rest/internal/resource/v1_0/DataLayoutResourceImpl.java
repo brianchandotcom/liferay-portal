@@ -15,7 +15,10 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
+import com.liferay.data.engine.rest.internal.constants.DataEngineConstants;
+import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
@@ -28,16 +31,28 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,6 +104,77 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
+	public void postContentSpaceDataLayoutPermission(
+			Long contentSpaceId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
+		if (!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
+			!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			throw new BadRequestException(
+				"Operation must be 'delete' or 'save'");
+		}
+
+		DataEnginePermissionUtil.checkPermission(
+			DataActionKeys.DEFINE_PERMISSIONS, contentSpaceId,
+			_groupLocalService);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataLayoutPermission.getAddDataLayout()) {
+			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+		}
+
+		if (dataLayoutPermission.getDefinePermissions()) {
+			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		if (StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			List<Role> roles = DataEnginePermissionUtil.getRoles(
+				contextCompany, _roleLocalService,
+				dataLayoutPermission.getRoleNames());
+
+			for (Role role : roles) {
+				_resourcePermissionLocalService.setResourcePermissions(
+					contextCompany.getCompanyId(),
+					DataEngineConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(contextCompany.getCompanyId()),
+					role.getRoleId(), ArrayUtil.toStringArray(actionIds));
+			}
+		}
+		else {
+			List<Role> roles = DataEnginePermissionUtil.getRoles(
+				contextCompany, _roleLocalService,
+				dataLayoutPermission.getRoleNames());
+
+			for (Role role : roles) {
+				ResourcePermission resourcePermission =
+					_resourcePermissionLocalService.fetchResourcePermission(
+						contextCompany.getCompanyId(),
+						DataEngineConstants.RESOURCE_NAME,
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(contextCompany.getCompanyId()),
+						role.getRoleId());
+
+				if (resourcePermission != null) {
+					_resourcePermissionLocalService.deleteResourcePermission(
+						resourcePermission);
+				}
+			}
+		}
+	}
+
+	@Override
 	public DataLayout postDataDefinitionDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
@@ -124,6 +210,79 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			serviceContext.getModelPermissions());
 
 		return dataLayout;
+	}
+
+	public void postDataLayoutDataLayoutPermission(
+			Long dataLayoutId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
+		if (!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
+			!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			throw new BadRequestException(
+				"Operation must be 'delete' or 'save'");
+		}
+
+		DDMStructureLayout ddmStructureLayout =
+			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
+
+		DataEnginePermissionUtil.checkPermission(
+			DataActionKeys.DEFINE_PERMISSIONS, ddmStructureLayout.getGroupId(),
+			_groupLocalService);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataLayoutPermission.getDelete()) {
+			actionIds.add(ActionKeys.DELETE);
+		}
+
+		if (dataLayoutPermission.getUpdate()) {
+			actionIds.add(ActionKeys.UPDATE);
+		}
+
+		if (dataLayoutPermission.getView()) {
+			actionIds.add(ActionKeys.VIEW);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		if (StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			ModelPermissions modelPermissions = new ModelPermissions();
+
+			for (String roleName : dataLayoutPermission.getRoleNames()) {
+				modelPermissions.addRolePermissions(
+					roleName, ArrayUtil.toStringArray(actionIds));
+			}
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				contextCompany.getCompanyId(), ddmStructureLayout.getGroupId(),
+				PrincipalThreadLocal.getUserId(),
+				DataLayoutConstants.RESOURCE_NAME, String.valueOf(dataLayoutId),
+				modelPermissions);
+		}
+		else {
+			List<Role> roles = DataEnginePermissionUtil.getRoles(
+				contextCompany, _roleLocalService,
+				dataLayoutPermission.getRoleNames());
+
+			for (Role role : roles) {
+				for (String actionId : actionIds) {
+					_resourcePermissionLocalService.removeResourcePermission(
+						contextCompany.getCompanyId(),
+						DataLayoutConstants.RESOURCE_NAME,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(dataLayoutId), role.getRoleId(),
+						actionId);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -219,5 +378,11 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+	
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

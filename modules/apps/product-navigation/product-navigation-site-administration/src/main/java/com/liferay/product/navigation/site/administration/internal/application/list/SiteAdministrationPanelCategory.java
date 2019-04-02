@@ -20,7 +20,12 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
@@ -94,6 +99,24 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			_recentGroupManager);
 
 		return super.includeHeader(request, response);
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (group == null) {
+			return false;
+		}
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, group,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(unbind = "-")

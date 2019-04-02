@@ -1,5 +1,11 @@
 components:
     schemas:
+        CustomProperty:
+            properties:
+                key:
+                    type: string
+                value:
+                    type: object
         DataDefinition:
             description: https://www.schema.org/DataDefinition
             properties:
@@ -39,8 +45,12 @@ components:
             type: object
         DataDefinitionField:
             properties:
+                customProperties:
+                    items:
+                        $ref: '#/components/schemas/CustomProperty'
+                    type: array
                 defaultValue:
-                    type: string
+                    type: object
                 fieldType:
                     type: string
                 id:

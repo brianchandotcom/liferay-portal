@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal.contributor.query;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -24,9 +25,12 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +47,7 @@ public class GroupIdQueryPreFilterContributor
 	public void contribute(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		long[] groupIds = searchContext.getGroupIds();
+		long[] groupIds = getGroupIds(searchContext);
 
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
@@ -102,6 +106,57 @@ public class GroupIdQueryPreFilterContributor
 		booleanFilter.add(scopeBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
+	protected long[] addScopeGroup(long groupId) {
+		try {
+			List<Long> groupIds = new ArrayList<>();
+
+			groupIds.add(groupId);
+
+			Group group = groupLocalService.getGroup(groupId);
+
+			List<Group> groups = groupLocalService.getGroups(
+				group.getCompanyId(), Layout.class.getName(),
+				group.getGroupId());
+
+			for (Group scopeGroup : groups) {
+				groupIds.add(scopeGroup.getGroupId());
+			}
+
+			return ArrayUtil.toLongArray(groupIds);
+		}
+		catch (Exception e) {
+		}
+
+		return new long[] {groupId};
+	}
+
+	protected long[] getGroupIds(SearchContext searchContext) {
+		long[] groupIds = getGroupIdsFromSearchContext(searchContext);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			groupIds = searchContext.getGroupIds();
+		}
+
+		return groupIds;
+	}
+
+	protected long[] getGroupIdsFromSearchContext(SearchContext searchContext) {
+		String groupIdAttribute = GetterUtil.getString(
+			searchContext.getAttribute("groupId"));
+
+		if (Validator.isNull(groupIdAttribute)) {
+			return null;
+		}
+
+		long groupId = GetterUtil.getLong(groupIdAttribute);
+
+		if (groupId == 0) {
+			return _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT;
+		}
+
+		return addScopeGroup(groupId);
+	}
+
 	@Reference
 	protected GroupLocalService groupLocalService;
 
@@ -142,5 +197,7 @@ public class GroupIdQueryPreFilterContributor
 			throw new SystemException(pe);
 		}
 	}
+
+	private static final long[] _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT = {0};
 
 }

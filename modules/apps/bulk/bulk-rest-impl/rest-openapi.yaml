@@ -105,11 +105,11 @@ paths:
                                 $ref: "#/components/schemas/MessageSelection"
                     description: ""
             tags: ["MessageSelection"]
-    "/content-spaces/{content-space-id}/taxonomy-vocabularies/common":
+    "/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common":
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64

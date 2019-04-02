@@ -859,11 +859,11 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/blog-posting-images/{blog-posting-image-id}":
+    "/blog-posting-images/{blogPostingImageId}":
         delete:
             parameters:
                 - in: path
-                  name: blog-posting-image-id
+                  name: blogPostingImageId
                   required: true
                   schema:
                       format: int64
@@ -877,7 +877,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: blog-posting-image-id
+                  name: blogPostingImageId
                   required: true
                   schema:
                       format: int64
@@ -890,11 +890,11 @@ paths:
                                 $ref: "#/components/schemas/BlogPostingImage"
                     description: ""
             tags: ["BlogPostingImage"]
-    "/blog-postings/{blog-posting-id}":
+    "/blog-postings/{blogPostingId}":
         delete:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -908,7 +908,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -924,7 +924,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -945,7 +945,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -963,11 +963,11 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
-    "/blog-postings/{blog-posting-id}/comments":
+    "/blog-postings/{blogPostingId}/comments":
         get:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -1005,7 +1005,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -1023,11 +1023,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/blog-postings/{blog-posting-id}/ratings":
+    "/blog-postings/{blogPostingId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -1045,7 +1045,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: blog-posting-id
+                  name: blogPostingId
                   required: true
                   schema:
                       format: int64
@@ -1063,11 +1063,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/comments/{comment-id}":
+    "/comments/{commentId}":
         delete:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: commentId
                   required: true
                   schema:
                       format: int64
@@ -1081,7 +1081,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: commentId
                   required: true
                   schema:
                       format: int64
@@ -1097,7 +1097,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: commentId
                   required: true
                   schema:
                       format: int64
@@ -1115,11 +1115,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/comments/{comment-id}/comments":
+    "/comments/{commentId}/comments":
         get:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: commentId
                   required: true
                   schema:
                       format: int64
@@ -1157,7 +1157,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: commentId
                   required: true
                   schema:
                       format: int64
@@ -1175,11 +1175,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/content-lists/{content-list-id}/content-list-elements":
+    "/content-lists/{contentListId}/content-list-elements":
         get:
             parameters:
                 - in: path
-                  name: content-list-id
+                  name: contentListId
                   required: true
                   schema:
                       format: int64
@@ -1202,11 +1202,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["ContentListElement"]
-    "/content-spaces/{content-space-id}/blog-posting-images":
+    "/content-spaces/{contentSpaceId}/blog-posting-images":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1244,7 +1244,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1268,11 +1268,11 @@ paths:
                                 $ref: "#/components/schemas/BlogPostingImage"
                     description: ""
             tags: ["BlogPostingImage"]
-    "/content-spaces/{content-space-id}/blog-postings":
+    "/content-spaces/{contentSpaceId}/blog-postings":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1310,7 +1310,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1328,11 +1328,11 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
-    "/content-spaces/{content-space-id}/content-structures":
+    "/content-spaces/{contentSpaceId}/content-structures":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1367,11 +1367,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["ContentStructure"]
-    "/content-spaces/{content-space-id}/documents":
+    "/content-spaces/{contentSpaceId}/documents":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1413,7 +1413,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1437,11 +1437,11 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/content-spaces/{content-space-id}/folders":
+    "/content-spaces/{contentSpaceId}/folders":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1483,7 +1483,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1501,11 +1501,11 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description: ""
             tags: ["Folder"]
-    "/content-spaces/{content-space-id}/knowledge-base-articles":
+    "/content-spaces/{contentSpaceId}/knowledge-base-articles":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1547,7 +1547,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1565,11 +1565,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/content-spaces/{content-space-id}/knowledge-base-folders":
+    "/content-spaces/{contentSpaceId}/knowledge-base-folders":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1595,7 +1595,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1613,11 +1613,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
-    "/content-spaces/{content-space-id}/message-board-sections":
+    "/content-spaces/{contentSpaceId}/message-board-sections":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1659,7 +1659,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1677,11 +1677,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/content-spaces/{content-space-id}/message-board-threads":
+    "/content-spaces/{contentSpaceId}/message-board-threads":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1723,7 +1723,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1741,11 +1741,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
-    "/content-spaces/{content-space-id}/structured-content-folders":
+    "/content-spaces/{contentSpaceId}/structured-content-folders":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1787,7 +1787,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1805,7 +1805,7 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
             tags: ["StructuredContentFolder"]
-    "/content-spaces/{content-space-id}/structured-contents":
+    "/content-spaces/{contentSpaceId}/structured-contents":
         get:
             parameters:
                 - in: header
@@ -1813,7 +1813,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1859,7 +1859,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1877,7 +1877,7 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
-    "/content-spaces/{content-space-id}/structured-contents/by-key/{key}":
+    "/content-spaces/{contentSpaceId}/structured-contents/by-key/{key}":
         get:
             parameters:
                 - in: header
@@ -1885,7 +1885,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1903,7 +1903,7 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
-    "/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}":
+    "/content-spaces/{contentSpaceId}/structured-contents/by-uuid/{uuid}":
         get:
             parameters:
                 - in: header
@@ -1911,7 +1911,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -1929,11 +1929,11 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
-    "/content-structures/{content-structure-id}":
+    "/content-structures/{contentStructureId}":
         get:
             parameters:
                 - in: path
-                  name: content-structure-id
+                  name: contentStructureId
                   required: true
                   schema:
                       format: int64
@@ -1946,7 +1946,7 @@ paths:
                                 $ref: "#/components/schemas/ContentStructure"
                     description: ""
             tags: ["ContentStructure"]
-    "/content-structures/{content-structure-id}/structured-contents":
+    "/content-structures/{contentStructureId}/structured-contents":
         get:
             parameters:
                 - in: header
@@ -1954,7 +1954,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: content-structure-id
+                  name: contentStructureId
                   required: true
                   schema:
                       format: int64
@@ -1989,11 +1989,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["StructuredContent"]
-    "/documents/{document-id}":
+    "/documents/{documentId}":
         delete:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2007,7 +2007,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2023,7 +2023,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2050,7 +2050,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2074,11 +2074,11 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/documents/{document-id}/comments":
+    "/documents/{documentId}/comments":
         get:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2116,7 +2116,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2134,11 +2134,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/documents/{document-id}/ratings":
+    "/documents/{documentId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2156,7 +2156,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: document-id
+                  name: documentId
                   required: true
                   schema:
                       format: int64
@@ -2174,11 +2174,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/folders/{folder-id}":
+    "/folders/{folderId}":
         delete:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2192,7 +2192,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2208,7 +2208,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2229,7 +2229,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2247,11 +2247,11 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description: ""
             tags: ["Folder"]
-    "/folders/{folder-id}/documents":
+    "/folders/{folderId}/documents":
         get:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2289,7 +2289,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2313,11 +2313,11 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/folders/{folder-id}/folders":
+    "/folders/{folderId}/folders":
         get:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2355,7 +2355,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: folderId
                   required: true
                   schema:
                       format: int64
@@ -2373,11 +2373,11 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description: ""
             tags: ["Folder"]
-    "/knowledge-base-articles/{knowledge-base-article-id}":
+    "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2391,7 +2391,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2407,7 +2407,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2428,7 +2428,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2446,11 +2446,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2488,7 +2488,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2506,11 +2506,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments":
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2528,7 +2528,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2552,11 +2552,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/ratings":
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2574,7 +2574,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: knowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2592,11 +2592,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/knowledge-base-attachments/{knowledge-base-attachment-id}":
+    "/knowledge-base-attachments/{knowledgeBaseAttachmentId}":
         delete:
             parameters:
                 - in: path
-                  name: knowledge-base-attachment-id
+                  name: knowledgeBaseAttachmentId
                   required: true
                   schema:
                       format: int64
@@ -2610,7 +2610,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-attachment-id
+                  name: knowledgeBaseAttachmentId
                   required: true
                   schema:
                       format: int64
@@ -2623,11 +2623,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
-    "/knowledge-base-folders/{knowledge-base-folder-id}":
+    "/knowledge-base-folders/{knowledgeBaseFolderId}":
         delete:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2641,7 +2641,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2657,7 +2657,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2678,7 +2678,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2696,11 +2696,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
-    "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles":
+    "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2742,7 +2742,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2760,11 +2760,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-folders":
+    "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2790,7 +2790,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: knowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -2808,11 +2808,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
-    "/message-board-attachments/{message-board-attachment-id}":
+    "/message-board-attachments/{messageBoardAttachmentId}":
         delete:
             parameters:
                 - in: path
-                  name: message-board-attachment-id
+                  name: messageBoardAttachmentId
                   required: true
                   schema:
                       format: int64
@@ -2826,7 +2826,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: message-board-attachment-id
+                  name: messageBoardAttachmentId
                   required: true
                   schema:
                       format: int64
@@ -2839,11 +2839,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-messages/{message-board-message-id}":
+    "/message-board-messages/{messageBoardMessageId}":
         delete:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2857,7 +2857,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2873,7 +2873,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2894,7 +2894,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2912,11 +2912,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
-    "/message-board-messages/{message-board-message-id}/message-board-attachments":
+    "/message-board-messages/{messageBoardMessageId}/message-board-attachments":
         get:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2934,7 +2934,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -2958,11 +2958,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-messages/{message-board-message-id}/message-board-messages":
+    "/message-board-messages/{messageBoardMessageId}/message-board-messages":
         get:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3000,7 +3000,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3018,11 +3018,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
-    "/message-board-messages/{message-board-message-id}/ratings":
+    "/message-board-messages/{messageBoardMessageId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3040,7 +3040,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: messageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3058,11 +3058,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/message-board-sections/{message-board-section-id}":
+    "/message-board-sections/{messageBoardSectionId}":
         delete:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3076,7 +3076,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3092,7 +3092,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3113,7 +3113,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3131,11 +3131,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/message-board-sections/{message-board-section-id}/message-board-sections":
+    "/message-board-sections/{messageBoardSectionId}/message-board-sections":
         get:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3173,7 +3173,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3191,11 +3191,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/message-board-sections/{message-board-section-id}/message-board-threads":
+    "/message-board-sections/{messageBoardSectionId}/message-board-threads":
         get:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3233,7 +3233,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: messageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3251,11 +3251,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
-    "/message-board-threads/{message-board-thread-id}":
+    "/message-board-threads/{messageBoardThreadId}":
         delete:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3269,7 +3269,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3285,7 +3285,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3306,7 +3306,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3324,11 +3324,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
-    "/message-board-threads/{message-board-thread-id}/message-board-attachments":
+    "/message-board-threads/{messageBoardThreadId}/message-board-attachments":
         get:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3346,7 +3346,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3370,11 +3370,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-threads/{message-board-thread-id}/message-board-messages":
+    "/message-board-threads/{messageBoardThreadId}/message-board-messages":
         get:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3412,7 +3412,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3430,11 +3430,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
-    "/message-board-threads/{message-board-thread-id}/ratings":
+    "/message-board-threads/{messageBoardThreadId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3452,7 +3452,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-thread-id
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3470,11 +3470,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/ratings/{rating-id}":
+    "/ratings/{ratingId}":
         delete:
             parameters:
                 - in: path
-                  name: rating-id
+                  name: ratingId
                   required: true
                   schema:
                       format: int64
@@ -3488,7 +3488,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: rating-id
+                  name: ratingId
                   required: true
                   schema:
                       format: int64
@@ -3504,7 +3504,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: rating-id
+                  name: ratingId
                   required: true
                   schema:
                       format: int64
@@ -3522,11 +3522,11 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/structured-content-folders/{structured-content-folder-id}":
+    "/structured-content-folders/{structuredContentFolderId}":
         delete:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3540,7 +3540,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3555,7 +3555,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3573,11 +3573,11 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
             tags: ["StructuredContentFolder"]
-    "/structured-content-folders/{structured-content-folder-id}/structured-content-folders":
+    "/structured-content-folders/{structuredContentFolderId}/structured-content-folders":
         get:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3615,7 +3615,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3633,7 +3633,7 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
             tags: ["StructuredContentFolder"]
-    "/structured-content-folders/{structured-content-folder-id}/structured-contents":
+    "/structured-content-folders/{structuredContentFolderId}/structured-contents":
         get:
             parameters:
                 - in: header
@@ -3641,7 +3641,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3683,7 +3683,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: structured-content-folder-id
+                  name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3701,11 +3701,11 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
-    "/structured-contents/{structured-content-id}":
+    "/structured-contents/{structuredContentId}":
         delete:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3723,7 +3723,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3743,7 +3743,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3768,7 +3768,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3786,11 +3786,11 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
-    "/structured-contents/{structured-content-id}/comments":
+    "/structured-contents/{structuredContentId}/comments":
         get:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3828,7 +3828,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3846,11 +3846,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/structured-contents/{structured-content-id}/ratings":
+    "/structured-contents/{structuredContentId}/ratings":
         get:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3868,7 +3868,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -3886,17 +3886,17 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/structured-contents/{structured-content-id}/rendered-content/{template-id}":
+    "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
             parameters:
                 - in: path
-                  name: structured-content-id
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
                       type: integer
                 - in: path
-                  name: template-id
+                  name: templateId
                   required: true
                   schema:
                       format: int64

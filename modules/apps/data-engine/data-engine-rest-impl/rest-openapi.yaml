@@ -240,11 +240,11 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/content-spaces/{content-space-id}/data-definition-permissions":
+    "/content-spaces/{contentSpaceId}/data-definition-permissions":
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -265,11 +265,11 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["DataDefinition"]
-    "/content-spaces/{content-space-id}/data-definitions":
+    "/content-spaces/{contentSpaceId}/data-definitions":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -301,7 +301,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -319,11 +319,11 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
-    "/content-spaces/{content-space-id}/data-layout":
+    "/content-spaces/{contentSpaceId}/data-layout":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -348,11 +348,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["DataLayout"]
-    "/content-spaces/{content-space-id}/data-record-collection-permissions":
+    "/content-spaces/{contentSpaceId}/data-record-collection-permissions":
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -373,11 +373,11 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["DataRecordCollection"]
-    "/content-spaces/{content-space-id}/data-record-collections":
+    "/content-spaces/{contentSpaceId}/data-record-collections":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -406,11 +406,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["DataRecordCollection"]
-    "/data-definitions/{data-definition-id}":
+    "/data-definitions/{dataDefinitionId}":
         delete:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -424,7 +424,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -440,7 +440,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -458,11 +458,11 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
-    "/data-definitions/{data-definition-id}/data-definition-permissions":
+    "/data-definitions/{dataDefinitionId}/data-definition-permissions":
         post:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -484,11 +484,11 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["DataDefinition"]
-    "/data-definitions/{data-definition-id}/data-layouts":
+    "/data-definitions/{dataDefinitionId}/data-layouts":
         post:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -506,11 +506,11 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
-    "/data-definitions/{data-definition-id}/data-record-collections":
+    "/data-definitions/{dataDefinitionId}/data-record-collections":
         get:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -542,7 +542,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: data-definition-id
+                  name: dataDefinitionId
                   required: true
                   schema:
                       format: int64
@@ -560,11 +560,11 @@ paths:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
-    "/data-layouts/{data-layout-id}":
+    "/data-layouts/{dataLayoutId}":
         delete:
             parameters:
                 - in: path
-                  name: data-layout-id
+                  name: dataLayoutId
                   required: true
                   schema:
                       format: int64
@@ -578,7 +578,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: data-layout-id
+                  name: dataLayoutId
                   required: true
                   schema:
                       format: int64
@@ -594,7 +594,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: data-layout-id
+                  name: dataLayoutId
                   required: true
                   schema:
                       format: int64
@@ -612,11 +612,11 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
-    "/data-record-collections/{data-record-collection-id}":
+    "/data-record-collections/{dataRecordCollectionId}":
         delete:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -630,7 +630,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -646,7 +646,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -664,11 +664,11 @@ paths:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
-    "/data-record-collections/{data-record-collection-id}/data-record-collection-permissions":
+    "/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions":
         post:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -690,11 +690,11 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["DataRecordCollection"]
-    "/data-record-collections/{data-record-collection-id}/data-records":
+    "/data-record-collections/{dataRecordCollectionId}/data-records":
         get:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -722,7 +722,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -740,11 +740,11 @@ paths:
                                 $ref: "#/components/schemas/DataRecord"
                     description: ""
             tags: ["DataRecord"]
-    "/data-record-collections/{data-record-collection-id}/data-records/export":
+    "/data-record-collections/{dataRecordCollectionId}/data-records/export":
         get:
             parameters:
                 - in: path
-                  name: data-record-collection-id
+                  name: dataRecordCollectionId
                   required: true
                   schema:
                       format: int64
@@ -757,11 +757,11 @@ paths:
                                 type: string
                     description: ""
             tags: ["DataRecord"]
-    "/data-records/{data-record-id}":
+    "/data-records/{dataRecordId}":
         delete:
             parameters:
                 - in: path
-                  name: data-record-id
+                  name: dataRecordId
                   required: true
                   schema:
                       format: int64
@@ -775,7 +775,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: data-record-id
+                  name: dataRecordId
                   required: true
                   schema:
                       format: int64
@@ -791,7 +791,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: data-record-id
+                  name: dataRecordId
                   required: true
                   schema:
                       format: int64

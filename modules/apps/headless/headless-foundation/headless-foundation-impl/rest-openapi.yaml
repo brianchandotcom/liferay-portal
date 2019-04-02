@@ -481,11 +481,11 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/content-spaces/{content-space-id}/keywords":
+    "/content-spaces/{contentSpaceId}/keywords":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -523,7 +523,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -541,11 +541,11 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
-    "/content-spaces/{content-space-id}/segments":
+    "/content-spaces/{contentSpaceId}/segments":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -568,11 +568,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Segment"]
-    "/content-spaces/{content-space-id}/taxonomy-vocabularies":
+    "/content-spaces/{contentSpaceId}/taxonomy-vocabularies":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -610,7 +610,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
@@ -628,17 +628,17 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
                     description: ""
             tags: ["TaxonomyVocabulary"]
-    "/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments":
+    "/content-spaces/{contentSpaceId}/user-accounts/{userAccountId}/segments":
         get:
             parameters:
                 - in: path
-                  name: content-space-id
+                  name: contentSpaceId
                   required: true
                   schema:
                       format: int64
                       type: integer
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -661,11 +661,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Segment"]
-    "/emails/{email-id}":
+    "/emails/{emailId}":
         get:
             parameters:
                 - in: path
-                  name: email-id
+                  name: emailId
                   required: true
                   schema:
                       format: int64
@@ -678,11 +678,11 @@ paths:
                                 $ref: "#/components/schemas/Email"
                     description: ""
             tags: ["Email"]
-    "/keywords/{keyword-id}":
+    "/keywords/{keywordId}":
         delete:
             parameters:
                 - in: path
-                  name: keyword-id
+                  name: keywordId
                   required: true
                   schema:
                       format: int64
@@ -696,7 +696,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: keyword-id
+                  name: keywordId
                   required: true
                   schema:
                       format: int64
@@ -712,7 +712,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: keyword-id
+                  name: keywordId
                   required: true
                   schema:
                       format: int64
@@ -730,11 +730,11 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
-    "/my-user-accounts/{user-account-id}":
+    "/my-user-accounts/{userAccountId}":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -747,11 +747,11 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
-    "/my-user-accounts/{user-account-id}/organizations":
+    "/my-user-accounts/{userAccountId}/organizations":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -774,11 +774,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
-    "/my-user-accounts/{user-account-id}/roles":
+    "/my-user-accounts/{userAccountId}/roles":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -834,11 +834,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
-    "/organizations/{organization-id}":
+    "/organizations/{organizationId}":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -851,11 +851,11 @@ paths:
                                 $ref: "#/components/schemas/Organization"
                     description: ""
             tags: ["Organization"]
-    "/organizations/{organization-id}/emails":
+    "/organizations/{organizationId}/emails":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -870,11 +870,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/organizations/{organization-id}/organizations":
+    "/organizations/{organizationId}/organizations":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -909,11 +909,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
-    "/organizations/{organization-id}/phones":
+    "/organizations/{organizationId}/phones":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -936,11 +936,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Phone"]
-    "/organizations/{organization-id}/postal-addresses":
+    "/organizations/{organizationId}/postal-addresses":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -963,11 +963,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["PostalAddress"]
-    "/organizations/{organization-id}/user-accounts":
+    "/organizations/{organizationId}/user-accounts":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -1002,11 +1002,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/organizations/{organization-id}/web-urls":
+    "/organizations/{organizationId}/web-urls":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: organizationId
                   required: true
                   schema:
                       format: int64
@@ -1029,11 +1029,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["WebUrl"]
-    "/phones/{phone-id}":
+    "/phones/{phoneId}":
         get:
             parameters:
                 - in: path
-                  name: phone-id
+                  name: phoneId
                   required: true
                   schema:
                       format: int64
@@ -1046,11 +1046,11 @@ paths:
                                 $ref: "#/components/schemas/Phone"
                     description: ""
             tags: ["Phone"]
-    "/postal-addresses/{postal-address-id}":
+    "/postal-addresses/{postalAddressId}":
         get:
             parameters:
                 - in: path
-                  name: postal-address-id
+                  name: postalAddressId
                   required: true
                   schema:
                       format: int64
@@ -1084,11 +1084,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Role"]
-    "/roles/{role-id}":
+    "/roles/{roleId}":
         get:
             parameters:
                 - in: path
-                  name: role-id
+                  name: roleId
                   required: true
                   schema:
                       format: int64
@@ -1101,11 +1101,11 @@ paths:
                                 $ref: "#/components/schemas/Role"
                     description: ""
             tags: ["Role"]
-    "/segments/{segment-id}/user-accounts":
+    "/segments/{segmentId}/user-accounts":
         get:
             parameters:
                 - in: path
-                  name: segment-id
+                  name: segmentId
                   required: true
                   schema:
                       format: int64
@@ -1128,11 +1128,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["SegmentUser"]
-    "/taxonomy-categories/{taxonomy-category-id}":
+    "/taxonomy-categories/{taxonomyCategoryId}":
         delete:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1146,7 +1146,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1162,7 +1162,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1183,7 +1183,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1201,11 +1201,11 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyCategory"
                     description: ""
             tags: ["TaxonomyCategory"]
-    "/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories":
+    "/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories":
         get:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1243,7 +1243,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: taxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1261,11 +1261,11 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyCategory"
                     description: ""
             tags: ["TaxonomyCategory"]
-    "/taxonomy-vocabularies/{taxonomy-vocabulary-id}":
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1279,7 +1279,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1295,7 +1295,7 @@ paths:
         patch:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1316,7 +1316,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1334,11 +1334,11 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
                     description: ""
             tags: ["TaxonomyVocabulary"]
-    "/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories":
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1376,7 +1376,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: taxonomy-vocabulary-id
+                  name: taxonomyVocabularyId
                   required: true
                   schema:
                       format: int64
@@ -1451,11 +1451,11 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
-    "/user-accounts/{user-account-id}":
+    "/user-accounts/{userAccountId}":
         delete:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1469,7 +1469,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1485,7 +1485,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1503,11 +1503,11 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
-    "/user-accounts/{user-account-id}/emails":
+    "/user-accounts/{userAccountId}/emails":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1522,11 +1522,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/user-accounts/{user-account-id}/organizations":
+    "/user-accounts/{userAccountId}/organizations":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1549,11 +1549,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
-    "/user-accounts/{user-account-id}/phones":
+    "/user-accounts/{userAccountId}/phones":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1576,11 +1576,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Phone"]
-    "/user-accounts/{user-account-id}/postal-addresses":
+    "/user-accounts/{userAccountId}/postal-addresses":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1603,11 +1603,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["PostalAddress"]
-    "/user-accounts/{user-account-id}/roles":
+    "/user-accounts/{userAccountId}/roles":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1630,11 +1630,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Role"]
-    "/user-accounts/{user-account-id}/web-urls":
+    "/user-accounts/{userAccountId}/web-urls":
         get:
             parameters:
                 - in: path
-                  name: user-account-id
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1657,11 +1657,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["WebUrl"]
-    "/web-sites/{web-site-id}/user-accounts":
+    "/web-sites/{webSiteId}/user-accounts":
         get:
             parameters:
                 - in: path
-                  name: web-site-id
+                  name: webSiteId
                   required: true
                   schema:
                       format: int64
@@ -1696,11 +1696,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/web-urls/{web-url-id}":
+    "/web-urls/{webUrlId}":
         get:
             parameters:
                 - in: path
-                  name: web-url-id
+                  name: webUrlId
                   required: true
                   schema:
                       format: int64

@@ -184,6 +184,11 @@ class SidebarStructurePanel extends Component {
 				this.activeItemId,
 				this.activeItemType,
 				this.layoutData.structure
+			).filter(
+				activeItem => (
+					(this.activeItemId !== activeItem.itemId) &&
+					(this.activeItemType !== activeItem.itemType)
+				)
 			).forEach(
 				activeItem => {
 					const key = `${activeItem.itemType}-${activeItem.itemId}`;

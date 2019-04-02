@@ -202,7 +202,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/slas", processId);
+			_resourceURL + _toPath("/processes/{processId}/slas", processId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -230,7 +230,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/slas", processId);
+			_resourceURL + _toPath("/processes/{processId}/slas", processId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -269,7 +269,7 @@ public abstract class BaseSLAResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/slas", processId);
+			_resourceURL + _toPath("/processes/{processId}/slas", processId);
 
 		options.setLocation(location);
 
@@ -302,7 +302,7 @@ public abstract class BaseSLAResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/slas", processId);
+			_resourceURL + _toPath("/processes/{processId}/slas", processId);
 
 		options.setLocation(location);
 
@@ -332,7 +332,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setDelete(true);
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 
@@ -350,7 +350,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		options.setDelete(true);
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 
@@ -377,7 +377,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected SLA invokeGetSLA(Long slaId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 
@@ -400,7 +400,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected Http.Response invokeGetSLAResponse(Long slaId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 
@@ -438,7 +438,7 @@ public abstract class BaseSLAResourceTestCase {
 			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 
@@ -469,7 +469,7 @@ public abstract class BaseSLAResourceTestCase {
 			_inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		String location = _resourceURL + _toPath("/slas/{sla-id}", slaId);
+		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
 
 		options.setLocation(location);
 

@@ -64,11 +64,11 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/processes/{process-id}/slas")
+	@Path("/processes/{processId}/slas")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public Page<SLA> getProcessSLAsPage(
-			@NotNull @PathParam("process-id") Long processId,
+			@NotNull @PathParam("processId") Long processId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -78,11 +78,11 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/processes/{process-id}/slas")
+	@Path("/processes/{processId}/slas")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA postProcessSLA(
-			@NotNull @PathParam("process-id") Long processId, SLA sla)
+			@NotNull @PathParam("processId") Long processId, SLA sla)
 		throws Exception {
 
 		return new SLA();
@@ -90,19 +90,19 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 
 	@Override
 	@DELETE
-	@Path("/slas/{sla-id}")
+	@Path("/slas/{slaId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public void deleteSLA(@NotNull @PathParam("sla-id") Long slaId)
+	public void deleteSLA(@NotNull @PathParam("slaId") Long slaId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/slas/{sla-id}")
+	@Path("/slas/{slaId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA getSLA(@NotNull @PathParam("sla-id") Long slaId)
+	public SLA getSLA(@NotNull @PathParam("slaId") Long slaId)
 		throws Exception {
 
 		return new SLA();
@@ -111,10 +111,10 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/slas/{sla-id}")
+	@Path("/slas/{slaId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putSLA(@NotNull @PathParam("sla-id") Long slaId, SLA sla)
+	public SLA putSLA(@NotNull @PathParam("slaId") Long slaId, SLA sla)
 		throws Exception {
 
 		return new SLA();

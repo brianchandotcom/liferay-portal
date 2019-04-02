@@ -50,11 +50,11 @@ public abstract class BaseNodeResourceImpl implements NodeResource {
 
 	@Override
 	@GET
-	@Path("/processes/{process-id}/nodes")
+	@Path("/processes/{processId}/nodes")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Node")})
 	public Page<Node> getProcessNodesPage(
-			@NotNull @PathParam("process-id") Long processId)
+			@NotNull @PathParam("processId") Long processId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

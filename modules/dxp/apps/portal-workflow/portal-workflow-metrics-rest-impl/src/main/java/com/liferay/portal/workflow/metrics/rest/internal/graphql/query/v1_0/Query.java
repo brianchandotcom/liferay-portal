@@ -72,7 +72,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Node> getProcessNodesPage(
-			@GraphQLName("process-id") Long processId)
+			@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -107,7 +107,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Process getProcess(@GraphQLName("process-id") Long processId)
+	public Process getProcess(@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -119,7 +119,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<SLA> getProcessSLAsPage(
-			@GraphQLName("process-id") Long processId,
+			@GraphQLName("processId") Long processId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -136,7 +136,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public SLA getSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
+	public SLA getSLA(@GraphQLName("slaId") Long slaId) throws Exception {
 		return _applyComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.getSLA(slaId));

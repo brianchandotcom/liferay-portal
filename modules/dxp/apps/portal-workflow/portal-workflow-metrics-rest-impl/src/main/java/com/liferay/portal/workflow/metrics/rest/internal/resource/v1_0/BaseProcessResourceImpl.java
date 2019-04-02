@@ -76,10 +76,10 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 
 	@Override
 	@GET
-	@Path("/processes/{process-id}")
+	@Path("/processes/{processId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Process")})
-	public Process getProcess(@NotNull @PathParam("process-id") Long processId)
+	public Process getProcess(@NotNull @PathParam("processId") Long processId)
 		throws Exception {
 
 		return new Process();

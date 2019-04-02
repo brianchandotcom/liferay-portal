@@ -314,7 +314,7 @@ public abstract class BaseProcessResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}", processId);
+			_resourceURL + _toPath("/processes/{processId}", processId);
 
 		options.setLocation(location);
 
@@ -340,7 +340,7 @@ public abstract class BaseProcessResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}", processId);
+			_resourceURL + _toPath("/processes/{processId}", processId);
 
 		options.setLocation(location);
 

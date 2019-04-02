@@ -160,7 +160,7 @@ public abstract class BaseNodeResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/nodes", processId);
+			_resourceURL + _toPath("/processes/{processId}/nodes", processId);
 
 		options.setLocation(location);
 
@@ -182,7 +182,7 @@ public abstract class BaseNodeResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/processes/{process-id}/nodes", processId);
+			_resourceURL + _toPath("/processes/{processId}/nodes", processId);
 
 		options.setLocation(location);
 

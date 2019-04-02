@@ -47,7 +47,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public SLA postProcessSLA(
-			@GraphQLName("process-id") Long processId,
+			@GraphQLName("processId") Long processId,
 			@GraphQLName("SLA") SLA sla)
 		throws Exception {
 
@@ -57,7 +57,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteSLA(@GraphQLName("sla-id") Long slaId) throws Exception {
+	public void deleteSLA(@GraphQLName("slaId") Long slaId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.deleteSLA(slaId));
@@ -65,7 +65,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public SLA putSLA(
-			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sla)
+			@GraphQLName("slaId") Long slaId, @GraphQLName("SLA") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

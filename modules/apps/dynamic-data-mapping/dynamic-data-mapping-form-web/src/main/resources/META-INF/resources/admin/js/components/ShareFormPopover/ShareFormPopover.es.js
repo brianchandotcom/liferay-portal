@@ -10,6 +10,16 @@ class ShareFormPopover extends Component {
 	static PROPS = {
 
 		/**
+		 * The element to align with.
+		 * @default ""
+		 * @instance
+		 * @memberof ShareFormPopover
+		 * @type {object}
+		 */
+
+		alignElement: Config.object().required(),
+
+		/**
 		 * The spritemap for Clay icons.
 		 * @default ""
 		 * @instance
@@ -83,11 +93,12 @@ class ShareFormPopover extends Component {
 				success: false
 			}
 		);
+
+		this.emit('popoverClosed');
 	}
 
 	render() {
-		const shareFormIcon = document.querySelector('.share-form-icon');
-		const {spritemap, url} = this.props;
+		const {alignElement, spritemap, url, visible} = this.props;
 		const {success} = this.state;
 
 		const buttonClasses = getCN(
@@ -107,14 +118,15 @@ class ShareFormPopover extends Component {
 
 		return (
 			<Popover
-				alignElement={shareFormIcon}
+				alignElement={alignElement}
 				events={{
 					popoverClosed: this._handlePopoverClosed.bind(this)
 				}}
 				placement={Align.LeftCenter}
 				portalElement={document.body}
 				ref={'popover'}
-				title={'copy-url'}
+				title={Liferay.Language.get('copy-url')}
+				visible={visible}
 			>
 				<div class={formClasses}>
 					<div class="input-group">
@@ -140,7 +152,7 @@ class ShareFormPopover extends Component {
 										</svg>
 									</span>
 								) : (
-									<span class="publish-button-text">{'copy'}</span>
+									<span class="publish-button-text">{Liferay.Language.get('copy')}</span>
 								)}
 							</button>
 						</span>

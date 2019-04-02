@@ -103,52 +103,30 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</aui:form>
 </div>
 
-<%@ include file="/admin/export_form_instance.jspf" %>
+<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormPopover/ShareFormPopover.es as ShareFormPopover" %>'>
+	var spritemap = themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-<aui:script use="liferay-ddm-form-portlet"></aui:script>
-
-<%@ include file="/admin/copy_form_publish_url.jspf" %>
-
-<aui:script use="liferay-ddm-form-builder-copy-publish-form-url-popover">
-	var A = AUI();
-
-	var copyPublishFormURLPopover = new Liferay.DDM.FormBuilderCopyPublishFormURLPopover(
-		{
-			portletNamespace: '<portlet:namespace />'
-		}
-	);
-
-	Liferay.on(
+	Liferay.after(
 		'<portlet:namespace />copyFormURL',
-		function(event) {
-			if (copyPublishFormURLPopover.isVisible()) {
-				copyPublishFormURLPopover.hide();
-			}
+		function({url}) {
+			var trigger = Liferay.Menu._INSTANCE._activeTrigger;
 
-			copyPublishFormURLPopover.set('publishURL', event.url);
-
-			copyPublishFormURLPopover.setAlign(
+			var popover = new ShareFormPopover.default(
 				{
-					node: Liferay.Menu._INSTANCE._activeTrigger,
-					points: [A.WidgetPositionAlign.TR, A.WidgetPositionAlign.TR]
+					alignElement: trigger.getDOM(),
+					events: {
+						popoverClosed: function() {
+							popover.dispose();
+						}
+					},
+					spritemap,
+					url,
+					visible: true
 				}
 			);
-
-			copyPublishFormURLPopover.show();
-		}
-	);
-
-	A.all('.searchcontainer-content .dropdown-toggle.icon-monospaced').before(
-		'click',
-		function() {
-			copyPublishFormURLPopover.hide();
-		}
-	);
-
-	Liferay.on(
-		'destroyPortlet',
-		function() {
-			copyPublishFormURLPopover.destroy();
 		}
 	);
 </aui:script>
+
+<%@ include file="/admin/copy_form_publish_url.jspf" %>
+<%@ include file="/admin/export_form_instance.jspf" %>

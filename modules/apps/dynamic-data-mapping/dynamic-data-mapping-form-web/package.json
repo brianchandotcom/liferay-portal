@@ -13,8 +13,7 @@
 						"$": true,
 						"AlloyEditor": true,
 						"CKEDITOR": true,
-						"MODULE_PATH": true,
-						"main": true
+						"MODULE_PATH": true
 					},
 					"parser": "babel-eslint",
 					"parserOptions": {
@@ -64,7 +63,7 @@
 						"AlloyEditor": true,
 						"CKEDITOR": true,
 						"MODULE_PATH": true,
-						"main": true
+						"ShareFormPopover": true
 					}
 				}
 			}

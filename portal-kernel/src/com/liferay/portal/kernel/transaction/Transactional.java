@@ -26,9 +26,17 @@ import java.lang.annotation.Target;
  * they're invoked by an
  * <code>com.liferay.portal.spring.aop.AopInvocationHandler</code>.
  *
- * All Liferay aspect annotations are aware of their scope. Interface aspect
- * annotations can be overwritten by their implementations. Class level aspect
- * annotations can be overwritten by method annotations.
+ * <ul>
+ * <li>
+ * All Liferay aspect annotations are aware of their scope.
+ * </li>
+ * <li>
+ * Interface aspect annotations can be overwritten by their implementations.
+ * </li>
+ * <li>
+ * Class level aspect annotations can be overwritten by method annotations.
+ * </li>
+ * </ul>
  *
  * @author Brian Wing Shun Chan
  */
@@ -68,7 +76,7 @@ public @interface Transactional {
 
 	/**
 	 * Whether the the transaction is effectively read-only, allowing for
-	 * optimizations at runtime.
+	 * optimizations at run time.
 	 */
 	public boolean readOnly() default false;
 

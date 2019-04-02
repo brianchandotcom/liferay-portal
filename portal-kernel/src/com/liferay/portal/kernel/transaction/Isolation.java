@@ -19,7 +19,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the isolation level from other transactions.
+ * Defines the level of visibility this transaction has into data changes done
+ * by other concurrent transactions.
+ *
+ * <p>
+ * <code>SERIALIZABLE</code> is the most restrictive.
+ * </p>
+ *
+ * <p>
+ * <code>READ_UNCOMMITTED</code> is the least restrictive.
+ * </p>
  *
  * @author Michael Young
  * @author Shuyang Zhou
@@ -28,7 +37,8 @@ import java.util.Map;
 public enum Isolation {
 
 	/**
-	 * Use the default isolation level of the counter service.
+	 * Use the isolation level of the counter service, as defined by the portal
+	 * properties.
 	 */
 	COUNTER(TransactionDefinition.ISOLATION_COUNTER),
 	/**
@@ -36,7 +46,8 @@ public enum Isolation {
 	 */
 	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),
 	/**
-	 * Use the default isolation level of the portal.
+	 * Use the isolation level of the portal, as defined by the portal
+	 * properties.
 	 */
 	PORTAL(TransactionDefinition.ISOLATION_PORTAL),
 	/**
@@ -44,7 +55,10 @@ public enum Isolation {
 	 */
 	READ_COMMITTED(TransactionDefinition.ISOLATION_READ_COMMITTED),
 	/**
-	 * Allow dirty reads, non-repeatable reads and phantom reads.
+	 * Allow dirty reads, non-repeatable reads, and phantom reads.
+	 */
+	/**
+	 * Allow dirty reads, non-repeatable reads, and phantom reads.
 	 */
 	READ_UNCOMMITTED(TransactionDefinition.ISOLATION_READ_UNCOMMITTED),
 	/**
@@ -52,7 +66,7 @@ public enum Isolation {
 	 */
 	REPEATABLE_READ(TransactionDefinition.ISOLATION_REPEATABLE_READ),
 	/**
-	 * Prevent dirty reads, non-repeatable reads and phantom reads.
+	 * Prevent dirty reads, non-repeatable reads, and phantom reads.
 	 */
 	SERIALIZABLE(TransactionDefinition.ISOLATION_SERIALIZABLE);
 

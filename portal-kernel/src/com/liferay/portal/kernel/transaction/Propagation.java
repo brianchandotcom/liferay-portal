@@ -19,10 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Defines how the method should be executed in relation to a new or existing
+ * transaction.
+ *
  * @author Michael Young
  * @author Shuyang Zhou
- * @see Transactional
- * @review
+ * @see    Transactional
  */
 public enum Propagation {
 

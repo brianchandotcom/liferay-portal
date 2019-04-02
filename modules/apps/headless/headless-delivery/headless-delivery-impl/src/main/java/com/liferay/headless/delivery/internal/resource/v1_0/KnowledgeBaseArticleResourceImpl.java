@@ -14,16 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.KnowledgeBaseArticleDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.KnowledgeBaseArticleEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -41,20 +35,13 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-
-import java.util.List;
-import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -276,9 +263,7 @@ public class KnowledgeBaseArticleResourceImpl
 				}
 			},
 			document -> _toKBArticle(
-				_kbArticleService.getLatestKBArticle(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					WorkflowConstants.STATUS_APPROVED)),
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
 			sorts);
 	}
 
@@ -289,67 +274,20 @@ public class KnowledgeBaseArticleResourceImpl
 			return null;
 		}
 
-		return new KnowledgeBaseArticle() {
-			{
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						KBArticle.class.getName(),
-						kbArticle.getResourcePrimKey()));
-				articleBody = kbArticle.getContent();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(kbArticle.getUserId()));
-				dateCreated = kbArticle.getCreateDate();
-				dateModified = kbArticle.getModifiedDate();
-				description = kbArticle.getDescription();
-				encodingFormat = "text/html";
-				friendlyUrlPath = kbArticle.getUrlTitle();
-				id = kbArticle.getResourcePrimKey();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						KBArticle.class.getName(), kbArticle.getClassPK()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfAttachments = Optional.ofNullable(
-					kbArticle.getAttachmentsFileEntries()
-				).map(
-					List::size
-				).orElse(
-					0
-				);
-				numberOfKnowledgeBaseArticles =
-					_kbArticleService.getKBArticlesCount(
-						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
-						WorkflowConstants.STATUS_APPROVED);
-				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						KBArticle.class.getName(), kbArticle.getClassPK()),
-					TaxonomyCategoryUtil::toTaxonomyCategory,
-					TaxonomyCategory.class);
-				title = kbArticle.getTitle();
+		return _toKBArticle(kbArticle.getResourcePrimKey());
+	}
 
-				setParentKnowledgeBaseFolder(
-					() -> {
-						if (kbArticle.getKbFolderId() <= 0) {
-							return null;
-						}
+	private KnowledgeBaseArticle _toKBArticle(
+			long knowledgeBaseArticleResourcePrimKey)
+		throws Exception {
 
-						return ParentKnowledgeBaseFolderUtil.
-							toParentKnowledgeBaseFolder(
-								_kbFolderService.getKBFolder(
-									kbArticle.getKbFolderId()));
-					});
-			}
-		};
+		return _knowledgeBaseArticleDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				null, knowledgeBaseArticleResourcePrimKey));
 	}
 
 	private static final EntityModel _entityModel =
 		new KnowledgeBaseArticleEntityModel();
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -361,12 +299,6 @@ public class KnowledgeBaseArticleResourceImpl
 	private KBFolderService _kbFolderService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private KnowledgeBaseArticleDTOConverter _knowledgeBaseArticleDTOConverter;
 
 }

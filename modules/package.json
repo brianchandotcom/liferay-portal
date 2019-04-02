@@ -1,10 +1,17 @@
 {
 	"devDependencies": {
+		"compass-mixins": "0.12.10",
+		"gulp": "3.9.1",
+		"liferay-frontend-common-css": "1.0.4",
+		"liferay-frontend-theme-styled": "4.0.0-alpha.1552930087997",
+		"liferay-frontend-theme-unstyled": "4.0.0-alpha.1552930030671",
 		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-npm-bridge-generator": "2.7.1",
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
-		"liferay-npm-scripts": "1.4.11"
+		"liferay-npm-scripts": "1.4.11",
+		"liferay-theme-es2015-hook": "8.0.0-rc.2",
+		"liferay-theme-tasks": "9.0.0-alpha.1"
 	},
 	"private": true,
 	"scripts": {

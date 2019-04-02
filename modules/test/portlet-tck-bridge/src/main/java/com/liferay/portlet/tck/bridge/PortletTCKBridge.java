@@ -48,7 +48,6 @@ public class PortletTCKBridge {
 		deactivate();
 
 		try {
-
 			PortletTCKBridgeConfiguration portletTCKBridgeConfiguration =
 				ConfigurableUtil.createConfigurable(
 					PortletTCKBridgeConfiguration.class,
@@ -58,18 +57,21 @@ public class PortletTCKBridge {
 				portletTCKBridgeConfiguration.tckDeployFilesDir();
 
 			BundleContext bundleContext = componentContext.getBundleContext();
+
 			Bundle[] bundles = bundleContext.getBundles();
 			Setup.setupPortletTCKSite(tckDeployFilesDir, bundles);
 			_log.info("Portlet TCK Bridge is ready");
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
+
 		// no-op
+
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -79,4 +81,5 @@ public class PortletTCKBridge {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletTCKBridge.class);
+
 }

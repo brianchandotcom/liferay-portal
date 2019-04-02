@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -63,7 +62,8 @@ import org.osgi.framework.Bundle;
 public class Setup {
 
 	public static void setupPortletTCKSite(
-		String tckDeployFilesDir, Bundle[] bundles) throws Exception {
+			String tckDeployFilesDir, Bundle[] bundles)
+		throws Exception {
 
 		long companyId = 0L;
 		long userId = 0L;
@@ -74,7 +74,8 @@ public class Setup {
 
 			if ("Liferay".equals(company.getName())) {
 				companyId = id;
-				userId = company.getDefaultUser().getUserId();
+				userId = company.getDefaultUser(
+				).getUserId();
 			}
 		}
 
@@ -85,8 +86,9 @@ public class Setup {
 		_addAllUsersToSite(groupId);
 
 		URL configFileURL = new File(
-			tckDeployFilesDir +
-				"/pluto-portal-driver-config.xml").toURI().toURL();
+			tckDeployFilesDir + "/pluto-portal-driver-config.xml"
+		).toURI(
+		).toURL();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -98,8 +100,7 @@ public class Setup {
 
 		Element rootElement = document.getRootElement();
 
-		Element renderConfigElement = rootElement.element(
-			"render-config");
+		Element renderConfigElement = rootElement.element("render-config");
 
 		Iterator<Element> pageElementIterator =
 			renderConfigElement.elementIterator("page");
@@ -121,24 +122,21 @@ public class Setup {
 
 				Attribute contextAttribute = portletElement.attribute(
 					"context");
+
 				String context = contextAttribute.getValue();
 
 				if (context.startsWith("/tck-")) {
-
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"setupPortletTCKSite: pageName = " +
-								pageName);
+							"setupPortletTCKSite: pageName = " + pageName);
 					}
 
 					portlets.add(
-						_createPortlet(
-							portletElement, context, pageName));
+						_createPortlet(portletElement, context, pageName));
 				}
 			}
 
-			PortalPage portalPage = new PortalPage(
-				pageName, portlets);
+			PortalPage portalPage = new PortalPage(pageName, portlets);
 
 			_setupPage(userId, groupId, portalPage, bundles);
 		}
@@ -170,6 +168,7 @@ public class Setup {
 		throws PortalException {
 
 		String columnNumberLabel = String.valueOf(columnNumber);
+
 		columnNumberLabel = "column-" + columnNumber;
 
 		layoutTypePortlet.addPortletId(
@@ -179,8 +178,14 @@ public class Setup {
 		layoutTypePortlet.resetStates();
 	}
 
-	private static Portlet _createPortlet(Element element, String context, String pageName) {
-		context = context.replaceFirst("^/", "").replaceFirst("(-[0-9.]+)?(-SNAPSHOT)?$", "");
+	private static Portlet _createPortlet(
+		Element element, String context, String pageName) {
+
+		context = context.replaceFirst(
+			"^/", ""
+		).replaceFirst(
+			"(-[0-9.]+)?(-SNAPSHOT)?$", ""
+		);
 		Attribute nameAttribute = element.attribute("name");
 
 		String portletName = nameAttribute.getValue();
@@ -238,8 +243,7 @@ public class Setup {
 	}
 
 	private static void _setupPage(
-			long userId, long groupId, PortalPage portalPage,
-			Bundle[] bundles)
+			long userId, long groupId, PortalPage portalPage, Bundle[] bundles)
 		throws Exception {
 
 		String portalPageName = portalPage.getPageName();
@@ -262,7 +266,6 @@ public class Setup {
 		int columnNumber = 1;
 
 		for (Portlet portlet : portlets) {
-
 			String servletContextName = portlet.getContext();
 
 			if (_log.isDebugEnabled()) {
@@ -297,8 +300,7 @@ public class Setup {
 					String warContext = "_WAR_" + servletContextName;
 
 					String portletId =
-						noDashPortletName +
-							warContext.replaceAll("[.]", "");
+						noDashPortletName + warContext.replaceAll("[.]", "");
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
@@ -360,7 +362,10 @@ public class Setup {
 				companyId, RoleConstants.ADMINISTRATOR);
 
 			User administratorUser = UserLocalServiceUtil.getRoleUsers(
-				administratorRole.getRoleId()).get(0);
+				administratorRole.getRoleId()
+			).get(
+				0
+			);
 
 			try {
 				permissionChecker = PermissionCheckerFactoryUtil.create(

@@ -57,4 +57,17 @@
 			<hint name="max-length">4000</hint>
 		</field>
 	</model>
+	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel">
+		<field name="uuid" type="String" />
+		<field name="layoutPageTemplateStructureRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="layoutPageTemplateStructureId" type="long" />
+		<field name="segmentsExperienceId" type="long" />
+		<field name="data" type="String" />
+	</model>
 </model-hints>

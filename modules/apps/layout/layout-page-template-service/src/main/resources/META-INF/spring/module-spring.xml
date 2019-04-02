@@ -15,4 +15,6 @@
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateEntryPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateStructureLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateStructurePersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructurePersistence" />
+	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateStructureRelLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService" />
+	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateStructureRelPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructureRelPersistence" />
 </beans>

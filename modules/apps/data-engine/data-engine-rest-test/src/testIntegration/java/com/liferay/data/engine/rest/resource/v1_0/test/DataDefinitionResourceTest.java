@@ -34,11 +34,6 @@ public class DataDefinitionResourceTest
 
 	@Ignore
 	@Override
-	public void testGetDataDefinition() throws Exception {
-	}
-
-	@Ignore
-	@Override
 	public void testPostContentSpaceDataDefinitionPermission()
 		throws Exception {
 	}
@@ -47,11 +42,6 @@ public class DataDefinitionResourceTest
 	@Override
 	public void testPostDataDefinitionDataDefinitionPermission()
 		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	public void testPutDataDefinition() throws Exception {
 	}
 
 	protected void assertValid(DataDefinition dataDefinition) {

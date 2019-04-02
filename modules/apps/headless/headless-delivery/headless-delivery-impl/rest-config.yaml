@@ -1,0 +1,9 @@
+apiDir: "../headless-delivery-api/src/main/java"
+apiPackagePath: "com.liferay.headless.delivery"
+application:
+    baseURI: "/headless-delivery"
+    className: "HeadlessDeliveryApplication"
+    name: "Liferay.Headless.Delivery"
+author: "Javier Gamarra"
+clientDir: "../headless-delivery-client/src/main/java"
+testDir: "../headless-delivery-test/src/testIntegration/java"

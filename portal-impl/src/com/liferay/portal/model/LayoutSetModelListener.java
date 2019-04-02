@@ -26,11 +26,19 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 
 	@Override
 	public void onAfterRemove(LayoutSet layoutSet) {
+		if (!layoutSet.isHead()) {
+			return;
+		}
+
 		clearCache(layoutSet);
 	}
 
 	@Override
 	public void onAfterUpdate(LayoutSet layoutSet) {
+		if (!layoutSet.isHead()) {
+			return;
+		}
+
 		clearCache(layoutSet);
 	}
 

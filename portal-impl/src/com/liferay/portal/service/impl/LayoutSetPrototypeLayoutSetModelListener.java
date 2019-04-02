@@ -35,16 +35,28 @@ public class LayoutSetPrototypeLayoutSetModelListener
 
 	@Override
 	public void onAfterCreate(LayoutSet layoutSet) {
+		if (!layoutSet.isHead()) {
+			return;
+		}
+
 		updateLayoutSetPrototype(layoutSet, layoutSet.getModifiedDate());
 	}
 
 	@Override
 	public void onAfterRemove(LayoutSet layoutSet) {
+		if (!layoutSet.isHead()) {
+			return;
+		}
+
 		updateLayoutSetPrototype(layoutSet, new Date());
 	}
 
 	@Override
 	public void onAfterUpdate(LayoutSet layoutSet) {
+		if (!layoutSet.isHead()) {
+			return;
+		}
+
 		updateLayoutSetPrototype(layoutSet, layoutSet.getModifiedDate());
 	}
 

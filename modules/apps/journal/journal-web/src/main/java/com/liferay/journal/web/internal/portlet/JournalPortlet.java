@@ -993,7 +993,7 @@ public class JournalPortlet extends MVCPortlet {
 		// Asset display page
 
 		_assetDisplayPageEntryFormProcessor.process(
-			JournalArticle.class.getName(), article.getClassPK(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
 			actionRequest);
 
 		sendEditArticleRedirect(

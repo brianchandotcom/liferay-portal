@@ -1582,7 +1582,11 @@ public abstract class BaseBuild implements Build {
 
 		public int getDepth() {
 			if (_parentStopWatchRecord == null) {
-				return 0;
+				if (_baseBuild == null) {
+					return 0;
+				}
+
+				return _baseBuild.getDepth() + 1;
 			}
 
 			return _parentStopWatchRecord.getDepth() + 1;

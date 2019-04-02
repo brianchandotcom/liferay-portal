@@ -46,7 +46,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "a");
+		jsonObject.put("allowedContent", "a[*](*)");
 		jsonObject.put("disallowedContent", "br");
 
 		String removePlugins = jsonObject.getString("removePlugins");

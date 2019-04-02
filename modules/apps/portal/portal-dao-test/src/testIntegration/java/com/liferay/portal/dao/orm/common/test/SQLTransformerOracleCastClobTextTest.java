@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -41,7 +42,6 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -58,15 +58,18 @@ public class SQLTransformerOracleCastClobTextTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		DB db = DBManagerUtil.getDB();
+
+		Assume.assumeTrue(db.getDBType() == DBType.ORACLE);
+	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
-
-		if (_db.getDBType() != DBType.ORACLE) {
-			return;
-		}
 
 		_db.runSQL(
 			"create table TestCastClobText (id LONG not null primary key, " +
@@ -118,16 +121,7 @@ public class SQLTransformerOracleCastClobTextTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		if (_db.getDBType() != DBType.ORACLE) {
-			return;
-		}
-
 		_db.runSQL("drop table TestCastClobText");
-	}
-
-	@Before
-	public void setUp() {
-		Assume.assumeTrue(_db.getDBType() == DBType.ORACLE);
 	}
 
 	@Test

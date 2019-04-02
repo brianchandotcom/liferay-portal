@@ -125,9 +125,12 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.1", "1.0.2", new UpgradeDDMTemplateSmallImageURL());
 
 		registry.register(
-			"1.0.2", "1.1.0",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.
-				UpgradeDDMFormParagraphFields(_jsonFactory),
+			"1.0.2", "1.0.3",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_3.
+				UpgradeDDMFormParagraphFields(_jsonFactory));
+
+		registry.register(
+			"1.0.3", "1.1.0",
 			new UpgradeCheckboxFieldToCheckboxMultipleField(
 				ddmFormJSONDeserializer, ddmFormValuesDeserializer,
 				ddmFormValuesSerializer, _jsonFactory),

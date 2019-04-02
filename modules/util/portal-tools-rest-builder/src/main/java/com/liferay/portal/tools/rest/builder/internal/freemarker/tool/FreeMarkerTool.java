@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
@@ -247,8 +246,7 @@ public class FreeMarkerTool {
 	public boolean isPathParameter(
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 
-		String name = CamelCaseUtil.fromCamelCase(
-			javaMethodParameter.getParameterName());
+		String name = javaMethodParameter.getParameterName();
 
 		for (Parameter parameter : operation.getParameters()) {
 			if (Objects.equals(parameter.getName(), name) &&

@@ -133,29 +133,23 @@
 	</div>
 {/template}
 
-{deltemplate ClayAutocomplete.Item variant="'sharingUser'"}
+{deltemplate ClayAutocomplete.ItemContent variant="'sharingUser'"}
 	{@param data: ?}
-	{@param index: int}
-	{@param? _handleDropdownItemClick: any}
 
-	<li>
-		<a class="dropdown-item" data-dropdown-item-index="{$index}" data-onclick="{$_handleDropdownItemClick}" href="javascript:;" id="item">
-			{if $data.data.portraitURL}
-				{call ClaySticker.render}
-					{param size: 'lg' /}
-					{param imageSrc: $data.data.portraitURL /}
-					{param shape: 'circle' /}
-				{/call}
-			{else}
-				{call ClaySticker.render}
-					{param size: 'lg' /}
-					{param icon: 'user' /}
-					{param shape: 'circle' /}
-					{param spritemap: $data.data.spritemap /}
-				{/call}
-			{/if}
-			{sp}
-			<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
-		</a>
-	</li>
+	{if $data.data.portraitURL}
+		{call ClaySticker.render}
+			{param size: 'lg' /}
+			{param imageSrc: $data.data.portraitURL /}
+			{param shape: 'circle' /}
+		{/call}
+	{else}
+		{call ClaySticker.render}
+			{param size: 'lg' /}
+			{param icon: 'user' /}
+			{param shape: 'circle' /}
+			{param spritemap: $data.data.spritemap /}
+		{/call}
+	{/if}
+	{sp}
+	<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
 {/deltemplate}

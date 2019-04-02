@@ -56,7 +56,7 @@ import java.util.stream.Stream;
  * @author Javier Gamarra
  * @author Victor Oliveira
  */
-public class StructureUtil {
+public class FormStructureUtil {
 
 	public static FormStructure toFormStructure(
 			DDMStructure ddmStructure, Portal portal,

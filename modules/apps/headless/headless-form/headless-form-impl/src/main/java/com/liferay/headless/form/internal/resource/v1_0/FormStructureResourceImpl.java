@@ -17,7 +17,7 @@ package com.liferay.headless.form.internal.resource.v1_0;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
-import com.liferay.headless.form.internal.dto.v1_0.util.StructureUtil;
+import com.liferay.headless.form.internal.dto.v1_0.util.FormStructureUtil;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -49,7 +49,7 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 					contentSpaceId, _getClassNameId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
-				ddmStructure -> StructureUtil.toFormStructure(
+				ddmStructure -> FormStructureUtil.toFormStructure(
 					ddmStructure, _portal, _userLocalService,
 					contextAcceptLanguage.getPreferredLocale())),
 			pagination,
@@ -61,7 +61,7 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 	public FormStructure getFormStructure(Long formStructureId)
 		throws Exception {
 
-		return StructureUtil.toFormStructure(
+		return FormStructureUtil.toFormStructure(
 			_ddmStructureLocalService.getStructure(formStructureId), _portal,
 			_userLocalService, contextAcceptLanguage.getPreferredLocale());
 	}

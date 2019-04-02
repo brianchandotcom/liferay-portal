@@ -14,35 +14,21 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.adaptive.media.AMAttribute;
-import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.image.finder.AMImageFinder;
-import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
-import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
-import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -51,11 +37,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -63,11 +46,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
@@ -94,8 +74,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getContentSpaceDocumentsPage(
-		Long contentSpaceId, Boolean flatten, String search, Filter filter,
-		Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -136,8 +116,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getFolderDocumentsPage(
-		Long folderId, String search, Filter filter, Pagination pagination,
-		Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -219,7 +199,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public Document postContentSpaceDocument(
-		Long contentSpaceId, MultipartBody multipartBody)
+			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _addDocument(contentSpaceId, 0L, contentSpaceId, multipartBody);
@@ -227,7 +207,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public Document postFolderDocument(
-		Long folderId, MultipartBody multipartBody)
+			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(folderId);
@@ -299,8 +279,8 @@ public class DocumentResourceImpl
 	}
 
 	private Document _addDocument(
-		Long repositoryId, long folderId, Long groupId,
-		MultipartBody multipartBody)
+			Long repositoryId, long folderId, Long groupId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -349,8 +329,8 @@ public class DocumentResourceImpl
 	}
 
 	private Page<Document> _getDocumentsPage(
-		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-		String search, Filter filter, Pagination pagination, Sort[] sorts)
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.Folder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.FolderDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.FolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.FolderResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -64,8 +62,8 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getContentSpaceFoldersPage(
-		Long contentSpaceId, Boolean flatten, String search, Filter filter,
-		Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Long folderId = null;
@@ -90,8 +88,8 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getFolderFoldersPage(
-		Long folderId, String search, Filter filter, Pagination pagination,
-		Sort[] sorts)
+			Long folderId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
@@ -144,7 +142,7 @@ public class FolderResourceImpl
 	}
 
 	private Folder _addFolder(
-		Long contentSpaceId, Long parentFolderId, Folder folder)
+			Long contentSpaceId, Long parentFolderId, Folder folder)
 		throws Exception {
 
 		return _toFolder(
@@ -156,8 +154,8 @@ public class FolderResourceImpl
 	}
 
 	private Page<Folder> _getFoldersPage(
-		Long contentSpaceId, String search, Filter filter,
-		Long parentFolderId, Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Long parentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -186,7 +184,7 @@ public class FolderResourceImpl
 	}
 
 	private Folder _toFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder)
+			com.liferay.portal.kernel.repository.model.Folder folder)
 		throws Exception {
 
 		return _folderDTOConverter.toDTO(

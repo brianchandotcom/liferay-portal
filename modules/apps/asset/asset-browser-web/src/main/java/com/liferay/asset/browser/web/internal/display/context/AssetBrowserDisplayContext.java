@@ -77,14 +77,14 @@ public class AssetBrowserDisplayContext {
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			long[] subtypeSelectionId = null;
+			long[] subtypeSelectionIds = null;
 
 			if (getSubtypeSelectionId() > 0) {
-				subtypeSelectionId = new long[] {getSubtypeSelectionId()};
+				subtypeSelectionIds = new long[] {getSubtypeSelectionId()};
 			}
 
 			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(), _getClassNameIds(), subtypeSelectionId,
+				_getFilterGroupIds(), _getClassNameIds(), subtypeSelectionIds,
 				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
 				_getListable(), false, false);
 
@@ -93,7 +93,7 @@ public class AssetBrowserDisplayContext {
 			List<AssetEntry> assetEntries =
 				AssetEntryLocalServiceUtil.getEntries(
 					_getFilterGroupIds(), _getClassNameIds(),
-					subtypeSelectionId, _getKeywords(), _getKeywords(),
+					subtypeSelectionIds, _getKeywords(), _getKeywords(),
 					_getKeywords(), _getKeywords(), _getListable(), false,
 					false, assetBrowserSearch.getStart(),
 					assetBrowserSearch.getEnd(), "modifiedDate",

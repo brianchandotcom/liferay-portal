@@ -160,6 +160,9 @@ public class LiferayK8sConnection {
 
 	}
 
+	private LiferayK8sConnection() {
+	}
+
 	private static final ApiClient _apiClient;
 	private static final CoreV1Api _coreV1Api;
 	private static LiferayK8sConnection _liferayK8sConnection;

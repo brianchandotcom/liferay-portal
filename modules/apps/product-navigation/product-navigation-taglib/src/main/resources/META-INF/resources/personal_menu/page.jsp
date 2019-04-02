@@ -34,7 +34,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 		<%= label %>
 	</div>
 
-	<div id="<%= randomNamespace + "clay_dropdown_portal" %>"></div>
+	<div id="clay_dropdown_portal"></div>
 </div>
 
 <%

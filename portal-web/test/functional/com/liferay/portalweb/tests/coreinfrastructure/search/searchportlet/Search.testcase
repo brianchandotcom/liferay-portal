@@ -2060,7 +2060,7 @@ definition {
 	@priority = "5"
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SearchUsecase#ViewSearchResultDetails";
+		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

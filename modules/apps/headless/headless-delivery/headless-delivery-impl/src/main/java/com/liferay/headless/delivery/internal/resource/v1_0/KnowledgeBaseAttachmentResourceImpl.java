@@ -12,11 +12,26 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.resource.v1_0;
+package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -29,4 +44,87 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class KnowledgeBaseAttachmentResourceImpl
 	extends BaseKnowledgeBaseAttachmentResourceImpl {
+
+	@Override
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+		throws Exception {
+
+		_portletFileRepository.deletePortletFileEntry(
+			knowledgeBaseAttachmentId);
+	}
+
+	@Override
+	public Page<KnowledgeBaseAttachment>
+			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+				Long knowledgeBaseArticleId)
+		throws Exception {
+
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+
+		return Page.of(
+			transform(
+				kbArticle.getAttachmentsFileEntries(),
+				this::_toKnowledgeBaseAttachment));
+	}
+
+	@Override
+	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+			Long knowledgeBaseAttachmentId)
+		throws Exception {
+
+		return _toKnowledgeBaseAttachment(
+			_portletFileRepository.getPortletFileEntry(
+				knowledgeBaseAttachmentId));
+	}
+
+	@Override
+	public KnowledgeBaseAttachment
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				Long knowledgeBaseArticleId, MultipartBody multipartBody)
+		throws Exception {
+
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		return _toKnowledgeBaseAttachment(
+			_portletFileRepository.addPortletFileEntry(
+				kbArticle.getGroupId(), _user.getUserId(),
+				KBArticle.class.getName(), kbArticle.getClassPK(),
+				KBConstants.SERVICE_NAME, kbArticle.getAttachmentsFolderId(),
+				binaryFile.getInputStream(), binaryFile.getFileName(),
+				binaryFile.getFileName(), false));
+	}
+
+	private KnowledgeBaseAttachment _toKnowledgeBaseAttachment(
+			FileEntry fileEntry)
+		throws Exception {
+
+		return new KnowledgeBaseAttachment() {
+			{
+				contentUrl = _dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null, "", false,
+					false);
+				encodingFormat = fileEntry.getMimeType();
+				fileExtension = fileEntry.getExtension();
+				id = fileEntry.getFileEntryId();
+				sizeInBytes = fileEntry.getSize();
+				title = fileEntry.getTitle();
+			}
+		};
+	}
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private KBArticleService _kbArticleService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Context
+	private User _user;
+
 }

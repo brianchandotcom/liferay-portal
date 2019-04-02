@@ -12,11 +12,22 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.resource.v1_0;
+package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
+import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.web.experience.internal.dto.v1_0.converter.DTOConverterRegistry;
+import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +39,57 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ContentListElementResourceImpl
 	extends BaseContentListElementResourceImpl {
+
+	@Override
+	public Page<ContentListElement> getContentListContentListElementsPage(
+			Long contentListId, Pagination pagination)
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.fetchAssetListEntry(contentListId);
+
+		return Page.of(
+			transform(
+				assetListEntry.getAssetEntries(
+					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toContentListElement),
+			pagination,
+			assetListEntry.getAssetEntriesCount(
+				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
+	}
+
+	private ContentListElement _toContentListElement(AssetEntry assetEntry) {
+		return new ContentListElement() {
+			{
+				contentType = assetEntry.getClassName();
+				order = assetEntry.getPriority();
+				title = assetEntry.getTitle(
+					contextAcceptLanguage.getPreferredLocale());
+
+				setContent(
+					() -> {
+						DTOConverter dtoConverter =
+							_dtoConverterRegistry.getDTOConverter(
+								assetEntry.getClassName());
+
+						if (dtoConverter == null) {
+							return null;
+						}
+
+						return dtoConverter.toDTO(
+							new DefaultDTOConverterContext(
+								contextAcceptLanguage.getPreferredLocale(),
+								assetEntry.getClassPK(), contextUriInfo));
+					});
+			}
+		};
+	}
+
+	@Reference
+	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
 }

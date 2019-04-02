@@ -24,6 +24,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaM
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -144,8 +145,13 @@ public class ResourceOpenAPIParser {
 		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
 			String parameterName = javaMethodParameter.getParameterName();
 
-			if (parameterName.equals("filter") ||
-				parameterName.equals("sorts")) {
+			if (parameterName.equals("contentSpace")) {
+				sb.append(
+					"@Parameter(in = ParameterIn.QUERY, name = \"" +
+						"content-space-id\"),");
+			}
+			else if (parameterName.equals("filter") ||
+					 parameterName.equals("sorts")) {
 
 				sb.append(
 					"@Parameter(in = ParameterIn.QUERY, name = \"" +
@@ -236,6 +242,7 @@ public class ResourceOpenAPIParser {
 			String parameterName = parameter.getName();
 
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
+				StringUtil.equals(parameterName, "content-space-id") ||
 				StringUtil.equals(parameterName, "filter") ||
 				StringUtil.equals(parameterName, "sort")) {
 
@@ -257,6 +264,13 @@ public class ResourceOpenAPIParser {
 					CamelCaseUtil.toCamelCase(parameterName),
 					OpenAPIParserUtil.getJavaDataType(
 						javaDataTypeMap, parameter.getSchema())));
+		}
+
+		if (parameterNames.contains("content-space-id")) {
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"contentSpace", ContentSpace.class.getName());
+
+			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		if (parameterNames.contains("filter")) {
@@ -497,6 +511,10 @@ public class ResourceOpenAPIParser {
 		}
 
 		String parameterType = javaMethodParameter.getParameterType();
+
+		if (Objects.equals(parameterType, ContentSpace.class.getName())) {
+			return "@Context";
+		}
 
 		if (Objects.equals(parameterType, Filter.class.getName()) &&
 			parameterNames.contains("filter")) {

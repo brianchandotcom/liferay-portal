@@ -1115,11 +1115,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/comments/{comment-id}/comments":
+    "/comments/{parent-comment-id}/comments":
         get:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: parent-comment-id
                   required: true
                   schema:
                       format: int64
@@ -1157,7 +1157,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: comment-id
+                  name: parent-comment-id
                   required: true
                   schema:
                       format: int64
@@ -2313,11 +2313,11 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/folders/{folder-id}/folders":
+    "/folders/{parent-folder-id}/folders":
         get:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: parent-folder-id
                   required: true
                   schema:
                       format: int64
@@ -2355,7 +2355,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: folder-id
+                  name: parent-folder-id
                   required: true
                   schema:
                       format: int64
@@ -2446,11 +2446,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
+    "/knowledge-base-articles/{parent-knowledge-base-article-id}/knowledge-base-articles":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: parent-knowledge-base-article-id
                   required: true
                   schema:
                       format: int64
@@ -2488,7 +2488,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-article-id
+                  name: parent-knowledge-base-article-id
                   required: true
                   schema:
                       format: int64
@@ -2760,11 +2760,11 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-folders":
+    "/knowledge-base-folders/{parent-knowledge-base-folder-id}/knowledge-base-folders":
         get:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: parent-knowledge-base-folder-id
                   required: true
                   schema:
                       format: int64
@@ -2790,7 +2790,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: knowledge-base-folder-id
+                  name: parent-knowledge-base-folder-id
                   required: true
                   schema:
                       format: int64
@@ -2958,11 +2958,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-messages/{message-board-message-id}/message-board-messages":
+    "/message-board-messages/{parent-message-board-message-id}/message-board-messages":
         get:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: parent-message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -3000,7 +3000,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-message-id
+                  name: parent-message-board-message-id
                   required: true
                   schema:
                       format: int64
@@ -3131,11 +3131,11 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/message-board-sections/{message-board-section-id}/message-board-sections":
+    "/message-board-sections/{parent-message-board-section-id}/message-board-sections":
         get:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: parent-message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -3173,7 +3173,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: message-board-section-id
+                  name: parent-message-board-section-id
                   required: true
                   schema:
                       format: int64
@@ -3573,11 +3573,11 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
             tags: ["StructuredContentFolder"]
-    "/structured-content-folders/{structured-content-folder-id}/structured-content-folders":
+    "/structured-content-folders/{parent-structured-content-folder-id}/structured-content-folders":
         get:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: parent-structured-content-folder-id
                   required: true
                   schema:
                       format: int64
@@ -3615,7 +3615,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: structured-content-folder-id
+                  name: parent-structured-content-folder-id
                   required: true
                   schema:
                       format: int64

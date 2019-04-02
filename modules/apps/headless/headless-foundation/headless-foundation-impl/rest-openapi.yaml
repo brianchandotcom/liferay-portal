@@ -870,11 +870,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/organizations/{organization-id}/organizations":
+    "/organizations/{parent-organization-id}/organizations":
         get:
             parameters:
                 - in: path
-                  name: organization-id
+                  name: parent-organization-id
                   required: true
                   schema:
                       format: int64
@@ -1201,11 +1201,11 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyCategory"
                     description: ""
             tags: ["TaxonomyCategory"]
-    "/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories":
+    "/taxonomy-categories/{parent-taxonomy-category-id}/taxonomy-categories":
         get:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: parent-taxonomy-category-id
                   required: true
                   schema:
                       format: int64
@@ -1243,7 +1243,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: taxonomy-category-id
+                  name: parent-taxonomy-category-id
                   required: true
                   schema:
                       format: int64

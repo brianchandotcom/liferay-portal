@@ -45,6 +45,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.security.GeneralSecurityException;
 
 import java.util.HashMap;
@@ -263,19 +266,33 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	private File _getContentFile(long userId, FileEntry fileEntry) {
 		try {
+			Credential credential = _getCredential(
+				fileEntry.getCompanyId(), userId);
+
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory,
-				_getCredential(fileEntry.getCompanyId(), userId)
+				_netHttpTransport, _jsonFactory, credential
 			).build();
 
 			Drive.Files driveFiles = drive.files();
 
-			Drive.Files.Export driveFilesExport = driveFiles.export(
-				_getGoogleDriveFileId(fileEntry), fileEntry.getMimeType());
+			Drive.Files.Get getRequest = driveFiles.get(
+				_getGoogleDriveFileId(fileEntry));
 
-			try (InputStream is =
-					driveFilesExport.executeMediaAsInputStream()) {
+			getRequest.setFields("exportLinks");
 
+			com.google.api.services.drive.model.File file =
+				getRequest.execute();
+
+			Map<String, String> exportLinks = file.getExportLinks();
+
+			URL url = new URL(exportLinks.get(fileEntry.getMimeType()));
+
+			URLConnection urlConnection = url.openConnection();
+
+			urlConnection.setRequestProperty(
+				"Authorization", "Bearer " + credential.getAccessToken());
+
+			try (InputStream is = urlConnection.getInputStream()) {
 				return FileUtil.createTempFile(is);
 			}
 		}

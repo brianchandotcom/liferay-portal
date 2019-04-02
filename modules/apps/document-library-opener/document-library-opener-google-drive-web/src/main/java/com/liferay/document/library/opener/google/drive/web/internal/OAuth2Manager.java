@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal;
 
+import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -176,14 +178,35 @@ public class OAuth2Manager {
 			_getGoogleAuthorizationCodeFlow(long companyId)
 		throws PortalException {
 
-		if (_googleAuthorizationCodeFlows.containsKey(companyId)) {
-			return _googleAuthorizationCodeFlows.get(companyId);
-		}
-
 		try {
 			DLOpenerGoogleDriveCompanyConfiguration
 				dlOpenerGoogleDriveCompanyConfiguration =
 					_getDlOpenerGoogleDriveConfiguration(companyId);
+
+			if (_googleAuthorizationCodeFlows.containsKey(companyId)) {
+				GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+					_googleAuthorizationCodeFlows.get(companyId);
+
+				ClientParametersAuthentication clientParametersAuthentication =
+					(ClientParametersAuthentication)
+						googleAuthorizationCodeFlow.getClientAuthentication();
+
+				if (StringUtil.equals(
+						clientParametersAuthentication.getClientId(),
+						dlOpenerGoogleDriveCompanyConfiguration.clientId()) &&
+					StringUtil.equals(
+						clientParametersAuthentication.getClientSecret(),
+						dlOpenerGoogleDriveCompanyConfiguration.
+							clientSecret())) {
+
+					return googleAuthorizationCodeFlow;
+				}
+
+				DataStore<StoredCredential> credentialDataStore =
+					googleAuthorizationCodeFlow.getCredentialDataStore();
+
+				credentialDataStore.clear();
+			}
 
 			GoogleAuthorizationCodeFlow.Builder
 				googleAuthorizationCodeFlowBuilder =

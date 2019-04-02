@@ -17,11 +17,11 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -34,33 +34,33 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/content-list-element.properties",
-	scope = ServiceScope.PROTOTYPE, service = ContentListElementResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/content-set-element.properties",
+	scope = ServiceScope.PROTOTYPE, service = ContentSetElementResource.class
 )
-public class ContentListElementResourceImpl
-	extends BaseContentListElementResourceImpl {
+public class ContentSetElementResourceImpl
+	extends BaseContentSetElementResourceImpl {
 
 	@Override
-	public Page<ContentListElement> getContentListContentListElementsPage(
-			Long contentListId, Pagination pagination)
+	public Page<ContentSetElement> getContentSetContentSetElementsPage(
+			Long contentSetId, Pagination pagination)
 		throws Exception {
 
 		AssetListEntry assetListEntry =
-			_assetListEntryService.fetchAssetListEntry(contentListId);
+			_assetListEntryService.fetchAssetListEntry(contentSetId);
 
 		return Page.of(
 			transform(
 				assetListEntry.getAssetEntries(
 					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toContentListElement),
+				this::_toContentSetElement),
 			pagination,
 			assetListEntry.getAssetEntriesCount(
 				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
 	}
 
-	private ContentListElement _toContentListElement(AssetEntry assetEntry) {
-		return new ContentListElement() {
+	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {
+		return new ContentSetElement() {
 			{
 				contentType = assetEntry.getClassName();
 				order = assetEntry.getPriority();

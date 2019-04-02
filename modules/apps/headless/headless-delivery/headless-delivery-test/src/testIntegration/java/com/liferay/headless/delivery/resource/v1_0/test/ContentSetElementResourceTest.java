@@ -24,6 +24,6 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class ContentListElementResourceTest
-	extends BaseContentListElementResourceTestCase {
+public class ContentSetElementResourceTest
+	extends BaseContentSetElementResourceTestCase {
 }

@@ -12,14 +12,30 @@
  * details.
  */
 
-package com.liferay.headless.delivery.client.resource.v1_0;
+package com.liferay.headless.delivery.resource.v1_0;
+
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
 /**
+ * To access this resource, run:
+ *
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-delivery/v1.0
+ *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-public class ContentListElementResource {
+public interface ContentSetElementResource {
+
+	public Page<ContentSetElement> getContentSetContentSetElementsPage(
+			Long contentSetId, Pagination pagination)
+		throws Exception;
+
+	public void setContextCompany(Company contextCompany);
+
 }

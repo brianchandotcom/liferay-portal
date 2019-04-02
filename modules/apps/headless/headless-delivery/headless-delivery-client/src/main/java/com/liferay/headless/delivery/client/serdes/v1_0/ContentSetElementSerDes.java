@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ContentListElement;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Collection;
@@ -27,24 +27,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentListElementSerDes {
+public class ContentSetElementSerDes {
 
-	public static ContentListElement toDTO(String json) {
-		ContentListElementJSONParser contentListElementJSONParser =
-			new ContentListElementJSONParser();
+	public static ContentSetElement toDTO(String json) {
+		ContentSetElementJSONParser contentSetElementJSONParser =
+			new ContentSetElementJSONParser();
 
-		return contentListElementJSONParser.parseToDTO(json);
+		return contentSetElementJSONParser.parseToDTO(json);
 	}
 
-	public static ContentListElement[] toDTOs(String json) {
-		ContentListElementJSONParser contentListElementJSONParser =
-			new ContentListElementJSONParser();
+	public static ContentSetElement[] toDTOs(String json) {
+		ContentSetElementJSONParser contentSetElementJSONParser =
+			new ContentSetElementJSONParser();
 
-		return contentListElementJSONParser.parseToDTOs(json);
+		return contentSetElementJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ContentListElement contentListElement) {
-		if (contentListElement == null) {
+	public static String toJSON(ContentSetElement contentSetElement) {
+		if (contentSetElement == null) {
 			return "{}";
 		}
 
@@ -54,25 +54,25 @@ public class ContentListElementSerDes {
 
 		sb.append("\"content\": ");
 
-		sb.append(contentListElement.getContent());
+		sb.append(contentSetElement.getContent());
 		sb.append(", ");
 
 		sb.append("\"contentType\": ");
 
 		sb.append("\"");
-		sb.append(contentListElement.getContentType());
+		sb.append(contentSetElement.getContentType());
 		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"order\": ");
 
-		sb.append(contentListElement.getOrder());
+		sb.append(contentSetElement.getOrder());
 		sb.append(", ");
 
 		sb.append("\"title\": ");
 
 		sb.append("\"");
-		sb.append(contentListElement.getTitle());
+		sb.append(contentSetElement.getTitle());
 		sb.append("\"");
 
 		sb.append("}");
@@ -81,9 +81,9 @@ public class ContentListElementSerDes {
 	}
 
 	public static String toJSON(
-		Collection<ContentListElement> contentListElements) {
+		Collection<ContentSetElement> contentSetElements) {
 
-		if (contentListElements == null) {
+		if (contentSetElements == null) {
 			return "[]";
 		}
 
@@ -91,12 +91,12 @@ public class ContentListElementSerDes {
 
 		sb.append("[");
 
-		for (ContentListElement contentListElement : contentListElements) {
+		for (ContentSetElement contentSetElement : contentSetElements) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append(toJSON(contentListElement));
+			sb.append(toJSON(contentSetElement));
 		}
 
 		sb.append("]");
@@ -104,40 +104,40 @@ public class ContentListElementSerDes {
 		return sb.toString();
 	}
 
-	private static class ContentListElementJSONParser
-		extends BaseJSONParser<ContentListElement> {
+	private static class ContentSetElementJSONParser
+		extends BaseJSONParser<ContentSetElement> {
 
-		protected ContentListElement createDTO() {
-			return new ContentListElement();
+		protected ContentSetElement createDTO() {
+			return new ContentSetElement();
 		}
 
-		protected ContentListElement[] createDTOArray(int size) {
-			return new ContentListElement[size];
+		protected ContentSetElement[] createDTOArray(int size) {
+			return new ContentSetElement[size];
 		}
 
 		protected void setField(
-			ContentListElement contentListElement, String jsonParserFieldName,
+			ContentSetElement contentSetElement, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "content")) {
 				if (jsonParserFieldValue != null) {
-					contentListElement.setContent((Object)jsonParserFieldValue);
+					contentSetElement.setContent((Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "contentType")) {
 				if (jsonParserFieldValue != null) {
-					contentListElement.setContentType(
+					contentSetElement.setContentType(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "order")) {
 				if (jsonParserFieldValue != null) {
-					contentListElement.setOrder((Number)jsonParserFieldValue);
+					contentSetElement.setOrder((Number)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
-					contentListElement.setTitle((String)jsonParserFieldValue);
+					contentSetElement.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else {

@@ -23,7 +23,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentListElement {
+public class ContentSetElement {
 
 	public Object getContent() {
 		return content;

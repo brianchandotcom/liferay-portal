@@ -297,7 +297,7 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Documentum Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder3 Name");
+		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
 
@@ -356,7 +356,7 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Documentum Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder Name");
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
 		DMFolder.deleteCP(dmFolderName = "DM Folder Name", recycleBinDisabled = "true");
 
@@ -509,7 +509,7 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Documentum Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "Documentum Subfolder Name");
+		DMFolder.addCP(dmFolderName = "Documentum Subfolder Name");
 
 		DMFolder.viewCP(dmFolderName = "Documentum Subfolder Name");
 

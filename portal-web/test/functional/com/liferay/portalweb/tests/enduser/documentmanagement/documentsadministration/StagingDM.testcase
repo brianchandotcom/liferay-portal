@@ -204,7 +204,7 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1", specificNameFolder = "true");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder 2");
+		DMFolder.addCP(dmFolderName = "DM Folder 2");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 2", specificNameFolder = "true");
 
@@ -224,7 +224,7 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 2", specificNameFolder = "true");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder 3");
+		DMFolder.addCP(dmFolderName = "DM Folder 3");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 3", specificNameFolder = "true");
 

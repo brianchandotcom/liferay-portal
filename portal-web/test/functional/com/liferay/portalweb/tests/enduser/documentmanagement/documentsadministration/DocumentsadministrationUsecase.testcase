@@ -1032,14 +1032,14 @@ definition {
 			specificNameFolder = "true"
 		);
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "The Properties of Moon Rocks");
+		DMFolder.addCP(dmFolderName = "The Properties of Moon Rocks");
 
 		DMFolder.viewCP(
 			dmFolderName = "The Properties of Moon Rocks",
 			specificNameFolder = "true"
 		);
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "Audio Lectures");
+		DMFolder.addCP(dmFolderName = "Audio Lectures");
 
 		DMFolder.viewCP(dmFolderName = "Audio Lectures");
 
@@ -1521,9 +1521,9 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderCP(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addCP(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		ProductMenu.gotoSite(site = "Global");

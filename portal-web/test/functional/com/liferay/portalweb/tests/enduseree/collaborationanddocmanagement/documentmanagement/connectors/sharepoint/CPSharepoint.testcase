@@ -185,7 +185,7 @@ definition {
 	test DeleteDocumentInSubfolder {
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder3 Name");
+		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
 
@@ -250,7 +250,7 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder Name");
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
 		DMFolder.deleteCP(dmFolderName = "DM Folder Name", recycleBinDisabled = "true");
 
@@ -338,7 +338,7 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
-		DMFolder.addSubfolderCP(dmSubFolderName = "Sharepoint Subfolder");
+		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
 
 		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
 

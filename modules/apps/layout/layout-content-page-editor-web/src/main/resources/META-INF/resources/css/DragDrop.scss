@@ -12,6 +12,13 @@
 }
 
 .fragments-editor__drag-source {
+	transition: opacity ease 0.2s;
+	will-change: opacity;
+
+	&.dragged {
+		opacity: 0.6;
+	}
+
 	&.dragging {
 		background: transparent;
 		border: none;

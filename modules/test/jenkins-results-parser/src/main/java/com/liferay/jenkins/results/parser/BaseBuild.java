@@ -1707,7 +1707,7 @@ public abstract class BaseBuild implements Build {
 			Element nameElement = Dom4JUtil.getNewElement(
 				"td", buildInfoElement, expanderAnchorElement, getName());
 
-			int indent = (getDepth() + 1) * 35;
+			int indent = getDepth() * _INDENTATION_SIZE_PIXELS;
 
 			if (expanderAnchorElement == null) {
 				indent += 12;
@@ -1784,8 +1784,6 @@ public abstract class BaseBuild implements Build {
 
 			_parentStopWatchRecord = stopWatchRecord;
 		}
-
-		private static final int _INDENTATION_SIZE = 4;
 
 		private final BaseBuild _baseBuild;
 		private Set<StopWatchRecord> _childStopWatchRecords;
@@ -2311,7 +2309,7 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), null, getDisplayName()));
 
-		int indent = 0;
+		int indent = getDepth() * _INDENTATION_SIZE_PIXELS;
 
 		if (stopWatchRecordsExpanderAnchorElement == null) {
 			indent += 12;
@@ -3231,6 +3229,8 @@ public abstract class BaseBuild implements Build {
 	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS = {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
+
+	private static final int _INDENTATION_SIZE_PIXELS = 35;
 
 	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
 

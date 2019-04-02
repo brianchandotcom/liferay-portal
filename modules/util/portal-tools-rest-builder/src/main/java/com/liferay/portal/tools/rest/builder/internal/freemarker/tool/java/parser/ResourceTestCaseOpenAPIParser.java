@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -27,6 +28,7 @@ import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -53,7 +55,7 @@ public class ResourceTestCaseOpenAPIParser {
 					resourceJavaMethodSignature.getOperation(),
 					resourceJavaMethodSignature.getRequestBodyMediaTypes(),
 					resourceJavaMethodSignature.getSchemaName(),
-					resourceJavaMethodSignature.getJavaMethodParameters(),
+					_getJavaMethodParameters(resourceJavaMethodSignature),
 					_getMethodName(resourceJavaMethodSignature),
 					resourceJavaMethodSignature.getReturnType()));
 		}
@@ -67,6 +69,29 @@ public class ResourceTestCaseOpenAPIParser {
 
 		return ResourceOpenAPIParser.getParameters(
 			javaMethodParameters, operation, annotation);
+	}
+
+	private static List<JavaMethodParameter> _getJavaMethodParameters(
+		JavaMethodSignature javaMethodSignature) {
+
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+		for (JavaMethodParameter javaMethodParameter :
+				javaMethodSignature.getJavaMethodParameters()) {
+
+			String parameterType = javaMethodParameter.getParameterType();
+
+			if (Objects.equals(parameterType, ContentSpace.class.getName())) {
+				javaMethodParameters.add(
+					new JavaMethodParameter(
+						"contentSpaceId", Long.class.getName()));
+			}
+			else {
+				javaMethodParameters.add(javaMethodParameter);
+			}
+		}
+
+		return javaMethodParameters;
 	}
 
 	private static String _getMethodName(

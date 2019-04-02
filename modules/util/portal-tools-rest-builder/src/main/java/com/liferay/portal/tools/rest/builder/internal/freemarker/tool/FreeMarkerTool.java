@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -164,6 +165,24 @@ public class FreeMarkerTool {
 			schema);
 	}
 
+	public List<JavaMethodParameter> getPathJavaMethodParameters(
+		JavaMethodSignature javaMethodSignature) {
+
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		for (JavaMethodParameter javaMethodParameter :
+				javaMethodSignature.getJavaMethodParameters()) {
+
+			if (isPathParameter(javaMethodParameter, operation)) {
+				javaMethodParameters.add(javaMethodParameter);
+			}
+		}
+
+		return javaMethodParameters;
+	}
+
 	public String getResourceArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 
@@ -221,20 +240,6 @@ public class FreeMarkerTool {
 
 		return OpenAPIParserUtil.hasHTTPMethod(
 			javaMethodSignature, httpMethods);
-	}
-
-	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-		Operation operation = javaMethodSignature.getOperation();
-
-		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			if (isPathParameter(javaMethodParameter, operation)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public boolean isDTOSchemaProperty(

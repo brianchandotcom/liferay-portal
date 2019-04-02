@@ -146,15 +146,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#if>
 					</#list>
 
-					<#if freeMarkerTool.hasPathParameter(javaMethodSignature)>
-						if (<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-									<#if !javaMethodParameter?is_first>
-										&&
-									</#if>
+					<#assign pathJavaMethodParameters = freeMarkerTool.getPathJavaMethodParameters(javaMethodSignature) />
 
-									(irrelevant${javaMethodParameter.parameterName?cap_first} != null)
+					<#if (pathJavaMethodParameters?size > 0)>
+						if (<#list pathJavaMethodParameters as javaMethodParameter>
+								<#if !javaMethodParameter?is_first>
+									&&
 								</#if>
+
+								(irrelevant${javaMethodParameter.parameterName?cap_first} != null)
 							</#list>) {
 
 							${schemaName} irrelevant${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(

@@ -141,9 +141,10 @@ class ManageCollaborators extends PortletBase {
 	 */
 	_handleChangeShareable(event) {
 		const target = event.delegateTarget;
+
 		const collaboratorId = target.dataset.collaboratorId;
-		const sharingEntryId = target.dataset.sharingentryId;
 		const shareable = target.checked;
+		const sharingEntryId = target.dataset.sharingentryId;
 
 		let collaborator = this._getCollaborator(collaboratorId);
 
@@ -164,6 +165,7 @@ class ManageCollaborators extends PortletBase {
 	 */
 	_handleDeleteCollaborator(event) {
 		const target = event.delegateTarget;
+
 		const collaboratorId = target.dataset.collaboratorId;
 		const sharingEntryId = target.dataset.sharingentryId;
 
@@ -176,7 +178,6 @@ class ManageCollaborators extends PortletBase {
 		this._deleteSharingEntryIds.push(sharingEntryId);
 	}
 
-
 	/**
 	 * Enable and disable the expiration date field
 	 * @param  {Event} event
@@ -184,8 +185,10 @@ class ManageCollaborators extends PortletBase {
 	 */
 	_handleEnableExpirationDate(event) {
 		const target = event.delegateTarget || event.currentTarget;
+
 		const collaboratorId = target.dataset.collaboratorId;
 		const enabled = target.checked;
+
 		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
@@ -193,8 +196,9 @@ class ManageCollaborators extends PortletBase {
 
 			if (enabled) {
 				collaborator.sharingEntryExpirationDate = this._tomorrowDate;
-			} else {
-				collaborator.sharingEntryExpirationDate = "";
+			}
+			else {
+				collaborator.sharingEntryExpirationDate = '';
 				collaborator.sharingEntryExpirationDateError = false;
 			}
 
@@ -223,7 +227,7 @@ class ManageCollaborators extends PortletBase {
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
 				sharingEntryIdActionIdPairs: permissions,
 				sharingEntryIdExpirationDatePairs: expirationDates,
-				sharingEntryIdsAndShareables: shareables,
+				sharingEntryIdsAndShareables: shareables
 			}
 		)
 			.then(
@@ -266,7 +270,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_hideShowExtraActions(event) {
-		this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid
+		this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
 	}
 
 	/**

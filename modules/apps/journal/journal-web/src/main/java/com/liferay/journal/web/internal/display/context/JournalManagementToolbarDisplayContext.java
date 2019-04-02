@@ -538,7 +538,7 @@ public class JournalManagementToolbarDisplayContext
 							addFavoriteDropdownItem(unsafeConsumer);
 						}
 						else {
-							addRestDropdownItem(unsafeConsumer);
+							addDropdownItem(unsafeConsumer);
 						}
 					}
 				}

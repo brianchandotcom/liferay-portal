@@ -9,6 +9,16 @@
 		padding: 0;
 	}
 
+	.list-group {
+		margin-bottom: 0;
+	}
+
+	.list-group-item {
+		font-size: 1rem;
+		border: 0;
+		padding: 0.5rem 1.25rem;
+	}
+
 	.modal-body.inline-scroller .empty-collaborators {
 		height: 125px;
 		text-align: center;
@@ -31,11 +41,6 @@
 		padding-top: 0.5em;
 	}
 
-	.list-group-item {
-		border: 0;
-		padding: 0.5rem 20px;
-	}
-
 	.modal-body.inline-scroller {
 		padding: 0;
 	}
@@ -52,9 +57,5 @@
 		font-size: 0.875rem;
 		height: 2rem;
 		padding-top: 0.25em;
-	}
-
-	ul.list-group {
-		margin-bottom: 0;
 	}
 }

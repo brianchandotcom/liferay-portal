@@ -31,7 +31,7 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		String[] assetTagNames, Long[] assetCategoryIds, long groupId,
+		String[] assetTagNames, Long[] assetCategoryIds, Long groupId,
 		String viewableBy) {
 
 		return new ServiceContext() {
@@ -57,7 +57,9 @@ public class ServiceContextUtil {
 					setAssetTagNames(assetTagNames);
 				}
 
-				setScopeGroupId(groupId);
+				if (groupId != null) {
+					setScopeGroupId(groupId);
+				}
 			}
 		};
 	}

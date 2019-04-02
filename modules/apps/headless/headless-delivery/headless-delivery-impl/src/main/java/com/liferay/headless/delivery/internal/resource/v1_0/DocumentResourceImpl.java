@@ -33,6 +33,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -93,8 +94,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+		Long contentSpaceId, Boolean flatten, String search, Filter filter,
+		Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -135,8 +136,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getFolderDocumentsPage(
-			Long folderId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+		Long folderId, String search, Filter filter, Pagination pagination,
+		Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -213,14 +214,12 @@ public class DocumentResourceImpl
 					null
 				)));
 
-		return _toDocument(
-			fileEntry, fileEntry.getFileVersion(),
-			_userService.getUserById(fileEntry.getUserId()));
+		return _toDocument(fileEntry);
 	}
 
 	@Override
 	public Document postContentSpaceDocument(
-			Long contentSpaceId, MultipartBody multipartBody)
+		Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _addDocument(contentSpaceId, 0L, contentSpaceId, multipartBody);
@@ -228,7 +227,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public Document postFolderDocument(
-			Long folderId, MultipartBody multipartBody)
+		Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(folderId);
@@ -296,14 +295,12 @@ public class DocumentResourceImpl
 					Document.ViewableBy.OWNER.getValue()
 				)));
 
-		return _toDocument(
-			fileEntry, fileEntry.getFileVersion(),
-			_userService.getUserById(fileEntry.getUserId()));
+		return _toDocument(fileEntry);
 	}
 
 	private Document _addDocument(
-			Long repositoryId, long folderId, Long groupId,
-			MultipartBody multipartBody)
+		Long repositoryId, long folderId, Long groupId,
+		MultipartBody multipartBody)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -348,38 +345,12 @@ public class DocumentResourceImpl
 					Document.ViewableBy.OWNER.getValue()
 				)));
 
-		return _toDocument(
-			fileEntry, fileEntry.getFileVersion(),
-			_userService.getUserById(fileEntry.getUserId()));
-	}
-
-	private AdaptedImage[] _getAdaptiveMedias(FileEntry fileEntry)
-		throws Exception {
-
-		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
-				fileEntry.getMimeType())) {
-
-			return new AdaptedImage[0];
-		}
-
-		Stream<AdaptiveMedia<AMImageProcessor>> stream =
-			_amImageFinder.getAdaptiveMediaStream(
-				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
-					fileEntry
-				).withConfigurationStatus(
-					AMImageQueryBuilder.ConfigurationStatus.ANY
-				).done());
-
-		return stream.map(
-			this::_toAdaptedImage
-		).toArray(
-			AdaptedImage[]::new
-		);
+		return _toDocument(fileEntry);
 	}
 
 	private Page<Document> _getDocumentsPage(
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+		String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -395,91 +366,12 @@ public class DocumentResourceImpl
 			sorts);
 	}
 
-	private <T, S> T _getValue(
-		AdaptiveMedia<S> adaptiveMedia, AMAttribute<S, T> amAttribute) {
-
-		Optional<T> valueOptional = adaptiveMedia.getValueOptional(amAttribute);
-
-		return valueOptional.orElse(null);
-	}
-
-	private AdaptedImage _toAdaptedImage(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-
-		return new AdaptedImage() {
-			{
-				contentUrl = String.valueOf(adaptiveMedia.getURI());
-				height = _getValue(
-					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-				resolutionName = _getValue(
-					adaptiveMedia,
-					AMAttribute.getConfigurationUuidAMAttribute());
-				sizeInBytes = _getValue(
-					adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
-				width = _getValue(
-					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
-			}
-		};
-	}
-
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
-		return _toDocument(
-			fileEntry, fileEntry.getFileVersion(),
-			_userLocalService.getUserById(fileEntry.getUserId()));
-	}
-
-	private Document _toDocument(
-			FileEntry fileEntry, FileVersion fileVersion, User user)
-		throws Exception {
-
-		return new Document() {
-			{
-				adaptedImages = _getAdaptiveMedias(fileEntry);
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId()));
-				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileVersion, null, "");
-				creator = CreatorUtil.toCreator(_portal, user);
-				dateCreated = fileEntry.getCreateDate();
-				dateModified = fileEntry.getModifiedDate();
-				description = fileEntry.getDescription();
-				encodingFormat = fileEntry.getMimeType();
-				fileExtension = fileEntry.getExtension();
-				folderId = fileEntry.getFolderId();
-				id = fileEntry.getFileEntryId();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfComments = _commentManager.getCommentsCount(
-					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-				sizeInBytes = fileEntry.getSize();
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-				title = fileEntry.getTitle();
-			}
-		};
+		return _documentDTOConverter.toDTO(
+			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
 	}
 
 	private static final EntityModel _entityModel = new DocumentEntityModel();
-
-	@Reference
-	private AMImageFinder _amImageFinder;
-
-	@Reference
-	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -488,30 +380,12 @@ public class DocumentResourceImpl
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private CommentManager _commentManager;
-
-	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Reference
-	private RatingsStatsLocalService _ratingsStatsLocalService;
+	private DocumentDTOConverter _documentDTOConverter;
 
 	@Context
 	private User _user;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserLocalService _userService;
 
 }

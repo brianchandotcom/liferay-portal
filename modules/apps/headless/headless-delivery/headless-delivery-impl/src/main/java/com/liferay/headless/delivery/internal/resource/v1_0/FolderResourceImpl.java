@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.FolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.FolderResource;
@@ -63,8 +64,8 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+		Long contentSpaceId, Boolean flatten, String search, Filter filter,
+		Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Long folderId = null;
@@ -89,8 +90,8 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getFolderFoldersPage(
-			Long folderId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+		Long folderId, String search, Filter filter, Pagination pagination,
+		Sort[] sorts)
 		throws Exception {
 
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
@@ -143,7 +144,7 @@ public class FolderResourceImpl
 	}
 
 	private Folder _addFolder(
-			Long contentSpaceId, Long parentFolderId, Folder folder)
+		Long contentSpaceId, Long parentFolderId, Folder folder)
 		throws Exception {
 
 		return _toFolder(
@@ -155,8 +156,8 @@ public class FolderResourceImpl
 	}
 
 	private Page<Folder> _getFoldersPage(
-			Long contentSpaceId, String search, Filter filter,
-			Long parentFolderId, Pagination pagination, Sort[] sorts)
+		Long contentSpaceId, String search, Filter filter,
+		Long parentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -185,25 +186,13 @@ public class FolderResourceImpl
 	}
 
 	private Folder _toFolder(
-			com.liferay.portal.kernel.repository.model.Folder folder)
+		com.liferay.portal.kernel.repository.model.Folder folder)
 		throws Exception {
 
-		return new Folder() {
-			{
-				contentSpaceId = folder.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(folder.getUserId()));
-				dateCreated = folder.getCreateDate();
-				dateModified = folder.getModifiedDate();
-				description = folder.getDescription();
-				id = folder.getFolderId();
-				name = folder.getName();
-				numberOfDocuments = _dlAppService.getFileEntriesCount(
-					folder.getRepositoryId(), folder.getFolderId());
-				numberOfFolders = _dlAppService.getFoldersCount(
-					folder.getRepositoryId(), folder.getFolderId());
-			}
-		};
+		return _folderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				folder.getFolderId()));
 	}
 
 	private Folder _updateFolder(Long folderId, String name, String description)
@@ -220,9 +209,6 @@ public class FolderResourceImpl
 	private DLAppService _dlAppService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private FolderDTOConverter _folderDTOConverter;
 
 }

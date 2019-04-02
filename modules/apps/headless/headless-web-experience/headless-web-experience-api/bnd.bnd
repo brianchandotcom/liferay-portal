@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Headless Web Experience API
-Bundle-SymbolicName: com.liferay.headless.web.experience.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.web.experience.dto.v1_0,\
-	com.liferay.headless.web.experience.dto.v1_0.converter,\
-	com.liferay.headless.web.experience.resource.v1_0

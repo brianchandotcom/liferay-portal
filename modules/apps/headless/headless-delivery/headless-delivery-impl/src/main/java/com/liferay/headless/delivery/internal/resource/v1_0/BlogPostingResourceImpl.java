@@ -87,8 +87,8 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			Long contentSpaceId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+		Long contentSpaceId, String search, Filter filter,
+		Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -116,7 +116,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public BlogPosting postContentSpaceBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
+		Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
@@ -152,7 +152,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public BlogPosting putBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
+		Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
@@ -197,26 +197,6 @@ public class BlogPostingResourceImpl
 		blogPosting.setNumberOfComments((Number)null);
 	}
 
-	private Image _getImage(BlogsEntry blogsEntry) throws Exception {
-		long coverImageFileEntryId = blogsEntry.getCoverImageFileEntryId();
-
-		if (coverImageFileEntryId == 0) {
-			return null;
-		}
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(coverImageFileEntryId);
-
-		return new Image() {
-			{
-				caption = blogsEntry.getCoverImageCaption();
-				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
-				imageId = coverImageFileEntryId;
-			}
-		};
-	}
-
 	private ImageSelector _getImageSelector(Long imageId) {
 		if ((imageId == null) || (imageId == 0)) {
 			return new ImageSelector();
@@ -237,76 +217,22 @@ public class BlogPostingResourceImpl
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
-		return new BlogPosting() {
-			{
-				alternativeHeadline = blogsEntry.getSubtitle();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
-				articleBody = blogsEntry.getContent();
-				contentSpaceId = blogsEntry.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
-				dateCreated = blogsEntry.getCreateDate();
-				dateModified = blogsEntry.getModifiedDate();
-				datePublished = blogsEntry.getDisplayDate();
-				description = blogsEntry.getDescription();
-				encodingFormat = "text/html";
-				friendlyUrlPath = blogsEntry.getUrlTitle();
-				headline = blogsEntry.getTitle();
-				id = blogsEntry.getEntryId();
-				image = _getImage(blogsEntry);
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfComments = _commentManager.getCommentsCount(
-					BlogsEntry.class.getName(), blogsEntry.getEntryId());
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-			}
-		};
+		return _blogPostingDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				blogsEntry.getEntryId()));
 	}
 
 	private static final EntityModel _entityModel =
 		new BlogPostingEntityModel();
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
+	private BlogPostingDTOConverter _blogPostingDTOConverter;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
-	private CommentManager _commentManager;
-
-	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Context
-	private User _user;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

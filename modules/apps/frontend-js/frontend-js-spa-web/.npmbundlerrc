@@ -19,10 +19,8 @@
 		}
 	},
 	"exclude": {
-		"bootstrap": [
-			"Gruntfile.js",
-			"grunt/**/*"
-		],
+		"bootstrap": true,
+		"core-js": true,
 		"path-browserify": true,
 		"punycode": true,
 		"querystring": true,

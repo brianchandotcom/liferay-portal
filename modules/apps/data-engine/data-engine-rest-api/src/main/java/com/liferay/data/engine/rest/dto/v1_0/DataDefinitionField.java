@@ -40,17 +40,45 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinitionField")
 public class DataDefinitionField {
 
-	public String getDefaultValue() {
+	public CustomProperty[] getCustomProperties() {
+		return customProperties;
+	}
+
+	public void setCustomProperties(CustomProperty[] customProperties) {
+		this.customProperties = customProperties;
+	}
+
+	@JsonIgnore
+	public void setCustomProperties(
+		UnsafeSupplier<CustomProperty[], Exception>
+			customPropertiesUnsafeSupplier) {
+
+		try {
+			customProperties = customPropertiesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CustomProperty[] customProperties;
+
+	public Object getDefaultValue() {
 		return defaultValue;
 	}
 
-	public void setDefaultValue(String defaultValue) {
+	public void setDefaultValue(Object defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
 	@JsonIgnore
 	public void setDefaultValue(
-		UnsafeSupplier<String, Exception> defaultValueUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
 
 		try {
 			defaultValue = defaultValueUnsafeSupplier.get();
@@ -65,7 +93,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String defaultValue;
+	protected Object defaultValue;
 
 	public String getFieldType() {
 		return fieldType;
@@ -306,11 +334,30 @@ public class DataDefinitionField {
 
 		sb.append("{");
 
+		sb.append("\"customProperties\": ");
+
+		if (customProperties == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < customProperties.length; i++) {
+				sb.append(customProperties[i]);
+
+				if ((i + 1) < customProperties.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
 		sb.append("\"defaultValue\": ");
 
-		sb.append("\"");
 		sb.append(defaultValue);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"fieldType\": ");

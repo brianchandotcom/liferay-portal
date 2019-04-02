@@ -102,6 +102,14 @@ public class AssetEntryUsagesDisplayContext {
 	public List<DropdownItem> getAssetEntryUsageActionDropdownItems(
 		AssetEntryUsage assetEntryUsage) {
 
+		long classNameId = assetEntryUsage.getClassNameId();
+
+		if (classNameId == PortalUtil.getClassNameId(
+				AssetDisplayPageEntry.class)) {
+
+			return Collections.emptyList();
+		}
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			getAssetEntryId());
 

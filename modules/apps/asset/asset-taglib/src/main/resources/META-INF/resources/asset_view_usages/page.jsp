@@ -95,21 +95,23 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
+			<c:if test="<%= assetEntryUsage.getClassNameId() != PortalUtil.getClassNameId(AssetDisplayPageEntry.class) %>">
 
-			<%
-			Map<String, String> data = new HashMap<>();
+				<%
+				Map<String, String> data = new HashMap<>();
 
-			data.put("href", previewURL);
-			data.put("title", assetEntry.getTitle(locale));
-			%>
+				data.put("href", previewURL);
+				data.put("title", assetEntry.getTitle(locale));
+				%>
 
-			<clay:button
-				data="<%= data %>"
-				elementClasses="preview-asset-entry-usage table-action-link"
-				icon="view"
-				monospaced="<%= true %>"
-				style="secondary"
-			/>
+				<clay:button
+					data="<%= data %>"
+					elementClasses="preview-asset-entry-usage table-action-link"
+					icon="view"
+					monospaced="<%= true %>"
+					style="secondary"
+				/>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

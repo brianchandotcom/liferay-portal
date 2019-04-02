@@ -19,11 +19,15 @@
 <%
 AssetEntry assetEntry = assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry();
 
+AssetRendererFactory assetRendererFactory = null;
+
 LayoutPageTemplateStructure layoutPageTemplateStructure = null;
 
 JSONArray structureJSONArray = null;
 
 if (assetEntry != null) {
+	assetRendererFactory = assetEntry.getAssetRendererFactory();
+
 	LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId());
 
 	layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), layoutPageTemplateEntry.getPlid(), true);
@@ -37,6 +41,10 @@ if (assetEntry != null) {
 	}
 }
 %>
+
+<c:if test="<%= assetRendererFactory != null %>">
+	<liferay-ui:success key='<%= assetRendererFactory.getPortletId() + "requestProcessed" %>' message="your-request-processed-successfully" />
+</c:if>
 
 <c:choose>
 	<c:when test="<%= structureJSONArray != null %>">

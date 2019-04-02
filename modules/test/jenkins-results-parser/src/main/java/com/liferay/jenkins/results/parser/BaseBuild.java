@@ -1685,7 +1685,7 @@ public abstract class BaseBuild implements Build {
 			expanderAnchorElement.addAttribute(
 				"onClick",
 				JenkinsResultsParserUtil.combine(
-					"return toggleStopwatchRecordExpander(\'", namespace,
+					"return toggleStopWatchRecordExpander(\'", namespace,
 					"\', \'", getName(), "\')"));
 			expanderAnchorElement.addAttribute(
 				"style",
@@ -2619,7 +2619,7 @@ public abstract class BaseBuild implements Build {
 		stopWatchRecordsExpanderAnchorElement.addAttribute(
 			"onClick",
 			JenkinsResultsParserUtil.combine(
-				"return toggleStopwatchRecordExpander(\'", hashCode,
+				"return toggleStopWatchRecordExpander(\'", hashCode,
 				"\', \'\')"));
 
 		stopWatchRecordsExpanderAnchorElement.addAttribute(

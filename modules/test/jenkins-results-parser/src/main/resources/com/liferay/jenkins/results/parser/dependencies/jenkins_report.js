@@ -1,64 +1,67 @@
-function setChildStopWatchRowsVisibility(childRowNames, namespace, show) {
-	if (childRowNames == null) {
+function setChildStopWatchRowsVisibility(
+	childStopWatchRowNames, parentRowId, show) {
+
+	if (childStopWatchRowNames == null) {
 		return;
 	}
 
-	for (var i = 0; i < childRowNames.length; i++) {
-		var rowElement = document.getElementById(
-			namespace + "-" + childRowNames[i]);
+	for (var i = 0; i < childStopWatchRowNames.length; i++) {
+		var childStopWatchRowElement = document.getElementById(
+			parentRowId + "-" + childStopWatchRowNames[i]);
 
-		if (rowElement == null) {
+		if (childStopWatchRowElement == null) {
 			continue;
 		}
 
 		if (show) {
-			rowElement.style.display = "";
+			childStopWatchRowElement.style.display = "";
 		}
 		else {
-			rowElement.style.display = "none";
+			childStopWatchRowElement.style.display = "none";
 		}
 
-		anchorElement = document.getElementById(
-			namespace + "-expander-anchor-" + childRowNames[i]);
+		expanderAnchorElement = document.getElementById(
+			parentRowId + "-expander-anchor-" + childStopWatchRowNames[i]);
 
 		if (!show ||
-			(show && (anchorElement != null) &&
-				anchorElement.text == "- ")) {
+			(show && (expanderAnchorElement != null) &&
+				expanderAnchorElement.text == "- ")) {
 
-			var childrenAttribute = rowElement.getAttribute(
-				"child-stopwatch-rows");
+			var childStopWatchRowsAttribute =
+				childStopWatchRowElement.getAttribute("child-stopwatch-rows");
 
-			if (childrenAttribute != null) {
+			if (childStopWatchRowsAttribute != null) {
 				setChildStopWatchRowsVisibility(
-					childrenAttribute.split(","), namespace, show);
+					childStopWatchRowsAttribute.split(","), parentRowId,
+					show);
 			}
 		}
 	}
 }
 
-function toggleStopwatchRecordExpander(namespace, parentStopwatchRecordName) {
-	var anchorElement = document.getElementById(
-		namespace + "-expander-anchor-" + parentStopwatchRecordName);
+function toggleStopWatchRecordExpander(parentRowId, parentStopWatchRecordName) {
+	var expanderAnchorElement = document.getElementById(
+		parentRowId + "-expander-anchor-" + parentStopWatchRecordName);
 
 	var row = document.getElementById(
-		namespace + "-" + parentStopwatchRecordName);
+		parentRowId + "-" + parentStopWatchRecordName);
 
-	var childrenAttribute = row.getAttribute("child-stopwatch-rows");
+	var childStopWatchRowsAttribute = row.getAttribute("child-stopwatch-rows");
 
-	if (anchorElement.text == "+ ") {
-		anchorElement.text = "- ";
+	if (expanderAnchorElement.text == "+ ") {
+		expanderAnchorElement.text = "- ";
 
-		if (childrenAttribute != null) {
+		if (childStopWatchRowsAttribute != null) {
 			setChildStopWatchRowsVisibility(
-				childrenAttribute.split(","), namespace, true);
+				childStopWatchRowsAttribute.split(","), parentRowId, true);
 		}
 	}
 	else {
-		anchorElement.text = "+ ";
+		expanderAnchorElement.text = "+ ";
 
-		if (childrenAttribute != null) {
+		if (childStopWatchRowsAttribute != null) {
 			setChildStopWatchRowsVisibility(
-				childrenAttribute.split(","), namespace, false);
+				childStopWatchRowsAttribute.split(","), parentRowId, false);
 		}
 	}
 

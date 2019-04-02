@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 
 			add(FormRecordResourceImpl.class);
 
+			add(FormRecordFormResourceImpl.class);
+
 			add(FormStructureResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

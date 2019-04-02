@@ -17,6 +17,7 @@ package com.liferay.headless.form.internal.graphql.servlet.v1_0;
 import com.liferay.headless.form.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.form.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
+import com.liferay.headless.form.resource.v1_0.FormRecordFormResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
@@ -47,6 +48,8 @@ public class ServletDataImpl implements ServletData {
 			_formDocumentResourceComponentServiceObjects);
 		Mutation.setFormRecordResourceComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects);
+		Mutation.setFormRecordFormResourceComponentServiceObjects(
+			_formRecordFormResourceComponentServiceObjects);
 
 		Query.setFormResourceComponentServiceObjects(
 			_formResourceComponentServiceObjects);
@@ -84,6 +87,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FormRecordResource>
 		_formRecordResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<FormRecordFormResource>
+		_formRecordFormResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FormStructureResource>

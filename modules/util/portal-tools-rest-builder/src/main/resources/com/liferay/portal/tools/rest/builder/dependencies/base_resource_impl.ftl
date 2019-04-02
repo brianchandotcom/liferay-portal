@@ -76,8 +76,6 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data")>
 				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
 
-				preparePatch(${schemaVarName});
-
 				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 
 				<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
@@ -90,6 +88,8 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 					</#if>
 				</#list>
 
+				preparePatch(${schemaVarName}, existing${schemaName});
+
 				return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
 			<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 				return new ${javaMethodSignature.returnType}();
@@ -101,7 +101,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(${schemaName} ${schemaVarName}) {
+	protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
 	}
 
 	protected <T, R> List<R> transform(Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction) {

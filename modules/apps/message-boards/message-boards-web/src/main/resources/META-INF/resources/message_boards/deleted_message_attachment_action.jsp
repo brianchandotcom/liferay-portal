@@ -28,7 +28,7 @@ MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getF
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 >
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 		<portlet:actionURL name="/message_boards/edit_message_attachments" var="restoreEntryURL">

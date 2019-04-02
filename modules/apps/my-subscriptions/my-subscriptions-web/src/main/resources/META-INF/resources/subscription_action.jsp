@@ -28,7 +28,7 @@ AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 	showWhenSingleIcon="<%= true %>"
 >
 

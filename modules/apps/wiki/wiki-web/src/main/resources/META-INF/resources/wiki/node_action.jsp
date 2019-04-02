@@ -33,7 +33,7 @@ else {
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">

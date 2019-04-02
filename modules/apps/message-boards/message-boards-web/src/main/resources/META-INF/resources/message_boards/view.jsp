@@ -251,7 +251,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									direction="left-side"
 									icon="<%= StringPool.BLANK %>"
 									markupView="lexicon"
-									message="<%= StringPool.BLANK %>"
+									message="actions"
 									showWhenSingleIcon="<%= true %>"
 								>
 									<c:if test="<%= showPermissionsButton %>">
@@ -441,7 +441,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 												direction="left-side"
 												icon="<%= StringPool.BLANK %>"
 												markupView="lexicon"
-												message="<%= StringPool.BLANK %>"
+												message="actions"
 												showWhenSingleIcon="<%= true %>"
 											>
 												<liferay-rss:rss
@@ -483,7 +483,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 												direction="left-side"
 												icon="<%= StringPool.BLANK %>"
 												markupView="lexicon"
-												message="<%= StringPool.BLANK %>"
+												message="actions"
 												showWhenSingleIcon="<%= true %>"
 											>
 												<liferay-rss:rss

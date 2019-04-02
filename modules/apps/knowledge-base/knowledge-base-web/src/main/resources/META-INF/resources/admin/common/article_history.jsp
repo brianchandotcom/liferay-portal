@@ -53,7 +53,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 							direction="left-side"
 							icon="<%= StringPool.BLANK %>"
 							markupView="lexicon"
-							message="<%= StringPool.BLANK %>"
+							message="actions"
 							showWhenSingleIcon="<%= true %>"
 						>
 							<c:if test="<%= (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">

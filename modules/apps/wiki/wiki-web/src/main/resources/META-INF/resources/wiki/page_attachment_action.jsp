@@ -30,7 +30,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 >
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">

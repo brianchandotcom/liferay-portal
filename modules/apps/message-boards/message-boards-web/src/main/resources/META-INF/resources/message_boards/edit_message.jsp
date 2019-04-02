@@ -278,7 +278,7 @@ if (portletTitleBasedNavigation) {
 										direction="left-side"
 										icon="<%= StringPool.BLANK %>"
 										markupView="lexicon"
-										message="<%= StringPool.BLANK %>"
+										message="actions"
 									>
 										<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
 											<liferay-ui:icon-delete

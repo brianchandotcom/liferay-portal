@@ -26,7 +26,7 @@ AnnouncementsEntry entry = (AnnouncementsEntry)row.getObject();
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= AnnouncementsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">

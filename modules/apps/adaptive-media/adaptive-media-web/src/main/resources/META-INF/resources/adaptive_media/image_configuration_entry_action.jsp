@@ -53,7 +53,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message="actions"
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-portlet:renderURL var="editImageConfigurationEntryURL">

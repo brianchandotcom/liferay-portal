@@ -169,7 +169,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							direction="left-side"
 							icon="<%= StringPool.BLANK %>"
 							markupView="lexicon"
-							message="<%= StringPool.BLANK %>"
+							message="actions"
 							showWhenSingleIcon="<%= true %>"
 						>
 							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">

@@ -49,7 +49,7 @@ else {
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
+		message="actions"
 		showWhenSingleIcon="<%= true %>"
 	>
 		<c:if test="<%= (version != wikiPage.getVersion()) && socialActivityWikiPage.isApproved() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">

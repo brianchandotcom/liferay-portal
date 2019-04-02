@@ -27,7 +27,7 @@ MBBan ban = (MBBan)row.getObject();
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
+		message="actions"
 		showWhenSingleIcon="<%= true %>"
 	>
 		<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">

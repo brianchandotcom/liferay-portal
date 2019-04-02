@@ -140,7 +140,7 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 	},
 
 	textProperties: {
-		icon: 'format',
+		icon: 'pencil',
 		id: 'text_properties',
 		panelId: 'text_properties',
 		title: Liferay.Language.get('text-properties'),

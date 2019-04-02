@@ -2,7 +2,6 @@ import 'clay-button';
 import 'clay-select';
 import 'clay-sticker';
 import {ClayStripe} from 'clay-alert';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
@@ -201,16 +200,6 @@ class ManageCollaborators extends PortletBase {
 
 			this.collaborators = this.collaborators;
 		}
-	}
-
-	/**
-	 * Toggles the class 'active'
-	 *
-	 * @param {Event} event
-	 * @protected
-	 */
-	_handleHoverCollaborator(event) {
-		dom.toggleClasses(event.delegateTarget, 'active');
 	}
 
 	/**

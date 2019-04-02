@@ -13,7 +13,6 @@
 	{@param? _handleChangeShareable: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleEnableExpirationDate: any}
-	{@param? _handleHoverCollaborator: any}
 	{@param? _handleSaveButtonClick: any}
 	{@param? _hideShowExtraActions: any}
 	{@param? _loadingResponse: bool}
@@ -34,11 +33,9 @@
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
 						<li
-							class="list-group-item list-group-item-flex"
+							class="list-group-item list-group-item-flex list-group-item-action"
 							data-collaboratorid="{$collaborator.id}"
 							data-onclick="{$_hideShowExtraActions}"
-							data-onmouseout="{$_handleHoverCollaborator}"
-							data-onmouseover="{$_handleHoverCollaborator}"
 							id="collaborator{$collaborator.id}"
 						>
 							{call .collaborator}

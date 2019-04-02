@@ -127,9 +127,9 @@ definition {
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPGViaMG(
-			mgSubfolderDescription = "DM Subfolder Description",
-			mgSubfolderName = "DM Subfolder Name"
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Subfolder Description",
+			mgFolderName = "DM Subfolder Name"
 		);
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Subfolder Name");
@@ -152,9 +152,9 @@ definition {
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPGViaMG(
-			mgSubfolderDescription = "DM Subfolder1 Description",
-			mgSubfolderName = "DM Subfolder1 Name"
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Subfolder1 Description",
+			mgFolderName = "DM Subfolder1 Name"
 		);
 
 		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder1 Name");
@@ -163,9 +163,9 @@ definition {
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPGViaMG(
-			mgSubfolderDescription = "DM Subfolder2 Description",
-			mgSubfolderName = "DM Subfolder2 Name"
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Subfolder2 Description",
+			mgFolderName = "DM Subfolder2 Name"
 		);
 
 		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder2 Name");
@@ -174,9 +174,9 @@ definition {
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPGViaMG(
-			mgSubfolderDescription = "DM Subfolder3 Description",
-			mgSubfolderName = "DM Subfolder3 Name"
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Subfolder3 Description",
+			mgFolderName = "DM Subfolder3 Name"
 		);
 
 		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder3 Name");

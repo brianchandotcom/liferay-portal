@@ -689,8 +689,12 @@ public class DLImpl implements DL {
 			orderByComparator = new RepositoryModelSizeComparator<>(
 				orderByAsc, orderByModel);
 		}
-		else {
+		else if (orderByCol.equals("title")) {
 			orderByComparator = new RepositoryModelTitleComparator<>(
+				orderByAsc, orderByModel);
+		}
+		else {
+			orderByComparator = new RepositoryModelModifiedDateComparator<>(
 				orderByAsc, orderByModel);
 		}
 

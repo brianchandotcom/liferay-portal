@@ -45,13 +45,10 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
-		ClassName className = _classNameService.fetchClassName(
-			DDMFormInstance.class.getName());
-
 		return Page.of(
 			transform(
 				_ddmStructureLocalService.getStructures(
-					contentSpaceId, className.getClassNameId(),
+					contentSpaceId, _getClassNameId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				ddmStructure -> StructureUtil.toFormStructure(
@@ -59,7 +56,7 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 					contextAcceptLanguage.getPreferredLocale())),
 			pagination,
 			_ddmStructureLocalService.getStructuresCount(
-				contentSpaceId, className.getClassNameId()));
+				contentSpaceId, _getClassNameId()));
 	}
 
 	@Override
@@ -69,6 +66,13 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		return StructureUtil.toFormStructure(
 			_ddmStructureLocalService.getStructure(formStructureId), _portal,
 			_userLocalService, contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private long _getClassNameId() {
+		ClassName className = _classNameLocalService.fetchClassName(
+			DDMFormInstance.class.getName());
+
+		return className.getClassNameId();
 	}
 
 	@Reference

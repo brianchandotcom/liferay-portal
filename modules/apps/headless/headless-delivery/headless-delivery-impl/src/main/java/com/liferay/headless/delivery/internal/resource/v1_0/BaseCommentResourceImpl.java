@@ -240,7 +240,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Comment comment) {
+	protected void preparePatch(Comment comment, Comment existingComment) {
 	}
 
 	protected <T, R> List<R> transform(

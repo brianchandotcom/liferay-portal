@@ -37,6 +37,12 @@ public interface RatingResource {
 	public Rating postBlogPostingRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
+	public Page<Rating> getDocumentRatingsPage(Long documentId)
+		throws Exception;
+
+	public Rating postDocumentRating(Long documentId, Rating rating)
+		throws Exception;
+
 	public Page<Rating> getKnowledgeBaseArticleRatingsPage(
 			Long knowledgeBaseArticleId)
 		throws Exception;
@@ -66,12 +72,6 @@ public interface RatingResource {
 	public Rating getRating(Long ratingId) throws Exception;
 
 	public Rating putRating(Long ratingId, Rating rating) throws Exception;
-
-	public Page<Rating> getDocumentRatingsPage(Long documentId)
-		throws Exception;
-
-	public Rating postDocumentRating(Long documentId, Rating rating)
-		throws Exception;
 
 	public Page<Rating> getStructuredContentRatingsPage(
 			Long structuredContentId)

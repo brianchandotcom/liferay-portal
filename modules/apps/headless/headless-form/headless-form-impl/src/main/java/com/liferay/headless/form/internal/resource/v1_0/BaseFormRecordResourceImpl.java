@@ -117,7 +117,8 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(FormRecord formRecord) {
+	protected void preparePatch(
+		FormRecord formRecord, FormRecord existingFormRecord) {
 	}
 
 	protected <T, R> List<R> transform(

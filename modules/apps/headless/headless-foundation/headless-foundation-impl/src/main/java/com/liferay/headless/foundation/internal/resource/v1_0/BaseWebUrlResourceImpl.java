@@ -105,7 +105,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(WebUrl webUrl) {
+	protected void preparePatch(WebUrl webUrl, WebUrl existingWebUrl) {
 	}
 
 	protected <T, R> List<R> transform(

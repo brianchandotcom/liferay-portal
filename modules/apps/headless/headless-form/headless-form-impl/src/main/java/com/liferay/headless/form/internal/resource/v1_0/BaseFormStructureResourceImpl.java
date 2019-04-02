@@ -88,7 +88,8 @@ public abstract class BaseFormStructureResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(FormStructure formStructure) {
+	protected void preparePatch(
+		FormStructure formStructure, FormStructure existingFormStructure) {
 	}
 
 	protected <T, R> List<R> transform(

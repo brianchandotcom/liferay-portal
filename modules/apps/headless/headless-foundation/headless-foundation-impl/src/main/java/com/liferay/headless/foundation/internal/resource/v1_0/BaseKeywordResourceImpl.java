@@ -132,7 +132,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Keyword keyword) {
+	protected void preparePatch(Keyword keyword, Keyword existingKeyword) {
 	}
 
 	protected <T, R> List<R> transform(

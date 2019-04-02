@@ -128,8 +128,6 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 
-		preparePatch(folder);
-
 		Folder existingFolder = getFolder(folderId);
 
 		if (Validator.isNotNull(folder.getContentSpaceId())) {
@@ -163,6 +161,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 		if (Validator.isNotNull(folder.getViewableBy())) {
 			existingFolder.setViewableBy(folder.getViewableBy());
 		}
+
+		preparePatch(folder, existingFolder);
 
 		return putFolder(folderId, existingFolder);
 	}
@@ -219,7 +219,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Folder folder) {
+	protected void preparePatch(Folder folder, Folder existingFolder) {
 	}
 
 	protected <T, R> List<R> transform(

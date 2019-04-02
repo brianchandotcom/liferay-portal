@@ -105,7 +105,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Phone phone) {
+	protected void preparePatch(Phone phone, Phone existingPhone) {
 	}
 
 	protected <T, R> List<R> transform(

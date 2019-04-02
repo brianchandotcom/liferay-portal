@@ -95,8 +95,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		preparePatch(taxonomyCategory);
-
 		TaxonomyCategory existingTaxonomyCategory = getTaxonomyCategory(
 			taxonomyCategoryId);
 
@@ -140,6 +138,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			existingTaxonomyCategory.setViewableBy(
 				taxonomyCategory.getViewableBy());
 		}
+
+		preparePatch(taxonomyCategory, existingTaxonomyCategory);
 
 		return putTaxonomyCategory(
 			taxonomyCategoryId, existingTaxonomyCategory);
@@ -237,7 +237,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(TaxonomyCategory taxonomyCategory) {
+	protected void preparePatch(
+		TaxonomyCategory taxonomyCategory,
+		TaxonomyCategory existingTaxonomyCategory) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -116,7 +116,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	}
 
 	protected void preparePatch(
-		KnowledgeBaseAttachment knowledgeBaseAttachment) {
+		KnowledgeBaseAttachment knowledgeBaseAttachment,
+		KnowledgeBaseAttachment existingKnowledgeBaseAttachment) {
 	}
 
 	protected <T, R> List<R> transform(

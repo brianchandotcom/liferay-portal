@@ -76,7 +76,9 @@ public abstract class BaseContentListElementResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(ContentListElement contentListElement) {
+	protected void preparePatch(
+		ContentListElement contentListElement,
+		ContentListElement existingContentListElement) {
 	}
 
 	protected <T, R> List<R> transform(

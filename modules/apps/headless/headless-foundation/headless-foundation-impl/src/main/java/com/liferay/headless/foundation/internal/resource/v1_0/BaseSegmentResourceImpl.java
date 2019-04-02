@@ -97,7 +97,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Segment segment) {
+	protected void preparePatch(Segment segment, Segment existingSegment) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -178,8 +178,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		preparePatch(messageBoardThread);
-
 		MessageBoardThread existingMessageBoardThread = getMessageBoardThread(
 			messageBoardThreadId);
 
@@ -252,6 +250,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getViewableBy());
 		}
 
+		preparePatch(messageBoardThread, existingMessageBoardThread);
+
 		return putMessageBoardThread(
 			messageBoardThreadId, existingMessageBoardThread);
 	}
@@ -275,7 +275,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(MessageBoardThread messageBoardThread) {
+	protected void preparePatch(
+		MessageBoardThread messageBoardThread,
+		MessageBoardThread existingMessageBoardThread) {
 	}
 
 	protected <T, R> List<R> transform(

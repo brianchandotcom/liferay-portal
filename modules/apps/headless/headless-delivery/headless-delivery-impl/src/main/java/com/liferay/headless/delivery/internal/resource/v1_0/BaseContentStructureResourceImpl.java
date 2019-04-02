@@ -94,7 +94,9 @@ public abstract class BaseContentStructureResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(ContentStructure contentStructure) {
+	protected void preparePatch(
+		ContentStructure contentStructure,
+		ContentStructure existingContentStructure) {
 	}
 
 	protected <T, R> List<R> transform(

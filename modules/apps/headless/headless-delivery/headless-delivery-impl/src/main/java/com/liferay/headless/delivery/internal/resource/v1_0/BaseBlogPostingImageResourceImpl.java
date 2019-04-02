@@ -124,7 +124,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(BlogPostingImage blogPostingImage) {
+	protected void preparePatch(
+		BlogPostingImage blogPostingImage,
+		BlogPostingImage existingBlogPostingImage) {
 	}
 
 	protected <T, R> List<R> transform(

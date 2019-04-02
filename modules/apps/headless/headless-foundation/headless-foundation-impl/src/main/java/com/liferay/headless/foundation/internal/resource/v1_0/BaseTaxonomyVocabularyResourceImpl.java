@@ -134,8 +134,6 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		preparePatch(taxonomyVocabulary);
-
 		TaxonomyVocabulary existingTaxonomyVocabulary = getTaxonomyVocabulary(
 			taxonomyVocabularyId);
 
@@ -180,6 +178,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getViewableBy());
 		}
 
+		preparePatch(taxonomyVocabulary, existingTaxonomyVocabulary);
+
 		return putTaxonomyVocabulary(
 			taxonomyVocabularyId, existingTaxonomyVocabulary);
 	}
@@ -203,7 +203,9 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(TaxonomyVocabulary taxonomyVocabulary) {
+	protected void preparePatch(
+		TaxonomyVocabulary taxonomyVocabulary,
+		TaxonomyVocabulary existingTaxonomyVocabulary) {
 	}
 
 	protected <T, R> List<R> transform(

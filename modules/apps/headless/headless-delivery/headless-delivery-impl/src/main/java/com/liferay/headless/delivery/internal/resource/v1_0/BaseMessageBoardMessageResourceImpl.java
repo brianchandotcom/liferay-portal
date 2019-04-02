@@ -98,8 +98,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		preparePatch(messageBoardMessage);
-
 		MessageBoardMessage existingMessageBoardMessage =
 			getMessageBoardMessage(messageBoardMessageId);
 
@@ -171,6 +169,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			existingMessageBoardMessage.setViewableBy(
 				messageBoardMessage.getViewableBy());
 		}
+
+		preparePatch(messageBoardMessage, existingMessageBoardMessage);
 
 		return putMessageBoardMessage(
 			messageBoardMessageId, existingMessageBoardMessage);
@@ -281,7 +281,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(MessageBoardMessage messageBoardMessage) {
+	protected void preparePatch(
+		MessageBoardMessage messageBoardMessage,
+		MessageBoardMessage existingMessageBoardMessage) {
 	}
 
 	protected <T, R> List<R> transform(

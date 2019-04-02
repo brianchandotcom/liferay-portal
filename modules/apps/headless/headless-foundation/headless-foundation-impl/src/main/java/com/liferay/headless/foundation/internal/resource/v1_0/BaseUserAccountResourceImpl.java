@@ -202,7 +202,8 @@ public abstract class BaseUserAccountResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(UserAccount userAccount) {
+	protected void preparePatch(
+		UserAccount userAccount, UserAccount existingUserAccount) {
 	}
 
 	protected <T, R> List<R> transform(

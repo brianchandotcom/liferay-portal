@@ -229,8 +229,6 @@ public abstract class BaseStructuredContentResourceImpl
 			StructuredContent structuredContent)
 		throws Exception {
 
-		preparePatch(structuredContent);
-
 		StructuredContent existingStructuredContent = getStructuredContent(
 			structuredContentId);
 
@@ -311,6 +309,8 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getViewableBy());
 		}
 
+		preparePatch(structuredContent, existingStructuredContent);
+
 		return putStructuredContent(
 			structuredContentId, existingStructuredContent);
 	}
@@ -350,7 +350,9 @@ public abstract class BaseStructuredContentResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(StructuredContent structuredContent) {
+	protected void preparePatch(
+		StructuredContent structuredContent,
+		StructuredContent existingStructuredContent) {
 	}
 
 	protected <T, R> List<R> transform(

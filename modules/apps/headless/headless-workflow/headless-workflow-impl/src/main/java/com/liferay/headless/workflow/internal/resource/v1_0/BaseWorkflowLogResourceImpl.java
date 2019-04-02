@@ -88,7 +88,8 @@ public abstract class BaseWorkflowLogResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(WorkflowLog workflowLog) {
+	protected void preparePatch(
+		WorkflowLog workflowLog, WorkflowLog existingWorkflowLog) {
 	}
 
 	protected <T, R> List<R> transform(

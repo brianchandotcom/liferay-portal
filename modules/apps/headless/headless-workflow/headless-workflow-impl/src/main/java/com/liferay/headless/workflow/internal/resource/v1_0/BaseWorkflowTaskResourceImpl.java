@@ -185,7 +185,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(WorkflowTask workflowTask) {
+	protected void preparePatch(
+		WorkflowTask workflowTask, WorkflowTask existingWorkflowTask) {
 	}
 
 	protected <T, R> List<R> transform(

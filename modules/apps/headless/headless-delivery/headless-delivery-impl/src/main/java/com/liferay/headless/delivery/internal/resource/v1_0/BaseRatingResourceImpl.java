@@ -80,6 +80,31 @@ public abstract class BaseRatingResourceImpl implements RatingResource {
 
 	@Override
 	@GET
+	@Path("/documents/{document-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Rating")})
+	public Page<Rating> getDocumentRatingsPage(
+			@NotNull @PathParam("document-id") Long documentId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/documents/{document-id}/ratings")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Rating")})
+	public Rating postDocumentRating(
+			@NotNull @PathParam("document-id") Long documentId, Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@GET
 	@Path("/knowledge-base-articles/{knowledge-base-article-id}/ratings")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Rating")})
@@ -197,31 +222,6 @@ public abstract class BaseRatingResourceImpl implements RatingResource {
 
 	@Override
 	@GET
-	@Path("/documents/{document-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Rating")})
-	public Page<Rating> getDocumentRatingsPage(
-			@NotNull @PathParam("document-id") Long documentId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/documents/{document-id}/ratings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Rating")})
-	public Rating postDocumentRating(
-			@NotNull @PathParam("document-id") Long documentId, Rating rating)
-		throws Exception {
-
-		return new Rating();
-	}
-
-	@Override
-	@GET
 	@Path("/structured-contents/{structured-content-id}/ratings")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Rating")})
@@ -252,7 +252,7 @@ public abstract class BaseRatingResourceImpl implements RatingResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Rating rating) {
+	protected void preparePatch(Rating rating, Rating existingRating) {
 	}
 
 	protected <T, R> List<R> transform(

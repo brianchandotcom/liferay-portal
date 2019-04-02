@@ -76,7 +76,8 @@ public abstract class BaseSegmentUserResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(SegmentUser segmentUser) {
+	protected void preparePatch(
+		SegmentUser segmentUser, SegmentUser existingSegmentUser) {
 	}
 
 	protected <T, R> List<R> transform(

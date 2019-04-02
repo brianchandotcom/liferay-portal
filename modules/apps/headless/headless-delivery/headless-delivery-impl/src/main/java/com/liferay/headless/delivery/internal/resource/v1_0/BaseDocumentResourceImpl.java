@@ -188,7 +188,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Document document) {
+	protected void preparePatch(Document document, Document existingDocument) {
 	}
 
 	protected <T, R> List<R> transform(

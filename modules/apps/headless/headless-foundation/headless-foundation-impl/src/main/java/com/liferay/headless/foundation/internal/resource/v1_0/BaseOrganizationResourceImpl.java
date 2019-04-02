@@ -153,7 +153,8 @@ public abstract class BaseOrganizationResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Organization organization) {
+	protected void preparePatch(
+		Organization organization, Organization existingOrganization) {
 	}
 
 	protected <T, R> List<R> transform(

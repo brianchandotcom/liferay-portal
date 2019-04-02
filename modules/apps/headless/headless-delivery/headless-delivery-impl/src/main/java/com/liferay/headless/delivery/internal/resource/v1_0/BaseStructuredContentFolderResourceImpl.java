@@ -186,7 +186,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	}
 
 	protected void preparePatch(
-		StructuredContentFolder structuredContentFolder) {
+		StructuredContentFolder structuredContentFolder,
+		StructuredContentFolder existingStructuredContentFolder) {
 	}
 
 	protected <T, R> List<R> transform(

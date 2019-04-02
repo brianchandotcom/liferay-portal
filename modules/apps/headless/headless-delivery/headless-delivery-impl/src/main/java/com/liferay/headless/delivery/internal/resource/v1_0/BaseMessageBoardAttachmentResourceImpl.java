@@ -147,7 +147,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(MessageBoardAttachment messageBoardAttachment) {
+	protected void preparePatch(
+		MessageBoardAttachment messageBoardAttachment,
+		MessageBoardAttachment existingMessageBoardAttachment) {
 	}
 
 	protected <T, R> List<R> transform(

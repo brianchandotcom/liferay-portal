@@ -135,8 +135,6 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		preparePatch(messageBoardSection);
-
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
@@ -183,6 +181,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			existingMessageBoardSection.setViewableBy(
 				messageBoardSection.getViewableBy());
 		}
+
+		preparePatch(messageBoardSection, existingMessageBoardSection);
 
 		return putMessageBoardSection(
 			messageBoardSectionId, existingMessageBoardSection);
@@ -250,7 +250,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(MessageBoardSection messageBoardSection) {
+	protected void preparePatch(
+		MessageBoardSection messageBoardSection,
+		MessageBoardSection existingMessageBoardSection) {
 	}
 
 	protected <T, R> List<R> transform(

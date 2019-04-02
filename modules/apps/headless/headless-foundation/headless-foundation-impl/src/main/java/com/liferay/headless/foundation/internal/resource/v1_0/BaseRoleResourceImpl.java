@@ -122,7 +122,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Role role) {
+	protected void preparePatch(Role role, Role existingRole) {
 	}
 
 	protected <T, R> List<R> transform(

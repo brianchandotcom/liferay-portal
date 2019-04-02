@@ -107,7 +107,8 @@ public abstract class BasePostalAddressResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(PostalAddress postalAddress) {
+	protected void preparePatch(
+		PostalAddress postalAddress, PostalAddress existingPostalAddress) {
 	}
 
 	protected <T, R> List<R> transform(

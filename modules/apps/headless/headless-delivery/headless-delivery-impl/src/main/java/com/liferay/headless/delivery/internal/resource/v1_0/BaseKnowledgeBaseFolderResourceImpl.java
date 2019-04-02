@@ -128,8 +128,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		preparePatch(knowledgeBaseFolder);
-
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
 
@@ -172,6 +170,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			existingKnowledgeBaseFolder.setParentKnowledgeBaseFolderId(
 				knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
 		}
+
+		preparePatch(knowledgeBaseFolder, existingKnowledgeBaseFolder);
 
 		return putKnowledgeBaseFolder(
 			knowledgeBaseFolderId, existingKnowledgeBaseFolder);
@@ -236,7 +236,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(KnowledgeBaseFolder knowledgeBaseFolder) {
+	protected void preparePatch(
+		KnowledgeBaseFolder knowledgeBaseFolder,
+		KnowledgeBaseFolder existingKnowledgeBaseFolder) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -74,7 +74,8 @@ public abstract class BaseFormDocumentResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(FormDocument formDocument) {
+	protected void preparePatch(
+		FormDocument formDocument, FormDocument existingFormDocument) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -87,7 +87,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Email email) {
+	protected void preparePatch(Email email, Email existingEmail) {
 	}
 
 	protected <T, R> List<R> transform(

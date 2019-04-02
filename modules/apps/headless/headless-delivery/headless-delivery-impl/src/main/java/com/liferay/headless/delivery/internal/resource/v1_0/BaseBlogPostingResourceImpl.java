@@ -95,8 +95,6 @@ public abstract class BaseBlogPostingResourceImpl
 			BlogPosting blogPosting)
 		throws Exception {
 
-		preparePatch(blogPosting);
-
 		BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
 
 		if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
@@ -162,6 +160,8 @@ public abstract class BaseBlogPostingResourceImpl
 			existingBlogPosting.setViewableBy(blogPosting.getViewableBy());
 		}
 
+		preparePatch(blogPosting, existingBlogPosting);
+
 		return putBlogPosting(blogPostingId, existingBlogPosting);
 	}
 
@@ -219,7 +219,8 @@ public abstract class BaseBlogPostingResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(BlogPosting blogPosting) {
+	protected void preparePatch(
+		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
 	}
 
 	protected <T, R> List<R> transform(

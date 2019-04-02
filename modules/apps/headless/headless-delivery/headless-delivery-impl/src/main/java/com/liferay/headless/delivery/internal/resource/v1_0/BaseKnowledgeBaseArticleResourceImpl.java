@@ -135,8 +135,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		preparePatch(knowledgeBaseArticle);
-
 		KnowledgeBaseArticle existingKnowledgeBaseArticle =
 			getKnowledgeBaseArticle(knowledgeBaseArticleId);
 
@@ -217,6 +215,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			existingKnowledgeBaseArticle.setViewableBy(
 				knowledgeBaseArticle.getViewableBy());
 		}
+
+		preparePatch(knowledgeBaseArticle, existingKnowledgeBaseArticle);
 
 		return putKnowledgeBaseArticle(
 			knowledgeBaseArticleId, existingKnowledgeBaseArticle);
@@ -328,7 +328,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(KnowledgeBaseArticle knowledgeBaseArticle) {
+	protected void preparePatch(
+		KnowledgeBaseArticle knowledgeBaseArticle,
+		KnowledgeBaseArticle existingKnowledgeBaseArticle) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -434,10 +434,16 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									href="<%= rowURL %>"
 									name="title"
-									value="<%= HtmlUtil.escape(curFolder.getName()) %>"
-								/>
+								>
+									<div class="sticker sticker-document sticker-secondary">
+										<clay:icon
+											symbol='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
+										/>
+									</div>
+
+									<aui:a href="<%= rowURL.toString() %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
+								</liferay-ui:search-container-column-text>
 							</c:if>
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "description") %>'>

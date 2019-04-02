@@ -1,3 +1,32 @@
 {
+	"exclude": {
+		"lodash": [
+			"fp/**/*",
+			"lodash*"
+		],
+		"react": [
+			"umd/**/*"
+		],
+		"react-dnd": [
+			"dist/**/*"
+		],
+		"react-dnd-html5-backend": [
+			"dist/**/*"
+		],
+		"react-dom": [
+			"umd/**/*"
+		],
+		"recompose": [
+			"dist/Recompose.esm.js",
+			"dist/Recompose.min.js",
+			"dist/Recompose.umd.js"
+		],
+		"scheduler": [
+			"umd/**/*"
+		],
+		"tiny-warning": [
+			"src/**/*"
+		]
+	},
 	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

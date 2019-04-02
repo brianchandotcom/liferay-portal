@@ -15,10 +15,12 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.resource.v1_0.RatingResource;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -60,6 +62,16 @@ public class RatingResourceImpl extends BaseRatingResourceImpl {
 
 		return spiRatingResource.getRatingsPage(
 			BlogsEntry.class.getName(), blogPostingId);
+	}
+
+	@Override
+	public Page<Rating> getDocumentRatingsPage(Long documentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRatingsPage(
+			DLFileEntry.class.getName(), documentId);
 	}
 
 	@Override
@@ -106,6 +118,17 @@ public class RatingResourceImpl extends BaseRatingResourceImpl {
 	}
 
 	@Override
+	public Page<Rating> getStructuredContentRatingsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRatingsPage(
+			JournalArticle.class.getName(), structuredContentId);
+	}
+
+	@Override
 	public Rating postBlogPostingRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
@@ -113,6 +136,17 @@ public class RatingResourceImpl extends BaseRatingResourceImpl {
 
 		return spiRatingResource.postRating(
 			BlogsEntry.class.getName(), blogPostingId,
+			GetterUtil.getDouble(rating.getRatingValue()));
+	}
+
+	@Override
+	public Rating postDocumentRating(Long documentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.postRating(
+			DLFileEntry.class.getName(), documentId,
 			GetterUtil.getDouble(rating.getRatingValue()));
 	}
 
@@ -152,6 +186,18 @@ public class RatingResourceImpl extends BaseRatingResourceImpl {
 
 		return spiRatingResource.postRating(
 			MBMessage.class.getName(), mbThread.getRootMessageId(),
+			GetterUtil.getDouble(rating.getRatingValue()));
+	}
+
+	@Override
+	public Rating postStructuredContentRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.postRating(
+			JournalArticle.class.getName(), structuredContentId,
 			GetterUtil.getDouble(rating.getRatingValue()));
 	}
 

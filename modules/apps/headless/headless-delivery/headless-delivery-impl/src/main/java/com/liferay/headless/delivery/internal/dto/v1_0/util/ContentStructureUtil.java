@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructureField;
-import com.liferay.headless.web.experience.dto.v1_0.Option;
+import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.dto.v1_0.ContentStructureField;
+import com.liferay.headless.delivery.dto.v1_0.Option;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;

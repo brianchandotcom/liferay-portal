@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.headless.web.experience.internal.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
+import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.constants.SegmentsConstants;

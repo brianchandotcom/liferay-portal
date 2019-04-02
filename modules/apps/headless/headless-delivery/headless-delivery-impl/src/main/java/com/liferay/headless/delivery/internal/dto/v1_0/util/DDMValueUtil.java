@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -20,8 +20,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
-import com.liferay.headless.web.experience.dto.v1_0.Geo;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,7 +53,7 @@ public class DDMValueUtil {
 		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService, Locale locale) {
 
-		com.liferay.headless.web.experience.dto.v1_0.Value value =
+		com.liferay.headless.delivery.dto.v1_0.Value value =
 			contentFieldValue.getValue();
 
 		if (value == null) {

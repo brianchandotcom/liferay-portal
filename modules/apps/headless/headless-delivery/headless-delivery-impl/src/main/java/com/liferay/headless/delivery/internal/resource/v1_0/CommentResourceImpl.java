@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CommentUtil;
-import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.headless.common.spi.resource.SPICommentResource;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CommentUtil;
+import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;

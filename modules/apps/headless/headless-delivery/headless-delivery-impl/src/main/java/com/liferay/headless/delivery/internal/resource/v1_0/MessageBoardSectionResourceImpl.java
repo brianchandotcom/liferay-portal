@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.collaboration.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
-import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;

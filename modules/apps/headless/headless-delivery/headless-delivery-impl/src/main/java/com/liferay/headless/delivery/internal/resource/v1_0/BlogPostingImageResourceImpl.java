@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
-import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
-import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;

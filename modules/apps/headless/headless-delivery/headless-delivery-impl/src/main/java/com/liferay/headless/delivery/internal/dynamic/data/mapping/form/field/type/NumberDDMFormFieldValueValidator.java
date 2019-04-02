@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dynamic.data.mapping.form.field.type;
+package com.liferay.headless.delivery.internal.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;

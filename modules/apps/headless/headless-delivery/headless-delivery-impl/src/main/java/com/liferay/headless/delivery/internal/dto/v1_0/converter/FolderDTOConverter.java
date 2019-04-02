@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.headless.document.library.internal.dto.v1_0.converter;
+package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 

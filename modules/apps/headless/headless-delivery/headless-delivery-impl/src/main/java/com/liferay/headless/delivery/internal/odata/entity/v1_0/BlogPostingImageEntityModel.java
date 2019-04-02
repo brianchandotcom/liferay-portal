@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.odata.entity.v1_0;
+package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

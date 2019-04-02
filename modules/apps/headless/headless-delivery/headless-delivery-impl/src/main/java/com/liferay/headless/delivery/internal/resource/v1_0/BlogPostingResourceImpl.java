@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.Image;
-import com.liferay.headless.collaboration.internal.dto.v1_0.converter.BlogPostingDTOConverter;
-import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
-import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Image;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;

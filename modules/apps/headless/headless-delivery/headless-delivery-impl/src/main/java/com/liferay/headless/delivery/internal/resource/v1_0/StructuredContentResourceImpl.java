@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
@@ -33,15 +33,15 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.headless.web.experience.internal.dto.v1_0.converter.StructuredContentDTOConverter;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
-import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
-import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
-import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;

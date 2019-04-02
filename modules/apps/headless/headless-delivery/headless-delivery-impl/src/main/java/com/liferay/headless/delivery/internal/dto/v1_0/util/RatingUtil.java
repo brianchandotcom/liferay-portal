@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
-import com.liferay.headless.web.experience.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;

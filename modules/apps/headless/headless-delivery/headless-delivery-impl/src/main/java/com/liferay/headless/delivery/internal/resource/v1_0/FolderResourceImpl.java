@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.headless.document.library.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.internal.dto.v1_0.converter.FolderDTOConverter;
-import com.liferay.headless.document.library.internal.odata.entity.v1_0.FolderEntityModel;
-import com.liferay.headless.document.library.resource.v1_0.FolderResource;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.FolderDTOConverter;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.FolderEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.FolderResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;

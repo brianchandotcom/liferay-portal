@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 

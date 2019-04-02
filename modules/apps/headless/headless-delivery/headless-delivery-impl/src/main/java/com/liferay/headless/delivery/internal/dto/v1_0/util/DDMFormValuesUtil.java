@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.LayoutLocalService;

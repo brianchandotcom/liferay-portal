@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.dto.v1_0.converter;
+package com.liferay.headless.delivery.dto.v1_0.converter;
 
 import java.util.Locale;
 import java.util.Optional;

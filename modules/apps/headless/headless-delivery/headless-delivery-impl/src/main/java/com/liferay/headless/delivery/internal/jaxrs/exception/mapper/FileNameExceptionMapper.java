@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.document.library.internal.jaxrs.exception.mapper;
+package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.FileNameException;
 
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Document.Library)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Document.Library.FileNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.FileNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

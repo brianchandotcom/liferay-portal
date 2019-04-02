@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.jaxrs.exception.mapper;
+package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 
@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Collaboration)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Collaboration.DuplicateFriendlyURLEntryExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateFriendlyURLEntryExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

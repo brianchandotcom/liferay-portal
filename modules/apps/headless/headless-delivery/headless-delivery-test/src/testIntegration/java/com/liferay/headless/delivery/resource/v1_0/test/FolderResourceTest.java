@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.document.library.resource.v1_0.test;
+package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.Folder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;

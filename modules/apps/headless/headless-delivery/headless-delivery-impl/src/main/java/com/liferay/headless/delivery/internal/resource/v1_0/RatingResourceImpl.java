@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.headless.collaboration.dto.v1_0.Rating;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.RatingUtil;
-import com.liferay.headless.collaboration.resource.v1_0.RatingResource;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
+import com.liferay.headless.delivery.resource.v1_0.RatingResource;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;

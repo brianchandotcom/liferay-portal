@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
-import com.liferay.headless.collaboration.dto.v1_0.ParentKnowledgeBaseFolder;
+import com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.knowledge.base.model.KBFolder;
 
 /**

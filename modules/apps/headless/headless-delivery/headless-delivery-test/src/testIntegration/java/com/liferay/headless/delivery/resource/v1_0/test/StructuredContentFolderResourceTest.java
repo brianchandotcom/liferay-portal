@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.resource.v1_0.test;
+package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

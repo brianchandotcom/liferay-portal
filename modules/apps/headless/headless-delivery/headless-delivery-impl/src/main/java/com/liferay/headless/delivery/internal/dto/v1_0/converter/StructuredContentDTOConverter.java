@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0.converter;
+package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -26,20 +26,20 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
-import com.liferay.headless.web.experience.dto.v1_0.Geo;
-import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.web.experience.dto.v1_0.Value;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.web.experience.internal.resource.v1_0.BaseStructuredContentResourceImpl;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.Geo;
+import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.Value;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentDocumentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;

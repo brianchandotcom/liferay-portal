@@ -26,7 +26,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" wrapperCssClass='<%=((ddmTemplate == null) || (ddmTemplate.getClassPK() == 0)) ? "mb-2" : StringPool.BLANK %>' />
+<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" wrapperCssClass='<%= ((ddmTemplate == null) || (ddmTemplate.getClassPK() == 0)) ? "mb-2" : StringPool.BLANK %>' />
 
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
 	<div class="form-group">

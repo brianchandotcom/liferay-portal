@@ -90,7 +90,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		Template template = null;
 
 		if (_portalCache != null) {
-			_portalCache.get(templateResource);
+			template = _portalCache.get(templateResource);
 
 			if (template != null) {
 				return template;

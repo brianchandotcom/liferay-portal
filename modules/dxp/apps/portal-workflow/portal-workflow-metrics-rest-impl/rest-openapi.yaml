@@ -113,11 +113,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Process"]
-    "/processes/{process-id}":
+    "/processes/{processId}":
         get:
             parameters:
                 - in: path
-                  name: process-id
+                  name: processId
                   required: true
                   schema:
                       format: int64
@@ -130,11 +130,11 @@ paths:
                                 $ref: "#/components/schemas/Process"
                     description: ""
             tags: ["Process"]
-    "/processes/{process-id}/nodes":
+    "/processes/{processId}/nodes":
         get:
             parameters:
                 - in: path
-                  name: process-id
+                  name: processId
                   required: true
                   schema:
                       format: int64
@@ -149,11 +149,11 @@ paths:
                                 type: array
                     description: ""
             tags: ["Node"]
-    "/processes/{process-id}/slas":
+    "/processes/{processId}/slas":
         get:
             parameters:
                 - in: path
-                  name: process-id
+                  name: processId
                   required: true
                   schema:
                       format: int64
@@ -181,7 +181,7 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: process-id
+                  name: processId
                   required: true
                   schema:
                       format: int64
@@ -205,11 +205,11 @@ paths:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""
             tags: ["SLA"]
-    "/slas/{sla-id}":
+    "/slas/{slaId}":
         delete:
             parameters:
                 - in: path
-                  name: sla-id
+                  name: slaId
                   required: true
                   schema:
                       format: int64
@@ -223,7 +223,7 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: sla-id
+                  name: slaId
                   required: true
                   schema:
                       format: int64
@@ -239,7 +239,7 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: sla-id
+                  name: slaId
                   required: true
                   schema:
                       format: int64

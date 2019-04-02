@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.personal.menu.web.internal.menu;
+package com.liferay.product.navigation.personal.menu.web.internal.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,7 +47,7 @@ public class PersonalMenuProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/personal_menu_icon.jsp";
+		return "/control_menu/personal_menu_icon.jsp";
 	}
 
 	@Override

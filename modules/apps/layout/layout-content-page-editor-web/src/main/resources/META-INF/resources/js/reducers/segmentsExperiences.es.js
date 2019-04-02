@@ -43,7 +43,13 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 						classNameId,
 						classPK,
 						nameMap,
-						segmentsEntryId: segmentsEntryId
+						segmentsEntryId: segmentsEntryId,
+						serviceContext: JSON.stringify(
+							{
+								scopeGroupId: themeDisplay.getScopeGroupId(),
+								userId: themeDisplay.getUserId()
+							}
+						)
 					},
 					(obj) => {
 

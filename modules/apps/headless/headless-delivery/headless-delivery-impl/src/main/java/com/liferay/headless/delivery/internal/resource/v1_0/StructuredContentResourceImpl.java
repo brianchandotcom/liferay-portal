@@ -33,15 +33,15 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.headless.web.experience.internal.dto.v1_0.converter.StructuredContentDTOConverter;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
-import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
-import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
-import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -88,23 +88,27 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 import java.time.LocalDateTime;
+
 import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra

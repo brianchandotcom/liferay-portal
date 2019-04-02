@@ -19,9 +19,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidat
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares

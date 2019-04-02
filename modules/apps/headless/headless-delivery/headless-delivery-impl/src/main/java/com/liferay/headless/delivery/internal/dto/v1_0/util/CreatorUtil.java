@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
-import com.liferay.headless.collaboration.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;

@@ -30,13 +30,13 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.document.library.dto.v1_0.AdaptedImage;
-import com.liferay.headless.document.library.dto.v1_0.Document;
-import com.liferay.headless.document.library.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.document.library.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
-import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
+import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
@@ -64,15 +64,17 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.Optional;
-import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra

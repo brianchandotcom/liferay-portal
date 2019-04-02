@@ -15,11 +15,12 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
-import org.osgi.service.component.annotations.Component;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Converts any {@code DuplicateFriendlyURLEntryException} to a {@code 422}
@@ -30,9 +31,9 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Collaboration)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Collaboration.DuplicateFriendlyURLEntryExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateFriendlyURLEntryExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

@@ -22,6 +22,13 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Image;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -42,16 +49,19 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
+
+import java.time.LocalDateTime;
+
+import java.util.Date;
+import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra

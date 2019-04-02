@@ -16,10 +16,10 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
-import com.liferay.headless.web.experience.internal.odata.entity.v1_0.ContentStructureEntityModel;
-import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentStructureEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -32,11 +32,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Javier Gamarra

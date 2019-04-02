@@ -14,10 +14,11 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
-import com.liferay.headless.web.experience.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;

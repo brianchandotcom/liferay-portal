@@ -14,10 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
-import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;

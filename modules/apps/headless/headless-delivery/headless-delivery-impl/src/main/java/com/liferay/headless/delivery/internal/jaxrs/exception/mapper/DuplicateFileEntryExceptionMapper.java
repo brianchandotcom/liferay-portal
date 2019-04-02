@@ -15,11 +15,12 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
-import org.osgi.service.component.annotations.Component;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Converts any {@code DuplicateFileEntryException} to a {@code 409} error.
@@ -29,9 +30,9 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Document.Library)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Document.Library.DuplicateFileEntryExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateFileEntryExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

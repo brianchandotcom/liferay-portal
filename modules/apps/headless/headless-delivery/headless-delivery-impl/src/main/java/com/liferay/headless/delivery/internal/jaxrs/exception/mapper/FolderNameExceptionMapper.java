@@ -15,11 +15,12 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.FolderNameException;
-import org.osgi.service.component.annotations.Component;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Converts any {@code FolderNameException} to a {@code 400} error.
@@ -29,9 +30,9 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Document.Library)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Document.Library.FolderNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.FolderNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

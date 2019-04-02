@@ -17,6 +17,9 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.headless.common.spi.resource.SPICommentResource;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CommentUtil;
+import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -25,11 +28,12 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Javier Gamarra

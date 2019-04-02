@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 
 /**
  * @author Javier Gamarra

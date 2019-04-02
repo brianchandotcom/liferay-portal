@@ -15,10 +15,10 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.headless.collaboration.dto.v1_0.Rating;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.RatingUtil;
-import com.liferay.headless.collaboration.resource.v1_0.RatingResource;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
+import com.liferay.headless.delivery.resource.v1_0.RatingResource;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -29,11 +29,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+
+import javax.ws.rs.core.Context;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.Context;
 
 /**
  * @author Javier Gamarra

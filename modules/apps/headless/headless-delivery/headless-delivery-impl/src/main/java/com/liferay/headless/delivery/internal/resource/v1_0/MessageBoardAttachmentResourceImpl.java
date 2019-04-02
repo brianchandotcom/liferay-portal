@@ -15,8 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.collaboration.dto.v1_0.MessageBoardAttachment;
-import com.liferay.headless.collaboration.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -28,11 +28,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.core.Context;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.Context;
 
 /**
  * @author Javier Gamarra

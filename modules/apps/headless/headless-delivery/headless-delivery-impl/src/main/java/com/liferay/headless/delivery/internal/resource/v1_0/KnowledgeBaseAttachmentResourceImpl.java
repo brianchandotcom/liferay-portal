@@ -15,8 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
-import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
@@ -27,11 +27,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.core.Context;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.Context;
 
 /**
  * @author Javier Gamarra

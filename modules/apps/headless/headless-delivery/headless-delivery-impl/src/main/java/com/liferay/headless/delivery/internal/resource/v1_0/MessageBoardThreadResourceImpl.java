@@ -17,14 +17,14 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.collaboration.dto.v1_0.MessageBoardThread;
-import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
-import com.liferay.headless.collaboration.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
-import com.liferay.headless.collaboration.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
@@ -57,13 +57,15 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
+
+import java.util.Collections;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.Collections;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra

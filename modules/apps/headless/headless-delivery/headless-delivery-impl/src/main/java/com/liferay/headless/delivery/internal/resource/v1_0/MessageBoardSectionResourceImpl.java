@@ -14,11 +14,11 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.MessageBoardSection;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.collaboration.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
-import com.liferay.headless.collaboration.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -39,12 +39,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra

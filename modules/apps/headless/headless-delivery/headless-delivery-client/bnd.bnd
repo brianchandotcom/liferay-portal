@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Delivery Client
+Bundle-SymbolicName: com.liferay.headless.delivery.client
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.delivery.client.dto.v1_0

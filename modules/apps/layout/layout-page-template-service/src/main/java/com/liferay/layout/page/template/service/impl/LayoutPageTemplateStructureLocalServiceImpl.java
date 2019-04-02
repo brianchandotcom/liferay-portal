@@ -19,9 +19,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -115,52 +114,13 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			return layoutPageTemplateStructure;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
-		jsonObject.put("nextColumnId", fragmentEntryLinks.size());
-		jsonObject.put("nextRowId", fragmentEntryLinks.size());
-
-		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
-
-			JSONObject columnsJSONObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
-
-			JSONObject fragmentEntryLinkIdsJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			fragmentEntryLinkIdsJSONObject.put("columnId", String.valueOf(i));
-
-			JSONArray fragmentEntryLinkIdsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			fragmentEntryLinkIdsJSONArray.put(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-			fragmentEntryLinkIdsJSONObject.put(
-				"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray);
-
-			fragmentEntryLinkIdsJSONObject.put("size", "12");
-
-			columnsJSONArray.put(fragmentEntryLinkIdsJSONObject);
-
-			columnsJSONObject.put("columns", columnsJSONArray);
-
-			columnsJSONObject.put("rowId", String.valueOf(i));
-
-			columnsJSONObject.put("type", fragmentEntryLink.getType());
-
-			structureJSONArray.put(columnsJSONObject);
-		}
-
-		jsonObject.put("structure", structureJSONArray);
+		JSONObject jsonObject =
+			LayoutPageTemplateStructureHelperUtil.
+				generateContentLayoutStructure(fragmentEntryLinks);
 
 		return addLayoutPageTemplateStructure(
 			PrincipalThreadLocal.getUserId(), groupId, classNameId, classPK,

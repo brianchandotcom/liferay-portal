@@ -51,7 +51,6 @@
 			javascript.single.page.application.enabled=false
 			layout.parallel.render.enable=false
 			module.framework.auto.deploy.interval=2000
-			session.timeout=${test.session.timeout[tck]}
 			setup.wizard.enabled=false
 			terms.of.use.required=false
 			theme.portlet.decorate.default=false

@@ -1604,6 +1604,18 @@ public abstract class BaseBuild implements Build {
 			return _parentStopWatchRecord;
 		}
 
+		public String getShortName() {
+			String shortName = getName();
+
+			StopWatchRecord parentStopWatchRecord = getParentStopWatchRecord();
+
+			if (parentStopWatchRecord == null) {
+				return shortName;
+			}
+
+			return shortName.replace(parentStopWatchRecord.getName(), "");
+		}
+
 		public Long getStartTimestamp() {
 			return _startTimestamp;
 		}
@@ -1685,7 +1697,7 @@ public abstract class BaseBuild implements Build {
 			Element expanderAnchorElement = getExpanderAnchorElement(namespace);
 
 			Element nameElement = Dom4JUtil.getNewElement(
-				"td", buildInfoElement, expanderAnchorElement, getName());
+				"td", buildInfoElement, expanderAnchorElement, getShortName());
 
 			int indent = getDepth() * _INDENTATION_SIZE_PIXELS;
 

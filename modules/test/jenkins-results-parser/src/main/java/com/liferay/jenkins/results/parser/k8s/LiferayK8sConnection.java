@@ -37,7 +37,19 @@ import java.util.List;
  */
 public class LiferayK8sConnection {
 
-	public static Pod createPod(Pod configurationPod, String namespace) {
+	public static LiferayK8sConnection getInstance() {
+		if (_liferayK8sConnection == null) {
+			_liferayK8sConnection = new LiferayK8sConnection();
+		}
+
+		return _liferayK8sConnection;
+	}
+
+	public Pod createPod(Pod configurationPod) {
+		return createPod(configurationPod, "default");
+	}
+
+	public Pod createPod(Pod configurationPod, String namespace) {
 		try {
 			return new Pod(
 				_coreV1Api.createNamespacedPod(
@@ -54,18 +66,6 @@ public class LiferayK8sConnection {
 
 			return null;
 		}
-	}
-
-	public static LiferayK8sConnection getInstance() {
-		if (_liferayK8sConnection == null) {
-			_liferayK8sConnection = new LiferayK8sConnection();
-		}
-
-		return _liferayK8sConnection;
-	}
-
-	public Pod createPod(Pod configurationPod) {
-		return createPod(configurationPod, "default");
 	}
 
 	public boolean deletePod(Pod pod) {

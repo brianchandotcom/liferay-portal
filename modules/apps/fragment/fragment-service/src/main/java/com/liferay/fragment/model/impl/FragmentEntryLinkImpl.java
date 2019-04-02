@@ -16,6 +16,8 @@ package com.liferay.fragment.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.fragment.constants.FragmentEntryLinkTypeConstants;
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +29,22 @@ import java.util.Date;
  */
 @ProviderType
 public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
+
+	@Override
+	public String getType() {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				getFragmentEntryId());
+
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getType() ==
+				FragmentEntryTypeConstants.TYPE_SECTION)) {
+
+			return FragmentEntryLinkTypeConstants.TYPE_SECTION;
+		}
+
+		return FragmentEntryLinkTypeConstants.TYPE_COMPONENT;
+	}
 
 	@Override
 	public boolean isLatestVersion() throws PortalException {

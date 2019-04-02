@@ -45,7 +45,7 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String css, String mode,
-			Locale locale)
+			Locale locale, long[] segmentsExperienceIds)
 		throws PortalException {
 
 		return _processResources(fragmentEntryLink, css);

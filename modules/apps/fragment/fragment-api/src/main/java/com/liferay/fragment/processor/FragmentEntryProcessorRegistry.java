@@ -35,7 +35,8 @@ public interface FragmentEntryProcessorRegistry {
 	public JSONObject getDefaultEditableValuesJSONObject(String html);
 
 	public default String processFragmentEntryLinkCSS(
-			FragmentEntryLink fragmentEntryLink, String mode, Locale locale)
+			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
+			long[] segmentsExperienceIds)
 		throws PortalException {
 
 		return fragmentEntryLink.getCss();

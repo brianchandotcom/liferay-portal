@@ -154,7 +154,7 @@ public class FragmentEntryRenderUtil {
 			getService();
 
 		String css = fragmentEntryProcessorRegistry.processFragmentEntryLinkCSS(
-			fragmentEntryLink, mode, locale);
+			fragmentEntryLink, mode, locale, segmentsExperienceIds);
 
 		String html =
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(

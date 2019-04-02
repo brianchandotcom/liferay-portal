@@ -49,7 +49,7 @@
 </div>
 
 <div class="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />specificDisplayPageNameContainer">
-	<div class="input-group">
+	<div class="input-group mb-2">
 
 		<%
 		String specificAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getSpecificAssetDisplayPageName();
@@ -72,7 +72,7 @@
 		</c:if>
 	</div>
 
-	<div class="button-holder">
+	<div class="btn-group">
 		<aui:button name="chooseSpecificDisplayPage" value="select" />
 	</div>
 </div>

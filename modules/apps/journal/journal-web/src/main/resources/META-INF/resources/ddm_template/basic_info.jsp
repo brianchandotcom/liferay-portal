@@ -26,13 +26,13 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-<div class="form-group">
-	<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" />
+<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" wrapperCssClass='<%=((ddmTemplate == null) || (ddmTemplate.getClassPK() == 0)) ? "mb-2" : StringPool.BLANK %>' />
 
-	<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
+<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
+	<div class="form-group">
 		<aui:button id="selectDDMStructure" value="select" />
-	</c:if>
-</div>
+	</div>
+</c:if>
 
 <aui:select changesContext="<%= true %>" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 

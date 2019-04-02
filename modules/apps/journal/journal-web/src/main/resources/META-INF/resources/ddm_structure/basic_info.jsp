@@ -34,16 +34,12 @@ DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructu
 
 <aui:input name="parentDDMStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureId() %>" />
 
-<aui:input disabled="<%= true %>" label="parent-structure" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" />
+<aui:input disabled="<%= true %>" label="parent-structure" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" wrapperCssClass="mb-2" />
 
-<div class="btn-group mb-3">
-	<div class="btn-group-item mr-3">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
-	</div>
+<div class="form-group">
+	<aui:button cssClass="mr-3" onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
 
-	<div class="btn-group-item">
-		<aui:button disabled="<%= Validator.isNull(journalEditDDMStructuresDisplayContext.getParentDDMStructureName()) %>" name="removeParentDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentDDMStructure();" %>' value="remove" />
-	</div>
+	<aui:button disabled="<%= Validator.isNull(journalEditDDMStructuresDisplayContext.getParentDDMStructureName()) %>" name="removeParentDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentDDMStructure();" %>' value="remove" />
 </div>
 
 <c:if test="<%= ddmStructure != null %>">

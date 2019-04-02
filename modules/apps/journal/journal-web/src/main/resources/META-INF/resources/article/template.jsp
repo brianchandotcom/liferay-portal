@@ -32,7 +32,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	<c:when test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
 		<p class="text-secondary"><liferay-ui:message key="this-template-will-be-used-when-showing-the-content-within-a-widget" /></p>
 
-		<div class="form-group input-group">
+		<div class="form-group input-group mb-2">
 			<div class="input-group-item">
 				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value="<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>" />
 			</div>
@@ -60,7 +60,9 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 			</c:if>
 		</div>
 
-		<aui:button id="selectDDMTemplate" value="select" />
+		<div class="btn-group">
+			<aui:button id="selectDDMTemplate" value="select" />
+		</div>
 	</c:when>
 	<c:otherwise>
 		<p class="text-secondary"><liferay-ui:message key="there-are-no-templates" /></p>

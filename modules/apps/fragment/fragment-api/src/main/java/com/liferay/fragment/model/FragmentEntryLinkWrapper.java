@@ -385,11 +385,6 @@ public class FragmentEntryLinkWrapper
 		return model.getPrimaryKey();
 	}
 
-	@Override
-	public String getType() {
-		return model.getType();
-	}
-
 	/**
 	 * Returns the user ID of this fragment entry link.
 	 *

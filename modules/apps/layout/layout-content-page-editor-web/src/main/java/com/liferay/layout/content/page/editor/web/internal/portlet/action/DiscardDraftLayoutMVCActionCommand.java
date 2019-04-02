@@ -119,10 +119,12 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
-						getLayoutPageTemplateEntry(layout.getClassPK());
+						fetchLayoutPageTemplateEntry(layout.getClassPK());
 
-				layout = _layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid());
+				if (layoutPageTemplateEntry != null) {
+					layout = _layoutLocalService.getLayout(
+						layoutPageTemplateEntry.getPlid());
+				}
 			}
 
 			_layoutCopyHelper.copyLayout(layout, draftLayout);

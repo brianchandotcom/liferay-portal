@@ -109,7 +109,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-				_getDDMStructureVersionId(dataLayout.getDataDefinitionId()),
+				_getDDMStructureVersionId(dataDefinitionId),
 				LocalizedValueUtil.toLocalizationMap(dataLayout.getName()),
 				LocalizedValueUtil.toLocalizationMap(
 					dataLayout.getDescription()),

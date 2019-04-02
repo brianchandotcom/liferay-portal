@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.LayoutVersioningThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -620,7 +621,7 @@ public class PortletPreferencesLocalServiceImpl
 	public PortletPreferences updatePreferences(
 		long ownerId, int ownerType, long plid, String portletId, String xml) {
 
-		plid = _swapPlidForUpdatePreferences(plid);
+		plid = _swapPlidForUpdatePreferences(ownerType, plid);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -709,6 +710,29 @@ public class PortletPreferencesLocalServiceImpl
 		return null;
 	}
 
+	private long _getLayoutVersionId(int ownerType, long plid) {
+		if ((ownerType != PortletKeys.PREFS_OWNER_TYPE_LAYOUT) ||
+			(plid == LayoutConstants.DEFAULT_PLID)) {
+
+			return plid;
+		}
+
+		try {
+			LayoutVersion layoutVersion = layoutLocalService.fetchLatestVersion(
+				layoutLocalService.getLayout(plid));
+
+			return layoutVersion.getLayoutVersionId();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find any layout version for layout " + plid, pe);
+			}
+
+			return plid;
+		}
+	}
+
 	private javax.portlet.PortletPreferences _getStrictPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String defaultPreferences) {
@@ -729,25 +753,8 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private long _swapPlidForPortletPreferences(int ownerType, long plid) {
-		if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
-			(plid != LayoutConstants.DEFAULT_PLID)) {
-
-			try {
-				LayoutVersion layoutVersion =
-					layoutLocalService.fetchLatestVersion(
-						layoutLocalService.getLayout(plid));
-
-				return layoutVersion.getLayoutVersionId();
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find any layout version for layout " + plid,
-						pe);
-				}
-
-				return plid;
-			}
+		if (LayoutVersioningThreadLocal.isEnabled()) {
+			return _getLayoutVersionId(ownerType, plid);
 		}
 
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
@@ -764,25 +771,8 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private long _swapPlidForPreferences(int ownerType, long plid) {
-		if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
-			(plid != LayoutConstants.DEFAULT_PLID)) {
-
-			try {
-				LayoutVersion layoutVersion =
-					layoutLocalService.fetchLatestVersion(
-						layoutLocalService.getLayout(plid));
-
-				return layoutVersion.getLayoutVersionId();
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find any layout version for layout " + plid,
-						pe);
-				}
-
-				return plid;
-			}
+		if (LayoutVersioningThreadLocal.isEnabled()) {
+			return _getLayoutVersionId(ownerType, plid);
 		}
 
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
@@ -812,7 +802,11 @@ public class PortletPreferencesLocalServiceImpl
 		}
 	}
 
-	private long _swapPlidForUpdatePreferences(long plid) {
+	private long _swapPlidForUpdatePreferences(int ownerType, long plid) {
+		if (LayoutVersioningThreadLocal.isEnabled()) {
+			return _getLayoutVersionId(ownerType, plid);
+		}
+
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
 			return plid;
 		}

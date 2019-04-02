@@ -1702,8 +1702,8 @@ public abstract class BaseBuild implements Build {
 
 			int indent = getDepth() * _INDENTATION_SIZE_PIXELS;
 
-			if (expanderAnchorElement == null) {
-				indent += 12;
+			if (expanderAnchorElement != null) {
+				indent -= _EXPANDER_SIZE_PIXELS;
 			}
 
 			nameElement.addAttribute(
@@ -2304,8 +2304,8 @@ public abstract class BaseBuild implements Build {
 
 		int indent = getDepth() * _INDENTATION_SIZE_PIXELS;
 
-		if (stopWatchRecordsExpanderAnchorElement == null) {
-			indent += 12;
+		if (stopWatchRecordsExpanderAnchorElement != null) {
+			indent -= _EXPANDER_SIZE_PIXELS;
 		}
 
 		nameCellElement.addAttribute("style", "text-indent: " + indent);
@@ -3224,6 +3224,7 @@ public abstract class BaseBuild implements Build {
 	};
 
 	private static final int _INDENTATION_SIZE_PIXELS = 35;
+	private static final int _EXPANDER_SIZE_PIXELS = 20;
 
 	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
 

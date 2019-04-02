@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -27,11 +28,70 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
  */
 public class LocalizedValueUtil {
+
+	public static LocalizedValue[] getLocalizedProperty(
+		String property, JSONObject jsonObject) {
+
+		if (!jsonObject.has(property)) {
+			return null;
+		}
+
+		List<LocalizedValue> localizedValues = new ArrayList<>();
+
+		JSONObject languageJSONObject = jsonObject.getJSONObject(property);
+
+		Iterator<String> keys = languageJSONObject.keys();
+
+		while (keys.hasNext()) {
+			String key = keys.next();
+
+			LocalizedValue localizedValue = new LocalizedValue();
+
+			localizedValue.setKey(key);
+			localizedValue.setValue(languageJSONObject.getString(key));
+
+			localizedValues.add(localizedValue);
+		}
+
+		return localizedValues.toArray(
+			new LocalizedValue[localizedValues.size()]);
+	}
+
+	public static String getLocalizedValue(
+		LocalizedValue[] localizedValues, String languageId) {
+
+		Map<Locale, String> localizedValue = toLocalizationMap(localizedValues);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		return localizedValue.get(locale);
+	}
+
+	public static void setLocalizedProperty(
+		String property, JSONFactory jsonFactory, JSONObject jsonObject,
+		Map<Locale, String> map) {
+
+		JSONObject languageJSONObject = jsonFactory.createJSONObject();
+
+		Set<Map.Entry<Locale, String>> set = map.entrySet();
+
+		Stream<Map.Entry<Locale, String>> stream = set.stream();
+
+		stream.forEach(
+			entry -> languageJSONObject.put(
+				entry.getKey(
+				).getLanguage(),
+				entry.getValue()));
+
+		jsonObject.put(property, languageJSONObject);
+	}
 
 	public static JSONObject toJSONObject(LocalizedValue[] localizedValues)
 		throws Exception {
@@ -52,7 +112,7 @@ public class LocalizedValueUtil {
 	public static Map<Locale, String> toLocalizationMap(
 		LocalizedValue[] localizedValues) {
 
-		if (localizedValues == null) {
+		if (ArrayUtil.isEmpty(localizedValues)) {
 			return Collections.emptyMap();
 		}
 

@@ -70,7 +70,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
-	<div class="autofit-row autofit-row-center mb-4">
+	<div class="autofit-row autofit-row-center mb-2">
 		<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 			<div class="autofit-col">
 				<h4 class="asset-title component-title">
@@ -188,7 +188,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		</div>
 	</c:if>
 
-	<div class="asset-content mb-4">
+	<div class="asset-content mb-3">
 		<liferay-asset:asset-display
 			assetEntry="<%= assetEntry %>"
 			assetRenderer="<%= assetRenderer %>"

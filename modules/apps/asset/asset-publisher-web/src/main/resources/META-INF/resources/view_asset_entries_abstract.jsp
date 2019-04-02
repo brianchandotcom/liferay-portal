@@ -53,7 +53,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
 			<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
-			<div class="autofit-row autofit-row-center mb-4">
+			<div class="autofit-row autofit-row-center mb-2">
 				<div class="autofit-col">
 					<h4 class="asset-title component-title">
 						<c:choose>
@@ -158,7 +158,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				</div>
 			</c:if>
 
-			<div class="asset-content mb-4">
+			<div class="asset-content mb-3">
 				<liferay-asset:asset-display
 					abstractLength="<%= assetPublisherDisplayContext.getAbstractLength() %>"
 					assetEntry="<%= assetEntry %>"

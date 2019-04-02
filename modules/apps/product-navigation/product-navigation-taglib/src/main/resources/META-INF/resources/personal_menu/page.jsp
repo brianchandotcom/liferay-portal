@@ -42,6 +42,7 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 <%
 ResourceURL resourceURL = PortletURLFactoryUtil.create(request, PersonalMenuPortletKeys.PERSONAL_MENU, PortletRequest.RESOURCE_PHASE);
 
+resourceURL.setParameter("currentURL", themeDisplay.getURLCurrent());
 resourceURL.setParameter("portletId", themeDisplay.getPpid());
 resourceURL.setResourceID("/get_personal_menu_items");
 %>

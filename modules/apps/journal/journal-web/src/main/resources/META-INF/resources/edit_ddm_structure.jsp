@@ -55,7 +55,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= HtmlUtil.escape(redirect) %>">
+						<a class="btn btn-secondary btn-sm mr-3" href="<%= HtmlUtil.escape(redirect) %>">
 							<liferay-ui:message key="cancel" />
 						</a>
 

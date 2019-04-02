@@ -44,7 +44,9 @@ import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
+import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +77,8 @@ public class SharedAssetsViewDisplayContext {
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		SharingMenuItemFactory sharingMenuItemFactory,
+		SharingEntryMenuItemContributorRegistry
+			sharingEntryMenuItemContributorRegistry,
 		SharingPermission sharingPermission) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -84,6 +88,8 @@ public class SharedAssetsViewDisplayContext {
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
+		_sharingEntryMenuItemContributorRegistry =
+			sharingEntryMenuItemContributorRegistry;
 		_sharingPermission = sharingPermission;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
@@ -209,7 +215,17 @@ public class SharedAssetsViewDisplayContext {
 					_request));
 		}
 
+		SharingEntryMenuItemContributor sharingEntryMenuItemContributor =
+			_sharingEntryMenuItemContributorRegistry.
+				getSharingEntryMenuItemContributor(
+					sharingEntry.getClassNameId());
+
+		menuItems.addAll(
+			sharingEntryMenuItemContributor.getSharingEntryMenuItems(
+				sharingEntry, _themeDisplay));
+
 		menu.setMenuItems(menuItems);
+
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
 
@@ -463,6 +479,8 @@ public class SharedAssetsViewDisplayContext {
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
+	private final SharingEntryMenuItemContributorRegistry
+		_sharingEntryMenuItemContributorRegistry;
 	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final SharingPermission _sharingPermission;
 	private final ThemeDisplay _themeDisplay;

@@ -406,6 +406,21 @@ public class JournalDisplayContext {
 		return _ddmTemplateKey;
 	}
 
+	public int getDefaultStatus() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				_themeDisplay.getCompanyId(),
+				_themeDisplay.getScopeGroupId()) ||
+			isNavigationMine()) {
+
+			return WorkflowConstants.STATUS_ANY;
+		}
+
+		return WorkflowConstants.STATUS_APPROVED;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -1025,20 +1040,7 @@ public class JournalDisplayContext {
 			return _status;
 		}
 
-		int defaultStatus = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				_themeDisplay.getCompanyId(),
-				_themeDisplay.getScopeGroupId()) ||
-			isNavigationMine()) {
-
-			defaultStatus = WorkflowConstants.STATUS_ANY;
-		}
-
-		_status = ParamUtil.getInteger(_request, "status", defaultStatus);
+		_status = ParamUtil.getInteger(_request, "status", getDefaultStatus());
 
 		return _status;
 	}

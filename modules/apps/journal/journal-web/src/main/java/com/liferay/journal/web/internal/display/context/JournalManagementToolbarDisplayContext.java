@@ -352,7 +352,7 @@ public class JournalManagementToolbarDisplayContext
 
 				int status = _journalDisplayContext.getStatus();
 
-				if (status != WorkflowConstants.STATUS_ANY) {
+				if (status != _journalDisplayContext.getDefaultStatus()) {
 					add(
 						labelItem -> {
 							labelItem.setLabel(

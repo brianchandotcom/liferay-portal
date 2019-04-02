@@ -1197,6 +1197,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int hashCode() {
+		String key = getBuildURL();
+
+		return key.hashCode();
+	}
+
+	@Override
 	public boolean hasModifiedDownstreamBuilds() {
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (downstreamBuild.isBuildModified() ||
@@ -1687,15 +1694,21 @@ public abstract class BaseBuild implements Build {
 			return expanderAnchorElement;
 		}
 
-		protected List<Element> getJenkinsReportTableRowElements(
-			String namespace) {
-
+		protected List<Element> getJenkinsReportTableRowElements() {
 			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
 
-			buildInfoElement.addAttribute("id", namespace + "-" + getName());
+			String baseBuildHashCode = "";
+
+			if (_baseBuild != null) {
+				baseBuildHashCode = String.valueOf(_baseBuild.hashCode());
+			}
+
+			buildInfoElement.addAttribute(
+				"id", baseBuildHashCode + "-" + getName());
 			buildInfoElement.addAttribute("style", "display: none");
 
-			Element expanderAnchorElement = getExpanderAnchorElement(namespace);
+			Element expanderAnchorElement = getExpanderAnchorElement(
+				baseBuildHashCode);
 
 			Element nameElement = Dom4JUtil.getNewElement(
 				"td", buildInfoElement, expanderAnchorElement, getShortName());
@@ -1749,8 +1762,7 @@ public abstract class BaseBuild implements Build {
 						childStopWatchRecord.getName());
 
 					List<Element> childJenkinsReportTableRowElements =
-						childStopWatchRecord.getJenkinsReportTableRowElements(
-							namespace);
+						childStopWatchRecord.getJenkinsReportTableRowElements();
 
 					for (Element childJenkinsReportTableRowElement :
 							childJenkinsReportTableRowElements) {
@@ -2283,8 +2295,7 @@ public abstract class BaseBuild implements Build {
 
 		for (StopWatchRecord stopWatchRecord : getStopWatchRecordsGroup()) {
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
-				stopWatchRecord.getJenkinsReportTableRowElements(
-					getStopWatchRecordsNamespace()));
+				stopWatchRecord.getJenkinsReportTableRowElements());
 		}
 
 		return jenkinsReportStopWatchRecordTableRowElements;
@@ -2337,8 +2348,7 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.join(",", childStopWatchRecordNames));
 		}
 
-		buildInfoElement.addAttribute(
-			"id", getStopWatchRecordsNamespace() + "-");
+		buildInfoElement.addAttribute("id", String.valueOf(hashCode()) + "-");
 
 		getStartTime();
 
@@ -2599,20 +2609,22 @@ public abstract class BaseBuild implements Build {
 
 		Element stopWatchRecordsExpanderAnchorElement =
 			Dom4JUtil.getNewAnchorElement("", "+ ");
-		String namespace = getStopWatchRecordsNamespace();
+
+		String hashCode = String.valueOf(hashCode());
 
 		stopWatchRecordsExpanderAnchorElement.addAttribute(
 			"id",
-			JenkinsResultsParserUtil.combine(namespace, "-expander-anchor-"));
+			JenkinsResultsParserUtil.combine(hashCode, "-expander-anchor-"));
 
 		stopWatchRecordsExpanderAnchorElement.addAttribute(
 			"onClick",
 			JenkinsResultsParserUtil.combine(
-				"return toggleStopwatchRecordExpander(\'", namespace,
+				"return toggleStopwatchRecordExpander(\'", hashCode,
 				"\', \'\')"));
 
 		stopWatchRecordsExpanderAnchorElement.addAttribute(
-			"style", "font-family: monospace, monospace; text-decoration: none");
+			"style",
+			"font-family: monospace, monospace; text-decoration: none");
 
 		return stopWatchRecordsExpanderAnchorElement;
 	}
@@ -2679,12 +2691,6 @@ public abstract class BaseBuild implements Build {
 		stopWatchRecordConsoleReadCursor = consoleTextLength;
 
 		return stopWatchRecordsGroup;
-	}
-
-	protected String getStopWatchRecordsNamespace() {
-		String key = getBuildURL();
-
-		return String.valueOf(key.hashCode());
 	}
 
 	protected Map<String, String> getTempMap(String tempMapName) {
@@ -3216,6 +3222,8 @@ public abstract class BaseBuild implements Build {
 
 	private static final String _CONSOLE_TEXT_CACHE_PREFIX = "console-text-";
 
+	private static final int _EXPANDER_SIZE_PIXELS = 20;
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
 
@@ -3224,7 +3232,6 @@ public abstract class BaseBuild implements Build {
 	};
 
 	private static final int _INDENT_SIZE_PIXELS = 35;
-	private static final int _EXPANDER_SIZE_PIXELS = 20;
 
 	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
 

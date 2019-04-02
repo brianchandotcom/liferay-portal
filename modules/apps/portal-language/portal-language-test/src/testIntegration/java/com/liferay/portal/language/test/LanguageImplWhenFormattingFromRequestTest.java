@@ -149,6 +149,7 @@ public class LanguageImplWhenFormattingFromRequestTest {
 		return new HttpServletRequestWrapper(
 			ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
 
+			@Override
 			public Object getAttribute(String name) {
 				if (name.equals(WebKeys.THEME_DISPLAY)) {
 					ThemeDisplay themeDisplay = new ThemeDisplay();

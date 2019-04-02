@@ -7,6 +7,8 @@ import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
+const mapToPair = (map) => Array.from(map, pair => pair.join(','));
+
 /**
  * Handles actions to delete or change permissions of the
  * collaborators for a file entry.
@@ -215,10 +217,6 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleSaveButtonClick() {
-		const expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, pair => pair.join(','));
-		const permissions = Array.from(this._sharingEntryIdsAndPermissions, pair => pair.join(','));
-		const shareables = Array.from(this._sharingEntryIdsAndShareables, pair => pair.join(','));
-
 		if (this._findExpirationDateError()) {
 			return;
 		}
@@ -227,9 +225,9 @@ class ManageCollaborators extends PortletBase {
 			this.actionUrl,
 			{
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
-				sharingEntryIdActionIdPairs: permissions,
-				sharingEntryIdExpirationDatePairs: expirationDates,
-				sharingEntryIdsAndShareables: shareables
+				sharingEntryIdActionIdPairs: mapToPair(this._sharingEntryIdsAndPermissions),
+				sharingEntryIdExpirationDatePairs: mapToPair(this._sharingEntryIdsAndExpirationDate),
+				sharingEntryIdsAndShareables: mapToPair(this._sharingEntryIdsAndShareables)
 			}
 		)
 			.then(

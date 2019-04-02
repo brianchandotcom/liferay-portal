@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"metal-dom": "^2.0.0",
-		"metal-drag-drop": "~3.0.1",
+		"metal-drag-drop": "3.3.0",
 		"metal-position": "^2.1.0",
 		"metal-state": "^2.13.2"
 	},

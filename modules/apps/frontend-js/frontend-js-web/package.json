@@ -28,7 +28,7 @@
 		"metal-anim": "^2.0.0",
 		"metal-component": "^2.5.13",
 		"metal-dom": "^2.5.13",
-		"metal-drag-drop": "^3.0.1",
+		"metal-drag-drop": "3.3.0",
 		"metal-events": "^2.5.16",
 		"metal-keyboard-focus": "^2.0.1",
 		"metal-position": "^2.1.1",

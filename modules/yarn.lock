@@ -12542,7 +12542,7 @@ metal-debounce@^2.0.0, metal-debounce@^2.0.1:
   dependencies:
     core-js "^2.5.5"
 
-metal-dom@2.16.7, metal-dom@^2.0.0, metal-dom@^2.13.2, metal-dom@^2.14.0, metal-dom@^2.16.0, metal-dom@^2.16.5, metal-dom@^2.16.6, metal-dom@^2.16.7, metal-dom@^2.4.0, metal-dom@^2.4.7, metal-dom@^2.5.13, metal-dom@^2.5.18, metal-dom@^2.5.3, metal-dom@^2.6.4:
+metal-dom@2.16.7, metal-dom@^2.0.0, metal-dom@^2.13.2, metal-dom@^2.16.0, metal-dom@^2.16.5, metal-dom@^2.16.6, metal-dom@^2.16.7, metal-dom@^2.4.0, metal-dom@^2.4.7, metal-dom@^2.5.13, metal-dom@^2.5.18, metal-dom@^2.5.3, metal-dom@^2.6.4:
   version "2.16.7"
   resolved "https://registry.yarnpkg.com/metal-dom/-/metal-dom-2.16.7.tgz#685163cb3ab7af6203b1136010ec102802fd5928"
   integrity sha512-FbKjx8k4Jjsso96tHsUJakXK67RoEyEsOTKgqbjXZcqo4ThfbkOrJpVk/g0QXQSUk4yefQUHG/XDyTWOpZdpuw==
@@ -12550,10 +12550,10 @@ metal-dom@2.16.7, metal-dom@^2.0.0, metal-dom@^2.13.2, metal-dom@^2.14.0, metal-
     metal "^2.16.7"
     metal-events "^2.16.7"
 
-metal-drag-drop@3.2.2, metal-drag-drop@^3.0.1, metal-drag-drop@^3.1.0, metal-drag-drop@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-3.2.2.tgz#acd055435b590394273fea4ab567b3ab571e98c0"
-  integrity sha512-XVDc5HCu6qx0rkCHwgk7KkhYK0kdk9zp+ZhNyyryzP69qpVBui2LL/1PnkjcMQThA8mhVEzvyegAZsAPfnieEw==
+metal-drag-drop@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-3.3.0.tgz#5934c992e5780fcb8e18ba4ccfcc4f9bedf8a4ec"
+  integrity sha512-pCVYCdppXChyFCFQpIdQOHqsF5YSz79GwdQPLSIXNsU0Rd452Bd4a8YaftuRj3cnsV2x1A6L7T18CqEZvxyNgA==
   dependencies:
     bootstrap "^3.3.6"
     metal "^2.16.7"
@@ -12562,29 +12562,7 @@ metal-drag-drop@3.2.2, metal-drag-drop@^3.0.1, metal-drag-drop@^3.1.0, metal-dra
     metal-position "^2.1.2"
     metal-state "^2.16.7"
 
-metal-drag-drop@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-2.0.1.tgz#62d422f67fdbf34a8d09d1c4a0510a330f1d4a54"
-  integrity sha1-YtQi9n/b80qNCdHEoFEKMw8dSlQ=
-  dependencies:
-    metal "^2.0.0"
-    metal-events "^2.0.0"
-    metal-position "^2.0.0"
-    metal-state "^2.0.0"
-
-metal-drag-drop@~3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-3.0.1.tgz#9792b2429620693732411564eec2aed1d05a2126"
-  integrity sha512-3+Y4IwC9mVTuN07hjOZBLXSry1bpZj5TF+yN0LU4gnYO1y3zwBS+SloWgvv6y99FbZqT5/7SC3WCpnD5F0R2rQ==
-  dependencies:
-    bootstrap "^3.3.6"
-    metal "^2.14.0"
-    metal-dom "^2.14.0"
-    metal-events "^2.14.0"
-    metal-position "^2.0.0"
-    metal-state "^2.14.0"
-
-metal-events@2.16.7, metal-events@^2.0.0, metal-events@^2.14.0, metal-events@^2.16.0, metal-events@^2.16.5, metal-events@^2.16.7, metal-events@^2.2.3, metal-events@^2.5.0, metal-events@^2.5.16, metal-events@^2.6.4:
+metal-events@2.16.7, metal-events@^2.0.0, metal-events@^2.16.0, metal-events@^2.16.5, metal-events@^2.16.7, metal-events@^2.2.3, metal-events@^2.5.0, metal-events@^2.5.16, metal-events@^2.6.4:
   version "2.16.7"
   resolved "https://registry.yarnpkg.com/metal-events/-/metal-events-2.16.7.tgz#61d1b4d06d6a277d86f166cd9a86d8c2e8b76752"
   integrity sha512-LuxsRlMTQu+Vw6yev9F38vnTPGQYimWDs8IHyvI3z6uBCyrK9jSw5prbNPn+DEjMgK5HFJtKTsPsCNF5AaNBtQ==
@@ -12768,7 +12746,7 @@ metal-soy@2.16.7, metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.14.0, metal-
     metal-soy-bundle "^2.16.7"
     metal-state "^2.16.7"
 
-metal-state@2.16.7, metal-state@^2.0.0, metal-state@^2.13.2, metal-state@^2.14.0, metal-state@^2.16.0, metal-state@^2.16.5, metal-state@^2.16.6, metal-state@^2.16.7, metal-state@^2.3.0, metal-state@^2.6.0, metal-state@^2.6.4:
+metal-state@2.16.7, metal-state@^2.0.0, metal-state@^2.13.2, metal-state@^2.16.0, metal-state@^2.16.5, metal-state@^2.16.6, metal-state@^2.16.7, metal-state@^2.3.0, metal-state@^2.6.0, metal-state@^2.6.4:
   version "2.16.7"
   resolved "https://registry.yarnpkg.com/metal-state/-/metal-state-2.16.7.tgz#b7608adb3e40ed75be7d078901c32a8085bd5c99"
   integrity sha512-dre4fe5qMm/9taybytuFPmUu55O0E9bJQfePJdvkPal0OySZCHuZybJ/3Cc0/PFlDCWgqpIJ7pWs7vbrdytGXg==
@@ -12934,7 +12912,7 @@ metal-web-component@^2.14.0, metal-web-component@^2.16.0, metal-web-component@^2
     metal "^2.16.7"
     metal-state "2.7.0"
 
-metal@2.16.7, metal@^2.0.0, metal@^2.13.2, metal@^2.14.0, metal@^2.16.0, metal@^2.16.2, metal@^2.16.5, metal@^2.16.6, metal@^2.16.7, metal@^2.2.0, metal@^2.4.7, metal@^2.5.18, metal@^2.6.4:
+metal@2.16.7, metal@^2.0.0, metal@^2.13.2, metal@^2.16.0, metal@^2.16.2, metal@^2.16.5, metal@^2.16.6, metal@^2.16.7, metal@^2.2.0, metal@^2.4.7, metal@^2.5.18, metal@^2.6.4:
   version "2.16.7"
   resolved "https://registry.yarnpkg.com/metal/-/metal-2.16.7.tgz#a8071fdd59d6c06dd637f7f78244b40ac90e4ffe"
   integrity sha512-lCUB9DXNS7dVv03/Z+bLeCKaxAfES8T7qhZiFkpkQgW2lmwZrr0p8QcJ8TJPgRPr5EMUitlvVr3fKsxzjeq6mA==

@@ -22,9 +22,14 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.provider.SegmentsEntryProvider;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,15 +53,26 @@ public class ContentListElementResourceImpl
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(contentListId);
 
+		if (assetListEntry == null) {
+			throw new BadRequestException(
+				"No asset list exists with ID " + contentListId);
+		}
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			assetListEntry.getGroupId(), _user.getModelClassName(),
+			_user.getPrimaryKey());
+
+		if (segmentsEntryIds.length == 0) {
+			segmentsEntryIds = new long[] {
+				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
+			};
+		}
+
 		return Page.of(
 			transform(
-				assetListEntry.getAssetEntries(
-					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
-					pagination.getStartPosition(), pagination.getEndPosition()),
+				assetListEntry.getAssetEntries(segmentsEntryIds),
 				this::_toContentListElement),
-			pagination,
-			assetListEntry.getAssetEntriesCount(
-				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
+			pagination, assetListEntry.getAssetEntriesCount(segmentsEntryIds));
 	}
 
 	private ContentListElement _toContentListElement(AssetEntry assetEntry) {
@@ -91,5 +107,11 @@ public class ContentListElementResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private SegmentsEntryProvider _segmentsEntryProvider;
+
+	@Context
+	private User _user;
 
 }

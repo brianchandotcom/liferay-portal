@@ -64,6 +64,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 						<clay:button
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+							monospaced="<%= true %>"
 							size="sm"
 							style="borderless"
 						/>

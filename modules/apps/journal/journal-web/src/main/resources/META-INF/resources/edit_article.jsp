@@ -95,6 +95,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						<clay:button
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+							monospaced="<%= true %>"
 							size="sm"
 							style="borderless"
 						/>

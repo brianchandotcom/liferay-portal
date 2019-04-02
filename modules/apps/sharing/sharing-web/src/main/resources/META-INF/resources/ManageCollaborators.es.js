@@ -169,7 +169,7 @@ class ManageCollaborators extends PortletBase {
 		const collaboratorId = target.dataset.collaboratorId;
 		const sharingEntryId = target.dataset.sharingentryId;
 
-		event.preventDefault();
+		event.stopPropagation();
 
 		this.collaborators = this.collaborators.filter(
 			collaborator => collaborator.id != collaboratorId
@@ -184,7 +184,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleEnableExpirationDate(event) {
-		const target = event.delegateTarget || event.currentTarget;
+		const target = event.delegateTarget;
 
 		const collaboratorId = target.dataset.collaboratorId;
 		const enabled = target.checked;
@@ -270,7 +270,9 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_hideShowExtraActions(event) {
-		this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
+		if (!event.target.matches('select,button')) {
+			this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
+		}
 	}
 
 	/**

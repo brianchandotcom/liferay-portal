@@ -43,7 +43,7 @@ public class DuplicateFriendlyURLEntryExceptionMapper
 	@Override
 	public Response toResponse(DuplicateFriendlyURLEntryException dfurlee) {
 		return Response.status(
-			422
+			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(

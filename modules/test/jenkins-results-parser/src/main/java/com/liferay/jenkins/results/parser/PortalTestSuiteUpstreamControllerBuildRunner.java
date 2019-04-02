@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -26,7 +24,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class PortalTestSuiteUpstreamControllerBuildRunner
-	<S extends PortalTopLevelBuildData>
+	<S extends PortalTestSuiteUpstreamControllerBuildData>
 		extends BaseBuildRunner<S, Workspace> {
 
 	@Override
@@ -99,20 +97,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return portalBranchSHA.substring(0, 7);
 	}
 
-	private String _getTestSuiteName() {
-		BuildData buildData = getBuildData();
-
-		String jobName = buildData.getJobName();
-
-		Matcher matcher = _jobNamePattern.matcher(jobName);
-
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid job name " + jobName);
-		}
-
-		return matcher.group("testSuiteName");
-	}
-
 	private void _invokeJob() {
 		StringBuilder sb = new StringBuilder();
 
@@ -135,31 +119,26 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		sb.append("token=");
 		sb.append(jenkinsAuthenticationToken);
 
-		sb.append("&CI_TEST_SUITE=");
-		sb.append(_getTestSuiteName());
-
 		S buildData = getBuildData();
 
+		sb.append("&CI_TEST_SUITE=");
+		sb.append(buildData.getTestSuiteName());
 		sb.append("&CONTROLLER_BUILD_URL=");
 		sb.append(buildData.getBuildURL());
-
-		String jenkinsGitHubURL = buildData.getBuildParameter(
-			"JENKINS_GITHUB_URL");
-
-		if (jenkinsGitHubURL != null) {
-			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
-				jenkinsGitHubURL);
-
-			if (matcher.find()) {
-				sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
-				sb.append(matcher.group("branchName"));
-				sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
-				sb.append(matcher.group("username"));
-			}
-		}
-
+		sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
+		sb.append(buildData.getJenkinsBranchName());
+		sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
+		sb.append(buildData.getJenkinsBranchUsername());
 		sb.append("&PORTAL_GIT_COMMIT=");
 		sb.append(buildData.getPortalBranchSHA());
+		sb.append("&PORTAL_GITHUB_URL=");
+		sb.append(buildData.getPortalGitHubURL());
+		sb.append("&TESTRAY_BUILD_NAME=");
+		sb.append(buildData.getTestrayBuildName());
+		sb.append("&TESTRAY_BUILD_TYPE=");
+		sb.append(buildData.getTestrayBuildType());
+		sb.append("&TESTRAY_PROJECT_NAME=");
+		sb.append(buildData.getTestrayProjectName());
 
 		try {
 			JenkinsResultsParserUtil.toString(sb.toString());
@@ -202,12 +181,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	}
 
 	private static final String _INVOCATION_COHORT_NAME = "test-5";
-
-	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
-		"https://github.com/(?<username>[^/]+)/liferay-jenkins-ee/tree/" +
-			"(?<branchName>.+)");
-	private static final Pattern _jobNamePattern = Pattern.compile(
-		"[^\\(]+\\((?<branchName>[^_]+)_(?<testSuiteName>[^\\)]+)\\)");
 
 	private String _invocationURL;
 

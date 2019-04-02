@@ -139,13 +139,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 		segmentsEntrySoyContext.put(
 			"name",
-			() -> {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", themeDisplay.getLocale(),
-					SegmentsConstants.class);
-
-				return LanguageUtil.get(resourceBundle, "default-segment-name");
-			}
+			SegmentsConstants.getDefaultSegmentsEntryName(
+				themeDisplay.getLocale())
 		).put(
 			"segmentsEntryId", SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		);

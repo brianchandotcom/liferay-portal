@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,7 +80,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -758,10 +756,7 @@ public class EditAssetListDisplayContext {
 			return segmentsEntry.getName(locale);
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, SegmentsConstants.class);
-
-		return LanguageUtil.get(resourceBundle, "default-segment-name");
+		return SegmentsConstants.getDefaultSegmentsEntryName(locale);
 	}
 
 	public long[] getSelectedGroupIds() throws PortalException {

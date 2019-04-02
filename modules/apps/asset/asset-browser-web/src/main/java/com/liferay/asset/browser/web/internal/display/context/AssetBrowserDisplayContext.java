@@ -77,19 +77,18 @@ public class AssetBrowserDisplayContext {
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(), _getClassNameIds(),
-				new long[] {getSubtypeSelectionId()}, _getKeywords(),
-				_getKeywords(), _getKeywords(), _getKeywords(), _getListable(),
-				false, false);
-
-			assetBrowserSearch.setTotal(total);
-
 			long[] subtypeSelectionId = null;
 
 			if (getSubtypeSelectionId() > 0) {
 				subtypeSelectionId = new long[] {getSubtypeSelectionId()};
 			}
+
+			int total = AssetEntryLocalServiceUtil.getEntriesCount(
+				_getFilterGroupIds(), _getClassNameIds(), subtypeSelectionId,
+				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
+				_getListable(), false, false);
+
+			assetBrowserSearch.setTotal(total);
 
 			List<AssetEntry> assetEntries =
 				AssetEntryLocalServiceUtil.getEntries(

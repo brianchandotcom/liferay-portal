@@ -20,17 +20,21 @@
 boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
 String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
 
-String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
 %>
 
 <style type="text/css">
-	#personal_menu_dropdown .btn:focus {
+	div.personal-menu-dropdown .btn:focus {
 		box-shadow: none;
+	}
+
+	div.personal-menu-dropdown .dropdown-item {
+		color: #6B6C7E;
 	}
 </style>
 
-<div id="<%= randomNamespace + "personal_menu_dropdown" %>">
-	<div id="<%= randomNamespace + "personal_menu_dropdown_toggle" %>" style="cursor: pointer;">
+<div class="personal-menu-dropdown" id="<%= namespace + "personal_menu_dropdown" %>">
+	<div id="<%= namespace + "personal_menu_dropdown_toggle" %>" style="cursor: pointer;">
 		<%= label %>
 	</div>
 
@@ -44,7 +48,7 @@ resourceURL.setResourceID("/get_personal_menu_items");
 %>
 
 <aui:script require="clay-dropdown/src/ClayDropdown as ClayDropdown,metal-dom/src/dom as dom">
-	var toggle = document.getElementById('<%= randomNamespace + "personal_menu_dropdown_toggle" %>');
+	var toggle = document.getElementById('<%= namespace + "personal_menu_dropdown_toggle" %>');
 
 	if (toggle) {
 		dom.once(
@@ -65,7 +69,7 @@ resourceURL.setResourceID("/get_personal_menu_items");
 					function(personalMenuItems) {
 						new ClayDropdown.default(
 							{
-								element: '#<%= randomNamespace + "personal_menu_dropdown_toggle" %>',
+								element: '#<%= namespace + "personal_menu_dropdown_toggle" %>',
 								events: {
 									'willAttach': function(event) {
 										if (<%= expanded %>) {
@@ -82,7 +86,7 @@ resourceURL.setResourceID("/get_personal_menu_items");
 								showToggleIcon: false,
 								spritemap: '<%= themeDisplay.getPathThemeImages().concat("/clay/icons.svg") %>'
 							},
-							'#<%= randomNamespace + "personal_menu_dropdown" %>'
+							'#<%= namespace + "personal_menu_dropdown" %>'
 						);
 					}
 				);

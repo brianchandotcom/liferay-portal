@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -86,8 +87,8 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public Page<MessageBoardThread> getContentSpaceMessageBoardThreadsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getContentSpaceMessageBoardThreadsPage(
@@ -152,10 +153,11 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public MessageBoardThread postContentSpaceMessageBoardThread(
-			Long contentSpaceId, MessageBoardThread messageBoardThread)
+			ContentSpace contentSpace, MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		return _addMessageBoardThread(contentSpaceId, 0L, messageBoardThread);
+		return _addMessageBoardThread(
+			contentSpace.getId(), 0L, messageBoardThread);
 	}
 
 	@Override

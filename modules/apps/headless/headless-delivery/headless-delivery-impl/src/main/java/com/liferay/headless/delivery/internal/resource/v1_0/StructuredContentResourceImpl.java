@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -134,23 +135,23 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public StructuredContent getContentSpaceStructuredContentByKey(
-			Long contentSpaceId, String key)
+			String key, ContentSpace contentSpace)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getArticle(
-			contentSpaceId, key);
+			contentSpace.getId(), key);
 
 		return _getStructuredContent(journalArticle);
 	}
 
 	@Override
 	public StructuredContent getContentSpaceStructuredContentByUuid(
-			Long contentSpaceId, String uuid)
+			String uuid, ContentSpace contentSpace)
 		throws Exception {
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(
-				uuid, contentSpaceId);
+				uuid, contentSpace.getId());
 
 		_journalArticleModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
@@ -161,8 +162,8 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -180,7 +181,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			contentSpaceId, search, filter, pagination, sorts);
+			contentSpace.getId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -359,12 +360,12 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public StructuredContent postContentSpaceStructuredContent(
-			Long contentSpaceId, StructuredContent structuredContent)
+			ContentSpace contentSpace, StructuredContent structuredContent)
 		throws Exception {
 
 		return _addStructuredContent(
-			contentSpaceId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			structuredContent);
+			contentSpace.getId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, structuredContent);
 	}
 
 	@Override

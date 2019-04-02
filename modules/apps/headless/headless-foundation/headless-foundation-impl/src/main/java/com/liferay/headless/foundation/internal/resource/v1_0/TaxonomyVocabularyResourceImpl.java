@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -91,9 +92,10 @@ public class TaxonomyVocabularyResourceImpl
 		_assetVocabularyService.deleteVocabulary(taxonomyVocabularyId);
 	}
 
+
 	@Override
 	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -105,7 +107,7 @@ public class TaxonomyVocabularyResourceImpl
 				Field.ASSET_VOCABULARY_ID),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+				searchContext.setGroupIds(new long[] {contentSpace.getId()});
 			},
 			document -> _toTaxonomyVocabulary(
 				_assetVocabularyService.getVocabulary(
@@ -182,12 +184,12 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Override
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
-			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
+			ContentSpace contentSpace, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _toTaxonomyVocabulary(
 			_assetVocabularyService.addVocabulary(
-				contentSpaceId, null,
+				contentSpace.getId(), null,
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getName()),
@@ -195,9 +197,9 @@ public class TaxonomyVocabularyResourceImpl
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getDescription()),
 				_getSettings(
-					taxonomyVocabulary.getAssetTypes(), contentSpaceId),
+					taxonomyVocabulary.getAssetTypes(), contentSpace.getId()),
 				ServiceContextUtil.createServiceContext(
-					contentSpaceId,
+					contentSpace.getId(),
 					taxonomyVocabulary.getViewableByAsString())));
 	}
 

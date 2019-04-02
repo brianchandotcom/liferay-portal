@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -74,8 +75,8 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -92,12 +93,10 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 
-				if (contentSpaceId != null) {
-					booleanFilter.add(
-						new TermFilter(
-							Field.GROUP_ID, String.valueOf(contentSpaceId)),
-						BooleanClauseOccur.MUST);
-				}
+				booleanFilter.add(
+					new TermFilter(
+						Field.GROUP_ID, String.valueOf(contentSpace.getId())),
+					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
 	}
@@ -199,10 +198,11 @@ public class DocumentResourceImpl
 
 	@Override
 	public Document postContentSpaceDocument(
-			Long contentSpaceId, MultipartBody multipartBody)
+			ContentSpace contentSpace, MultipartBody multipartBody)
 		throws Exception {
 
-		return _addDocument(contentSpaceId, 0L, contentSpaceId, multipartBody);
+		return _addDocument(
+			contentSpace.getId(), 0L, contentSpace.getId(), multipartBody);
 	}
 
 	@Override

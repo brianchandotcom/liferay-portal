@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -52,16 +53,17 @@ public class KnowledgeBaseFolderResourceImpl
 
 	@Override
 	public Page<KnowledgeBaseFolder> getContentSpaceKnowledgeBaseFoldersPage(
-			Long contentSpaceId, Pagination pagination)
+			ContentSpace contentSpace, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_kbFolderService.getKBFolders(
-					contentSpaceId, 0, pagination.getStartPosition(),
+					contentSpace.getId(), 0, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				this::_toKnowledgeBaseFolder),
-			pagination, _kbFolderService.getKBFoldersCount(contentSpaceId, 0));
+			pagination,
+			_kbFolderService.getKBFoldersCount(contentSpace.getId(), 0));
 	}
 
 	@Override
@@ -94,12 +96,12 @@ public class KnowledgeBaseFolderResourceImpl
 
 	@Override
 	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
-			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
+			ContentSpace contentSpace, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				contentSpaceId, _getClassNameId(), 0,
+				contentSpace.getId(), _getClassNameId(), 0,
 				knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(), new ServiceContext()));
 	}

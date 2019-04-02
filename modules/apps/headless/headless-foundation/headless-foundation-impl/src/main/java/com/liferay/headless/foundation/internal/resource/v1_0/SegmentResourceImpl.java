@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.context.Context;
@@ -34,6 +35,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -50,31 +52,33 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
+
 	@Override
 	public Page<Segment> getContentSpaceSegmentsPage(
-		Long contentSpaceId, Pagination pagination) {
+		ContentSpace contentSpace, Pagination pagination) {
 
 		return Page.of(
 			transform(
 				_segmentsEntryService.getSegmentsEntries(
-					contentSpaceId, true, pagination.getStartPosition(),
+					contentSpace.getId(), true, pagination.getStartPosition(),
 					pagination.getEndPosition(), null),
 				this::_toSegment),
 			pagination,
 			_segmentsEntryService.getSegmentsEntriesCount(
-				contentSpaceId, true));
+				contentSpace.getId(), true));
 	}
 
 	@Override
 	public Page<Segment> getContentSpaceUserAccountSegmentsPage(
-			Long contentSpaceId, Long userAccountId, Pagination pagination)
+			Long userAccountId, ContentSpace contentSpace,
+			Pagination pagination)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			contentSpaceId, user.getModelClassName(), user.getPrimaryKey(),
-			_createSegmentsContext());
+			contentSpace.getId(), user.getModelClassName(),
+			user.getPrimaryKey(), _createSegmentsContext());
 
 		return Page.of(
 			transformToList(

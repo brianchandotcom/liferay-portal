@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -61,7 +62,7 @@ public class KeywordResourceImpl
 
 	@Override
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -73,7 +74,7 @@ public class KeywordResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+				searchContext.setGroupIds(new long[] {contentSpace.getId()});
 			},
 			document -> _toKeyword(
 				_assetTagService.getTag(
@@ -92,18 +93,19 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+	public Keyword postContentSpaceKeyword(
+			ContentSpace contentSpace, Keyword keyword)
 		throws Exception {
 
 		try {
 			return _toKeyword(
 				_assetTagService.addTag(
-					contentSpaceId, keyword.getName(),
+					contentSpace.getId(), keyword.getName(),
 					new ServiceContext() {
 						{
 							setAddGroupPermissions(true);
 							setAddGuestPermissions(true);
-							setScopeGroupId(contentSpaceId);
+							setScopeGroupId(contentSpace.getId());
 						}
 					}));
 		}

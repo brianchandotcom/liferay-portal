@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -75,7 +76,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -89,7 +90,7 @@ public class BlogPostingResourceImpl
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+				searchContext.setGroupIds(new long[] {contentSpace.getId()});
 			},
 			document -> _toBlogPosting(
 				_blogsEntryService.getEntry(
@@ -104,7 +105,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public BlogPosting postContentSpaceBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
+			ContentSpace contentSpace, BlogPosting blogPosting)
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
@@ -134,7 +135,7 @@ public class BlogPostingResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
-					blogPosting.getTaxonomyCategoryIds(), contentSpaceId,
+					blogPosting.getTaxonomyCategoryIds(), contentSpace.getId(),
 					blogPosting.getViewableByAsString())));
 	}
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -69,8 +70,8 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
@@ -87,7 +88,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			contentSpaceId, search, filter, pagination, sorts);
+			contentSpace.getId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -164,11 +165,12 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
+			ContentSpace contentSpace,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _getKnowledgeBaseArticle(
-			contentSpaceId, 0L,
+			contentSpace.getId(), 0L,
 			_classNameLocalService.fetchClassName(KBFolder.class.getName()),
 			knowledgeBaseArticle);
 	}

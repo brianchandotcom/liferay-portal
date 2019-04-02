@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -62,8 +63,8 @@ public class FolderResourceImpl
 
 	@Override
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Long folderId = null;
@@ -73,7 +74,7 @@ public class FolderResourceImpl
 		}
 
 		return _getFoldersPage(
-			contentSpaceId, search, filter, folderId, pagination, sorts);
+			contentSpace.getId(), search, filter, folderId, pagination, sorts);
 	}
 
 	@Override
@@ -119,10 +120,11 @@ public class FolderResourceImpl
 	}
 
 	@Override
-	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
+	public Folder postContentSpaceFolder(
+			ContentSpace contentSpace, Folder folder)
 		throws Exception {
 
-		return _addFolder(contentSpaceId, 0L, folder);
+		return _addFolder(contentSpace.getId(), 0L, folder);
 	}
 
 	@Override

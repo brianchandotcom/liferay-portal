@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -68,7 +69,7 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public Page<StructuredContentFolder>
 			getContentSpaceStructuredContentFoldersPage(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, ContentSpace contentSpace,
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -80,8 +81,8 @@ public class StructuredContentFolderResourceImpl
 		}
 
 		return _getFoldersPage(
-			contentSpaceId, parentStructuredContentFolderId, search, filter,
-			pagination, sorts);
+			contentSpace.getId(), parentStructuredContentFolderId, search,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -115,12 +116,13 @@ public class StructuredContentFolderResourceImpl
 
 	@Override
 	public StructuredContentFolder postContentSpaceStructuredContentFolder(
-			Long contentSpaceId,
+			ContentSpace contentSpace,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return _addStructuredContentFolder(
-			contentSpaceId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			contentSpace.getId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			structuredContentFolder);
 	}
 

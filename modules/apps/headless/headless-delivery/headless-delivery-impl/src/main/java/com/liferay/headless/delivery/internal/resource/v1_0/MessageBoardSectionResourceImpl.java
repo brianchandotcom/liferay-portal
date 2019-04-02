@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -66,8 +67,8 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getContentSpaceMessageBoardSectionsPage(
@@ -126,10 +127,11 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	public MessageBoardSection postContentSpaceMessageBoardSection(
-			Long contentSpaceId, MessageBoardSection messageBoardSection)
+			ContentSpace contentSpace, MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return _addMessageBoardSection(contentSpaceId, 0L, messageBoardSection);
+		return _addMessageBoardSection(
+			contentSpace.getId(), 0L, messageBoardSection);
 	}
 
 	@Override

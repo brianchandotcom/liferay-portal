@@ -32,8 +32,14 @@
 				{/if}
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
+						{let $expanded: $collaborator.id == $expandedCollaboratorId /}
 						<li
-							class="list-group-item list-group-item-flex list-group-item-action"
+							class="
+								list-group-item
+								list-group-item-action
+								list-group-item-flex
+								{if $expanded}{sp}active{/if}
+							"
 							data-collaboratorid="{$collaborator.id}"
 							data-onclick="{$_hideShowExtraActions}"
 							id="collaborator{$collaborator.id}"
@@ -47,8 +53,8 @@
 								{param _loadingResponse: $_loadingResponse /}
 								{param _tomorrowDate: $_tomorrowDate /}
 								{param collaborator: $collaborator /}
+								{param expanded: $expanded /}
 								{param spritemap: $spritemap /}
-								{param expandedCollaboratorId: $expandedCollaboratorId /}
 							{/call}
 						</li>
 					{/foreach}
@@ -99,6 +105,7 @@
 
 {template .collaborator}
 	{@param collaborator: ?}
+	{@param expanded: bool}
 	{@param spritemap: string}
 	{@param? _handleBlurExpirationDate: any}
 	{@param? _handleChangePermission: any}
@@ -107,7 +114,6 @@
 	{@param? _handleEnableExpirationDate: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
-	{@param? expandedCollaboratorId: string}
 
 	<div class="autofit-col">
 		{if $collaborator.portraitURL}
@@ -130,7 +136,7 @@
 
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
-				<strong class="list-group-title">{$collaborator.name}</strong>
+				<strong>{$collaborator.name}</strong>
 			</div>
 
 			{if $collaborator.sharingEntryExpirationDate}
@@ -190,7 +196,7 @@
 			</div>
 		</div>
 
-		<div class="{if $collaborator.id != $expandedCollaboratorId}hide{/if}">
+		<div class="{if not $expanded}hide{/if}">
 			<div class="autofit-row autofit-row-center">
 				<div class="autofit-col">
 					<div class="form-group">

@@ -28,7 +28,6 @@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.asset.model.AssetEntryUsage" %><%@
 page import="com.liferay.asset.service.AssetEntryUsageLocalServiceUtil" %><%@
-page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

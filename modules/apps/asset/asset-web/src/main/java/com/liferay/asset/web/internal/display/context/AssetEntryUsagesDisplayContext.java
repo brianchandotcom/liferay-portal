@@ -167,10 +167,6 @@ public class AssetEntryUsagesDisplayContext {
 			return "page";
 		}
 
-		if (classNameId == PortalUtil.getClassNameId(FragmentEntryLink.class)) {
-			return "fragment";
-		}
-
 		return "page-template";
 	}
 
@@ -217,12 +213,6 @@ public class AssetEntryUsagesDisplayContext {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
 			getAssetEntryId(),
 			PortalUtil.getClassNameId(AssetDisplayPageEntry.class));
-	}
-
-	public int getFragmentsUsageCount() {
-		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(),
-			PortalUtil.getClassNameId(FragmentEntryLink.class));
 	}
 
 	public String getNavigation() {
@@ -321,17 +311,6 @@ public class AssetEntryUsagesDisplayContext {
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					getAssetEntryId(),
 					PortalUtil.getClassNameId(AssetDisplayPageEntry.class),
-					assetEntryUsagesSearchContainer.getStart(),
-					assetEntryUsagesSearchContainer.getEnd(),
-					orderByComparator);
-
-			assetEntryUsagesCount = getDisplayPagesUsageCount();
-		}
-		else if (Objects.equals(getNavigation(), "fragments")) {
-			assetEntryUsages =
-				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(),
-					PortalUtil.getClassNameId(FragmentEntryLink.class),
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);

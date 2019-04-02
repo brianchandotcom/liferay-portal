@@ -8,7 +8,7 @@ import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
 import {MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
-import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {moveItem, removeItem, setIn, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -69,6 +69,12 @@ class FragmentEntryLinkListSection extends Component {
 
 		nextState = setIn(nextState, ['_columnResizerVisible'], columnResizerVisible);
 
+		nextState = setIn(
+			nextState,
+			['_fragmentsEditorRowTypes'],
+			FRAGMENTS_EDITOR_ROW_TYPES
+		);
+
 		if (nextState._resizing && nextState._resizeSectionColumns) {
 			nextState = setIn(nextState, ['columns'], state._resizeSectionColumns);
 		}
@@ -83,7 +89,8 @@ class FragmentEntryLinkListSection extends Component {
 		if (
 			(this.rowId === this.activeItemId) &&
 			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) &&
-			!this._resizing
+			!this._resizing &&
+			this.row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
 		) {
 			this._createFloatingToolbar();
 		}

@@ -3,11 +3,6 @@
 	"bugs": {
 		"url": "https://issues.liferay.com/"
 	},
-	"devDependencies": {
-		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.1": "8.0.0-rc.2",
-		"liferay-theme-tasks": "8.0.0-rc.2"
-	},
 	"keywords": [
 		"liferay-theme"
 	],

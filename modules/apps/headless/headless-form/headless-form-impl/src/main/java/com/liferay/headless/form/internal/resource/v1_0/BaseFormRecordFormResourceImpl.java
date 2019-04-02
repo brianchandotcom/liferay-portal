@@ -14,25 +14,18 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
-import com.liferay.headless.form.dto.v1_0.Form;
-import com.liferay.headless.form.dto.v1_0.FormDocument;
-import com.liferay.headless.form.resource.v1_0.FormResource;
+import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.dto.v1_0.FormRecordForm;
+import com.liferay.headless.form.resource.v1_0.FormRecordFormResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -40,8 +33,7 @@ import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -54,70 +46,29 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFormResourceImpl implements FormResource {
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/content-spaces/{contentSpaceId}/forms")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Page<Form> getContentSpaceFormsPage(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
-	@Path("/forms/{formId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Form getForm(@NotNull @PathParam("formId") Long formId)
-		throws Exception {
-
-		return new Form();
-	}
+public abstract class BaseFormRecordFormResourceImpl
+	implements FormRecordFormResource {
 
 	@Override
 	@Consumes("application/json")
-	@POST
-	@Path("/forms/{formId}/evaluate-context")
+	@PUT
+	@Path("/form-records/{formRecordId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Form postFormEvaluateContext(
-			@NotNull @PathParam("formId") Long formId, Form form)
+	@Tags(value = {@Tag(name = "FormRecordForm")})
+	public FormRecord putFormRecord(
+			@NotNull @PathParam("formRecordId") Long formRecordId,
+			FormRecordForm formRecordForm)
 		throws Exception {
 
-		return new Form();
-	}
-
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/forms/{formId}/upload-file")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public FormDocument postFormUploadFile(
-			@NotNull @PathParam("formId") Long formId,
-			MultipartBody multipartBody)
-		throws Exception {
-
-		return new FormDocument();
+		return new FormRecord();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Form form, Form existingForm) {
+	protected void preparePatch(
+		FormRecordForm formRecordForm, FormRecordForm existingFormRecordForm) {
 	}
 
 	protected <T, R> List<R> transform(

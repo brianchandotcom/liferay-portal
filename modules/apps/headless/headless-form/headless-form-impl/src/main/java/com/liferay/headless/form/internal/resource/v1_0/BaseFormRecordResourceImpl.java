@@ -15,6 +15,7 @@
 package com.liferay.headless.form.internal.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -40,7 +41,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -68,14 +68,12 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/form-records/{formRecordId}")
+	@GET
+	@Path("/forms/{formId}/fetch-latest-draft")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
-	public FormRecord putFormRecord(
-			@NotNull @PathParam("formRecordId") Long formRecordId,
-			FormRecord formRecord)
+	public FormRecord getFormFetchLatestDraft(
+			@NotNull @PathParam("formId") Long formId)
 		throws Exception {
 
 		return new FormRecord();
@@ -107,7 +105,8 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord postFormFormRecord(
-			@NotNull @PathParam("formId") Long formId, FormRecord formRecord)
+			@NotNull @PathParam("formId") Long formId,
+			FormRecordForm formRecordForm)
 		throws Exception {
 
 		return new FormRecord();

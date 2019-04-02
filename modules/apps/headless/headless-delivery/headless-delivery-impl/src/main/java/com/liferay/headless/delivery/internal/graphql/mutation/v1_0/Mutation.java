@@ -187,149 +187,6 @@ public class Mutation {
 			structuredContentFolderResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContent postContentSpaceStructuredContent(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postContentSpaceStructuredContent(
-					contentSpaceId, structuredContent));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContent postStructuredContentFolderStructuredContent(
-			@GraphQLName("structured-content-folder-id") Long
-				structuredContentFolderId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postStructuredContentFolderStructuredContent(
-						structuredContentFolderId, structuredContent));
-	}
-
-	@GraphQLInvokeDetached
-	public void deleteStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContent(
-					structuredContentId));
-	}
-
-	@GraphQLInvokeDetached
-	public StructuredContent patchStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.patchStructuredContent(
-					structuredContentId, structuredContent));
-	}
-
-	@GraphQLInvokeDetached
-	public StructuredContent putStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.putStructuredContent(
-					structuredContentId, structuredContent));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContentFolder postContentSpaceStructuredContentFolder(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("StructuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postContentSpaceStructuredContentFolder(
-						contentSpaceId, structuredContentFolder));
-	}
-
-	@GraphQLInvokeDetached
-	public void deleteStructuredContentFolder(
-			@GraphQLName("structured-content-folder-id") Long
-				structuredContentFolderId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.deleteStructuredContentFolder(
-					structuredContentFolderId));
-	}
-
-	@GraphQLInvokeDetached
-	public StructuredContentFolder putStructuredContentFolder(
-			@GraphQLName("structured-content-folder-id") Long
-				structuredContentFolderId,
-			@GraphQLName("StructuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.putStructuredContentFolder(
-					structuredContentFolderId, structuredContentFolder));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
-				@GraphQLName("structured-content-folder-id") Long
-					structuredContentFolderId,
-				@GraphQLName("StructuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postStructuredContentFolderStructuredContentFolder(
-						structuredContentFolderId, structuredContentFolder));
-	}
-
 	@GraphQLInvokeDetached
 	public void deleteBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
@@ -1126,6 +983,20 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating postDocumentRating(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("Rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ratingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ratingResource -> ratingResource.postDocumentRating(
+				documentId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Rating postKnowledgeBaseArticleRating(
 			@GraphQLName("knowledge-base-article-id") Long
 				knowledgeBaseArticleId,
@@ -1191,20 +1062,6 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Rating postDocumentRating(
-			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("Rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> ratingResource.postDocumentRating(
-				documentId, rating));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating postStructuredContentRating(
 			@GraphQLName("structured-content-id") Long structuredContentId,
 			@GraphQLName("Rating") Rating rating)
@@ -1215,6 +1072,149 @@ public class Mutation {
 			this::_populateResourceContext,
 			ratingResource -> ratingResource.postStructuredContentRating(
 				structuredContentId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContent postContentSpaceStructuredContent(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postContentSpaceStructuredContent(
+					contentSpaceId, structuredContent));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContent postStructuredContentFolderStructuredContent(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						structuredContentFolderId, structuredContent));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContent(
+					structuredContentId));
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.patchStructuredContent(
+					structuredContentId, structuredContent));
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContent putStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContent(
+					structuredContentId, structuredContent));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder postContentSpaceStructuredContentFolder(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("StructuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postContentSpaceStructuredContentFolder(
+						contentSpaceId, structuredContentFolder));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteStructuredContentFolder(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.deleteStructuredContentFolder(
+					structuredContentFolderId));
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContentFolder putStructuredContentFolder(
+			@GraphQLName("structured-content-folder-id") Long
+				structuredContentFolderId,
+			@GraphQLName("StructuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.putStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				@GraphQLName("structured-content-folder-id") Long
+					structuredContentFolderId,
+				@GraphQLName("StructuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						structuredContentFolderId, structuredContentFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

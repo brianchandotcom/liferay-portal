@@ -2,7 +2,7 @@ import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR,
 import {add, addSection, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
-import {getColumn, getDropSectionPosition, getFragmentColumn} from '../utils/FragmentsEditorGetUtils.es';
+import {getColumn, getDropSectionPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -360,7 +360,24 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					[...nextState.layoutData.structure]
 				);
 
-				nextData = _removeFragment(nextData, fragmentEntryLinkId);
+				const fragmentEntryLinkRow = nextData.structure[
+					getFragmentRowIndex(
+						nextData.structure,
+						fragmentEntryLinkId
+					)
+				];
+
+				let fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component;
+
+				if (fragmentEntryLinkRow.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+					fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.section;
+				}
+
+				nextData = _removeFragment(
+					nextData,
+					fragmentEntryLinkId,
+					fragmentEntryLinkType
+				);
 
 				_removeFragmentEntryLink(
 					nextState.deleteFragmentEntryLinkURL,
@@ -774,9 +791,15 @@ function _moveFragmentEntryLink(
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
  * @return {Promise}
+ * @param {string} [fragmentEntryLinkType=FRAGMENTS_EDITOR_ROW_TYPES.componentRow]
+ * @return {object} Next layout data
  * @review
  */
-function _removeFragment(layoutData, fragmentEntryLinkId) {
+function _removeFragment(
+	layoutData,
+	fragmentEntryLinkId,
+	fragmentEntryLinkType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+) {
 	const {structure} = layoutData;
 
 	const column = getFragmentColumn(structure, fragmentEntryLinkId);
@@ -792,20 +815,36 @@ function _removeFragment(layoutData, fragmentEntryLinkId) {
 	);
 	const sectionIndex = structure.indexOf(section);
 
-	return updateIn(
-		layoutData,
-		[
-			'structure',
-			sectionIndex,
-			'columns',
-			columnIndex,
-			'fragmentEntryLinkIds'
-		],
-		fragmentEntryLinkIds => remove(
-			fragmentEntryLinkIds,
-			fragmentIndex
-		)
-	);
+	let nextData = null;
+
+	if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+		nextData = updateIn(
+			layoutData,
+			['structure'],
+			structure => remove(
+				structure,
+				sectionIndex
+			)
+		);
+	}
+	else {
+		nextData = updateIn(
+			layoutData,
+			[
+				'structure',
+				sectionIndex,
+				'columns',
+				columnIndex,
+				'fragmentEntryLinkIds'
+			],
+			fragmentEntryLinkIds => remove(
+				fragmentEntryLinkIds,
+				fragmentIndex
+			)
+		);
+	}
+
+	return nextData;
 }
 
 /**

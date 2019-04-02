@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Headless Collaboration API
-Bundle-SymbolicName: com.liferay.headless.collaboration.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.collaboration.dto.v1_0,\
-	com.liferay.headless.collaboration.resource.v1_0

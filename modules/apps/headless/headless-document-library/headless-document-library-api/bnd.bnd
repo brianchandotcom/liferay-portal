@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Headless Document Library API
-Bundle-SymbolicName: com.liferay.headless.document.library.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.document.library.dto.v1_0,\
-	com.liferay.headless.document.library.resource.v1_0

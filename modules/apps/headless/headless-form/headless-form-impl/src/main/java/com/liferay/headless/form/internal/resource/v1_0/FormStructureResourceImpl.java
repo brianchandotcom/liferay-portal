@@ -131,7 +131,15 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		return new Grid() {
 			{
 				columns = _toColumn(ddmFormField);
-				rows = _toRows(ddmFormField);
+				rows = TransformUtil.transform(
+					_toLocalizedValueMapEntry(ddmFormField, "rows"),
+					entry -> new Row() {
+						{
+							label = _toString(entry.getValue());
+							value = entry.getKey();
+						}
+					},
+					Row.class);
 			}
 		};
 	}
@@ -386,18 +394,6 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		}
 
 		return new Map.Entry[0];
-	}
-
-	private Row[] _toRows(DDMFormField ddmFormField) {
-		return TransformUtil.transform(
-			_toLocalizedValueMapEntry(ddmFormField, "rows"),
-			entry -> new Row() {
-				{
-					label = _toString(entry.getValue());
-					value = entry.getKey();
-				}
-			},
-			Row.class);
 	}
 
 	private String _toString(LocalizedValue localizedValue) {

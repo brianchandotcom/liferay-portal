@@ -500,9 +500,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
@@ -557,10 +557,10 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolder = "Duplicate",
-			dmSubFolderDescription = "DM Document Description",
-			dmSubFolderName = "DM Document Title"
+		DMFolder.addPG(
+			dmFolder = "Duplicate",
+			dmFolderDescription = "DM Document Description",
+			dmFolderName = "DM Document Title"
 		);
 	}
 
@@ -584,9 +584,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM Subfolder1 Description",
-			dmSubFolderName = "Subfolder1 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder1 Description",
+			dmFolderName = "Subfolder1 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");
@@ -597,9 +597,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM Subfolder2 Description",
-			dmSubFolderName = "Subfolder2 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder2 Description",
+			dmFolderName = "Subfolder2 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder2 Name");
@@ -610,9 +610,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM Subfolder3 Description",
-			dmSubFolderName = "Subfolder3 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder3 Description",
+			dmFolderName = "Subfolder3 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder3 Name");
@@ -769,9 +769,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM Subfolder Description",
-			dmSubFolderName = "DM Subfolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder Description",
+			dmFolderName = "DM Subfolder Name"
 		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -794,9 +794,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
@@ -1012,9 +1012,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		DMFolder.editPG(
@@ -1035,9 +1035,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
@@ -1390,9 +1390,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
@@ -1839,9 +1839,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder Description",
-			dmSubFolderName = "DM SubFolder Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name"
 		);
 
 		ProductMenu.gotoPortlet(

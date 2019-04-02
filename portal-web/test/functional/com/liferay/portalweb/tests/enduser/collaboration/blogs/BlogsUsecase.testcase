@@ -1610,9 +1610,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder 1 Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder 1 Description",
-			dmSubFolderName = "DM SubFolder 1 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder 1 Description",
+			dmFolderName = "DM SubFolder 1 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 1 Name");
@@ -1632,9 +1632,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder 2 Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM SubFolder 2 Description",
-			dmSubFolderName = "DM SubFolder 2 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM SubFolder 2 Description",
+			dmFolderName = "DM SubFolder 2 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 2 Name");

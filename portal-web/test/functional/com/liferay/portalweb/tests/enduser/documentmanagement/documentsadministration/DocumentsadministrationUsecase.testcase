@@ -378,9 +378,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.addSubfolderPG(
-			dmSubFolderDescription = "DM Subfolder1 Description",
-			dmSubFolderName = "Subfolder1 Name"
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder1 Description",
+			dmFolderName = "Subfolder1 Name"
 		);
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");

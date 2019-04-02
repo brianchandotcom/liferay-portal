@@ -65,10 +65,10 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("BEGIN ");
-		sb.append("DECLARE CONTINUE HANDLER FOR SQLSTATE '42704' ");
-		sb.append("BEGIN END; ")
-		sb.append("EXECUTE IMMEDIATE 'DROP TABLE $1'; ");
+		sb.append("BEGIN\n");
+		sb.append("DECLARE CONTINUE HANDLER FOR SQLSTATE '42704'\n");
+		sb.append("BEGIN END;\n");
+		sb.append("EXECUTE IMMEDIATE 'DROP TABLE $1';\n");
 		sb.append("END");
 
 		String dropTableIfExists = sb.toString();

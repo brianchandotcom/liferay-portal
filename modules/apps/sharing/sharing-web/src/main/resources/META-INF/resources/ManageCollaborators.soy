@@ -12,9 +12,9 @@
 	{@param? _handleChangePermission: any}
 	{@param? _handleChangeShareable: any}
 	{@param? _handleDeleteCollaborator: any}
-	{@param? _handleEnableExpirationDate: any}
+	{@param? _handleEnableDisableExpirationDate: any}
 	{@param? _handleSaveButtonClick: any}
-	{@param? _hideShowExtraActions: any}
+	{@param? _handleExpandCollaborator: any}
 	{@param? _loadingResponse: bool}
 	{@param? _removeExpirationDateError: any}
 	{@param? _tomorrowDate: string}
@@ -41,7 +41,7 @@
 								{if $expanded}{sp}active{/if}
 							"
 							data-collaboratorid="{$collaborator.id}"
-							data-onclick="{$_hideShowExtraActions}"
+							data-onclick="{$_handleExpandCollaborator}"
 							id="collaborator{$collaborator.id}"
 						>
 							{call .collaborator}
@@ -49,7 +49,7 @@
 								{param _handleChangePermission: $_handleChangePermission /}
 								{param _handleChangeShareable: $_handleChangeShareable /}
 								{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
-								{param _handleEnableExpirationDate: $_handleEnableExpirationDate /}
+								{param _handleEnableDisableExpirationDate: $_handleEnableDisableExpirationDate /}
 								{param _loadingResponse: $_loadingResponse /}
 								{param _tomorrowDate: $_tomorrowDate /}
 								{param collaborator: $collaborator /}
@@ -111,7 +111,7 @@
 	{@param? _handleChangePermission: any}
 	{@param? _handleChangeShareable: any}
 	{@param? _handleDeleteCollaborator: any}
-	{@param? _handleEnableExpirationDate: any}
+	{@param? _handleEnableDisableExpirationDate: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
 
@@ -236,7 +236,7 @@
 									class="custom-control-input"
 									type="checkbox"
 									data-collaborator-id="{$collaborator.id}"
-									data-onchange="{$_handleEnableExpirationDate}"
+									data-onchange="{$_handleEnableDisableExpirationDate}"
 									{if $collaborator.sharingEntryExpirationDate}
 										checked
 									{/if}

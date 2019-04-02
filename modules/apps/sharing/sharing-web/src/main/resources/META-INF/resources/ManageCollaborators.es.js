@@ -185,7 +185,7 @@ class ManageCollaborators extends PortletBase {
 	 * @param  {Event} event
 	 * @protected
 	 */
-	_handleEnableExpirationDate(event) {
+	_handleEnableDisableExpirationDate(event) {
 		const target = event.delegateTarget;
 
 		const collaboratorId = target.dataset.collaboratorId;
@@ -207,6 +207,18 @@ class ManageCollaborators extends PortletBase {
 			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
 
 			this.collaborators = this.collaborators;
+		}
+	}
+
+	/**
+	 * Expand configuration for sharing permissions and expiration
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
+	_handleExpandCollaborator(event) {
+		if (!event.target.matches('select,button')) {
+			this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
 		}
 	}
 
@@ -261,18 +273,6 @@ class ManageCollaborators extends PortletBase {
 			);
 
 		this._loadingResponse = true;
-	}
-
-	/**
-	 * Expand configuration for sharing permissions and expiration
-	 *
-	 * @param {Event} event
-	 * @protected
-	 */
-	_hideShowExtraActions(event) {
-		if (!event.target.matches('select,button')) {
-			this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
-		}
 	}
 
 	/**

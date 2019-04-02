@@ -423,7 +423,7 @@ public class ResourceOpenAPIParser {
 			}
 
 			String pathName = CamelCaseUtil.toCamelCase(
-				pathSegment.replaceAll("\\{|-id|}", ""));
+				pathSegment.replaceAll("\\{|-id|}|Id}", ""));
 
 			if (StringUtil.equalsIgnoreCase(pathName, schemaName)) {
 				pathName = schemaName;

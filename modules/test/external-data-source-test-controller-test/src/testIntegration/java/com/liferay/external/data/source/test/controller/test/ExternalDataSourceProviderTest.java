@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class ExternalDataSourceControllerParentTest
+public class ExternalDataSourceProviderTest
 	extends ExternalDataSourceControllerTest {
 
 	@ClassRule
@@ -48,7 +48,14 @@ public class ExternalDataSourceControllerParentTest
 
 	@Override
 	protected String getResourceDestination() {
-		return "META-INF/spring/parent/ext-spring.xml";
+		return "META-INF/services/com.liferay.portal.kernel.dao.jdbc." +
+			"DataSourceProvider";
+	}
+
+	@Override
+	protected String getResourceSource() {
+		return "/META-INF/services/com.liferay.portal.kernel.dao.jdbc." +
+			"DataSourceProvider";
 	}
 
 }

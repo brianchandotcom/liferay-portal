@@ -154,8 +154,12 @@ public class ExternalDataSourceControllerTest {
 		}
 	}
 
-	protected String getExtSpringDestination() {
+	protected String getResourceDestination() {
 		return "META-INF/spring/ext-spring.xml";
+	}
+
+	protected String getResourceSource() {
+		return "/META-INF/spring/ext-spring.xml";
 	}
 
 	private byte[] _getServiceJarBytes(String path) throws Exception {
@@ -191,10 +195,10 @@ public class ExternalDataSourceControllerTest {
 
 			try (InputStream extSpringInputSteam =
 					ExternalDataSourceControllerTest.class.getResourceAsStream(
-						"/META-INF/spring/ext-spring.xml")) {
+						getResourceSource())) {
 
 				jarOutputStream.putNextEntry(
-					new JarEntry(getExtSpringDestination()));
+					new JarEntry(getResourceDestination()));
 
 				StreamUtil.transfer(
 					extSpringInputSteam, jarOutputStream, false);

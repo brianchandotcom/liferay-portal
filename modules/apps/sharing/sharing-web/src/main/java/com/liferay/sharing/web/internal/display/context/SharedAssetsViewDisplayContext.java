@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
@@ -53,7 +54,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import javax.portlet.PortletException;
@@ -71,7 +71,6 @@ public class SharedAssetsViewDisplayContext {
 	public SharedAssetsViewDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems,
 		SharingEntryLocalService sharingEntryLocalService,
 		Function<SharingEntry, SharingEntryInterpreter>
@@ -83,7 +82,6 @@ public class SharedAssetsViewDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
 		_sharedAssetsFilterItems = sharedAssetsFilterItems;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
@@ -94,7 +92,10 @@ public class SharedAssetsViewDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+
+		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

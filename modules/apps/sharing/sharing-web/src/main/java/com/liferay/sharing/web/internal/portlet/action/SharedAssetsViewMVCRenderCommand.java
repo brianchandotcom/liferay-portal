@@ -52,8 +52,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -168,16 +166,13 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(renderResponse);
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
 			new ArrayList<>();
 
 		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
 
 		return new SharedAssetsViewDisplayContext(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse,
 			sharedAssetsFilterItems, _sharingEntryLocalService,
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingMenuItemFactory, _sharingEntryMenuItemContributorRegistry,

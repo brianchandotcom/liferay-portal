@@ -15,4 +15,23 @@ dependencies {
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+
+	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
+	compileOnly project(":apps:headless:headless-common-spi")
+	compileOnly project(":apps:knowledge-base:knowledge-base-api")
+	compileOnly project(":apps:portal-odata:portal-odata-api")
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:adaptive-media:adaptive-media-api")
+	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"
+	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:asset:asset-list-api")
+	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:segments:segments-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 }

@@ -15,6 +15,7 @@
 	{@param row: ?}
 	{@param rowId: string}
 	{@param? _columnResizerVisible: bool}
+	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
 	{@param? _handleSectionKeyUp: any}
@@ -57,8 +58,11 @@
 		{sp}fragments-editor__drop-target--sidebar-layout
 		{sp}fragments-editor__drop-target--sidebar-section
 		{sp}fragments-editor__drop-target--sidebar-widget
-		{sp}fragments-editor__topper-wrapper
 		{sp}fragment-entry-link-list__container
+
+		{if $row.type == $_fragmentsEditorRowTypes.componentRow}
+			{sp}fragments-editor__topper-wrapper
+		{/if}
 
 		{if $_resizing}
 			{sp}fragment-entry-link-list__container--resizing
@@ -74,12 +78,18 @@
 
 		{if not $_resizing and $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__row-section--active
-			{sp}fragments-editor__topper-wrapper--active
+
+			{if $row.type == $_fragmentsEditorRowTypes.componentRow}
+				{sp}fragments-editor__topper-wrapper--active
+			{/if}
 		{/if}
 
 		{if not $_resizing and $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__container--hovered
-			{sp}fragments-editor__topper-wrapper--hovered
+
+			{if $row.type == $_fragmentsEditorRowTypes.componentRow}
+				{sp}fragments-editor__topper-wrapper--hovered
+			{/if}
 		{/if}
 
 		{if $row and $row.config and $row.config.backgroundColorCssClass}

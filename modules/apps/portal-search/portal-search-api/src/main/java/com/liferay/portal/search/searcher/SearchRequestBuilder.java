@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -36,9 +37,13 @@ import java.util.function.Function;
 @ProviderType
 public interface SearchRequestBuilder {
 
-	public void addAggregation(Aggregation aggregation);
+	public SearchRequestBuilder addAggregation(Aggregation aggregation);
 
-	public void addPipelineAggregation(PipelineAggregation pipelineAggregation);
+	public SearchRequestBuilder addComplexQueryPart(
+		ComplexQueryPart complexQueryPart);
+
+	public SearchRequestBuilder addPipelineAggregation(
+		PipelineAggregation pipelineAggregation);
 
 	/**
 	 * Adds fields to include in search results as a map of keys and values.
@@ -84,6 +89,8 @@ public interface SearchRequestBuilder {
 		boolean includeResponseString);
 
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes);
+
+	public SearchRequestBuilder postFilterQuery(Query query);
 
 	public SearchRequestBuilder query(Query query);
 

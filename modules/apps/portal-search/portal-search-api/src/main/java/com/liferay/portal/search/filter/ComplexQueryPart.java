@@ -12,26 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.search.query;
+package com.liferay.portal.search.filter;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.io.Serializable;
-
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public interface Query extends Serializable {
-
-	public <T> T accept(QueryVisitor<T> queryVisitor);
+public interface ComplexQueryPart {
 
 	public Float getBoost();
 
-	public String getQueryName();
+	public String getField();
 
-	public void setBoost(Float boost);
+	public String getName();
 
-	public void setQueryName(String queryName);
+	public String getOccur();
+
+	public String getParent();
+
+	public String getType();
+
+	public String getValue();
+
+	public boolean isDisabled();
 
 }

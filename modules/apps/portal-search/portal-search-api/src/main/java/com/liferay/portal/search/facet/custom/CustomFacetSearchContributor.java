@@ -37,6 +37,10 @@ public interface CustomFacetSearchContributor {
 
 		public CustomFacetBuilder fieldToAggregate(String fieldToAggregate);
 
+		public CustomFacetBuilder frequencyThreshold(int frequencyThreshold);
+
+		public CustomFacetBuilder maxTerms(int maxTerms);
+
 		public CustomFacetBuilder selectedValues(String... selectedValues);
 
 	}

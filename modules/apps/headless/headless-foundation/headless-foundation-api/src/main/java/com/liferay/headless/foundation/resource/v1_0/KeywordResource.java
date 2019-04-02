@@ -18,6 +18,7 @@ import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -35,11 +36,12 @@ import javax.annotation.Generated;
 public interface KeywordResource {
 
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+	public Keyword postContentSpaceKeyword(
+			ContentSpace contentSpace, Keyword keyword)
 		throws Exception;
 
 	public void deleteKeyword(Long keywordId) throws Exception;

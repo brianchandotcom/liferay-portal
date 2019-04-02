@@ -124,7 +124,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Page<ContentStructure> page =
 				invokeGetContentSpaceContentStructuresPage(
-					irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+					null, irrelevantContentSpaceId, null, Pagination.of(1, 2),
 					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -145,7 +145,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page =
 			invokeGetContentSpaceContentStructuresPage(
-				contentSpaceId, null, null, Pagination.of(1, 2), null);
+				null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -191,7 +191,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> page =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null,
+					null, contentSpaceId,
 					getFilterString(entityField, "eq", contentStructure1),
 					Pagination.of(1, 2), null);
 
@@ -227,7 +227,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> page =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null,
+					null, contentSpaceId,
 					getFilterString(entityField, "eq", contentStructure1),
 					Pagination.of(1, 2), null);
 
@@ -258,7 +258,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			invokeGetContentSpaceContentStructuresPage(
-				contentSpaceId, null, null, Pagination.of(1, 2), null);
+				null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
@@ -268,7 +268,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page2 =
 			invokeGetContentSpaceContentStructuresPage(
-				contentSpaceId, null, null, Pagination.of(2, 2), null);
+				null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -325,7 +325,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> ascPage =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -334,7 +334,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Page<ContentStructure> descPage =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -378,7 +378,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> ascPage =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -387,7 +387,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Page<ContentStructure> descPage =
 				invokeGetContentSpaceContentStructuresPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -419,7 +419,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	protected Page<ContentStructure> invokeGetContentSpaceContentStructuresPage(
-			Long contentSpaceId, String search, String filterString,
+			String search, Long contentSpaceId, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -455,7 +455,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceContentStructuresPageResponse(
-			Long contentSpaceId, String search, String filterString,
+			String search, Long contentSpaceId, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 

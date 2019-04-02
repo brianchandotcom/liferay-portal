@@ -26,6 +26,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -81,7 +82,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Form> getContentSpaceFormsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -91,7 +92,7 @@ public class Query {
 			this::_populateResourceContext,
 			formResource -> {
 				Page paginationPage = formResource.getContentSpaceFormsPage(
-					contentSpaceId, Pagination.of(pageSize, page));
+					contentSpace, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -165,7 +166,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -176,7 +177,7 @@ public class Query {
 			formStructureResource -> {
 				Page paginationPage =
 					formStructureResource.getContentSpaceFormStructuresPage(
-						contentSpaceId, Pagination.of(pageSize, page));
+						contentSpace, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

@@ -263,25 +263,25 @@ public abstract class BaseSegmentResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceUserAccountSegmentsPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceUserAccountSegmentsPage_getIrrelevantContentSpaceId();
 		Long userAccountId =
 			testGetContentSpaceUserAccountSegmentsPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetContentSpaceUserAccountSegmentsPage_getIrrelevantUserAccountId();
+		Long contentSpaceId =
+			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId();
+		Long irrelevantContentSpaceId =
+			testGetContentSpaceUserAccountSegmentsPage_getIrrelevantContentSpaceId();
 
-		if ((irrelevantContentSpaceId != null) &&
-			(irrelevantUserAccountId != null)) {
+		if ((irrelevantUserAccountId != null) &&
+			(irrelevantContentSpaceId != null)) {
 
 			Segment irrelevantSegment =
 				testGetContentSpaceUserAccountSegmentsPage_addSegment(
-					irrelevantContentSpaceId, irrelevantUserAccountId,
+					irrelevantUserAccountId, irrelevantContentSpaceId,
 					randomIrrelevantSegment());
 
 			Page<Segment> page = invokeGetContentSpaceUserAccountSegmentsPage(
-				irrelevantContentSpaceId, irrelevantUserAccountId,
+				irrelevantUserAccountId, irrelevantContentSpaceId,
 				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -294,14 +294,14 @@ public abstract class BaseSegmentResourceTestCase {
 
 		Segment segment1 =
 			testGetContentSpaceUserAccountSegmentsPage_addSegment(
-				contentSpaceId, userAccountId, randomSegment());
+				userAccountId, contentSpaceId, randomSegment());
 
 		Segment segment2 =
 			testGetContentSpaceUserAccountSegmentsPage_addSegment(
-				contentSpaceId, userAccountId, randomSegment());
+				userAccountId, contentSpaceId, randomSegment());
 
 		Page<Segment> page = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, userAccountId, Pagination.of(1, 2));
+			userAccountId, contentSpaceId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -314,32 +314,32 @@ public abstract class BaseSegmentResourceTestCase {
 	public void testGetContentSpaceUserAccountSegmentsPageWithPagination()
 		throws Exception {
 
-		Long contentSpaceId =
-			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId();
 		Long userAccountId =
 			testGetContentSpaceUserAccountSegmentsPage_getUserAccountId();
+		Long contentSpaceId =
+			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId();
 
 		Segment segment1 =
 			testGetContentSpaceUserAccountSegmentsPage_addSegment(
-				contentSpaceId, userAccountId, randomSegment());
+				userAccountId, contentSpaceId, randomSegment());
 
 		Segment segment2 =
 			testGetContentSpaceUserAccountSegmentsPage_addSegment(
-				contentSpaceId, userAccountId, randomSegment());
+				userAccountId, contentSpaceId, randomSegment());
 
 		Segment segment3 =
 			testGetContentSpaceUserAccountSegmentsPage_addSegment(
-				contentSpaceId, userAccountId, randomSegment());
+				userAccountId, contentSpaceId, randomSegment());
 
 		Page<Segment> page1 = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, userAccountId, Pagination.of(1, 2));
+			userAccountId, contentSpaceId, Pagination.of(1, 2));
 
 		List<Segment> segments1 = (List<Segment>)page1.getItems();
 
 		Assert.assertEquals(segments1.toString(), 2, segments1.size());
 
 		Page<Segment> page2 = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, userAccountId, Pagination.of(2, 2));
+			userAccountId, contentSpaceId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -358,25 +358,11 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	protected Segment testGetContentSpaceUserAccountSegmentsPage_addSegment(
-			Long contentSpaceId, Long userAccountId, Segment segment)
+			Long userAccountId, Long contentSpaceId, Segment segment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Long
-			testGetContentSpaceUserAccountSegmentsPage_getIrrelevantContentSpaceId()
-		throws Exception {
-
-		return irrelevantGroup.getGroupId();
 	}
 
 	protected Long testGetContentSpaceUserAccountSegmentsPage_getUserAccountId()
@@ -393,8 +379,22 @@ public abstract class BaseSegmentResourceTestCase {
 		return null;
 	}
 
+	protected Long
+			testGetContentSpaceUserAccountSegmentsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetContentSpaceUserAccountSegmentsPage_getIrrelevantContentSpaceId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
 	protected Page<Segment> invokeGetContentSpaceUserAccountSegmentsPage(
-			Long contentSpaceId, Long userAccountId, Pagination pagination)
+			Long userAccountId, Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -403,7 +403,7 @@ public abstract class BaseSegmentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments",
-					contentSpaceId, userAccountId);
+					userAccountId, contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -426,7 +426,7 @@ public abstract class BaseSegmentResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceUserAccountSegmentsPageResponse(
-				Long contentSpaceId, Long userAccountId, Pagination pagination)
+				Long userAccountId, Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -435,7 +435,7 @@ public abstract class BaseSegmentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments",
-					contentSpaceId, userAccountId);
+					userAccountId, contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

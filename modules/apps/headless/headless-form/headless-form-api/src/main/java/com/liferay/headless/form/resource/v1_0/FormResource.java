@@ -16,6 +16,7 @@ package com.liferay.headless.form.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +34,7 @@ import javax.annotation.Generated;
 public interface FormResource {
 
 	public Page<Form> getContentSpaceFormsPage(
-			Long contentSpaceId, Pagination pagination)
+			ContentSpace contentSpace, Pagination pagination)
 		throws Exception;
 
 	public Form getForm(Long formId) throws Exception;

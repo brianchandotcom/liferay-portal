@@ -123,7 +123,7 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantContentSpaceId, randomIrrelevantDocument());
 
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				irrelevantContentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, irrelevantContentSpaceId, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -141,7 +141,7 @@ public abstract class BaseDocumentResourceTestCase {
 			contentSpaceId, randomDocument());
 
 		Page<Document> page = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -184,7 +184,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null,
+				null, null, contentSpaceId,
 				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -217,7 +217,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null,
+				null, null, contentSpaceId,
 				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -244,14 +244,14 @@ public abstract class BaseDocumentResourceTestCase {
 			contentSpaceId, randomDocument());
 
 		Page<Document> page1 = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
 		Page<Document> page2 = invokeGetContentSpaceDocumentsPage(
-			contentSpaceId, null, null, null, Pagination.of(2, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -302,7 +302,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -310,7 +310,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -349,7 +349,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -357,7 +357,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -388,7 +388,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Page<Document> invokeGetContentSpaceDocumentsPage(
-			Long contentSpaceId, Boolean flatten, String search,
+			Boolean flatten, String search, Long contentSpaceId,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -424,7 +424,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
-			Long contentSpaceId, Boolean flatten, String search,
+			Boolean flatten, String search, Long contentSpaceId,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 

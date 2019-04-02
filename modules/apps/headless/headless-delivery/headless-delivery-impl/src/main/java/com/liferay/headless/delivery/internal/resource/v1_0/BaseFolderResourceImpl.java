@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -65,6 +66,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "content-space-id"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -75,10 +77,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@QueryParam("search") String search,
+			@PathParam("content-space-id") ContentSpace contentSpace,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -87,11 +90,14 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "content-space-id")}
+	)
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postContentSpaceFolder(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@PathParam("content-space-id") ContentSpace contentSpace,
 			Folder folder)
 		throws Exception {
 

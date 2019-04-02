@@ -16,6 +16,7 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Segment;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,11 +34,12 @@ import javax.annotation.Generated;
 public interface SegmentResource {
 
 	public Page<Segment> getContentSpaceSegmentsPage(
-			Long contentSpaceId, Pagination pagination)
+			ContentSpace contentSpace, Pagination pagination)
 		throws Exception;
 
 	public Page<Segment> getContentSpaceUserAccountSegmentsPage(
-			Long contentSpaceId, Long userAccountId, Pagination pagination)
+			Long userAccountId, ContentSpace contentSpace,
+			Pagination pagination)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -257,7 +257,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			Page<BlogPostingImage> page =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					irrelevantContentSpaceId, null, null, Pagination.of(1, 2),
+					null, irrelevantContentSpaceId, null, Pagination.of(1, 2),
 					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -278,7 +278,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		Page<BlogPostingImage> page =
 			invokeGetContentSpaceBlogPostingImagesPage(
-				contentSpaceId, null, null, Pagination.of(1, 2), null);
+				null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -324,7 +324,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPostingImage> page =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null,
+					null, contentSpaceId,
 					getFilterString(entityField, "eq", blogPostingImage1),
 					Pagination.of(1, 2), null);
 
@@ -360,7 +360,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPostingImage> page =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null,
+					null, contentSpaceId,
 					getFilterString(entityField, "eq", blogPostingImage1),
 					Pagination.of(1, 2), null);
 
@@ -391,7 +391,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		Page<BlogPostingImage> page1 =
 			invokeGetContentSpaceBlogPostingImagesPage(
-				contentSpaceId, null, null, Pagination.of(1, 2), null);
+				null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<BlogPostingImage> blogPostingImages1 =
 			(List<BlogPostingImage>)page1.getItems();
@@ -401,7 +401,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		Page<BlogPostingImage> page2 =
 			invokeGetContentSpaceBlogPostingImagesPage(
-				contentSpaceId, null, null, Pagination.of(2, 2), null);
+				null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -458,7 +458,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPostingImage> ascPage =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -467,7 +467,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			Page<BlogPostingImage> descPage =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -511,7 +511,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPostingImage> ascPage =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -520,7 +520,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			Page<BlogPostingImage> descPage =
 				invokeGetContentSpaceBlogPostingImagesPage(
-					contentSpaceId, null, null, Pagination.of(1, 2),
+					null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -552,7 +552,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	protected Page<BlogPostingImage> invokeGetContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, String search, String filterString,
+			String search, Long contentSpaceId, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -588,7 +588,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceBlogPostingImagesPageResponse(
-			Long contentSpaceId, String search, String filterString,
+			String search, Long contentSpaceId, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 

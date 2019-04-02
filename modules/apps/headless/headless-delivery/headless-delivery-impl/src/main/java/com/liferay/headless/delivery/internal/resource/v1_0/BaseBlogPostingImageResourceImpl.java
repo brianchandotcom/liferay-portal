@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -88,6 +89,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "content-space-id"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -98,9 +100,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@QueryParam("search") String search,
+			@PathParam("content-space-id") ContentSpace contentSpace,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -109,11 +112,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "content-space-id")}
+	)
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@PathParam("content-space-id") ContentSpace contentSpace,
 			MultipartBody multipartBody)
 		throws Exception {
 

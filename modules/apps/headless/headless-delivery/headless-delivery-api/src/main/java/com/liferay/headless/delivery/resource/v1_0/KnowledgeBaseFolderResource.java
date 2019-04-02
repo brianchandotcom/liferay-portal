@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,11 +34,11 @@ import javax.annotation.Generated;
 public interface KnowledgeBaseFolderResource {
 
 	public Page<KnowledgeBaseFolder> getContentSpaceKnowledgeBaseFoldersPage(
-			Long contentSpaceId, Pagination pagination)
+			ContentSpace contentSpace, Pagination pagination)
 		throws Exception;
 
 	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
-			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
+			ContentSpace contentSpace, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
 	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)

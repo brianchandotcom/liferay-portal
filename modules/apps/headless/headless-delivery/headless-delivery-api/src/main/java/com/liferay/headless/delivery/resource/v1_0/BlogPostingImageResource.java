@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -42,12 +43,12 @@ public interface BlogPostingImageResource {
 		throws Exception;
 
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-			Long contentSpaceId, MultipartBody multipartBody)
+			ContentSpace contentSpace, MultipartBody multipartBody)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

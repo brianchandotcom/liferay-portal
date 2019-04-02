@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -208,8 +209,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Keyword> getContentSpaceKeywordsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("search") String search,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
@@ -221,7 +222,7 @@ public class Query {
 			keywordResource -> {
 				Page paginationPage =
 					keywordResource.getContentSpaceKeywordsPage(
-						contentSpaceId, search, filter,
+						search, contentSpace, filter,
 						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -505,7 +506,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getContentSpaceSegmentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -516,7 +517,7 @@ public class Query {
 			segmentResource -> {
 				Page paginationPage =
 					segmentResource.getContentSpaceSegmentsPage(
-						contentSpaceId, Pagination.of(pageSize, page));
+						contentSpace, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -525,8 +526,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getContentSpaceUserAccountSegmentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -537,7 +538,7 @@ public class Query {
 			segmentResource -> {
 				Page paginationPage =
 					segmentResource.getContentSpaceUserAccountSegmentsPage(
-						contentSpaceId, userAccountId,
+						userAccountId, contentSpace,
 						Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -635,8 +636,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyVocabulary>
 			getContentSpaceTaxonomyVocabulariesPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("search") String search,
+				@GraphQLName("ContentSpace") ContentSpace contentSpace,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -650,7 +651,7 @@ public class Query {
 				Page paginationPage =
 					taxonomyVocabularyResource.
 						getContentSpaceTaxonomyVocabulariesPage(
-							contentSpaceId, search, filter,
+							search, contentSpace, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

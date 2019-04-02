@@ -26,6 +26,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -78,7 +79,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("Keyword") Keyword keyword)
 		throws Exception {
 
@@ -86,7 +87,7 @@ public class Mutation {
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.postContentSpaceKeyword(
-				contentSpaceId, keyword));
+				contentSpace, keyword));
 	}
 
 	@GraphQLInvokeDetached
@@ -185,7 +186,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("ContentSpace") ContentSpace contentSpace,
 			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {
@@ -195,7 +196,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.postContentSpaceTaxonomyVocabulary(
-					contentSpaceId, taxonomyVocabulary));
+					contentSpace, taxonomyVocabulary));
 	}
 
 	@GraphQLInvokeDetached

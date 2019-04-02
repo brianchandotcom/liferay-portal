@@ -123,7 +123,7 @@ public abstract class BaseFolderResourceTestCase {
 				irrelevantContentSpaceId, randomIrrelevantFolder());
 
 			Page<Folder> page = invokeGetContentSpaceFoldersPage(
-				irrelevantContentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, irrelevantContentSpaceId, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -140,7 +140,7 @@ public abstract class BaseFolderResourceTestCase {
 			contentSpaceId, randomFolder());
 
 		Page<Folder> page = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -182,7 +182,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Folder> page = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null,
+				null, null, contentSpaceId,
 				getFilterString(entityField, "eq", folder1),
 				Pagination.of(1, 2), null);
 
@@ -215,7 +215,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Folder> page = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null,
+				null, null, contentSpaceId,
 				getFilterString(entityField, "eq", folder1),
 				Pagination.of(1, 2), null);
 
@@ -242,14 +242,14 @@ public abstract class BaseFolderResourceTestCase {
 			contentSpaceId, randomFolder());
 
 		Page<Folder> page1 = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<Folder> folders1 = (List<Folder>)page1.getItems();
 
 		Assert.assertEquals(folders1.toString(), 2, folders1.size());
 
 		Page<Folder> page2 = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, null, null, null, Pagination.of(2, 2), null);
+			null, null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -300,7 +300,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -308,7 +308,7 @@ public abstract class BaseFolderResourceTestCase {
 				(List<Folder>)ascPage.getItems());
 
 			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -347,7 +347,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -355,7 +355,7 @@ public abstract class BaseFolderResourceTestCase {
 				(List<Folder>)ascPage.getItems());
 
 			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2),
+				null, null, contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -385,7 +385,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Page<Folder> invokeGetContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, String search,
+			Boolean flatten, String search, Long contentSpaceId,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -421,7 +421,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
-			Long contentSpaceId, Boolean flatten, String search,
+			Boolean flatten, String search, Long contentSpaceId,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 

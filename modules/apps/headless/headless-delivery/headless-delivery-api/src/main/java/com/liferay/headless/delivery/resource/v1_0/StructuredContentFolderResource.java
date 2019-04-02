@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -36,12 +37,12 @@ public interface StructuredContentFolderResource {
 
 	public Page<StructuredContentFolder>
 			getContentSpaceStructuredContentFoldersPage(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, ContentSpace contentSpace,
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public StructuredContentFolder postContentSpaceStructuredContentFolder(
-			Long contentSpaceId,
+			ContentSpace contentSpace,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 

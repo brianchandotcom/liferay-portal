@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.Folder;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -35,11 +36,12 @@ import javax.annotation.Generated;
 public interface FolderResource {
 
 	public Page<Folder> getContentSpaceFoldersPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
+	public Folder postContentSpaceFolder(
+			ContentSpace contentSpace, Folder folder)
 		throws Exception;
 
 	public void deleteFolder(Long folderId) throws Exception;

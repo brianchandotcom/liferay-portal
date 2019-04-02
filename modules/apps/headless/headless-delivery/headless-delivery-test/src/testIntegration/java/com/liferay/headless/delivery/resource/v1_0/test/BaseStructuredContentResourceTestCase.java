@@ -126,7 +126,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Page<StructuredContent> page =
 				invokeGetContentSpaceStructuredContentsPage(
-					irrelevantContentSpaceId, null, null, null,
+					null, null, irrelevantContentSpaceId, null,
 					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -147,7 +147,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page =
 			invokeGetContentSpaceStructuredContentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -193,7 +193,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> page =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(entityField, "eq", structuredContent1),
 					Pagination.of(1, 2), null);
 
@@ -229,7 +229,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> page =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(entityField, "eq", structuredContent1),
 					Pagination.of(1, 2), null);
 
@@ -260,7 +260,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page1 =
 			invokeGetContentSpaceStructuredContentsPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<StructuredContent> structuredContents1 =
 			(List<StructuredContent>)page1.getItems();
@@ -270,7 +270,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page2 =
 			invokeGetContentSpaceStructuredContentsPage(
-				contentSpaceId, null, null, null, Pagination.of(2, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -327,7 +327,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> ascPage =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -336,7 +336,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Page<StructuredContent> descPage =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -380,7 +380,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> ascPage =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -389,7 +389,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Page<StructuredContent> descPage =
 				invokeGetContentSpaceStructuredContentsPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -422,7 +422,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	protected Page<StructuredContent>
 			invokeGetContentSpaceStructuredContentsPage(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, Long contentSpaceId,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -458,7 +458,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceStructuredContentsPageResponse(
-			Long contentSpaceId, Boolean flatten, String search,
+			Boolean flatten, String search, Long contentSpaceId,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -576,8 +576,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent getStructuredContent =
 			invokeGetContentSpaceStructuredContentByKey(
-				postStructuredContent.getContentSpaceId(),
-				postStructuredContent.getKey());
+				postStructuredContent.getKey(),
+				postStructuredContent.getContentSpaceId());
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
@@ -592,7 +592,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent invokeGetContentSpaceStructuredContentByKey(
-			Long contentSpaceId, String key)
+			String key, Long contentSpaceId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -601,7 +601,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
-					contentSpaceId, key);
+					key, contentSpaceId);
 
 		options.setLocation(location);
 
@@ -623,7 +623,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceStructuredContentByKeyResponse(
-			Long contentSpaceId, String key)
+			String key, Long contentSpaceId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -632,7 +632,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
-					contentSpaceId, key);
+					key, contentSpaceId);
 
 		options.setLocation(location);
 
@@ -648,8 +648,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent getStructuredContent =
 			invokeGetContentSpaceStructuredContentByUuid(
-				postStructuredContent.getContentSpaceId(),
-				postStructuredContent.getUuid());
+				postStructuredContent.getUuid(),
+				postStructuredContent.getContentSpaceId());
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
@@ -664,7 +664,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent invokeGetContentSpaceStructuredContentByUuid(
-			Long contentSpaceId, String uuid)
+			String uuid, Long contentSpaceId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -673,7 +673,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
-					contentSpaceId, uuid);
+					uuid, contentSpaceId);
 
 		options.setLocation(location);
 
@@ -696,7 +696,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceStructuredContentByUuidResponse(
-				Long contentSpaceId, String uuid)
+				String uuid, Long contentSpaceId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -705,7 +705,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
-					contentSpaceId, uuid);
+					uuid, contentSpaceId);
 
 		options.setLocation(location);
 

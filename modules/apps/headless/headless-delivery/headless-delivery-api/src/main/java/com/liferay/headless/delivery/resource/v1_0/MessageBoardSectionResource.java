@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -35,12 +36,12 @@ import javax.annotation.Generated;
 public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection> getContentSpaceMessageBoardSectionsPage(
-			Long contentSpaceId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, ContentSpace contentSpace,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardSection postContentSpaceMessageBoardSection(
-			Long contentSpaceId, MessageBoardSection messageBoardSection)
+			ContentSpace contentSpace, MessageBoardSection messageBoardSection)
 		throws Exception;
 
 	public void deleteMessageBoardSection(Long messageBoardSectionId)

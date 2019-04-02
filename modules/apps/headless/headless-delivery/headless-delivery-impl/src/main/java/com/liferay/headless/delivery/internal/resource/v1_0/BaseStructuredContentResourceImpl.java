@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -67,6 +68,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "content-space-id"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -77,10 +79,11 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@QueryParam("search") String search,
+			@PathParam("content-space-id") ContentSpace contentSpace,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -89,11 +92,14 @@ public abstract class BaseStructuredContentResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "content-space-id")}
+	)
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postContentSpaceStructuredContent(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@PathParam("content-space-id") ContentSpace contentSpace,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -102,12 +108,15 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "content-space-id")}
+	)
 	@Path("/content-spaces/{content-space-id}/structured-contents/by-key/{key}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getContentSpaceStructuredContentByKey(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@NotNull @PathParam("key") String key)
+			@NotNull @PathParam("key") String key,
+			@PathParam("content-space-id") ContentSpace contentSpace)
 		throws Exception {
 
 		return new StructuredContent();
@@ -115,14 +124,17 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "content-space-id")}
+	)
 	@Path(
 		"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getContentSpaceStructuredContentByUuid(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@NotNull @PathParam("uuid") String uuid)
+			@NotNull @PathParam("uuid") String uuid,
+			@PathParam("content-space-id") ContentSpace contentSpace)
 		throws Exception {
 
 		return new StructuredContent();

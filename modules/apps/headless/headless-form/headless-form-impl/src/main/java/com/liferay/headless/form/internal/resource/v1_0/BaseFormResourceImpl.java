@@ -19,6 +19,7 @@ import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -58,6 +59,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "content-space-id"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -66,7 +68,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getContentSpaceFormsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@PathParam("content-space-id") ContentSpace contentSpace,
 			@Context Pagination pagination)
 		throws Exception {
 

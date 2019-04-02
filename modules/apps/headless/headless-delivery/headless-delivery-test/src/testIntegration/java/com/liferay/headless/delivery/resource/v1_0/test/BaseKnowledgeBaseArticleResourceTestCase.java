@@ -128,7 +128,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			Page<KnowledgeBaseArticle> page =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					irrelevantContentSpaceId, null, null, null,
+					null, null, irrelevantContentSpaceId, null,
 					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -149,7 +149,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page =
 			invokeGetContentSpaceKnowledgeBaseArticlesPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -197,7 +197,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(entityField, "eq", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
@@ -233,7 +233,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(entityField, "eq", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
@@ -264,7 +264,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page1 =
 			invokeGetContentSpaceKnowledgeBaseArticlesPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
@@ -275,7 +275,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page2 =
 			invokeGetContentSpaceKnowledgeBaseArticlesPage(
-				contentSpaceId, null, null, null, Pagination.of(2, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -336,7 +336,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -345,7 +345,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			Page<KnowledgeBaseArticle> descPage =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -391,7 +391,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -400,7 +400,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			Page<KnowledgeBaseArticle> descPage =
 				invokeGetContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -434,7 +434,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Page<KnowledgeBaseArticle>
 			invokeGetContentSpaceKnowledgeBaseArticlesPage(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, Long contentSpaceId,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -471,7 +471,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceKnowledgeBaseArticlesPageResponse(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, Long contentSpaceId,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 

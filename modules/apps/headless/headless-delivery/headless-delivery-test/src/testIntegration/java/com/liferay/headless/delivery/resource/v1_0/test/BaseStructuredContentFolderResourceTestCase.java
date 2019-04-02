@@ -128,7 +128,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			Page<StructuredContentFolder> page =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					irrelevantContentSpaceId, null, null, null,
+					null, null, irrelevantContentSpaceId, null,
 					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -149,7 +149,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		Page<StructuredContentFolder> page =
 			invokeGetContentSpaceStructuredContentFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -197,7 +197,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContentFolder> page =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(
 						entityField, "eq", structuredContentFolder1),
 					Pagination.of(1, 2), null);
@@ -234,7 +234,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContentFolder> page =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null,
+					null, null, contentSpaceId,
 					getFilterString(
 						entityField, "eq", structuredContentFolder1),
 					Pagination.of(1, 2), null);
@@ -266,7 +266,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		Page<StructuredContentFolder> page1 =
 			invokeGetContentSpaceStructuredContentFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(1, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<StructuredContentFolder> structuredContentFolders1 =
 			(List<StructuredContentFolder>)page1.getItems();
@@ -277,7 +277,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		Page<StructuredContentFolder> page2 =
 			invokeGetContentSpaceStructuredContentFoldersPage(
-				contentSpaceId, null, null, null, Pagination.of(2, 2), null);
+				null, null, contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -338,7 +338,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContentFolder> ascPage =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -348,7 +348,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			Page<StructuredContentFolder> descPage =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -395,7 +395,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContentFolder> ascPage =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -405,7 +405,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			Page<StructuredContentFolder> descPage =
 				invokeGetContentSpaceStructuredContentFoldersPage(
-					contentSpaceId, null, null, null, Pagination.of(1, 2),
+					null, null, contentSpaceId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -441,7 +441,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	protected Page<StructuredContentFolder>
 			invokeGetContentSpaceStructuredContentFoldersPage(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, Long contentSpaceId,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -478,7 +478,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	protected Http.Response
 			invokeGetContentSpaceStructuredContentFoldersPageResponse(
-				Long contentSpaceId, Boolean flatten, String search,
+				Boolean flatten, String search, Long contentSpaceId,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 

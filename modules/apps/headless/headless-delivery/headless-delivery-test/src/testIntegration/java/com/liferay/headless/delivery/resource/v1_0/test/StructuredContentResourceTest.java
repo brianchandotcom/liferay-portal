@@ -46,6 +46,7 @@ import java.util.Objects;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -86,6 +87,16 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Ignore
+	@Override
+	public void testGetContentSpaceStructuredContentByKey() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testGetContentSpaceStructuredContentByUuid() throws Exception {
 	}
 
 	protected void assertValid(StructuredContent structuredContent) {

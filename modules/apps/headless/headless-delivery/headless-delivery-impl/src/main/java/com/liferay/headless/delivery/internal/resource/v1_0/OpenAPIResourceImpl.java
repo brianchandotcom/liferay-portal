@@ -76,19 +76,15 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(ContentListElementResourceImpl.class);
-
-			add(ContentStructureResourceImpl.class);
-
-			add(StructuredContentResourceImpl.class);
-
-			add(StructuredContentFolderResourceImpl.class);
-
 			add(BlogPostingResourceImpl.class);
 
 			add(BlogPostingImageResourceImpl.class);
 
 			add(CommentResourceImpl.class);
+
+			add(ContentListElementResourceImpl.class);
+
+			add(ContentStructureResourceImpl.class);
 
 			add(DocumentResourceImpl.class);
 
@@ -109,6 +105,10 @@ public class OpenAPIResourceImpl {
 			add(MessageBoardThreadResourceImpl.class);
 
 			add(RatingResourceImpl.class);
+
+			add(StructuredContentResourceImpl.class);
+
+			add(StructuredContentFolderResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

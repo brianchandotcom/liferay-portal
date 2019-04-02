@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.content.space.ContentSpace;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -47,12 +48,12 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			Long contentSpaceId, String search, Filter filter,
+			String search, ContentSpace contentSpace, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public BlogPosting postContentSpaceBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
+			ContentSpace contentSpace, BlogPosting blogPosting)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -55,7 +55,7 @@ public class ArquillianTest {
 			new BridgeJUnitTestRunner.BridgeRunListener(ArquillianTest.class),
 			AssumeClassRuleTestItem.class);
 
-		assertResult(result);
+		assertResult(result, AssumeClassRuleTestItem.class);
 	}
 
 	@Test

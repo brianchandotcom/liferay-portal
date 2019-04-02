@@ -9,7 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
 	}
 
 	tearDown {
@@ -119,8 +118,6 @@ definition {
 
 		FormRules.save();
 	}
-
-	
 
 	@description = "This is a use case for LPS-73332."
 	@priority = "2"
@@ -944,7 +941,7 @@ definition {
 		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
 
 		Navigator.openURL();
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

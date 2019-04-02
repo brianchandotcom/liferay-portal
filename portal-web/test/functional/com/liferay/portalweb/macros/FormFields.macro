@@ -10,7 +10,7 @@ definition {
 	}
 
 	macro changeFieldType {
-		
+
 		while (IsElementNotPresent(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON_DROPDOWN")) {
 			Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
 		}
@@ -133,11 +133,11 @@ definition {
 	}
 
 	macro editParagraphBody {
-		
-		 Type.clickAtType(
-		 	locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
-		 	value1 = "${fieldValue}"
-		 );
+
+		Type.clickAtType(
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
+			value1 = "${fieldValue}"
+		);
 	}
 
 	macro editPassword {
@@ -224,7 +224,7 @@ definition {
 
 	macro enableSwitcher {
 		Click(locator1 = "FormFields#SWITCHER", key_fieldName = "${fieldName}");
-		
+
 		//FormFields.viewSwitcherChecked(fieldName = "${fieldName}");
 	}
 
@@ -515,7 +515,7 @@ definition {
 	}
 
 	macro viewFieldNameMetal {
-		
+
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(

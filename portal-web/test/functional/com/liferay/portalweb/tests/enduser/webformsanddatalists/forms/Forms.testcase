@@ -830,8 +830,6 @@ definition {
 		Form.save();
 	}
 
-	
-
 	@description = "This is a use case for LPS-61740"
 	@priority = "5"
 	test PreviewAndPublishForm {
@@ -2527,7 +2525,7 @@ definition {
 		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionValue";
 
 		Navigator.openURL();
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

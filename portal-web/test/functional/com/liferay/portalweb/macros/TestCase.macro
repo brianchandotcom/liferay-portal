@@ -76,10 +76,10 @@ definition {
 		);
 
 		SystemSettings.saveConfiguration();
-		
+
 		SystemSettings.resetConfiguration();
 
-        Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
+		Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
 
 		SystemSettings.saveConfiguration();
 

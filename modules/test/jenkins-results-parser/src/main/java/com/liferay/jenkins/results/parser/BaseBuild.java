@@ -1674,26 +1674,6 @@ public abstract class BaseBuild implements Build {
 			return expanderAnchorElement;
 		}
 
-		protected String getIndentedName() {
-			StringBuilder sb = new StringBuilder();
-
-			for (int i = 0; i < (getDepth() * _INDENTATION_SIZE); i++) {
-				sb.append("&nbsp;");
-			}
-
-			String name = getName();
-
-			StopWatchRecord parentStopWatchRecord = getParentStopWatchRecord();
-
-			if (parentStopWatchRecord != null) {
-				name = name.replace(parentStopWatchRecord.getName(), "");
-			}
-
-			sb.append(name);
-
-			return sb.toString();
-		}
-
 		protected List<Element> getJenkinsReportTableRowElements(
 			String namespace) {
 

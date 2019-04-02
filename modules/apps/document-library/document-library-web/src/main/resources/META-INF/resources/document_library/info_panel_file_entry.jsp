@@ -93,9 +93,14 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
 
 						String ownerURL = StringPool.BLANK;
+						String ownerFullName = StringPool.BLANK;
 
-						if ((owner != null) && !owner.isDefaultUser()) {
-							ownerURL = owner.getDisplayURL(themeDisplay);
+						if (owner != null) {
+							ownerFullName = owner.getFullName();
+
+							if (!owner.isDefaultUser()) {
+								ownerURL = owner.getDisplayURL(themeDisplay);
+							}
 						}
 						%>
 
@@ -108,7 +113,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						<div class="autofit-row">
 							<div class="autofit-col autofit-col-expand">
 								<div class="component-title h4 username">
-									<a href="<%= ownerURL %>"><%= owner.getFullName() %></a>
+									<a href="<%= ownerURL %>"><%= ownerFullName %></a>
 								</div>
 
 								<small class="text-muted">

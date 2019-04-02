@@ -16,13 +16,24 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.InputStream;
 
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,16 +43,51 @@ import org.junit.runner.RunWith;
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
-	@Ignore
+	public static final String OPERATION_DELETE_PERMISSION = "delete";
+
+	public static final String OPERATION_SAVE_PERMISSION = "save";
+
+	public static final String RESOURCE_NAME =
+		"com.liferay.data.engine.rest.internal.model.InternalDataDefinition";
+
 	@Override
 	public void testPostContentSpaceDataDefinitionPermission()
 		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		DataDefinitionPermission dataDefinitionPermission =
+			new DataDefinitionPermission() {
+				{
+					addDataDefinition = true;
+					roleNames = new String[] {role.getName()};
+				}
+			};
+
+		invokePostContentSpaceDataDefinitionPermission(
+			testGroup.getGroupId(), OPERATION_SAVE_PERMISSION,
+			dataDefinitionPermission);
 	}
 
-	@Ignore
 	@Override
 	public void testPostDataDefinitionDataDefinitionPermission()
 		throws Exception {
+
+		_ddmStructure = _addDDMStructure(testGroup);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		DataDefinitionPermission dataDefinitionPermission =
+			new DataDefinitionPermission() {
+				{
+					view = true;
+					roleNames = new String[] {role.getName()};
+				}
+			};
+
+		invokePostDataDefinitionDataDefinitionPermission(
+			_ddmStructure.getStructureId(), OPERATION_SAVE_PERMISSION,
+			dataDefinitionPermission);
 	}
 
 	protected void assertValid(DataDefinition dataDefinition) {
@@ -141,5 +187,27 @@ public class DataDefinitionResourceTest
 		return invokePostContentSpaceDataDefinition(
 			testGroup.getGroupId(), randomDataDefinition());
 	}
+
+	private DDMStructure _addDDMStructure(Group group) throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(RESOURCE_NAME), group);
+
+		return ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(RESOURCE_NAME),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_read("test-structured-content-structure.json"),
+			StorageType.JSON.getValue());
+	}
+
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
+	private DDMStructure _ddmStructure;
 
 }

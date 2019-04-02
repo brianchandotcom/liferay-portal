@@ -33,8 +33,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12,
-							value = "showThePersonalMenuInTheControlMenu"
+							size = 12, value = "showInControlMenu"
 						)
 					}
 				)
@@ -45,9 +44,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 public interface PersonalMenuConfigurationForm {
 
 	@DDMFormField(
-		label = "%show-the-personal-menu-in-the-control-menu",
-		properties = "showAsSwitcher=true",
-		tip = "%show-the-personal-menu-in-the-control-menu-help"
+		label = "%show-in-control-menu", properties = "showAsSwitcher=true",
+		tip = "%show-in-control-menu-help"
 	)
 	public boolean showThePersonalMenuInTheControlMenu();
 

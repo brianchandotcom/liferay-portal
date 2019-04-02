@@ -33,10 +33,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface PersonalMenuConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "show-the-personal-menu-in-the-control-menu-help",
-		name = "show-the-personal-menu-in-the-control-menu", required = false
+		deflt = "false", description = "show-in-control-menu-help",
+		name = "show-in-control-menu", required = false
 	)
-	public boolean showThePersonalMenuInTheControlMenu();
+	public boolean showInControlMenu();
 
 }

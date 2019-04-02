@@ -20,7 +20,7 @@ dependencies {
 
 mergeLang {
 	setting("../product-navigation-personal-menu-api/src/main/resources/content") {
-		transformKeys = ["show-the-personal-menu-in-the-control-menu": "show-the-personal-menu-in-the-control-menu", "show-the-personal-menu-in-the-control-menu-help": "show-the-personal-menu-in-the-control-menu-help"]
+		transformKeys = ["show-in-control-menu": "show-in-control-menu", "show-in-control-menu-help": "show-in-control-menu-help"]
 	}
 
 	sourceDirs = ["../product-navigation-personal-menu-api/src/main/resources/content"]

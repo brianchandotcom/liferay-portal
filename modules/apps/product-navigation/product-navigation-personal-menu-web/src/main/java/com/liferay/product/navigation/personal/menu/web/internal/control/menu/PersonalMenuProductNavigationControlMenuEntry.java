@@ -59,7 +59,7 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			_personalMenuConfigurationTracker.getCompanyConfiguration(
 				themeDisplay.getCompanyId());
 
-		if (personalMenuConfiguration.showThePersonalMenuInTheControlMenu()) {
+		if (personalMenuConfiguration.showInControlMenu()) {
 			return true;
 		}
 

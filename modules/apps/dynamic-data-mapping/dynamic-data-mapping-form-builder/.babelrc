@@ -1,8 +1,4 @@
 {
-    "ignore": [
-		"**/alloy/js/*.js",
-		"**/alloy/js/**/*.js"
-    ],
     "plugins": [
         ["@babel/plugin-proposal-decorators", {"legacy": true}],
         "@babel/plugin-proposal-class-properties",

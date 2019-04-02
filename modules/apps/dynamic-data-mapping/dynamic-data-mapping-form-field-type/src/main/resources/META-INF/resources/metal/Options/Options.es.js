@@ -10,7 +10,7 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {
 	normalizeFieldName
-} from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/util/fields.es';
+} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
 
 /**
  * Options.

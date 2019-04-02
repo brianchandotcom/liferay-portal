@@ -107,8 +107,8 @@ bs.init(
 		proxy: 'http://localhost:8080/',
 		serveStatic: [
 			{
-				route: `/o/js/resolved-module/${name}@${version}/metal`,
-				dir: 'classes/META-INF/resources/metal'
+				route: `/o/js/resolved-module/${name}@${version}`,
+				dir: 'classes/META-INF/resources'
 			}
 		],
 		watch: false
@@ -142,7 +142,7 @@ bs.init(
 				}
 			);
 			let buildingJS = false;
-			bs.watch('src/main/resources/META-INF/resources/metal/**/*.js').on(
+			bs.watch('src/main/resources/META-INF/resources/**/*.js').on(
 				'change',
 				fileName => {
 					if (buildingJS) {

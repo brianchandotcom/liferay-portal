@@ -27,7 +27,7 @@
 						"sourceType": "module"
 					},
 					"plugins": [
-						"./node_modules/eslint-plugin-react"
+						"eslint-plugin-react"
 					],
 					"rules": {
 						"newline-after-var": 2,

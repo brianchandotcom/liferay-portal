@@ -3,7 +3,7 @@
 import Component from 'metal-jsx';
 import objectHash from 'object-hash';
 import {Config} from 'metal-state';
-import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
+import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/js/util/fetch.es';
 
 class AutoSave extends Component {
 	static PROPS = {

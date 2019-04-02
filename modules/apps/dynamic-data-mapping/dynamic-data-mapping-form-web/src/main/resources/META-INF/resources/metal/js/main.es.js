@@ -4,18 +4,18 @@ import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import core from 'metal';
 import dom from 'metal-dom';
-import FormBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/FormBuilder/FormBuilder.es';
-import LayoutProvider from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/LayoutProvider.es';
+import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
+import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
-import RuleBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/RuleBuilder/RuleBuilder.es';
+import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
 import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/metal/js/util/dom.es';
-import {pageStructure} from 'dynamic-data-mapping-form-builder/metal/js/util/config.es';
-import {sub} from 'dynamic-data-mapping-form-builder/metal/js/util/strings.es';
+import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
+import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
+import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**
  * Form.

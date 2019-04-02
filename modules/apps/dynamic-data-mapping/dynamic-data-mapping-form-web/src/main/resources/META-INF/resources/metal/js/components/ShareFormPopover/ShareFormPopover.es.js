@@ -5,7 +5,7 @@ import getCN from 'classnames';
 import Popover from '../Popover/Popover.es';
 import {Align} from 'metal-position';
 import {EventHandler} from 'metal-events';
-import {selectText} from 'dynamic-data-mapping-form-builder/metal/js/util/dom.es';
+import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 
 class ShareFormPopover extends Component {
 	static PROPS = {

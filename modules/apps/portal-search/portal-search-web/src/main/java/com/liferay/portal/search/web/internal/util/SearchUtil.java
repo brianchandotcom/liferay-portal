@@ -193,7 +193,7 @@ public class SearchUtil {
 				viewContentURL.toString());
 
 			if (Validator.isNull(viewURL)) {
-				return viewURL;
+				return viewContentURL.toString();
 			}
 
 			ThemeDisplay themeDisplay =

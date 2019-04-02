@@ -64,6 +64,8 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 				booleanQuery.getMinimumShouldMatch());
 		}
 
+		boolQueryBuilder.queryName(booleanQuery.getQueryName());
+
 		return boolQueryBuilder;
 	}
 

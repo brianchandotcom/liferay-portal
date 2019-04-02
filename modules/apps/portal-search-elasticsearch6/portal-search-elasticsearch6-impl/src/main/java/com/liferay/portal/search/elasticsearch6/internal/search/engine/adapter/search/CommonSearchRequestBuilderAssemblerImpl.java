@@ -78,14 +78,27 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	protected QueryBuilder getQueryBuilder(
 		BaseSearchRequest baseSearchRequest) {
 
-		Query query = baseSearchRequest.getQuery();
+		QueryBuilder queryBuilder = translateQuery(
+			baseSearchRequest.getQuery());
 
-		if (query != null) {
-			return _queryToQueryBuilderTranslator.translate(
-				baseSearchRequest.getQuery());
+		QueryBuilder legacyQueryBuilder = translateQuery(
+			baseSearchRequest.getQuery71());
+
+		if (queryBuilder == null) {
+			return legacyQueryBuilder;
 		}
 
-		return translateQuery(baseSearchRequest.getQuery71());
+		if (legacyQueryBuilder == null) {
+			return queryBuilder;
+		}
+
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		return boolQueryBuilder.must(
+			queryBuilder
+		).must(
+			legacyQueryBuilder
+		);
 	}
 
 	protected void setAggregations(
@@ -319,6 +332,10 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	protected QueryBuilder translateQuery(
 		com.liferay.portal.kernel.search.Query query) {
 
+		if (query == null) {
+			return null;
+		}
+
 		QueryBuilder queryBuilder =
 			_legacyQueryToQueryBuilderTranslator.translate(query, null);
 
@@ -342,6 +359,14 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		boolQueryBuilder.must(queryBuilder);
 
 		return boolQueryBuilder;
+	}
+
+	protected QueryBuilder translateQuery(Query query) {
+		if (query != null) {
+			return _queryToQueryBuilderTranslator.translate(query);
+		}
+
+		return null;
 	}
 
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;

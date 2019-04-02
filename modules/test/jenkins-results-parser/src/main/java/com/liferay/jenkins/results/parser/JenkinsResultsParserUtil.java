@@ -1414,6 +1414,48 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String getRemoteURL(String localURL) {
+		if (localURL.startsWith("file")) {
+			localURL = fixFileName(localURL);
+		}
+
+		String remoteURL = localURL;
+		String remoteURLQueryString = "";
+
+		int x = localURL.indexOf("?");
+
+		if (x != -1) {
+			remoteURL = localURL.substring(0, x);
+			remoteURLQueryString = localURL.substring(x);
+		}
+
+		Matcher localURLAuthorityMatcher1 = _localURLAuthorityPattern1.matcher(
+			remoteURL);
+		Matcher localURLAuthorityMatcher2 = _localURLAuthorityPattern2.matcher(
+			remoteURL);
+
+		if (localURLAuthorityMatcher1.find()) {
+			String localURLAuthority = localURLAuthorityMatcher1.group(0);
+			String remoteURLAuthority = combine(
+				"https://test.liferay.com/", localURLAuthorityMatcher1.group(2),
+				"/");
+
+			remoteURL = remoteURL.replaceAll(
+				localURLAuthority, remoteURLAuthority);
+		}
+		else if (localURLAuthorityMatcher2.find()) {
+			String localURLAuthority = localURLAuthorityMatcher2.group(0);
+			String remoteURLAuthority = combine(
+				"https://", localURLAuthorityMatcher2.group(1),
+				".liferay.com/");
+
+			remoteURL = remoteURL.replaceAll(
+				localURLAuthority, remoteURLAuthority);
+		}
+
+		return remoteURL + remoteURLQueryString;
+	}
+
 	public static String getResourceFileContent(String resourceName)
 		throws IOException {
 
@@ -2882,6 +2924,10 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
 	private static Hashtable<?, ?> _jenkinsProperties;
+	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
+		"http://(test-[0-9]+)/([0-9]+)/");
+	private static final Pattern _localURLAuthorityPattern2 = Pattern.compile(
+		"http://(test-[0-9]+-[0-9]+)/");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
 	private static final Set<String> _redactTokens = new HashSet<>();

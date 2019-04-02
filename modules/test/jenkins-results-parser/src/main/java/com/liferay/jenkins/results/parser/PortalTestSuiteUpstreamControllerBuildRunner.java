@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -29,11 +31,15 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
+		if (_previousBuildHasCurrentSHA()) {
+			return;
+		}
+
 		if (_previousBuildHasExistingInvocation()) {
 			return;
 		}
 
-		if (_previousBuildHasCurrentSHA()) {
+		if (_previousBuildHasRunningInvocation()) {
 			return;
 		}
 
@@ -195,6 +201,43 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		return false;
 	}
+
+	private boolean _previousBuildHasRunningInvocation() {
+		for (JSONObject previousBuildJSONObject :
+				getPreviousBuildJSONObjects()) {
+
+			String description = previousBuildJSONObject.optString(
+				"description", "");
+
+			Matcher matcher = _pattern.matcher(description);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String buildURL = matcher.group("buildURL");
+
+			try {
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						buildURL + "/api/json?tree=result"));
+
+				Object result = jsonObject.get("result");
+
+				if (result.equals(JSONObject.NULL)) {
+					return true;
+				}
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"<a href=\"(?<buildURL>[^\"]+)\">Build URL</a>");
 
 	private String _invocationURL;
 

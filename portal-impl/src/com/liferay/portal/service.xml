@@ -604,8 +604,6 @@
 		<!-- Other fields -->
 
 		<column name="parentPlid" type="long" />
-		<column name="leftPlid" type="long" />
-		<column name="rightPlid" type="long" />
 		<column name="privateLayout" type="boolean" />
 		<column accessor="true" name="layoutId" type="long" />
 		<column name="parentLayoutId" type="long" />
@@ -703,12 +701,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
-		</finder>
-		<finder name="G_P_GtLP_LtRP" return-type="Collection" where="system = [$FALSE$]">
-			<finder-column name="groupId" />
-			<finder-column comparator="&gt;" name="leftPlid" />
-			<finder-column comparator="&lt;" name="rightPlid" />
-			<finder-column name="privateLayout" />
 		</finder>
 		<finder name="G_P_P_LtP" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />

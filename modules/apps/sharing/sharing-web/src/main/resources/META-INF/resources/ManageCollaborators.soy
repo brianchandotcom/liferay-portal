@@ -139,8 +139,8 @@
 				<strong>{$collaborator.name}</strong>
 			</div>
 
-			{if $collaborator.sharingEntryExpirationDate}
-				<div class="autofit-col">
+			<div class="autofit-col">
+				{if $collaborator.sharingEntryExpirationDate}
 					{let $untilMsg kind="text"}
 						{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
 					{/let}
@@ -152,11 +152,13 @@
 						{param spritemap: $spritemap /}
 						{param symbol: 'time' /}
 					{/call}
-				</div>
-			{/if}
+				{else}
+					<span class="lexicon-icon"></span>
+				{/if}
+			</div>
 
-			{if $collaborator.shareable}
-				<div class="autofit-col">
+			<div class="autofit-col">
+				{if $collaborator.shareable}
 					{let $tooltipMessage kind="text"}
 						{msg desc=""}can-share-and-manage-permissions{/msg}
 					{/let}
@@ -168,8 +170,10 @@
 						{param spritemap: $spritemap /}
 						{param symbol: 'users' /}
 					{/call}
-				</div>
-			{/if}
+				{else}
+					<span class="lexicon-icon"></span>
+				{/if}
+			</div>
 
 			<div class="autofit-col">
 				{call ClaySelect.render}

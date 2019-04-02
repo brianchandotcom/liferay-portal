@@ -174,6 +174,11 @@ public class OAuth2Manager {
 			_getGoogleAuthorizationCodeFlow(long companyId)
 		throws PortalException {
 
+		if (!isConfigured(companyId)) {
+			throw new PortalException(
+				"Google Drive Opener is not properly configured");
+		}
+
 		try {
 			DLOpenerGoogleDriveCompanyConfiguration
 				dlOpenerGoogleDriveCompanyConfiguration =

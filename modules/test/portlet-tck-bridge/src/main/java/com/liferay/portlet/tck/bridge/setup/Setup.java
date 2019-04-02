@@ -339,10 +339,6 @@ public class Setup {
 			_log.debug(
 				"setupPage: LayoutLocalServiceUtil.updateLookAndFeel ...");
 		}
-
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			groupId, true, "portlettck_WAR_portlettcktheme",
-			portalPageLayout.getColorSchemeId(), null);
 	}
 
 	/**

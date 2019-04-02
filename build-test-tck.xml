@@ -88,8 +88,6 @@
 
 		<update-gradle-properties />
 
-		<gradle-execute dir="modules/test/portlet-tck-theme" task="deploy" />
-
 		<propertycopy
 			from="app.server.${app.server.type}.bin.dir"
 			name="app.server.bin.dir" override="true"

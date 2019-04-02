@@ -45,7 +45,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			{
 				dialog: {
 					after: {
-						destroy: function (event) {
+						destroy: function(event) {
 							window.location.reload();
 						}
 					},

@@ -60,6 +60,8 @@ public interface Build {
 
 	public Long getDelayTime();
 
+	public int getDepth();
+
 	public String getDisplayName();
 
 	public int getDownstreamBuildCount(String status);

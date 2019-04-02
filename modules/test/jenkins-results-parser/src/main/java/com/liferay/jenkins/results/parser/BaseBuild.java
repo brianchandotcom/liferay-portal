@@ -405,6 +405,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getDepth() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild == null) {
+			return 0;
+		}
+
+		return parentBuild.getDepth() + 1;
+	}
+
+	@Override
 	public String getDisplayName() {
 		StringBuilder sb = new StringBuilder();
 

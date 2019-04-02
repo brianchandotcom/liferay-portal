@@ -111,22 +111,14 @@ public class SPICommentResource<T> {
 		return _entityModel;
 	}
 
-	public T postCommentComment(Long parentCommentId, String text)
-		throws Exception {
-
-		Comment parentComment = _commentManager.fetchComment(parentCommentId);
-
-		if (parentComment == null) {
-			throw new NotFoundException();
-		}
-
+	public T postCommentComment(Comment comment, String text) throws Exception {
 		return _postComment(
 			() -> _commentManager.addComment(
-				_getUserId(), _className, parentComment.getClassPK(),
-				StringPool.BLANK, parentCommentId, StringPool.BLANK,
+				_getUserId(), _className, comment.getClassPK(),
+				StringPool.BLANK, comment.getCommentId(), StringPool.BLANK,
 				StringBundler.concat("<p>", text, "</p>"),
 				_createServiceContextFunction()),
-			parentComment.getGroupId(), parentComment.getClassPK());
+			comment.getGroupId(), comment.getClassPK());
 	}
 
 	public T postEntityComment(long groupId, long classPK, String text)
@@ -170,8 +162,8 @@ public class SPICommentResource<T> {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
-			_company.getCompanyId(), comment.getGroupId(), _className,
-			comment.getClassPK());
+			_company.getCompanyId(), comment.getGroupId(),
+			comment.getClassName(), comment.getClassPK());
 	}
 
 	private Function<String, ServiceContext> _createServiceContextFunction() {

@@ -116,10 +116,10 @@ public class CommentResourceImpl
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
-		DLFileEntry fileEntry = _dlFileEntryService.getFileEntry(documentId);
+		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
 		return spiCommentResource.postEntityComment(
-			fileEntry.getGroupId(), documentId, comment.getText());
+			dlFileEntry.getGroupId(), documentId, comment.getText());
 	}
 
 	@Override

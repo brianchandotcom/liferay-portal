@@ -11367,10 +11367,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.7.1:
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.1.6.tgz#564f7df5376ed5470626c1d077cfe45042e09604"
-  integrity sha512-NOOyZc9GWPp6/8vyNt3kb7vwZvMhTa6sDDNfYYH9W7M9wTliN0IP6+whY8S6mRVREhnNEiTVIjyLuWsTK2urgQ==
+liferay-npm-bundler-preset-liferay-dev@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.1.7.tgz#2d00ae283441113077025b40ba626ad3673b2017"
+  integrity sha512-AtcI6ucb89NczU0AG1Z9SejMYMHztkoG6iOizRsU2RR22kX6tEnmAu3KChrAof97Jjttj/Hec3c5sojQc2/V+g==
   dependencies:
     babel-preset-liferay-standard "2.7.1"
     liferay-npm-bundler-plugin-exclude-imports "2.7.1"
@@ -11414,10 +11414,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.4.10:
-  version "1.4.10"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.4.10.tgz#4431f293960f870947d464694dddc5fa8b669685"
-  integrity sha512-4+n2rPBAtMeEXQW1Ceja1I8kjD4RyWy0ZPLP5/0SOlZDIE7znYQdByNnxI2Q5SFQl6ACQTmwLR1yVZ/lAQIZWQ==
+liferay-npm-scripts@1.4.11:
+  version "1.4.11"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.4.11.tgz#716c8287d7d73f6e14670ae30ed81c6fc336439b"
+  integrity sha512-A7jN9HEhYPg4NcAkipaEjHtVkBMZGfUbTFmZIV62rSNbWl4kgRQHdo0pObhf5W3mVyjhvw9KMw5F5cxnsejMYQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/preset-env" "^7.4.2"
@@ -11431,7 +11431,7 @@ liferay-npm-scripts@1.4.10:
     liferay-jest-junit-reporter "1.0.1"
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
-    liferay-npm-bundler-preset-liferay-dev "1.1.6"
+    liferay-npm-bundler-preset-liferay-dev "1.1.7"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
     rimraf "^2.6.2"

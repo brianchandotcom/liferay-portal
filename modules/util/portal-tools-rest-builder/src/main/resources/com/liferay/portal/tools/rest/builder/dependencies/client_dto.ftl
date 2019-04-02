@@ -2,6 +2,8 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;

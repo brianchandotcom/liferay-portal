@@ -6,8 +6,11 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 

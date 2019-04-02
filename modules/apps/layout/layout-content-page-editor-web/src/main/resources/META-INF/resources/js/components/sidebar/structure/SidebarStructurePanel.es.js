@@ -6,9 +6,9 @@ import '../fragments/FragmentsEditorSidebarCard.es';
 import {REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION} from '../../../actions/actions.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/FragmentEntryLinkContent.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
+import {getItemPath, getSectionFragmentEntryLinkIds} from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarStructurePanel.soy';
 
 /**
@@ -112,19 +112,37 @@ class SidebarStructurePanel extends Component {
 	 * @static
 	 */
 	static _getRowTree(state, row) {
+		let children = row.columns.map(
+			column => SidebarStructurePanel._getColumnTree(
+				state,
+				column
+			)
+		);
+		let elementId = row.rowId;
+		let elementType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
+		let label = Liferay.Language.get('section');
+
+		if (row.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+			const [fragmentEntryLinkId] = getSectionFragmentEntryLinkIds(row);
+
+			const fragmentEntryLink = state.fragmentEntryLinks[
+				fragmentEntryLinkId
+			];
+
+			children = [];
+			elementId = fragmentEntryLinkId;
+			elementType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+			label = fragmentEntryLink.name;
+		}
+
 		return SidebarStructurePanel._getTreeNode(
 			state,
 			{
-				children: row.columns.map(
-					column => SidebarStructurePanel._getColumnTree(
-						state,
-						column
-					)
-				),
-				elementId: row.rowId,
-				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
+				children,
+				elementId,
+				elementType,
 				key: `${FRAGMENTS_EDITOR_ITEM_TYPES.section}-${row.rowId}`,
-				label: Liferay.Language.get('section'),
+				label,
 				removable: true
 			}
 		);

@@ -50,19 +50,14 @@ public abstract class BaseTemplateResourceCache
 		TemplateResource templateResource = _singleVMPortalCache.get(
 			templateId);
 
-		if (templateResource == _DUMMY_TEMPLATE_RESOURCE) {
-			return null;
-		}
-
 		if (templateResource == null) {
 			templateResource = _multiVMPortalCache.get(templateId);
 		}
 
-		if (templateResource == null) {
-			return null;
-		}
+		if ((templateResource != null) &&
+			(templateResource != DUMMY_TEMPLATE_RESOURCE) &&
+			(_modificationCheckInterval > 0)) {
 
-		if (_modificationCheckInterval > 0) {
 			long expireTime =
 				templateResource.getLastModified() + _modificationCheckInterval;
 
@@ -95,7 +90,7 @@ public abstract class BaseTemplateResourceCache
 		}
 
 		if (templateResource == null) {
-			_singleVMPortalCache.put(templateId, _DUMMY_TEMPLATE_RESOURCE);
+			_singleVMPortalCache.put(templateId, DUMMY_TEMPLATE_RESOURCE);
 		}
 		else if (templateResource instanceof URLTemplateResource) {
 			_singleVMPortalCache.put(
@@ -172,7 +167,7 @@ public abstract class BaseTemplateResourceCache
 		}
 	}
 
-	private static final TemplateResource _DUMMY_TEMPLATE_RESOURCE =
+	protected static final TemplateResource DUMMY_TEMPLATE_RESOURCE =
 		ProxyFactory.newDummyInstance(TemplateResource.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(

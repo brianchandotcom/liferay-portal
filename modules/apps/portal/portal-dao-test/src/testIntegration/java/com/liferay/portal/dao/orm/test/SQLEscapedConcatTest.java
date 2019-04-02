@@ -18,11 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,11 +50,11 @@ public class SQLEscapedConcatTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		String jdbcDefaultURL = PropsValues.JDBC_DEFAULT_URL;
+		DB db = DBManagerUtil.getDB();
 
 		Assume.assumeTrue(
-			jdbcDefaultURL.contains("mysql") ||
-			jdbcDefaultURL.contains("mariadb"));
+			(db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB));
 	}
 
 	@BeforeClass

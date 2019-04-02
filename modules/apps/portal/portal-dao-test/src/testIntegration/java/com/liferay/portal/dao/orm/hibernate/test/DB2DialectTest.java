@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -33,7 +34,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,14 +50,17 @@ public class DB2DialectTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			TransactionalTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	public static void assume() {
 		DB db = DBManagerUtil.getDB();
 
 		Assume.assumeTrue(db.getDBType() == DBType.DB2);
+	}
 
+	@BeforeClass
+	public static void setUpClass() {
 		_sessionFactory = ReflectionTestUtil.getFieldValue(
 			_userPersistence, "_sessionFactory");
 	}
@@ -112,9 +116,9 @@ public class DB2DialectTest {
 		"SELECT tabname FROM syscat.tables WHERE tabschema = 'SYSIBM' ORDER " +
 			"BY tabname";
 
-	private SessionFactory _sessionFactory;
+	private static SessionFactory _sessionFactory;
 
 	@Inject
-	private UserPersistence _userPersistence;
+	private static UserPersistence _userPersistence;
 
 }

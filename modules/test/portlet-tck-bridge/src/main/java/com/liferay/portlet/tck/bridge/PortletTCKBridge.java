@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.tck.bridge;
 
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,10 +46,6 @@ public class PortletTCKBridge {
 	@Modified
 	protected void activate(ComponentContext componentContext) {
 		deactivate();
-
-		if (!_log.isInfoEnabled()) {
-			Log4JUtil.setLevel("com.liferay.portlet.tck.bridge", "INFO", true);
-		}
 
 		try {
 

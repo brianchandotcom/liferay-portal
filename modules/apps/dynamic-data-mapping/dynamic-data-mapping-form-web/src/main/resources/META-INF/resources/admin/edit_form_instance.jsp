@@ -141,8 +141,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
 
 <aui:script>
-	var rawModuleName = '<%= mainRequire %>'.split(' ')[0];
-
 	Liferay.namespace('DDM').FormSettings = {
 		autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
 		autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
@@ -173,7 +171,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		},
 		start: function(initialPages) {
 			Liferay.Loader.require(
-				rawModuleName,
+				'<%= mainRequire %>',
 				function(packageName) {
 					var context = <%= serializedFormBuilderContext %>;
 

@@ -623,8 +623,10 @@ class Form extends Component {
 				</div>
 				{published && (
 					<ShareFormPopover
+						alignElement={document.querySelector('.share-form-icon')}
 						spritemap={spritemap}
 						url={this._createFormURL()}
+						visible={false}
 					/>
 				)}
 			</div>

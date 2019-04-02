@@ -1,7 +1,0 @@
-assemble {
-	dependsOn npmRunBuild
-}
-
-gulpBuild {
-	enabled = false
-}

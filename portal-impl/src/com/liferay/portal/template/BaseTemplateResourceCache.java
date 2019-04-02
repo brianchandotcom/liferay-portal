@@ -101,12 +101,14 @@ public abstract class BaseTemplateResourceCache
 			_singleVMPortalCache.put(
 				templateId, new CacheTemplateResource(templateResource));
 		}
-		else if (!(templateResource instanceof CacheTemplateResource)) {
-			if (!(templateResource instanceof StringTemplateResource)) {
-				templateResource = new CacheTemplateResource(templateResource);
-			}
+		else if (templateResource instanceof CacheTemplateResource ||
+				 templateResource instanceof StringTemplateResource) {
 
 			_multiVMPortalCache.put(templateId, templateResource);
+		}
+		else {
+			_multiVMPortalCache.put(
+				templateId, new CacheTemplateResource(templateResource));
 		}
 	}
 

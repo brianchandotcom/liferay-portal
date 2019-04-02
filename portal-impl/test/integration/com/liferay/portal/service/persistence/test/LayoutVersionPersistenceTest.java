@@ -137,10 +137,6 @@ public class LayoutVersionPersistenceTest {
 
 		newLayoutVersion.setParentPlid(RandomTestUtil.nextLong());
 
-		newLayoutVersion.setLeftPlid(RandomTestUtil.nextLong());
-
-		newLayoutVersion.setRightPlid(RandomTestUtil.nextLong());
-
 		newLayoutVersion.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		newLayoutVersion.setLayoutId(RandomTestUtil.nextLong());
@@ -226,12 +222,6 @@ public class LayoutVersionPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutVersion.getParentPlid(),
 			newLayoutVersion.getParentPlid());
-		Assert.assertEquals(
-			existingLayoutVersion.getLeftPlid(),
-			newLayoutVersion.getLeftPlid());
-		Assert.assertEquals(
-			existingLayoutVersion.getRightPlid(),
-			newLayoutVersion.getRightPlid());
 		Assert.assertEquals(
 			existingLayoutVersion.isPrivateLayout(),
 			newLayoutVersion.isPrivateLayout());
@@ -678,27 +668,6 @@ public class LayoutVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_GtLP_LtRP() throws Exception {
-		_persistence.countByG_P_GtLP_LtRP(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_P_GtLP_LtRP(
-			0L, 0L, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByG_P_GtLP_LtRP_Version() throws Exception {
-		_persistence.countByG_P_GtLP_LtRP_Version(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_P_GtLP_LtRP_Version(
-			0L, 0L, 0L, RandomTestUtil.randomBoolean(), 0);
-	}
-
-	@Test
 	public void testCountByG_P_P_LtP() throws Exception {
 		_persistence.countByG_P_P_LtP(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -747,13 +716,13 @@ public class LayoutVersionPersistenceTest {
 			"LayoutVersion", "layoutVersionId", true, "version", true, "uuid",
 			true, "plid", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"parentPlid", true, "leftPlid", true, "rightPlid", true,
-			"privateLayout", true, "layoutId", true, "parentLayoutId", true,
-			"classNameId", true, "classPK", true, "name", true, "title", true,
-			"description", true, "keywords", true, "robots", true, "type", true,
-			"hidden", true, "system", true, "friendlyURL", true, "iconImageId",
-			true, "themeId", true, "colorSchemeId", true, "priority", true,
-			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"parentPlid", true, "privateLayout", true, "layoutId", true,
+			"parentLayoutId", true, "classNameId", true, "classPK", true,
+			"name", true, "title", true, "description", true, "keywords", true,
+			"robots", true, "type", true, "hidden", true, "system", true,
+			"friendlyURL", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "priority", true, "layoutPrototypeUuid",
+			true, "layoutPrototypeLinkEnabled", true,
 			"sourcePrototypeLayoutUuid", true, "publishDate", true,
 			"lastPublishDate", true);
 	}
@@ -1048,10 +1017,6 @@ public class LayoutVersionPersistenceTest {
 		layoutVersion.setModifiedDate(RandomTestUtil.nextDate());
 
 		layoutVersion.setParentPlid(RandomTestUtil.nextLong());
-
-		layoutVersion.setLeftPlid(RandomTestUtil.nextLong());
-
-		layoutVersion.setRightPlid(RandomTestUtil.nextLong());
 
 		layoutVersion.setPrivateLayout(RandomTestUtil.randomBoolean());
 

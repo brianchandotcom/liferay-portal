@@ -55,8 +55,6 @@ public class LayoutVersionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentPlid", getParentPlid());
-		attributes.put("leftPlid", getLeftPlid());
-		attributes.put("rightPlid", getRightPlid());
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
@@ -154,18 +152,6 @@ public class LayoutVersionWrapper
 
 		if (parentPlid != null) {
 			setParentPlid(parentPlid);
-		}
-
-		Long leftPlid = (Long)attributes.get("leftPlid");
-
-		if (leftPlid != null) {
-			setLeftPlid(leftPlid);
-		}
-
-		Long rightPlid = (Long)attributes.get("rightPlid");
-
-		if (rightPlid != null) {
-			setRightPlid(rightPlid);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -645,16 +631,6 @@ public class LayoutVersionWrapper
 	}
 
 	/**
-	 * Returns the left plid of this layout version.
-	 *
-	 * @return the left plid of this layout version
-	 */
-	@Override
-	public long getLeftPlid() {
-		return model.getLeftPlid();
-	}
-
-	/**
 	 * Returns the modified date of this layout version.
 	 *
 	 * @return the modified date of this layout version
@@ -808,16 +784,6 @@ public class LayoutVersionWrapper
 	@Override
 	public Date getPublishDate() {
 		return model.getPublishDate();
-	}
-
-	/**
-	 * Returns the right plid of this layout version.
-	 *
-	 * @return the right plid of this layout version
-	 */
-	@Override
-	public long getRightPlid() {
-		return model.getRightPlid();
 	}
 
 	/**
@@ -1417,16 +1383,6 @@ public class LayoutVersionWrapper
 	}
 
 	/**
-	 * Sets the left plid of this layout version.
-	 *
-	 * @param leftPlid the left plid of this layout version
-	 */
-	@Override
-	public void setLeftPlid(long leftPlid) {
-		model.setLeftPlid(leftPlid);
-	}
-
-	/**
 	 * Sets the modified date of this layout version.
 	 *
 	 * @param modifiedDate the modified date of this layout version
@@ -1567,16 +1523,6 @@ public class LayoutVersionWrapper
 	@Override
 	public void setPublishDate(Date publishDate) {
 		model.setPublishDate(publishDate);
-	}
-
-	/**
-	 * Sets the right plid of this layout version.
-	 *
-	 * @param rightPlid the right plid of this layout version
-	 */
-	@Override
-	public void setRightPlid(long rightPlid) {
-		model.setRightPlid(rightPlid);
 	}
 
 	/**

@@ -88,7 +88,6 @@ public class LayoutModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"parentPlid", Types.BIGINT},
-		{"leftPlid", Types.BIGINT}, {"rightPlid", Types.BIGINT},
 		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
 		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
@@ -121,8 +120,6 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("parentPlid", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("leftPlid", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("rightPlid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentLayoutId", Types.BIGINT);
@@ -151,7 +148,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
+		"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -202,23 +199,19 @@ public class LayoutModelImpl
 
 	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 512L;
 
-	public static final long LEFTPLID_COLUMN_BITMASK = 1024L;
+	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 1024L;
 
-	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 2048L;
+	public static final long PARENTPLID_COLUMN_BITMASK = 2048L;
 
-	public static final long PARENTPLID_COLUMN_BITMASK = 4096L;
+	public static final long PRIORITY_COLUMN_BITMASK = 4096L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 8192L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8192L;
 
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 16384L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 16384L;
 
-	public static final long RIGHTPLID_COLUMN_BITMASK = 32768L;
+	public static final long TYPE_COLUMN_BITMASK = 32768L;
 
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 65536L;
-
-	public static final long TYPE_COLUMN_BITMASK = 131072L;
-
-	public static final long UUID_COLUMN_BITMASK = 262144L;
+	public static final long UUID_COLUMN_BITMASK = 65536L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -244,8 +237,6 @@ public class LayoutModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setParentPlid(soapModel.getParentPlid());
-		model.setLeftPlid(soapModel.getLeftPlid());
-		model.setRightPlid(soapModel.getRightPlid());
 		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setParentLayoutId(soapModel.getParentLayoutId());
@@ -429,12 +420,6 @@ public class LayoutModelImpl
 		attributeGetterFunctions.put("parentPlid", Layout::getParentPlid);
 		attributeSetterBiConsumers.put(
 			"parentPlid", (BiConsumer<Layout, Long>)Layout::setParentPlid);
-		attributeGetterFunctions.put("leftPlid", Layout::getLeftPlid);
-		attributeSetterBiConsumers.put(
-			"leftPlid", (BiConsumer<Layout, Long>)Layout::setLeftPlid);
-		attributeGetterFunctions.put("rightPlid", Layout::getRightPlid);
-		attributeSetterBiConsumers.put(
-			"rightPlid", (BiConsumer<Layout, Long>)Layout::setRightPlid);
 		attributeGetterFunctions.put("privateLayout", Layout::getPrivateLayout);
 		attributeSetterBiConsumers.put(
 			"privateLayout",
@@ -566,8 +551,6 @@ public class LayoutModelImpl
 		layoutVersion.setCreateDate(getCreateDate());
 		layoutVersion.setModifiedDate(getModifiedDate());
 		layoutVersion.setParentPlid(getParentPlid());
-		layoutVersion.setLeftPlid(getLeftPlid());
-		layoutVersion.setRightPlid(getRightPlid());
 		layoutVersion.setPrivateLayout(getPrivateLayout());
 		layoutVersion.setLayoutId(getLayoutId());
 		layoutVersion.setParentLayoutId(getParentLayoutId());
@@ -813,52 +796,6 @@ public class LayoutModelImpl
 
 	public long getOriginalParentPlid() {
 		return _originalParentPlid;
-	}
-
-	@JSON
-	@Override
-	public long getLeftPlid() {
-		return _leftPlid;
-	}
-
-	@Override
-	public void setLeftPlid(long leftPlid) {
-		_columnBitmask |= LEFTPLID_COLUMN_BITMASK;
-
-		if (!_setOriginalLeftPlid) {
-			_setOriginalLeftPlid = true;
-
-			_originalLeftPlid = _leftPlid;
-		}
-
-		_leftPlid = leftPlid;
-	}
-
-	public long getOriginalLeftPlid() {
-		return _originalLeftPlid;
-	}
-
-	@JSON
-	@Override
-	public long getRightPlid() {
-		return _rightPlid;
-	}
-
-	@Override
-	public void setRightPlid(long rightPlid) {
-		_columnBitmask |= RIGHTPLID_COLUMN_BITMASK;
-
-		if (!_setOriginalRightPlid) {
-			_setOriginalRightPlid = true;
-
-			_originalRightPlid = _rightPlid;
-		}
-
-		_rightPlid = rightPlid;
-	}
-
-	public long getOriginalRightPlid() {
-		return _originalRightPlid;
 	}
 
 	@JSON
@@ -1821,26 +1758,6 @@ public class LayoutModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public long getNestedSetsTreeNodeLeft() {
-		return _leftPlid;
-	}
-
-	public long getNestedSetsTreeNodeRight() {
-		return _rightPlid;
-	}
-
-	public long getNestedSetsTreeNodeScopeId() {
-		return _groupId;
-	}
-
-	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
-		_leftPlid = nestedSetsTreeNodeLeft;
-	}
-
-	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
-		_rightPlid = nestedSetsTreeNodeRight;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -2040,8 +1957,6 @@ public class LayoutModelImpl
 		layoutImpl.setCreateDate(getCreateDate());
 		layoutImpl.setModifiedDate(getModifiedDate());
 		layoutImpl.setParentPlid(getParentPlid());
-		layoutImpl.setLeftPlid(getLeftPlid());
-		layoutImpl.setRightPlid(getRightPlid());
 		layoutImpl.setPrivateLayout(isPrivateLayout());
 		layoutImpl.setLayoutId(getLayoutId());
 		layoutImpl.setParentLayoutId(getParentLayoutId());
@@ -2174,14 +2089,6 @@ public class LayoutModelImpl
 
 		layoutModelImpl._setOriginalParentPlid = false;
 
-		layoutModelImpl._originalLeftPlid = layoutModelImpl._leftPlid;
-
-		layoutModelImpl._setOriginalLeftPlid = false;
-
-		layoutModelImpl._originalRightPlid = layoutModelImpl._rightPlid;
-
-		layoutModelImpl._setOriginalRightPlid = false;
-
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -2277,10 +2184,6 @@ public class LayoutModelImpl
 		}
 
 		layoutCacheModel.parentPlid = getParentPlid();
-
-		layoutCacheModel.leftPlid = getLeftPlid();
-
-		layoutCacheModel.rightPlid = getRightPlid();
 
 		layoutCacheModel.privateLayout = isPrivateLayout();
 
@@ -2525,12 +2428,6 @@ public class LayoutModelImpl
 	private long _parentPlid;
 	private long _originalParentPlid;
 	private boolean _setOriginalParentPlid;
-	private long _leftPlid;
-	private long _originalLeftPlid;
-	private boolean _setOriginalLeftPlid;
-	private long _rightPlid;
-	private long _originalRightPlid;
-	private boolean _setOriginalRightPlid;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

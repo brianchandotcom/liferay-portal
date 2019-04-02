@@ -45,8 +45,6 @@ public class LayoutVersionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setParentPlid(model.getParentPlid());
-		soapModel.setLeftPlid(model.getLeftPlid());
-		soapModel.setRightPlid(model.getRightPlid());
 		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setParentLayoutId(model.getParentLayoutId());
@@ -213,22 +211,6 @@ public class LayoutVersionSoap implements Serializable {
 
 	public void setParentPlid(long parentPlid) {
 		_parentPlid = parentPlid;
-	}
-
-	public long getLeftPlid() {
-		return _leftPlid;
-	}
-
-	public void setLeftPlid(long leftPlid) {
-		_leftPlid = leftPlid;
-	}
-
-	public long getRightPlid() {
-		return _rightPlid;
-	}
-
-	public void setRightPlid(long rightPlid) {
-		_rightPlid = rightPlid;
 	}
 
 	public boolean getPrivateLayout() {
@@ -460,8 +442,6 @@ public class LayoutVersionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentPlid;
-	private long _leftPlid;
-	private long _rightPlid;
 	private boolean _privateLayout;
 	private long _layoutId;
 	private long _parentLayoutId;

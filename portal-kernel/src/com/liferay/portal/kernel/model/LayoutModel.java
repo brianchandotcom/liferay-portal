@@ -253,34 +253,6 @@ public interface LayoutModel
 	public void setParentPlid(long parentPlid);
 
 	/**
-	 * Returns the left plid of this layout.
-	 *
-	 * @return the left plid of this layout
-	 */
-	public long getLeftPlid();
-
-	/**
-	 * Sets the left plid of this layout.
-	 *
-	 * @param leftPlid the left plid of this layout
-	 */
-	public void setLeftPlid(long leftPlid);
-
-	/**
-	 * Returns the right plid of this layout.
-	 *
-	 * @return the right plid of this layout
-	 */
-	public long getRightPlid();
-
-	/**
-	 * Sets the right plid of this layout.
-	 *
-	 * @param rightPlid the right plid of this layout
-	 */
-	public void setRightPlid(long rightPlid);
-
-	/**
 	 * Returns the private layout of this layout.
 	 *
 	 * @return the private layout of this layout

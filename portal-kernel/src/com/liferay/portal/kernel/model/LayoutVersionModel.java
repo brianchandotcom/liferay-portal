@@ -249,34 +249,6 @@ public interface LayoutVersionModel
 	public void setParentPlid(long parentPlid);
 
 	/**
-	 * Returns the left plid of this layout version.
-	 *
-	 * @return the left plid of this layout version
-	 */
-	public long getLeftPlid();
-
-	/**
-	 * Sets the left plid of this layout version.
-	 *
-	 * @param leftPlid the left plid of this layout version
-	 */
-	public void setLeftPlid(long leftPlid);
-
-	/**
-	 * Returns the right plid of this layout version.
-	 *
-	 * @return the right plid of this layout version
-	 */
-	public long getRightPlid();
-
-	/**
-	 * Sets the right plid of this layout version.
-	 *
-	 * @param rightPlid the right plid of this layout version
-	 */
-	public void setRightPlid(long rightPlid);
-
-	/**
 	 * Returns the private layout of this layout version.
 	 *
 	 * @return the private layout of this layout version

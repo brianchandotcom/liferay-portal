@@ -92,8 +92,8 @@
 		</antcall>
 
 		<echo
-			file="${liferay.home}/osgi/configs/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.cfg"
-		>tckDeployFilesDir=${tck.home}/deploy/target/deploy-files</echo>
+			file="${liferay.home}/osgi/configs/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.config"
+		>tckDeployFilesDir="${tck.home}/deploy/target/deploy-files"</echo>
 
 		<gradle-execute dir="modules/test/portlet-tck-bridge" task="deploy" />
 		<wait-for-app-server-log-message log.message="Portlet TCK Bridge is ready" />

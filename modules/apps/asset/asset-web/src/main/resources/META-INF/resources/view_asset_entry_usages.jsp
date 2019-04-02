@@ -150,23 +150,27 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 						modelVar="assetEntryUsage"
 					>
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand table-cell-minw-200 table-title"
 							name="name"
 							value="<%= assetEntryUsagesDisplayContext.getAssetEntryUsageName(assetEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="type"
 							translate="<%= true %>"
 							value="<%= assetEntryUsagesDisplayContext.getAssetEntryUsageTypeLabel(assetEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
 							name="where"
 							translate="<%= true %>"
 							value="<%= assetEntryUsagesDisplayContext.getAssetEntryUsageWhereLabel(assetEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="modified-date"
 							value="<%= assetEntryUsage.getModifiedDate() %>"
 						/>
@@ -176,7 +180,9 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 						%>
 
 						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-							<liferay-ui:search-container-column-text>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-column-text-center"
+							>
 								<clay:dropdown-actions
 									dropdownItems="<%= dropdownItems %>"
 								/>

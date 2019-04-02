@@ -192,15 +192,17 @@ class ManageCollaborators extends PortletBase {
 		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
+			const sharingEntryExpirationDate = enabled ? this._tomorrowDate : '';
 			collaborator.enabledExpirationDate = enabled;
 
-			if (enabled) {
-				collaborator.sharingEntryExpirationDate = this._tomorrowDate;
-			}
-			else {
-				collaborator.sharingEntryExpirationDate = '';
+			if (!enabled) {
 				collaborator.sharingEntryExpirationDateError = false;
+				this._findExpirationDateError();
 			}
+
+			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+
+			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
 
 			this.collaborators = this.collaborators;
 		}

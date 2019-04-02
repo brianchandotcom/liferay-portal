@@ -58,6 +58,9 @@ public class TaxonomyCategoryBulkSelection {
 		try {
 			documentBulkSelection = documentBulkSelectionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -83,6 +86,9 @@ public class TaxonomyCategoryBulkSelection {
 		try {
 			taxonomyCategoryIdsToAdd =
 				taxonomyCategoryIdsToAddUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -111,6 +117,9 @@ public class TaxonomyCategoryBulkSelection {
 		try {
 			taxonomyCategoryIdsToRemove =
 				taxonomyCategoryIdsToRemoveUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

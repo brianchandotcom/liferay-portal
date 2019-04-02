@@ -55,6 +55,9 @@ public class GenericError {
 		try {
 			message = messageUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

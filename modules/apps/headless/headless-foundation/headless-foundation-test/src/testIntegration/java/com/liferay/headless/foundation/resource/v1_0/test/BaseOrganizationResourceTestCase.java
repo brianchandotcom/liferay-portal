@@ -232,7 +232,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/my-user-accounts/{user-account-id}/organizations",
+					"/my-user-accounts/{userAccountId}/organizations",
 					userAccountId);
 
 		location = HttpUtil.addParameter(
@@ -263,7 +263,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/my-user-accounts/{user-account-id}/organizations",
+					"/my-user-accounts/{userAccountId}/organizations",
 					userAccountId);
 
 		location = HttpUtil.addParameter(
@@ -577,7 +577,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/organizations/{organization-id}", organizationId);
+				_toPath("/organizations/{organizationId}", organizationId);
 
 		options.setLocation(location);
 
@@ -604,7 +604,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/organizations/{organization-id}", organizationId);
+				_toPath("/organizations/{organizationId}", organizationId);
 
 		options.setLocation(location);
 
@@ -914,7 +914,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/organizations",
+					"/organizations/{organizationId}/organizations",
 					organizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -950,7 +950,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/organizations",
+					"/organizations/{organizationId}/organizations",
 					organizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1091,7 +1091,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/organizations",
+					"/user-accounts/{userAccountId}/organizations",
 					userAccountId);
 
 		location = HttpUtil.addParameter(
@@ -1122,7 +1122,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/organizations",
+					"/user-accounts/{userAccountId}/organizations",
 					userAccountId);
 
 		location = HttpUtil.addParameter(

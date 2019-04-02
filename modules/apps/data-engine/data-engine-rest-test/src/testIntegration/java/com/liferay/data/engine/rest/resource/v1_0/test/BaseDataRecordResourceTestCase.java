@@ -228,7 +228,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
+					"/data-record-collections/{dataRecordCollectionId}/data-records",
 					dataRecordCollectionId);
 
 		location = HttpUtil.addParameter(
@@ -260,7 +260,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
+					"/data-record-collections/{dataRecordCollectionId}/data-records",
 					dataRecordCollectionId);
 
 		location = HttpUtil.addParameter(
@@ -308,7 +308,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
+					"/data-record-collections/{dataRecordCollectionId}/data-records",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -344,7 +344,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
+					"/data-record-collections/{dataRecordCollectionId}/data-records",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -370,7 +370,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records/export",
+					"/data-record-collections/{dataRecordCollectionId}/data-records/export",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -394,7 +394,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records/export",
+					"/data-record-collections/{dataRecordCollectionId}/data-records/export",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -427,7 +427,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 
@@ -447,7 +447,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 
@@ -478,7 +478,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 
@@ -505,7 +505,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 
@@ -549,7 +549,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 
@@ -583,7 +583,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-records/{data-record-id}", dataRecordId);
+				_toPath("/data-records/{dataRecordId}", dataRecordId);
 
 		options.setLocation(location);
 

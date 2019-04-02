@@ -81,7 +81,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DataDefinition> getContentSpaceDataDefinitionsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -103,7 +103,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DataDefinition getDataDefinition(
-			@GraphQLName("data-definition-id") Long dataDefinitionId)
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -116,7 +116,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DataLayout> getContentSpaceDataLayoutPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -136,7 +136,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DataLayout getDataLayout(
-			@GraphQLName("data-layout-id") Long dataLayoutId)
+			@GraphQLName("dataLayoutId") Long dataLayoutId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -149,8 +149,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DataRecord> getDataRecordCollectionDataRecordsPage(
-			@GraphQLName("data-record-collection-id") Long
-				dataRecordCollectionId,
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -170,8 +169,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public String getDataRecordCollectionDataRecordExport(
-			@GraphQLName("data-record-collection-id") Long
-				dataRecordCollectionId)
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -185,7 +183,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DataRecord getDataRecord(
-			@GraphQLName("data-record-id") Long dataRecordId)
+			@GraphQLName("dataRecordId") Long dataRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -199,7 +197,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<DataRecordCollection>
 			getContentSpaceDataRecordCollectionsPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("contentSpaceId") Long contentSpaceId,
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -223,7 +221,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
-				@GraphQLName("data-definition-id") Long dataDefinitionId,
+				@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -246,8 +244,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DataRecordCollection getDataRecordCollection(
-			@GraphQLName("data-record-collection-id") Long
-				dataRecordCollectionId)
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

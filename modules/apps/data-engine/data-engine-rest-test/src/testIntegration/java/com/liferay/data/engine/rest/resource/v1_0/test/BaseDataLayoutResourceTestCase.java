@@ -223,7 +223,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-layout",
+					"/content-spaces/{contentSpaceId}/data-layout",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -254,7 +254,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-layout",
+					"/content-spaces/{contentSpaceId}/data-layout",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -301,7 +301,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-layouts",
+					"/data-definitions/{dataDefinitionId}/data-layouts",
 					dataDefinitionId);
 
 		options.setLocation(location);
@@ -337,7 +337,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-layouts",
+					"/data-definitions/{dataDefinitionId}/data-layouts",
 					dataDefinitionId);
 
 		options.setLocation(location);
@@ -372,7 +372,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 
@@ -392,7 +392,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 
@@ -423,7 +423,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 
@@ -450,7 +450,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 
@@ -494,7 +494,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 
@@ -528,7 +528,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/data-layouts/{data-layout-id}", dataLayoutId);
+				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
 
 		options.setLocation(location);
 

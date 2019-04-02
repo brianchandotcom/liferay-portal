@@ -141,7 +141,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-record-collection-permissions",
+					"/content-spaces/{contentSpaceId}/data-record-collection-permissions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -166,7 +166,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-record-collection-permissions",
+					"/content-spaces/{contentSpaceId}/data-record-collection-permissions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -313,7 +313,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-record-collections",
+					"/content-spaces/{contentSpaceId}/data-record-collections",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -345,7 +345,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-record-collections",
+					"/content-spaces/{contentSpaceId}/data-record-collections",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -497,7 +497,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
+					"/data-definitions/{dataDefinitionId}/data-record-collections",
 					dataDefinitionId);
 
 		location = HttpUtil.addParameter(
@@ -529,7 +529,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
+					"/data-definitions/{dataDefinitionId}/data-record-collections",
 					dataDefinitionId);
 
 		location = HttpUtil.addParameter(
@@ -579,7 +579,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
+					"/data-definitions/{dataDefinitionId}/data-record-collections",
 					dataDefinitionId);
 
 		options.setLocation(location);
@@ -618,7 +618,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
+					"/data-definitions/{dataDefinitionId}/data-record-collections",
 					dataDefinitionId);
 
 		options.setLocation(location);
@@ -664,7 +664,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -687,7 +687,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -726,7 +726,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -757,7 +757,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -811,7 +811,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -849,7 +849,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}",
+					"/data-record-collections/{dataRecordCollectionId}",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -895,7 +895,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-record-collection-permissions",
+					"/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions",
 					dataRecordCollectionId);
 
 		options.setLocation(location);
@@ -920,7 +920,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-record-collection-permissions",
+					"/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions",
 					dataRecordCollectionId);
 
 		options.setLocation(location);

@@ -214,8 +214,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/web-urls",
-					organizationId);
+					"/organizations/{organizationId}/web-urls", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -245,8 +244,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/web-urls",
-					organizationId);
+					"/organizations/{organizationId}/web-urls", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -365,7 +363,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/web-urls", userAccountId);
+					"/user-accounts/{userAccountId}/web-urls", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -395,7 +393,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/web-urls", userAccountId);
+					"/user-accounts/{userAccountId}/web-urls", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -428,7 +426,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId);
+			_resourceURL + _toPath("/web-urls/{webUrlId}", webUrlId);
 
 		options.setLocation(location);
 
@@ -454,7 +452,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId);
+			_resourceURL + _toPath("/web-urls/{webUrlId}", webUrlId);
 
 		options.setLocation(location);
 

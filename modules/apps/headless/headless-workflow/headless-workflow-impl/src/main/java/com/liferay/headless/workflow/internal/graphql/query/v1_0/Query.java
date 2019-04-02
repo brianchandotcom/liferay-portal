@@ -61,7 +61,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowLog getWorkflowLog(
-			@GraphQLName("workflow-log-id") Long workflowLogId)
+			@GraphQLName("workflowLogId") Long workflowLogId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -74,7 +74,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			@GraphQLName("workflow-task-id") Long workflowTaskId,
+			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -94,7 +94,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
-			@GraphQLName("role-id") Long roleId,
+			@GraphQLName("roleId") Long roleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -152,7 +152,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask getWorkflowTask(
-			@GraphQLName("workflow-task-id") Long workflowTaskId)
+			@GraphQLName("workflowTaskId") Long workflowTaskId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

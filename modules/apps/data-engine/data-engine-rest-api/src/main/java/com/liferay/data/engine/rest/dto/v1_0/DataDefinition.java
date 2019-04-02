@@ -56,6 +56,9 @@ public class DataDefinition {
 		try {
 			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -82,6 +85,9 @@ public class DataDefinition {
 
 		try {
 			dataDefinitionFields = dataDefinitionFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -110,6 +116,9 @@ public class DataDefinition {
 		try {
 			dataDefinitionRules = dataDefinitionRulesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -133,6 +142,9 @@ public class DataDefinition {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -158,6 +170,9 @@ public class DataDefinition {
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -182,6 +197,9 @@ public class DataDefinition {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -203,6 +221,9 @@ public class DataDefinition {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -228,6 +249,9 @@ public class DataDefinition {
 		try {
 			name = nameUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -252,6 +276,9 @@ public class DataDefinition {
 		try {
 			storageType = storageTypeUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -275,6 +302,9 @@ public class DataDefinition {
 
 		try {
 			userId = userIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

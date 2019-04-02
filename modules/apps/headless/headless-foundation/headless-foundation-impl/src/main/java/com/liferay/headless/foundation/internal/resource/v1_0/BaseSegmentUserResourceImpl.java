@@ -61,11 +61,11 @@ public abstract class BaseSegmentUserResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/segments/{segment-id}/user-accounts")
+	@Path("/segments/{segmentId}/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SegmentUser")})
 	public Page<SegmentUser> getSegmentUserAccountsPage(
-			@NotNull @PathParam("segment-id") Long segmentId,
+			@NotNull @PathParam("segmentId") Long segmentId,
 			@Context Pagination pagination)
 		throws Exception {
 

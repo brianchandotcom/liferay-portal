@@ -55,6 +55,9 @@ public class SelectionScope {
 		try {
 			folderId = folderIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class SelectionScope {
 		try {
 			repositoryId = repositoryIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -102,6 +108,9 @@ public class SelectionScope {
 
 		try {
 			selectAll = selectAllUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

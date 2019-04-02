@@ -144,7 +144,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -167,7 +167,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -206,7 +206,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -237,7 +237,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -294,7 +294,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -331,7 +331,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -386,7 +386,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -423,7 +423,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}",
+					"/message-board-messages/{messageBoardMessageId}",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -761,7 +761,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-messages",
+					"/message-board-messages/{messageBoardMessageId}/message-board-messages",
 					messageBoardMessageId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -798,7 +798,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-messages",
+					"/message-board-messages/{messageBoardMessageId}/message-board-messages",
 					messageBoardMessageId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -856,7 +856,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-messages",
+					"/message-board-messages/{messageBoardMessageId}/message-board-messages",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -895,7 +895,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-messages",
+					"/message-board-messages/{messageBoardMessageId}/message-board-messages",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -1233,7 +1233,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-messages",
+					"/message-board-threads/{messageBoardThreadId}/message-board-messages",
 					messageBoardThreadId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1270,7 +1270,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-messages",
+					"/message-board-threads/{messageBoardThreadId}/message-board-messages",
 					messageBoardThreadId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1328,7 +1328,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-messages",
+					"/message-board-threads/{messageBoardThreadId}/message-board-messages",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1367,7 +1367,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-messages",
+					"/message-board-threads/{messageBoardThreadId}/message-board-messages",
 					messageBoardThreadId);
 
 		options.setLocation(location);

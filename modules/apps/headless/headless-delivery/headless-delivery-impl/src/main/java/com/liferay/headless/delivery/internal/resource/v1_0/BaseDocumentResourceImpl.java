@@ -71,11 +71,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/documents")
+	@Path("/content-spaces/{contentSpaceId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getContentSpaceDocumentsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -87,11 +87,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/content-spaces/{content-space-id}/documents")
+	@Path("/content-spaces/{contentSpaceId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postContentSpaceDocument(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -100,21 +100,21 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	@Override
 	@DELETE
-	@Path("/documents/{document-id}")
+	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public void deleteDocument(
-			@NotNull @PathParam("document-id") Long documentId)
+			@NotNull @PathParam("documentId") Long documentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/documents/{document-id}")
+	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document getDocument(
-			@NotNull @PathParam("document-id") Long documentId)
+			@NotNull @PathParam("documentId") Long documentId)
 		throws Exception {
 
 		return new Document();
@@ -123,11 +123,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@PATCH
-	@Path("/documents/{document-id}")
+	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document patchDocument(
-			@NotNull @PathParam("document-id") Long documentId,
+			@NotNull @PathParam("documentId") Long documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -137,11 +137,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@PUT
-	@Path("/documents/{document-id}")
+	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document putDocument(
-			@NotNull @PathParam("document-id") Long documentId,
+			@NotNull @PathParam("documentId") Long documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -158,11 +158,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/folders/{folder-id}/documents")
+	@Path("/folders/{folderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getFolderDocumentsPage(
-			@NotNull @PathParam("folder-id") Long folderId,
+			@NotNull @PathParam("folderId") Long folderId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -173,11 +173,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/folders/{folder-id}/documents")
+	@Path("/folders/{folderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postFolderDocument(
-			@NotNull @PathParam("folder-id") Long folderId,
+			@NotNull @PathParam("folderId") Long folderId,
 			MultipartBody multipartBody)
 		throws Exception {
 

@@ -396,7 +396,7 @@ public abstract class BaseKeywordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
+					"/content-spaces/{contentSpaceId}/keywords",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -432,7 +432,7 @@ public abstract class BaseKeywordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
+					"/content-spaces/{contentSpaceId}/keywords",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -482,7 +482,7 @@ public abstract class BaseKeywordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
+					"/content-spaces/{contentSpaceId}/keywords",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -518,7 +518,7 @@ public abstract class BaseKeywordResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
+					"/content-spaces/{contentSpaceId}/keywords",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -550,7 +550,7 @@ public abstract class BaseKeywordResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 
@@ -569,7 +569,7 @@ public abstract class BaseKeywordResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 
@@ -597,7 +597,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 
@@ -623,7 +623,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 
@@ -665,7 +665,7 @@ public abstract class BaseKeywordResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 
@@ -698,7 +698,7 @@ public abstract class BaseKeywordResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+			_resourceURL + _toPath("/keywords/{keywordId}", keywordId);
 
 		options.setLocation(location);
 

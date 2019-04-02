@@ -55,6 +55,9 @@ public class Status {
 		try {
 			actionInProgress = actionInProgressUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

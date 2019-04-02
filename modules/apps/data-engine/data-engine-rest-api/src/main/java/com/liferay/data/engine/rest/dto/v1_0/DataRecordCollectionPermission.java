@@ -57,6 +57,9 @@ public class DataRecordCollectionPermission {
 			addDataRecordCollection =
 				addDataRecordCollectionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -80,6 +83,9 @@ public class DataRecordCollectionPermission {
 
 		try {
 			definePermissions = definePermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -105,6 +111,9 @@ public class DataRecordCollectionPermission {
 		try {
 			delete = deleteUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -128,6 +137,9 @@ public class DataRecordCollectionPermission {
 
 		try {
 			roleNames = roleNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -153,6 +165,9 @@ public class DataRecordCollectionPermission {
 		try {
 			update = updateUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -174,6 +189,9 @@ public class DataRecordCollectionPermission {
 	public void setView(UnsafeSupplier<Boolean, Exception> viewUnsafeSupplier) {
 		try {
 			view = viewUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

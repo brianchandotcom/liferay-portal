@@ -141,7 +141,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -164,7 +164,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -202,7 +202,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -233,7 +233,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -287,7 +287,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -324,7 +324,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -376,7 +376,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -413,7 +413,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}",
+					"/taxonomy-categories/{taxonomyCategoryId}",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -749,7 +749,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories",
+					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
 					taxonomyCategoryId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -786,7 +786,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories",
+					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
 					taxonomyCategoryId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -839,7 +839,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories",
+					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -876,7 +876,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories",
+					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
 					taxonomyCategoryId);
 
 		options.setLocation(location);
@@ -1212,7 +1212,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories",
 					taxonomyVocabularyId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1249,7 +1249,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories",
 					taxonomyVocabularyId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1302,7 +1302,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -1340,7 +1340,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);

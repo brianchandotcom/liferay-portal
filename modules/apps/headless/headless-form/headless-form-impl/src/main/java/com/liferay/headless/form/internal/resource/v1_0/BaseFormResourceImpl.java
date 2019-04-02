@@ -62,11 +62,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/forms")
+	@Path("/content-spaces/{contentSpaceId}/forms")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getContentSpaceFormsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -75,10 +75,10 @@ public abstract class BaseFormResourceImpl implements FormResource {
 
 	@Override
 	@GET
-	@Path("/forms/{form-id}")
+	@Path("/forms/{formId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
-	public Form getForm(@NotNull @PathParam("form-id") Long formId)
+	public Form getForm(@NotNull @PathParam("formId") Long formId)
 		throws Exception {
 
 		return new Form();
@@ -87,11 +87,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/forms/{form-id}/evaluate-context")
+	@Path("/forms/{formId}/evaluate-context")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormEvaluateContext(
-			@NotNull @PathParam("form-id") Long formId, Form form)
+			@NotNull @PathParam("formId") Long formId, Form form)
 		throws Exception {
 
 		return new Form();
@@ -99,11 +99,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 
 	@Override
 	@GET
-	@Path("/forms/{form-id}/fetch-latest-draft")
+	@Path("/forms/{formId}/fetch-latest-draft")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Form getFormFetchLatestDraft(
-			@NotNull @PathParam("form-id") Long formId)
+			@NotNull @PathParam("formId") Long formId)
 		throws Exception {
 
 		return new Form();
@@ -112,11 +112,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/forms/{form-id}/upload-file")
+	@Path("/forms/{formId}/upload-file")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormUploadFile(
-			@NotNull @PathParam("form-id") Long formId, Form form)
+			@NotNull @PathParam("formId") Long formId, Form form)
 		throws Exception {
 
 		return new Form();

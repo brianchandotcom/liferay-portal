@@ -122,7 +122,7 @@ public abstract class BaseEmailResourceTestCase {
 	protected Email invokeGetEmail(Long emailId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+		String location = _resourceURL + _toPath("/emails/{emailId}", emailId);
 
 		options.setLocation(location);
 
@@ -147,7 +147,7 @@ public abstract class BaseEmailResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+		String location = _resourceURL + _toPath("/emails/{emailId}", emailId);
 
 		options.setLocation(location);
 
@@ -220,7 +220,7 @@ public abstract class BaseEmailResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/emails", organizationId);
+					"/organizations/{organizationId}/emails", organizationId);
 
 		options.setLocation(location);
 
@@ -245,7 +245,7 @@ public abstract class BaseEmailResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/emails", organizationId);
+					"/organizations/{organizationId}/emails", organizationId);
 
 		options.setLocation(location);
 
@@ -317,8 +317,7 @@ public abstract class BaseEmailResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/emails", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/emails", userAccountId);
 
 		options.setLocation(location);
 
@@ -342,8 +341,7 @@ public abstract class BaseEmailResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/emails", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/emails", userAccountId);
 
 		options.setLocation(location);
 

@@ -64,21 +64,21 @@ public abstract class BaseBlogPostingResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/blog-postings/{blog-posting-id}")
+	@Path("/blog-postings/{blogPostingId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void deleteBlogPosting(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId)
+			@NotNull @PathParam("blogPostingId") Long blogPostingId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/blog-postings/{blog-posting-id}")
+	@Path("/blog-postings/{blogPostingId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting getBlogPosting(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId)
+			@NotNull @PathParam("blogPostingId") Long blogPostingId)
 		throws Exception {
 
 		return new BlogPosting();
@@ -87,11 +87,11 @@ public abstract class BaseBlogPostingResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/blog-postings/{blog-posting-id}")
+	@Path("/blog-postings/{blogPostingId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting patchBlogPosting(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
 			BlogPosting blogPosting)
 		throws Exception {
 
@@ -168,11 +168,11 @@ public abstract class BaseBlogPostingResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/blog-postings/{blog-posting-id}")
+	@Path("/blog-postings/{blogPostingId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting putBlogPosting(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
 			BlogPosting blogPosting)
 		throws Exception {
 
@@ -189,11 +189,11 @@ public abstract class BaseBlogPostingResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/blog-postings")
+	@Path("/content-spaces/{contentSpaceId}/blog-postings")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -204,11 +204,11 @@ public abstract class BaseBlogPostingResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/blog-postings")
+	@Path("/content-spaces/{contentSpaceId}/blog-postings")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting postContentSpaceBlogPosting(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			BlogPosting blogPosting)
 		throws Exception {
 

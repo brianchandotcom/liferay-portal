@@ -137,7 +137,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/my-user-accounts/{user-account-id}", userAccountId);
+				_toPath("/my-user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -164,7 +164,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/my-user-accounts/{user-account-id}", userAccountId);
+				_toPath("/my-user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -468,7 +468,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/user-accounts",
+					"/organizations/{organizationId}/user-accounts",
 					organizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -504,7 +504,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/user-accounts",
+					"/organizations/{organizationId}/user-accounts",
 					organizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -947,7 +947,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -967,7 +967,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -999,7 +999,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -1026,7 +1026,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -1071,7 +1071,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -1105,7 +1105,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
+				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
 
@@ -1402,7 +1402,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId);
+				_toPath("/web-sites/{webSiteId}/user-accounts", webSiteId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1436,7 +1436,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId);
+				_toPath("/web-sites/{webSiteId}/user-accounts", webSiteId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 

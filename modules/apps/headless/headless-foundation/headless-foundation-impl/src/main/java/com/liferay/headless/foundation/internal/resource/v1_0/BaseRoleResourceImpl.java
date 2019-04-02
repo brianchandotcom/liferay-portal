@@ -60,11 +60,11 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/my-user-accounts/{user-account-id}/roles")
+	@Path("/my-user-accounts/{userAccountId}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getMyUserAccountRolesPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -90,10 +90,10 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
-	@Path("/roles/{role-id}")
+	@Path("/roles/{roleId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
-	public Role getRole(@NotNull @PathParam("role-id") Long roleId)
+	public Role getRole(@NotNull @PathParam("roleId") Long roleId)
 		throws Exception {
 
 		return new Role();
@@ -107,11 +107,11 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-account-id}/roles")
+	@Path("/user-accounts/{userAccountId}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getUserAccountRolesPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

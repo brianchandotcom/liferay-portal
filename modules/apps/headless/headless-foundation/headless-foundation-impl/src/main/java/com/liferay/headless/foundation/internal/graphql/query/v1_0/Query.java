@@ -162,7 +162,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Email getEmail(@GraphQLName("email-id") Long emailId)
+	public Email getEmail(@GraphQLName("emailId") Long emailId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -174,7 +174,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Email> getOrganizationEmailsPage(
-			@GraphQLName("organization-id") Long organizationId)
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -191,7 +191,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Email> getUserAccountEmailsPage(
-			@GraphQLName("user-account-id") Long userAccountId)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -208,7 +208,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Keyword> getContentSpaceKeywordsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -230,7 +230,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Keyword getKeyword(@GraphQLName("keyword-id") Long keywordId)
+	public Keyword getKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -242,7 +242,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getMyUserAccountOrganizationsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -282,7 +282,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Organization getOrganization(
-			@GraphQLName("organization-id") Long organizationId)
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -295,7 +295,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
-			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -318,7 +318,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getUserAccountOrganizationsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -338,7 +338,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getOrganizationPhonesPage(
-			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -356,7 +356,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Phone getPhone(@GraphQLName("phone-id") Long phoneId)
+	public Phone getPhone(@GraphQLName("phoneId") Long phoneId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -368,7 +368,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getUserAccountPhonesPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -387,7 +387,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getOrganizationPostalAddressesPage(
-			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -407,7 +407,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public PostalAddress getPostalAddress(
-			@GraphQLName("postal-address-id") Long postalAddressId)
+			@GraphQLName("postalAddressId") Long postalAddressId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -420,7 +420,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getUserAccountPostalAddressesPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -440,7 +440,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Role> getMyUserAccountRolesPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -476,7 +476,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Role getRole(@GraphQLName("role-id") Long roleId) throws Exception {
+	public Role getRole(@GraphQLName("roleId") Long roleId) throws Exception {
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -486,7 +486,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Role> getUserAccountRolesPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -505,7 +505,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getContentSpaceSegmentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -525,8 +525,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getContentSpaceUserAccountSegmentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -547,7 +547,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<SegmentUser> getSegmentUserAccountsPage(
-			@GraphQLName("segment-id") Long segmentId,
+			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -567,7 +567,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyCategory getTaxonomyCategory(
-			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId)
+			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -582,7 +582,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
-				@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+				@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -608,8 +608,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyVocabularyTaxonomyCategoriesPage(
-				@GraphQLName("taxonomy-vocabulary-id") Long
-					taxonomyVocabularyId,
+				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -635,7 +634,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyVocabulary>
 			getContentSpaceTaxonomyVocabulariesPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("contentSpaceId") Long contentSpaceId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -660,7 +659,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary getTaxonomyVocabulary(
-			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId)
+			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -674,7 +673,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount(
-			@GraphQLName("user-account-id") Long userAccountId)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -687,7 +686,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getOrganizationUserAccountsPage(
-			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -730,7 +729,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount getUserAccount(
-			@GraphQLName("user-account-id") Long userAccountId)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -743,7 +742,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getWebSiteUserAccountsPage(
-			@GraphQLName("web-site-id") Long webSiteId,
+			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -766,7 +765,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getOrganizationWebUrlsPage(
-			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -785,7 +784,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getUserAccountWebUrlsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -803,7 +802,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WebUrl getWebUrl(@GraphQLName("web-url-id") Long webUrlId)
+	public WebUrl getWebUrl(@GraphQLName("webUrlId") Long webUrlId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

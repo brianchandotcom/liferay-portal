@@ -128,7 +128,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
+				_toPath("/form-documents/{formDocumentId}", formDocumentId);
 
 		options.setLocation(location);
 
@@ -149,7 +149,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
+				_toPath("/form-documents/{formDocumentId}", formDocumentId);
 
 		options.setLocation(location);
 
@@ -183,7 +183,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
+				_toPath("/form-documents/{formDocumentId}", formDocumentId);
 
 		options.setLocation(location);
 
@@ -210,7 +210,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
+				_toPath("/form-documents/{formDocumentId}", formDocumentId);
 
 		options.setLocation(location);
 

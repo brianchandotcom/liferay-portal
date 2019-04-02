@@ -210,7 +210,7 @@ public abstract class BaseFormResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/forms", contentSpaceId);
+					"/content-spaces/{contentSpaceId}/forms", contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -240,7 +240,7 @@ public abstract class BaseFormResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/forms", contentSpaceId);
+					"/content-spaces/{contentSpaceId}/forms", contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -272,7 +272,7 @@ public abstract class BaseFormResourceTestCase {
 	protected Form invokeGetForm(Long formId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/forms/{form-id}", formId);
+		String location = _resourceURL + _toPath("/forms/{formId}", formId);
 
 		options.setLocation(location);
 
@@ -297,7 +297,7 @@ public abstract class BaseFormResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/forms/{form-id}", formId);
+		String location = _resourceURL + _toPath("/forms/{formId}", formId);
 
 		options.setLocation(location);
 
@@ -333,7 +333,7 @@ public abstract class BaseFormResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId);
+			_resourceURL + _toPath("/forms/{formId}/evaluate-context", formId);
 
 		options.setLocation(location);
 
@@ -366,7 +366,7 @@ public abstract class BaseFormResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId);
+			_resourceURL + _toPath("/forms/{formId}/evaluate-context", formId);
 
 		options.setLocation(location);
 
@@ -397,7 +397,7 @@ public abstract class BaseFormResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
+				_toPath("/forms/{formId}/fetch-latest-draft", formId);
 
 		options.setLocation(location);
 
@@ -424,7 +424,7 @@ public abstract class BaseFormResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
+				_toPath("/forms/{formId}/fetch-latest-draft", formId);
 
 		options.setLocation(location);
 
@@ -458,7 +458,7 @@ public abstract class BaseFormResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId);
+			_resourceURL + _toPath("/forms/{formId}/upload-file", formId);
 
 		options.setLocation(location);
 
@@ -491,7 +491,7 @@ public abstract class BaseFormResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId);
+			_resourceURL + _toPath("/forms/{formId}/upload-file", formId);
 
 		options.setLocation(location);
 

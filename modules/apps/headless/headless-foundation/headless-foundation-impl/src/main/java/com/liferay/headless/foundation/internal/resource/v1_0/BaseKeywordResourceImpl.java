@@ -69,11 +69,11 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/keywords")
+	@Path("/content-spaces/{contentSpaceId}/keywords")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -84,11 +84,11 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/keywords")
+	@Path("/content-spaces/{contentSpaceId}/keywords")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword postContentSpaceKeyword(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			Keyword keyword)
 		throws Exception {
 
@@ -97,19 +97,19 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@DELETE
-	@Path("/keywords/{keyword-id}")
+	@Path("/keywords/{keywordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public void deleteKeyword(@NotNull @PathParam("keyword-id") Long keywordId)
+	public void deleteKeyword(@NotNull @PathParam("keywordId") Long keywordId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/keywords/{keyword-id}")
+	@Path("/keywords/{keywordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public Keyword getKeyword(@NotNull @PathParam("keyword-id") Long keywordId)
+	public Keyword getKeyword(@NotNull @PathParam("keywordId") Long keywordId)
 		throws Exception {
 
 		return new Keyword();
@@ -118,11 +118,11 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/keywords/{keyword-id}")
+	@Path("/keywords/{keywordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword putKeyword(
-			@NotNull @PathParam("keyword-id") Long keywordId, Keyword keyword)
+			@NotNull @PathParam("keywordId") Long keywordId, Keyword keyword)
 		throws Exception {
 
 		return new Keyword();

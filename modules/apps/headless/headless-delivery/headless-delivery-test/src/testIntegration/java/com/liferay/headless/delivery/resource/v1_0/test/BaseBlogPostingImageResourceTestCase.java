@@ -140,7 +140,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
+					"/blog-posting-images/{blogPostingImageId}",
 					blogPostingImageId);
 
 		options.setLocation(location);
@@ -163,7 +163,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
+					"/blog-posting-images/{blogPostingImageId}",
 					blogPostingImageId);
 
 		options.setLocation(location);
@@ -201,7 +201,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
+					"/blog-posting-images/{blogPostingImageId}",
 					blogPostingImageId);
 
 		options.setLocation(location);
@@ -232,7 +232,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
+					"/blog-posting-images/{blogPostingImageId}",
 					blogPostingImageId);
 
 		options.setLocation(location);
@@ -561,7 +561,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-posting-images",
+					"/content-spaces/{contentSpaceId}/blog-posting-images",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -597,7 +597,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-posting-images",
+					"/content-spaces/{contentSpaceId}/blog-posting-images",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -639,7 +639,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-posting-images",
+					"/content-spaces/{contentSpaceId}/blog-posting-images",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -672,7 +672,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-posting-images",
+					"/content-spaces/{contentSpaceId}/blog-posting-images",
 					contentSpaceId);
 
 		options.setLocation(location);

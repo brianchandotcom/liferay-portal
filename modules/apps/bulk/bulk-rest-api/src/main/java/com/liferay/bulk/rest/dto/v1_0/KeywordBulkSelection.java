@@ -58,6 +58,9 @@ public class KeywordBulkSelection {
 		try {
 			documentBulkSelection = documentBulkSelectionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -82,6 +85,9 @@ public class KeywordBulkSelection {
 		try {
 			keywordsToAdd = keywordsToAddUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -105,6 +111,9 @@ public class KeywordBulkSelection {
 
 		try {
 			keywordsToRemove = keywordsToRemoveUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

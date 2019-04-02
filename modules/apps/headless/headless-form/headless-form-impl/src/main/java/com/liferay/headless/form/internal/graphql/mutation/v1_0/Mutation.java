@@ -66,7 +66,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormEvaluateContext(
-			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
+			@GraphQLName("formId") Long formId, @GraphQLName("Form") Form form)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -78,7 +78,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormUploadFile(
-			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
+			@GraphQLName("formId") Long formId, @GraphQLName("Form") Form form)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -89,7 +89,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteFormDocument(
-			@GraphQLName("form-document-id") Long formDocumentId)
+			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -101,7 +101,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
-			@GraphQLName("form-record-id") Long formRecordId,
+			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("FormRecord") FormRecord formRecord)
 		throws Exception {
 
@@ -115,7 +115,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord(
-			@GraphQLName("form-id") Long formId,
+			@GraphQLName("formId") Long formId,
 			@GraphQLName("FormRecord") FormRecord formRecord)
 		throws Exception {
 

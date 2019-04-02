@@ -390,7 +390,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/comments", blogPostingId);
+					"/blog-postings/{blogPostingId}/comments", blogPostingId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -425,7 +425,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/comments", blogPostingId);
+					"/blog-postings/{blogPostingId}/comments", blogPostingId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -474,7 +474,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/comments", blogPostingId);
+					"/blog-postings/{blogPostingId}/comments", blogPostingId);
 
 		options.setLocation(location);
 
@@ -509,7 +509,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/comments", blogPostingId);
+					"/blog-postings/{blogPostingId}/comments", blogPostingId);
 
 		options.setLocation(location);
 
@@ -540,7 +540,7 @@ public abstract class BaseCommentResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -559,7 +559,7 @@ public abstract class BaseCommentResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -587,7 +587,7 @@ public abstract class BaseCommentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -613,7 +613,7 @@ public abstract class BaseCommentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -655,7 +655,7 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -688,7 +688,7 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/comments/{comment-id}", commentId);
+			_resourceURL + _toPath("/comments/{commentId}", commentId);
 
 		options.setLocation(location);
 
@@ -959,8 +959,7 @@ public abstract class BaseCommentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/comments/{comment-id}/comments", commentId);
+			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -993,8 +992,7 @@ public abstract class BaseCommentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/comments/{comment-id}/comments", commentId);
+			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1039,8 +1037,7 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath("/comments/{comment-id}/comments", commentId);
+			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
 
 		options.setLocation(location);
 
@@ -1073,8 +1070,7 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath("/comments/{comment-id}/comments", commentId);
+			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
 
 		options.setLocation(location);
 
@@ -1348,7 +1344,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/comments", documentId);
+				_toPath("/documents/{documentId}/comments", documentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1382,7 +1378,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/comments", documentId);
+				_toPath("/documents/{documentId}/comments", documentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1429,7 +1425,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/comments", documentId);
+				_toPath("/documents/{documentId}/comments", documentId);
 
 		options.setLocation(location);
 
@@ -1463,7 +1459,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/comments", documentId);
+				_toPath("/documents/{documentId}/comments", documentId);
 
 		options.setLocation(location);
 
@@ -1761,7 +1757,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/comments",
+					"/structured-contents/{structuredContentId}/comments",
 					structuredContentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1797,7 +1793,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/comments",
+					"/structured-contents/{structuredContentId}/comments",
 					structuredContentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1848,7 +1844,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/comments",
+					"/structured-contents/{structuredContentId}/comments",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1884,7 +1880,7 @@ public abstract class BaseCommentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/comments",
+					"/structured-contents/{structuredContentId}/comments",
 					structuredContentId);
 
 		options.setLocation(location);

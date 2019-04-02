@@ -128,7 +128,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/workflow-logs/{workflow-log-id}", workflowLogId);
+				_toPath("/workflow-logs/{workflowLogId}", workflowLogId);
 
 		options.setLocation(location);
 
@@ -155,7 +155,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/workflow-logs/{workflow-log-id}", workflowLogId);
+				_toPath("/workflow-logs/{workflowLogId}", workflowLogId);
 
 		options.setLocation(location);
 
@@ -282,7 +282,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/workflow-tasks/{workflow-task-id}/workflow-logs",
+					"/workflow-tasks/{workflowTaskId}/workflow-logs",
 					workflowTaskId);
 
 		location = HttpUtil.addParameter(
@@ -313,7 +313,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/workflow-tasks/{workflow-task-id}/workflow-logs",
+					"/workflow-tasks/{workflowTaskId}/workflow-logs",
 					workflowTaskId);
 
 		location = HttpUtil.addParameter(

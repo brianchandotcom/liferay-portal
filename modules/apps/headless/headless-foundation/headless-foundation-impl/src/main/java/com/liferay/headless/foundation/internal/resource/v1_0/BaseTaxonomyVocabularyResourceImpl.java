@@ -72,11 +72,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/taxonomy-vocabularies")
+	@Path("/content-spaces/{contentSpaceId}/taxonomy-vocabularies")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -87,11 +87,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/taxonomy-vocabularies")
+	@Path("/content-spaces/{contentSpaceId}/taxonomy-vocabularies")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
@@ -100,22 +100,22 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public void deleteTaxonomyVocabulary(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary getTaxonomyVocabulary(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId)
 		throws Exception {
 
@@ -125,11 +125,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
@@ -187,11 +187,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary putTaxonomyVocabulary(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {

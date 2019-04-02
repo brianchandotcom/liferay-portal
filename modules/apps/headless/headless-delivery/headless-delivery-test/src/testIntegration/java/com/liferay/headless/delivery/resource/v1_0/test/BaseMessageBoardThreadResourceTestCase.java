@@ -432,7 +432,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/message-board-threads",
+					"/content-spaces/{contentSpaceId}/message-board-threads",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -469,7 +469,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/message-board-threads",
+					"/content-spaces/{contentSpaceId}/message-board-threads",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -523,7 +523,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/message-board-threads",
+					"/content-spaces/{contentSpaceId}/message-board-threads",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -560,7 +560,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/message-board-threads",
+					"/content-spaces/{contentSpaceId}/message-board-threads",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -897,7 +897,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-sections/{message-board-section-id}/message-board-threads",
+					"/message-board-sections/{messageBoardSectionId}/message-board-threads",
 					messageBoardSectionId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -934,7 +934,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-sections/{message-board-section-id}/message-board-threads",
+					"/message-board-sections/{messageBoardSectionId}/message-board-threads",
 					messageBoardSectionId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -992,7 +992,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-sections/{message-board-section-id}/message-board-threads",
+					"/message-board-sections/{messageBoardSectionId}/message-board-threads",
 					messageBoardSectionId);
 
 		options.setLocation(location);
@@ -1031,7 +1031,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-sections/{message-board-section-id}/message-board-threads",
+					"/message-board-sections/{messageBoardSectionId}/message-board-threads",
 					messageBoardSectionId);
 
 		options.setLocation(location);
@@ -1075,7 +1075,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1098,7 +1098,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1137,7 +1137,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1168,7 +1168,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1224,7 +1224,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1261,7 +1261,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1315,7 +1315,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1352,7 +1352,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}",
+					"/message-board-threads/{messageBoardThreadId}",
 					messageBoardThreadId);
 
 		options.setLocation(location);

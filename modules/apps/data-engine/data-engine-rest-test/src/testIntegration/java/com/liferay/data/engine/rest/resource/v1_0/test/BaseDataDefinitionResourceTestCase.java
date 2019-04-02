@@ -140,7 +140,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definition-permissions",
+					"/content-spaces/{contentSpaceId}/data-definition-permissions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -165,7 +165,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definition-permissions",
+					"/content-spaces/{contentSpaceId}/data-definition-permissions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -300,7 +300,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definitions",
+					"/content-spaces/{contentSpaceId}/data-definitions",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -331,7 +331,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definitions",
+					"/content-spaces/{contentSpaceId}/data-definitions",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -380,7 +380,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definitions",
+					"/content-spaces/{contentSpaceId}/data-definitions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -416,7 +416,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/data-definitions",
+					"/content-spaces/{contentSpaceId}/data-definitions",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -457,7 +457,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -479,7 +479,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -515,7 +515,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -544,7 +544,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -593,7 +593,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -628,7 +628,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}", dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
 
 		options.setLocation(location);
 
@@ -672,7 +672,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-definition-permissions",
+					"/data-definitions/{dataDefinitionId}/data-definition-permissions",
 					dataDefinitionId);
 
 		options.setLocation(location);
@@ -697,7 +697,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-definition-permissions",
+					"/data-definitions/{dataDefinitionId}/data-definition-permissions",
 					dataDefinitionId);
 
 		options.setLocation(location);

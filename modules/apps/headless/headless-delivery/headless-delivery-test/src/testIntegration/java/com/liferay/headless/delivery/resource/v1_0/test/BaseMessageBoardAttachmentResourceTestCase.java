@@ -140,7 +140,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-attachments/{message-board-attachment-id}",
+					"/message-board-attachments/{messageBoardAttachmentId}",
 					messageBoardAttachmentId);
 
 		options.setLocation(location);
@@ -163,7 +163,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-attachments/{message-board-attachment-id}",
+					"/message-board-attachments/{messageBoardAttachmentId}",
 					messageBoardAttachmentId);
 
 		options.setLocation(location);
@@ -202,7 +202,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-attachments/{message-board-attachment-id}",
+					"/message-board-attachments/{messageBoardAttachmentId}",
 					messageBoardAttachmentId);
 
 		options.setLocation(location);
@@ -233,7 +233,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-attachments/{message-board-attachment-id}",
+					"/message-board-attachments/{messageBoardAttachmentId}",
 					messageBoardAttachmentId);
 
 		options.setLocation(location);
@@ -325,7 +325,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					"/message-board-messages/{messageBoardMessageId}/message-board-attachments",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -352,7 +352,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					"/message-board-messages/{messageBoardMessageId}/message-board-attachments",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -388,7 +388,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					"/message-board-messages/{messageBoardMessageId}/message-board-attachments",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -422,7 +422,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/message-board-attachments",
+					"/message-board-messages/{messageBoardMessageId}/message-board-attachments",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -516,7 +516,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					"/message-board-threads/{messageBoardThreadId}/message-board-attachments",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -543,7 +543,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					"/message-board-threads/{messageBoardThreadId}/message-board-attachments",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -579,7 +579,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					"/message-board-threads/{messageBoardThreadId}/message-board-attachments",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -613,7 +613,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/message-board-attachments",
+					"/message-board-threads/{messageBoardThreadId}/message-board-attachments",
 					messageBoardThreadId);
 
 		options.setLocation(location);

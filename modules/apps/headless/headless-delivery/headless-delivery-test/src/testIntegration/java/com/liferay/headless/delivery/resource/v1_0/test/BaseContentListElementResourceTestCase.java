@@ -235,7 +235,7 @@ public abstract class BaseContentListElementResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-lists/{content-list-id}/content-list-elements",
+					"/content-lists/{contentListId}/content-list-elements",
 					contentListId);
 
 		location = HttpUtil.addParameter(
@@ -266,7 +266,7 @@ public abstract class BaseContentListElementResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-lists/{content-list-id}/content-list-elements",
+					"/content-lists/{contentListId}/content-list-elements",
 					contentListId);
 
 		location = HttpUtil.addParameter(

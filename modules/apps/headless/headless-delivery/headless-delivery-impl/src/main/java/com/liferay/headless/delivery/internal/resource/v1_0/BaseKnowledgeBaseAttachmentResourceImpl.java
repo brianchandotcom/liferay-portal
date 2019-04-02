@@ -56,13 +56,13 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Override
 	@GET
 	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments"
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				@NotNull @PathParam("knowledge-base-article-id") Long
+				@NotNull @PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId)
 		throws Exception {
 
@@ -73,13 +73,13 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments"
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@NotNull @PathParam("knowledge-base-article-id") Long
+				@NotNull @PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				MultipartBody multipartBody)
 		throws Exception {
@@ -89,22 +89,22 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/knowledge-base-attachments/{knowledge-base-attachment-id}")
+	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public void deleteKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledge-base-attachment-id") Long
+			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/knowledge-base-attachments/{knowledge-base-attachment-id}")
+	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledge-base-attachment-id") Long
+			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 

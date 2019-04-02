@@ -61,11 +61,11 @@ public abstract class BaseFormStructureResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/form-structures")
+	@Path("/content-spaces/{contentSpaceId}/form-structures")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public Page<FormStructure> getContentSpaceFormStructuresPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -74,11 +74,11 @@ public abstract class BaseFormStructureResourceImpl
 
 	@Override
 	@GET
-	@Path("/form-structures/{form-structure-id}")
+	@Path("/form-structures/{formStructureId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public FormStructure getFormStructure(
-			@NotNull @PathParam("form-structure-id") Long formStructureId)
+			@NotNull @PathParam("formStructureId") Long formStructureId)
 		throws Exception {
 
 		return new FormStructure();

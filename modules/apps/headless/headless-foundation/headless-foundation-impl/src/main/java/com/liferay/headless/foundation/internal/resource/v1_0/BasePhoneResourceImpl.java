@@ -60,11 +60,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/organizations/{organization-id}/phones")
+	@Path("/organizations/{organizationId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organizationId") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -73,10 +73,10 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
-	@Path("/phones/{phone-id}")
+	@Path("/phones/{phoneId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Phone getPhone(@NotNull @PathParam("phone-id") Long phoneId)
+	public Phone getPhone(@NotNull @PathParam("phoneId") Long phoneId)
 		throws Exception {
 
 		return new Phone();
@@ -90,11 +90,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-account-id}/phones")
+	@Path("/user-accounts/{userAccountId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

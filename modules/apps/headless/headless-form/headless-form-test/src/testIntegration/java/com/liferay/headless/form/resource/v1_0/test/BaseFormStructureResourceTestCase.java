@@ -226,7 +226,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/form-structures",
+					"/content-spaces/{contentSpaceId}/form-structures",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -257,7 +257,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/form-structures",
+					"/content-spaces/{contentSpaceId}/form-structures",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -298,8 +298,7 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/form-structures/{form-structure-id}", formStructureId);
+				_toPath("/form-structures/{formStructureId}", formStructureId);
 
 		options.setLocation(location);
 
@@ -326,8 +325,7 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/form-structures/{form-structure-id}", formStructureId);
+				_toPath("/form-structures/{formStructureId}", formStructureId);
 
 		options.setLocation(location);
 

@@ -60,11 +60,11 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/organizations/{organization-id}/web-urls")
+	@Path("/organizations/{organizationId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getOrganizationWebUrlsPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organizationId") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -79,11 +79,11 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-account-id}/web-urls")
+	@Path("/user-accounts/{userAccountId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -92,10 +92,10 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
-	@Path("/web-urls/{web-url-id}")
+	@Path("/web-urls/{webUrlId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public WebUrl getWebUrl(@NotNull @PathParam("web-url-id") Long webUrlId)
+	public WebUrl getWebUrl(@NotNull @PathParam("webUrlId") Long webUrlId)
 		throws Exception {
 
 		return new WebUrl();

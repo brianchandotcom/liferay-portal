@@ -215,7 +215,7 @@ public abstract class BaseSegmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/segments",
+					"/content-spaces/{contentSpaceId}/segments",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -246,7 +246,7 @@ public abstract class BaseSegmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/segments",
+					"/content-spaces/{contentSpaceId}/segments",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(
@@ -402,7 +402,7 @@ public abstract class BaseSegmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments",
+					"/content-spaces/{contentSpaceId}/user-accounts/{userAccountId}/segments",
 					contentSpaceId, userAccountId);
 
 		location = HttpUtil.addParameter(
@@ -434,7 +434,7 @@ public abstract class BaseSegmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments",
+					"/content-spaces/{contentSpaceId}/user-accounts/{userAccountId}/segments",
 					contentSpaceId, userAccountId);
 
 		location = HttpUtil.addParameter(

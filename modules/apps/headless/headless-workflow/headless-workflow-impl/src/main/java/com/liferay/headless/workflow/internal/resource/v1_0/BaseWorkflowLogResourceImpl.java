@@ -55,11 +55,11 @@ public abstract class BaseWorkflowLogResourceImpl
 
 	@Override
 	@GET
-	@Path("/workflow-logs/{workflow-log-id}")
+	@Path("/workflow-logs/{workflowLogId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public WorkflowLog getWorkflowLog(
-			@NotNull @PathParam("workflow-log-id") Long workflowLogId)
+			@NotNull @PathParam("workflowLogId") Long workflowLogId)
 		throws Exception {
 
 		return new WorkflowLog();
@@ -73,11 +73,11 @@ public abstract class BaseWorkflowLogResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
+	@Path("/workflow-tasks/{workflowTaskId}/workflow-logs")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			@NotNull @PathParam("workflow-task-id") Long workflowTaskId,
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId,
 			@Context Pagination pagination)
 		throws Exception {
 

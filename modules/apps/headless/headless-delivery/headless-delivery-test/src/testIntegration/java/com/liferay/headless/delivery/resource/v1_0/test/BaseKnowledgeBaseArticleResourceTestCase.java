@@ -443,7 +443,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/knowledge-base-articles",
+					"/content-spaces/{contentSpaceId}/knowledge-base-articles",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -480,7 +480,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/knowledge-base-articles",
+					"/content-spaces/{contentSpaceId}/knowledge-base-articles",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -534,7 +534,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/knowledge-base-articles",
+					"/content-spaces/{contentSpaceId}/knowledge-base-articles",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -571,7 +571,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/knowledge-base-articles",
+					"/content-spaces/{contentSpaceId}/knowledge-base-articles",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -617,7 +617,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -640,7 +640,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -679,7 +679,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -710,7 +710,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -769,7 +769,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -807,7 +807,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -863,7 +863,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -901,7 +901,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -1247,7 +1247,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
 					knowledgeBaseArticleId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1284,7 +1284,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
 					knowledgeBaseArticleId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1342,7 +1342,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -1381,7 +1381,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -1730,7 +1730,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles",
+					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 					knowledgeBaseFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1767,7 +1767,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles",
+					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 					knowledgeBaseFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1825,7 +1825,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles",
+					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 					knowledgeBaseFolderId);
 
 		options.setLocation(location);
@@ -1864,7 +1864,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles",
+					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 					knowledgeBaseFolderId);
 
 		options.setLocation(location);

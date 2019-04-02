@@ -138,7 +138,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -158,7 +158,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -190,7 +190,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -217,7 +217,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -267,7 +267,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -301,7 +301,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -348,7 +348,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -382,7 +382,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
 
 		options.setLocation(location);
 
@@ -687,7 +687,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
+					"/content-spaces/{contentSpaceId}/blog-postings",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -723,7 +723,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
+					"/content-spaces/{contentSpaceId}/blog-postings",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -774,7 +774,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
+					"/content-spaces/{contentSpaceId}/blog-postings",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -810,7 +810,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
+					"/content-spaces/{contentSpaceId}/blog-postings",
 					contentSpaceId);
 
 		options.setLocation(location);

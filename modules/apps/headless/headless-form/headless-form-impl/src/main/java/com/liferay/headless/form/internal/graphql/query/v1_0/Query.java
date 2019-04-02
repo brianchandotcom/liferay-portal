@@ -81,7 +81,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Form> getContentSpaceFormsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -99,7 +99,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getForm(@GraphQLName("form-id") Long formId) throws Exception {
+	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -108,7 +108,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getFormFetchLatestDraft(@GraphQLName("form-id") Long formId)
+	public Form getFormFetchLatestDraft(@GraphQLName("formId") Long formId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -120,7 +120,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormDocument getFormDocument(
-			@GraphQLName("form-document-id") Long formDocumentId)
+			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -133,7 +133,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord getFormRecord(
-			@GraphQLName("form-record-id") Long formRecordId)
+			@GraphQLName("formRecordId") Long formRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -146,7 +146,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormRecord> getFormFormRecordsPage(
-			@GraphQLName("form-id") Long formId,
+			@GraphQLName("formId") Long formId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -165,7 +165,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -185,7 +185,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormStructure getFormStructure(
-			@GraphQLName("form-structure-id") Long formStructureId)
+			@GraphQLName("formStructureId") Long formStructureId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

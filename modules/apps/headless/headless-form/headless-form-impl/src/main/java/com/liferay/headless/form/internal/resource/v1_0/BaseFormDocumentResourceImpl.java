@@ -50,21 +50,21 @@ public abstract class BaseFormDocumentResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/form-documents/{form-document-id}")
+	@Path("/form-documents/{formDocumentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public void deleteFormDocument(
-			@NotNull @PathParam("form-document-id") Long formDocumentId)
+			@NotNull @PathParam("formDocumentId") Long formDocumentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/form-documents/{form-document-id}")
+	@Path("/form-documents/{formDocumentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
-			@NotNull @PathParam("form-document-id") Long formDocumentId)
+			@NotNull @PathParam("formDocumentId") Long formDocumentId)
 		throws Exception {
 
 		return new FormDocument();

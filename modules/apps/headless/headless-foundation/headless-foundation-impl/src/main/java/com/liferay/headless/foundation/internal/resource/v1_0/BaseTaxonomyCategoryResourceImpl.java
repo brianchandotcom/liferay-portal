@@ -64,21 +64,21 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/taxonomy-categories/{taxonomy-category-id}")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public void deleteTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId)
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/taxonomy-categories/{taxonomy-category-id}")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory getTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId)
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 
 		return new TaxonomyCategory();
@@ -87,11 +87,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/taxonomy-categories/{taxonomy-category-id}")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory patchTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -148,11 +148,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/taxonomy-categories/{taxonomy-category-id}")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory putTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -169,11 +169,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -184,11 +184,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories")
+	@Path("/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -205,11 +205,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -221,11 +221,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories")
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
-			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+			@NotNull @PathParam("taxonomyVocabularyId") Long
 				taxonomyVocabularyId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {

@@ -64,11 +64,11 @@ public abstract class BaseOrganizationResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/my-user-accounts/{user-account-id}/organizations")
+	@Path("/my-user-accounts/{userAccountId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -98,11 +98,11 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
-	@Path("/organizations/{organization-id}")
+	@Path("/organizations/{organizationId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Organization getOrganization(
-			@NotNull @PathParam("organization-id") Long organizationId)
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception {
 
 		return new Organization();
@@ -118,11 +118,11 @@ public abstract class BaseOrganizationResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/organizations/{organization-id}/organizations")
+	@Path("/organizations/{organizationId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organizationId") Long organizationId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -138,11 +138,11 @@ public abstract class BaseOrganizationResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-account-id}/organizations")
+	@Path("/user-accounts/{userAccountId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getUserAccountOrganizationsPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -50,10 +50,10 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Path("/emails/{email-id}")
+	@Path("/emails/{emailId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Email getEmail(@NotNull @PathParam("email-id") Long emailId)
+	public Email getEmail(@NotNull @PathParam("emailId") Long emailId)
 		throws Exception {
 
 		return new Email();
@@ -61,11 +61,11 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Path("/organizations/{organization-id}/emails")
+	@Path("/organizations/{organizationId}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getOrganizationEmailsPage(
-			@NotNull @PathParam("organization-id") Long organizationId)
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -73,11 +73,11 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Path("/user-accounts/{user-account-id}/emails")
+	@Path("/user-accounts/{userAccountId}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getUserAccountEmailsPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

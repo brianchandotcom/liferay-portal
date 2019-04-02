@@ -397,7 +397,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{contentSpaceId}/documents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -433,7 +433,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{contentSpaceId}/documents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -474,7 +474,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{contentSpaceId}/documents",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -506,7 +506,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{contentSpaceId}/documents",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -538,7 +538,7 @@ public abstract class BaseDocumentResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -557,7 +557,7 @@ public abstract class BaseDocumentResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -585,7 +585,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -611,7 +611,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -637,7 +637,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -666,7 +666,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -694,7 +694,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -723,7 +723,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
+			_resourceURL + _toPath("/documents/{documentId}", documentId);
 
 		options.setLocation(location);
 
@@ -996,7 +996,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1029,7 +1029,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1066,7 +1066,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
 
 		options.setLocation(location);
 
@@ -1095,7 +1095,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
 
 		options.setLocation(location);
 

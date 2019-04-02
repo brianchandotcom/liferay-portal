@@ -70,12 +70,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/structured-content-folders")
+	@Path("/content-spaces/{contentSpaceId}/structured-content-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<StructuredContentFolder>
 			getContentSpaceStructuredContentFoldersPage(
-				@NotNull @PathParam("content-space-id") Long contentSpaceId,
+				@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 				@QueryParam("flatten") Boolean flatten,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
@@ -87,11 +87,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/structured-content-folders")
+	@Path("/content-spaces/{contentSpaceId}/structured-content-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder postContentSpaceStructuredContentFolder(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -100,22 +100,22 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/structured-content-folders/{structured-content-folder-id}")
+	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void deleteStructuredContentFolder(
-			@NotNull @PathParam("structured-content-folder-id") Long
+			@NotNull @PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/structured-content-folders/{structured-content-folder-id}")
+	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {})
 	public StructuredContentFolder getStructuredContentFolder(
-			@NotNull @PathParam("structured-content-folder-id") Long
+			@NotNull @PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 
@@ -125,11 +125,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/structured-content-folders/{structured-content-folder-id}")
+	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder putStructuredContentFolder(
-			@NotNull @PathParam("structured-content-folder-id") Long
+			@NotNull @PathParam("structuredContentFolderId") Long
 				structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
@@ -148,13 +148,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path(
-		"/structured-content-folders/{structured-content-folder-id}/structured-content-folders"
+		"/structured-content-folders/{structuredContentFolderId}/structured-content-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				@NotNull @PathParam("structured-content-folder-id") Long
+				@NotNull @PathParam("structuredContentFolderId") Long
 					structuredContentFolderId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
@@ -167,13 +167,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/structured-content-folders/{structured-content-folder-id}/structured-content-folders"
+		"/structured-content-folders/{structuredContentFolderId}/structured-content-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				@NotNull @PathParam("structured-content-folder-id") Long
+				@NotNull @PathParam("structuredContentFolderId") Long
 					structuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {

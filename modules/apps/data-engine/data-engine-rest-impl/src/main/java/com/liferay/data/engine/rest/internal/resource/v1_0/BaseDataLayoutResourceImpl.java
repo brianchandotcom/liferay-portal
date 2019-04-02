@@ -64,11 +64,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/data-layout")
+	@Path("/content-spaces/{contentSpaceId}/data-layout")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public Page<DataLayout> getContentSpaceDataLayoutPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -78,11 +78,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/data-definitions/{data-definition-id}/data-layouts")
+	@Path("/data-definitions/{dataDefinitionId}/data-layouts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout postDataDefinitionDataLayout(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
 			DataLayout dataLayout)
 		throws Exception {
 
@@ -91,21 +91,21 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 
 	@Override
 	@DELETE
-	@Path("/data-layouts/{data-layout-id}")
+	@Path("/data-layouts/{dataLayoutId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public void deleteDataLayout(
-			@NotNull @PathParam("data-layout-id") Long dataLayoutId)
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/data-layouts/{data-layout-id}")
+	@Path("/data-layouts/{dataLayoutId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout getDataLayout(
-			@NotNull @PathParam("data-layout-id") Long dataLayoutId)
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId)
 		throws Exception {
 
 		return new DataLayout();
@@ -114,11 +114,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/data-layouts/{data-layout-id}")
+	@Path("/data-layouts/{dataLayoutId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout putDataLayout(
-			@NotNull @PathParam("data-layout-id") Long dataLayoutId,
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId,
 			DataLayout dataLayout)
 		throws Exception {
 

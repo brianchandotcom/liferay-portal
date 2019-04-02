@@ -71,11 +71,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/folders")
+	@Path("/content-spaces/{contentSpaceId}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -87,11 +87,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/folders")
+	@Path("/content-spaces/{contentSpaceId}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postContentSpaceFolder(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			Folder folder)
 		throws Exception {
 
@@ -100,19 +100,19 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 
 	@Override
 	@DELETE
-	@Path("/folders/{folder-id}")
+	@Path("/folders/{folderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public void deleteFolder(@NotNull @PathParam("folder-id") Long folderId)
+	public void deleteFolder(@NotNull @PathParam("folderId") Long folderId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/folders/{folder-id}")
+	@Path("/folders/{folderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Folder getFolder(@NotNull @PathParam("folder-id") Long folderId)
+	public Folder getFolder(@NotNull @PathParam("folderId") Long folderId)
 		throws Exception {
 
 		return new Folder();
@@ -121,11 +121,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/folders/{folder-id}")
+	@Path("/folders/{folderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder patchFolder(
-			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folderId") Long folderId, Folder folder)
 		throws Exception {
 
 		preparePatch(folder);
@@ -170,11 +170,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/folders/{folder-id}")
+	@Path("/folders/{folderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder putFolder(
-			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folderId") Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();
@@ -190,11 +190,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/folders/{folder-id}/folders")
+	@Path("/folders/{folderId}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getFolderFoldersPage(
-			@NotNull @PathParam("folder-id") Long folderId,
+			@NotNull @PathParam("folderId") Long folderId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -205,11 +205,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/folders/{folder-id}/folders")
+	@Path("/folders/{folderId}/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postFolderFolder(
-			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folderId") Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();

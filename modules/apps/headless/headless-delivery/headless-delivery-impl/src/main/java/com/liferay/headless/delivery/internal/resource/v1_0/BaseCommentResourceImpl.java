@@ -69,11 +69,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/blog-postings/{blog-posting-id}/comments")
+	@Path("/blog-postings/{blogPostingId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getBlogPostingCommentsPage(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -84,11 +84,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/blog-postings/{blog-posting-id}/comments")
+	@Path("/blog-postings/{blogPostingId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postBlogPostingComment(
-			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
 			Comment comment)
 		throws Exception {
 
@@ -97,19 +97,19 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@DELETE
-	@Path("/comments/{comment-id}")
+	@Path("/comments/{commentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
-	public void deleteComment(@NotNull @PathParam("comment-id") Long commentId)
+	public void deleteComment(@NotNull @PathParam("commentId") Long commentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/comments/{comment-id}")
+	@Path("/comments/{commentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment getComment(@NotNull @PathParam("comment-id") Long commentId)
+	public Comment getComment(@NotNull @PathParam("commentId") Long commentId)
 		throws Exception {
 
 		return new Comment();
@@ -118,11 +118,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/comments/{comment-id}")
+	@Path("/comments/{commentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment putComment(
-			@NotNull @PathParam("comment-id") Long commentId, Comment comment)
+			@NotNull @PathParam("commentId") Long commentId, Comment comment)
 		throws Exception {
 
 		return new Comment();
@@ -138,11 +138,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/comments/{comment-id}/comments")
+	@Path("/comments/{commentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
-			@NotNull @PathParam("comment-id") Long commentId,
+			@NotNull @PathParam("commentId") Long commentId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -153,11 +153,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/comments/{comment-id}/comments")
+	@Path("/comments/{commentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
-			@NotNull @PathParam("comment-id") Long commentId, Comment comment)
+			@NotNull @PathParam("commentId") Long commentId, Comment comment)
 		throws Exception {
 
 		return new Comment();
@@ -173,11 +173,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/documents/{document-id}/comments")
+	@Path("/documents/{documentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getDocumentCommentsPage(
-			@NotNull @PathParam("document-id") Long documentId,
+			@NotNull @PathParam("documentId") Long documentId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -188,11 +188,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/documents/{document-id}/comments")
+	@Path("/documents/{documentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postDocumentComment(
-			@NotNull @PathParam("document-id") Long documentId, Comment comment)
+			@NotNull @PathParam("documentId") Long documentId, Comment comment)
 		throws Exception {
 
 		return new Comment();
@@ -208,12 +208,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/structured-contents/{structured-content-id}/comments")
+	@Path("/structured-contents/{structuredContentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getStructuredContentCommentsPage(
-			@NotNull @PathParam("structured-content-id") Long
-				structuredContentId,
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -224,12 +223,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/structured-contents/{structured-content-id}/comments")
+	@Path("/structured-contents/{structuredContentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postStructuredContentComment(
-			@NotNull @PathParam("structured-content-id") Long
-				structuredContentId,
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
 			Comment comment)
 		throws Exception {
 

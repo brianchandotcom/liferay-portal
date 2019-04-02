@@ -138,7 +138,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies/common",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -168,7 +168,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies/common",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common",
 					contentSpaceId);
 
 		options.setLocation(location);

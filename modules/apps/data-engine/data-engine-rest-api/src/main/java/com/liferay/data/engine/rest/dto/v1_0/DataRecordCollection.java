@@ -55,6 +55,9 @@ public class DataRecordCollection {
 		try {
 			dataDefinitionId = dataDefinitionIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class DataRecordCollection {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -100,6 +106,9 @@ public class DataRecordCollection {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -124,6 +133,9 @@ public class DataRecordCollection {
 
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

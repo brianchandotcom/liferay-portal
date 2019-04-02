@@ -64,22 +64,22 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/message-board-messages/{message-board-message-id}")
+	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public void deleteMessageBoardMessage(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/message-board-messages/{message-board-message-id}")
+	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage getMessageBoardMessage(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId)
 		throws Exception {
 
@@ -89,11 +89,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/message-board-messages/{message-board-message-id}")
+	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage patchMessageBoardMessage(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
@@ -179,11 +179,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/message-board-messages/{message-board-message-id}")
+	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage putMessageBoardMessage(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
@@ -202,13 +202,13 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path(
-		"/message-board-messages/{message-board-message-id}/message-board-messages"
+		"/message-board-messages/{messageBoardMessageId}/message-board-messages"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				@NotNull @PathParam("message-board-message-id") Long
+				@NotNull @PathParam("messageBoardMessageId") Long
 					messageBoardMessageId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
@@ -221,12 +221,12 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/message-board-messages/{message-board-message-id}/message-board-messages"
+		"/message-board-messages/{messageBoardMessageId}/message-board-messages"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
@@ -245,13 +245,13 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path(
-		"/message-board-threads/{message-board-thread-id}/message-board-messages"
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				@NotNull @PathParam("message-board-thread-id") Long
+				@NotNull @PathParam("messageBoardThreadId") Long
 					messageBoardThreadId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
@@ -264,12 +264,12 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/message-board-threads/{message-board-thread-id}/message-board-messages"
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
-			@NotNull @PathParam("message-board-thread-id") Long
+			@NotNull @PathParam("messageBoardThreadId") Long
 				messageBoardThreadId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {

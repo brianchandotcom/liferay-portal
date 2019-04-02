@@ -170,7 +170,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+					"/blog-postings/{blogPostingId}/ratings", blogPostingId);
 
 		options.setLocation(location);
 
@@ -195,7 +195,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+					"/blog-postings/{blogPostingId}/ratings", blogPostingId);
 
 		options.setLocation(location);
 
@@ -234,7 +234,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+					"/blog-postings/{blogPostingId}/ratings", blogPostingId);
 
 		options.setLocation(location);
 
@@ -269,7 +269,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/blog-postings/{blog-posting-id}/ratings", blogPostingId);
+					"/blog-postings/{blogPostingId}/ratings", blogPostingId);
 
 		options.setLocation(location);
 
@@ -341,7 +341,7 @@ public abstract class BaseRatingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/ratings", documentId);
+				_toPath("/documents/{documentId}/ratings", documentId);
 
 		options.setLocation(location);
 
@@ -365,7 +365,7 @@ public abstract class BaseRatingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/ratings", documentId);
+				_toPath("/documents/{documentId}/ratings", documentId);
 
 		options.setLocation(location);
 
@@ -402,7 +402,7 @@ public abstract class BaseRatingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/ratings", documentId);
+				_toPath("/documents/{documentId}/ratings", documentId);
 
 		options.setLocation(location);
 
@@ -436,7 +436,7 @@ public abstract class BaseRatingResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/documents/{document-id}/ratings", documentId);
+				_toPath("/documents/{documentId}/ratings", documentId);
 
 		options.setLocation(location);
 
@@ -517,7 +517,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/ratings",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -543,7 +543,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/ratings",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -584,7 +584,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/ratings",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -620,7 +620,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/ratings",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/ratings",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -702,7 +702,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/ratings",
+					"/message-board-messages/{messageBoardMessageId}/ratings",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -728,7 +728,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/ratings",
+					"/message-board-messages/{messageBoardMessageId}/ratings",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -769,7 +769,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/ratings",
+					"/message-board-messages/{messageBoardMessageId}/ratings",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -805,7 +805,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-messages/{message-board-message-id}/ratings",
+					"/message-board-messages/{messageBoardMessageId}/ratings",
 					messageBoardMessageId);
 
 		options.setLocation(location);
@@ -887,7 +887,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/ratings",
+					"/message-board-threads/{messageBoardThreadId}/ratings",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -913,7 +913,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/ratings",
+					"/message-board-threads/{messageBoardThreadId}/ratings",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -954,7 +954,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/ratings",
+					"/message-board-threads/{messageBoardThreadId}/ratings",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -990,7 +990,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/message-board-threads/{message-board-thread-id}/ratings",
+					"/message-board-threads/{messageBoardThreadId}/ratings",
 					messageBoardThreadId);
 
 		options.setLocation(location);
@@ -1022,7 +1022,7 @@ public abstract class BaseRatingResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1041,7 +1041,7 @@ public abstract class BaseRatingResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1069,7 +1069,7 @@ public abstract class BaseRatingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1095,7 +1095,7 @@ public abstract class BaseRatingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1136,7 +1136,7 @@ public abstract class BaseRatingResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1169,7 +1169,7 @@ public abstract class BaseRatingResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/ratings/{rating-id}", ratingId);
+			_resourceURL + _toPath("/ratings/{ratingId}", ratingId);
 
 		options.setLocation(location);
 
@@ -1249,7 +1249,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/ratings",
+					"/structured-contents/{structuredContentId}/ratings",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1275,7 +1275,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/ratings",
+					"/structured-contents/{structuredContentId}/ratings",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1316,7 +1316,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/ratings",
+					"/structured-contents/{structuredContentId}/ratings",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1352,7 +1352,7 @@ public abstract class BaseRatingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/ratings",
+					"/structured-contents/{structuredContentId}/ratings",
 					structuredContentId);
 
 		options.setLocation(location);

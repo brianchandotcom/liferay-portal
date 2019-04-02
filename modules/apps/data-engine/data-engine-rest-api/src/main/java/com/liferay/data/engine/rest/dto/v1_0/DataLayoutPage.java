@@ -56,6 +56,9 @@ public class DataLayoutPage {
 		try {
 			dataLayoutRows = dataLayoutRowsUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -80,6 +83,9 @@ public class DataLayoutPage {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -103,6 +109,9 @@ public class DataLayoutPage {
 
 		try {
 			title = titleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

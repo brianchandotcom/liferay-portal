@@ -55,6 +55,9 @@ public class DataDefinitionPermission {
 		try {
 			addDataDefinition = addDataDefinitionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,6 +81,9 @@ public class DataDefinitionPermission {
 
 		try {
 			definePermissions = definePermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,6 +109,9 @@ public class DataDefinitionPermission {
 		try {
 			delete = deleteUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -126,6 +135,9 @@ public class DataDefinitionPermission {
 
 		try {
 			roleNames = roleNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -151,6 +163,9 @@ public class DataDefinitionPermission {
 		try {
 			update = updateUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -172,6 +187,9 @@ public class DataDefinitionPermission {
 	public void setView(UnsafeSupplier<Boolean, Exception> viewUnsafeSupplier) {
 		try {
 			view = viewUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

@@ -172,7 +172,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyVocabulary>
 			postContentSpaceTaxonomyVocabulariesCommonPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("contentSpaceId") Long contentSpaceId,
 				@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
 					documentBulkSelection)
 		throws Exception {

@@ -219,7 +219,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/segments/{segment-id}/user-accounts", segmentId);
+				_toPath("/segments/{segmentId}/user-accounts", segmentId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -248,7 +248,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/segments/{segment-id}/user-accounts", segmentId);
+				_toPath("/segments/{segmentId}/user-accounts", segmentId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

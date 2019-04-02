@@ -55,6 +55,9 @@ public class DataDefinitionField {
 		try {
 			defaultValue = defaultValueUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,6 +82,9 @@ public class DataDefinitionField {
 		try {
 			fieldType = fieldTypeUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -100,6 +106,9 @@ public class DataDefinitionField {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -125,6 +134,9 @@ public class DataDefinitionField {
 		try {
 			indexable = indexableUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -148,6 +160,9 @@ public class DataDefinitionField {
 
 		try {
 			label = labelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -173,6 +188,9 @@ public class DataDefinitionField {
 		try {
 			localizable = localizableUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -194,6 +212,9 @@ public class DataDefinitionField {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -219,6 +240,9 @@ public class DataDefinitionField {
 		try {
 			repeatable = repeatableUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -242,6 +266,9 @@ public class DataDefinitionField {
 
 		try {
 			tip = tipUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

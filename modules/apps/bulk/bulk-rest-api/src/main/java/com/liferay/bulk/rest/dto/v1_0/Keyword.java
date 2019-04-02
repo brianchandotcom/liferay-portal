@@ -53,6 +53,9 @@ public class Keyword {
 		try {
 			name = nameUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

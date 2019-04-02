@@ -61,11 +61,11 @@ public abstract class BaseContentListElementResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-lists/{content-list-id}/content-list-elements")
+	@Path("/content-lists/{contentListId}/content-list-elements")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentListElement")})
 	public Page<ContentListElement> getContentListContentListElementsPage(
-			@NotNull @PathParam("content-list-id") Long contentListId,
+			@NotNull @PathParam("contentListId") Long contentListId,
 			@Context Pagination pagination)
 		throws Exception {
 

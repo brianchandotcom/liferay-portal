@@ -63,11 +63,11 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
-	@Path("/my-user-accounts/{user-account-id}")
+	@Path("/my-user-accounts/{userAccountId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount getMyUserAccount(
-			@NotNull @PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -83,11 +83,11 @@ public abstract class BaseUserAccountResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/organizations/{organization-id}/user-accounts")
+	@Path("/organizations/{organizationId}/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organizationId") Long organizationId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -142,21 +142,21 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/user-accounts/{user-account-id}")
+	@Path("/user-accounts/{userAccountId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public void deleteUserAccount(
-			@NotNull @PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/user-accounts/{user-account-id}")
+	@Path("/user-accounts/{userAccountId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount getUserAccount(
-			@NotNull @PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -165,11 +165,11 @@ public abstract class BaseUserAccountResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/user-accounts/{user-account-id}")
+	@Path("/user-accounts/{userAccountId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount putUserAccount(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			UserAccount userAccount)
 		throws Exception {
 
@@ -186,11 +186,11 @@ public abstract class BaseUserAccountResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/web-sites/{web-site-id}/user-accounts")
+	@Path("/web-sites/{webSiteId}/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			@NotNull @PathParam("web-site-id") Long webSiteId,
+			@NotNull @PathParam("webSiteId") Long webSiteId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {

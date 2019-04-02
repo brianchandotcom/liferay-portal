@@ -72,11 +72,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/knowledge-base-articles")
+	@Path("/content-spaces/{contentSpaceId}/knowledge-base-articles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -88,11 +88,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/knowledge-base-articles")
+	@Path("/content-spaces/{contentSpaceId}/knowledge-base-articles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -101,22 +101,22 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void deleteKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-article-id") Long
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
 				knowledgeBaseArticleId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-article-id") Long
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
 				knowledgeBaseArticleId)
 		throws Exception {
 
@@ -126,11 +126,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-article-id") Long
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
 				knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -225,11 +225,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-article-id") Long
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
 				knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -248,13 +248,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles"
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("knowledge-base-article-id") Long
+				@NotNull @PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
@@ -267,12 +267,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles"
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-article-id") Long
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
 				knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -291,13 +291,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path(
-		"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles"
+		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("knowledge-base-folder-id") Long
+				@NotNull @PathParam("knowledgeBaseFolderId") Long
 					knowledgeBaseFolderId,
 				@QueryParam("flatten") Boolean flatten,
 				@QueryParam("search") String search, @Context Filter filter,
@@ -311,12 +311,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles"
+		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledge-base-folder-id") Long
+			@NotNull @PathParam("knowledgeBaseFolderId") Long
 				knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {

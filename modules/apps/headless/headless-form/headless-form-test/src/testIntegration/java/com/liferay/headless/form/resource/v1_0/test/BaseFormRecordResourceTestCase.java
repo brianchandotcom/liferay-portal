@@ -128,7 +128,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
+				_toPath("/form-records/{formRecordId}", formRecordId);
 
 		options.setLocation(location);
 
@@ -155,7 +155,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
+				_toPath("/form-records/{formRecordId}", formRecordId);
 
 		options.setLocation(location);
 
@@ -199,7 +199,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
+				_toPath("/form-records/{formRecordId}", formRecordId);
 
 		options.setLocation(location);
 
@@ -233,7 +233,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
+				_toPath("/form-records/{formRecordId}", formRecordId);
 
 		options.setLocation(location);
 
@@ -348,7 +348,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -376,7 +376,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -420,7 +420,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
 		options.setLocation(location);
 
@@ -453,7 +453,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
 		options.setLocation(location);
 

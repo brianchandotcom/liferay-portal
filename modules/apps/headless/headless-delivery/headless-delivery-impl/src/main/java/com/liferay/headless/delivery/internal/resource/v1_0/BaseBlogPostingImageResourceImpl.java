@@ -62,23 +62,21 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/blog-posting-images/{blog-posting-image-id}")
+	@Path("/blog-posting-images/{blogPostingImageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public void deleteBlogPostingImage(
-			@NotNull @PathParam("blog-posting-image-id") Long
-				blogPostingImageId)
+			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/blog-posting-images/{blog-posting-image-id}")
+	@Path("/blog-posting-images/{blogPostingImageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage getBlogPostingImage(
-			@NotNull @PathParam("blog-posting-image-id") Long
-				blogPostingImageId)
+			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 
 		return new BlogPostingImage();
@@ -94,11 +92,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/blog-posting-images")
+	@Path("/content-spaces/{contentSpaceId}/blog-posting-images")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -109,11 +107,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/content-spaces/{content-space-id}/blog-posting-images")
+	@Path("/content-spaces/{contentSpaceId}/blog-posting-images")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {
 

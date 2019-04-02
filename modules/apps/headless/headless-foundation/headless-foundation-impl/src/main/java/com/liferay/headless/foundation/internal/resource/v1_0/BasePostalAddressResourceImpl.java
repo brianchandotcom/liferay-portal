@@ -61,11 +61,11 @@ public abstract class BasePostalAddressResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/organizations/{organization-id}/postal-addresses")
+	@Path("/organizations/{organizationId}/postal-addresses")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			@NotNull @PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organizationId") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -74,11 +74,11 @@ public abstract class BasePostalAddressResourceImpl
 
 	@Override
 	@GET
-	@Path("/postal-addresses/{postal-address-id}")
+	@Path("/postal-addresses/{postalAddressId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public PostalAddress getPostalAddress(
-			@NotNull @PathParam("postal-address-id") Long postalAddressId)
+			@NotNull @PathParam("postalAddressId") Long postalAddressId)
 		throws Exception {
 
 		return new PostalAddress();
@@ -92,11 +92,11 @@ public abstract class BasePostalAddressResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-account-id}/postal-addresses")
+	@Path("/user-accounts/{userAccountId}/postal-addresses")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

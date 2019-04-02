@@ -55,6 +55,9 @@ public class TaxonomyVocabulary {
 		try {
 			multiValued = multiValuedUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -76,6 +79,9 @@ public class TaxonomyVocabulary {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -100,6 +106,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			required = requiredUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -126,6 +135,9 @@ public class TaxonomyVocabulary {
 		try {
 			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -149,6 +161,9 @@ public class TaxonomyVocabulary {
 
 		try {
 			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

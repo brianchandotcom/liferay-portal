@@ -65,11 +65,11 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/data-record-collections/{data-record-collection-id}/data-records")
+	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			@NotNull @PathParam("data-record-collection-id") Long
+			@NotNull @PathParam("dataRecordCollectionId") Long
 				dataRecordCollectionId,
 			@Context Pagination pagination)
 		throws Exception {
@@ -80,11 +80,11 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/data-record-collections/{data-record-collection-id}/data-records")
+	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord postDataRecordCollectionDataRecord(
-			@NotNull @PathParam("data-record-collection-id") Long
+			@NotNull @PathParam("dataRecordCollectionId") Long
 				dataRecordCollectionId,
 			DataRecord dataRecord)
 		throws Exception {
@@ -95,12 +95,12 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Override
 	@GET
 	@Path(
-		"/data-record-collections/{data-record-collection-id}/data-records/export"
+		"/data-record-collections/{dataRecordCollectionId}/data-records/export"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public String getDataRecordCollectionDataRecordExport(
-			@NotNull @PathParam("data-record-collection-id") Long
+			@NotNull @PathParam("dataRecordCollectionId") Long
 				dataRecordCollectionId)
 		throws Exception {
 
@@ -109,21 +109,21 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 
 	@Override
 	@DELETE
-	@Path("/data-records/{data-record-id}")
+	@Path("/data-records/{dataRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public void deleteDataRecord(
-			@NotNull @PathParam("data-record-id") Long dataRecordId)
+			@NotNull @PathParam("dataRecordId") Long dataRecordId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/data-records/{data-record-id}")
+	@Path("/data-records/{dataRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord getDataRecord(
-			@NotNull @PathParam("data-record-id") Long dataRecordId)
+			@NotNull @PathParam("dataRecordId") Long dataRecordId)
 		throws Exception {
 
 		return new DataRecord();
@@ -132,11 +132,11 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/data-records/{data-record-id}")
+	@Path("/data-records/{dataRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord putDataRecord(
-			@NotNull @PathParam("data-record-id") Long dataRecordId,
+			@NotNull @PathParam("dataRecordId") Long dataRecordId,
 			DataRecord dataRecord)
 		throws Exception {
 

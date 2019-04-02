@@ -210,7 +210,7 @@ public abstract class BaseRoleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/my-user-accounts/{user-account-id}/roles", userAccountId);
+					"/my-user-accounts/{userAccountId}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -240,7 +240,7 @@ public abstract class BaseRoleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/my-user-accounts/{user-account-id}/roles", userAccountId);
+					"/my-user-accounts/{userAccountId}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -322,7 +322,7 @@ public abstract class BaseRoleResourceTestCase {
 	protected Role invokeGetRole(Long roleId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/roles/{role-id}", roleId);
+		String location = _resourceURL + _toPath("/roles/{roleId}", roleId);
 
 		options.setLocation(location);
 
@@ -347,7 +347,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/roles/{role-id}", roleId);
+		String location = _resourceURL + _toPath("/roles/{roleId}", roleId);
 
 		options.setLocation(location);
 
@@ -460,8 +460,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/roles", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -490,8 +489,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/roles", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

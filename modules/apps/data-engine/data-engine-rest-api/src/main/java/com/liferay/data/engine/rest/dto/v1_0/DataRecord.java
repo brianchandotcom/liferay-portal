@@ -55,6 +55,9 @@ public class DataRecord {
 		try {
 			dataRecordCollectionId = dataRecordCollectionIdUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -80,6 +83,9 @@ public class DataRecord {
 		try {
 			dataRecordValues = dataRecordValuesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -101,6 +107,9 @@ public class DataRecord {
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

@@ -431,7 +431,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
+					"/content-spaces/{contentSpaceId}/structured-contents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -467,7 +467,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
+					"/content-spaces/{contentSpaceId}/structured-contents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -520,7 +520,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
+					"/content-spaces/{contentSpaceId}/structured-contents",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -557,7 +557,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
+					"/content-spaces/{contentSpaceId}/structured-contents",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -600,7 +600,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
+					"/content-spaces/{contentSpaceId}/structured-contents/by-key/{key}",
 					contentSpaceId, key);
 
 		options.setLocation(location);
@@ -631,7 +631,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents/by-key/{key}",
+					"/content-spaces/{contentSpaceId}/structured-contents/by-key/{key}",
 					contentSpaceId, key);
 
 		options.setLocation(location);
@@ -672,7 +672,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
+					"/content-spaces/{contentSpaceId}/structured-contents/by-uuid/{uuid}",
 					contentSpaceId, uuid);
 
 		options.setLocation(location);
@@ -704,7 +704,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents/by-uuid/{uuid}",
+					"/content-spaces/{contentSpaceId}/structured-contents/by-uuid/{uuid}",
 					contentSpaceId, uuid);
 
 		options.setLocation(location);
@@ -1038,7 +1038,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-structures/{content-structure-id}/structured-contents",
+					"/content-structures/{contentStructureId}/structured-contents",
 					contentStructureId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1075,7 +1075,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-structures/{content-structure-id}/structured-contents",
+					"/content-structures/{contentStructureId}/structured-contents",
 					contentStructureId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1422,7 +1422,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-content-folders/{structured-content-folder-id}/structured-contents",
+					"/structured-content-folders/{structuredContentFolderId}/structured-contents",
 					structuredContentFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1459,7 +1459,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-content-folders/{structured-content-folder-id}/structured-contents",
+					"/structured-content-folders/{structuredContentFolderId}/structured-contents",
 					structuredContentFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -1516,7 +1516,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-content-folders/{structured-content-folder-id}/structured-contents",
+					"/structured-content-folders/{structuredContentFolderId}/structured-contents",
 					structuredContentFolderId);
 
 		options.setLocation(location);
@@ -1555,7 +1555,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-content-folders/{structured-content-folder-id}/structured-contents",
+					"/structured-content-folders/{structuredContentFolderId}/structured-contents",
 					structuredContentFolderId);
 
 		options.setLocation(location);
@@ -1598,7 +1598,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1621,7 +1621,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1659,7 +1659,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1690,7 +1690,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1745,7 +1745,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1782,7 +1782,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1834,7 +1834,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1871,7 +1871,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}",
+					"/structured-contents/{structuredContentId}",
 					structuredContentId);
 
 		options.setLocation(location);
@@ -1899,7 +1899,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/rendered-content/{template-id}",
+					"/structured-contents/{structuredContentId}/rendered-content/{templateId}",
 					structuredContentId, templateId);
 
 		options.setLocation(location);
@@ -1923,7 +1923,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/structured-contents/{structured-content-id}/rendered-content/{template-id}",
+					"/structured-contents/{structuredContentId}/rendered-content/{templateId}",
 					structuredContentId, templateId);
 
 		options.setLocation(location);

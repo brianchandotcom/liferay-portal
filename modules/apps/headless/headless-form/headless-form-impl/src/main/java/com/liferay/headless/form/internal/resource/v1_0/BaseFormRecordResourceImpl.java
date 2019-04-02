@@ -57,11 +57,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
 	@Override
 	@GET
-	@Path("/form-records/{form-record-id}")
+	@Path("/form-records/{formRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord getFormRecord(
-			@NotNull @PathParam("form-record-id") Long formRecordId)
+			@NotNull @PathParam("formRecordId") Long formRecordId)
 		throws Exception {
 
 		return new FormRecord();
@@ -70,11 +70,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/form-records/{form-record-id}")
+	@Path("/form-records/{formRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord putFormRecord(
-			@NotNull @PathParam("form-record-id") Long formRecordId,
+			@NotNull @PathParam("formRecordId") Long formRecordId,
 			FormRecord formRecord)
 		throws Exception {
 
@@ -89,11 +89,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/forms/{form-id}/form-records")
+	@Path("/forms/{formId}/form-records")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public Page<FormRecord> getFormFormRecordsPage(
-			@NotNull @PathParam("form-id") Long formId,
+			@NotNull @PathParam("formId") Long formId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -103,11 +103,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/forms/{form-id}/form-records")
+	@Path("/forms/{formId}/form-records")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord postFormFormRecord(
-			@NotNull @PathParam("form-id") Long formId, FormRecord formRecord)
+			@NotNull @PathParam("formId") Long formId, FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();

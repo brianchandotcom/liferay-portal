@@ -210,7 +210,7 @@ public abstract class BasePhoneResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/phones", organizationId);
+					"/organizations/{organizationId}/phones", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -240,7 +240,7 @@ public abstract class BasePhoneResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/phones", organizationId);
+					"/organizations/{organizationId}/phones", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -272,7 +272,7 @@ public abstract class BasePhoneResourceTestCase {
 	protected Phone invokeGetPhone(Long phoneId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/phones/{phone-id}", phoneId);
+		String location = _resourceURL + _toPath("/phones/{phoneId}", phoneId);
 
 		options.setLocation(location);
 
@@ -297,7 +297,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/phones/{phone-id}", phoneId);
+		String location = _resourceURL + _toPath("/phones/{phoneId}", phoneId);
 
 		options.setLocation(location);
 
@@ -410,8 +410,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/phones", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/phones", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -440,8 +439,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/phones", userAccountId);
+				_toPath("/user-accounts/{userAccountId}/phones", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

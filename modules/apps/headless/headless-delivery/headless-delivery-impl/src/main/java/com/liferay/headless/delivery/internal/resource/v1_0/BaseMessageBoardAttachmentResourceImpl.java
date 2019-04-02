@@ -55,22 +55,22 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/message-board-attachments/{message-board-attachment-id}")
+	@Path("/message-board-attachments/{messageBoardAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public void deleteMessageBoardAttachment(
-			@NotNull @PathParam("message-board-attachment-id") Long
+			@NotNull @PathParam("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/message-board-attachments/{message-board-attachment-id}")
+	@Path("/message-board-attachments/{messageBoardAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment getMessageBoardAttachment(
-			@NotNull @PathParam("message-board-attachment-id") Long
+			@NotNull @PathParam("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 
@@ -80,13 +80,13 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Override
 	@GET
 	@Path(
-		"/message-board-messages/{message-board-message-id}/message-board-attachments"
+		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
-				@NotNull @PathParam("message-board-message-id") Long
+				@NotNull @PathParam("messageBoardMessageId") Long
 					messageBoardMessageId)
 		throws Exception {
 
@@ -97,12 +97,12 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path(
-		"/message-board-messages/{message-board-message-id}/message-board-attachments"
+		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			@NotNull @PathParam("message-board-message-id") Long
+			@NotNull @PathParam("messageBoardMessageId") Long
 				messageBoardMessageId,
 			MultipartBody multipartBody)
 		throws Exception {
@@ -113,13 +113,13 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Override
 	@GET
 	@Path(
-		"/message-board-threads/{message-board-thread-id}/message-board-attachments"
+		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
-				@NotNull @PathParam("message-board-thread-id") Long
+				@NotNull @PathParam("messageBoardThreadId") Long
 					messageBoardThreadId)
 		throws Exception {
 
@@ -130,12 +130,12 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path(
-		"/message-board-threads/{message-board-thread-id}/message-board-attachments"
+		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
-			@NotNull @PathParam("message-board-thread-id") Long
+			@NotNull @PathParam("messageBoardThreadId") Long
 				messageBoardThreadId,
 			MultipartBody multipartBody)
 		throws Exception {

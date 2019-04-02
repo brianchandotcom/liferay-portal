@@ -55,6 +55,9 @@ public class MessageSelection {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}

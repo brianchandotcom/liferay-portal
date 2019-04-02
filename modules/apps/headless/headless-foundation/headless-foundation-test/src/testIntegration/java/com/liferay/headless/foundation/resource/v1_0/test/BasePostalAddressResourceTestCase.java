@@ -228,7 +228,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/postal-addresses",
+					"/organizations/{organizationId}/postal-addresses",
 					organizationId);
 
 		location = HttpUtil.addParameter(
@@ -259,7 +259,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organization-id}/postal-addresses",
+					"/organizations/{organizationId}/postal-addresses",
 					organizationId);
 
 		location = HttpUtil.addParameter(
@@ -300,8 +300,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/postal-addresses/{postal-address-id}", postalAddressId);
+				_toPath("/postal-addresses/{postalAddressId}", postalAddressId);
 
 		options.setLocation(location);
 
@@ -328,8 +327,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/postal-addresses/{postal-address-id}", postalAddressId);
+				_toPath("/postal-addresses/{postalAddressId}", postalAddressId);
 
 		options.setLocation(location);
 
@@ -461,7 +459,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/postal-addresses",
+					"/user-accounts/{userAccountId}/postal-addresses",
 					userAccountId);
 
 		location = HttpUtil.addParameter(
@@ -492,7 +490,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/user-accounts/{user-account-id}/postal-addresses",
+					"/user-accounts/{userAccountId}/postal-addresses",
 					userAccountId);
 
 		location = HttpUtil.addParameter(

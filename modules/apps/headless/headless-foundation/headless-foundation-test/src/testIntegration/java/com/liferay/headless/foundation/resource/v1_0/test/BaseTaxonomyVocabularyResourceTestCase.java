@@ -432,7 +432,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -469,7 +469,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -523,7 +523,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -560,7 +560,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
+					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -604,7 +604,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -627,7 +627,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -666,7 +666,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -697,7 +697,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -753,7 +753,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -790,7 +790,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -844,7 +844,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);
@@ -881,7 +881,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					"/taxonomy-vocabularies/{taxonomyVocabularyId}",
 					taxonomyVocabularyId);
 
 		options.setLocation(location);

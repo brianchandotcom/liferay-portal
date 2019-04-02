@@ -428,7 +428,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/content-structures",
+					"/content-spaces/{contentSpaceId}/content-structures",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -464,7 +464,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/content-structures",
+					"/content-spaces/{contentSpaceId}/content-structures",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -511,7 +511,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-structures/{content-structure-id}",
+					"/content-structures/{contentStructureId}",
 					contentStructureId);
 
 		options.setLocation(location);
@@ -542,7 +542,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-structures/{content-structure-id}",
+					"/content-structures/{contentStructureId}",
 					contentStructureId);
 
 		options.setLocation(location);

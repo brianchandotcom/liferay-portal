@@ -394,8 +394,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/folders", contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -430,8 +429,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/folders", contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -479,8 +477,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/folders", contentSpaceId);
 
 		options.setLocation(location);
 
@@ -515,8 +512,7 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/folders", contentSpaceId);
 
 		options.setLocation(location);
 
@@ -547,7 +543,7 @@ public abstract class BaseFolderResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -566,7 +562,7 @@ public abstract class BaseFolderResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -594,7 +590,7 @@ public abstract class BaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -620,7 +616,7 @@ public abstract class BaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -663,7 +659,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -696,7 +692,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -739,7 +735,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -772,7 +768,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+			_resourceURL + _toPath("/folders/{folderId}", folderId);
 
 		options.setLocation(location);
 
@@ -1042,7 +1038,7 @@ public abstract class BaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/folders", folderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1075,7 +1071,7 @@ public abstract class BaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/folders", folderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1120,7 +1116,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/folders", folderId);
 
 		options.setLocation(location);
 
@@ -1153,7 +1149,7 @@ public abstract class BaseFolderResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+			_resourceURL + _toPath("/folders/{folderId}/folders", folderId);
 
 		options.setLocation(location);
 

@@ -187,7 +187,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -214,7 +214,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -250,7 +250,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -284,7 +284,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments",
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments",
 					knowledgeBaseArticleId);
 
 		options.setLocation(location);
@@ -331,7 +331,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-attachments/{knowledge-base-attachment-id}",
+					"/knowledge-base-attachments/{knowledgeBaseAttachmentId}",
 					knowledgeBaseAttachmentId);
 
 		options.setLocation(location);
@@ -354,7 +354,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-attachments/{knowledge-base-attachment-id}",
+					"/knowledge-base-attachments/{knowledgeBaseAttachmentId}",
 					knowledgeBaseAttachmentId);
 
 		options.setLocation(location);
@@ -394,7 +394,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-attachments/{knowledge-base-attachment-id}",
+					"/knowledge-base-attachments/{knowledgeBaseAttachmentId}",
 					knowledgeBaseAttachmentId);
 
 		options.setLocation(location);
@@ -425,7 +425,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-attachments/{knowledge-base-attachment-id}",
+					"/knowledge-base-attachments/{knowledgeBaseAttachmentId}",
 					knowledgeBaseAttachmentId);
 
 		options.setLocation(location);

@@ -62,11 +62,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/data-definition-permissions")
+	@Path("/content-spaces/{contentSpaceId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postContentSpaceDataDefinitionPermission(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@NotNull @QueryParam("operation") String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
@@ -80,11 +80,11 @@ public abstract class BaseDataDefinitionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/data-definitions")
+	@Path("/content-spaces/{contentSpaceId}/data-definitions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public Page<DataDefinition> getContentSpaceDataDefinitionsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
@@ -95,11 +95,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/data-definitions")
+	@Path("/content-spaces/{contentSpaceId}/data-definitions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition postContentSpaceDataDefinition(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			DataDefinition dataDefinition)
 		throws Exception {
 
@@ -108,21 +108,21 @@ public abstract class BaseDataDefinitionResourceImpl
 
 	@Override
 	@DELETE
-	@Path("/data-definitions/{data-definition-id}")
+	@Path("/data-definitions/{dataDefinitionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void deleteDataDefinition(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId)
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/data-definitions/{data-definition-id}")
+	@Path("/data-definitions/{dataDefinitionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition getDataDefinition(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId)
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
 
 		return new DataDefinition();
@@ -131,11 +131,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/data-definitions/{data-definition-id}")
+	@Path("/data-definitions/{dataDefinitionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition putDataDefinition(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
 			DataDefinition dataDefinition)
 		throws Exception {
 
@@ -145,11 +145,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/data-definitions/{data-definition-id}/data-definition-permissions")
+	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postDataDefinitionDataDefinitionPermission(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
 			@NotNull @QueryParam("operation") String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {

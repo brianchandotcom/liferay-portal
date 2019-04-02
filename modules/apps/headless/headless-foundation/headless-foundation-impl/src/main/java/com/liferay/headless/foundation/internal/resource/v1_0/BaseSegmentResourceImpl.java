@@ -60,11 +60,11 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/segments")
+	@Path("/content-spaces/{contentSpaceId}/segments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getContentSpaceSegmentsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -80,13 +80,13 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 		}
 	)
 	@Path(
-		"/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments"
+		"/content-spaces/{contentSpaceId}/user-accounts/{userAccountId}/segments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getContentSpaceUserAccountSegmentsPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@NotNull @PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+			@NotNull @PathParam("userAccountId") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

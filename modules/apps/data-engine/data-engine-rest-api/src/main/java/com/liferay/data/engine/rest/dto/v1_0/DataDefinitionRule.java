@@ -57,6 +57,9 @@ public class DataDefinitionRule {
 			dataDefinitionFieldNames =
 				dataDefinitionFieldNamesUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -85,6 +88,9 @@ public class DataDefinitionRule {
 			dataDefinitionRuleParameters =
 				dataDefinitionRuleParametersUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -106,6 +112,9 @@ public class DataDefinitionRule {
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -130,6 +139,9 @@ public class DataDefinitionRule {
 
 		try {
 			ruleType = ruleTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.list.web.internal.servlet.taglib.util;
 
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -113,24 +111,10 @@ public class AssetEntryListActionDropdownItems {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getEditAssetListEntryActionUnsafeConsumer() {
 
-		PortletURL editAssetEntryListURL =
-			_liferayPortletResponse.createRenderURL();
-
-		if (Objects.equals(
-				_assetListEntry.getType(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
-
-			editAssetEntryListURL.setParameter(
-				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
-		}
-		else {
-			editAssetEntryListURL.setParameter(
-				"mvcPath", "/edit_asset_list_entry_manual.jsp");
-		}
-
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				editAssetEntryListURL, "redirect",
+				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				"/edit_asset_list_entry.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "assetListEntryId",
 				_assetListEntry.getAssetListEntryId());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));

@@ -47,13 +47,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 					if (AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE)) {
 						PortletURL editAssetListEntryURL = liferayPortletResponse.createRenderURL();
 
-						if (assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-							editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry_dynamic.jsp");
-						}
-						else {
-							editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry_manual.jsp");
-						}
-
+						editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
 						editAssetListEntryURL.setParameter("redirect", currentURL);
 						editAssetListEntryURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
 

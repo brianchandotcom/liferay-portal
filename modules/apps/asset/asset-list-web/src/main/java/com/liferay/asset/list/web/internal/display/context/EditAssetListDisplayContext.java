@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
@@ -622,17 +621,7 @@ public class EditAssetListDisplayContext {
 			_portletRequest, AssetListPortletKeys.ASSET_LIST,
 			PortletRequest.RENDER_PHASE);
 
-		if (getAssetListEntryType() ==
-				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-
-			portletURL.setParameter(
-				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcPath", "/edit_asset_list_entry_manual.jsp");
-		}
-
+		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
 

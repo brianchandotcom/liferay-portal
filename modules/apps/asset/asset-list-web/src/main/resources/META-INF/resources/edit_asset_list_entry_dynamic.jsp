@@ -26,11 +26,6 @@ if (Validator.isNull(redirect)) {
 }
 
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
 <portlet:actionURL name="/asset_list/update_asset_list_entry_dynamic" var="updateAssetListEntryDynamicURL" />

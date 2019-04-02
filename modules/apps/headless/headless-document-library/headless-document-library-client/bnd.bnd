@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Headless Document Library Client
-Bundle-SymbolicName: com.liferay.headless.document.library.client
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.headless.document.library.client.dto.v1_0

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Headless Collaboration Client
-Bundle-SymbolicName: com.liferay.headless.collaboration.client
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.headless.collaboration.client.dto.v1_0

@@ -68,7 +68,8 @@ public class AssetDisplayPagesItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, AssetDisplayPagesItemSelectorView.class);
 
-		return ResourceBundleUtil.getString(resourceBundle, "display-pages");
+		return ResourceBundleUtil.getString(
+			resourceBundle, "display-page-templates");
 	}
 
 	@Override

@@ -77,13 +77,10 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 			<div class="text-secondary">
 				<c:choose>
 					<c:when test="<%= assetEntryUsage.getClassNameId() == PortalUtil.getClassNameId(AssetDisplayPageEntry.class) %>">
-						<liferay-ui:message key="display-page" />
+						<liferay-ui:message key="display-page-template" />
 					</c:when>
 					<c:when test="<%= assetEntryUsage.getClassNameId() == PortalUtil.getClassNameId(Layout.class) %>">
 						<liferay-ui:message key="page" />
-					</c:when>
-					<c:when test="<%= assetEntryUsage.getClassNameId() == PortalUtil.getClassNameId(FragmentEntryLink.class) %>">
-						<liferay-ui:message key="fragment" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:message key="page-template" />

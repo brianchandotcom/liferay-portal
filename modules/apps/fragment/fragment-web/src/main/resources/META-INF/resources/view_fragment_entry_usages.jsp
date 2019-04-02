@@ -79,11 +79,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								<%
 								PortletURL displayPagesNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
-								displayPagesNavigationURL.setParameter("navigation", "display-pages");
+								displayPagesNavigationURL.setParameter("navigation", "display-page-templates");
 								%>
 
-								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 								</a>
 							</li>
 						</ul>
@@ -102,8 +102,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") %>'>
 							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 						</c:when>
-						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-pages") %>'>
-							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-page-templates") %>'>
+							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />

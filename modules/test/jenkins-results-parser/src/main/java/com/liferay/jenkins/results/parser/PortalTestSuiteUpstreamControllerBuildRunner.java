@@ -32,14 +32,35 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	@Override
 	public void run() {
 		if (_previousBuildHasCurrentSHA()) {
+			BuildData buildData = getBuildData();
+
+			buildData.setBuildDescription(
+				JenkinsResultsParserUtil.combine(
+					"SKIPPED: ", _getPortalBranchAbbreviatedSHA(),
+					" was already ran"));
+
+			super.updateBuildDescription();
+
 			return;
 		}
 
 		if (_previousBuildHasExistingInvocation()) {
+			BuildData buildData = getBuildData();
+
+			buildData.setBuildDescription("SKIPPED: Job was already invoked");
+
+			super.updateBuildDescription();
+
 			return;
 		}
 
 		if (_previousBuildHasRunningInvocation()) {
+			BuildData buildData = getBuildData();
+
+			buildData.setBuildDescription("SKIPPED: Job is already running");
+
+			super.updateBuildDescription();
+
 			return;
 		}
 

@@ -1306,6 +1306,70 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
+    "/content-spaces/{contentSpaceId}/content-sets/by-key/{key}/content-set-elements":
+        get:
+            parameters:
+                - in: path
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: key
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSetElement"
+                                type: array
+                    description: ""
+            tags: ["ContentSetElement"]
+    "/content-spaces/{contentSpaceId}/content-sets/by-uuid/{uuid}/content-set-elements":
+        get:
+            parameters:
+                - in: path
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: uuid
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSetElement"
+                                type: array
+                    description: ""
+            tags: ["ContentSetElement"]
     "/content-spaces/{contentSpaceId}/content-structures":
         get:
             parameters:

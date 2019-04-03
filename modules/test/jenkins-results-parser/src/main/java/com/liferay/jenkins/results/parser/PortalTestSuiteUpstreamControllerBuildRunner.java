@@ -31,6 +31,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
+		retirePreviousBuilds();
+
 		if (_previousBuildHasCurrentSHA()) {
 			BuildData buildData = getBuildData();
 
@@ -66,7 +68,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		updateBuildDescription();
 
-		keepLogs(true);
+		keepBuildLogs(true);
 
 		_invokeJob();
 	}

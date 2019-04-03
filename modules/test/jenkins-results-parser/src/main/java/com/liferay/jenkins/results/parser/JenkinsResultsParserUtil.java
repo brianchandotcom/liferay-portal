@@ -1745,6 +1745,27 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static void keepBuildLogs(
+		boolean keepBuildLogs, int buildNumber, String jobName,
+		String masterHostname) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
+		sb.append(jobName);
+		sb.append("\"); ");
+
+		sb.append("def build = job.getBuildByNumber(");
+		sb.append(buildNumber);
+		sb.append("); ");
+
+		sb.append("build.keepLog(");
+		sb.append(keepBuildLogs);
+		sb.append(");");
+
+		executeJenkinsScript(masterHostname, "script=" + sb.toString());
+	}
+
 	public static void move(File sourceFile, File targetFile)
 		throws IOException {
 

@@ -110,23 +110,10 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	protected abstract void initWorkspace();
 
-	protected void keepLogs(boolean keepLogs) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
-		sb.append(_buildData.getJobName());
-		sb.append("\"); ");
-
-		sb.append("def build = job.getBuildByNumber(");
-		sb.append(_buildData.getBuildNumber());
-		sb.append("); ");
-
-		sb.append("build.keepLog(");
-		sb.append(keepLogs);
-		sb.append(");");
-
-		JenkinsResultsParserUtil.executeJenkinsScript(
-			_buildData.getMasterHostname(), "script=" + sb.toString());
+	protected void keepBuildLogs(boolean keepLogs) {
+		JenkinsResultsParserUtil.keepBuildLogs(
+			keepLogs, _buildData.getBuildNumber(), _buildData.getJobName(),
+			_buildData.getMasterHostname());
 	}
 
 	protected void publishToUserContentDir(File file) {
@@ -186,6 +173,54 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 		}
 	}
 
+	protected void retirePreviousBuilds() {
+		long allowedBuildAge = 7 * _MILLISECONDS_PER_DAY;
+
+		String allowedBuildAgeInDays = System.getenv(
+			"ALLOWED_BUILD_AGE_IN_DAYS");
+
+		if ((allowedBuildAgeInDays != null) &&
+			!allowedBuildAgeInDays.isEmpty()) {
+
+			allowedBuildAge =
+				Integer.parseInt(allowedBuildAgeInDays) * _MILLISECONDS_PER_DAY;
+		}
+
+		long allowedBuildStartTime =
+			System.currentTimeMillis() - allowedBuildAge;
+
+		for (JSONObject previousBuildJSONObject :
+				getPreviousBuildJSONObjects()) {
+
+			long previousBuildStartTime = previousBuildJSONObject.getLong(
+				"timestamp");
+
+			if (previousBuildStartTime > allowedBuildStartTime) {
+				continue;
+			}
+
+			try {
+				JSONObject injectedEnvVarsJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(
+							previousBuildJSONObject.getString("url") +
+								"/injectedEnvVars/api/json"));
+
+				JSONObject envMapJSONObject =
+					injectedEnvVarsJSONObject.getJSONObject("envMap");
+
+				JenkinsResultsParserUtil.keepBuildLogs(
+					false,
+					Integer.valueOf(envMapJSONObject.getString("BUILD_NUMBER")),
+					envMapJSONObject.getString("JOB_NAME"),
+					envMapJSONObject.getString("HOSTNAME"));
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+	}
+
 	protected void setUpWorkspace() {
 		if (_workspace == null) {
 			initWorkspace();
@@ -215,6 +250,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 			_buildData.getBuildDescription(), _buildData.getBuildNumber(),
 			_buildData.getJobName(), _buildData.getMasterHostname());
 	}
+
+	private static final long _MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
 	private final T _buildData;
 	private final Job _job;

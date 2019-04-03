@@ -992,6 +992,14 @@ definition {
 
 		var key_dmFolderName = "${dmFolderName}";
 
+		if (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectFolder#CHOOSE_BUTTON")) {
+			AssertClick(
+				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+				value1 = "Home",
+				var key_breadcrumbName = "Home"
+			);
+		}
+
 		AssertClick(
 			locator1 = "DocumentsAndMediaSelectFolder#CHOOSE_BUTTON",
 			value1 = "Choose"

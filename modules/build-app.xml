@@ -79,9 +79,12 @@
 				<property file="@{app.dir}/app.bnd" />
 
 				<if>
-					<not>
-						<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
-					</not>
+					<and>
+						<available file="@{app.dir}/app.bnd" />
+						<not>
+							<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
+						</not>
+					</and>
 					<then>
 						<ant inheritAll="false" target="delete-app">
 							<property name="app.name" value="${app.name}" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.login.authentication.google.web.internal.portlet.action;
+package com.liferay.portal.security.sso.google.login.authentication.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -124,7 +124,7 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)"
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google.login.authentication.web)"
 	)
 	private ServletContext _servletContext;
 

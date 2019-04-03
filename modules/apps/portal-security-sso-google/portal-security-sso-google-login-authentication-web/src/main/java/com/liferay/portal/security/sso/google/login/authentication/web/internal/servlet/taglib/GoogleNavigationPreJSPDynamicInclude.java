@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.login.authentication.google.web.internal.servlet.taglib;
+package com.liferay.portal.security.sso.google.login.authentication.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,7 +72,7 @@ public class GoogleNavigationPreJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google.login.authentication.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

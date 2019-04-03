@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.portal.security.sso.google.login.authentication.web.internal.portlet.action.GoogleLoginAction" />
+		<Method name="execute" />
+		<Bug pattern="UNVALIDATED_REDIRECT" />
+	</Match>
+</FindBugsFilter>

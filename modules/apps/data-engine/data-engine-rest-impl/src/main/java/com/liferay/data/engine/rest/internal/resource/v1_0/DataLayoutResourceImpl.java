@@ -378,7 +378,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-	
+
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 

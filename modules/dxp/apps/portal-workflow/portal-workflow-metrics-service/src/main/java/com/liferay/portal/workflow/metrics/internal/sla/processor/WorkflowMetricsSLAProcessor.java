@@ -16,9 +16,14 @@ package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +31,8 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.filter.DateRangeFilterBuilder;
+import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.SortOrder;
@@ -57,10 +64,27 @@ public class WorkflowMetricsSLAProcessor {
 		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		List<TaskInterval> taskIntervals = _getTaskIntervals(
-			companyId, nowLocalDateTime, instanceId);
+		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult =
+			fetchLastWorkflowMetricsSLAProcessResult(
+				workflowMetricsSLADefinition, instanceId);
+
+		LocalDateTime lastCheckLocalDateTime = null;
 
 		long elapsedTime = 0;
+
+		if (lastWorkflowMetricsSLAProcessResult != null) {
+			elapsedTime = lastWorkflowMetricsSLAProcessResult.getElapsedTime();
+
+			lastCheckLocalDateTime =
+				lastWorkflowMetricsSLAProcessResult.getLastCheckLocalDateTime();
+
+			if (lastCheckLocalDateTime.isAfter(nowLocalDateTime)) {
+				return Optional.empty();
+			}
+		}
+
+		List<TaskInterval> taskIntervals = _getTaskIntervals(
+			companyId, lastCheckLocalDateTime, nowLocalDateTime, instanceId);
 
 		for (TaskInterval taskInterval : taskIntervals) {
 			Duration duration = Duration.between(
@@ -96,10 +120,85 @@ public class WorkflowMetricsSLAProcessor {
 			workfowMetricsSLAStatus);
 
 		return Optional.of(workflowMetricsSLAProcessResult);
-
 	}
 
-	protected List<Document> getDocuments(long companyId, long instanceId) {
+	protected WorkflowMetricsSLAProcessResult
+		fetchLastWorkflowMetricsSLAProcessResult(
+			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+			long instanceId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-sla-process-result");
+		searchSearchRequest.setQuery(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm(
+									"companyId",
+									workflowMetricsSLADefinition.
+										getCompanyId());
+
+								addRequiredTerm("instanceId", instanceId);
+							}
+						});
+				}
+			});
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		if (ListUtil.isEmpty(searchHitList)) {
+			return null;
+		}
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		Document document = searchHit.getDocument();
+
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
+			new WorkflowMetricsSLAProcessResult();
+
+		workflowMetricsSLAProcessResult.setCompanyId(
+			workflowMetricsSLADefinition.getCompanyId());
+
+		workflowMetricsSLAProcessResult.setElapsedTime(
+			document.getLong("elapsedTime"));
+
+		workflowMetricsSLAProcessResult.setInstanceId(instanceId);
+
+		workflowMetricsSLAProcessResult.setLastCheckLocalDateTime(
+			LocalDateTimeUtil.toLocalDateTime(document, "lastCheckDate"));
+		workflowMetricsSLAProcessResult.setOnTime(
+			GetterUtil.getBoolean(document.getValue("onTime")));
+		workflowMetricsSLAProcessResult.setOverdueLocalDateTime(
+			LocalDateTimeUtil.toLocalDateTime(document, "overdueDate"));
+
+		workflowMetricsSLAProcessResult.setProcessId(
+			workflowMetricsSLADefinition.getProcessId());
+
+		workflowMetricsSLAProcessResult.setRemainingTime(
+			document.getLong("remainingTime"));
+
+		workflowMetricsSLAProcessResult.setSLADefinitionId(
+			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+
+		workflowMetricsSLAProcessResult.setWorkfowMetricsSLAStatus(
+			WorkfowMetricsSLAStatus.valueOf(document.getString("status")));
+
+		return workflowMetricsSLAProcessResult;
+	}
+
+	protected List<Document> getDocuments(
+		long companyId, long instanceId, LocalDateTime lastCheckLocalDateTime) {
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addSorts(
@@ -116,9 +215,26 @@ public class WorkflowMetricsSLAProcessor {
 						new BooleanFilter() {
 							{
 								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("completed", false);
 								addRequiredTerm("deleted", false);
 								addRequiredTerm("instanceId", instanceId);
+
+								if (lastCheckLocalDateTime != null) {
+									add(
+										_createCompletionDateRangeFilter(
+											lastCheckLocalDateTime),
+										BooleanClauseOccur.SHOULD);
+									add(
+										new BooleanFilter() {
+											{
+												add(
+													new ExistsFilter(
+														"completionDate"),
+													BooleanClauseOccur.
+														MUST_NOT);
+											}
+										},
+										BooleanClauseOccur.SHOULD);
+								}
 							}
 						});
 				}
@@ -140,10 +256,32 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
-	private List<TaskInterval> _getTaskIntervals(
-		long companyId, LocalDateTime nowLocalDateTime, long instanceId) {
+	@Reference
+	protected FilterBuilders filterBuilders;
 
-		List<Document> documents = getDocuments(companyId, instanceId);
+	private Filter _createCompletionDateRangeFilter(
+		LocalDateTime lastCheckLocalDateTime) {
+
+		DateRangeFilterBuilder completionDateRangeFilterBuilder =
+			filterBuilders.dateRangeFilterBuilder();
+
+		completionDateRangeFilterBuilder.setFieldName("completionDate");
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+			_INDEX_DATE_FORMAT_PATTERN);
+
+		completionDateRangeFilterBuilder.setFrom(
+			formatter.format(lastCheckLocalDateTime));
+
+		return completionDateRangeFilterBuilder.build();
+	}
+
+	private List<TaskInterval> _getTaskIntervals(
+		long companyId, LocalDateTime lastCheckLocalDateTime,
+		LocalDateTime nowLocalDateTime, long instanceId) {
+
+		List<Document> documents = getDocuments(
+			companyId, instanceId, lastCheckLocalDateTime);
 
 		if (documents.isEmpty()) {
 			return Collections.emptyList();
@@ -151,13 +289,15 @@ public class WorkflowMetricsSLAProcessor {
 
 		Stack<TaskInterval> taskIntervals = new Stack<>();
 
-		taskIntervals.push(_toTaskInterval(documents.get(0), nowLocalDateTime));
+		taskIntervals.push(
+			_toTaskInterval(
+				documents.get(0), lastCheckLocalDateTime, nowLocalDateTime));
 
 		for (int i = 1; i < documents.size(); i++) {
 			TaskInterval topTaskInterval = taskIntervals.peek();
 
 			TaskInterval taskInterval = _toTaskInterval(
-				documents.get(i), nowLocalDateTime);
+				documents.get(i), lastCheckLocalDateTime, nowLocalDateTime);
 
 			LocalDateTime topEndLocalDateTime =
 				topTaskInterval.getEndDateLocalDateTime();
@@ -189,7 +329,8 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private TaskInterval _toTaskInterval(
-		Document document, LocalDateTime nowLocalDateTime) {
+		Document document, LocalDateTime lastCheckLocalDateTime,
+		LocalDateTime nowLocalDateTime) {
 
 		TaskInterval taskInterval = new TaskInterval();
 
@@ -201,8 +342,17 @@ public class WorkflowMetricsSLAProcessor {
 				document, "completionDate");
 		}
 
-		taskInterval._startDateLocalDateTime = _toLocalDateTime(
+		LocalDateTime createDateLocalDateTime = _toLocalDateTime(
 			document, "createDate");
+
+		if ((lastCheckLocalDateTime != null) &&
+			lastCheckLocalDateTime.isAfter(createDateLocalDateTime)) {
+
+			taskInterval._startDateLocalDateTime = lastCheckLocalDateTime;
+		}
+		else {
+			taskInterval._startDateLocalDateTime = createDateLocalDateTime;
+		}
 
 		return taskInterval;
 	}

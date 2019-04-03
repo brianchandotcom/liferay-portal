@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>SITES_NAVIGATION</td>
-	<td>//ol//a[contains(.,'sites')]</td>
+	<td>//a[contains(.,'sites')]</td>
 	<td></td>
 </tr>
 <tr>

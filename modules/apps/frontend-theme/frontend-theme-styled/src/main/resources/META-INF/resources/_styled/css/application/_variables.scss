@@ -78,43 +78,6 @@ $file-icon-text-color-5: #FF5F5F !default;
 $file-icon-text-color-6: #4B9BFF !default;
 $file-icon-text-color-7: #272833 !default;
 
-/* ---------- palette colors ---------- */
-
-$palette-blue: $blue !default;
-$palette-cyan: $cyan !default;
-$palette-gray-600: $gray-600 !default;
-$palette-gray-800: $gray-800 !default;
-$palette-green: $green !default;
-$palette-indigo: $indigo !default;
-$palette-orange: $orange !default;
-$palette-pink: $pink !default;
-$palette-purple: $purple !default;
-$palette-red: $red !default;
-$palette-teal: $teal !default;
-$palette-white: $white !default;
-$palette-yellow: $yellow !default;
-
-$palette-colors: () !default;
-
-$palette-colors: map-merge(
-	(
-		"blue": $palette-blue,
-		"cyan": $palette-cyan,
-		"gray-dark": $palette-gray-800,
-		"gray": $palette-gray-600,
-		"green": $palette-green,
-		"indigo": $palette-indigo,
-		"orange": $palette-orange,
-		"pink": $palette-pink,
-		"purple": $palette-purple,
-		"red": $palette-red,
-		"teal": $palette-teal,
-		"white": $palette-white,
-		"yellow": $palette-yellow
-	),
-	$palette-colors
-);
-
 /* ---------- User icons background colors ---------- */
 
 $user-icon-bg-color-0: #FFF !default;

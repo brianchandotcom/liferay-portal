@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>IMAGE_TITLE</td>
-	<td>//div[contains(@class,'image')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td>//div[contains(@class,'image')]//span[contains(@class,'card-title') and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

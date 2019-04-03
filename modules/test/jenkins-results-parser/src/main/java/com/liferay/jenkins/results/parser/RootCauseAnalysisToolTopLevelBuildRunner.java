@@ -105,11 +105,11 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
 		}
 		catch (Exception e) {
-			String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+			String portalGitHubURL = getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
-					_PORTAL_BRANCH_SHAS,
+					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS,
 					" has SHAs that are not be found within the latest ",
 					String.valueOf(WorkspaceGitRepository.MAX_COMMIT_HISTORY),
 					" commits of <a href=\"", portalGitHubURL, "\">",
@@ -183,11 +183,11 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return maxCommitGroupCount;
 		}
 
-		return _DEFAULT_MAX_COMMIT_GROUP_COUNT;
+		return _COMMITS_GROUP_SIZE_MAX_DEFAULT;
 	}
 
 	private List<String> _getPortalBranchSHAs() {
-		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
+		String portalBranchSHAs = getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS);
 
 		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
 			WorkspaceGitRepository workspaceGitRepository =
@@ -243,7 +243,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 	private List<String> _getTestList() {
 		String portalBatchTestSelector = getBuildParameter(
-			_PORTAL_BATCH_TEST_SELECTOR);
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR);
 
 		List<String> list = new ArrayList<>();
 
@@ -261,14 +261,14 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private void _validateBuildParameterJenkinsGitHubURL() {
-		String jenkinsGitHubURL = getBuildParameter(_JENKINS_GITHUB_URL);
+		String jenkinsGitHubURL = getBuildParameter(_NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL);
 
 		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.isEmpty()) {
 			return;
 		}
 
 		String failureMessage = JenkinsResultsParserUtil.combine(
-			_JENKINS_GITHUB_URL,
+			_NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL,
 			" has an invalid Jenkins GitHub URL <a href=\"", jenkinsGitHubURL,
 			"\">", jenkinsGitHubURL, "</a>");
 
@@ -286,16 +286,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private void _validateBuildParameterPortalBatchName() {
-		String portalBatchName = getBuildParameter(_PORTAL_BATCH_NAME);
+		String portalBatchName = getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_BATCH);
 
 		if ((portalBatchName == null) || portalBatchName.isEmpty()) {
-			failBuildRunner(_PORTAL_BATCH_NAME + " is null");
+			failBuildRunner(_NAME_BUILD_PARAMETER_PORTAL_BATCH + " is null");
 		}
 
 		String allowedPortalBatchNames = getJobProperty(
 			JenkinsResultsParserUtil.combine(
 				"allowed.portal.batch.names[",
-				getBuildParameter(_PORTAL_UPSTREAM_BRANCH_NAME), "]"));
+				getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME), "]"));
 
 		if ((allowedPortalBatchNames == null) ||
 			allowedPortalBatchNames.isEmpty()) {
@@ -309,7 +309,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		if (!allowedPortalBatchNamesList.contains(portalBatchName)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(_PORTAL_BATCH_NAME);
+			sb.append(_NAME_BUILD_PARAMETER_PORTAL_BATCH);
 			sb.append(" must match one of the following: ");
 
 			sb.append("<ul>");
@@ -328,17 +328,17 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 	private void _validateBuildParameterPortalBatchTestSelector() {
 		String portalBatchTestSelector = getBuildParameter(
-			_PORTAL_BATCH_TEST_SELECTOR);
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR);
 
 		if ((portalBatchTestSelector == null) ||
 			portalBatchTestSelector.isEmpty()) {
 
-			failBuildRunner(_PORTAL_BATCH_TEST_SELECTOR + " is null");
+			failBuildRunner(_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR + " is null");
 		}
 	}
 
 	private void _validateBuildParameterPortalBranchSHAs() {
-		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
+		String portalBranchSHAs = getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS);
 
 		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
 			return;
@@ -356,21 +356,21 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		if (portalBranchSHACount > allowedPortalBranchSHAs) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
-					_PORTAL_BRANCH_SHAS, " can only reference ",
+					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS, " can only reference ",
 					String.valueOf(allowedPortalBranchSHAs),
 					" portal branch SHAs"));
 		}
 	}
 
 	private void _validateBuildParameterPortalGitHubURL() {
-		String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+		String portalGitHubURL = getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 
 		if ((portalGitHubURL == null) || portalGitHubURL.isEmpty()) {
-			failBuildRunner(_PORTAL_GITHUB_URL + " is null");
+			failBuildRunner(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL + " is null");
 		}
 
 		String failureMessage = JenkinsResultsParserUtil.combine(
-			_PORTAL_GITHUB_URL, " has an invalid Portal GitHub URL <a href=\"",
+			_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL, " has an invalid Portal GitHub URL <a href=\"",
 			portalGitHubURL, "\">", portalGitHubURL, "</a>");
 
 		Matcher matcher = _pattern.matcher(portalGitHubURL);
@@ -390,12 +390,12 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 	private void _validateBuildParameterPortalUpstreamBranchName() {
 		String portalUpstreamBranchName = getBuildParameter(
-			_PORTAL_UPSTREAM_BRANCH_NAME);
+			_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME);
 
 		if ((portalUpstreamBranchName == null) ||
 			portalUpstreamBranchName.isEmpty()) {
 
-			failBuildRunner(_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
+			failBuildRunner(_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
 		}
 
 		String allowedPortalUpstreamBranchNames = getJobProperty(
@@ -415,7 +415,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(_PORTAL_UPSTREAM_BRANCH_NAME);
+			sb.append(_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME);
 			sb.append(" must match one of the following: ");
 
 			sb.append("<ul>");
@@ -434,20 +434,20 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		}
 	}
 
-	private static final Integer _DEFAULT_MAX_COMMIT_GROUP_COUNT = 5;
+	private static final Integer _COMMITS_GROUP_SIZE_MAX_DEFAULT = 5;
 
-	private static final String _JENKINS_GITHUB_URL = "JENKINS_GITHUB_URL";
+	private static final String _NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL = "JENKINS_GITHUB_URL";
 
-	private static final String _PORTAL_BATCH_NAME = "PORTAL_BATCH_NAME";
+	private static final String _NAME_BUILD_PARAMETER_PORTAL_BATCH = "PORTAL_BATCH_NAME";
 
-	private static final String _PORTAL_BATCH_TEST_SELECTOR =
+	private static final String _NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR =
 		"PORTAL_BATCH_TEST_SELECTOR";
 
-	private static final String _PORTAL_BRANCH_SHAS = "PORTAL_BRANCH_SHAS";
+	private static final String _NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS = "PORTAL_BRANCH_SHAS";
 
-	private static final String _PORTAL_GITHUB_URL = "PORTAL_GITHUB_URL";
+	private static final String _NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL = "PORTAL_GITHUB_URL";
 
-	private static final String _PORTAL_UPSTREAM_BRANCH_NAME =
+	private static final String _NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME =
 		"PORTAL_UPSTREAM_BRANCH_NAME";
 
 	private static final Pattern _compareURLPattern = Pattern.compile(

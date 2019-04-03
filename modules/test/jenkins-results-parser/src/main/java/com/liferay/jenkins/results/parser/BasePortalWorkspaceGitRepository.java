@@ -26,27 +26,27 @@ public abstract class BasePortalWorkspaceGitRepository
 
 	@Override
 	public void setPortalAppServerProperties(Properties properties) {
-		setProperties(_FILE_PATH_APP_SERVER_PROPERTIES, properties);
+		setProperties(_FILE_PATH_PROPERTIES_APP_SERVER, properties);
 	}
 
 	@Override
 	public void setPortalBuildProperties(Properties properties) {
-		setProperties(_FILE_PATH_BUILD_PROPERTIES, properties);
+		setProperties(_FILE_PATH_PROPERTIES_BUILD, properties);
 	}
 
 	@Override
 	public void setPortalReleaseProperties(Properties properties) {
-		setProperties(_FILE_PATH_RELEASE_PROPERTIES, properties);
+		setProperties(_FILE_PATH_PROPERTIES_RELEASE, properties);
 	}
 
 	@Override
 	public void setPortalSQLProperties(Properties properties) {
-		setProperties(_FILE_PATH_SQL_PROPERTIES, properties);
+		setProperties(_FILE_PATH_PROPERTIES_SQL, properties);
 	}
 
 	@Override
 	public void setPortalTestProperties(Properties properties) {
-		setProperties(_FILE_PATH_TEST_PROPERTIES, properties);
+		setProperties(_FILE_PATH_PROPERTIES_TEST, properties);
 	}
 
 	protected BasePortalWorkspaceGitRepository(JSONObject jsonObject) {
@@ -79,23 +79,23 @@ public abstract class BasePortalWorkspaceGitRepository
 			name.replace("-ee", ""), "-", upstreamBranchName);
 	}
 
-	private static final String _FILE_PATH_APP_SERVER_PROPERTIES =
+	private static final String _FILE_PATH_PROPERTIES_APP_SERVER =
 		JenkinsResultsParserUtil.combine(
 			"app.server.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_BUILD_PROPERTIES =
+	private static final String _FILE_PATH_PROPERTIES_BUILD =
 		JenkinsResultsParserUtil.combine(
 			"build.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_RELEASE_PROPERTIES =
+	private static final String _FILE_PATH_PROPERTIES_RELEASE =
 		JenkinsResultsParserUtil.combine(
 			"release.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_SQL_PROPERTIES =
+	private static final String _FILE_PATH_PROPERTIES_SQL =
 		JenkinsResultsParserUtil.combine(
 			"sql/sql.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_TEST_PROPERTIES =
+	private static final String _FILE_PATH_PROPERTIES_TEST =
 		JenkinsResultsParserUtil.combine(
 			"test.", System.getenv("HOSTNAME"), ".properties");
 

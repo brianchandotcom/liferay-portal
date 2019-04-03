@@ -49,7 +49,7 @@ public class BufferedProcess extends Process {
 	public int exitValue() {
 		int exitValue = _process.exitValue();
 
-		JenkinsResultsParserUtil.sleep(_MINIMUM_EXECUTION_TIME);
+		JenkinsResultsParserUtil.sleep(_MILLIS_EXECUTION_TIME_MIN);
 
 		return exitValue;
 	}
@@ -71,12 +71,12 @@ public class BufferedProcess extends Process {
 
 	@Override
 	public int waitFor() throws InterruptedException {
-		JenkinsResultsParserUtil.sleep(_MINIMUM_EXECUTION_TIME);
+		JenkinsResultsParserUtil.sleep(_MILLIS_EXECUTION_TIME_MIN);
 
 		return _process.waitFor();
 	}
 
-	private static final long _MINIMUM_EXECUTION_TIME = 10;
+	private static final long _MILLIS_EXECUTION_TIME_MIN = 10;
 
 	private final Process _process;
 	private final InputStreamBuffer _standardErrorInputStreamBuffer;

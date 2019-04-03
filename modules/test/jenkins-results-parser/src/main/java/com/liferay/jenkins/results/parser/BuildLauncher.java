@@ -37,10 +37,10 @@ public class BuildLauncher {
 
 		BuildRunner buildRunner = BuildRunnerFactory.newBuildRunner(buildData);
 
-		if (buildCommand.equals(_RUN_COMMAND)) {
+		if (buildCommand.equals(_COMMAND_RUN)) {
 			buildRunner.run();
 		}
-		else if (buildCommand.equals(_TEARDOWN_COMMAND)) {
+		else if (buildCommand.equals(_COMMAND_TEARDOWN)) {
 			buildRunner.tearDown();
 		}
 	}
@@ -49,7 +49,7 @@ public class BuildLauncher {
 		String buildCommand = null;
 
 		for (String arg : args) {
-			if (!arg.equals(_RUN_COMMAND) && !arg.equals(_TEARDOWN_COMMAND)) {
+			if (!arg.equals(_COMMAND_RUN) && !arg.equals(_COMMAND_TEARDOWN)) {
 				continue;
 			}
 
@@ -164,9 +164,9 @@ public class BuildLauncher {
 		return JenkinsResultsParserUtil.getBuildParameters(buildURL);
 	}
 
-	private static final String _RUN_COMMAND = "run";
+	private static final String _COMMAND_RUN = "run";
 
-	private static final String _TEARDOWN_COMMAND = "teardown";
+	private static final String _COMMAND_TEARDOWN = "teardown";
 
 	private static final Pattern _buildOptionPattern = Pattern.compile(
 		"-D(?<name>[^=\\s]+)=(?<value>.+)");

@@ -229,7 +229,7 @@ public class UpstreamFailureUtil {
 
 			String url = JenkinsResultsParserUtil.getLocalURL(
 				JenkinsResultsParserUtil.combine(
-					_UPSTREAM_FAILURES_JOB_BASE_URL, upstreamJobName,
+					_URL_BASE_UPSTREAM_FAILURES_JOB, upstreamJobName,
 					"/builds/latest/test.results.json"));
 
 			_upstreamFailuresJobJSONObject =
@@ -250,7 +250,7 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	private static final String _UPSTREAM_FAILURES_JOB_BASE_URL =
+	private static final String _URL_BASE_UPSTREAM_FAILURES_JOB =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
 	private static JSONObject _upstreamFailuresJobJSONObject;

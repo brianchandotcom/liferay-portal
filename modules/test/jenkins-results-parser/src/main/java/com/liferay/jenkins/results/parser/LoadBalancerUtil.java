@@ -162,7 +162,7 @@ public class LoadBalancerUtil {
 				return "http://" + mostAvailableJenkinsMaster.getName();
 			}
 			catch (Exception e) {
-				if (retries < _MAX_RETRIES) {
+				if (retries < _RETRIES_SIZE_MAX) {
 					retries++;
 
 					continue;
@@ -330,7 +330,7 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	private static final int _MAX_RETRIES = 3;
+	private static final int _RETRIES_SIZE_MAX = 3;
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMasters =
 		new HashMap<>();

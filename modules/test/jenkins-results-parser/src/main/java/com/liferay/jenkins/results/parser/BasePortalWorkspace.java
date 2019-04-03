@@ -99,7 +99,7 @@ public abstract class BasePortalWorkspace
 		}
 
 		workspaceGitRepository = WorkspaceUtil.getWorkspaceGitRepository(
-			LegacyWorkspaceGitRepository.TYPE, _LEGACY_GITHUB_URL, "master");
+			LegacyWorkspaceGitRepository.TYPE, _URL_GITHUB_PORTAL_LEGACY_EE_REPOSITORY, "master");
 
 		if (!(workspaceGitRepository instanceof LegacyWorkspaceGitRepository)) {
 			throw new RuntimeException("Invalid workspace Git repository");
@@ -249,7 +249,7 @@ public abstract class BasePortalWorkspace
 
 	protected final LegacyWorkspaceGitRepository legacyWorkspaceGitRepository;
 
-	private static final String _LEGACY_GITHUB_URL =
+	private static final String _URL_GITHUB_PORTAL_LEGACY_EE_REPOSITORY =
 		"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/master";
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(

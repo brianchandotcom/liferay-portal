@@ -379,7 +379,7 @@ public class GitHubDevSyncUtil {
 
 				long branchAge = timestamp - remoteGitBranchTimestamp;
 
-				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
+				if (branchAge > _MILLIS_BRANCH_EXPIRATION) {
 					String gitRepositoryBaseRemoteGitBranchName =
 						remoteGitBranchName.replaceAll("(.*)-\\d+", "$1");
 
@@ -1152,7 +1152,7 @@ public class GitHubDevSyncUtil {
 			long existingTimestamp = Long.parseLong(matcher.group(1));
 
 			if ((System.currentTimeMillis() - existingTimestamp) >
-					_BRANCH_UPDATE_AGE_MILLIS) {
+					_MILLIS_BRANCH_UPDATE_AGE) {
 
 				oldTimestampCachedRemoteGitBranch = cachedRemoteGitBranch;
 
@@ -1373,10 +1373,10 @@ public class GitHubDevSyncUtil {
 			cachedLocalGitBranch, cachedRemoteGitBranch);
 	}
 
-	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
+	private static final long _MILLIS_BRANCH_EXPIRATION =
 		1000 * 60 * 60 * 24 * 2;
 
-	private static final long _BRANCH_UPDATE_AGE_MILLIS = 1000 * 60 * 60 * 24;
+	private static final long _MILLIS_BRANCH_UPDATE_AGE = 1000 * 60 * 60 * 24;
 
 	private static final Pattern _cachedBranchPattern = Pattern.compile(
 		"cache(-([^-]+))+");

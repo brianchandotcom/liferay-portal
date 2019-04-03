@@ -101,11 +101,11 @@ public abstract class BaseWorkspaceGitRepository
 		int index = 0;
 
 		while (index < MAX_COMMIT_HISTORY) {
-			int currentGroupSize = _COMMIT_HISTORY_GROUP_SIZE;
+			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (MAX_COMMIT_HISTORY - _COMMIT_HISTORY_GROUP_SIZE)) {
+			if (index > (MAX_COMMIT_HISTORY - _COMMITS_HISTORY_GROUP_SIZE)) {
 				currentGroupSize =
-					MAX_COMMIT_HISTORY % _COMMIT_HISTORY_GROUP_SIZE;
+					MAX_COMMIT_HISTORY % _COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
@@ -119,7 +119,7 @@ public abstract class BaseWorkspaceGitRepository
 				}
 			}
 
-			index += _COMMIT_HISTORY_GROUP_SIZE;
+			index += _COMMITS_HISTORY_GROUP_SIZE;
 		}
 
 		return rangeLocalGitCommits;
@@ -229,7 +229,7 @@ public abstract class BaseWorkspaceGitRepository
 			throw new RuntimeException("Branch SHA is null");
 		}
 
-		if (!branchSHA.matches(_SHA_REGEX)) {
+		if (!branchSHA.matches(_REGEX_SHA)) {
 			throw new RuntimeException("Branch SHA is invalid");
 		}
 
@@ -283,11 +283,11 @@ public abstract class BaseWorkspaceGitRepository
 		int index = 0;
 
 		while (index < MAX_COMMIT_HISTORY) {
-			int currentGroupSize = _COMMIT_HISTORY_GROUP_SIZE;
+			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (MAX_COMMIT_HISTORY - _COMMIT_HISTORY_GROUP_SIZE)) {
+			if (index > (MAX_COMMIT_HISTORY - _COMMITS_HISTORY_GROUP_SIZE)) {
 				currentGroupSize =
-					MAX_COMMIT_HISTORY % _COMMIT_HISTORY_GROUP_SIZE;
+					MAX_COMMIT_HISTORY % _COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
@@ -313,7 +313,7 @@ public abstract class BaseWorkspaceGitRepository
 				break;
 			}
 
-			index += _COMMIT_HISTORY_GROUP_SIZE;
+			index += _COMMITS_HISTORY_GROUP_SIZE;
 		}
 
 		if (!requiredCommitSHAs.isEmpty()) {
@@ -371,7 +371,7 @@ public abstract class BaseWorkspaceGitRepository
 		validateKeys(_REQUIRED_KEYS);
 
 		if (JenkinsResultsParserUtil.isCINode()) {
-			validateKeys(_REQUIRED_CI_KEYS);
+			validateKeys(_CI_KEYS_REQUIRED);
 		}
 	}
 
@@ -400,7 +400,7 @@ public abstract class BaseWorkspaceGitRepository
 			_setGitHubDevBranchName(
 				GitHubDevSyncUtil.getCachedBranchName(pullRequest));
 
-			validateKeys(_REQUIRED_CI_KEYS);
+			validateKeys(_CI_KEYS_REQUIRED);
 		}
 	}
 
@@ -432,7 +432,7 @@ public abstract class BaseWorkspaceGitRepository
 			_setGitHubDevBranchName(
 				GitHubDevSyncUtil.getCachedBranchName(remoteGitRef));
 
-			validateKeys(_REQUIRED_CI_KEYS);
+			validateKeys(_CI_KEYS_REQUIRED);
 		}
 	}
 
@@ -513,7 +513,7 @@ public abstract class BaseWorkspaceGitRepository
 			throw new RuntimeException("Branch head SHA is null");
 		}
 
-		if (!branchHeadSHA.matches(_SHA_REGEX)) {
+		if (!branchHeadSHA.matches(_REGEX_SHA)) {
 			throw new RuntimeException("Branch head SHA is invalid");
 		}
 
@@ -548,9 +548,9 @@ public abstract class BaseWorkspaceGitRepository
 		put("type", getType());
 	}
 
-	private static final Integer _COMMIT_HISTORY_GROUP_SIZE = 100;
+	private static final Integer _COMMITS_HISTORY_GROUP_SIZE = 100;
 
-	private static final String[] _REQUIRED_CI_KEYS = {
+	private static final String[] _CI_KEYS_REQUIRED = {
 		"git_hub_dev_branch_name"
 	};
 
@@ -558,7 +558,7 @@ public abstract class BaseWorkspaceGitRepository
 		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
 	};
 
-	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
+	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();

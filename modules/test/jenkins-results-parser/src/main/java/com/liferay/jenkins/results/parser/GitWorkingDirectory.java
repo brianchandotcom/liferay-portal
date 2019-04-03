@@ -460,7 +460,7 @@ public class GitWorkingDirectory {
 		for (List<String> branchNames :
 				Lists.partition(
 					new ArrayList<>(localGitBranchNames),
-					_DELETE_BRANCHES_BATCH_SIZE)) {
+					_BRANCHES_DELETE_BATCH_SIZE)) {
 
 			_deleteLocalGitBranches(
 				branchNames.toArray(new String[branchNames.size()]));
@@ -517,7 +517,7 @@ public class GitWorkingDirectory {
 					Lists.partition(
 						new ArrayList<String>(
 							remoteURLBranchNamesEntry.getValue()),
-						_DELETE_BRANCHES_BATCH_SIZE)) {
+						_BRANCHES_DELETE_BATCH_SIZE)) {
 
 				_deleteRemoteGitBranches(
 					remoteURL,
@@ -2398,7 +2398,7 @@ public class GitWorkingDirectory {
 		return result.getStandardOut();
 	}
 
-	private static final int _DELETE_BRANCHES_BATCH_SIZE = 5;
+	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");

@@ -59,7 +59,7 @@ public class TGZUtil {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				archiveFile);
 			BufferedOutputStream bufferedOutputStream =
-				new BufferedOutputStream(fileOutputStream, _BUFFER_SIZE);
+				new BufferedOutputStream(fileOutputStream, _CHARS_BUFFER_SIZE);
 			GzipCompressorOutputStream gzipCompressorOutputStream =
 				new GzipCompressorOutputStream(bufferedOutputStream);
 			TarArchiveOutputStream tarArchiveOutputStream =
@@ -96,7 +96,7 @@ public class TGZUtil {
 
 		try (FileInputStream fileInputStream = new FileInputStream(archiveFile);
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(
-				fileInputStream, _BUFFER_SIZE);
+				fileInputStream, _CHARS_BUFFER_SIZE);
 			GzipCompressorInputStream gzipCompressorInputStream =
 				new GzipCompressorInputStream(bufferedInputStream);
 			TarArchiveInputStream tarArchiveInputStream =
@@ -316,6 +316,6 @@ public class TGZUtil {
 		}
 	}
 
-	private static final int _BUFFER_SIZE = 8192;
+	private static final int _CHARS_BUFFER_SIZE = 8192;
 
 }

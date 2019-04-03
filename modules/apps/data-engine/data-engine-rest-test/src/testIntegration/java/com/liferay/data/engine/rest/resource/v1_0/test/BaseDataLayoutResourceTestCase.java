@@ -108,6 +108,70 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testPostContentSpaceDataLayoutPermission() throws Exception {
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout postDataLayout =
+			testPostContentSpaceDataLayoutPermission_addDataLayout(
+				randomDataLayout);
+
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
+	}
+
+	protected DataLayout testPostContentSpaceDataLayoutPermission_addDataLayout(
+			DataLayout dataLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokePostContentSpaceDataLayoutPermission(
+			Long contentSpaceId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-layout-permissions");
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokePostContentSpaceDataLayoutPermissionResponse(
+			Long contentSpaceId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-layout-permissions");
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetContentSpaceDataLayoutPage() throws Exception {
 		Long contentSpaceId =
 			testGetContentSpaceDataLayoutPage_getContentSpaceId();
@@ -271,72 +335,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDataLayoutPermission() throws Exception {
-		DataLayout randomDataLayout = randomDataLayout();
-
-		DataLayout postDataLayout =
-			testPostContentSpaceDataLayoutPermission_addDataLayout(
-				randomDataLayout);
-
-		assertEquals(randomDataLayout, postDataLayout);
-		assertValid(postDataLayout);
-	}
-
-	protected DataLayout testPostContentSpaceDataLayoutPermission_addDataLayout(
-			DataLayout dataLayout)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void invokePostContentSpaceDataLayoutPermission(
-			Long contentSpaceId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/data-layout-permissions",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokePostContentSpaceDataLayoutPermissionResponse(
-			Long contentSpaceId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/data-layout-permissions",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testPostDataDefinitionDataLayout() throws Exception {
 		DataLayout randomDataLayout = randomDataLayout();
 
@@ -446,7 +444,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-layout/{data-layout-id}/data-layout-permissions",
+					"/data-layout/{dataLayoutId}/data-layout-permissions",
 					dataLayoutId);
 
 		options.setLocation(location);
@@ -470,7 +468,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-layout/{data-layout-id}/data-layout-permissions",
+					"/data-layout/{dataLayoutId}/data-layout-permissions",
 					dataLayoutId);
 
 		options.setLocation(location);

@@ -48,6 +48,37 @@ public class ContentSetElementResourceImpl
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(contentSetId);
 
+		return _getContentSetContentSetElementsPage(pagination, assetListEntry);
+	}
+
+	@Override
+	public Page<ContentSetElement>
+			getContentSpaceContentSetByKeyContentSetElementsPage(
+				Long contentSpaceId, String key, Pagination pagination)
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.getAssetListEntry(contentSpaceId, key);
+
+		return _getContentSetContentSetElementsPage(pagination, assetListEntry);
+	}
+
+	@Override
+	public Page<ContentSetElement>
+			getContentSpaceContentSetByUuidContentSetElementsPage(
+				Long contentSpaceId, String uuid, Pagination pagination)
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.getAssetListEntryByUuidAndGroupId(
+				uuid, contentSpaceId);
+
+		return _getContentSetContentSetElementsPage(pagination, assetListEntry);
+	}
+
+	private Page<ContentSetElement> _getContentSetContentSetElementsPage(
+		Pagination pagination, AssetListEntry assetListEntry) {
+
 		return Page.of(
 			transform(
 				assetListEntry.getAssetEntries(

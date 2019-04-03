@@ -17,24 +17,24 @@ class FloatingToolbar extends Component {
 	 * TopRight if it does not fit.
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
-	 * @param {number} preferedPosition
+	 * @param {number} preferredPosition
 	 * @param {number} fallbackPosition
 	 * @private
 	 * @return {number} Selected position
 	 * @review
 	 */
-	static _alignElement(element, anchor, preferedPosition, fallbackPosition) {
+	static _alignElement(element, anchor, preferredPosition, fallbackPosition) {
 		let position = -1;
 
 		if (element && anchor) {
 			const suggestedAlign = Align.suggestAlignBestRegion(
 				element,
 				anchor,
-				preferedPosition
+				preferredPosition
 			);
 
-			position = suggestedAlign.position === preferedPosition ?
-				preferedPosition :
+			position = suggestedAlign.position === preferredPosition ?
+				preferredPosition :
 				fallbackPosition;
 
 			Align.align(element, anchor, position, false);
@@ -157,18 +157,34 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	_align() {
+		let panelPosition = {
+			fallback: Align.TopRight,
+			preferred: Align.BottomRight
+		};
+
+		const languageDirection = Liferay.Language.direction[
+			Liferay.ThemeDisplay.getLanguageId()
+		];
+
+		if (languageDirection === 'rtl') {
+			panelPosition = {
+				fallback: Align.TopLeft,
+				preferred: Align.BottomLeft
+			};
+		}
+
 		requestAnimationFrame(
 			() => {
 				FloatingToolbar._alignElement(
 					this.refs.buttons,
 					this.anchorElement,
-					Align.BottomRight,
-					Align.TopRight
+					panelPosition.preferred,
+					panelPosition.fallback
 				);
 
 				requestAnimationFrame(
 					() => {
-						this._alignPanel();
+						this._alignPanel(panelPosition);
 					}
 				);
 			}
@@ -177,15 +193,16 @@ class FloatingToolbar extends Component {
 
 	/**
 	 * Aligns the FloatingToolbar panel to the buttons
+	 * @param {{ fallback: string, preferred: string }} panelPosition
 	 * @private
 	 * @review
 	 */
-	_alignPanel() {
+	_alignPanel(panelPosition) {
 		FloatingToolbar._alignElement(
 			this.refs.panel,
 			this.refs.buttons,
-			Align.BottomRight,
-			Align.TopRight
+			panelPosition.preferred,
+			panelPosition.fallback
 		);
 	}
 

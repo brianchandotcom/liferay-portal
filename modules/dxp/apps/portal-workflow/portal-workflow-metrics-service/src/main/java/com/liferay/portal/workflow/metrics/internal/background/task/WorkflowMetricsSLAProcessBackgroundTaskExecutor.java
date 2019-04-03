@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -32,6 +33,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
+import com.liferay.portal.workflow.metrics.internal.util.LocalDateTimeUtil;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
@@ -42,6 +44,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,20 +81,25 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				fetchWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinitionId);
 
-		Stream<Long> stream = _getInstanceIdsStream(
+		Map<Long, LocalDateTime> map = _getInstanceIdCreateDateMap(
 			workflowMetricsSLADefinition.getCompanyId(),
 			workflowMetricsSLADefinition.getProcessId());
 
-		stream.forEach(
-			instanceId -> {
+		long startNodeId = _getStartNodeId(
+			workflowMetricsSLADefinition.getCompanyId(),
+			workflowMetricsSLADefinition.getProcessId());
+
+		map.forEach(
+			(instanceId, createDateLocalDateTime) -> {
 				Optional<WorkflowMetricsSLAProcessResult> optional =
 					_workflowMetricsSLAProcessor.process(
-						workflowMetricsSLADefinition.getCompanyId(), instanceId,
-						LocalDateTime.now(), workflowMetricsSLADefinition);
+						workflowMetricsSLADefinition.getCompanyId(),
+						createDateLocalDateTime, instanceId,
+						LocalDateTime.now(), startNodeId,
+						workflowMetricsSLADefinition);
 
 				optional.ifPresent(
-					_slaProcessResultWorkflowMetricsIndexer::
-						addDocument);
+					_slaProcessResultWorkflowMetricsIndexer::addDocument);
 			});
 
 		return BackgroundTaskResult.SUCCESS;
@@ -104,7 +112,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	private Stream<Long> _getInstanceIdsStream(long companyId, long processId) {
+	private Map<Long, LocalDateTime> _getInstanceIdCreateDateMap(
+		long companyId, long processId) {
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
@@ -137,9 +147,49 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			List::parallelStream
 		).map(
 			SearchHit::getDocument
-		).map(
-			document -> GetterUtil.getLong(document.getFieldValue("instanceId"))
+		).collect(
+			Collectors.toMap(
+				document -> document.getLong("instanceId"),
+				document -> LocalDateTimeUtil.toLocalDateTime(
+					document, "createDate"))
 		);
+	}
+
+	private long _getStartNodeId(long companyId, long processId) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+		searchSearchRequest.setQuery(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm("companyId", companyId);
+								addRequiredTerm("deleted", false);
+								addRequiredTerm("initial", true);
+								addRequiredTerm("processId", processId);
+							}
+						});
+				}
+			});
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		if (ListUtil.isEmpty(searchHitList)) {
+			return 0;
+		}
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		Document document = searchHit.getDocument();
+
+		return document.getLong("nodeId");
 	}
 
 	@Reference

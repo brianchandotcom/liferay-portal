@@ -294,6 +294,11 @@ public interface AssetListEntryLocalService
 	public AssetListEntry getAssetListEntry(long assetListEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws PortalException;
+
 	/**
 	 * Returns the asset list entry matching the UUID and group.
 	 *

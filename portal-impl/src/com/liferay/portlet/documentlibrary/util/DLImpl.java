@@ -1034,6 +1034,18 @@ public class DLImpl implements DL {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             com.liferay.document.library.kernel.util.
+	 *             DLUtil#hasViewInContextGroupLayout(long, ThemeDisplay)}
+	 */
+	@Deprecated
+	@Override
+	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
+		return hasViewInContextGroupLayout(
+			themeDisplay.getSiteGroupId(), themeDisplay);
+	}
+
 	@Override
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, long folderId, long fileEntryTypeId)

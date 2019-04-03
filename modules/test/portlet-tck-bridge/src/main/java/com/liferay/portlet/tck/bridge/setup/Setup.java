@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -69,7 +66,7 @@ public class Setup {
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
 			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
-		_setupPermissionChecker(company.getCompanyId());
+		_setupPermissionChecker(company);
 
 		User user = company.getDefaultUser();
 
@@ -336,32 +333,20 @@ public class Setup {
 		}
 	}
 
-	/**
-	 * This method sets up the {@link PermissionChecker} {@link ThreadLocal}
-	 * prior to performing additional test setup.
-	 */
-	private static void _setupPermissionChecker(long companyId)
+	private static void _setupPermissionChecker(Company company)
 		throws PortalException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("setupPermissionChecker: companyId = " + companyId);
-		}
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker == null) {
-			Role administratorRole = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.ADMINISTRATOR);
-
-			List<User> users = UserLocalServiceUtil.getRoleUsers(
-				administratorRole.getRoleId());
-
-			User administratorUser = users.get(0);
+			User user = UserLocalServiceUtil.getUserByEmailAddress(
+				company.getCompanyId(),
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+					company.getMx());
 
 			try {
-				permissionChecker = PermissionCheckerFactoryUtil.create(
-					administratorUser);
+				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			}

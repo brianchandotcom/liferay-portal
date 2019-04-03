@@ -12591,7 +12591,7 @@ metal-useragent@3.0.1, metal-useragent@^3.0.0:
   dependencies:
     metal "^2.16.6"
 
-metal-web-component@^2.14.0, metal-web-component@^2.16.0, metal-web-component@^2.16.7:
+metal-web-component@^2.16.0, metal-web-component@^2.16.7:
   version "2.16.7"
   resolved "https://registry.yarnpkg.com/metal-web-component/-/metal-web-component-2.16.7.tgz#6540454122638f5c99e90d774cbf40933367cd5a"
   integrity sha512-6hU2py7EZqfijRUjDxAV7CHLwbDO1BD8quRaJFu23dPbstRknc032rzz8s4R+vWSKJh3OBw9CH2kq3438XoAeg==

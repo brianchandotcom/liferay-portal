@@ -14,8 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -50,8 +50,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseContentListElementResourceImpl
-	implements ContentListElementResource {
+public abstract class BaseContentSetElementResourceImpl
+	implements ContentSetElementResource {
 
 	@Override
 	@GET
@@ -61,11 +61,11 @@ public abstract class BaseContentListElementResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-lists/{contentListId}/content-list-elements")
+	@Path("/content-sets/{contentSetId}/content-set-elements")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "ContentListElement")})
-	public Page<ContentListElement> getContentListContentListElementsPage(
-			@NotNull @PathParam("contentListId") Long contentListId,
+	@Tags(value = {@Tag(name = "ContentSetElement")})
+	public Page<ContentSetElement> getContentSetContentSetElementsPage(
+			@NotNull @PathParam("contentSetId") Long contentSetId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -77,8 +77,8 @@ public abstract class BaseContentListElementResourceImpl
 	}
 
 	protected void preparePatch(
-		ContentListElement contentListElement,
-		ContentListElement existingContentListElement) {
+		ContentSetElement contentSetElement,
+		ContentSetElement existingContentSetElement) {
 	}
 
 	protected <T, R> List<R> transform(

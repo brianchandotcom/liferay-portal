@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,7 +77,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseContentListElementResourceTestCase {
+public abstract class BaseContentSetElementResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -106,112 +106,112 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentListContentListElementsPage() throws Exception {
-		Long contentListId =
-			testGetContentListContentListElementsPage_getContentListId();
-		Long irrelevantContentListId =
-			testGetContentListContentListElementsPage_getIrrelevantContentListId();
+	public void testGetContentSetContentSetElementsPage() throws Exception {
+		Long contentSetId =
+			testGetContentSetContentSetElementsPage_getContentSetId();
+		Long irrelevantContentSetId =
+			testGetContentSetContentSetElementsPage_getIrrelevantContentSetId();
 
-		if ((irrelevantContentListId != null)) {
-			ContentListElement irrelevantContentListElement =
-				testGetContentListContentListElementsPage_addContentListElement(
-					irrelevantContentListId,
-					randomIrrelevantContentListElement());
+		if ((irrelevantContentSetId != null)) {
+			ContentSetElement irrelevantContentSetElement =
+				testGetContentSetContentSetElementsPage_addContentSetElement(
+					irrelevantContentSetId,
+					randomIrrelevantContentSetElement());
 
-			Page<ContentListElement> page =
-				invokeGetContentListContentListElementsPage(
-					irrelevantContentListId, Pagination.of(1, 2));
+			Page<ContentSetElement> page =
+				invokeGetContentSetContentSetElementsPage(
+					irrelevantContentSetId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantContentListElement),
-				(List<ContentListElement>)page.getItems());
+				Arrays.asList(irrelevantContentSetElement),
+				(List<ContentSetElement>)page.getItems());
 			assertValid(page);
 		}
 
-		ContentListElement contentListElement1 =
-			testGetContentListContentListElementsPage_addContentListElement(
-				contentListId, randomContentListElement());
+		ContentSetElement contentSetElement1 =
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				contentSetId, randomContentSetElement());
 
-		ContentListElement contentListElement2 =
-			testGetContentListContentListElementsPage_addContentListElement(
-				contentListId, randomContentListElement());
+		ContentSetElement contentSetElement2 =
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				contentSetId, randomContentSetElement());
 
-		Page<ContentListElement> page =
-			invokeGetContentListContentListElementsPage(
-				contentListId, Pagination.of(1, 2));
+		Page<ContentSetElement> page =
+			invokeGetContentSetContentSetElementsPage(
+				contentSetId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(contentListElement1, contentListElement2),
-			(List<ContentListElement>)page.getItems());
+			Arrays.asList(contentSetElement1, contentSetElement2),
+			(List<ContentSetElement>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
-	public void testGetContentListContentListElementsPageWithPagination()
+	public void testGetContentSetContentSetElementsPageWithPagination()
 		throws Exception {
 
-		Long contentListId =
-			testGetContentListContentListElementsPage_getContentListId();
+		Long contentSetId =
+			testGetContentSetContentSetElementsPage_getContentSetId();
 
-		ContentListElement contentListElement1 =
-			testGetContentListContentListElementsPage_addContentListElement(
-				contentListId, randomContentListElement());
+		ContentSetElement contentSetElement1 =
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				contentSetId, randomContentSetElement());
 
-		ContentListElement contentListElement2 =
-			testGetContentListContentListElementsPage_addContentListElement(
-				contentListId, randomContentListElement());
+		ContentSetElement contentSetElement2 =
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				contentSetId, randomContentSetElement());
 
-		ContentListElement contentListElement3 =
-			testGetContentListContentListElementsPage_addContentListElement(
-				contentListId, randomContentListElement());
+		ContentSetElement contentSetElement3 =
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				contentSetId, randomContentSetElement());
 
-		Page<ContentListElement> page1 =
-			invokeGetContentListContentListElementsPage(
-				contentListId, Pagination.of(1, 2));
+		Page<ContentSetElement> page1 =
+			invokeGetContentSetContentSetElementsPage(
+				contentSetId, Pagination.of(1, 2));
 
-		List<ContentListElement> contentListElements1 =
-			(List<ContentListElement>)page1.getItems();
+		List<ContentSetElement> contentSetElements1 =
+			(List<ContentSetElement>)page1.getItems();
 
 		Assert.assertEquals(
-			contentListElements1.toString(), 2, contentListElements1.size());
+			contentSetElements1.toString(), 2, contentSetElements1.size());
 
-		Page<ContentListElement> page2 =
-			invokeGetContentListContentListElementsPage(
-				contentListId, Pagination.of(2, 2));
+		Page<ContentSetElement> page2 =
+			invokeGetContentSetContentSetElementsPage(
+				contentSetId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<ContentListElement> contentListElements2 =
-			(List<ContentListElement>)page2.getItems();
+		List<ContentSetElement> contentSetElements2 =
+			(List<ContentSetElement>)page2.getItems();
 
 		Assert.assertEquals(
-			contentListElements2.toString(), 1, contentListElements2.size());
+			contentSetElements2.toString(), 1, contentSetElements2.size());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
-				contentListElement1, contentListElement2, contentListElement3),
-			new ArrayList<ContentListElement>() {
+				contentSetElement1, contentSetElement2, contentSetElement3),
+			new ArrayList<ContentSetElement>() {
 				{
-					addAll(contentListElements1);
-					addAll(contentListElements2);
+					addAll(contentSetElements1);
+					addAll(contentSetElements2);
 				}
 			});
 	}
 
-	protected ContentListElement
-			testGetContentListContentListElementsPage_addContentListElement(
-				Long contentListId, ContentListElement contentListElement)
+	protected ContentSetElement
+			testGetContentSetContentSetElementsPage_addContentSetElement(
+				Long contentSetId, ContentSetElement contentSetElement)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentListContentListElementsPage_getContentListId()
+	protected Long testGetContentSetContentSetElementsPage_getContentSetId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -219,15 +219,14 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	protected Long
-			testGetContentListContentListElementsPage_getIrrelevantContentListId()
+			testGetContentSetContentSetElementsPage_getIrrelevantContentSetId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<ContentListElement>
-			invokeGetContentListContentListElementsPage(
-				Long contentListId, Pagination pagination)
+	protected Page<ContentSetElement> invokeGetContentSetContentSetElementsPage(
+			Long contentSetId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -235,8 +234,8 @@ public abstract class BaseContentListElementResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-lists/{contentListId}/content-list-elements",
-					contentListId);
+					"/content-sets/{contentSetId}/content-set-elements",
+					contentSetId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -253,12 +252,12 @@ public abstract class BaseContentListElementResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			string,
-			new TypeReference<Page<ContentListElement>>() {
+			new TypeReference<Page<ContentSetElement>>() {
 			});
 	}
 
-	protected Http.Response invokeGetContentListContentListElementsPageResponse(
-			Long contentListId, Pagination pagination)
+	protected Http.Response invokeGetContentSetContentSetElementsPageResponse(
+			Long contentSetId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -266,8 +265,8 @@ public abstract class BaseContentListElementResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-lists/{contentListId}/content-list-elements",
-					contentListId);
+					"/content-sets/{contentSetId}/content-set-elements",
+					contentSetId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -289,45 +288,41 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	protected void assertEquals(
-		ContentListElement contentListElement1,
-		ContentListElement contentListElement2) {
+		ContentSetElement contentSetElement1,
+		ContentSetElement contentSetElement2) {
 
 		Assert.assertTrue(
-			contentListElement1 + " does not equal " + contentListElement2,
-			equals(contentListElement1, contentListElement2));
+			contentSetElement1 + " does not equal " + contentSetElement2,
+			equals(contentSetElement1, contentSetElement2));
 	}
 
 	protected void assertEquals(
-		List<ContentListElement> contentListElements1,
-		List<ContentListElement> contentListElements2) {
+		List<ContentSetElement> contentSetElements1,
+		List<ContentSetElement> contentSetElements2) {
 
 		Assert.assertEquals(
-			contentListElements1.size(), contentListElements2.size());
+			contentSetElements1.size(), contentSetElements2.size());
 
-		for (int i = 0; i < contentListElements1.size(); i++) {
-			ContentListElement contentListElement1 = contentListElements1.get(
-				i);
-			ContentListElement contentListElement2 = contentListElements2.get(
-				i);
+		for (int i = 0; i < contentSetElements1.size(); i++) {
+			ContentSetElement contentSetElement1 = contentSetElements1.get(i);
+			ContentSetElement contentSetElement2 = contentSetElements2.get(i);
 
-			assertEquals(contentListElement1, contentListElement2);
+			assertEquals(contentSetElement1, contentSetElement2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ContentListElement> contentListElements1,
-		List<ContentListElement> contentListElements2) {
+		List<ContentSetElement> contentSetElements1,
+		List<ContentSetElement> contentSetElements2) {
 
 		Assert.assertEquals(
-			contentListElements1.size(), contentListElements2.size());
+			contentSetElements1.size(), contentSetElements2.size());
 
-		for (ContentListElement contentListElement1 : contentListElements1) {
+		for (ContentSetElement contentSetElement1 : contentSetElements1) {
 			boolean contains = false;
 
-			for (ContentListElement contentListElement2 :
-					contentListElements2) {
-
-				if (equals(contentListElement1, contentListElement2)) {
+			for (ContentSetElement contentSetElement2 : contentSetElements2) {
+				if (equals(contentSetElement1, contentSetElement2)) {
 					contains = true;
 
 					break;
@@ -335,23 +330,22 @@ public abstract class BaseContentListElementResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				contentListElements2 + " does not contain " +
-					contentListElement1,
+				contentSetElements2 + " does not contain " + contentSetElement1,
 				contains);
 		}
 	}
 
-	protected void assertValid(ContentListElement contentListElement) {
+	protected void assertValid(ContentSetElement contentSetElement) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<ContentListElement> page) {
+	protected void assertValid(Page<ContentSetElement> page) {
 		boolean valid = false;
 
-		Collection<ContentListElement> contentListElements = page.getItems();
+		Collection<ContentSetElement> contentSetElements = page.getItems();
 
-		int size = contentListElements.size();
+		int size = contentSetElements.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -364,10 +358,10 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	protected boolean equals(
-		ContentListElement contentListElement1,
-		ContentListElement contentListElement2) {
+		ContentSetElement contentSetElement1,
+		ContentSetElement contentSetElement2) {
 
-		if (contentListElement1 == contentListElement2) {
+		if (contentSetElement1 == contentSetElement2) {
 			return true;
 		}
 
@@ -375,13 +369,13 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_contentListElementResource instanceof EntityModelResource)) {
+		if (!(_contentSetElementResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_contentListElementResource;
+			(EntityModelResource)_contentSetElementResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -408,7 +402,7 @@ public abstract class BaseContentListElementResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		ContentListElement contentListElement) {
+		ContentSetElement contentSetElement) {
 
 		StringBundler sb = new StringBundler();
 
@@ -427,7 +421,7 @@ public abstract class BaseContentListElementResourceTestCase {
 
 		if (entityFieldName.equals("contentType")) {
 			sb.append("'");
-			sb.append(String.valueOf(contentListElement.getContentType()));
+			sb.append(String.valueOf(contentSetElement.getContentType()));
 			sb.append("'");
 
 			return sb.toString();
@@ -440,7 +434,7 @@ public abstract class BaseContentListElementResourceTestCase {
 
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
-			sb.append(String.valueOf(contentListElement.getTitle()));
+			sb.append(String.valueOf(contentSetElement.getTitle()));
 			sb.append("'");
 
 			return sb.toString();
@@ -450,8 +444,8 @@ public abstract class BaseContentListElementResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected ContentListElement randomContentListElement() {
-		return new ContentListElement() {
+	protected ContentSetElement randomContentSetElement() {
+		return new ContentSetElement() {
 			{
 				contentType = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
@@ -459,12 +453,12 @@ public abstract class BaseContentListElementResourceTestCase {
 		};
 	}
 
-	protected ContentListElement randomIrrelevantContentListElement() {
-		return randomContentListElement();
+	protected ContentSetElement randomIrrelevantContentSetElement() {
+		return randomContentSetElement();
 	}
 
-	protected ContentListElement randomPatchContentListElement() {
-		return randomContentListElement();
+	protected ContentSetElement randomPatchContentSetElement() {
+		return randomContentSetElement();
 	}
 
 	protected Group irrelevantGroup;
@@ -541,7 +535,7 @@ public abstract class BaseContentListElementResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseContentListElementResourceTestCase.class);
+		BaseContentSetElementResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -583,7 +577,7 @@ public abstract class BaseContentListElementResourceTestCase {
 	};
 
 	@Inject
-	private ContentListElementResource _contentListElementResource;
+	private ContentSetElementResource _contentSetElementResource;
 
 	private URL _resourceURL;
 

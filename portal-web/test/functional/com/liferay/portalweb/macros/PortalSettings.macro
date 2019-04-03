@@ -610,6 +610,20 @@ definition {
 		);
 	}
 
+	macro gotoConfiguration {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "${configurationCategory}",
+			configurationName = "${configurationName}",
+			configurationScope = "${configurationScope}"
+		);
+	}
+
 	macro gotoPortalSettings {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -636,7 +650,11 @@ definition {
 
 		PortletEntry.save();
 
-		PortalSettingsNavigator.gotoCAS();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "CAS Server",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Uncheck(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
@@ -761,7 +779,11 @@ definition {
 	}
 
 	macro viewAuthenticationCASCP {
-		PortalSettingsNavigator.gotoCAS();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "CAS Server",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
@@ -941,7 +963,11 @@ definition {
 	}
 
 	macro viewAuthenticationNTLMCP {
-		PortalSettingsNavigator.gotoNTLM();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "NTLM",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX"

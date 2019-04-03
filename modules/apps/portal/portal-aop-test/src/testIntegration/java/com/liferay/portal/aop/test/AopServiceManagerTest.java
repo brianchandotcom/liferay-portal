@@ -52,9 +52,9 @@ import org.osgi.framework.PrototypeServiceFactory;
 import org.osgi.framework.ServiceException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.log.LogLevel;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
+import org.osgi.service.log.LogService;
 
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -226,7 +226,7 @@ public class AopServiceManagerTest {
 			new DefaultNoticeableFuture<>();
 
 		LogListener logListener = logEntry -> {
-			if (logEntry.getLevel() == LogLevel.ERROR.ordinal()) {
+			if (logEntry.getLevel() == LogService.LOG_ERROR) {
 				defaultNoticeableFuture.set(logEntry.getException());
 			}
 		};

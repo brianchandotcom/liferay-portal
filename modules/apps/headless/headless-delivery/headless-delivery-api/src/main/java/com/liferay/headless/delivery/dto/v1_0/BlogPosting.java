@@ -26,6 +26,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -42,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("BlogPosting")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"articleBody", "headline"})
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting {
 

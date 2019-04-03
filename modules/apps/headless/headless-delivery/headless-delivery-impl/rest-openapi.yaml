@@ -348,13 +348,13 @@ components:
                     type: string
                 description:
                     type: string
+                documentFolderId:
+                    format: int64
+                    type: integer
                 encodingFormat:
                     type: string
                 fileExtension:
                     type: string
-                folderId:
-                    format: int64
-                    type: integer
                 id:
                     format: int64
                     type: integer
@@ -390,8 +390,8 @@ components:
                     type: string
                     writeOnly: true
             type: object
-        Folder:
-            description: https://www.schema.org/Folder
+        DocumentFolder:
+            description: https://www.schema.org/DocumentFolder
             properties:
                 contentSpaceId:
                     format: int64
@@ -411,9 +411,9 @@ components:
                     type: integer
                 name:
                     type: string
-                numberOfDocuments:
+                numberOfDocumentFolders:
                     type: number
-                numberOfFolders:
+                numberOfDocuments:
                     type: number
                 viewableBy:
                     enum: [Anyone, Members, Owner]
@@ -1367,6 +1367,70 @@ paths:
                                 type: array
                     description: ""
             tags: ["ContentStructure"]
+    "/content-spaces/{contentSpaceId}/document-folders":
+        get:
+            parameters:
+                - in: path
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+                    description: ""
+            tags: ["DocumentFolder"]
+        post:
+            parameters:
+                - in: path
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
     "/content-spaces/{contentSpaceId}/documents":
         get:
             parameters:
@@ -1437,70 +1501,6 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/content-spaces/{contentSpaceId}/folders":
-        get:
-            parameters:
-                - in: path
-                  name: contentSpaceId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Folder"
-                                type: array
-                    description: ""
-            tags: ["Folder"]
-        post:
-            parameters:
-                - in: path
-                  name: contentSpaceId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
     "/content-spaces/{contentSpaceId}/knowledge-base-articles":
         get:
             parameters:
@@ -1989,6 +1989,205 @@ paths:
                                 type: array
                     description: ""
             tags: ["StructuredContent"]
+    "/document-folders/{documentFolderId}":
+        delete:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DocumentFolder"]
+        get:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
+        patch:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
+        put:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
+    "/document-folders/{documentFolderId}/document-folders":
+        get:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+                    description: ""
+            tags: ["DocumentFolder"]
+        post:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
+    "/document-folders/{documentFolderId}/documents":
+        get:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
+                    description: ""
+            tags: ["Document"]
+        post:
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/Document"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                    description: ""
+            tags: ["Document"]
     "/documents/{documentId}":
         delete:
             parameters:
@@ -2174,205 +2373,6 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
-    "/folders/{folderId}":
-        delete:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["Folder"]
-        get:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-        patch:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-        put:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-    "/folders/{folderId}/documents":
-        get:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Document"
-                                type: array
-                    description: ""
-            tags: ["Document"]
-        post:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                document:
-                                    $ref: "#/components/schemas/Document"
-                                file:
-                                    format: binary
-                                    type: string
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Document"
-                    description: ""
-            tags: ["Document"]
-    "/folders/{folderId}/folders":
-        get:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Folder"
-                                type: array
-                    description: ""
-            tags: ["Folder"]
-        post:
-            parameters:
-                - in: path
-                  name: folderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
             parameters:

@@ -983,8 +983,8 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return new String[] {
-			"blue", "cyan", "gray", "gray-dark", "green", "indigo", "orange",
-			"pink", "purple", "red", "teal", "white", "yellow"
+			"primary", "success", "danger", "warning", "info", "dark",
+			"secondary", "light", "white"
 		};
 	}
 

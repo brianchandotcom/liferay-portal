@@ -206,15 +206,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 						"redirect", _currentURLObj.toString(),
 						"parentCategoryId", String.valueOf(categoryId));
 
-					String label = "category[message-board]";
-
-					if (categoryId !=
-							MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-						label = "subcategory[message-board]";
-					}
-
-					dropdownItem.setLabel(LanguageUtil.get(_request, label));
+					dropdownItem.setLabel(
+						LanguageUtil.get(_request, "category[message-board]"));
 				});
 		}
 

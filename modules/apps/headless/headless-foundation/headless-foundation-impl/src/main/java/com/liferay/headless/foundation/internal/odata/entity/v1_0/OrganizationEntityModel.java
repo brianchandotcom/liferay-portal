@@ -16,6 +16,7 @@ package com.liferay.headless.foundation.internal.odata.entity.v1_0;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -34,6 +35,9 @@ public class OrganizationEntityModel implements EntityModel {
 
 	public OrganizationEntityModel() {
 		_entityFieldsMap = Stream.of(
+			new CollectionEntityField(
+				new StringEntityField(
+					"keywords", locale -> "assetTagNames.raw")),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

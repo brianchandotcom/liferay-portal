@@ -41,12 +41,14 @@ public class FolderNameExceptionMapper
 
 	@Override
 	public Response toResponse(FolderNameException fne) {
+		String message = fne.getMessage();
+
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			fne.getMessage()
+			message.replace("Folder", "Document folder")
 		).build();
 	}
 

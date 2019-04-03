@@ -41,12 +41,14 @@ public class DuplicateFolderNameExceptionMapper
 
 	@Override
 	public Response toResponse(DuplicateFolderNameException dfne) {
+		String message = dfne.getMessage();
+
 		return Response.status(
 			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			dfne.getMessage()
+			message.replace("folder", "document folder")
 		).build();
 	}
 

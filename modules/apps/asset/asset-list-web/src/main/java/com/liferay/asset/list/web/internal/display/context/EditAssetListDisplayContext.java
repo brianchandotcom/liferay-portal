@@ -812,14 +812,15 @@ public class EditAssetListDisplayContext {
 		return _segmentsEntryId;
 	}
 
-	public String getSegmentsEntryName(Locale locale) {
-		SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-		if (segmentsEntry != null) {
-			return segmentsEntry.getName(locale);
+	public String getSegmentsEntryName(long segmentsEntryId, Locale locale) {
+		if (segmentsEntryId == SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT) {
+			return SegmentsConstants.getDefaultSegmentsEntryName(locale);
 		}
 
-		return SegmentsConstants.getDefaultSegmentsEntryName(locale);
+		SegmentsEntry segmentsEntry =
+			SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(segmentsEntryId);
+
+		return segmentsEntry.getName(locale);
 	}
 
 	public long[] getSelectedGroupIds() throws PortalException {

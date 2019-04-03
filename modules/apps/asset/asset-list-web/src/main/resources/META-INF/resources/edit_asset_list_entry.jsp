@@ -93,7 +93,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 											%>
 
 											<a class="nav-link truncate-text <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>" href="<%= editAssetListEntryURL.toString() %>">
-												<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(locale)) %>
+												<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(assetListEntrySegmentsEntryRel.getSegmentsEntryId(), locale)) %>
 											</a>
 										</li>
 
@@ -132,7 +132,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				<h3 class="sheet-title">
 					<div class="autofit-row autofit-row-center">
 						<div class="autofit-col">
-							<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(locale)) %>
+							<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(editAssetListDisplayContext.getSegmentsEntryId(), locale)) %>
 						</div>
 
 						<div class="autofit-col autofit-col-end inline-item-after">

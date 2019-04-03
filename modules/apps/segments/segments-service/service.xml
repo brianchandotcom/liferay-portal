@@ -191,15 +191,12 @@
 
 		<!-- References -->
 
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>DefaultSegmentsExperience</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
 		<exception>SegmentsExperiencePriority</exception>
-		<exception>SegmentsExperienceSegmentsEntry</exception>
 	</exceptions>
 </service-builder>

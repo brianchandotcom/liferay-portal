@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
@@ -250,7 +249,6 @@ class Form extends Component {
 		saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn')
 	}
 
-	@autobind
 	_resolvePublishURL() {
 		return this._autoSave.save(false).then(
 			() => {
@@ -262,7 +260,6 @@ class Form extends Component {
 		);
 	}
 
-	@autobind
 	_resolvePreviewURL() {
 		return this._autoSave.save(true).then(
 			() => {
@@ -368,7 +365,6 @@ class Form extends Component {
 		);
 	}
 
-	@autobind
 	_createFormURL() {
 		let formURL;
 
@@ -384,7 +380,6 @@ class Form extends Component {
 		return formURL + this._getFormInstanceId();
 	}
 
-	@autobind
 	_getFormInstanceId() {
 		const {namespace} = this.props;
 
@@ -566,16 +561,16 @@ class Form extends Component {
 						<PublishButton
 							events={
 								{
-									publishedChanged: this._handlePublishedChanged
+									publishedChanged: this._handlePublishedChanged.bind(this)
 								}
 							}
 							formInstanceId={formInstanceId}
 							namespace={namespace}
 							published={published}
-							resolvePublishURL={this._createFormURL}
+							resolvePublishURL={this._createFormURL.bind(this)}
 							showPublishAlert={showPublishAlert}
 							spritemap={spritemap}
-							submitForm={this.submitForm}
+							submitForm={this.submitForm.bind(this)}
 							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
 						/>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
@@ -583,7 +578,7 @@ class Form extends Component {
 						</button>
 						<PreviewButton
 							namespace={namespace}
-							resolvePreviewURL={this._resolvePreviewURL}
+							resolvePreviewURL={this._resolvePreviewURL.bind(this)}
 							spritemap={spritemap}
 						/>
 					</div>
@@ -622,7 +617,6 @@ class Form extends Component {
 		);
 	}
 
-	@autobind
 	submitForm() {
 		const {namespace} = this.props;
 
@@ -684,7 +678,6 @@ class Form extends Component {
 		);
 	}
 
-	@autobind
 	_handlePublishedChanged({newVal}) {
 		const {saved} = this.props;
 		const shareFormIcon = document.querySelector('.share-form-icon');

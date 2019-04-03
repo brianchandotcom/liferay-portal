@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Clipboard from 'metal-clipboard';
 import Component, {Config} from 'metal-jsx';
 import getCN from 'classnames';
@@ -44,7 +43,7 @@ class ShareFormPopover extends Component {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			this._clipboard.on('success', this._handleClipboardSuccess)
+			this._clipboard.on('success', this._handleClipboardSuccess.bind(this))
 		);
 	}
 
@@ -70,7 +69,6 @@ class ShareFormPopover extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
-	@autobind
 	_handleClipboardSuccess() {
 		this.setState(
 			{
@@ -79,7 +77,6 @@ class ShareFormPopover extends Component {
 		);
 	}
 
-	@autobind
 	_handlePopoverClosed() {
 		this.setState(
 			{
@@ -112,7 +109,7 @@ class ShareFormPopover extends Component {
 			<Popover
 				alignElement={shareFormIcon}
 				events={{
-					popoverClosed: this._handlePopoverClosed
+					popoverClosed: this._handlePopoverClosed.bind(this)
 				}}
 				placement={Align.LeftCenter}
 				portalElement={document.body}

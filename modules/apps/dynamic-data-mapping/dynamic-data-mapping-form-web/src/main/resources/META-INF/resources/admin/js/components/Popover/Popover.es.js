@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Component, {Config} from 'metal-jsx';
 import dom from 'metal-dom';
 import getCN from 'classnames';
@@ -47,8 +46,8 @@ class Popover extends Component {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown, true),
-			dom.on(alignElement, 'click', this._handleAlignElementClicked)
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true),
+			dom.on(alignElement, 'click', this._handleAlignElementClicked.bind(this))
 		);
 
 		return this.setPopoverWidth();
@@ -74,7 +73,6 @@ class Popover extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
-	@autobind
 	_handleAlignElementClicked() {
 		const {displayed} = this.state;
 
@@ -94,7 +92,6 @@ class Popover extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	@autobind
 	_handleDocumentMouseDown({target}) {
 		const {alignElement} = this.props;
 		const {displayed} = this.state;

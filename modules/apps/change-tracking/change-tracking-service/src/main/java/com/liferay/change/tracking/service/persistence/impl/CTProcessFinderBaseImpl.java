@@ -16,40 +16,54 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class CTProcessFinderBaseImpl extends BasePersistenceImpl<CTProcess> {
+public abstract class CTProcessFinderBaseImpl
+	extends BasePersistenceImpl<CTProcess> {
 
 	public CTProcessFinderBaseImpl() {
 		setModelClass(CTProcess.class);
 	}
 
-	/**
-	 * Returns the ct process persistence.
-	 *
-	 * @return the ct process persistence
-	 */
-	public CTProcessPersistence getCTProcessPersistence() {
-		return ctProcessPersistence;
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ct process persistence.
-	 *
-	 * @param ctProcessPersistence the ct process persistence
-	 */
-	public void setCTProcessPersistence(
-		CTProcessPersistence ctProcessPersistence) {
-
-		this.ctProcessPersistence = ctProcessPersistence;
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CTProcessPersistence.class)
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CTProcessPersistence ctProcessPersistence;
 
 }

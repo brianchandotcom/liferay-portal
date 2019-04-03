@@ -25,7 +25,7 @@ import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessFinder;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -43,19 +43,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ct entry aggregate local service.
@@ -71,7 +70,8 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class CTEntryAggregateLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CTEntryAggregateLocalService, IdentifiableOSGiService {
+	implements CTEntryAggregateLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -450,7 +450,8 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
 		long ctCollectionId) {
 
-		return ctCollectionPersistence.getCTEntryAggregates(ctCollectionId);
+		return ctEntryAggregatePersistence.getCTCollectionCTEntryAggregates(
+			ctCollectionId);
 	}
 
 	/**
@@ -459,7 +460,7 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
 		long ctCollectionId, int start, int end) {
 
-		return ctCollectionPersistence.getCTEntryAggregates(
+		return ctEntryAggregatePersistence.getCTCollectionCTEntryAggregates(
 			ctCollectionId, start, end);
 	}
 
@@ -470,7 +471,7 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator) {
 
-		return ctCollectionPersistence.getCTEntryAggregates(
+		return ctEntryAggregatePersistence.getCTCollectionCTEntryAggregates(
 			ctCollectionId, start, end, orderByComparator);
 	}
 
@@ -607,7 +608,8 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	 */
 	@Override
 	public List<CTEntryAggregate> getCTEntryCTEntryAggregates(long ctEntryId) {
-		return ctEntryPersistence.getCTEntryAggregates(ctEntryId);
+		return ctEntryAggregatePersistence.getCTEntryCTEntryAggregates(
+			ctEntryId);
 	}
 
 	/**
@@ -616,7 +618,8 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	public List<CTEntryAggregate> getCTEntryCTEntryAggregates(
 		long ctEntryId, int start, int end) {
 
-		return ctEntryPersistence.getCTEntryAggregates(ctEntryId, start, end);
+		return ctEntryAggregatePersistence.getCTEntryCTEntryAggregates(
+			ctEntryId, start, end);
 	}
 
 	/**
@@ -626,7 +629,7 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 		long ctEntryId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator) {
 
-		return ctEntryPersistence.getCTEntryAggregates(
+		return ctEntryAggregatePersistence.getCTEntryCTEntryAggregates(
 			ctEntryId, start, end, orderByComparator);
 	}
 
@@ -663,367 +666,17 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 		ctEntryPersistence.setCTEntryAggregates(ctEntryId, ctEntryAggregateIds);
 	}
 
-	/**
-	 * Returns the ct collection local service.
-	 *
-	 * @return the ct collection local service
-	 */
-	public com.liferay.change.tracking.service.CTCollectionLocalService
-		getCTCollectionLocalService() {
-
-		return ctCollectionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CTEntryAggregateLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the ct collection local service.
-	 *
-	 * @param ctCollectionLocalService the ct collection local service
-	 */
-	public void setCTCollectionLocalService(
-		com.liferay.change.tracking.service.CTCollectionLocalService
-			ctCollectionLocalService) {
-
-		this.ctCollectionLocalService = ctCollectionLocalService;
-	}
-
-	/**
-	 * Returns the ct collection persistence.
-	 *
-	 * @return the ct collection persistence
-	 */
-	public CTCollectionPersistence getCTCollectionPersistence() {
-		return ctCollectionPersistence;
-	}
-
-	/**
-	 * Sets the ct collection persistence.
-	 *
-	 * @param ctCollectionPersistence the ct collection persistence
-	 */
-	public void setCTCollectionPersistence(
-		CTCollectionPersistence ctCollectionPersistence) {
-
-		this.ctCollectionPersistence = ctCollectionPersistence;
-	}
-
-	/**
-	 * Returns the ct entry local service.
-	 *
-	 * @return the ct entry local service
-	 */
-	public com.liferay.change.tracking.service.CTEntryLocalService
-		getCTEntryLocalService() {
-
-		return ctEntryLocalService;
-	}
-
-	/**
-	 * Sets the ct entry local service.
-	 *
-	 * @param ctEntryLocalService the ct entry local service
-	 */
-	public void setCTEntryLocalService(
-		com.liferay.change.tracking.service.CTEntryLocalService
-			ctEntryLocalService) {
-
-		this.ctEntryLocalService = ctEntryLocalService;
-	}
-
-	/**
-	 * Returns the ct entry persistence.
-	 *
-	 * @return the ct entry persistence
-	 */
-	public CTEntryPersistence getCTEntryPersistence() {
-		return ctEntryPersistence;
-	}
-
-	/**
-	 * Sets the ct entry persistence.
-	 *
-	 * @param ctEntryPersistence the ct entry persistence
-	 */
-	public void setCTEntryPersistence(CTEntryPersistence ctEntryPersistence) {
-		this.ctEntryPersistence = ctEntryPersistence;
-	}
-
-	/**
-	 * Returns the ct entry finder.
-	 *
-	 * @return the ct entry finder
-	 */
-	public CTEntryFinder getCTEntryFinder() {
-		return ctEntryFinder;
-	}
-
-	/**
-	 * Sets the ct entry finder.
-	 *
-	 * @param ctEntryFinder the ct entry finder
-	 */
-	public void setCTEntryFinder(CTEntryFinder ctEntryFinder) {
-		this.ctEntryFinder = ctEntryFinder;
-	}
-
-	/**
-	 * Returns the ct entry aggregate local service.
-	 *
-	 * @return the ct entry aggregate local service
-	 */
-	public CTEntryAggregateLocalService getCTEntryAggregateLocalService() {
-		return ctEntryAggregateLocalService;
-	}
-
-	/**
-	 * Sets the ct entry aggregate local service.
-	 *
-	 * @param ctEntryAggregateLocalService the ct entry aggregate local service
-	 */
-	public void setCTEntryAggregateLocalService(
-		CTEntryAggregateLocalService ctEntryAggregateLocalService) {
-
-		this.ctEntryAggregateLocalService = ctEntryAggregateLocalService;
-	}
-
-	/**
-	 * Returns the ct entry aggregate persistence.
-	 *
-	 * @return the ct entry aggregate persistence
-	 */
-	public CTEntryAggregatePersistence getCTEntryAggregatePersistence() {
-		return ctEntryAggregatePersistence;
-	}
-
-	/**
-	 * Sets the ct entry aggregate persistence.
-	 *
-	 * @param ctEntryAggregatePersistence the ct entry aggregate persistence
-	 */
-	public void setCTEntryAggregatePersistence(
-		CTEntryAggregatePersistence ctEntryAggregatePersistence) {
-
-		this.ctEntryAggregatePersistence = ctEntryAggregatePersistence;
-	}
-
-	/**
-	 * Returns the ct entry aggregate finder.
-	 *
-	 * @return the ct entry aggregate finder
-	 */
-	public CTEntryAggregateFinder getCTEntryAggregateFinder() {
-		return ctEntryAggregateFinder;
-	}
-
-	/**
-	 * Sets the ct entry aggregate finder.
-	 *
-	 * @param ctEntryAggregateFinder the ct entry aggregate finder
-	 */
-	public void setCTEntryAggregateFinder(
-		CTEntryAggregateFinder ctEntryAggregateFinder) {
-
-		this.ctEntryAggregateFinder = ctEntryAggregateFinder;
-	}
-
-	/**
-	 * Returns the ct process local service.
-	 *
-	 * @return the ct process local service
-	 */
-	public com.liferay.change.tracking.service.CTProcessLocalService
-		getCTProcessLocalService() {
-
-		return ctProcessLocalService;
-	}
-
-	/**
-	 * Sets the ct process local service.
-	 *
-	 * @param ctProcessLocalService the ct process local service
-	 */
-	public void setCTProcessLocalService(
-		com.liferay.change.tracking.service.CTProcessLocalService
-			ctProcessLocalService) {
-
-		this.ctProcessLocalService = ctProcessLocalService;
-	}
-
-	/**
-	 * Returns the ct process persistence.
-	 *
-	 * @return the ct process persistence
-	 */
-	public CTProcessPersistence getCTProcessPersistence() {
-		return ctProcessPersistence;
-	}
-
-	/**
-	 * Sets the ct process persistence.
-	 *
-	 * @param ctProcessPersistence the ct process persistence
-	 */
-	public void setCTProcessPersistence(
-		CTProcessPersistence ctProcessPersistence) {
-
-		this.ctProcessPersistence = ctProcessPersistence;
-	}
-
-	/**
-	 * Returns the ct process finder.
-	 *
-	 * @return the ct process finder
-	 */
-	public CTProcessFinder getCTProcessFinder() {
-		return ctProcessFinder;
-	}
-
-	/**
-	 * Sets the ct process finder.
-	 *
-	 * @param ctProcessFinder the ct process finder
-	 */
-	public void setCTProcessFinder(CTProcessFinder ctProcessFinder) {
-		this.ctProcessFinder = ctProcessFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.change.tracking.model.CTEntryAggregate",
-			ctEntryAggregateLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.change.tracking.model.CTEntryAggregate");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ctEntryAggregateLocalService = (CTEntryAggregateLocalService)aopProxy;
 	}
 
 	/**
@@ -1068,80 +721,43 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTCollectionLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTCollectionLocalService
-		ctCollectionLocalService;
-
-	@BeanReference(type = CTCollectionPersistence.class)
+	@Reference
 	protected CTCollectionPersistence ctCollectionPersistence;
 
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTEntryLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTEntryLocalService
-		ctEntryLocalService;
-
-	@BeanReference(type = CTEntryPersistence.class)
+	@Reference
 	protected CTEntryPersistence ctEntryPersistence;
 
-	@BeanReference(type = CTEntryFinder.class)
+	@Reference
 	protected CTEntryFinder ctEntryFinder;
 
-	@BeanReference(type = CTEntryAggregateLocalService.class)
 	protected CTEntryAggregateLocalService ctEntryAggregateLocalService;
 
-	@BeanReference(type = CTEntryAggregatePersistence.class)
+	@Reference
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
 
-	@BeanReference(type = CTEntryAggregateFinder.class)
+	@Reference
 	protected CTEntryAggregateFinder ctEntryAggregateFinder;
 
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTProcessLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTProcessLocalService
-		ctProcessLocalService;
-
-	@BeanReference(type = CTProcessPersistence.class)
+	@Reference
 	protected CTProcessPersistence ctProcessPersistence;
 
-	@BeanReference(type = CTProcessFinder.class)
+	@Reference
 	protected CTProcessFinder ctProcessFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

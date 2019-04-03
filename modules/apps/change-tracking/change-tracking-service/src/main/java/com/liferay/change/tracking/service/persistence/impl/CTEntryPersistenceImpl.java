@@ -17,14 +17,15 @@ package com.liferay.change.tracking.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.exception.NoSuchEntryException;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.impl.CTEntryImpl;
 import com.liferay.change.tracking.model.impl.CTEntryModelImpl;
-import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
+import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,11 +44,11 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -59,6 +61,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the ct entry service.
  *
@@ -69,6 +78,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = CTEntryPersistence.class)
 @ProviderType
 public class CTEntryPersistenceImpl
 	extends BasePersistenceImpl<CTEntry> implements CTEntryPersistence {
@@ -823,7 +833,6 @@ public class CTEntryPersistenceImpl
 
 		setModelImplClass(CTEntryImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(CTEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -834,8 +843,8 @@ public class CTEntryPersistenceImpl
 	@Override
 	public void cacheResult(CTEntry ctEntry) {
 		entityCache.putResult(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED, CTEntryImpl.class,
-			ctEntry.getPrimaryKey(), ctEntry);
+			entityCacheEnabled, CTEntryImpl.class, ctEntry.getPrimaryKey(),
+			ctEntry);
 
 		finderCache.putResult(
 			_finderPathFetchByC_C,
@@ -856,7 +865,7 @@ public class CTEntryPersistenceImpl
 	public void cacheResult(List<CTEntry> ctEntries) {
 		for (CTEntry ctEntry : ctEntries) {
 			if (entityCache.getResult(
-					CTEntryModelImpl.ENTITY_CACHE_ENABLED, CTEntryImpl.class,
+					entityCacheEnabled, CTEntryImpl.class,
 					ctEntry.getPrimaryKey()) == null) {
 
 				cacheResult(ctEntry);
@@ -893,8 +902,7 @@ public class CTEntryPersistenceImpl
 	@Override
 	public void clearCache(CTEntry ctEntry) {
 		entityCache.removeResult(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED, CTEntryImpl.class,
-			ctEntry.getPrimaryKey());
+			entityCacheEnabled, CTEntryImpl.class, ctEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -909,8 +917,7 @@ public class CTEntryPersistenceImpl
 
 		for (CTEntry ctEntry : ctEntries) {
 			entityCache.removeResult(
-				CTEntryModelImpl.ENTITY_CACHE_ENABLED, CTEntryImpl.class,
-				ctEntry.getPrimaryKey());
+				entityCacheEnabled, CTEntryImpl.class, ctEntry.getPrimaryKey());
 
 			clearUniqueFindersCache((CTEntryModelImpl)ctEntry, true);
 		}
@@ -1127,7 +1134,7 @@ public class CTEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CTEntryModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1167,8 +1174,8 @@ public class CTEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED, CTEntryImpl.class,
-			ctEntry.getPrimaryKey(), ctEntry, false);
+			entityCacheEnabled, CTEntryImpl.class, ctEntry.getPrimaryKey(),
+			ctEntry, false);
 
 		clearUniqueFindersCache(ctEntryModelImpl, false);
 		cacheUniqueFindersCache(ctEntryModelImpl);
@@ -1437,59 +1444,55 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the ct entry aggregates associated with the ct entry.
+	 * Returns all the ct entry associated with the ct entry aggregate.
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @return the ct entry aggregates associated with the ct entry
+	 * @param pk the primary key of the ct entry aggregate
+	 * @return the ct entries associated with the ct entry aggregate
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTEntryAggregate>
-		getCTEntryAggregates(long pk) {
-
-		return getCTEntryAggregates(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public List<CTEntry> getCTEntryAggregateCTEntries(long pk) {
+		return getCTEntryAggregateCTEntries(
+			pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	/**
-	 * Returns a range of all the ct entry aggregates associated with the ct entry.
+	 * Returns all the ct entry associated with the ct entry aggregate.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @return the range of ct entry aggregates associated with the ct entry
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param start the lower bound of the range of ct entry aggregates
+	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	 * @return the range of ct entries associated with the ct entry aggregate
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTEntryAggregate>
-		getCTEntryAggregates(long pk, int start, int end) {
+	public List<CTEntry> getCTEntryAggregateCTEntries(
+		long pk, int start, int end) {
 
-		return getCTEntryAggregates(pk, start, end, null);
+		return getCTEntryAggregateCTEntries(pk, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates associated with the ct entry.
+	 * Returns all the ct entry associated with the ct entry aggregate.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param start the lower bound of the range of ct entry aggregates
+	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ct entry aggregates associated with the ct entry
+	 * @return the ordered range of ct entries associated with the ct entry aggregate
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTEntryAggregate>
-		getCTEntryAggregates(
-			long pk, int start, int end,
-			OrderByComparator
-				<com.liferay.change.tracking.model.CTEntryAggregate>
-					orderByComparator) {
+	public List<CTEntry> getCTEntryAggregateCTEntries(
+		long pk, int start, int end,
+		OrderByComparator<CTEntry> orderByComparator) {
 
-		return ctEntryToCTEntryAggregateTableMapper.getRightBaseModels(
+		return ctEntryToCTEntryAggregateTableMapper.getLeftBaseModels(
 			pk, start, end, orderByComparator);
 	}
 
@@ -1564,8 +1567,7 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void addCTEntryAggregate(
-		long pk,
-		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate) {
+		long pk, CTEntryAggregate ctEntryAggregate) {
 
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
@@ -1611,16 +1613,13 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void addCTEntryAggregates(
-		long pk,
-		List<com.liferay.change.tracking.model.CTEntryAggregate>
-			ctEntryAggregates) {
+		long pk, List<CTEntryAggregate> ctEntryAggregates) {
 
 		addCTEntryAggregates(
 			pk,
 			ListUtil.toLongArray(
 				ctEntryAggregates,
-				com.liferay.change.tracking.model.CTEntryAggregate.
-					CT_ENTRY_AGGREGATE_ID_ACCESSOR));
+				CTEntryAggregate.CT_ENTRY_AGGREGATE_ID_ACCESSOR));
 	}
 
 	/**
@@ -1654,8 +1653,7 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeCTEntryAggregate(
-		long pk,
-		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate) {
+		long pk, CTEntryAggregate ctEntryAggregate) {
 
 		ctEntryToCTEntryAggregateTableMapper.deleteTableMapping(
 			pk, ctEntryAggregate.getPrimaryKey());
@@ -1681,16 +1679,13 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeCTEntryAggregates(
-		long pk,
-		List<com.liferay.change.tracking.model.CTEntryAggregate>
-			ctEntryAggregates) {
+		long pk, List<CTEntryAggregate> ctEntryAggregates) {
 
 		removeCTEntryAggregates(
 			pk,
 			ListUtil.toLongArray(
 				ctEntryAggregates,
-				com.liferay.change.tracking.model.CTEntryAggregate.
-					CT_ENTRY_AGGREGATE_ID_ACCESSOR));
+				CTEntryAggregate.CT_ENTRY_AGGREGATE_ID_ACCESSOR));
 	}
 
 	/**
@@ -1739,16 +1734,13 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void setCTEntryAggregates(
-		long pk,
-		List<com.liferay.change.tracking.model.CTEntryAggregate>
-			ctEntryAggregates) {
+		long pk, List<CTEntryAggregate> ctEntryAggregates) {
 
 		try {
 			long[] ctEntryAggregatePKs = new long[ctEntryAggregates.size()];
 
 			for (int i = 0; i < ctEntryAggregates.size(); i++) {
-				com.liferay.change.tracking.model.CTEntryAggregate
-					ctEntryAggregate = ctEntryAggregates.get(i);
+				CTEntryAggregate ctEntryAggregate = ctEntryAggregates.get(i);
 
 				ctEntryAggregatePKs[i] = ctEntryAggregate.getPrimaryKey();
 			}
@@ -1774,58 +1766,53 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the ct collections associated with the ct entry.
+	 * Returns all the ct entry associated with the ct collection.
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @return the ct collections associated with the ct entry
+	 * @param pk the primary key of the ct collection
+	 * @return the ct entries associated with the ct collection
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTCollection>
-		getCTCollections(long pk) {
-
-		return getCTCollections(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public List<CTEntry> getCTCollectionCTEntries(long pk) {
+		return getCTCollectionCTEntries(
+			pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	/**
-	 * Returns a range of all the ct collections associated with the ct entry.
+	 * Returns all the ct entry associated with the ct collection.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @return the range of ct collections associated with the ct entry
+	 * @param pk the primary key of the ct collection
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
+	 * @return the range of ct entries associated with the ct collection
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTCollection>
-		getCTCollections(long pk, int start, int end) {
-
-		return getCTCollections(pk, start, end, null);
+	public List<CTEntry> getCTCollectionCTEntries(long pk, int start, int end) {
+		return getCTCollectionCTEntries(pk, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the ct collections associated with the ct entry.
+	 * Returns all the ct entry associated with the ct collection.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the ct entry
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param pk the primary key of the ct collection
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ct collections associated with the ct entry
+	 * @return the ordered range of ct entries associated with the ct collection
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTCollection>
-		getCTCollections(
-			long pk, int start, int end,
-			OrderByComparator<com.liferay.change.tracking.model.CTCollection>
-				orderByComparator) {
+	public List<CTEntry> getCTCollectionCTEntries(
+		long pk, int start, int end,
+		OrderByComparator<CTEntry> orderByComparator) {
 
-		return ctEntryToCTCollectionTableMapper.getRightBaseModels(
+		return ctEntryToCTCollectionTableMapper.getLeftBaseModels(
 			pk, start, end, orderByComparator);
 	}
 
@@ -1898,9 +1885,7 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollection the ct collection
 	 */
 	@Override
-	public void addCTCollection(
-		long pk, com.liferay.change.tracking.model.CTCollection ctCollection) {
-
+	public void addCTCollection(long pk, CTCollection ctCollection) {
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
 		if (ctEntry == null) {
@@ -1944,16 +1929,11 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollections the ct collections
 	 */
 	@Override
-	public void addCTCollections(
-		long pk,
-		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
-
+	public void addCTCollections(long pk, List<CTCollection> ctCollections) {
 		addCTCollections(
 			pk,
 			ListUtil.toLongArray(
-				ctCollections,
-				com.liferay.change.tracking.model.CTCollection.
-					CT_COLLECTION_ID_ACCESSOR));
+				ctCollections, CTCollection.CT_COLLECTION_ID_ACCESSOR));
 	}
 
 	/**
@@ -1984,9 +1964,7 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollection the ct collection
 	 */
 	@Override
-	public void removeCTCollection(
-		long pk, com.liferay.change.tracking.model.CTCollection ctCollection) {
-
+	public void removeCTCollection(long pk, CTCollection ctCollection) {
 		ctEntryToCTCollectionTableMapper.deleteTableMapping(
 			pk, ctCollection.getPrimaryKey());
 	}
@@ -2010,16 +1988,11 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollections the ct collections
 	 */
 	@Override
-	public void removeCTCollections(
-		long pk,
-		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
-
+	public void removeCTCollections(long pk, List<CTCollection> ctCollections) {
 		removeCTCollections(
 			pk,
 			ListUtil.toLongArray(
-				ctCollections,
-				com.liferay.change.tracking.model.CTCollection.
-					CT_COLLECTION_ID_ACCESSOR));
+				ctCollections, CTCollection.CT_COLLECTION_ID_ACCESSOR));
 	}
 
 	/**
@@ -2066,16 +2039,12 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollections the ct collections to be associated with the ct entry
 	 */
 	@Override
-	public void setCTCollections(
-		long pk,
-		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
-
+	public void setCTCollections(long pk, List<CTCollection> ctCollections) {
 		try {
 			long[] ctCollectionPKs = new long[ctCollections.size()];
 
 			for (int i = 0; i < ctCollections.size(); i++) {
-				com.liferay.change.tracking.model.CTCollection ctCollection =
-					ctCollections.get(i);
+				CTCollection ctCollection = ctCollections.get(i);
 
 				ctCollectionPKs[i] = ctCollection.getPrimaryKey();
 			}
@@ -2110,36 +2079,38 @@ public class CTEntryPersistenceImpl
 	/**
 	 * Initializes the ct entry persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		CTEntryModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		CTEntryModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		ctEntryToCTEntryAggregateTableMapper =
 			TableMapperFactory.getTableMapper(
+				"CTEntryAggregates_CTEntries#ctEntryId",
 				"CTEntryAggregates_CTEntries", "companyId", "ctEntryId",
-				"ctEntryAggregateId", this, ctEntryAggregatePersistence);
+				"ctEntryAggregateId", this, CTEntryAggregate.class);
 
 		ctEntryToCTCollectionTableMapper = TableMapperFactory.getTableMapper(
-			"CTCollections_CTEntries", "companyId", "ctEntryId",
-			"ctCollectionId", this, ctCollectionPersistence);
+			"CTCollections_CTEntries#ctEntryId", "CTCollections_CTEntries",
+			"companyId", "ctEntryId", "ctCollectionId", this,
+			CTCollection.class);
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, CTEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, CTEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByModelClassNameId = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, CTEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModelClassNameId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2147,65 +2118,89 @@ public class CTEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByModelClassNameId = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, CTEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByModelClassNameId",
 			new String[] {Long.class.getName()},
 			CTEntryModelImpl.MODELCLASSNAMEID_COLUMN_BITMASK);
 
 		_finderPathCountByModelClassNameId = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByModelClassNameId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, CTEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			CTEntryModelImpl.MODELCLASSNAMEID_COLUMN_BITMASK |
 			CTEntryModelImpl.MODELCLASSPK_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(CTEntryImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		TableMapperFactory.removeTableMapper("CTEntryAggregates_CTEntries");
-		TableMapperFactory.removeTableMapper("CTCollections_CTEntries");
+		TableMapperFactory.removeTableMapper(
+			"CTEntryAggregates_CTEntries#ctEntryId");
+		TableMapperFactory.removeTableMapper(
+			"CTCollections_CTEntries#ctEntryId");
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.CTEntry"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
-	@BeanReference(type = CTEntryAggregatePersistence.class)
-	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
-
-	protected TableMapper
-		<CTEntry, com.liferay.change.tracking.model.CTEntryAggregate>
-			ctEntryToCTEntryAggregateTableMapper;
-
-	@BeanReference(type = CTCollectionPersistence.class)
-	protected CTCollectionPersistence ctCollectionPersistence;
-
-	protected TableMapper
-		<CTEntry, com.liferay.change.tracking.model.CTCollection>
-			ctEntryToCTCollectionTableMapper;
+	protected TableMapper<CTEntry, CTEntryAggregate>
+		ctEntryToCTEntryAggregateTableMapper;
+	protected TableMapper<CTEntry, CTCollection>
+		ctEntryToCTCollectionTableMapper;
 
 	private static final String _SQL_SELECT_CTENTRY =
 		"SELECT ctEntry FROM CTEntry ctEntry";

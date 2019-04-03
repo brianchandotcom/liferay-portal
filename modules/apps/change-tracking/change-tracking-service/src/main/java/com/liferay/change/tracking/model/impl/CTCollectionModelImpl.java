@@ -112,26 +112,19 @@ public class CTCollectionModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.change.tracking.model.CTCollection"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.change.tracking.model.CTCollection"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.CTCollection"),
-		true);
-
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	public static final long NAME_COLUMN_BITMASK = 2L;
 
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public static final String MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_NAME =
 		"CTCollections_CTEntries";
@@ -146,12 +139,6 @@ public class CTCollectionModelImpl
 		MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_SQL_CREATE =
 			"create table CTCollections_CTEntries (companyId LONG not null,ctCollectionId LONG not null,ctEntryId LONG not null,primary key (ctCollectionId, ctEntryId))";
 
-	public static final boolean FINDER_CACHE_ENABLED_CTCOLLECTIONS_CTENTRIES =
-		GetterUtil.getBoolean(
-			com.liferay.change.tracking.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.CTCollections_CTEntries"),
-			true);
-
 	public static final String
 		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_NAME =
 			"CTCollection_CTEntryAggregate";
@@ -165,17 +152,6 @@ public class CTCollectionModelImpl
 	public static final String
 		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_SQL_CREATE =
 			"create table CTCollection_CTEntryAggregate (companyId LONG not null,ctCollectionId LONG not null,ctEntryAggregateId LONG not null,primary key (ctCollectionId, ctEntryAggregateId))";
-
-	public static final boolean
-		FINDER_CACHE_ENABLED_CTCOLLECTION_CTENTRYAGGREGATE =
-			GetterUtil.getBoolean(
-				com.liferay.change.tracking.service.util.ServiceProps.get(
-					"value.object.finder.cache.enabled.CTCollection_CTEntryAggregate"),
-				true);
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.change.tracking.model.CTCollection"));
 
 	public CTCollectionModelImpl() {
 	}
@@ -710,12 +686,12 @@ public class CTCollectionModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -879,6 +855,8 @@ public class CTCollectionModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		CTCollection.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _ctCollectionId;
 	private long _companyId;

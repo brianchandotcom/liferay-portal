@@ -16,41 +16,54 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class CTEntryAggregateFinderBaseImpl
+public abstract class CTEntryAggregateFinderBaseImpl
 	extends BasePersistenceImpl<CTEntryAggregate> {
 
 	public CTEntryAggregateFinderBaseImpl() {
 		setModelClass(CTEntryAggregate.class);
 	}
 
-	/**
-	 * Returns the ct entry aggregate persistence.
-	 *
-	 * @return the ct entry aggregate persistence
-	 */
-	public CTEntryAggregatePersistence getCTEntryAggregatePersistence() {
-		return ctEntryAggregatePersistence;
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ct entry aggregate persistence.
-	 *
-	 * @param ctEntryAggregatePersistence the ct entry aggregate persistence
-	 */
-	public void setCTEntryAggregatePersistence(
-		CTEntryAggregatePersistence ctEntryAggregatePersistence) {
-
-		this.ctEntryAggregatePersistence = ctEntryAggregatePersistence;
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CTEntryAggregatePersistence.class)
+	@Override
+	@Reference(
+		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
 
 }

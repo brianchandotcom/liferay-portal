@@ -36,12 +36,12 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -66,23 +66,15 @@ public class Setup {
 			String tckDeployFilesDir, Bundle[] bundles)
 		throws Exception {
 
-		long companyId = 0L;
-		long userId = 0L;
+		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
-		for (long id : PortalUtil.getCompanyIds()) {
-			_setupPermissionChecker(id);
-			Company company = CompanyLocalServiceUtil.getCompanyById(id);
+		_setupPermissionChecker(company.getCompanyId());
 
-			if ("Liferay".equals(company.getName())) {
-				companyId = id;
+		User user = company.getDefaultUser();
 
-				User user = company.getDefaultUser();
-
-				userId = user.getUserId();
-			}
-		}
-
-		Group group = _getGroupForSite(companyId, userId);
+		Group group = _getGroupForSite(
+			company.getCompanyId(), user.getUserId());
 
 		long groupId = group.getGroupId();
 
@@ -147,7 +139,7 @@ public class Setup {
 
 			PortalPage portalPage = new PortalPage(pageName, portlets);
 
-			_setupPage(userId, groupId, portalPage, bundles);
+			_setupPage(user.getUserId(), groupId, portalPage, bundles);
 		}
 	}
 

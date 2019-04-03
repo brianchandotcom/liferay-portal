@@ -74,7 +74,7 @@ definition {
 
 			Panel.expandPanel(panel = "Structure and Template");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 				value1 = "${structureName}"
 			);

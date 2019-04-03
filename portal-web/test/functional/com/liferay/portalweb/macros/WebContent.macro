@@ -408,7 +408,7 @@ definition {
 
 		Panel.expandPanel(panel = "Structure and Template");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 			value1 = "${structureName}"
 		);
@@ -1266,7 +1266,7 @@ definition {
 
 		Panel.expandPanel(panel = "Structure and Template");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 			value1 = "${structureName}"
 		);
@@ -1932,7 +1932,7 @@ definition {
 		if (isSet(structureLocalizationName)) {
 			Panel.expandPanel(panel = "${panel}");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 				value1 = "${structureLocalizationName}"
 			);

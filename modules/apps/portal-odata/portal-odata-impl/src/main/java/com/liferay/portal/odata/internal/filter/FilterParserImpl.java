@@ -30,6 +30,7 @@ import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.uri.UriInfo;
 import org.apache.olingo.server.api.uri.queryoption.FilterOption;
 import org.apache.olingo.server.core.uri.parser.Parser;
+import org.apache.olingo.server.core.uri.parser.UriParserSemanticException;
 
 /**
  * Transforms a string containing an OData filter into a manageable {@code
@@ -80,6 +81,19 @@ public class FilterParserImpl implements FilterParser {
 		try {
 			return _parser.parseUri(
 				_path, "$filter=" + Encoder.encode(filterString), null, null);
+		}
+		catch (UriParserSemanticException upse) {
+			String message = upse.getMessage();
+
+			if (UriParserSemanticException.MessageKeys.
+					EXPRESSION_PROPERTY_NOT_IN_TYPE.equals(
+						upse.getMessageKey())) {
+
+				message =
+					"A property used in the filter criteria is not supported";
+			}
+
+			throw new ExpressionVisitException(message, upse);
 		}
 		catch (ODataException ode) {
 			throw new ExpressionVisitException(ode.getMessage(), ode);

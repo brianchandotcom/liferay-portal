@@ -78,7 +78,7 @@ public class SortParserImplTest {
 			InvalidSortException.class
 		);
 
-		exception.hasMessageEndingWith("is not a complex field");
+		exception.hasMessageEndingWith("is not a complex property");
 	}
 
 	@Test

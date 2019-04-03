@@ -63,7 +63,8 @@ public class FilterParserImplTest {
 			ExpressionVisitException.class
 		);
 
-		exception.hasMessage("Unknown property.");
+		exception.hasMessage(
+			"A property used in the filter criteria is not supported");
 	}
 
 	@Test
@@ -355,7 +356,8 @@ public class FilterParserImplTest {
 			ExpressionVisitException.class
 		);
 
-		exception.hasMessage("Unknown property.");
+		exception.hasMessage(
+			"A property used in the filter criteria is not supported");
 	}
 
 	@Test

@@ -102,13 +102,11 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			contentSpaceId, search, filter, pagination, sorts);
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -136,7 +134,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			mbCategory.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -213,7 +211,8 @@ public class MessageBoardThreadResourceImpl
 
 	private Page<MessageBoardThread> _getContentSpaceMessageBoardThreadsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -223,6 +222,7 @@ public class MessageBoardThreadResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(

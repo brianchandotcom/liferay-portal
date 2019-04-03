@@ -81,13 +81,11 @@ public class MessageBoardSectionResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts);
+			contentSpaceId, search, filter, pagination, sorts);
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -121,7 +119,7 @@ public class MessageBoardSectionResourceImpl
 						String.valueOf(mbCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			mbCategory.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -174,13 +172,14 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					null, null, contentSpaceId,
+					contentSpaceId,
 					messageBoardSection.getViewableByAsString())));
 	}
 
 	private Page<MessageBoardSection> _getContentSpaceMessageBoardSectionsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Long contentSpaceId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -190,6 +189,7 @@ public class MessageBoardSectionResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},
 			document -> _toMessageBoardSection(
 				_mbCategoryService.getCategory(

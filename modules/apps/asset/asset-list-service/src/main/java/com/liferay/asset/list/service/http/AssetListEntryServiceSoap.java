@@ -321,6 +321,44 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySoap
+			getAssetListEntry(long groupId, String assetListEntryKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.list.model.AssetListEntry returnValue =
+				AssetListEntryServiceUtil.getAssetListEntry(
+					groupId, assetListEntryKey);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap
+			getAssetListEntryByUuidAndGroupId(String uuid, long groupId)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.list.model.AssetListEntry returnValue =
+				AssetListEntryServiceUtil.getAssetListEntryByUuidAndGroupId(
+					uuid, groupId);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void moveAssetEntrySelection(
 			long assetListEntryId, long segmentsEntryId, int position,
 			int newPosition)

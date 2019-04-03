@@ -111,6 +111,16 @@ public interface AssetListEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetListEntriesCount(long groupId, String title);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry getAssetListEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

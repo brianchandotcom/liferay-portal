@@ -160,6 +160,24 @@ public class AssetListEntryServiceWrapper
 		return _assetListEntryService.getAssetListEntriesCount(groupId, title);
 	}
 
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetListEntryService.getAssetListEntry(
+			groupId, assetListEntryKey);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry
+			getAssetListEntryByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetListEntryService.getAssetListEntryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

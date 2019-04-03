@@ -152,6 +152,20 @@ public class AssetListEntryServiceUtil {
 		return getService().getAssetListEntriesCount(groupId, title);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAssetListEntry(groupId, assetListEntryKey);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntry
+			getAssetListEntryByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAssetListEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

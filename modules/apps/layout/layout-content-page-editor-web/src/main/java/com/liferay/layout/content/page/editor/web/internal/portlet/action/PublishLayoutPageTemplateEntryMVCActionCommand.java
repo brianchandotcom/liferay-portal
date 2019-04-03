@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -114,9 +116,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 					_actionRequest,
 					portletId.concat(
 						SessionMessages.
-							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) &&
-				SessionMessages.contains(
-					_actionRequest, "fragmentEntryLinkAdded")) {
+							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE))) {
 
 				SessionMessages.clear(_actionRequest);
 			}
@@ -130,6 +130,17 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			_layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), new Date());
+
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+				MultiSessionMessages.add(
+					_actionRequest, "displayPagePublished");
+			}
+			else {
+				MultiSessionMessages.add(
+					_actionRequest, "layoutPageTemplatePublished");
+			}
 
 			return null;
 		}

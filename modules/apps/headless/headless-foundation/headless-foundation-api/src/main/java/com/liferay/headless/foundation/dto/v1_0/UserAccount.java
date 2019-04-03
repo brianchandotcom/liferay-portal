@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("UserAccount")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"email", "familyName", "givenName"})
 @XmlRootElement(name = "UserAccount")
 public class UserAccount {
 

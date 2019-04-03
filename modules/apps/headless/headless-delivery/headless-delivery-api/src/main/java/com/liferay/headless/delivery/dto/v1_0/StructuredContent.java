@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("StructuredContent")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"contentStructureId"})
 @XmlRootElement(name = "StructuredContent")
 public class StructuredContent {
 

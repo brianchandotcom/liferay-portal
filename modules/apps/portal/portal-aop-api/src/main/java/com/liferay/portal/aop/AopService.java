@@ -15,13 +15,13 @@
 package com.liferay.portal.aop;
 
 /**
- * Declares implementations to be intercepted and proxied by an aspect and
- * re-registered as providing the services they implement.
+ * Declares implementations to be proxied and intercepted by advices. The
+ * service is re-registered as interfaces it implements.
  *
  * <p>
  * <strong>Important:</strong> A service implementation should only register as
- * an <code>AopService</code> so that service listeners see the service only
- * when it's proxied.
+ * an <code>AopService</code> so that service listeners only see the service
+ * proxy.
  * </p>
  *
  * @author Preston Crary

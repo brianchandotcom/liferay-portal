@@ -837,7 +837,7 @@ definition {
 	}
 
 	macro editDisplayPage {
-		Panel.expandPanel(panel = "Display Page");
+		Panel.expandPanel(panel = "Display Page Template");
 
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",

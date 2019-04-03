@@ -238,7 +238,7 @@ definition {
 		}
 
 		task ("Assert the display page is selected by default") {
-			Panel.expandPanel(panel = "Display Page");
+			Panel.expandPanel(panel = "Display Page Template");
 
 			AssertSelectedLabel(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",

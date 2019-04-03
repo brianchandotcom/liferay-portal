@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Asset Auto Tagger OpenNLP Implementation
+Bundle-SymbolicName: com.liferay.asset.auto.tagger.opennlp.impl
+Bundle-Version: 1.0.0

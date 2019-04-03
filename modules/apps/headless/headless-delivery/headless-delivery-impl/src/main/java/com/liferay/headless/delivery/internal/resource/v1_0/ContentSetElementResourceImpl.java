@@ -46,7 +46,7 @@ public class ContentSetElementResourceImpl
 		throws Exception {
 
 		AssetListEntry assetListEntry =
-			_assetListEntryService.fetchAssetListEntry(contentSetId);
+			_assetListEntryService.getAssetListEntry(contentSetId);
 
 		return _getContentSetContentSetElementsPage(pagination, assetListEntry);
 	}

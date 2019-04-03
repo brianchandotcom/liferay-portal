@@ -75,16 +75,20 @@ public class ImageEditableElementParser implements EditableElementParser {
 		}
 
 		String imageLink = configJSONObject.getString("imageLink");
-		String imageTarget = configJSONObject.getString("imageTarget");
 
-		if (Validator.isNull(imageLink) || Validator.isNull(imageTarget)) {
+		if (Validator.isNull(imageLink)) {
 			return;
 		}
+
+		String imageTarget = configJSONObject.getString("imageTarget");
 
 		Element linkElement = new Element("a");
 
 		linkElement.attr("href", imageLink);
-		linkElement.attr("target", imageTarget);
+
+		if (Validator.isNotNull(imageTarget)) {
+			linkElement.attr("target", imageTarget);
+		}
 
 		linkElement.html(element.html());
 

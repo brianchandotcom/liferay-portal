@@ -56,8 +56,9 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
-			_personalMenuConfigurationTracker.getCompanyConfiguration(
-				themeDisplay.getCompanyId());
+			_personalMenuConfigurationTracker.
+				getCompanyPersonalMenuConfiguration(
+					themeDisplay.getCompanyId());
 
 		if (personalMenuConfiguration.showInControlMenu()) {
 			return true;

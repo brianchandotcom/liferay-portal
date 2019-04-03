@@ -58,7 +58,9 @@ public class PersonalMenuConfigurationTrackerImpl
 	}
 
 	@Override
-	public PersonalMenuConfiguration getCompanyConfiguration(long companyId) {
+	public PersonalMenuConfiguration getCompanyPersonalMenuConfiguration(
+		long companyId) {
+
 		if (_companyConfigurationBeans.containsKey(companyId)) {
 			return _companyConfigurationBeans.get(companyId);
 		}

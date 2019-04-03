@@ -141,6 +141,10 @@ public class Setup {
 				}
 			}
 
+			if (portlets.isEmpty()) {
+				continue;
+			}
+
 			PortalPage portalPage = new PortalPage(pageName, portlets);
 
 			_setupPage(userId, groupId, portalPage, bundles);

@@ -120,22 +120,26 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 </liferay-ui:search-container>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	var previewAssetEntryUsagesList = dom.delegate(
-		document.querySelector('#<portlet:namespace/>assetEntryUsagesList'),
-		'click',
-		'.preview-asset-entry-usage',
-		function(event) {
-			var delegateTarget = event.delegateTarget;
+	var assetEntryUsagesList = document.querySelector('#<portlet:namespace/>assetEntryUsagesList');
 
-			Liferay.fire(
-				'previewArticle',
-				{
-					title: delegateTarget.getAttribute('data-title'),
-					uri: delegateTarget.getAttribute('data-href')
-				}
-			);
-		}
-	);
+	if (assetEntryUsagesList) {
+		var previewAssetEntryUsagesList = dom.delegate(
+			document.querySelector('#<portlet:namespace/>assetEntryUsagesList'),
+			'click',
+			'.preview-asset-entry-usage',
+			function(event) {
+				var delegateTarget = event.delegateTarget;
+
+				Liferay.fire(
+					'previewArticle',
+					{
+						title: delegateTarget.getAttribute('data-title'),
+						uri: delegateTarget.getAttribute('data-href')
+					}
+				);
+			}
+		);
+	}
 
 	function removeListener() {
 		previewAssetEntryUsagesList.removeListener();

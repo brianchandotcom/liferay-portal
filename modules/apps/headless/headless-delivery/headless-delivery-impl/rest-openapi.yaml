@@ -217,8 +217,8 @@ components:
                                     type: string
                             type: object
                     type: object
-        ContentListElement:
-            description: https://www.schema.org/ContentListElement
+        ContentSetElement:
+            description: https://www.schema.org/ContentSetElement
             properties:
                 content:
                     type: object
@@ -1153,11 +1153,11 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/content-lists/{contentListId}/content-list-elements":
+    "/content-sets/{contentSetId}/content-set-elements":
         get:
             parameters:
                 - in: path
-                  name: contentListId
+                  name: contentSetId
                   required: true
                   schema:
                       format: int64
@@ -1176,10 +1176,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/ContentListElement"
+                                    $ref: "#/components/schemas/ContentSetElement"
                                 type: array
                     description: ""
-            tags: ["ContentListElement"]
+            tags: ["ContentSetElement"]
     "/content-spaces/{contentSpaceId}/blog-posting-images":
         get:
             parameters:

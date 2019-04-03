@@ -37,8 +37,6 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 	<div id="<%= namespace + "personal_menu_dropdown_toggle" %>" style="cursor: pointer;">
 		<%= label %>
 	</div>
-
-	<div id="clay_dropdown_portal"></div>
 </div>
 
 <%
@@ -71,6 +69,9 @@ resourceURL.setResourceID("/get_personal_menu_items");
 							{
 								element: '#<%= namespace + "personal_menu_dropdown_toggle" %>',
 								events: {
+									'itemClicked': function(event) {
+										this.refs.dropdown.refs.portal.detach();
+									},
 									'willAttach': function(event) {
 										if (<%= expanded %>) {
 											this.expanded = true;

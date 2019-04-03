@@ -15,13 +15,11 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -146,56 +144,6 @@ public class MessageBoardThreadSerDes {
 		sb.append("\"showAsQuestion\": ");
 
 		sb.append(messageBoardThread.getShowAsQuestion());
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategories\": ");
-
-		if (messageBoardThread.getTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0;
-				 i < messageBoardThread.getTaxonomyCategories().length; i++) {
-
-				sb.append(messageBoardThread.getTaxonomyCategories()[i]);
-
-				if ((i + 1) <
-						messageBoardThread.getTaxonomyCategories().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategoryIds\": ");
-
-		if (messageBoardThread.getTaxonomyCategoryIds() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0;
-				 i < messageBoardThread.getTaxonomyCategoryIds().length; i++) {
-
-				sb.append(messageBoardThread.getTaxonomyCategoryIds()[i]);
-
-				if ((i + 1) <
-						messageBoardThread.getTaxonomyCategoryIds().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"threadType\": ");
@@ -336,29 +284,6 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setShowAsQuestion(
 						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
-
-				if (jsonParserFieldValue != null) {
-					messageBoardThread.setTaxonomyCategories(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new TaxonomyCategory[size]
-						));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategoryIds")) {
-
-				if (jsonParserFieldValue != null) {
-					messageBoardThread.setTaxonomyCategoryIds(
-						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "threadType")) {

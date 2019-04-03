@@ -235,11 +235,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getShowAsQuestion());
 		}
 
-		if (Validator.isNotNull(messageBoardThread.getTaxonomyCategoryIds())) {
-			existingMessageBoardThread.setTaxonomyCategoryIds(
-				messageBoardThread.getTaxonomyCategoryIds());
-		}
-
 		if (Validator.isNotNull(messageBoardThread.getThreadType())) {
 			existingMessageBoardThread.setThreadType(
 				messageBoardThread.getThreadType());

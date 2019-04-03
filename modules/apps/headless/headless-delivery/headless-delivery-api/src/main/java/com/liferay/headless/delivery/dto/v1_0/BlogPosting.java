@@ -31,6 +31,8 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -156,6 +158,7 @@ public class BlogPosting {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String articleBody;
 
 	public Long getContentSpaceId() {
@@ -399,6 +402,7 @@ public class BlogPosting {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String headline;
 
 	public Long getId() {

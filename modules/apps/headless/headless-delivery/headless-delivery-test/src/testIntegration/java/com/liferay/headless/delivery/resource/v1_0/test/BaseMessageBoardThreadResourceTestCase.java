@@ -1579,16 +1579,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("taxonomyCategories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("taxonomyCategoryIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("threadType")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardThread.getThreadType()));

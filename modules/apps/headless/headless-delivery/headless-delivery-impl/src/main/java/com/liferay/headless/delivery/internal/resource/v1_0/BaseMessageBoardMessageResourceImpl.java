@@ -160,11 +160,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getShowAsAnswer());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getTaxonomyCategoryIds())) {
-			existingMessageBoardMessage.setTaxonomyCategoryIds(
-				messageBoardMessage.getTaxonomyCategoryIds());
-		}
-
 		if (Validator.isNotNull(messageBoardMessage.getViewableBy())) {
 			existingMessageBoardMessage.setViewableBy(
 				messageBoardMessage.getViewableBy());

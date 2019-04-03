@@ -461,61 +461,6 @@ public class MessageBoardMessage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsAnswer;
 
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	public Long[] getTaxonomyCategoryIds() {
-		return taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
-		this.taxonomyCategoryIds = taxonomyCategoryIds;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategoryIds(
-		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] taxonomyCategoryIds;
-
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}
@@ -675,48 +620,6 @@ public class MessageBoardMessage {
 		sb.append("\"showAsAnswer\": ");
 
 		sb.append(showAsAnswer);
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategories\": ");
-
-		if (taxonomyCategories == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategories.length; i++) {
-				sb.append(taxonomyCategories[i]);
-
-				if ((i + 1) < taxonomyCategories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategoryIds\": ");
-
-		if (taxonomyCategoryIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
-				sb.append(taxonomyCategoryIds[i]);
-
-				if ((i + 1) < taxonomyCategoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"viewableBy\": ");

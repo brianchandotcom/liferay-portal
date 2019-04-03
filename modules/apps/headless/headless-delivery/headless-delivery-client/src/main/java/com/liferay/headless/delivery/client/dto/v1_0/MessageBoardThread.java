@@ -339,49 +339,6 @@ public class MessageBoardThread {
 
 	protected Boolean showAsQuestion;
 
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	public Long[] getTaxonomyCategoryIds() {
-		return taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
-		this.taxonomyCategoryIds = taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(
-		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long[] taxonomyCategoryIds;
-
 	public String getThreadType() {
 		return threadType;
 	}

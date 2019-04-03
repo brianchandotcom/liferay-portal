@@ -1600,16 +1600,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("taxonomyCategories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("taxonomyCategoryIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);

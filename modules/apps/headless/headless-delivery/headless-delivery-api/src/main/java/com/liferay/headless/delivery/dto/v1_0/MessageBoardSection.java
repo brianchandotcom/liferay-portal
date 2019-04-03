@@ -31,6 +31,8 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -323,6 +325,7 @@ public class MessageBoardSection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String title;
 
 	public ViewableBy getViewableBy() {

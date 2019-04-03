@@ -4,10 +4,6 @@ import Icon from '../../shared/components/Icon';
 import React from 'react';
 
 const CLASSNAME = 'process-dashboard-summary-card';
-/**
- * @class
- * @memberof shared/components
- * */
 
 export default class SummaryCard extends React.Component {
 	constructor(props) {
@@ -17,6 +13,7 @@ export default class SummaryCard extends React.Component {
 			inOver: false
 		};
 	}
+
 	@autobind
 	handleMouseOver() {
 		this.setState({ inOver: !this.state.inOver });
@@ -64,7 +61,9 @@ export default class SummaryCard extends React.Component {
 							(!inOver ? (
 								percentage
 							) : (
-								<span className={'highlight-hover'}>{'See items'}</span>
+								<span className={'highlight-hover'}>
+									{Liferay.Language.get('see-items')}
+								</span>
 							))}
 					</div>
 				</div>

@@ -15,11 +15,13 @@ describe('ProcessDashboard', () => {
 			overdueInstanceCount: 0,
 			title: 'Single Approver'
 		};
+
 		const component = renderer.create(
 			<Router client={fetch(data)} idProcess="1">
 				<ProcessDashboard />
 			</Router>
 		);
+
 		const tree = component.toJSON();
 
 		expect(tree).toMatchSnapshot();

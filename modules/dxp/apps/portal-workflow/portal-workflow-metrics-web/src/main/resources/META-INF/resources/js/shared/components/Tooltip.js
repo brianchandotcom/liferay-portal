@@ -4,12 +4,6 @@ import React from 'react';
 
 const CLASSNAME = 'workflow-tooltip';
 
-/**
- * Tooltip
- * @class
- * @memberof TooltipBase component
- */
-
 export default class Tooltip extends React.Component {
 	constructor(props) {
 		super(props);
@@ -18,6 +12,7 @@ export default class Tooltip extends React.Component {
 			displayTooltip: false
 		};
 	}
+
 	@autobind
 	hideTooltip() {
 		this.setState({ displayTooltip: false });
@@ -50,13 +45,10 @@ export default class Tooltip extends React.Component {
 	}
 }
 
-/**
- * Tooltip Base
- * @class
- */
 export class TooltipBase extends React.Component {
 	render() {
 		const { position, title, visible, width } = this.props;
+
 		const classes = getCN('tooltip', {
 			[`clay-tooltip-${position}`]: position,
 			[`workflow-tooltip-${position}`]: position,

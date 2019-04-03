@@ -10,6 +10,17 @@ describe('Panel', () => {
 		}
 	});
 
+	it('Should not render component child components without content', () => {
+		component = shallow(
+			<Panel>
+				<Panel.Body />
+				<Panel.Footer />
+			</Panel>
+		);
+
+		expect(component.render()).toMatchSnapshot();
+	});
+
 	it('Should render component', () => {
 		component = shallow(
 			<Panel>
@@ -22,27 +33,6 @@ describe('Panel', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('Should not render component child components without content', () => {
-		component = shallow(
-			<Panel>
-				<Panel.Body />
-				<Panel.Footer />
-			</Panel>
-		);
-
-		expect(component.render()).toMatchSnapshot();
-	});
-
-	it('Should render header with title', () => {
-		component = shallow(
-			<Panel>
-				<Panel.Header title={'Lorem Ipsum'}>{'Header'}</Panel.Header>
-			</Panel>
-		);
-
-		expect(component.find(Panel.Header).render()).toMatchSnapshot();
-	});
-
 	it('Should render class passed by props', () => {
 		component = shallow(
 			<Panel elementClass={'custom-class'}>
@@ -53,6 +43,16 @@ describe('Panel', () => {
 				<Panel.Footer elementClass={'custom-class-footer'}>
 					{'Footer'}
 				</Panel.Footer>
+			</Panel>
+		);
+
+		expect(component.find(Panel.Header).render()).toMatchSnapshot();
+	});
+
+	it('Should render header with title', () => {
+		component = shallow(
+			<Panel>
+				<Panel.Header title={'Lorem Ipsum'}>{'Header'}</Panel.Header>
 			</Panel>
 		);
 

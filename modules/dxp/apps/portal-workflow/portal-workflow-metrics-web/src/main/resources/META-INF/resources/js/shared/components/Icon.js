@@ -1,10 +1,6 @@
 import getCN from 'classnames';
 import React from 'react';
 
-/**
- * @class
- * @memberof shared/components
- */
 export default class Icon extends React.Component {
 	render() {
 		const { elementClasses, iconName } = this.props;

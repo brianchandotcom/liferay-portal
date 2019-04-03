@@ -1,11 +1,6 @@
 import getCN from 'classnames';
 import React from 'react';
 
-/**
- * Body
- * @param {object} param0
- * @memberof Card
- */
 const Body = ({ children, elementClasses }) => {
 	const classes = getCN('panel-body', elementClasses);
 
@@ -14,11 +9,6 @@ const Body = ({ children, elementClasses }) => {
 	return <div className={classes}>{children}</div>;
 };
 
-/**
- * Bottom
- * @param {object} param0
- * @memberof Card
- */
 const Footer = ({ children, elementClasses, label }) => {
 	const classes = getCN('panel-footer', elementClasses);
 
@@ -33,11 +23,6 @@ const Footer = ({ children, elementClasses, label }) => {
 	);
 };
 
-/**
- * Top
- * @param {object} param0
- * @memberof Card
- */
 const Header = props => {
 	const { children, elementClasses, title } = props;
 	const classes = getCN('panel-header', elementClasses);
@@ -50,14 +35,7 @@ const Header = props => {
 	);
 };
 
-/**
- * Card
- * @class
- */
 export default class Panel extends React.Component {
-	/**
-	 * Lifecycle Render - MetalJS
-	 */
 	render() {
 		const { children, elementClasses } = this.props;
 		const classes = getCN('panel', 'panel-secondary', elementClasses);

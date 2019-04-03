@@ -5,16 +5,12 @@ import LoadingState from '../../shared/components/empty-state/LoadingState';
 import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import Panel from '../../shared/components/Panel';
 import PANELS from './Panels';
-import React from 'react';
+import React, { Fragment } from 'react';
 import SummaryCard from './SummaryCard';
 import Tooltip from '../../shared/components/Tooltip';
 
 const CLASSNAME = 'workflow-process-dashboard';
 
-/**
- * @class
- * @memberof processes-dashboard
- * */
 class ProcessDashboard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -48,7 +44,7 @@ class ProcessDashboard extends React.Component {
 	}
 
 	requestData() {
-		const { processId = '35315' } = this.props;
+		const { processId } = this.props;
 		const { client } = this.context;
 		const urlRequest = `/processes/${processId}`;
 
@@ -76,11 +72,14 @@ class ProcessDashboard extends React.Component {
 							</span>
 							<Tooltip
 								message={[
-									<b>{'Pending Items'}</b>,
-									' shows the status from all pending items according to SLA duration time targets.'
+									<Fragment key="tooltip">
+										{Liferay.Language.get(
+											'pending-items-shows-the-status-from-all-pending-items-according-to-sla-duration-time-targets'
+										)}
+									</Fragment>
 								]}
 								position={'right'}
-								width={'280'}
+								width={'288'}
 							>
 								<Icon iconName={'question-circle-full'} />
 							</Tooltip>
@@ -89,17 +88,14 @@ class ProcessDashboard extends React.Component {
 					<Panel.Body>
 						<div className={'pt-1 pb-4 d-flex'}>
 							{PANELS.map(
-								({
-									addressedToField,
-									iconColor,
-									iconName,
-									title,
-									totalField
-								}) => (
+								(
+									{ addressedToField, iconColor, iconName, title, totalField },
+									index
+								) => (
 									<SummaryCard
 										iconColor={iconColor}
 										iconName={iconName}
-										key={addressedToField}
+										key={`${index}_${addressedToField}`}
 										percentage={
 											totalField
 												? `${getPercentage(

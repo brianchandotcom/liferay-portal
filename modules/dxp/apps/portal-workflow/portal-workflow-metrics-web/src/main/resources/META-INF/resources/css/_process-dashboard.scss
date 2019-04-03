@@ -1,77 +1,77 @@
 $c: ".workflow-process-dashboard";
 
 #{$c} {
-    .dashboard-panel-header {
-        font-size: 18px;
-        color: #272833;
-        margin-top: 21px;
-        font-weight: 700;
+	.dashboard-panel-header {
+		color: #272833;
+		font-size: 18px;
+		font-weight: 700;
+		margin-top: 21px;
 
-        svg {
-            font-size: 16px;
-            color: #A7A9BC;
-        }
-    }
+		svg {
+			color: #A7A9BC;
+			font-size: 16px;
+		}
+	}
 
-    .process-dashboard-summary-card {
-        border: 1px solid #E7E7ED;
-        border-radius: 4px;
-        color: #30313F !important;
-        display: inline-flex;
-        font-size: 14px;
-        min-height: 136px;
-        padding: 16px;
-        width: 276px;
-        margin-right: 24px;
-        text-decoration: none;
+	.process-dashboard-summary-card {
+		border: 1px solid #E7E7ED;
+		border-radius: 4px;
+		color: #30313F !important;
+		display: inline-flex;
+		font-size: 14px;
+		margin-right: 24px;
+		min-height: 136px;
+		padding: 16px;
+		text-decoration: none;
+		width: 276px;
 
+		.body {
+			font-size: 40px;
+			line-height: 1;
+			margin: 8px 0;
+		}
 
-        .body {
-            font-size: 40px;
-            line-height: 1;
-            margin: 8px 0;
-        }
+		.footer {
+			color: #6B6C7E;
+			pointer-events: none;
 
-        .footer {
-            color: #6B6C7E;
-            pointer-events: none;
-            
-            .highlight-hover {
-                color: #0B5FFF;
-            }
-        }
+			.highlight-hover {
+				color: #0B5FFF;
+			}
+		}
 
-        &:hover {
-            border: none;
-            box-shadow: 0 0 0 2px #80acff;
-        }
+		.iconBadge {
+			border-radius: 50%;
+			height: 32px;
+			line-height: 32px;
+			padding: 9px;
+			text-align: center;
+			vertical-align: middle;
+			width: 32px;
+		}
 
-        &:last-child {
-            margin-right: 0;
-        }
+		.icon-green {
+			background: #EDF9F0;
+			color: #287D3C;
+		}
 
-        .iconBadge {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 32px;
-            padding: 9px;
-            vertical-align: middle;
-        }
-        .icon-red {
-            color: #DA1414;
-            background: #FEEFEF;
-        }
-        .icon-orange {
-            color: #B95000;
-            background: #FFF4EC;
-        }
-        .icon-green {
-            color: #287D3C;
-            background: #EDF9F0;
-        }
+		.icon-orange {
+			background: #FFF4EC;
+			color: #B95000;
+		}
 
-    }
-    
+		.icon-red {
+			background: #FEEFEF;
+			color: #DA1414;
+		}
+
+		&:hover {
+			border: none;
+			box-shadow: 0 0 0 2px #80ACFF;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
 }

@@ -76,14 +76,41 @@ public class PermissionCheckerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		registerResourceActions();
+		Package pkg = PermissionCheckerTest.class.getPackage();
+
+		String packageName = pkg.getName();
+
+		_resourceActions.read(
+			null, PermissionCheckerTest.class.getClassLoader(),
+			packageName.replace('.', '/') +
+				"/dependencies/resource-actions.xml");
 
 		_resourceActions.check(_PORTLET_RESOURCE_NAME);
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
-		removeResourceActions(_PORTLET_RESOURCE_NAME);
+	public static void tearDownClass() {
+		List<ResourceAction> portletResourceActions =
+			_resourceActionLocalService.getResourceActions(
+				_PORTLET_RESOURCE_NAME);
+
+		for (ResourceAction portletResourceAction : portletResourceActions) {
+			_resourceActionLocalService.deleteResourceAction(
+				portletResourceAction);
+		}
+
+		List<String> modelNames = _resourceActions.getPortletModelResources(
+			_PORTLET_RESOURCE_NAME);
+
+		for (String modelName : modelNames) {
+			List<ResourceAction> modelResourceActions =
+				_resourceActionLocalService.getResourceActions(modelName);
+
+			for (ResourceAction modelResourceAction : modelResourceActions) {
+				_resourceActionLocalService.deleteResourceAction(
+					modelResourceAction);
+			}
+		}
 	}
 
 	@Before
@@ -879,40 +906,6 @@ public class PermissionCheckerTest {
 		Assert.assertFalse(
 			permissionChecker.isOrganizationOwner(
 				_organization.getOrganizationId()));
-	}
-
-	protected static void registerResourceActions() throws Exception {
-		Package pkg = PermissionCheckerTest.class.getPackage();
-
-		String packageName = pkg.getName();
-
-		_resourceActions.read(
-			null, PermissionCheckerTest.class.getClassLoader(),
-			packageName.replace('.', '/') +
-				"/dependencies/resource-actions.xml");
-	}
-
-	protected static void removeResourceActions(String portletName) {
-		List<ResourceAction> portletResourceActions =
-			_resourceActionLocalService.getResourceActions(portletName);
-
-		for (ResourceAction portletResourceAction : portletResourceActions) {
-			_resourceActionLocalService.deleteResourceAction(
-				portletResourceAction);
-		}
-
-		List<String> modelNames = _resourceActions.getPortletModelResources(
-			portletName);
-
-		for (String modelName : modelNames) {
-			List<ResourceAction> modelResourceActions =
-				_resourceActionLocalService.getResourceActions(modelName);
-
-			for (ResourceAction modelResourceAction : modelResourceActions) {
-				_resourceActionLocalService.deleteResourceAction(
-					modelResourceAction);
-			}
-		}
 	}
 
 	protected void deployRemotePortlet(long companyId, String portletName)

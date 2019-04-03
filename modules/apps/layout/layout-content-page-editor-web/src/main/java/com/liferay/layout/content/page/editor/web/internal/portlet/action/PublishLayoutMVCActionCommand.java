@@ -97,6 +97,15 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 				return null;
 			}
 
+			Layout layout = _layoutLocalService.getLayout(
+				draftLayout.getClassPK());
+
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+
 			String portletId = _portal.getPortletId(_actionRequest);
 
 			if (SessionMessages.contains(
@@ -107,15 +116,6 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionMessages.clear(_actionRequest);
 			}
-
-			Layout layout = _layoutLocalService.getLayout(
-				draftLayout.getClassPK());
-
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), new Date());
 
 			MultiSessionMessages.add(_actionRequest, "layoutPublished");
 

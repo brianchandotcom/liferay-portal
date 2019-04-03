@@ -110,6 +110,16 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 					fetchLayoutPageTemplateEntryByPlid(
 						draftLayout.getClassPK());
 
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+
 			String portletId = _portal.getPortletId(_actionRequest);
 
 			if (SessionMessages.contains(
@@ -120,16 +130,6 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 				SessionMessages.clear(_actionRequest);
 			}
-
-			_layoutCopyHelper.copyLayout(draftLayout, layout);
-
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				WorkflowConstants.STATUS_APPROVED);
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), new Date());
 
 			String key = "layoutPageTemplatePublished";
 

@@ -280,6 +280,410 @@ public abstract class BaseContentSetElementResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetContentSpaceContentSetByKeyContentSetElementsPage()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getContentSpaceId();
+		Long irrelevantContentSpaceId =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getIrrelevantContentSpaceId();
+		String key =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getKey();
+		String irrelevantKey =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getIrrelevantKey();
+
+		if ((irrelevantContentSpaceId != null) && (irrelevantKey != null)) {
+			ContentSetElement irrelevantContentSetElement =
+				testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+					irrelevantContentSpaceId, irrelevantKey,
+					randomIrrelevantContentSetElement());
+
+			Page<ContentSetElement> page =
+				invokeGetContentSpaceContentSetByKeyContentSetElementsPage(
+					irrelevantContentSpaceId, irrelevantKey,
+					Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContentSetElement),
+				(List<ContentSetElement>)page.getItems());
+			assertValid(page);
+		}
+
+		ContentSetElement contentSetElement1 =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				contentSpaceId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				contentSpaceId, key, randomContentSetElement());
+
+		Page<ContentSetElement> page =
+			invokeGetContentSpaceContentSetByKeyContentSetElementsPage(
+				contentSpaceId, key, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentSetElement1, contentSetElement2),
+			(List<ContentSetElement>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceContentSetByKeyContentSetElementsPageWithPagination()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getContentSpaceId();
+		String key =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getKey();
+
+		ContentSetElement contentSetElement1 =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				contentSpaceId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				contentSpaceId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement3 =
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				contentSpaceId, key, randomContentSetElement());
+
+		Page<ContentSetElement> page1 =
+			invokeGetContentSpaceContentSetByKeyContentSetElementsPage(
+				contentSpaceId, key, Pagination.of(1, 2));
+
+		List<ContentSetElement> contentSetElements1 =
+			(List<ContentSetElement>)page1.getItems();
+
+		Assert.assertEquals(
+			contentSetElements1.toString(), 2, contentSetElements1.size());
+
+		Page<ContentSetElement> page2 =
+			invokeGetContentSpaceContentSetByKeyContentSetElementsPage(
+				contentSpaceId, key, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContentSetElement> contentSetElements2 =
+			(List<ContentSetElement>)page2.getItems();
+
+		Assert.assertEquals(
+			contentSetElements2.toString(), 1, contentSetElements2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				contentSetElement1, contentSetElement2, contentSetElement3),
+			new ArrayList<ContentSetElement>() {
+				{
+					addAll(contentSetElements1);
+					addAll(contentSetElements2);
+				}
+			});
+	}
+
+	protected ContentSetElement
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_addContentSetElement(
+				Long contentSpaceId, String key,
+				ContentSetElement contentSetElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getIrrelevantContentSpaceId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected String
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetContentSpaceContentSetByKeyContentSetElementsPage_getIrrelevantKey()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<ContentSetElement>
+			invokeGetContentSpaceContentSetByKeyContentSetElementsPage(
+				Long contentSpaceId, String key, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{contentSpaceId}/content-sets/by-key/{key}/content-set-elements",
+					contentSpaceId, key);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<ContentSetElement>>() {
+			});
+	}
+
+	protected Http.Response
+			invokeGetContentSpaceContentSetByKeyContentSetElementsPageResponse(
+				Long contentSpaceId, String key, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{contentSpaceId}/content-sets/by-key/{key}/content-set-elements",
+					contentSpaceId, key);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetContentSpaceContentSetByUuidContentSetElementsPage()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getContentSpaceId();
+		Long irrelevantContentSpaceId =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getIrrelevantContentSpaceId();
+		String uuid =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getUuid();
+		String irrelevantUuid =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getIrrelevantUuid();
+
+		if ((irrelevantContentSpaceId != null) && (irrelevantUuid != null)) {
+			ContentSetElement irrelevantContentSetElement =
+				testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+					irrelevantContentSpaceId, irrelevantUuid,
+					randomIrrelevantContentSetElement());
+
+			Page<ContentSetElement> page =
+				invokeGetContentSpaceContentSetByUuidContentSetElementsPage(
+					irrelevantContentSpaceId, irrelevantUuid,
+					Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContentSetElement),
+				(List<ContentSetElement>)page.getItems());
+			assertValid(page);
+		}
+
+		ContentSetElement contentSetElement1 =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				contentSpaceId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				contentSpaceId, uuid, randomContentSetElement());
+
+		Page<ContentSetElement> page =
+			invokeGetContentSpaceContentSetByUuidContentSetElementsPage(
+				contentSpaceId, uuid, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentSetElement1, contentSetElement2),
+			(List<ContentSetElement>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceContentSetByUuidContentSetElementsPageWithPagination()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getContentSpaceId();
+		String uuid =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getUuid();
+
+		ContentSetElement contentSetElement1 =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				contentSpaceId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				contentSpaceId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement3 =
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				contentSpaceId, uuid, randomContentSetElement());
+
+		Page<ContentSetElement> page1 =
+			invokeGetContentSpaceContentSetByUuidContentSetElementsPage(
+				contentSpaceId, uuid, Pagination.of(1, 2));
+
+		List<ContentSetElement> contentSetElements1 =
+			(List<ContentSetElement>)page1.getItems();
+
+		Assert.assertEquals(
+			contentSetElements1.toString(), 2, contentSetElements1.size());
+
+		Page<ContentSetElement> page2 =
+			invokeGetContentSpaceContentSetByUuidContentSetElementsPage(
+				contentSpaceId, uuid, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContentSetElement> contentSetElements2 =
+			(List<ContentSetElement>)page2.getItems();
+
+		Assert.assertEquals(
+			contentSetElements2.toString(), 1, contentSetElements2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				contentSetElement1, contentSetElement2, contentSetElement3),
+			new ArrayList<ContentSetElement>() {
+				{
+					addAll(contentSetElements1);
+					addAll(contentSetElements2);
+				}
+			});
+	}
+
+	protected ContentSetElement
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_addContentSetElement(
+				Long contentSpaceId, String uuid,
+				ContentSetElement contentSetElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getIrrelevantContentSpaceId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected String
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getUuid()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetContentSpaceContentSetByUuidContentSetElementsPage_getIrrelevantUuid()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<ContentSetElement>
+			invokeGetContentSpaceContentSetByUuidContentSetElementsPage(
+				Long contentSpaceId, String uuid, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{contentSpaceId}/content-sets/by-uuid/{uuid}/content-set-elements",
+					contentSpaceId, uuid);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<ContentSetElement>>() {
+			});
+	}
+
+	protected Http.Response
+			invokeGetContentSpaceContentSetByUuidContentSetElementsPageResponse(
+				Long contentSpaceId, String uuid, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{contentSpaceId}/content-sets/by-uuid/{uuid}/content-set-elements",
+					contentSpaceId, uuid);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

@@ -162,6 +162,14 @@ public class AssetListEntryServiceWrapper
 
 	@Override
 	public com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long assetListEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetListEntryService.getAssetListEntry(assetListEntryId);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
 			long groupId, String assetListEntryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

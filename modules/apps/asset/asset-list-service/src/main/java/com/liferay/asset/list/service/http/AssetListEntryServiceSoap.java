@@ -322,6 +322,24 @@ public class AssetListEntryServiceSoap {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntrySoap
+			getAssetListEntry(long assetListEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.list.model.AssetListEntry returnValue =
+				AssetListEntryServiceUtil.getAssetListEntry(assetListEntryId);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap
 			getAssetListEntry(long groupId, String assetListEntryKey)
 		throws RemoteException {
 

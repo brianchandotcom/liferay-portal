@@ -11,7 +11,6 @@ import {
 } from '../../shared/util/duration';
 import {
 	hasErrors,
-	validateDays,
 	validateDuration,
 	validateHours,
 	validateName
@@ -69,7 +68,6 @@ class SLAForm extends React.Component {
 		const { days, description, hours, name } = this.state;
 		const { errors } = this.state;
 
-		errors[DAYS] = validateDays(days);
 		errors[DURATION] = validateDuration(days, hours);
 		errors[HOURS] = validateHours(hours);
 		errors[NAME] = validateName(name);
@@ -157,20 +155,10 @@ class SLAForm extends React.Component {
 	}
 
 	@autobind
-	onDaysBlurred() {
-		const { days, errors } = this.state;
-
-		errors[ALERT_MESSAGE] = '';
-		errors[DAYS] = validateDays(days);
-
-		this.setState({ errors });
-	}
-
-	@autobind
 	onDurationChanged() {
 		const { days, errors, hours } = this.state;
 
-		errors[ALERT_MESSAGE] = '';
+		errors[ALERT_MESSAGE] = errors[HOURS] = '';
 		errors[DURATION] = validateDuration(days, hours);
 
 		this.setState({ errors });
@@ -217,7 +205,7 @@ class SLAForm extends React.Component {
 
 		return (
 			<div className="sla-form">
-				{(errors[ALERT_MESSAGE] || errors[DURATION]) && (
+				{errors[ALERT_MESSAGE] && (
 					<div className="alert-container">
 						<div className="alert alert-danger" role="alert">
 							<span className="alert-indicator">
@@ -226,7 +214,7 @@ class SLAForm extends React.Component {
 
 							<strong className="lead">{Liferay.Language.get('error')}</strong>
 
-							<span>{errors[ALERT_MESSAGE] || errors[DURATION]}</span>
+							<span>{errors[ALERT_MESSAGE]}</span>
 						</div>
 					</div>
 				)}
@@ -297,10 +285,10 @@ class SLAForm extends React.Component {
 							)}`}
 						</div>
 
-						<div className={`row ${errors[DURATION] ? 'has-error' : ''}`}>
+						<div className="row">
 							<div
 								className={`form-group col col-sm-5 ${
-									errors[DAYS] ? 'has-error' : ''
+									errors[DURATION] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
@@ -314,21 +302,20 @@ class SLAForm extends React.Component {
 									mask={daysMask}
 									maxLength={4}
 									name={DAYS}
-									onBlur={this.onDaysBlurred}
 									onChange={onChangeHandler(this.onDurationChanged)}
 									value={this.state.days}
 								/>
 
+								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
+
 								<div className="form-text">
 									{Liferay.Language.get('enter-a-whole-number')}
 								</div>
-
-								{errors[DAYS] && <FieldError error={errors[DAYS]} />}
 							</div>
 
 							<div
 								className={`form-group col col-sm-3 ${
-									errors[HOURS] ? 'has-error' : ''
+									(errors[DURATION] || errors[HOURS]) ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
@@ -347,6 +334,7 @@ class SLAForm extends React.Component {
 									value={this.state.hours}
 								/>
 
+								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
 								{errors[HOURS] && <FieldError error={errors[HOURS]} />}
 							</div>
 						</div>

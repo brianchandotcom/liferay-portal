@@ -37,15 +37,14 @@ export function formatDuration(millisecondsDuration) {
 }
 
 export function formatHours(hours, minutes) {
-	let hoursStr;
+	const padHours = value =>
+		(value && value.toString().padStart(2, '0')) || '00';
 
 	if (hours || minutes) {
-		hoursStr = (hours && hours.toString().padStart(2, '0')) || '00';
-		hoursStr += ':';
-		hoursStr += (minutes && minutes.toString().padStart(2, '0')) || '00';
+		return [hours, minutes].map(padHours).join(':');
 	}
 
-	return hoursStr || '';
+	return '';
 }
 
 export function getDurationValues(durationValue) {
@@ -57,8 +56,8 @@ export function getDurationValues(durationValue) {
 	const daysDuration = fullDuration.subtract(hoursDuration);
 
 	return {
-		days: daysDuration.asDays(),
-		hours: hoursDuration.hours() || '',
-		minutes: hoursDuration.minutes() || ''
+		days: daysDuration.asDays() || null,
+		hours: hoursDuration.hours() || null,
+		minutes: hoursDuration.minutes() || null
 	};
 }

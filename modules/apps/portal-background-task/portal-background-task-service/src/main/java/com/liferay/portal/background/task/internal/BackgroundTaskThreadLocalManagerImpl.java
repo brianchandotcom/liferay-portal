@@ -138,18 +138,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 
 		if (Validator.isNotNull(principalName)) {
-			try {
-				User user = _userLocalService.fetchUser(
-					PrincipalThreadLocal.getUserId());
+			User user = _userLocalService.fetchUser(
+				PrincipalThreadLocal.getUserId());
 
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(user);
 
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 
 		Locale siteDefaultLocale = (Locale)threadLocalValues.get(

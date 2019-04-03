@@ -17,7 +17,6 @@ package com.liferay.portlet.tck.bridge.setup;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -345,14 +344,9 @@ public class Setup {
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 					company.getMx());
 
-			try {
-				permissionChecker = PermissionCheckerFactoryUtil.create(user);
+			permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
 

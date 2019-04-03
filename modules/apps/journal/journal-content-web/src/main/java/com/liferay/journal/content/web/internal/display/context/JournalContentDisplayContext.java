@@ -669,6 +669,9 @@ public class JournalContentDisplayContext {
 
 			portletURL.setParameter("articleId", article.getArticleId());
 
+			portletURL.setParameter(
+				"groupId", String.valueOf(article.getGroupId()));
+
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			portletURL.setParameter(

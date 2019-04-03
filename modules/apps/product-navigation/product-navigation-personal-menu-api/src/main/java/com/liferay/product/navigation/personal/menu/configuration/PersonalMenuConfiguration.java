@@ -33,6 +33,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface PersonalMenuConfiguration {
 
 	@Meta.AD(
+		deflt = "current-site",
+		description = "personal-applications-look-and-feel-help",
+		name = "personal-applications-look-and-feel",
+		optionLabels = {"current-site", "my-dashboard"},
+		optionValues = {"current-site", "my-dashboard"}, required = false
+	)
+	public String personalApplicationsLookAndFeel();
+
+	@Meta.AD(
 		deflt = "false", description = "show-in-control-menu-help",
 		name = "show-in-control-menu", required = false
 	)

@@ -172,9 +172,7 @@ public class Setup {
 			String portletId)
 		throws PortalException {
 
-		String columnNumberLabel = String.valueOf(columnNumber);
-
-		columnNumberLabel = "column-" + columnNumber;
+		String columnNumberLabel = "column-" + columnNumber;
 
 		layoutTypePortlet.addPortletId(
 			userId, portletId, columnNumberLabel, -1);

@@ -11,8 +11,8 @@
 	position: fixed;
 	right: 0;
 	top: $managementBarHeight;
-	transition: padding-left ease $productMenuTransitionDuration;
-	will-change: padding-left;
+	transition: padding ease $productMenuTransitionDuration;
+	will-change: padding;
 	z-index: $sidebarZIndex;
 
 	&-content {
@@ -58,5 +58,9 @@
 			height: calc(100vh - #{$desktopControlMenuHeight + $desktopManagementBarHeight});
 			top: $desktopControlMenuHeight + $desktopManagementBarHeight;
 		}
+	}
+
+	html.rtl &--collapsed > &-content > &-section {
+		transform: translateX(-100%);
 	}
 }

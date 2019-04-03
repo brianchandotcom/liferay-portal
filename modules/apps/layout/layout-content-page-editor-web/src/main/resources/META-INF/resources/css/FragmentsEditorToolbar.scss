@@ -10,9 +10,9 @@
 	min-height: $managementBarHeight;
 	position: fixed;
 	top: $controlMenuHeight;
-	transition: left ease $productMenuTransitionDuration, width ease $productMenuTransitionDuration;
+	transition: left ease $productMenuTransitionDuration, right ease $productMenuTransitionDuration, width ease $productMenuTransitionDuration;
 	width: 100%;
-	will-change: left, width;
+	will-change: left, right, width;
 	z-index: $managementBarZIndex;
 
 	body.open & {

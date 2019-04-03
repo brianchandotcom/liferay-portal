@@ -220,26 +220,6 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsExperience getDefaultSegmentsExperience(
-			long groupId, long classNameId, long classPK)
-		throws PortalException {
-
-		SegmentsExperience defaultSegmentsExperience =
-			segmentsExperiencePersistence.fetchByG_S_C_C_First(
-				groupId, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
-				classNameId, _getPublishedLayoutClassPK(classPK), null);
-
-		if (defaultSegmentsExperience != null) {
-			return defaultSegmentsExperience;
-		}
-
-		throw new DefaultSegmentsExperienceException(
-			StringBundler.concat(
-				"Default segments experience is not available for class ",
-				classNameId, " with ID ", classPK));
-	}
-
-	@Override
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException {
 
@@ -334,11 +314,13 @@ public class SegmentsExperienceLocalServiceImpl
 
 		final int originalPriority = segmentsExperience.getPriority();
 
-		segmentsExperience.setPriority(-1);
+		segmentsExperience.setPriority(
+			SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT - 1);
 
 		segmentsExperiencePersistence.update(segmentsExperience);
 
-		swapSegmentsExperience.setPriority(-2);
+		swapSegmentsExperience.setPriority(
+			SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT - 2);
 
 		segmentsExperiencePersistence.update(swapSegmentsExperience);
 
@@ -381,7 +363,8 @@ public class SegmentsExperienceLocalServiceImpl
 		serviceContext.setUserId(defaultUserId);
 
 		return segmentsExperienceLocalService.addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, 0, true,
+			segmentsEntryId, classNameId, classPK, nameMap,
+			SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT, true,
 			serviceContext);
 	}
 
@@ -418,13 +401,6 @@ public class SegmentsExperienceLocalServiceImpl
 			throw new SegmentsExperiencePriorityException(
 				"A segments experience with the priority " + priority +
 					" already exists");
-		}
-
-		if ((priority == 0) &&
-			(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT != segmentsEntryId)) {
-
-			throw new SegmentsExperiencePriorityException(
-				"Priority 0 is reserved for the default segments experience");
 		}
 
 		if (SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT != segmentsEntryId) {

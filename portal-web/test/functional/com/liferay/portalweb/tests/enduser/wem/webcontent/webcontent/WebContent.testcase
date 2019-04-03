@@ -274,8 +274,6 @@ definition {
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");
 
-		Panel.expandPanel(panel = "Details");
-
 		PortletEntry.inputDescription(description = "Basic Web Content Description");
 
 		for (var templateFieldName : list "Date,Image") {

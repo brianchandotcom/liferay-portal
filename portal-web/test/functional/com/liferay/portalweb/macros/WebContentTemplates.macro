@@ -13,8 +13,6 @@ definition {
 	@summary = "Helper function to add description '${description}' to the template"
 	macro _inputDescription {
 		if (isSet(templateDescription)) {
-			Panel.expandPanel(panel = "Details");
-
 			PortletEntry.inputDescription(description = "${templateDescription}");
 		}
 	}
@@ -66,8 +64,6 @@ definition {
 
 	@summary = "Helper function to select template language 'templateLanguage' to read the template in"
 	macro _inputTemplateLanguage {
-		Panel.expandPanel(panel = "Details");
-
 		if ("${templateLanguage}" == "vm") {
 			Select(
 				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
@@ -182,8 +178,6 @@ definition {
 
 	@summary = "Input a small image with the url '${templateSmallImageURL}'"
 	macro inputSmallImage {
-		Panel.expandPanel(panel = "Details");
-
 		if (isSet(templateSmallImageURL)) {
 			if (IsElementNotPresent(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL")) {
 				Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
@@ -357,8 +351,6 @@ definition {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
 			AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${templateName}");
-
-			Panel.expandPanel(panel = "Details");
 
 			AssertTextEquals(
 				locator1 = "TextArea#DESCRIPTION",

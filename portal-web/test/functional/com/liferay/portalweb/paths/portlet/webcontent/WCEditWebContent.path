@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SELECTED_STRUCTURE</td>
-	<td>//div[contains(@class,'article-structure')]//a</td>
+	<td>//p[@class='article-structure']</td>
 	<td></td>
 </tr>
 <tr>

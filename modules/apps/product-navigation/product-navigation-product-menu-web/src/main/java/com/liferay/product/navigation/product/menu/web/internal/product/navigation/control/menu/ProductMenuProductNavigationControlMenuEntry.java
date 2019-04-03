@@ -14,6 +14,9 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.product.navigation.control.menu;
 
+import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +43,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -176,6 +180,15 @@ public class ProductMenuProductNavigationControlMenuEntry
 			return true;
 		}
 
+		List<PanelCategory> childPanelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		if (childPanelCategories.isEmpty()) {
+			return false;
+		}
+
 		User user = themeDisplay.getUser();
 
 		if (themeDisplay.isSignedIn() && user.isSetupComplete()) {
@@ -233,6 +246,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ProductMenuProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

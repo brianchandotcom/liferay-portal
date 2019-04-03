@@ -110,12 +110,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public Page<Document> getFolderDocumentsPage(
+	public Page<Document> getDocumentFolderDocumentsPage(
 			Long folderId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -133,6 +128,11 @@ public class DocumentResourceImpl
 				}
 			},
 			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Document postFolderDocument(
+	public Document postDocumentFolderDocument(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 

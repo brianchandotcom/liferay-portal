@@ -85,7 +85,7 @@ public class DocumentDTOConverter implements DTOConverter {
 				description = fileEntry.getDescription();
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();
-				folderId = fileEntry.getFolderId();
+				documentFolderId = fileEntry.getFolderId();
 				id = fileEntry.getFileEntryId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(

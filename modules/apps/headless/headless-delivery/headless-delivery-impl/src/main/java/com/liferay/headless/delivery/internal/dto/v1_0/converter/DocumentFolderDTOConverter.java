@@ -15,10 +15,11 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -30,18 +31,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "asset.entry.class.name=com.liferay.portal.kernel.repository.model.Folder",
-	service = {DTOConverter.class, FolderDTOConverter.class}
+	service = {DocumentFolderDTOConverter.class, DTOConverter.class}
 )
-public class FolderDTOConverter implements DTOConverter {
+public class DocumentFolderDTOConverter implements DTOConverter {
 
 	@Override
-	public Folder toDTO(DTOConverterContext dtoConverterContext)
+	public DocumentFolder toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		com.liferay.portal.kernel.repository.model.Folder folder =
-			_dlAppService.getFolder(dtoConverterContext.getResourcePrimKey());
+		Folder folder = _dlAppService.getFolder(
+			dtoConverterContext.getResourcePrimKey());
 
-		return new Folder() {
+		return new DocumentFolder() {
 			{
 				contentSpaceId = folder.getGroupId();
 				creator = CreatorUtil.toCreator(
@@ -53,7 +54,7 @@ public class FolderDTOConverter implements DTOConverter {
 				name = folder.getName();
 				numberOfDocuments = _dlAppService.getFileEntriesCount(
 					folder.getRepositoryId(), folder.getFolderId());
-				numberOfFolders = _dlAppService.getFoldersCount(
+				numberOfDocumentFolders = _dlAppService.getFoldersCount(
 					folder.getRepositoryId(), folder.getFolderId());
 			}
 		};

@@ -43,6 +43,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Optional;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,9 +93,7 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -214,8 +214,16 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
 				ServiceContextUtil.createServiceContext(
-					knowledgeBaseArticle.getKeywords(),
-					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					Optional.ofNullable(
+						knowledgeBaseArticle.getKeywords()
+					).orElse(
+						new String[0]
+					),
+					Optional.ofNullable(
+						knowledgeBaseArticle.getTaxonomyCategoryIds()
+					).orElse(
+						new Long[0]
+					),
 					knowledgeBaseArticle.getContentSpaceId(),
 					knowledgeBaseArticle.getViewableByAsString())));
 	}

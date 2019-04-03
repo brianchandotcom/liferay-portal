@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -34,6 +35,7 @@ import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -55,8 +57,11 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -179,13 +184,19 @@ public class MessageBoardThreadResourceImpl
 		_updateQuestion(mbMessage, messageBoardThread);
 
 		return _toMessageBoardThread(
-			_mbMessageService.updateDiscussionMessage(
-				mbMessage.getClassName(), mbMessage.getClassPK(),
-				mbMessage.getMessageId(), messageBoardThread.getHeadline(),
-				messageBoardThread.getArticleBody(),
+			_mbMessageService.updateMessage(
+				mbThread.getRootMessageId(), messageBoardThread.getHeadline(),
+				messageBoardThread.getArticleBody(), null,
+				_toPriority(
+					mbThread.getGroupId(), messageBoardThread.getThreadType()),
+				false,
 				ServiceContextUtil.createServiceContext(
-					messageBoardThread.getKeywords(), null,
-					mbThread.getGroupId(),
+					Optional.ofNullable(
+						messageBoardThread.getKeywords()
+					).orElse(
+						new String[0]
+					),
+					null, mbThread.getGroupId(),
 					messageBoardThread.getViewableByAsString())));
 	}
 
@@ -199,7 +210,8 @@ public class MessageBoardThreadResourceImpl
 			messageBoardThread.getHeadline(),
 			messageBoardThread.getArticleBody(),
 			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
-			0.0, false,
+			_toPriority(contentSpaceId, messageBoardThread.getThreadType()),
+			false,
 			ServiceContextUtil.createServiceContext(
 				messageBoardThread.getKeywords(), null, contentSpaceId,
 				messageBoardThread.getViewableByAsString()));
@@ -271,6 +283,41 @@ public class MessageBoardThreadResourceImpl
 					mbThread.getGroupId(), mbThread.getPriority());
 			}
 		};
+	}
+
+	private double _toPriority(Long contentSpaceId, String threadType)
+		throws PortalException {
+
+		if (threadType == null) {
+			return MBThreadConstants.PRIORITY_NOT_GIVEN;
+		}
+
+		MBGroupServiceSettings mbGroupServiceSettings =
+			MBGroupServiceSettings.getInstance(contentSpaceId);
+
+		String[] priorities = mbGroupServiceSettings.getPriorities(
+			contextAcceptLanguage.getPreferredLanguageId());
+
+		for (String priorityString : priorities) {
+			String[] parts = StringUtil.split(priorityString, StringPool.PIPE);
+
+			if (StringUtil.equalsIgnoreCase(parts[0], threadType)) {
+				return GetterUtil.getDouble(parts[2]);
+			}
+		}
+
+		String[] validPriorities = transform(
+			priorities,
+			priority -> {
+				String[] parts = StringUtil.split(priority, StringPool.PIPE);
+
+				return parts[0];
+			},
+			String.class);
+
+		throw new BadRequestException(
+			"Thread type not valid, valid priorities are " +
+				Arrays.toString(validPriorities));
 	}
 
 	private String _toThreadType(Long contentSpaceId, double priority)

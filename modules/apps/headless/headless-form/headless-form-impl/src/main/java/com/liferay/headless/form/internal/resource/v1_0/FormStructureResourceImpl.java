@@ -51,6 +51,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -121,37 +122,6 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		);
 	}
 
-	private Grid _getGrid(DDMFormField ddmFormField) {
-		String type = ddmFormField.getType();
-
-		if (!type.equals("grid")) {
-			return null;
-		}
-
-		return new Grid() {
-			{
-				columns = TransformUtil.transform(
-					_toLocalizedValueMapEntry(ddmFormField, "columns"),
-					entry -> new Column() {
-						{
-							label = _toString(entry.getValue());
-							value = entry.getKey();
-						}
-					},
-					Column.class);
-				rows = TransformUtil.transform(
-					_toLocalizedValueMapEntry(ddmFormField, "rows"),
-					entry -> new Row() {
-						{
-							label = _toString(entry.getValue());
-							value = entry.getKey();
-						}
-					},
-					Row.class);
-			}
-		};
-	}
-
 	private List<String> _getNestedFieldNames(
 		List<String> ddmFormFieldNames, DDMStructure ddmStructure) {
 
@@ -180,133 +150,123 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		);
 	}
 
-	private SuccessPage _getSuccessPage(
-		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
-
-		if (!ddmFormSuccessPageSettings.isEnabled()) {
-			return null;
-		}
-
-		return new SuccessPage() {
-			{
-				description = _toString(ddmFormSuccessPageSettings.getBody());
-				headline = _toString(ddmFormSuccessPageSettings.getTitle());
-			}
-		};
-	}
-
-	private String _getText(DDMFormField ddmFormField) {
-		Object textProperty = ddmFormField.getProperty("text");
-
-		if (!(textProperty instanceof LocalizedValue)) {
-			return null;
-		}
-
-		return _toString((LocalizedValue)textProperty);
-	}
-
-	private Validation _getValidation(DDMFormField ddmFormField) {
-		Object obj = ddmFormField.getProperty("validation");
-
-		if (!(obj instanceof DDMFormFieldValidation)) {
-			return null;
-		}
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			(DDMFormFieldValidation)obj;
-
-		return new Validation() {
-			{
-				expression = ddmFormFieldValidation.getExpression();
-				errorMessage = ddmFormFieldValidation.getErrorMessage();
-			}
-		};
-	}
-
-	private Boolean _hasFormRulesFunction(DDMFormField ddmFormField) {
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-
-		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
-
-		return ddmFormRules.stream(
-		).map(
-			DDMFormRule::getCondition
-		).anyMatch(
-			ruleCondition -> ruleCondition.contains(ddmFormField.getName())
-		);
-	}
-
-	private Boolean _showAsSwitcher(DDMFormField ddmFormField) {
-		String type = ddmFormField.getType();
-
-		if (DDMFormFieldType.CHECKBOX.equals(type) ||
-			DDMFormFieldType.CHECKBOX_MULTIPLE.equals(type)) {
-
-			return GetterUtil.getBoolean(
-				ddmFormField.getProperty("showAsSwitcher"));
-		}
-
-		return null;
-	}
-
-	private String _toDataType(DDMFormField ddmFormField) {
-		String type = ddmFormField.getType();
-
-		if (type.equals("document_library")) {
-			return "document";
-		}
-		else if (type.equals("date") || type.equals("paragraph")) {
-			return type;
-		}
-
-		return ddmFormField.getDataType();
-	}
-
 	private Field _toField(DDMFormField ddmFormField) {
 		return new Field() {
 			{
-				grid = _getGrid(ddmFormField);
-				hasFormRules = _hasFormRulesFunction(ddmFormField);
+				String type = ddmFormField.getType();
+
+				if (Objects.equals("document_library", type)) {
+					dataType = "document";
+				}
+				else if (Objects.equals("date", type) ||
+						 Objects.equals("paragraph", type)) {
+
+					dataType = type;
+				}
+				else {
+					dataType = ddmFormField.getDataType();
+				}
+
+				if (Objects.equals("grid", type)) {
+					grid = new Grid() {
+						{
+							columns = TransformUtil.transform(
+								_toLocalizedValueMapEntry(
+									ddmFormField, "columns"),
+								entry -> new Column() {
+									{
+										label = _toString(entry.getValue());
+										value = entry.getKey();
+									}
+								},
+								Column.class);
+							rows = TransformUtil.transform(
+								_toLocalizedValueMapEntry(ddmFormField, "rows"),
+								entry -> new Row() {
+									{
+										label = _toString(entry.getValue());
+										value = entry.getKey();
+									}
+								},
+								Row.class);
+						}
+					};
+				}
+
+				DDMForm ddmForm = ddmFormField.getDDMForm();
+
+				List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+				hasFormRules = ddmFormRules.stream(
+				).map(
+					DDMFormRule::getCondition
+				).anyMatch(
+					ruleCondition -> ruleCondition.contains(
+						ddmFormField.getName())
+				);
+
 				immutable = ddmFormField.isTransient();
+				inputControl = type;
 				label = _toString(ddmFormField.getLabel());
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
 				name = ddmFormField.getName();
+
+				options = Optional.ofNullable(
+					ddmFormField.getDDMFormFieldOptions()
+				).map(
+					DDMFormFieldOptions::getOptions
+				).map(
+					Map::entrySet
+				).map(
+					Set::stream
+				).orElseGet(
+					Stream::empty
+				).map(
+					entry -> new Option() {
+						{
+							setLabel(_toString(entry.getValue()));
+							setValue(entry.getKey());
+						}
+					}
+				).toArray(
+					Option[]::new
+				);
+
 				predefinedValue = _toString(ddmFormField.getPredefinedValue());
 				repeatable = ddmFormField.isRepeatable();
 				required = ddmFormField.isRequired();
-				showAsSwitcher = _showAsSwitcher(ddmFormField);
-				showLabel = ddmFormField.isShowLabel();
-				text = _getText(ddmFormField);
-				validation = _getValidation(ddmFormField);
 
-				setDataType(_toDataType(ddmFormField));
-				setInputControl(ddmFormField.getType());
-				setLabel(_toString(ddmFormField.getLabel()));
-				setLocalizable(ddmFormField.isLocalizable());
-				setMultiple(ddmFormField.isMultiple());
-				setName(ddmFormField.getName());
-				setOptions(
-					() -> Optional.ofNullable(
-						ddmFormField.getDDMFormFieldOptions()
-					).map(
-						DDMFormFieldOptions::getOptions
-					).map(
-						Map::entrySet
-					).map(
-						Set::stream
-					).orElseGet(
-						Stream::empty
-					).map(
-						entry -> new Option() {
-							{
-								setLabel(_toString(entry.getValue()));
-								setValue(entry.getKey());
-							}
+				if (DDMFormFieldType.CHECKBOX.equals(type) ||
+					DDMFormFieldType.CHECKBOX_MULTIPLE.equals(type)) {
+
+					showAsSwitcher = GetterUtil.getBoolean(
+						ddmFormField.getProperty("showAsSwitcher"));
+				}
+
+				showLabel = ddmFormField.isShowLabel();
+
+				Object textPropertyObject = ddmFormField.getProperty("text");
+
+				if (textPropertyObject instanceof LocalizedValue) {
+					text = _toString((LocalizedValue)textPropertyObject);
+				}
+
+				Object validationObject = ddmFormField.getProperty(
+					"validation");
+
+				if (validationObject instanceof DDMFormFieldValidation) {
+					DDMFormFieldValidation ddmFormFieldValidation =
+						(DDMFormFieldValidation)validationObject;
+
+					validation = new Validation() {
+						{
+							expression = ddmFormFieldValidation.getExpression();
+							errorMessage =
+								ddmFormFieldValidation.getErrorMessage();
 						}
-					).toArray(
-						Option[]::new
-					));
+					};
+				}
 			}
 		};
 	}
@@ -340,12 +300,12 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 	private FormStructure _toFormStructure(DDMStructure ddmStructure)
 		throws Exception {
 
+		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
+
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			ddmForm.getDDMFormSuccessPageSettings();
-
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
 
 		return new FormStructure() {
 			{
@@ -367,7 +327,17 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(
 					contextAcceptLanguage.getPreferredLocale());
-				successPage = _getSuccessPage(ddmFormSuccessPageSettings);
+
+				if (ddmFormSuccessPageSettings.isEnabled()) {
+					successPage = new SuccessPage() {
+						{
+							description = _toString(
+								ddmFormSuccessPageSettings.getBody());
+							headline = _toString(
+								ddmFormSuccessPageSettings.getTitle());
+						}
+					};
+				}
 			}
 		};
 	}

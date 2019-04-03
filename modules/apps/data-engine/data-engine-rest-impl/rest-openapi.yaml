@@ -603,11 +603,11 @@ paths:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
-    "/data-layout/{data-layout-id}/data-layout-permissions":
+    "/data-layout/{dataLayoutId}/data-layout-permissions":
         post:
             parameters:
                 - in: path
-                  name: data-layout-id
+                  name: dataLayoutId
                   required: true
                   schema:
                       format: int64

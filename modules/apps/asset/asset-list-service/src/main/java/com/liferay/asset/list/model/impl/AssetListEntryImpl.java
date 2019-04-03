@@ -31,6 +31,7 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
+import com.liferay.asset.util.AssetHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -363,10 +364,10 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(segmentsEntryId);
 
-		assetEntryQuery.setEnd(end);
 		assetEntryQuery.setStart(start);
+		assetEntryQuery.setEnd(end);
 
-		return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+		return AssetHelperUtil.search(getCompanyId(), assetEntryQuery);
 	}
 
 	private long _getFirstSegmentsEntryId(long[] segmentsEntryIds)

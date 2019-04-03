@@ -65,22 +65,20 @@ public class Setup {
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
 			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
+		User user = UserLocalServiceUtil.getUserByEmailAddress(
+			company.getCompanyId(),
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+				company.getMx());
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker == null) {
-			User user = UserLocalServiceUtil.getUserByEmailAddress(
-				company.getCompanyId(),
-				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-					company.getMx());
-
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
 		}
 
 		try {
-			User user = company.getDefaultUser();
-
 			Group group = _getGroupForSite(
 				company.getCompanyId(), user.getUserId());
 

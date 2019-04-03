@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.base.CTEntryAggregateLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -30,9 +31,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(
+	property = "model.name.class=com.liferay.change.tracking.model.CTEntryAggregate",
+	service = AopService.class
+)
 public class CTEntryAggregateLocalServiceImpl
 	extends CTEntryAggregateLocalServiceBaseImpl {
 

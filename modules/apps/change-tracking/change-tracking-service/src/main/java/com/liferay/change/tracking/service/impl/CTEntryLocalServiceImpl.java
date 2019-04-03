@@ -19,6 +19,7 @@ import com.liferay.change.tracking.exception.DuplicateCTEntryException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +52,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -60,10 +60,17 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
+@Component(
+	property = "model.class.name=com.liferay.change.tracking.model.CTEntry",
+	service = AopService.class
+)
 public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -519,22 +526,22 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTEntryLocalServiceImpl.class);
 
-	@ServiceReference(type = IndexerRegistry.class)
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = Queries.class)
+	@Reference
 	private Queries _queries;
 
-	@ServiceReference(type = Searcher.class)
+	@Reference
 	private Searcher _searcher;
 
-	@ServiceReference(type = SearchRequestBuilderFactory.class)
+	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
-	@ServiceReference(type = Sorts.class)
+	@Reference
 	private Sorts _sorts;
 
 }

@@ -5,3 +5,7 @@ dependencies {
 	testIntegrationCompile project(":test:external-data-source-test-api")
 	testIntegrationCompile project(":test:external-data-source-test-service")
 }
+
+jar {
+	enabled = true
+}

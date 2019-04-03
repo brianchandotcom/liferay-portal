@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>SELECTED_TEMPLATE</td>
-	<td>//span[contains(@id,'templateNameLabel')]</td>
+	<td>//input[@title='Template Name']</td>
 	<td></td>
 </tr>
 <tr>

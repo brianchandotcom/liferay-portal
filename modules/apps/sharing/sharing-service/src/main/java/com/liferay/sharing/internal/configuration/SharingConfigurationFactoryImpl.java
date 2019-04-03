@@ -21,12 +21,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.sharing.constants.SharingConstants;
 
 import java.util.Map;
 
@@ -81,10 +79,8 @@ public class SharingConfigurationFactoryImpl
 			}
 
 			SharingCompanyConfiguration sharingCompanyConfiguration =
-				_configurationProvider.getConfiguration(
-					SharingCompanyConfiguration.class,
-					new CompanyServiceSettingsLocator(
-						companyId, SharingConstants.SERVICE_NAME));
+				_configurationProvider.getCompanyConfiguration(
+					SharingCompanyConfiguration.class, companyId);
 
 			return new SharingConfigurationImpl(
 				group, sharingGroupConfiguration, sharingCompanyConfiguration,

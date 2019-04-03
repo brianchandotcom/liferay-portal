@@ -13,3 +13,8 @@
  * details.
  */
 --%>
+
+<%@ page import="com.liferay.sharing.configuration.SharingConfiguration" %><%@
+page import="com.liferay.sharing.web.internal.constants.SharingWebKeys" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>

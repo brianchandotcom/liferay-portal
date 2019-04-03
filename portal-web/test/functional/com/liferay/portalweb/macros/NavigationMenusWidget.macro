@@ -6,7 +6,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
 		Click(
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",

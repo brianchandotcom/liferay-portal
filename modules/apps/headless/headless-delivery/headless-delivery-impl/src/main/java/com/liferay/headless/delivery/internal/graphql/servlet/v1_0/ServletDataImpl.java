@@ -21,8 +21,8 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.FolderResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -62,8 +62,8 @@ public class ServletDataImpl implements ServletData {
 			_commentResourceComponentServiceObjects);
 		Mutation.setDocumentResourceComponentServiceObjects(
 			_documentResourceComponentServiceObjects);
-		Mutation.setFolderResourceComponentServiceObjects(
-			_folderResourceComponentServiceObjects);
+		Mutation.setDocumentFolderResourceComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
@@ -97,8 +97,8 @@ public class ServletDataImpl implements ServletData {
 			_contentStructureResourceComponentServiceObjects);
 		Query.setDocumentResourceComponentServiceObjects(
 			_documentResourceComponentServiceObjects);
-		Query.setFolderResourceComponentServiceObjects(
-			_folderResourceComponentServiceObjects);
+		Query.setDocumentFolderResourceComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Query.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
@@ -153,8 +153,8 @@ public class ServletDataImpl implements ServletData {
 		_documentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<FolderResource>
-		_folderResourceComponentServiceObjects;
+	private ComponentServiceObjects<DocumentFolderResource>
+		_documentFolderResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KnowledgeBaseArticleResource>

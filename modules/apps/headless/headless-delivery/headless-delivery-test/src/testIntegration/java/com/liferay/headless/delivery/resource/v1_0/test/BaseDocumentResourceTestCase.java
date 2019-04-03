@@ -735,18 +735,20 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPage() throws Exception {
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
-		Long irrelevantFolderId =
-			testGetFolderDocumentsPage_getIrrelevantFolderId();
+	public void testGetDocumentFolderDocumentsPage() throws Exception {
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
+		Long irrelevantDocumentFolderId =
+			testGetDocumentFolderDocumentsPage_getIrrelevantDocumentFolderId();
 
-		if ((irrelevantFolderId != null)) {
+		if ((irrelevantDocumentFolderId != null)) {
 			Document irrelevantDocument =
-				testGetFolderDocumentsPage_addDocument(
-					irrelevantFolderId, randomIrrelevantDocument());
+				testGetDocumentFolderDocumentsPage_addDocument(
+					irrelevantDocumentFolderId, randomIrrelevantDocument());
 
-			Page<Document> page = invokeGetFolderDocumentsPage(
-				irrelevantFolderId, null, null, Pagination.of(1, 2), null);
+			Page<Document> page = invokeGetDocumentFolderDocumentsPage(
+				irrelevantDocumentFolderId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -756,14 +758,14 @@ public abstract class BaseDocumentResourceTestCase {
 			assertValid(page);
 		}
 
-		Document document1 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
-		Document document2 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
-		Page<Document> page = invokeGetFolderDocumentsPage(
-			folderId, null, null, Pagination.of(1, 2), null);
+		Page<Document> page = invokeGetDocumentFolderDocumentsPage(
+			documentFolderId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -774,7 +776,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPageWithFilterDateTimeEquals()
+	public void testGetDocumentFolderDocumentsPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -784,7 +786,8 @@ public abstract class BaseDocumentResourceTestCase {
 			return;
 		}
 
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -795,15 +798,18 @@ public abstract class BaseDocumentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		document1 = testGetFolderDocumentsPage_addDocument(folderId, document1);
+		document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document1);
 
 		Thread.sleep(1000);
 
-		document2 = testGetFolderDocumentsPage_addDocument(folderId, document2);
+		document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> page = invokeGetFolderDocumentsPage(
-				folderId, null, getFilterString(entityField, "eq", document1),
+			Page<Document> page = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null,
+				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -813,7 +819,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPageWithFilterStringEquals()
+	public void testGetDocumentFolderDocumentsPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -823,18 +829,20 @@ public abstract class BaseDocumentResourceTestCase {
 			return;
 		}
 
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
-		Document document1 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document2 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> page = invokeGetFolderDocumentsPage(
-				folderId, null, getFilterString(entityField, "eq", document1),
+			Page<Document> page = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null,
+				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -844,27 +852,30 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPageWithPagination() throws Exception {
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
+	public void testGetDocumentFolderDocumentsPageWithPagination()
+		throws Exception {
 
-		Document document1 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
-		Document document2 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
-		Document document3 = testGetFolderDocumentsPage_addDocument(
-			folderId, randomDocument());
+		Document document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
 
-		Page<Document> page1 = invokeGetFolderDocumentsPage(
-			folderId, null, null, Pagination.of(1, 2), null);
+		Document document3 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, randomDocument());
+
+		Page<Document> page1 = invokeGetDocumentFolderDocumentsPage(
+			documentFolderId, null, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
-		Page<Document> page2 = invokeGetFolderDocumentsPage(
-			folderId, null, null, Pagination.of(2, 2), null);
+		Page<Document> page2 = invokeGetDocumentFolderDocumentsPage(
+			documentFolderId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -883,7 +894,9 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPageWithSortDateTime() throws Exception {
+	public void testGetDocumentFolderDocumentsPageWithSortDateTime()
+		throws Exception {
+
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.DATE_TIME);
 
@@ -891,7 +904,8 @@ public abstract class BaseDocumentResourceTestCase {
 			return;
 		}
 
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -902,23 +916,25 @@ public abstract class BaseDocumentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		document1 = testGetFolderDocumentsPage_addDocument(folderId, document1);
+		document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document1);
 
 		Thread.sleep(1000);
 
-		document2 = testGetFolderDocumentsPage_addDocument(folderId, document2);
+		document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> ascPage = invokeGetFolderDocumentsPage(
-				folderId, null, null, Pagination.of(1, 2),
+			Page<Document> ascPage = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(document1, document2),
 				(List<Document>)ascPage.getItems());
 
-			Page<Document> descPage = invokeGetFolderDocumentsPage(
-				folderId, null, null, Pagination.of(1, 2),
+			Page<Document> descPage = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -928,7 +944,9 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPageWithSortString() throws Exception {
+	public void testGetDocumentFolderDocumentsPageWithSortString()
+		throws Exception {
+
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
 
@@ -936,7 +954,8 @@ public abstract class BaseDocumentResourceTestCase {
 			return;
 		}
 
-		Long folderId = testGetFolderDocumentsPage_getFolderId();
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -946,21 +965,23 @@ public abstract class BaseDocumentResourceTestCase {
 			BeanUtils.setProperty(document2, entityField.getName(), "Bbb");
 		}
 
-		document1 = testGetFolderDocumentsPage_addDocument(folderId, document1);
+		document1 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document1);
 
-		document2 = testGetFolderDocumentsPage_addDocument(folderId, document2);
+		document2 = testGetDocumentFolderDocumentsPage_addDocument(
+			documentFolderId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> ascPage = invokeGetFolderDocumentsPage(
-				folderId, null, null, Pagination.of(1, 2),
+			Page<Document> ascPage = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(document1, document2),
 				(List<Document>)ascPage.getItems());
 
-			Page<Document> descPage = invokeGetFolderDocumentsPage(
-				folderId, null, null, Pagination.of(1, 2),
+			Page<Document> descPage = invokeGetDocumentFolderDocumentsPage(
+				documentFolderId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -969,34 +990,40 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Document testGetFolderDocumentsPage_addDocument(
-			Long folderId, Document document)
+	protected Document testGetDocumentFolderDocumentsPage_addDocument(
+			Long documentFolderId, Document document)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetFolderDocumentsPage_getFolderId() throws Exception {
+	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetFolderDocumentsPage_getIrrelevantFolderId()
+	protected Long
+			testGetDocumentFolderDocumentsPage_getIrrelevantDocumentFolderId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<Document> invokeGetFolderDocumentsPage(
-			Long folderId, String search, String filterString,
+	protected Page<Document> invokeGetDocumentFolderDocumentsPage(
+			Long documentFolderId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
+			_resourceURL +
+				_toPath(
+					"/document-folders/{documentFolderId}/documents",
+					documentFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1021,15 +1048,18 @@ public abstract class BaseDocumentResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetFolderDocumentsPageResponse(
-			Long folderId, String search, String filterString,
+	protected Http.Response invokeGetDocumentFolderDocumentsPageResponse(
+			Long documentFolderId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
+			_resourceURL +
+				_toPath(
+					"/document-folders/{documentFolderId}/documents",
+					documentFolderId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1048,25 +1078,29 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testPostFolderDocument() throws Exception {
+	public void testPostDocumentFolderDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected Document testPostFolderDocument_addDocument(Document document)
+	protected Document testPostDocumentFolderDocument_addDocument(
+			Document document)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Document invokePostFolderDocument(
-			Long folderId, MultipartBody multipartBody)
+	protected Document invokePostDocumentFolderDocument(
+			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
+			_resourceURL +
+				_toPath(
+					"/document-folders/{documentFolderId}/documents",
+					documentFolderId);
 
 		options.setLocation(location);
 
@@ -1088,14 +1122,17 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostFolderDocumentResponse(
-			Long folderId, MultipartBody multipartBody)
+	protected Http.Response invokePostDocumentFolderDocumentResponse(
+			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/folders/{folderId}/documents", folderId);
+			_resourceURL +
+				_toPath(
+					"/document-folders/{documentFolderId}/documents",
+					documentFolderId);
 
 		options.setLocation(location);
 
@@ -1271,6 +1308,11 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("documentFolderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(String.valueOf(document.getEncodingFormat()));
@@ -1285,11 +1327,6 @@ public abstract class BaseDocumentResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("folderId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -1346,9 +1383,9 @@ public abstract class BaseDocumentResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
+				documentFolderId = RandomTestUtil.randomLong();
 				encodingFormat = RandomTestUtil.randomString();
 				fileExtension = RandomTestUtil.randomString();
-				folderId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}

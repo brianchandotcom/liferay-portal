@@ -40,10 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Folder")
+@GraphQLName("DocumentFolder")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Folder")
-public class Folder {
+@XmlRootElement(name = "DocumentFolder")
+public class DocumentFolder {
 
 	public static enum ViewableBy {
 
@@ -264,6 +264,35 @@ public class Folder {
 	@NotEmpty
 	protected String name;
 
+	public Number getNumberOfDocumentFolders() {
+		return numberOfDocumentFolders;
+	}
+
+	public void setNumberOfDocumentFolders(Number numberOfDocumentFolders) {
+		this.numberOfDocumentFolders = numberOfDocumentFolders;
+	}
+
+	@JsonIgnore
+	public void setNumberOfDocumentFolders(
+		UnsafeSupplier<Number, Exception>
+			numberOfDocumentFoldersUnsafeSupplier) {
+
+		try {
+			numberOfDocumentFolders =
+				numberOfDocumentFoldersUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfDocumentFolders;
+
 	public Number getNumberOfDocuments() {
 		return numberOfDocuments;
 	}
@@ -290,33 +319,6 @@ public class Folder {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number numberOfDocuments;
-
-	public Number getNumberOfFolders() {
-		return numberOfFolders;
-	}
-
-	public void setNumberOfFolders(Number numberOfFolders) {
-		this.numberOfFolders = numberOfFolders;
-	}
-
-	@JsonIgnore
-	public void setNumberOfFolders(
-		UnsafeSupplier<Number, Exception> numberOfFoldersUnsafeSupplier) {
-
-		try {
-			numberOfFolders = numberOfFoldersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number numberOfFolders;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
@@ -360,13 +362,13 @@ public class Folder {
 			return true;
 		}
 
-		if (!(object instanceof Folder)) {
+		if (!(object instanceof DocumentFolder)) {
 			return false;
 		}
 
-		Folder folder = (Folder)object;
+		DocumentFolder documentFolder = (DocumentFolder)object;
 
-		return Objects.equals(toString(), folder.toString());
+		return Objects.equals(toString(), documentFolder.toString());
 	}
 
 	@Override
@@ -424,14 +426,14 @@ public class Folder {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"numberOfDocumentFolders\": ");
+
+		sb.append(numberOfDocumentFolders);
+		sb.append(", ");
+
 		sb.append("\"numberOfDocuments\": ");
 
 		sb.append(numberOfDocuments);
-		sb.append(", ");
-
-		sb.append("\"numberOfFolders\": ");
-
-		sb.append(numberOfFolders);
 		sb.append(", ");
 
 		sb.append("\"viewableBy\": ");

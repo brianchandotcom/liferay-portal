@@ -18,7 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.Document;
-import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
@@ -32,8 +32,8 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.FolderResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -97,12 +97,12 @@ public class Mutation {
 			documentResourceComponentServiceObjects;
 	}
 
-	public static void setFolderResourceComponentServiceObjects(
-		ComponentServiceObjects<FolderResource>
-			folderResourceComponentServiceObjects) {
+	public static void setDocumentFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentFolderResource>
+			documentFolderResourceComponentServiceObjects) {
 
-		_folderResourceComponentServiceObjects =
-			folderResourceComponentServiceObjects;
+		_documentFolderResourceComponentServiceObjects =
+			documentFolderResourceComponentServiceObjects;
 	}
 
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -402,79 +402,86 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	@GraphQLName("postFolderDocumentFolderIdMultipartBody")
-	public Document postFolderDocument(
-			@GraphQLName("folderId") Long folderId,
+	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
+	public Document postDocumentFolderDocument(
+			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.postFolderDocument(
-				folderId, multipartBody));
+			documentResource -> documentResource.postDocumentFolderDocument(
+				documentFolderId, multipartBody));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postContentSpaceFolder(
+	public DocumentFolder postContentSpaceDocumentFolder(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("Folder") Folder folder)
+			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.postContentSpaceFolder(
-				contentSpaceId, folder));
+			documentFolderResource ->
+				documentFolderResource.postContentSpaceDocumentFolder(
+					contentSpaceId, documentFolder));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteFolder(@GraphQLName("folderId") Long folderId)
+	public void deleteDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.deleteFolder(folderId));
+			documentFolderResource ->
+				documentFolderResource.deleteDocumentFolder(documentFolderId));
 	}
 
 	@GraphQLInvokeDetached
-	public Folder patchFolder(
-			@GraphQLName("folderId") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+	public DocumentFolder patchDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.patchFolder(folderId, folder));
+			documentFolderResource ->
+				documentFolderResource.patchDocumentFolder(
+					documentFolderId, documentFolder));
 	}
 
 	@GraphQLInvokeDetached
-	public Folder putFolder(
-			@GraphQLName("folderId") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+	public DocumentFolder putDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.putFolder(folderId, folder));
+			documentFolderResource -> documentFolderResource.putDocumentFolder(
+				documentFolderId, documentFolder));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postFolderFolder(
-			@GraphQLName("folderId") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+	public DocumentFolder postDocumentFolderDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.postFolderFolder(
-				folderId, folder));
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderDocumentFolder(
+					documentFolderId, documentFolder));
 	}
 
 	@GraphQLField
@@ -1284,10 +1291,11 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(FolderResource folderResource)
+	private void _populateResourceContext(
+			DocumentFolderResource documentFolderResource)
 		throws Exception {
 
-		folderResource.setContextCompany(
+		documentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -1389,8 +1397,8 @@ public class Mutation {
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<FolderResource>
-		_folderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentFolderResource>
+		_documentFolderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>

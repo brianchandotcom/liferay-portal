@@ -207,6 +207,27 @@ public class Document {
 
 	protected String description;
 
+	public Long getDocumentFolderId() {
+		return documentFolderId;
+	}
+
+	public void setDocumentFolderId(Long documentFolderId) {
+		this.documentFolderId = documentFolderId;
+	}
+
+	public void setDocumentFolderId(
+		UnsafeSupplier<Long, Exception> documentFolderIdUnsafeSupplier) {
+
+		try {
+			documentFolderId = documentFolderIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long documentFolderId;
+
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -248,27 +269,6 @@ public class Document {
 	}
 
 	protected String fileExtension;
-
-	public Long getFolderId() {
-		return folderId;
-	}
-
-	public void setFolderId(Long folderId) {
-		this.folderId = folderId;
-	}
-
-	public void setFolderId(
-		UnsafeSupplier<Long, Exception> folderIdUnsafeSupplier) {
-
-		try {
-			folderId = folderIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long folderId;
 
 	public Long getId() {
 		return id;

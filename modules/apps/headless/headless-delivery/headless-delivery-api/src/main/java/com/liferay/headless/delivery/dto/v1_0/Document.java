@@ -269,6 +269,33 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	public Long getDocumentFolderId() {
+		return documentFolderId;
+	}
+
+	public void setDocumentFolderId(Long documentFolderId) {
+		this.documentFolderId = documentFolderId;
+	}
+
+	@JsonIgnore
+	public void setDocumentFolderId(
+		UnsafeSupplier<Long, Exception> documentFolderIdUnsafeSupplier) {
+
+		try {
+			documentFolderId = documentFolderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long documentFolderId;
+
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -322,33 +349,6 @@ public class Document {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
-
-	public Long getFolderId() {
-		return folderId;
-	}
-
-	public void setFolderId(Long folderId) {
-		this.folderId = folderId;
-	}
-
-	@JsonIgnore
-	public void setFolderId(
-		UnsafeSupplier<Long, Exception> folderIdUnsafeSupplier) {
-
-		try {
-			folderId = folderIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long folderId;
 
 	public Long getId() {
 		return id;
@@ -660,6 +660,11 @@ public class Document {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"documentFolderId\": ");
+
+		sb.append(documentFolderId);
+		sb.append(", ");
+
 		sb.append("\"encodingFormat\": ");
 
 		sb.append("\"");
@@ -672,11 +677,6 @@ public class Document {
 		sb.append("\"");
 		sb.append(fileExtension);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"folderId\": ");
-
-		sb.append(folderId);
 		sb.append(", ");
 
 		sb.append("\"id\": ");

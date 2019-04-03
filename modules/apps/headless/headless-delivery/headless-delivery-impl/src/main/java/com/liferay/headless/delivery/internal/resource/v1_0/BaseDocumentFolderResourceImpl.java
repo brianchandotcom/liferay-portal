@@ -14,8 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.Folder;
-import com.liferay.headless.delivery.resource.v1_0.FolderResource;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
@@ -59,7 +59,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFolderResourceImpl implements FolderResource {
+public abstract class BaseDocumentFolderResourceImpl
+	implements DocumentFolderResource {
 
 	@Override
 	@GET
@@ -71,10 +72,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{contentSpaceId}/folders")
+	@Path("/content-spaces/{contentSpaceId}/document-folders")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Page<Folder> getContentSpaceFoldersPage(
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public Page<DocumentFolder> getContentSpaceDocumentFoldersPage(
 			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
 			@QueryParam("flatten") Boolean flatten,
 			@QueryParam("search") String search, @Context Filter filter,
@@ -87,97 +88,109 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/folders")
+	@Path("/content-spaces/{contentSpaceId}/document-folders")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Folder postContentSpaceFolder(
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public DocumentFolder postContentSpaceDocumentFolder(
 			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
-			Folder folder)
+			DocumentFolder documentFolder)
 		throws Exception {
 
-		return new Folder();
+		return new DocumentFolder();
 	}
 
 	@Override
 	@DELETE
-	@Path("/folders/{folderId}")
+	@Path("/document-folders/{documentFolderId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public void deleteFolder(@NotNull @PathParam("folderId") Long folderId)
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public void deleteDocumentFolder(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Path("/folders/{folderId}")
+	@Path("/document-folders/{documentFolderId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Folder getFolder(@NotNull @PathParam("folderId") Long folderId)
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public DocumentFolder getDocumentFolder(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId)
 		throws Exception {
 
-		return new Folder();
+		return new DocumentFolder();
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/folders/{folderId}")
+	@Path("/document-folders/{documentFolderId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Folder patchFolder(
-			@NotNull @PathParam("folderId") Long folderId, Folder folder)
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public DocumentFolder patchDocumentFolder(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			DocumentFolder documentFolder)
 		throws Exception {
 
-		Folder existingFolder = getFolder(folderId);
+		DocumentFolder existingDocumentFolder = getDocumentFolder(
+			documentFolderId);
 
-		if (Validator.isNotNull(folder.getContentSpaceId())) {
-			existingFolder.setContentSpaceId(folder.getContentSpaceId());
+		if (Validator.isNotNull(documentFolder.getContentSpaceId())) {
+			existingDocumentFolder.setContentSpaceId(
+				documentFolder.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(folder.getDateCreated())) {
-			existingFolder.setDateCreated(folder.getDateCreated());
+		if (Validator.isNotNull(documentFolder.getDateCreated())) {
+			existingDocumentFolder.setDateCreated(
+				documentFolder.getDateCreated());
 		}
 
-		if (Validator.isNotNull(folder.getDateModified())) {
-			existingFolder.setDateModified(folder.getDateModified());
+		if (Validator.isNotNull(documentFolder.getDateModified())) {
+			existingDocumentFolder.setDateModified(
+				documentFolder.getDateModified());
 		}
 
-		if (Validator.isNotNull(folder.getDescription())) {
-			existingFolder.setDescription(folder.getDescription());
+		if (Validator.isNotNull(documentFolder.getDescription())) {
+			existingDocumentFolder.setDescription(
+				documentFolder.getDescription());
 		}
 
-		if (Validator.isNotNull(folder.getName())) {
-			existingFolder.setName(folder.getName());
+		if (Validator.isNotNull(documentFolder.getName())) {
+			existingDocumentFolder.setName(documentFolder.getName());
 		}
 
-		if (Validator.isNotNull(folder.getNumberOfDocuments())) {
-			existingFolder.setNumberOfDocuments(folder.getNumberOfDocuments());
+		if (Validator.isNotNull(documentFolder.getNumberOfDocumentFolders())) {
+			existingDocumentFolder.setNumberOfDocumentFolders(
+				documentFolder.getNumberOfDocumentFolders());
 		}
 
-		if (Validator.isNotNull(folder.getNumberOfFolders())) {
-			existingFolder.setNumberOfFolders(folder.getNumberOfFolders());
+		if (Validator.isNotNull(documentFolder.getNumberOfDocuments())) {
+			existingDocumentFolder.setNumberOfDocuments(
+				documentFolder.getNumberOfDocuments());
 		}
 
-		if (Validator.isNotNull(folder.getViewableBy())) {
-			existingFolder.setViewableBy(folder.getViewableBy());
+		if (Validator.isNotNull(documentFolder.getViewableBy())) {
+			existingDocumentFolder.setViewableBy(
+				documentFolder.getViewableBy());
 		}
 
-		preparePatch(folder, existingFolder);
+		preparePatch(documentFolder, existingDocumentFolder);
 
-		return putFolder(folderId, existingFolder);
+		return putDocumentFolder(documentFolderId, existingDocumentFolder);
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/folders/{folderId}")
+	@Path("/document-folders/{documentFolderId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Folder putFolder(
-			@NotNull @PathParam("folderId") Long folderId, Folder folder)
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public DocumentFolder putDocumentFolder(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			DocumentFolder documentFolder)
 		throws Exception {
 
-		return new Folder();
+		return new DocumentFolder();
 	}
 
 	@Override
@@ -190,11 +203,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/folders/{folderId}/folders")
+	@Path("/document-folders/{documentFolderId}/document-folders")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Page<Folder> getFolderFoldersPage(
-			@NotNull @PathParam("folderId") Long folderId,
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -205,21 +218,23 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/folders/{folderId}/folders")
+	@Path("/document-folders/{documentFolderId}/document-folders")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Folder")})
-	public Folder postFolderFolder(
-			@NotNull @PathParam("folderId") Long folderId, Folder folder)
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public DocumentFolder postDocumentFolderDocumentFolder(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			DocumentFolder documentFolder)
 		throws Exception {
 
-		return new Folder();
+		return new DocumentFolder();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Folder folder, Folder existingFolder) {
+	protected void preparePatch(
+		DocumentFolder documentFolder, DocumentFolder existingDocumentFolder) {
 	}
 
 	protected <T, R> List<R> transform(

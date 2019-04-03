@@ -88,7 +88,7 @@ public class OpenAPIResourceImpl {
 
 			add(DocumentResourceImpl.class);
 
-			add(FolderResourceImpl.class);
+			add(DocumentFolderResourceImpl.class);
 
 			add(KnowledgeBaseArticleResourceImpl.class);
 

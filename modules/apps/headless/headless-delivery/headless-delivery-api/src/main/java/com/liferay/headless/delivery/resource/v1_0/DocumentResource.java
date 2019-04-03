@@ -54,13 +54,13 @@ public interface DocumentResource {
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception;
 
-	public Page<Document> getFolderDocumentsPage(
-			Long folderId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<Document> getDocumentFolderDocumentsPage(
+			Long documentFolderId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Document postFolderDocument(
-			Long folderId, MultipartBody multipartBody)
+	public Document postDocumentFolderDocument(
+			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

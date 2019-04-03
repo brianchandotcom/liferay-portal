@@ -20,7 +20,7 @@ import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.Document;
-import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
@@ -36,8 +36,8 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.FolderResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -122,12 +122,12 @@ public class Query {
 			documentResourceComponentServiceObjects;
 	}
 
-	public static void setFolderResourceComponentServiceObjects(
-		ComponentServiceObjects<FolderResource>
-			folderResourceComponentServiceObjects) {
+	public static void setDocumentFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentFolderResource>
+			documentFolderResourceComponentServiceObjects) {
 
-		_folderResourceComponentServiceObjects =
-			folderResourceComponentServiceObjects;
+		_documentFolderResourceComponentServiceObjects =
+			documentFolderResourceComponentServiceObjects;
 	}
 
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -483,8 +483,8 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage(
-			@GraphQLName("folderId") Long folderId,
+	public Collection<Document> getDocumentFolderDocumentsPage(
+			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -495,9 +495,10 @@ public class Query {
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource -> {
-				Page paginationPage = documentResource.getFolderDocumentsPage(
-					folderId, search, filter, Pagination.of(pageSize, page),
-					sorts);
+				Page paginationPage =
+					documentResource.getDocumentFolderDocumentsPage(
+						documentFolderId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -505,7 +506,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getContentSpaceFoldersPage(
+	public Collection<DocumentFolder> getContentSpaceDocumentFoldersPage(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -515,12 +516,13 @@ public class Query {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> {
-				Page paginationPage = folderResource.getContentSpaceFoldersPage(
-					contentSpaceId, flatten, search, filter,
-					Pagination.of(pageSize, page), sorts);
+			documentFolderResource -> {
+				Page paginationPage =
+					documentFolderResource.getContentSpaceDocumentFoldersPage(
+						contentSpaceId, flatten, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -528,19 +530,21 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder getFolder(@GraphQLName("folderId") Long folderId)
+	public DocumentFolder getDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.getFolder(folderId));
+			documentFolderResource -> documentFolderResource.getDocumentFolder(
+				documentFolderId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getFolderFoldersPage(
-			@GraphQLName("folderId") Long folderId,
+	public Collection<DocumentFolder> getDocumentFolderDocumentFoldersPage(
+			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -548,12 +552,13 @@ public class Query {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_folderResourceComponentServiceObjects,
+			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> {
-				Page paginationPage = folderResource.getFolderFoldersPage(
-					folderId, search, filter, Pagination.of(pageSize, page),
-					sorts);
+			documentFolderResource -> {
+				Page paginationPage =
+					documentFolderResource.getDocumentFolderDocumentFoldersPage(
+						documentFolderId, search, filter,
+						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1406,10 +1411,11 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(FolderResource folderResource)
+	private void _populateResourceContext(
+			DocumentFolderResource documentFolderResource)
 		throws Exception {
 
-		folderResource.setContextCompany(
+		documentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -1515,8 +1521,8 @@ public class Query {
 		_contentStructureResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<FolderResource>
-		_folderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentFolderResource>
+		_documentFolderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>

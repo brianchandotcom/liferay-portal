@@ -113,6 +113,11 @@ public class DocumentSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"documentFolderId\": ");
+
+		sb.append(document.getDocumentFolderId());
+		sb.append(", ");
+
 		sb.append("\"encodingFormat\": ");
 
 		sb.append("\"");
@@ -125,11 +130,6 @@ public class DocumentSerDes {
 		sb.append("\"");
 		sb.append(document.getFileExtension());
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"folderId\": ");
-
-		sb.append(document.getFolderId());
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -311,6 +311,11 @@ public class DocumentSerDes {
 					document.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "documentFolderId")) {
+				if (jsonParserFieldValue != null) {
+					document.setDocumentFolderId((Long)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					document.setEncodingFormat((String)jsonParserFieldValue);
@@ -319,11 +324,6 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
 				if (jsonParserFieldValue != null) {
 					document.setFileExtension((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "folderId")) {
-				if (jsonParserFieldValue != null) {
-					document.setFolderId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

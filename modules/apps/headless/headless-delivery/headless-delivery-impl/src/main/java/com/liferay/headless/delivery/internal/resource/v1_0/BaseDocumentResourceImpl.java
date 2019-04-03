@@ -158,11 +158,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/folders/{folderId}/documents")
+	@Path("/document-folders/{documentFolderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Page<Document> getFolderDocumentsPage(
-			@NotNull @PathParam("folderId") Long folderId,
+	public Page<Document> getDocumentFolderDocumentsPage(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -173,11 +173,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/folders/{folderId}/documents")
+	@Path("/document-folders/{documentFolderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Document postFolderDocument(
-			@NotNull @PathParam("folderId") Long folderId,
+	public Document postDocumentFolderDocument(
+			@NotNull @PathParam("documentFolderId") Long documentFolderId,
 			MultipartBody multipartBody)
 		throws Exception {
 

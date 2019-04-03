@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.Folder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -32,30 +32,37 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface FolderResource {
+public interface DocumentFolderResource {
 
-	public Page<Folder> getContentSpaceFoldersPage(
+	public Page<DocumentFolder> getContentSpaceDocumentFoldersPage(
 			Long contentSpaceId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
+	public DocumentFolder postContentSpaceDocumentFolder(
+			Long contentSpaceId, DocumentFolder documentFolder)
 		throws Exception;
 
-	public void deleteFolder(Long folderId) throws Exception;
+	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
 
-	public Folder getFolder(Long folderId) throws Exception;
-
-	public Folder patchFolder(Long folderId, Folder folder) throws Exception;
-
-	public Folder putFolder(Long folderId, Folder folder) throws Exception;
-
-	public Page<Folder> getFolderFoldersPage(
-			Long folderId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public DocumentFolder getDocumentFolder(Long documentFolderId)
 		throws Exception;
 
-	public Folder postFolderFolder(Long folderId, Folder folder)
+	public DocumentFolder patchDocumentFolder(
+			Long documentFolderId, DocumentFolder documentFolder)
+		throws Exception;
+
+	public DocumentFolder putDocumentFolder(
+			Long documentFolderId, DocumentFolder documentFolder)
+		throws Exception;
+
+	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
+			Long documentFolderId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public DocumentFolder postDocumentFolderDocumentFolder(
+			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

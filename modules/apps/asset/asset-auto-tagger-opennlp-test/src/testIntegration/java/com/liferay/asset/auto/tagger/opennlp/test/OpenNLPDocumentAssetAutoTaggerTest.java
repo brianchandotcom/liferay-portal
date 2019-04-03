@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.opennlp.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
+import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNPLDocumentAssetAutoTagCompanyConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -47,6 +48,29 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 		String fileName =
 			"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
 
+		OpenNPLDocumentAssetAutoTagCompanyConfiguration
+			openNPLDocumentAssetAutoTagCompanyConfiguration =
+				new OpenNPLDocumentAssetAutoTagCompanyConfiguration() {
+
+					@Override
+					public float confidenceThreshold() {
+						return 0.1F;
+					}
+
+					@Override
+					public boolean enabled() {
+						return true;
+					}
+
+				};
+
+		Collection<String> actualTagNames =
+			_openNLPDocumentAssetAutoTagger.getTagNames(
+				openNPLDocumentAssetAutoTagCompanyConfiguration,
+				new String(
+					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+				ContentTypes.TEXT_PLAIN);
+
 		Collection<String> expectedTagNames = Arrays.asList(
 			"ADVENTURES", "AT ALL.", "Adventures", "Ah", "Alice", "Alice .",
 			"Archive Foundation", "Australia", "Beau--ootiful", "Bill",
@@ -66,12 +90,6 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 			"THERE", "The", "United States", "VERY", "WOULD", "White Rabbit",
 			"Whoever", "William", "YOU.--Come", "YOUR");
 
-		Collection<String> actualTagNames =
-			_openNLPDocumentAssetAutoTagger.getTagNames(
-				new String(
-					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
-				0.1F, ContentTypes.TEXT_PLAIN);
-
 		Assert.assertEquals(
 			actualTagNames.toString(), expectedTagNames.size(),
 			actualTagNames.size());
@@ -82,11 +100,28 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 	public void testGetTagNamesWithUnsupportedFile() throws Exception {
 		String fileName = "test.jpg";
 
+		OpenNPLDocumentAssetAutoTagCompanyConfiguration
+			openNPLDocumentAssetAutoTagCompanyConfiguration =
+				new OpenNPLDocumentAssetAutoTagCompanyConfiguration() {
+
+					@Override
+					public float confidenceThreshold() {
+						return 0.1F;
+					}
+
+					@Override
+					public boolean enabled() {
+						return true;
+					}
+
+				};
+
 		Collection<String> tagNames =
 			_openNLPDocumentAssetAutoTagger.getTagNames(
+				openNPLDocumentAssetAutoTagCompanyConfiguration,
 				new String(
 					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
-				0.1F, ContentTypes.IMAGE_JPEG);
+				ContentTypes.IMAGE_JPEG);
 
 		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
 	}

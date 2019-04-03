@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.configur
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -31,19 +32,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "opennlp-auto-tag-provider-configuration-name"
 )
-public interface OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration {
+public interface OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
+	extends OpenNLPDocumentAssetAutoTagCompanyConfiguration {
 
-	/**
-	 * Enables auto tagging of documents using a pre-trained opennlp model.
-	 * @review
-	 */
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	/**
-	 * Sets the confidence threshold for the returned tags.
-	 * @review
-	 */
 	@Meta.AD(
 		deflt = "0.1", description = "confidence-threshold-description",
 		name = "confidence-threshold", required = false

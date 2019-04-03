@@ -14,6 +14,8 @@
 
 package com.liferay.asset.auto.tagger.opennlp.api;
 
+import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
+
 import java.util.Collection;
 
 /**
@@ -27,14 +29,16 @@ public interface OpenNLPDocumentAssetAutoTagger {
 	/**
 	 * Returns a list of tag names from the OpenNLP API.
 	 *
+	 * @param openNLPDocumentAssetAutoTagCompanyConfiguration the configuration.
 	 * @param content the text to be tagged.
-	 * @param confidenceThreshold the confidence threshold of the tags.
 	 * @param mimeType the mime type of the text.
 	 * @return a list of tag names.
 	 * @review
 	 */
 	public Collection<String> getTagNames(
-			String content, float confidenceThreshold, String mimeType)
+			OpenNLPDocumentAssetAutoTagCompanyConfiguration
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
+			String content, String mimeType)
 		throws Exception;
 
 }

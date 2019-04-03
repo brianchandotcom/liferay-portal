@@ -65,77 +65,95 @@ public class Setup {
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
 			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
-		_setupPermissionChecker(company);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		User user = company.getDefaultUser();
+		if (permissionChecker == null) {
+			User user = UserLocalServiceUtil.getUserByEmailAddress(
+				company.getCompanyId(),
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+					company.getMx());
 
-		Group group = _getGroupForSite(
-			company.getCompanyId(), user.getUserId());
-
-		long groupId = group.getGroupId();
-
-		_addAllUsersToSite(groupId);
-
-		File configFile = new File(
-			tckDeployFilesDir + "/pluto-portal-driver-config.xml");
-
-		URI configFileURI = configFile.toURI();
-
-		URL configFileURL = configFileURI.toURL();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"setupPortletTCKSite: configFileURL = " +
-					configFileURL.toString());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 		}
 
-		Document document = SAXReaderUtil.read(configFileURL);
+		try {
+			User user = company.getDefaultUser();
 
-		Element rootElement = document.getRootElement();
+			Group group = _getGroupForSite(
+				company.getCompanyId(), user.getUserId());
 
-		Element renderConfigElement = rootElement.element("render-config");
+			long groupId = group.getGroupId();
 
-		Iterator<Element> pageElementIterator =
-			renderConfigElement.elementIterator("page");
+			_addAllUsersToSite(groupId);
 
-		while (pageElementIterator.hasNext()) {
-			Element pageElement = pageElementIterator.next();
+			File configFile = new File(
+				tckDeployFilesDir + "/pluto-portal-driver-config.xml");
 
-			Attribute pageNameAttribute = pageElement.attribute("name");
+			URI configFileURI = configFile.toURI();
 
-			String pageName = pageNameAttribute.getValue();
+			URL configFileURL = configFileURI.toURL();
 
-			Iterator<Element> portletElementIterator =
-				pageElement.elementIterator("portlet");
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"setupPortletTCKSite: configFileURL = " +
+						configFileURL.toString());
+			}
 
-			List<Portlet> portlets = new LinkedList<>();
+			Document document = SAXReaderUtil.read(configFileURL);
 
-			while (portletElementIterator.hasNext()) {
-				Element portletElement = portletElementIterator.next();
+			Element rootElement = document.getRootElement();
 
-				Attribute contextAttribute = portletElement.attribute(
-					"context");
+			Element renderConfigElement = rootElement.element("render-config");
 
-				String context = contextAttribute.getValue();
+			Iterator<Element> pageElementIterator =
+				renderConfigElement.elementIterator("page");
 
-				if (context.startsWith("/tck-")) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"setupPortletTCKSite: pageName = " + pageName);
+			while (pageElementIterator.hasNext()) {
+				Element pageElement = pageElementIterator.next();
+
+				Attribute pageNameAttribute = pageElement.attribute("name");
+
+				String pageName = pageNameAttribute.getValue();
+
+				Iterator<Element> portletElementIterator =
+					pageElement.elementIterator("portlet");
+
+				List<Portlet> portlets = new LinkedList<>();
+
+				while (portletElementIterator.hasNext()) {
+					Element portletElement = portletElementIterator.next();
+
+					Attribute contextAttribute = portletElement.attribute(
+						"context");
+
+					String context = contextAttribute.getValue();
+
+					if (context.startsWith("/tck-")) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"setupPortletTCKSite: pageName = " + pageName);
+						}
+
+						portlets.add(
+							_createPortlet(portletElement, context, pageName));
 					}
-
-					portlets.add(
-						_createPortlet(portletElement, context, pageName));
 				}
+
+				if (portlets.isEmpty()) {
+					continue;
+				}
+
+				PortalPage portalPage = new PortalPage(pageName, portlets);
+
+				_setupPage(user.getUserId(), groupId, portalPage, bundles);
 			}
-
-			if (portlets.isEmpty()) {
-				continue;
+		}
+		finally {
+			if (permissionChecker == null) {
+				PermissionThreadLocal.setPermissionChecker(null);
 			}
-
-			PortalPage portalPage = new PortalPage(pageName, portlets);
-
-			_setupPage(user.getUserId(), groupId, portalPage, bundles);
 		}
 	}
 
@@ -329,24 +347,6 @@ public class Setup {
 			_log.debug("setupPage: css = ");
 			_log.debug(
 				"setupPage: LayoutLocalServiceUtil.updateLookAndFeel ...");
-		}
-	}
-
-	private static void _setupPermissionChecker(Company company)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			User user = UserLocalServiceUtil.getUserByEmailAddress(
-				company.getCompanyId(),
-				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-					company.getMx());
-
-			permissionChecker = PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
 

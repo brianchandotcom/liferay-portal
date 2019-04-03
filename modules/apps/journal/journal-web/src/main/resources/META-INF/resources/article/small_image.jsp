@@ -54,7 +54,7 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 </div>
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace/>smallFileContainer">
-	<aui:input cssClass="p-0" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallFile" type="file" wrapperCssClass="mb-3" />
+	<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallFile" type="file" wrapperCssClass="mb-3" />
 </div>
 
 <aui:script>

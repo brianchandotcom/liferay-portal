@@ -57,7 +57,7 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 </div>
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace/>smallImageFileContainer">
-	<aui:input cssClass="p-0" label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
+	<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
 		<p>

@@ -150,6 +150,11 @@ public class SiteNavigationMenuLocalServiceTest {
 			_group, nameExceedingMaxLength);
 	}
 
+	@Test(expected = SiteNavigationMenuNameException.class)
+	public void testAddSiteNavigationMenuWithNullName() throws Exception {
+		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, null);
+	}
+
 	@Test
 	public void testDeleteSiteNavigationMenu() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =

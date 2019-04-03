@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsUtil;
 import javax.portlet.PortletPreferences;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -78,10 +79,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY,
 			"com/liferay/user/service/test/dependencies" +
 				"/email_password_sent_body.tmpl");
-	}
 
-	@Before
-	public void setUp() throws Exception {
 		_localization = LocalizationUtil.getLocalization();
 
 		ReflectionTestUtil.setFieldValue(
@@ -102,7 +100,16 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 					throw new UnsupportedOperationException();
 				}));
+	}
 
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			LocalizationUtil.class, "_localization", _localization);
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		ServiceContext serviceContext =
@@ -113,10 +120,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			LocalizationUtil.class, "_localization", _localization);
-
+	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -312,7 +316,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		portletPreferences.store();
 	}
 
-	private Localization _localization;
+	private static Localization _localization;
 
 	@DeleteAfterTestRun
 	private User _user;

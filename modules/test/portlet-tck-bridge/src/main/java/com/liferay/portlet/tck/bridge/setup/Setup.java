@@ -168,14 +168,10 @@ public class Setup {
 	}
 
 	private static void _addPortlet(
-			LayoutTypePortlet layoutTypePortlet, long userId, int columnNumber,
-			String portletId)
+			LayoutTypePortlet layoutTypePortlet, long userId, String portletId)
 		throws PortalException {
 
-		String columnNumberLabel = "column-" + columnNumber;
-
-		layoutTypePortlet.addPortletId(
-			userId, portletId, columnNumberLabel, -1);
+		layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
 
 		layoutTypePortlet.resetModes();
 		layoutTypePortlet.resetStates();
@@ -267,8 +263,6 @@ public class Setup {
 		layoutTypePortlet.setLayoutTemplateId(
 			userId, portalPage.getLayoutTemplateId(), false);
 
-		int columnNumber = 1;
-
 		for (Portlet portlet : portlets) {
 			String servletContextName = portlet.getContext();
 
@@ -312,8 +306,7 @@ public class Setup {
 								"] portletName=[" + portletName + "] ...");
 					}
 
-					_addPortlet(
-						layoutTypePortlet, userId, columnNumber, portletId);
+					_addPortlet(layoutTypePortlet, userId, portletId);
 				}
 				else {
 					throw new Exception(

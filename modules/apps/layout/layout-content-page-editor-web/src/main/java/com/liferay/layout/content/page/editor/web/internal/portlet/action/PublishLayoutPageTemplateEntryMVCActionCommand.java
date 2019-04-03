@@ -131,16 +131,15 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), new Date());
 
+			String key = "layoutPageTemplatePublished";
+
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				MultiSessionMessages.add(
-					_actionRequest, "displayPagePublished");
+				key = "displayPagePublished";
 			}
-			else {
-				MultiSessionMessages.add(
-					_actionRequest, "layoutPageTemplatePublished");
-			}
+
+			MultiSessionMessages.add(_actionRequest, key);
 
 			return null;
 		}

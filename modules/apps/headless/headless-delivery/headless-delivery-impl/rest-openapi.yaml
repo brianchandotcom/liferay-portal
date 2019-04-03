@@ -494,6 +494,9 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - articleBody
+                - title
             type: object
         KnowledgeBaseAttachment:
             description: https://www.schema.org/KnowledgeBaseAttachment
@@ -546,6 +549,8 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
+            required:
+                - name
             type: object
         MessageBoardAttachment:
             description: https://www.schema.org/MessageBoardAttachment

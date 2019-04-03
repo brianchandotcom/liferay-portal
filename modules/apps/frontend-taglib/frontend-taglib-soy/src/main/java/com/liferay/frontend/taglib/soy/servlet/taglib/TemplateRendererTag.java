@@ -124,6 +124,12 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		return _useNamespace;
 	}
 
+	public <T> T getValue(String key) {
+		Map<String, Object> context = getContext();
+
+		return (T)context.get(key);
+	}
+
 	public void putHTMLValue(String key, String value) {
 		Map<String, Object> context = getContext();
 
@@ -133,12 +139,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		else {
 			putValue(key, value);
 		}
-	}
-
-	public <T> T getValue(String key) {
-		Map<String, Object> context = getContext();
-
-		return (T)context.get(key);
 	}
 
 	public void putValue(String key, Object value) {

@@ -154,7 +154,7 @@ public class CreatorSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					creator.setId((Long)jsonParserFieldValue);
+					creator.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "image")) {

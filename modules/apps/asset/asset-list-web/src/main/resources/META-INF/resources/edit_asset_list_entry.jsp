@@ -39,6 +39,8 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 					<li class="nav-item">
 
 						<%
+						List<SegmentsEntry> availableSegmentsEntries = editAssetListDisplayContext.getAvailableSegmentsEntries();
+
 						List<AssetListEntrySegmentsEntryRel> assetEntryListSegmentsEntryRels = editAssetListDisplayContext.getAssetListEntrySegmentsEntryRels();
 						%>
 
@@ -49,6 +51,27 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 										<strong class="text-uppercase">
 											<liferay-ui:message key="personalized-variations" />
 										</strong>
+									</div>
+
+									<div class="autofit-col autofit-col-end">
+										<ul class="navbar-nav">
+											<li>
+												<c:if test="<%= availableSegmentsEntries.size() > 0 %>">
+													<portlet:renderURL var="editAssetListEntryVariationURL">
+														<portlet:param name="mvcPath" value="/edit_asset_list_entry_variation.jsp" />
+														<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+														<portlet:param name="type" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryType()) %>" />
+													</portlet:renderURL>
+
+													<liferay-ui:icon
+														icon="plus"
+														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+														markupView="lexicon"
+														url="<%= editAssetListEntryVariationURL %>"
+													/>
+												</c:if>
+											</li>
+										</ul>
 									</div>
 								</div>
 
@@ -86,6 +109,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 								</p>
 
 								<liferay-frontend:empty-result-message
+									actionDropdownItems="<%= (availableSegmentsEntries.size() > 0) ? editAssetListDisplayContext.getAssetListEntryVariationActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
 									componentId='<%= renderResponse.getNamespace() + "emptyResultMessageComponent" %>'
 									description='<%= LanguageUtil.get(request, "no-personalized-variations-were-found") %>'
@@ -98,19 +122,36 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			</nav>
 		</div>
 
-		<%
-		AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-		%>
-
 		<div class="col-lg-9">
-			<c:choose>
-				<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
-					<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
+
+			<%
+			AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
+			%>
+
+			<div class="sheet">
+				<h3 class="sheet-title">
+					<div class="autofit-row autofit-row-center">
+						<div class="autofit-col">
+							<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(locale)) %>
+						</div>
+
+						<div class="autofit-col autofit-col-end inline-item-after">
+							<liferay-util:include page="/asset_list_entry_variation_action.jsp" servletContext="<%= application %>" />
+						</div>
+					</div>
+				</h3>
+
+				<div class="sheet-section">
+					<c:choose>
+						<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
+							<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:otherwise>
+							<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -35,6 +35,8 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
@@ -69,6 +71,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
@@ -81,6 +84,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
@@ -171,6 +175,27 @@ public class EditAssetListDisplayContext {
 		_assetListEntryType = assetListEntryType;
 
 		return _assetListEntryType;
+	}
+
+	public List<DropdownItem> getAssetListEntryVariationActionDropdownItems() {
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(), "mvcPath",
+							"/edit_asset_list_entry_variation.jsp", "redirect",
+							_themeDisplay.getURLCurrent(), "assetListEntryId",
+							getAssetListEntryId());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_request, "personalized-variation"));
+					});
+			}
+		};
 	}
 
 	public JSONArray getAutoFieldRulesJSONArray() {
@@ -319,6 +344,44 @@ public class EditAssetListDisplayContext {
 		availableGroups.add(_themeDisplay.getScopeGroup());
 
 		return availableGroups;
+	}
+
+	public List<SegmentsEntry> getAvailableSegmentsEntries() {
+		if (_availableSegmentsEntries != null) {
+			return _availableSegmentsEntries;
+		}
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			getAssetListEntrySegmentsEntryRels();
+
+		if (assetListEntrySegmentsEntryRels == null) {
+			return null;
+		}
+
+		Stream<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelsStream =
+				assetListEntrySegmentsEntryRels.stream();
+
+		long[] currentSegmentsEntryIds =
+			assetListEntrySegmentsEntryRelsStream.mapToLong(
+				AssetListEntrySegmentsEntryRel::getSegmentsEntryId
+			).toArray();
+
+		List<SegmentsEntry> segmentsEntries =
+			SegmentsEntryServiceUtil.getSegmentsEntries(
+				_themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Stream<SegmentsEntry> segmentsEntryStream = segmentsEntries.stream();
+
+		_availableSegmentsEntries = segmentsEntryStream.filter(
+			segmentsEntry -> !ArrayUtil.contains(
+				currentSegmentsEntryIds, segmentsEntry.getSegmentsEntryId())
+		).collect(
+			Collectors.toList()
+		);
+
+		return _availableSegmentsEntries;
 	}
 
 	public String getCategorySelectorURL() {
@@ -969,6 +1032,7 @@ public class EditAssetListDisplayContext {
 		_assetListEntrySegmentsEntryRels;
 	private Integer _assetListEntryType;
 	private long[] _availableClassNameIds;
+	private List<SegmentsEntry> _availableSegmentsEntries;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;
 	private String _ddmStructureDisplayFieldValue;

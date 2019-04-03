@@ -32,8 +32,6 @@ definition {
 	@summary = "Helper function to link structure '${structureName}' to the template"
 	macro _inputStructure {
 		if (isSet(structureName)) {
-			Panel.expandPanel(panel = "Details");
-
 			AssertClick(
 				locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
 				value1 = "Select"

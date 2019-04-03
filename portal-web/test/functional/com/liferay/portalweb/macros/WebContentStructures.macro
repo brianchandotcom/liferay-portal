@@ -4,8 +4,6 @@ definition {
 
 		WebContentStructures.addName(structureName = "${structureName}");
 
-		Panel.expandPanel(panel = "Details");
-
 		if (isSet(structureDescription)) {
 			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
 		}

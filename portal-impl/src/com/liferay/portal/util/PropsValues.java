@@ -1663,10 +1663,10 @@ public class PropsValues {
 	public static final String LOGIN_EMAIL_FROM_NAME = PropsUtil.get(
 		PropsKeys.LOGIN_EMAIL_FROM_NAME);
 
-	public static final String[] LOGIN_EVENTS_POST = PropsUtil.getArray(
+	public static String[] LOGIN_EVENTS_POST = PropsUtil.getArray(
 		PropsKeys.LOGIN_EVENTS_POST);
 
-	public static final String[] LOGIN_EVENTS_PRE = PropsUtil.getArray(
+	public static String[] LOGIN_EVENTS_PRE = PropsUtil.getArray(
 		PropsKeys.LOGIN_EVENTS_PRE);
 
 	public static String[] LOGIN_FORM_NAVIGATION_POST = PropsUtil.getArray(

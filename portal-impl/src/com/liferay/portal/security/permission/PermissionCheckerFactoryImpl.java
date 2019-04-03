@@ -37,7 +37,7 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 	}
 
 	@Override
-	public PermissionChecker create(User user) throws Exception {
+	public PermissionChecker create(User user) {
 		PermissionChecker permissionChecker = _permissionChecker.clone();
 
 		permissionChecker.init(user);

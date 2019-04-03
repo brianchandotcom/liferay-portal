@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class TestPermissionCheckerFactory implements PermissionCheckerFactory {
 
 	@Override
-	public PermissionChecker create(User user) throws Exception {
+	public PermissionChecker create(User user) {
 		return null;
 	}
 

@@ -40,7 +40,7 @@ public class StagingPermissionCheckerFactory
 	implements PermissionCheckerFactory {
 
 	@Override
-	public PermissionChecker create(User user) throws Exception {
+	public PermissionChecker create(User user) {
 		PermissionCheckerFactory permissionCheckerFactory =
 			_serviceTracker.getService();
 

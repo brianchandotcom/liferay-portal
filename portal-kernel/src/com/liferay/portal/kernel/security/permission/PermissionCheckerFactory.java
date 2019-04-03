@@ -22,6 +22,6 @@ import com.liferay.portal.kernel.model.User;
  */
 public interface PermissionCheckerFactory {
 
-	public PermissionChecker create(User user) throws Exception;
+	public PermissionChecker create(User user);
 
 }

@@ -69,7 +69,7 @@ public class UserPortraitTag extends IncludeTag {
 
 			sb.append("<div class=\"sticker sticker-circle sticker-light ");
 			sb.append("user-icon-color-");
-			sb.append(user.getUserId() % 10);
+			sb.append(user == null ? 0 : (user.getUserId() % 10));
 			sb.append(CharPool.SPACE);
 			sb.append(cssClass);
 			sb.append("\"><svg class=\"lexicon-icon\">");

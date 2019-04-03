@@ -431,25 +431,30 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</aui:fieldset>
 
-				<c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
-						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
+				<c:choose>
+					<c:when test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
+							<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
-						<div class="<%= updateVersionDetails ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />versionDetails">
-							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR %>" label="major-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
+							<div class="<%= updateVersionDetails ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />versionDetails">
+								<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR %>" label="major-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
 
-							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
+								<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
 
-							<aui:input checked="<%= (dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC) || (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) %>" label="keep-current-version-number" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
+								<aui:input checked="<%= (dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC) || (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) %>" label="keep-current-version-number" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
 
-							<aui:model-context />
+								<aui:model-context />
 
-							<aui:input label="version-notes" maxLength="75" name="changeLog" />
+								<aui:input label="version-notes" maxLength="75" name="changeLog" />
 
-							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-						</div>
-					</aui:fieldset>
-				</c:if>
+								<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+							</div>
+						</aui:fieldset>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="updateVersionDetails" type="hidden" value="<%= false %>" />
+					</c:otherwise>
+				</c:choose>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
 					<liferay-asset:select-asset-display-page

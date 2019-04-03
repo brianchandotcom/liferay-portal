@@ -4,7 +4,6 @@ import '../Numeric/Numeric.es';
 import '../Select/Select.es';
 import '../Text/Text.es';
 import './ValidationRegister.soy.js';
-import autobind from 'autobind-decorator';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Validation.soy.js';

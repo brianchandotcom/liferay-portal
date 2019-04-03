@@ -63,6 +63,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 						});
 				}
 			});
+		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

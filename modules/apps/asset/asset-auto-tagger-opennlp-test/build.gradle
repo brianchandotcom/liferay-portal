@@ -1,4 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":apps:asset:asset-auto-tagger-google-cloud-natural-language-api")
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:asset:asset-auto-tagger-opennlp-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

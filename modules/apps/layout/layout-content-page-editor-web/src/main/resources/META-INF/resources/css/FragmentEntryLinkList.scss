@@ -53,6 +53,10 @@
 			transform: translate(-50%, -50%);
 			width: 16px;
 			z-index: 1;
+
+			html.rtl & {
+				transform: translate(50%, -50%);
+			}
 		}
 
 		&-resizer:not(:disabled):not(.disabled) {

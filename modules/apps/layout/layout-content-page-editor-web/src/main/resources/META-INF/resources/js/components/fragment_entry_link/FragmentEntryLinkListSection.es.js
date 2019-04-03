@@ -178,14 +178,30 @@ class FragmentEntryLinkListSection extends Component {
 	 * @private
 	 */
 	_handleBodyMouseMove(event) {
-		const nextColumnRect = this.refs.resizeNextColumn.getBoundingClientRect();
+		let columnElement = this.refs.resizeColumn;
+		let columnIndex = this._resizeColumnIndex;
+		let nextColumnElement = this.refs.resizeNextColumn;
+		let nextColumnIndex = columnIndex + 1;
+
+		const languageDirection = Liferay.Language.direction[
+			Liferay.ThemeDisplay.getLanguageId()
+		];
+
+		if (languageDirection === 'rtl') {
+			columnElement = this.refs.resizeNextColumn;
+			columnIndex = nextColumnIndex;
+			nextColumnElement = this.refs.resizeColumn;
+			nextColumnIndex = this._resizeColumnIndex;
+		}
+
+		const nextColumnRect = nextColumnElement.getBoundingClientRect();
 
 		const maxPosition = nextColumnRect.x + nextColumnRect.width;
-		const minPosition = this.refs.resizeColumn.getBoundingClientRect().x;
+		const minPosition = columnElement.getBoundingClientRect().x;
 		const position = Math.max(Math.min(event.clientX, maxPosition), minPosition);
 
-		const column = this._resizeSectionColumns[this._resizeColumnIndex];
-		const nextColumn = this._resizeSectionColumns[this._resizeColumnIndex + 1];
+		const column = this._resizeSectionColumns[columnIndex];
+		const nextColumn = this._resizeSectionColumns[nextColumnIndex];
 
 		const maxColumns = (parseInt(column.size, 10) || 1) + (parseInt(nextColumn.size, 10) || 1) - 1;
 
@@ -199,20 +215,30 @@ class FragmentEntryLinkListSection extends Component {
 
 		this._resizeSectionColumns = setIn(
 			this._resizeSectionColumns,
-			[this._resizeColumnIndex, 'size'],
+			[columnIndex, 'size'],
 			columns.toString()
 		);
 
 		this._resizeSectionColumns = setIn(
 			this._resizeSectionColumns,
-			[this._resizeColumnIndex + 1, 'size'],
+			[nextColumnIndex, 'size'],
 			(maxColumns - columns + 1).toString()
 		);
 
-		this._resizeHighlightedColumn = this._resizeSectionColumns
-			.slice(0, this._resizeColumnIndex + 1)
-			.map(column => parseInt(column.size, 10) || 1)
-			.reduce((size, columnSize) => size + columnSize, 0) - 1;
+		if (languageDirection === 'rtl') {
+			this._resizeHighlightedColumn = maxColumns - (
+				this._resizeSectionColumns
+					.slice(columnIndex)
+					.map(column => parseInt(column.size, 10) || 1)
+					.reduce((size, columnSize) => size + columnSize, 0)
+			);
+		}
+		else {
+			this._resizeHighlightedColumn = this._resizeSectionColumns
+				.slice(0, nextColumnIndex)
+				.map(column => parseInt(column.size, 10) || 1)
+				.reduce((size, columnSize) => size + columnSize, 0) - 1;
+		}
 	}
 
 	/**

@@ -129,7 +129,7 @@ public class PermissionCheckerTest {
 
 		PermissionChecker permissionChecker = _getPermissionChecker(_user);
 
-		deployRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
+		_deployRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
 
 		try {
 			boolean hasPermission = permissionChecker.hasPermission(
@@ -172,7 +172,7 @@ public class PermissionCheckerTest {
 
 		PermissionChecker permissionChecker = _getPermissionChecker(_user);
 
-		deployRemotePortlet(
+		_deployRemotePortlet(
 			_user.getCompanyId(), _NONSITE_PORTLET_RESOURCE_NAME);
 
 		try {
@@ -908,7 +908,7 @@ public class PermissionCheckerTest {
 				_organization.getOrganizationId()));
 	}
 
-	protected void deployRemotePortlet(long companyId, String portletName)
+	private void _deployRemotePortlet(long companyId, String portletName)
 		throws PortalException {
 
 		Portlet portlet = new PortletImpl(companyId, portletName);

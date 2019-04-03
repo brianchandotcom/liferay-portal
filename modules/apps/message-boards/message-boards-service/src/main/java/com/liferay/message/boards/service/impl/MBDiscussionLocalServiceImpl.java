@@ -18,7 +18,6 @@ import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -39,16 +38,8 @@ public class MBDiscussionLocalServiceImpl
 			long threadId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			Group group = groupLocalService.getGroup(groupId);
-
-			long validUserId = PortalUtil.getValidUserId(
-				group.getCompanyId(), userId);
-
-			user = userLocalService.getUser(validUserId);
-		}
+		User user = userLocalService.fetchUser(
+			PortalUtil.getValidUserId(serviceContext.getCompanyId(), userId));
 
 		long discussionId = counterLocalService.increment();
 

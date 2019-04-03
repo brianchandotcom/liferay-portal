@@ -212,19 +212,19 @@ definition {
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD",
-			value1 = "${OpenSSOLoginURL}"
+		FormFields.editText(
+			fieldName = "loginURL",
+			fieldValue = "${OpenSSOLoginURL}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD",
-			value1 = "${OpenSSOLogoutURL}"
+		FormFields.editText(
+			fieldName = "logoutURL",
+			fieldValue = "${OpenSSOLogoutURL}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD",
-			value1 = "${OpenSSOServiceURL}"
+		FormFields.editText(
+			fieldName = "serviceURL",
+			fieldValue = "${OpenSSOServiceURL}"
 		);
 
 		PortletEntry.save();
@@ -249,24 +249,24 @@ definition {
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD",
-			value1 = "${casLoginURL}"
+		FormFields.editText(
+			fieldName = "loginURL",
+			fieldValue = "${casLoginURL}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD",
-			value1 = "${casLogoutURL}"
+		FormFields.editText(
+			fieldName = "logoutURL",
+			fieldValue = "${casLogoutURL}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD",
-			value1 = "${casServerURL}"
+		FormFields.editText(
+			fieldName = "ServerURL",
+			fieldValue = "${casServerURL}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD",
-			value1 = "${casServiceURL}"
+		FormFields.editTextMultiline(
+			fieldName = "serviceURL",
+			fieldValue = "${casServiceURL}"
 		);
 
 		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
@@ -517,14 +517,14 @@ definition {
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_CLIENT_ID",
-			value1 = "${googleClientID}"
+		FormFields.editText(
+			fieldName = "clientId",
+			fieldValue = "${googleClientID}"
 		);
 
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_CLIENT_SECRET",
-			value1 = "${googleClientSecret}"
+		FormFields.editText(
+			fieldName = "clientSecret",
+			fieldValue = "${googleClientSecret}"
 		);
 
 		PortletEntry.save();

@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE_CONTAINER</td>
-	<td>//div[contains(@class,'tag-group')]/ul</td>
+	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE_SPECIFIC</td>
-	<td>//div[contains(@class,'tag-group')]/ul/li[.='${key_tagName}']</td>
+	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]/li/a[.='${key_tagName}']</td>
 	<td></td>
 </tr>
 <tr>

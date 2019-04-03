@@ -7254,13 +7254,13 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netcdf.jar</file-name>
-				<version>4.2.20</version>
+				<version>4.3.23</version>
 				<project-name>NetCDF</project-name>
-				<project-url>http://www.unidata.ucar.edu/packages/netcdf-java</project-url>
+				<project-url>https://www.unidata.ucar.edu/downloads/netcdf/netcdf-java-4/index.jsp</project-url>
 				<licenses>
 					<license>
 						<license-name>Netcdf License</license-name>
-						<license-url>http://www.unidata.ucar.edu/software/netcdf/copyright.html</license-url>
+						<license-url>https://www.unidata.ucar.edu/software/netcdf/copyright.html</license-url>
 					</license>
 				</licenses>
 			</library>

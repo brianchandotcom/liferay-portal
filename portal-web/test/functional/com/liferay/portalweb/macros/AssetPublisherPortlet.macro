@@ -205,7 +205,7 @@ definition {
 
 		Select(
 			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
-			value1 = "categories"
+			value1 = "Categories"
 		);
 
 		if (isSet(queryAndOperator)) {
@@ -649,7 +649,7 @@ definition {
 
 		Select(
 			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
-			value1 = "tags"
+			value1 = "Tags"
 		);
 
 		AssetCategorization.selectTag(tagNameList = "${tagNameList}");

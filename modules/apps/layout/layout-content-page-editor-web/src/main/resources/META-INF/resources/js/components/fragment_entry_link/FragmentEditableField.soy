@@ -87,10 +87,12 @@
 	{/let}
 
 	<lfr-editable {$editableAttributes}>
-		{if ($type == 'image') and $editableValues.mappedField and $editableValues.config and $editableValues.config.imageLink}
+		{if ($type == 'image') and $editableValues.config and $editableValues.config.imageLink}
 			{let $linkAttributes kind="attributes"}
 				href="{$editableValues.config.imageLink}"
-				target="{$editableValues.config.imageTarget}"
+				{if $editableValues.config.imageTarget}
+					target="{$editableValues.config.imageTarget}"
+				{/if}
 			{/let}
 
 			<a {$linkAttributes}>

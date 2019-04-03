@@ -4,8 +4,8 @@
 	margin-right: $sidebarButtonsWidth;
 	margin-top: $managementBarHeight + $fragmentEntryLinkListPadding;
 	padding: 0 $fragmentEntryLinkListPadding;
-	transition: margin-right ease $productMenuTransitionDuration;
-	will-change: margin-right;
+	transition: margin ease $productMenuTransitionDuration;
+	will-change: margin;
 
 	@media (min-width: 768px) {
 		margin-top: $desktopManagementBarHeight + $fragmentEntryLinkListPadding;

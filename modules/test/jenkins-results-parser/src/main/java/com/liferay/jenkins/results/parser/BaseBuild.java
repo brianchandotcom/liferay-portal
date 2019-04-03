@@ -39,6 +39,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -152,6 +153,25 @@ public abstract class BaseBuild implements Build {
 
 		archiveConsoleLog();
 		archiveJSON();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BaseBuild)) {
+			return false;
+		}
+
+		BaseBuild baseBuild = (BaseBuild)obj;
+
+		if (Objects.equals(getBuildURL(), baseBuild.getBuildURL())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

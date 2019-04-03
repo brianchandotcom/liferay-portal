@@ -289,6 +289,7 @@ ManagementToolbar.STATE = {
 		{
 			caption: Config.string(),
 			helpText: Config.string(),
+			itemsIconAlignment: Config.string(),
 			maxPrimaryItems: Config.number(),
 			maxSecondaryItems: Config.number(),
 			maxTotalItems: Config.number(),

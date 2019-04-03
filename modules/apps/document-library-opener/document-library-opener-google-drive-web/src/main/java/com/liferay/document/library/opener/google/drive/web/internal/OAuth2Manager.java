@@ -27,7 +27,7 @@ import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
-import com.liferay.document.library.opener.google.drive.web.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration;
+import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,14 +96,14 @@ public class OAuth2Manager {
 
 	public boolean isConfigured(long companyId) {
 		try {
-			DLOpenerGoogleDriveCompanyConfiguration
-				dlOpenerGoogleDriveCompanyConfiguration =
-					_getDlOpenerGoogleDriveConfiguration(companyId);
+			DLGoogleDriveCompanyConfiguration
+				dlGoogleDriveCompanyConfiguration =
+					_getDlGoogleDriveCompanyConfiguration(companyId);
 
 			if (Validator.isNotNull(
-					dlOpenerGoogleDriveCompanyConfiguration.clientId()) &&
+					dlGoogleDriveCompanyConfiguration.clientId()) &&
 				Validator.isNotNull(
-					dlOpenerGoogleDriveCompanyConfiguration.clientSecret())) {
+					dlGoogleDriveCompanyConfiguration.clientSecret())) {
 
 				return true;
 			}
@@ -162,12 +162,12 @@ public class OAuth2Manager {
 		_googleAuthorizationCodeFlows.clear();
 	}
 
-	private DLOpenerGoogleDriveCompanyConfiguration
-			_getDlOpenerGoogleDriveConfiguration(long companyId)
+	private DLGoogleDriveCompanyConfiguration
+			_getDlGoogleDriveCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 
 		return _configurationProvider.getCompanyConfiguration(
-			DLOpenerGoogleDriveCompanyConfiguration.class, companyId);
+			DLGoogleDriveCompanyConfiguration.class, companyId);
 	}
 
 	private synchronized GoogleAuthorizationCodeFlow
@@ -180,9 +180,9 @@ public class OAuth2Manager {
 		}
 
 		try {
-			DLOpenerGoogleDriveCompanyConfiguration
-				dlOpenerGoogleDriveCompanyConfiguration =
-					_getDlOpenerGoogleDriveConfiguration(companyId);
+			DLGoogleDriveCompanyConfiguration
+				dlGoogleDriveCompanyConfiguration =
+					_getDlGoogleDriveCompanyConfiguration(companyId);
 
 			if (_googleAuthorizationCodeFlows.containsKey(companyId)) {
 				GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
@@ -194,11 +194,10 @@ public class OAuth2Manager {
 
 				if (StringUtil.equals(
 						clientParametersAuthentication.getClientId(),
-						dlOpenerGoogleDriveCompanyConfiguration.clientId()) &&
+						dlGoogleDriveCompanyConfiguration.clientId()) &&
 					StringUtil.equals(
 						clientParametersAuthentication.getClientSecret(),
-						dlOpenerGoogleDriveCompanyConfiguration.
-							clientSecret())) {
+						dlGoogleDriveCompanyConfiguration.clientSecret())) {
 
 					return googleAuthorizationCodeFlow;
 				}
@@ -215,10 +214,9 @@ public class OAuth2Manager {
 						GoogleNetHttpTransport.newTrustedTransport(),
 						JacksonFactory.getDefaultInstance(),
 						GetterUtil.getString(
-							dlOpenerGoogleDriveCompanyConfiguration.clientId()),
+							dlGoogleDriveCompanyConfiguration.clientId()),
 						GetterUtil.getString(
-							dlOpenerGoogleDriveCompanyConfiguration.
-								clientSecret()),
+							dlGoogleDriveCompanyConfiguration.clientSecret()),
 						Collections.singleton(DriveScopes.DRIVE_FILE));
 
 			googleAuthorizationCodeFlowBuilder =

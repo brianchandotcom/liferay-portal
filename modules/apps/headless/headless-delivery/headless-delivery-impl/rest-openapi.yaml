@@ -86,6 +86,9 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - articleBody
+                - headline
             type: object
         BlogPostingImage:
             description: https://www.schema.org/BlogPostingImage
@@ -636,6 +639,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - title
             type: object
         MessageBoardThread:
             description: https://www.schema.org/MessageBoardThread
@@ -680,6 +685,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - headline
             type: object
         Rating:
             description: https://www.schema.org/Rating

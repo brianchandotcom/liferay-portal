@@ -524,7 +524,6 @@ definition {
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
-			selectStructureName = "Basic Web Content",
 			structureName = "Global WC Structure Name",
 			templateName = "Local WC Template Name",
 			webContentContent = "WC WebContent Text",
@@ -1068,7 +1067,6 @@ definition {
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
-			selectStructureName = "Basic Web Content",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
 			webContentContent = "WC WebContent Text",
@@ -1203,7 +1201,6 @@ definition {
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
-			selectStructureName = "Basic Web Content",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
 			webContentContent = "WC WebContent Text",

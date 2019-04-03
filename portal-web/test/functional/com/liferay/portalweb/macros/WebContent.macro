@@ -139,42 +139,6 @@ definition {
 		);
 	}
 
-	macro addFeed {
-		PortletEntry.inputName(name = "${feedTitle}");
-
-		PortletEntry.inputDescription(description = "${description}");
-
-		Type(locator1 = "TextInput#URL", value1 = "${targetFriendlyUrl}");
-
-		Panel.expandPanel(panel = "Web Content Constraints");
-
-		AssertClick(locator1 = "WCEditWebContent#SELECT_STRUCTURE", value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		AssertClickNoError(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${structureName}",
-			key_ddlDataDefinitionName = "${structureName}"
-		);
-
-		AssertConfirm.assertConfirmationNoWait(
-			value1 = "Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?"
-		);
-
-		SelectFrame(value1 = "relative=top");
-
-		Panel.expandPanel(panel = "Presentation Settings");
-
-		Select(locator1 = "Select#FEED_ITEM_CONTENT", value1 = "${feedContent}");
-
-		Select(locator1 = "Select#FEED_TYPE", value1 = "${feedType}");
-
-		PortletEntry.save();
-	}
-
 	macro addLocalizedPGViaWCD {
 		WebContentNavigator.gotoAddPGViaWCD(
 			structureName = "${localizedBasicWebContent}"
@@ -382,29 +346,9 @@ definition {
 	}
 
 	macro addWithGlobalStructurePGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(structureName = "${selectStructureName}");
+		WebContentNavigator.gotoAddPGViaWCD(structureName = "${structureName}");
 
 		WebContent.addCP(webContentTitle = "${webContentTitle}");
-
-		Panel.expandPanel(panel = "Structure and Template");
-
-		AssertClick(locator1 = "WCEditWebContent#SELECT_STRUCTURE", value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		AssertClickNoError(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${structureName}",
-			key_ddlDataDefinitionName = "${structureName}"
-		);
-
-		AssertConfirm.assertConfirmationNoWait(
-			value1 = "Editing the current structure deletes all unsaved content."
-		);
-
-		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",

@@ -1,5 +1,3 @@
-import 'url-search-params-polyfill';
-
 const defaultHeaders = {
 	'Accept': 'application/json',
 	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'

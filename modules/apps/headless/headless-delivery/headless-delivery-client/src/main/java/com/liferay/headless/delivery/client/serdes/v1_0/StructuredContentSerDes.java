@@ -20,6 +20,9 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -199,9 +202,14 @@ public class StructuredContentSerDes {
 
 		sb.append("\"lastReviewed\": ");
 
-		sb.append("\"");
-		sb.append(structuredContent.getLastReviewed());
-		sb.append("\"");
+		if (structuredContent.getLastReviewed() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(_dateFormat.format(structuredContent.getLastReviewed()));
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"numberOfComments\": ");
@@ -376,7 +384,7 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentSpaceId")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setContentSpaceId(
-						(Long)jsonParserFieldValue);
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -384,7 +392,7 @@ public class StructuredContentSerDes {
 
 				if (jsonParserFieldValue != null) {
 					structuredContent.setContentStructureId(
-						(Long)jsonParserFieldValue);
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
@@ -395,20 +403,41 @@ public class StructuredContentSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					structuredContent.setDateCreated(
-						(Date)jsonParserFieldValue);
+					try {
+						structuredContent.setDateCreated(
+							_dateFormat.parse((String)jsonParserFieldValue));
+					}
+					catch (ParseException e) {
+						throw new IllegalArgumentException(
+							"Unsupported dateCreated value " +
+								jsonParserFieldValue);
+					}
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					structuredContent.setDateModified(
-						(Date)jsonParserFieldValue);
+					try {
+						structuredContent.setDateModified(
+							_dateFormat.parse((String)jsonParserFieldValue));
+					}
+					catch (ParseException e) {
+						throw new IllegalArgumentException(
+							"Unsupported dateModified value " +
+								jsonParserFieldValue);
+					}
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
 				if (jsonParserFieldValue != null) {
-					structuredContent.setDatePublished(
-						(Date)jsonParserFieldValue);
+					try {
+						structuredContent.setDatePublished(
+							_dateFormat.parse((String)jsonParserFieldValue));
+					}
+					catch (ParseException e) {
+						throw new IllegalArgumentException(
+							"Unsupported datePublished value " +
+								jsonParserFieldValue);
+					}
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -425,7 +454,8 @@ public class StructuredContentSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					structuredContent.setId((Long)jsonParserFieldValue);
+					structuredContent.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {
@@ -448,7 +478,7 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
-						(Number)jsonParserFieldValue);
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedContents")) {
@@ -511,5 +541,8 @@ public class StructuredContentSerDes {
 		}
 
 	}
+
+	private static final DateFormat _dateFormat = new SimpleDateFormat(
+		"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 }

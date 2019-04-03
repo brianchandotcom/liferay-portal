@@ -132,7 +132,8 @@ public class ContentSetElementSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "order")) {
 				if (jsonParserFieldValue != null) {
-					contentSetElement.setOrder((Number)jsonParserFieldValue);
+					contentSetElement.setOrder(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

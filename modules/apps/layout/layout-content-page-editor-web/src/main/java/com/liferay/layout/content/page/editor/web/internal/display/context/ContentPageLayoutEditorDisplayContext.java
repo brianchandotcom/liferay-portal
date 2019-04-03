@@ -14,18 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
 import java.util.List;
@@ -64,7 +59,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"defaultSegmentsEntryId",
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId()
+			"defaultSegmentsExperienceId",
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
 		).put(
 			"sidebarPanels", getSidebarPanelSoyContexts(false)
 		);
@@ -93,7 +89,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"defaultSegmentsEntryId",
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId()
+			"defaultSegmentsExperienceId",
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
 		);
 
 		_fragmentsEditorToolbarSoyContext = soyContext;
@@ -101,11 +98,25 @@ public class ContentPageLayoutEditorDisplayContext
 		return _fragmentsEditorToolbarSoyContext;
 	}
 
-	@Override
-	protected long[] getSegmentsExperienceIds() {
-		return new long[] {
-			GetterUtil.getLong(_getDefaultSegmentsExperienceId())
-		};
+	private SoyContext _createDefaultSegmentsExperience() {
+		SoyContext segmentsExperienceSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		segmentsExperienceSoyContext.put(
+			"name",
+			SegmentsConstants.getDefaultSegmentsExperienceName(
+				themeDisplay.getLocale())
+		).put(
+			"priority", SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
+		).put(
+			"segmentsEntryId",
+			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
+		).put(
+			"segmentsExperienceId",
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+		);
+
+		return segmentsExperienceSoyContext;
 	}
 
 	private SoyContext _getAvailableSegmentsEntriesSoyContext() {
@@ -178,35 +189,13 @@ public class ContentPageLayoutEditorDisplayContext
 				segmentsExperienceSoyContext);
 		}
 
+		availableSegmentsEntriesSoyContext.put(
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
+			_createDefaultSegmentsExperience());
+
 		return availableSegmentsEntriesSoyContext;
 	}
 
-	private String _getDefaultSegmentsExperienceId() {
-		if (_defaultSegmentsExperienceId != null) {
-			return _defaultSegmentsExperienceId;
-		}
-
-		_defaultSegmentsExperienceId = StringPool.BLANK;
-
-		try {
-			SegmentsExperience defaultSegmentsExperience =
-				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
-					getGroupId(), classNameId, classPK);
-
-			_defaultSegmentsExperienceId = String.valueOf(
-				defaultSegmentsExperience.getSegmentsExperienceId());
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get default segments experience", pe);
-		}
-
-		return _defaultSegmentsExperienceId;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContentPageLayoutEditorDisplayContext.class);
-
-	private String _defaultSegmentsExperienceId;
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 

@@ -111,12 +111,12 @@ public class SegmentsServicePreAction extends Action {
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
+		segmentsEntryIds = _getSegmentsExperienceIds(
+			layout.getGroupId(), segmentsEntryIds,
+			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
+
 		request.setAttribute(
-			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			_getSegmentsExperienceIds(
-				layout.getGroupId(), segmentsEntryIds,
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid()));
+			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS, segmentsEntryIds);
 	}
 
 	private long[] _getSegmentsExperienceIds(
@@ -129,9 +129,11 @@ public class SegmentsServicePreAction extends Action {
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 
-		return stream.mapToLong(
-			SegmentsExperienceModel::getSegmentsExperienceId
-		).toArray();
+		return ArrayUtil.append(
+			stream.mapToLong(
+				SegmentsExperienceModel::getSegmentsExperienceId
+			).toArray(),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -84,6 +84,7 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -310,10 +311,6 @@ public class ContentPageEditorDisplayContext {
 			request, "groupId", themeDisplay.getScopeGroupId());
 
 		return _groupId;
-	}
-
-	protected long[] getSegmentsExperienceIds() {
-		return new long[0];
 	}
 
 	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
@@ -927,7 +924,9 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
-		long[] segmentsExperienceIds = getSegmentsExperienceIds();
+		long[] segmentsExperienceIds = {
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+		};
 
 		try {
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {

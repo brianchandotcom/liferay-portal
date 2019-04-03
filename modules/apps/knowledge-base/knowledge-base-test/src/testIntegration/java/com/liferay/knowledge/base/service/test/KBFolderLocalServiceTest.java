@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
 import com.liferay.knowledge.base.exception.KBFolderParentException;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -27,6 +28,7 @@ import com.liferay.knowledge.base.util.comparator.KBObjectsModifiedDateComparato
 import com.liferay.knowledge.base.util.comparator.KBObjectsPriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsViewCountComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -693,6 +695,18 @@ public class KBFolderLocalServiceTest {
 
 		Assert.assertEquals(
 			parentKBFolder.getKbFolderId(), kbFolder.getParentKBFolderId());
+	}
+
+	@Test(expected = InvalidKBFolderNameException.class)
+	public void testUpdateKBFolderWithEmptyName() throws Exception {
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
+
+		KBFolderLocalServiceUtil.updateKBFolder(
+			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
+			_kbFolder.getKbFolderId(), kbFolder.getKbFolderId(),
+			StringPool.BLANK, kbFolder.getDescription(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getUserId()));
 	}
 
 	protected KBArticle addChildKBArticle(KBArticle kbArticle, String title)

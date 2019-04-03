@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Document Library Google Drive Configuration Implementation
+Bundle-SymbolicName: com.liferay.document.library.google.drive.configuration.impl
+Bundle-Version: 1.0.0

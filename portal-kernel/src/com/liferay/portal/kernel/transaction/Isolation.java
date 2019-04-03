@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the level of visibility this transaction has into data changes done
+ * Defines the level of visibility this transaction has for data changes made
  * by other concurrent transactions.
  *
  * <p>

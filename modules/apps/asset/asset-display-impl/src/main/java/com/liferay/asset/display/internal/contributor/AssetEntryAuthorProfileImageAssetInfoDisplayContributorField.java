@@ -12,37 +12,40 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.asset.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class BlogsEntryCoverImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class AssetEntryAuthorProfileImageAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "coverImage";
+		return "authorProfileImage";
 	}
 
 	@Override
@@ -50,7 +53,7 @@ public class BlogsEntryCoverImageAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "cover-image");
+		return LanguageUtil.get(resourceBundle, "author-profile-image");
 	}
 
 	@Override
@@ -59,36 +62,30 @@ public class BlogsEntryCoverImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
-		if (themeDisplay != null) {
+		if (user != null) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			try {
-				return blogsEntry.getCoverImageURL(themeDisplay);
+				return user.getPortraitURL(serviceContext.getThemeDisplay());
 			}
 			catch (PortalException pe) {
-				_log.error(pe, pe);
-
-				return null;
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 		}
-		else {
-			return blogsEntry.getCoverImageURL();
-		}
-	}
 
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryCoverImageAssetDisplayContributorField.class);
+		AssetEntryAuthorProfileImageAssetInfoDisplayContributorField.class);
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -14,11 +14,19 @@
 
 package com.liferay.asset.display.contributor;
 
-import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayField;
 
 /**
  * @author Jürgen Kappler
  */
-public interface AssetDisplayContributorField<T>
-	extends InfoDisplayContributorField<T> {
+public class AssetInfoDisplayField extends InfoDisplayField {
+
+	public AssetInfoDisplayField(String key, String label) {
+		super(key, label);
+	}
+
+	public AssetInfoDisplayField(String key, String label, String type) {
+		super(key, label, type);
+	}
+
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.display.contributor.util;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -30,21 +30,22 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class AssetDisplayContributorFieldHelperUtil {
 
-	public static List<AssetDisplayContributorField>
+	public static List<AssetInfoDisplayContributorField>
 		getAssetDisplayContributorFields(String className) {
 
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			_serviceTrackerMap.getService(className);
+		List<AssetInfoDisplayContributorField>
+			assetInfoDisplayContributorFields = _serviceTrackerMap.getService(
+				className);
 
-		if (assetDisplayContributorFields != null) {
-			return assetDisplayContributorFields;
+		if (assetInfoDisplayContributorFields != null) {
+			return assetInfoDisplayContributorFields;
 		}
 
 		return Collections.emptyList();
 	}
 
 	private static final ServiceTrackerMap
-		<String, List<AssetDisplayContributorField>> _serviceTrackerMap;
+		<String, List<AssetInfoDisplayContributorField>> _serviceTrackerMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -53,7 +54,7 @@ public class AssetDisplayContributorFieldHelperUtil {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AssetDisplayContributorField.class,
+			bundleContext, AssetInfoDisplayContributorField.class,
 			"(model.class.name=*)",
 			(serviceReference, emitter) -> emitter.emit(
 				(String)serviceReference.getProperty("model.class.name")));

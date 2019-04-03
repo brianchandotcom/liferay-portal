@@ -12,39 +12,40 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.adaptive.media.blogs.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
+import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	property = {
+		"model.class.name=com.liferay.blogs.model.BlogsEntry",
+		"service.ranking:Integer=2"
+	},
+	service = AssetInfoDisplayContributorField.class
 )
-public class BlogsEntryCoverImageCaptionAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class AMBlogsEntryContentAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "coverImageCaption";
+		return "content";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "cover-image-caption");
+		return LanguageUtil.get(locale, "content");
 	}
 
 	@Override
@@ -54,7 +55,11 @@ public class BlogsEntryCoverImageCaptionAssetDisplayContributorField
 
 	@Override
 	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		return blogsEntry.getCoverImageCaption();
+		return _contentTransformerHandler.transform(
+			ContentTransformerContentTypes.HTML, blogsEntry.getContent());
 	}
+
+	@Reference
+	private ContentTransformerHandler _contentTransformerHandler;
 
 }

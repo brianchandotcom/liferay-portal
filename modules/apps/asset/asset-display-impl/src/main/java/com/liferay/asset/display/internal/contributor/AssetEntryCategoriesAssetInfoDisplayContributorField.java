@@ -14,9 +14,11 @@
 
 package com.liferay.asset.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -29,14 +31,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	service = AssetInfoDisplayContributorField.class
 )
-public class AssetEntryDescriptionAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class AssetEntryCategoriesAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "description";
+		return "categories";
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class AssetEntryDescriptionAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "description");
+		return LanguageUtil.get(resourceBundle, "categories");
 	}
 
 	@Override
@@ -54,7 +56,8 @@ public class AssetEntryDescriptionAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return assetEntry.getDescription(locale);
+		return ListUtil.toString(
+			assetEntry.getCategories(), AssetCategory.NAME_ACCESSOR);
 	}
 
 }

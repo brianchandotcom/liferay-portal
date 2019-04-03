@@ -47,30 +47,30 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
-	public Set<AssetDisplayField> getAssetDisplayFields(
+	public Set<AssetInfoDisplayField> getAssetDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
 		// Fields for asset entry
 
-		Set<AssetDisplayField> assetDisplayFields = _getAssetDisplayFields(
-			AssetEntry.class.getName(), locale);
+		Set<AssetInfoDisplayField> assetInfoDisplayFields =
+			_getAssetDisplayFields(AssetEntry.class.getName(), locale);
 
 		// Fields for the specific asset type
 
-		Set<AssetDisplayField> assetTypeAssetDisplayFields =
+		Set<AssetInfoDisplayField> assetTypeAssetInfoDisplayFields =
 			_getAssetDisplayFields(getClassName(), locale);
 
-		assetDisplayFields.addAll(assetTypeAssetDisplayFields);
+		assetInfoDisplayFields.addAll(assetTypeAssetInfoDisplayFields);
 
 		// Fields for the class type
 
-		List<AssetDisplayField> classTypeFields = getClassTypeFields(
+		List<AssetInfoDisplayField> classTypeFields = getClassTypeFields(
 			classTypeId, locale);
 
-		assetDisplayFields.addAll(classTypeFields);
+		assetInfoDisplayFields.addAll(classTypeFields);
 
-		return assetDisplayFields;
+		return assetInfoDisplayFields;
 	}
 
 	@Override
@@ -211,29 +211,30 @@ public abstract class BaseAssetDisplayContributor<T>
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private List<AssetDisplayContributorField>
+	private List<AssetInfoDisplayContributorField>
 		_getAssetDisplayContributorFields(String className) {
 
 		return AssetDisplayContributorFieldHelperUtil.
 			getAssetDisplayContributorFields(className);
 	}
 
-	private Set<AssetDisplayField> _getAssetDisplayFields(
+	private Set<AssetInfoDisplayField> _getAssetDisplayFields(
 		String className, Locale locale) {
 
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
+		Set<AssetInfoDisplayField> assetInfoDisplayFields =
+			new LinkedHashSet<>();
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
+		for (AssetInfoDisplayContributorField assetInfoDisplayContributorField :
 				_getAssetDisplayContributorFields(className)) {
 
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetDisplayContributorField.getKey(),
-					assetDisplayContributorField.getLabel(locale),
-					assetDisplayContributorField.getType()));
+			assetInfoDisplayFields.add(
+				new AssetInfoDisplayField(
+					assetInfoDisplayContributorField.getKey(),
+					assetInfoDisplayContributorField.getLabel(locale),
+					assetInfoDisplayContributorField.getType()));
 		}
 
-		return assetDisplayFields;
+		return assetInfoDisplayFields;
 	}
 
 	private Map<String, Object> _getAssetEntryAssetDisplayFieldsValues(
@@ -242,11 +243,11 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		Map<String, Object> assetDisplayFieldsValues = new HashMap<>();
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
+		for (AssetInfoDisplayContributorField assetInfoDisplayContributorField :
 				_getAssetDisplayContributorFields(AssetEntry.class.getName())) {
 
 			Object assetDisplayFieldValue =
-				assetDisplayContributorField.getValue(assetEntry, locale);
+				assetInfoDisplayContributorField.getValue(assetEntry, locale);
 
 			if (assetDisplayFieldValue instanceof String) {
 				assetDisplayFieldValue = SanitizerUtil.sanitize(
@@ -257,7 +258,8 @@ public abstract class BaseAssetDisplayContributor<T>
 			}
 
 			assetDisplayFieldsValues.putIfAbsent(
-				assetDisplayContributorField.getKey(), assetDisplayFieldValue);
+				assetInfoDisplayContributorField.getKey(),
+				assetDisplayFieldValue);
 		}
 
 		return assetDisplayFieldsValues;
@@ -274,15 +276,16 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		// Field values for the specific asset type
 
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			AssetDisplayContributorFieldHelperUtil.
-				getAssetDisplayContributorFields(getClassName());
+		List<AssetInfoDisplayContributorField>
+			assetInfoDisplayContributorFields =
+				AssetDisplayContributorFieldHelperUtil.
+					getAssetDisplayContributorFields(getClassName());
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
+		for (AssetInfoDisplayContributorField assetInfoDisplayContributorField :
+				assetInfoDisplayContributorFields) {
 
 			Object assetDisplayFieldValue =
-				assetDisplayContributorField.getValue(assetObject, locale);
+				assetInfoDisplayContributorField.getValue(assetObject, locale);
 
 			if (assetDisplayFieldValue instanceof String) {
 				assetDisplayFieldValue = SanitizerUtil.sanitize(
@@ -293,7 +296,8 @@ public abstract class BaseAssetDisplayContributor<T>
 			}
 
 			parameterMap.putIfAbsent(
-				assetDisplayContributorField.getKey(), assetDisplayFieldValue);
+				assetInfoDisplayContributorField.getKey(),
+				assetDisplayFieldValue);
 		}
 
 		// Field values for the class type

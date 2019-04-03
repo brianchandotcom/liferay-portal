@@ -12,34 +12,39 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.asset.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class BlogsEntryContentAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class AssetEntryDescriptionAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "content";
+		return "description";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "content");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "description");
 	}
 
 	@Override
@@ -48,8 +53,8 @@ public class BlogsEntryContentAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		return blogsEntry.getContent();
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		return assetEntry.getDescription(locale);
 	}
 
 }

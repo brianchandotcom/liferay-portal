@@ -12,41 +12,34 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.contributor;
+package com.liferay.blogs.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jürgen Kappler
+ * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = AssetInfoDisplayContributorField.class
 )
-public class AssetEntryTagsAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class BlogsEntrySubtitleAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "tagNames";
+		return "subtitle";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "tags");
+		return LanguageUtil.get(locale, "subtitle");
 	}
 
 	@Override
@@ -55,8 +48,8 @@ public class AssetEntryTagsAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return ListUtil.toString(assetEntry.getTags(), AssetTag.NAME_ACCESSOR);
+	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+		return blogsEntry.getSubtitle();
 	}
 
 }

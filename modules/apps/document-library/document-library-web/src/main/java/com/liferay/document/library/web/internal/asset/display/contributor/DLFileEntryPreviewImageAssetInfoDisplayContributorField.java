@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributorField;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = AssetDisplayContributorField.class
+	service = AssetInfoDisplayContributorField.class
 )
-public class DLFileEntryPreviewImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<FileEntry> {
+public class DLFileEntryPreviewImageAssetInfoDisplayContributorField
+	implements AssetInfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {

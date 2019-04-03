@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -82,9 +81,8 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 		_localization = LocalizationUtil.getLocalization();
 
-		ReflectionTestUtil.setFieldValue(
-			LocalizationUtil.class, "_localization",
-			ProxyUtil.newProxyInstance(
+		_localizationUtil.setLocalization(
+			(Localization)ProxyUtil.newProxyInstance(
 				Localization.class.getClassLoader(),
 				new Class<?>[] {Localization.class},
 				(proxy, method, args) -> {
@@ -104,8 +102,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		ReflectionTestUtil.setFieldValue(
-			LocalizationUtil.class, "_localization", _localization);
+		_localizationUtil.setLocalization(_localization);
 	}
 
 	@Before
@@ -317,6 +314,9 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	private static Localization _localization;
+
+	@Inject
+	private static LocalizationUtil _localizationUtil;
 
 	@DeleteAfterTestRun
 	private User _user;

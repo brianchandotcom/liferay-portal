@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,9 +53,17 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-		OpenNPLDocumentAssetAutoTagCompanyConfiguration
-			openNPLDocumentAssetAutoTagCompanyConfiguration,
-		String content, String mimeType) {
+			OpenNPLDocumentAssetAutoTagCompanyConfiguration
+				openNPLDocumentAssetAutoTagCompanyConfiguration,
+			String content, Locale locale, String mimeType)
+		throws Exception {
+
+		if (Objects.nonNull(locale) &&
+			!Objects.equals(
+				locale.getLanguage(), Locale.ENGLISH.getLanguage())) {
+
+			return Collections.emptyList();
+		}
 
 		if (!openNPLDocumentAssetAutoTagCompanyConfiguration.enabled()) {
 			return Collections.emptyList();
@@ -82,6 +92,18 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		).collect(
 			Collectors.toSet()
 		);
+	}
+
+	@Override
+	public Collection<String> getTagNames(
+			OpenNPLDocumentAssetAutoTagCompanyConfiguration
+				openNPLDocumentAssetAutoTagCompanyConfiguration,
+			String content, String mimeType)
+		throws Exception {
+
+		return getTagNames(
+			openNPLDocumentAssetAutoTagCompanyConfiguration, content, null,
+			mimeType);
 	}
 
 	@Activate

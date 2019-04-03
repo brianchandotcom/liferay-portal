@@ -75,7 +75,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.CLOB},
 		{"duration", Types.BIGINT}, {"processId", Types.BIGINT},
 		{"pauseNodeNames", Types.VARCHAR}, {"startNodeNames", Types.VARCHAR},
 		{"stopNodeNames", Types.VARCHAR}
@@ -95,7 +95,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("processId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("pauseNodeNames", Types.VARCHAR);
@@ -104,7 +104,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
+		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowMetricsSLADefinition";

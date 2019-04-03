@@ -310,9 +310,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"WorkflowMetricsSLADefinition", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"duration", true, "processId", true, "pauseNodeNames", true,
-			"startNodeNames", true, "stopNodeNames", true);
+			true, "modifiedDate", true, "name", true, "duration", true,
+			"processId", true, "pauseNodeNames", true, "startNodeNames", true,
+			"stopNodeNames", true);
 	}
 
 	@Test

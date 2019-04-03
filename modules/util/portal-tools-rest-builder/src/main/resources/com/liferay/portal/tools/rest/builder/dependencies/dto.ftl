@@ -62,6 +62,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("${schemaName}")
 @JsonFilter("Liferay.Vulcan")
+<#if schema.requiredPropertySchemaNames?has_content>
+	@Schema(requiredProperties =
+		{
+			<#list schema.requiredPropertySchemaNames as requiredProperty>
+				"${requiredProperty}"
+				<#if requiredProperty_has_next>
+					,
+				</#if>
+			</#list>
+		}
+	)
+</#if>
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> {
 	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />

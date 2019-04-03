@@ -280,6 +280,20 @@ class Form extends Component {
 		}
 	}
 
+	created() {
+		this._createFormURL = this._createFormURL.bind(this);
+		this._handleBackButtonClicked = this._handleBackButtonClicked.bind(this);
+		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
+		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(this);
+		this._handleNameEditorKeydown = this._handleNameEditorKeydown.bind(this);
+		this._handlePagesChanged = this._handlePagesChanged.bind(this);
+		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(this);
+		this._handlePublishedChanged = this._handlePublishedChanged.bind(this);
+		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
+		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
+		this.submitForm = this.submitForm.bind(this);
+	}
+
 	disposed() {
 		super.disposed();
 
@@ -306,9 +320,9 @@ class Form extends Component {
 				this._createEditor('nameEditor').then(
 					editor => {
 						this._eventHandler.add(
-							dom.on(editor.element.$, 'keydown', this._handleNameEditorKeydown.bind(this)),
-							dom.on(editor.element.$, 'keyup', this._handleNameEditorCopyAndPaste.bind(this)),
-							dom.on(editor.element.$, 'keypress', this._handleNameEditorCopyAndPaste.bind(this))
+							dom.on(editor.element.$, 'keydown', this._handleNameEditorKeydown),
+							dom.on(editor.element.$, 'keyup', this._handleNameEditorCopyAndPaste),
+							dom.on(editor.element.$, 'keypress', this._handleNameEditorCopyAndPaste)
 						);
 
 						return editor;
@@ -355,13 +369,13 @@ class Form extends Component {
 					this.element
 				);
 
-				this._eventHandler.add(this._autoSave.on('autosaved', this._updateAutoSaveMessage.bind(this)));
+				this._eventHandler.add(this._autoSave.on('autosaved', this._updateAutoSaveMessage));
 			}
 		);
 
 		this._eventHandler.add(
-			dom.on('.back-url-link', 'click', this._handleBackButtonClicked.bind(this)),
-			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
+			dom.on('.back-url-link', 'click', this._handleBackButtonClicked),
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked)
 		);
 	}
 
@@ -518,8 +532,8 @@ class Form extends Component {
 		const layoutProviderProps = {
 			...this.props,
 			events: {
-				pagesChanged: this._handlePagesChanged.bind(this),
-				paginationModeChanged: this._handlePaginationModeChanded.bind(this)
+				pagesChanged: this._handlePagesChanged,
+				paginationModeChanged: this._handlePaginationModeChanded
 			},
 			initialPages: context.pages,
 			initialPaginationMode: context.paginationMode,
@@ -561,16 +575,16 @@ class Form extends Component {
 						<PublishButton
 							events={
 								{
-									publishedChanged: this._handlePublishedChanged.bind(this)
+									publishedChanged: this._handlePublishedChanged
 								}
 							}
 							formInstanceId={formInstanceId}
 							namespace={namespace}
 							published={published}
-							resolvePublishURL={this._createFormURL.bind(this)}
+							resolvePublishURL={this._createFormURL}
 							showPublishAlert={showPublishAlert}
 							spritemap={spritemap}
-							submitForm={this.submitForm.bind(this)}
+							submitForm={this.submitForm}
 							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
 						/>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
@@ -578,7 +592,7 @@ class Form extends Component {
 						</button>
 						<PreviewButton
 							namespace={namespace}
-							resolvePreviewURL={this._resolvePreviewURL.bind(this)}
+							resolvePreviewURL={this._resolvePreviewURL}
 							spritemap={spritemap}
 						/>
 					</div>

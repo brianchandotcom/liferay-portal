@@ -135,6 +135,21 @@ class Sidebar extends Component {
 
 		this.supportsTransitionEnd = transitionEnd !== false;
 		this.transitionEnd = transitionEnd || 'transitionend';
+
+		this._handleChangeFieldTypeItemClicked = this._handleChangeFieldTypeItemClicked.bind(this);
+		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
+		this._handleDocumentMouseDown = this._handleDocumentMouseDown.bind(this);
+		this._handleDocumentMouseDown = this._handleDocumentMouseDown.bind(this);
+		this._handleDragEnded = this._handleDragEnded.bind(this);
+		this._handleDragStarted = this._handleDragStarted.bind(this);
+		this._handleEvaluatorChanged = this._handleEvaluatorChanged.bind(this);
+		this._handleFieldSettingsClicked = this._handleFieldSettingsClicked.bind(this);
+		this._handlePreviousButtonClicked = this._handlePreviousButtonClicked.bind(this);
+		this._handleSettingsFieldBlurred = this._handleSettingsFieldBlurred.bind(this);
+		this._handleSettingsFieldEdited = this._handleSettingsFieldEdited.bind(this);
+		this._handleSettingsFieldEdited = this._handleSettingsFieldEdited.bind(this);
+		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
+		this._renderFieldTypeDropdownLabel = this._renderFieldTypeDropdownLabel.bind(this);
 	}
 
 	/**
@@ -145,7 +160,7 @@ class Sidebar extends Component {
 		this._bindDragAndDrop();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown, true)
 		);
 	}
 
@@ -274,9 +289,9 @@ class Sidebar extends Component {
 		this._eventHandler.add(
 			this._dragAndDrop.on(
 				DragDrop.Events.END,
-				this._handleDragEnded.bind(this)
+				this._handleDragEnded
 			),
-			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted.bind(this))
+			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted)
 		);
 	}
 
@@ -749,7 +764,7 @@ class Sidebar extends Component {
 					<li
 						class="nav-item"
 						data-index={index}
-						data-onclick={this._handleTabItemClicked.bind(this)}
+						data-onclick={this._handleTabItemClicked}
 						key={`tab${index}`}
 						ref={`tab${index}`}
 					>
@@ -808,7 +823,7 @@ class Sidebar extends Component {
 		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
 		const previousButtonEvents = {
-			click: this._handlePreviousButtonClicked.bind(this)
+			click: this._handlePreviousButtonClicked
 		};
 
 		return (
@@ -840,12 +855,12 @@ class Sidebar extends Component {
 								<ClayDropdownBase
 									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
-										itemClicked: this._handleChangeFieldTypeItemClicked.bind(this)
+										itemClicked: this._handleChangeFieldTypeItemClicked
 									}}
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
 									itemsIconAlignment={'left'}
-									label={this._renderFieldTypeDropdownLabel.bind(this)}
+									label={this._renderFieldTypeDropdownLabel}
 									spritemap={spritemap}
 									style={'secondary'}
 									triggerClasses={'nav-link btn-sm'}
@@ -855,7 +870,7 @@ class Sidebar extends Component {
 						<li class="tbar-item">
 							<ClayActionsDropdown
 								events={{
-									itemClicked: this._handleFieldSettingsClicked.bind(this)
+									itemClicked: this._handleFieldSettingsClicked
 								}}
 								items={fieldActions}
 								ref="fieldSettingsActions"
@@ -868,7 +883,7 @@ class Sidebar extends Component {
 				<li class="tbar-item">
 					<a
 						class="component-action sidebar-close"
-						data-onclick={this._handleCloseButtonClicked.bind(this)}
+						data-onclick={this._handleCloseButtonClicked}
 						href="#1"
 						ref="closeButton"
 						role="button"
@@ -902,9 +917,9 @@ class Sidebar extends Component {
 		const {settingsContext} = focusedField;
 
 		const layoutRenderEvents = {
-			evaluated: this._handleEvaluatorChanged.bind(this),
-			fieldBlurred: this._handleSettingsFieldBlurred.bind(this),
-			fieldEdited: this._handleSettingsFieldEdited.bind(this)
+			evaluated: this._handleEvaluatorChanged,
+			fieldBlurred: this._handleSettingsFieldBlurred,
+			fieldEdited: this._handleSettingsFieldEdited
 		};
 
 		const editMode = this._isEditMode();

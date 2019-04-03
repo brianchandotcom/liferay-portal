@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	public GoogleDocsDLFilePicker(
-		String namespace, String onFilePickCallback,
-		ThemeDisplay themeDisplay) {
+			String namespace, String onFilePickCallback,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
 
 		_namespace = namespace;
 		_onFilePickCallback = onFilePickCallback;

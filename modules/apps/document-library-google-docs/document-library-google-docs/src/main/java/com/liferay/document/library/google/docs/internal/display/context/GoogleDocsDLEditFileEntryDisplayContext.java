@@ -58,7 +58,9 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
+	public DLFilePicker getDLFilePicker(String onFilePickCallback)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

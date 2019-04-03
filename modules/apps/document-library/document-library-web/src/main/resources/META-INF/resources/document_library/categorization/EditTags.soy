@@ -1,33 +1,35 @@
 {namespace EditTags}
 
 {template .render}
-	{@param commonTags: list<?>}
+	{@param _commonTags: list<?>}
+	{@param _loading: bool}
+	{@param _showModal: bool}
 	{@param groupIds: list<?>}
-	{@param loading: bool}
 	{@param namespace: string}
-	{@param showModal: bool}
 	{@param spritemap: string}
+	{@param? _handleRadioChange: any}
+	{@param? _handleSaveBtnClick: any}
+	{@param? _handleSelectedItemsChange: any}
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
-	{@param? _handleRadioChange: any}
-	{@param? _handleSaveBtnClick: any}
 
-	{if $showModal}
+	{if $_showModal}
 		{call liferay.frontend.Modal.render}
 			{param body kind="html"}
-				{if $loading}
+				{if $_loading}
 					{call .loading /}
 				{else}
 					{call .tags}
-						{param commonTags: $commonTags /}
+						{param _commonTags: $_commonTags /}
+						{param _handleRadioChange: $_handleRadioChange /}
+						{param _handleSelectedItemsChange: $_handleSelectedItemsChange /}
 						{param groupIds: $groupIds /}
 						{param description: $description /}
 						{param multiple: $multiple /}
 						{param namespace: $namespace /}
 						{param selectAll: $selectAll /}
 						{param spritemap: $spritemap /}
-						{param _handleRadioChange: $_handleRadioChange /}
 					{/call}
 				{/if}
 			{/param}
@@ -65,14 +67,15 @@
 {/template}
 
 {template .tags}
-	{@param commonTags: list<?>}
+	{@param _commonTags: list<?>}
 	{@param groupIds: list<?>}
 	{@param namespace: string}
 	{@param spritemap: string}
+	{@param? _handleRadioChange: any}
+	{@param? _handleSelectedItemsChange: any}
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
-	{@param? _handleRadioChange: any}
 
 	{if $selectAll}
 		{call ClayAlert.render}
@@ -117,10 +120,14 @@
 
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}
 		{param elementClasses: 'clay-multi-select' /}
+		{param events: [
+			'itemAdded': $_handleSelectedItemsChange,
+			'itemRemoved': $_handleSelectedItemsChange
+		]/}
 		{param groupIds: $groupIds /}
 		{param id: $namespace + 'assetTagsSelector' /}
 		{param inputName: $namespace + '_hiddenInput' /}
-		{param selectedItems: $commonTags /}
+		{param selectedItems: $_commonTags /}
 		{param showSelectButton: false /}
 		{param spritemap: $spritemap /}
 	{/call}

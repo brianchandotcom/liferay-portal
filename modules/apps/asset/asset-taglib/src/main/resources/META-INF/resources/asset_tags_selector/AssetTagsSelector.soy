@@ -7,29 +7,28 @@
 	{@param id: string}
 	{@param inputName: string}
 	{@param spritemap: string}
-	{@param? tagNames: string}
-	{@param? selectedItems: list<?>}
-	{@param? showSelectButton: bool}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
+	{@param? selectedItems: list<?>}
+	{@param? showSelectButton: bool}
+	{@param? tagNames: string}
 
 	<div class="lfr-tags-selector-content" id="{$id}">
 		<input id="{$inputName}" type="hidden" value="{$tagNames}" />
 
 		{call ClayMultiSelect.render}
+			{param autocompleteFilterCondition: 'name' /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
-				'buttonClicked': $_handleButtonClicked,
-				'itemAdded': $_handleItemAdded,
-				'itemRemoved': $_handleItemRemoved,
-				'itemSelected': $_handleItemAdded
+				'selectButtonClick': $_handleButtonClicked,
+				'labelItemAdded': $_handleItemAdded,
+				'labelItemRemoved': $_handleItemRemoved
 			] /}
 			{param helpText: '' /}
 			{param inputName: $inputName /}
 			{param label kind="text"} {msg desc=""}tags{/msg} {/param}
-			{param labelLocator: 'name' /}
 			{param ref: 'multiSelect' /}
 			{param selectedItems: $selectedItems /}
 			{param showSelectButton: $showSelectButton /}

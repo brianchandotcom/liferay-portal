@@ -70,6 +70,26 @@ class Sharing extends PortletBase {
 	}
 
 	/**
+	 * Clean inputValue and error messages
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleInputBlur(event) {
+		const {inputValue} = event.target;
+
+		const empty = (!inputValue || inputValue === '') && this._userEmailAddresses.length === 0;
+
+		if (empty) {
+			this.emailErrorMessage = Liferay.Language.get('this-field-is-required');
+		}
+		else if (this._userEmailAddresses.length > 0) {
+			this.emailErrorMessage = '';
+			this.inputValue = inputValue;
+		}
+	}
+
+	/**
 	 * Close the SharingDialog
 	 * @private
 	 * @review
@@ -180,35 +200,46 @@ class Sharing extends PortletBase {
 	}
 
 	/**
+	 * Check if a passed email has a valid format
+	 * @private
+	 * @review
+	 * @return {Boolean} is valid or not
+	 */
+	_isEmailValid(email) {
+		const emailRegex = /.+@.+\..+/i;
+
+		return emailRegex.test(email);
+	}
+
+	/**
 	 * Validates if there are email addresses and all are valid
-	 * @return {Boolean} value isn't emtpy
+	 * @param {!Event} event
 	 * @private
 	 * @review
 	 */
-	_validateEmails() {
-		const empty = this._userEmailAddresses.length === 0;
+	_validateEmails(event) {
+		let {selectedItems, item} = event.data;
 
-		this.emailErrorMessage = empty ?
-			Liferay.Language.get('this-field-is-required') :
-			''
-		;
+		let invalidEmails = [];
+		this.emailErrorMessage = '';
+		this._inputValue = '';
 
-		let valid = false;
+		selectedItems.reduce((acc, curr, i) => {
+			if (!this._isEmailValid(curr.value)) {
+				invalidEmails.push(curr);
+				selectedItems.splice(i, 1);
+			}
+		}, invalidEmails);
 
-		if (!empty) {
-			const emailRegex = /.+@.+\..+/i;
+		if (invalidEmails.length > 0) {
+			this.emailErrorMessage = 
+				Liferay.Language.get('please-enter-a-valid-email-address');
 
-			valid = this._userEmailAddresses.every(
-				({value}) => emailRegex.test(value)
-			);
-
-			this.emailErrorMessage = valid ?
-				'' :
-				Liferay.Language.get('please-enter-a-valid-email-address')
-			;
+				this._inputValue = invalidEmails.map(item => item.value).join(',');
+				this._inputValue = this._inputValue;
 		}
 
-		return valid;
+		this._userEmailAddresses = selectedItems;
 	}
 }
 
@@ -219,6 +250,7 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
+	_inputValue: Config.string(),
 	emailErrorMessage: Config.string().value(''),
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),

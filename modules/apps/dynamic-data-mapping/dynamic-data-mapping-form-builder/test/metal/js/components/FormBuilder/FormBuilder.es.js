@@ -122,6 +122,7 @@ describe(
 				component = new Builder(
 					{
 						fieldTypes,
+						namespace: '_namespace_',
 						pages,
 						paginationMode: 'wizard',
 						rules: [],
@@ -540,6 +541,7 @@ describe(
 				const builderComponent = new Builder(
 					{
 						fieldTypes,
+						namespace: '_namespace_',
 						pages: componentPages,
 						paginationMode: 'wizard',
 						rules: [],

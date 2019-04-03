@@ -133,6 +133,9 @@ class Builder extends Component {
 	created() {
 		this._eventHandler = new EventHandler();
 		this._debouncedFieldEditedHandler = debounce(this._debouncedFieldEditedHandler.bind(this), 100);
+
+		this._handleDeleteModalButtonClicked = this._handleDeleteModalButtonClicked.bind(this);
+		this._handleCancelChangesModalButtonClicked = this._handleCancelChangesModalButtonClicked.bind(this);
 	}
 
 	attached() {

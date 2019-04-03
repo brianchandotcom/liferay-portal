@@ -20,6 +20,8 @@
 
 <liferay-frontend:edit-form
 	action="<%= addAssetEntrySelectionURL %>"
+	cssClass="pt-0"
+	fluid="<%= true %>"
 	method="post"
 	name="fm"
 >
@@ -29,7 +31,19 @@
 	<aui:input name="assetEntryIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
-		<h1 class="sheet-title">
+		<h3 class="sheet-title">
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col">
+					<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(editAssetListDisplayContext.getSegmentsEntryId(), locale)) %>
+				</div>
+
+				<div class="autofit-col autofit-col-end inline-item-after">
+					<liferay-util:include page="/asset_list_entry_variation_action.jsp" servletContext="<%= application %>" />
+				</div>
+			</div>
+		</h3>
+
+		<h3 class="sheet-title text-uppercase">
 			<span class="autofit-padded-no-gutters autofit-row">
 				<span class="autofit-col autofit-col-expand">
 					<span class="heading-text">
@@ -42,6 +56,7 @@
 						message="select"
 						showArrow="<%= false %>"
 						showWhenSingleIcon="<%= true %>"
+						triggerCssClass="btn-sm"
 					>
 
 						<%
@@ -65,7 +80,7 @@
 					</liferay-ui:icon-menu>
 				</span>
 			</span>
-		</h1>
+		</h3>
 
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"

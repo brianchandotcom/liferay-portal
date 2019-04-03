@@ -32,6 +32,8 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
 <liferay-frontend:edit-form
 	action="<%= updateAssetListEntryDynamicURL %>"
+	cssClass="pt-0"
+	fluid="<%= true %>"
 	method="post"
 	name="fm"
 >
@@ -43,6 +45,18 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h3 class="sheet-title">
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col">
+					<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(editAssetListDisplayContext.getSegmentsEntryId(), locale)) %>
+				</div>
+
+				<div class="autofit-col autofit-col-end inline-item-after">
+					<liferay-util:include page="/asset_list_entry_variation_action.jsp" servletContext="<%= application %>" />
+				</div>
+			</div>
+		</h3>
+
 		<liferay-frontend:form-navigator
 			formModelBean="<%= assetListEntry %>"
 			id="<%= AssetListFormConstants.FORM_NAVIGATOR_ID %>"

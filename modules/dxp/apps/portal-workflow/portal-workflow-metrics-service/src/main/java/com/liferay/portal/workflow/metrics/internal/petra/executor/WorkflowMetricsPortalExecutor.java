@@ -62,6 +62,12 @@ public class WorkflowMetricsPortalExecutor {
 		_noticeableExecutorService.shutdown();
 	}
 
+	@Reference
+	protected void setWorkflowMetricsPortalExecutorConfig(
+		WorkflowMetricsPortalExecutorConfig
+			workflowMetricsPortalExecutorConfig) {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowMetricsPortalExecutor.class);
 

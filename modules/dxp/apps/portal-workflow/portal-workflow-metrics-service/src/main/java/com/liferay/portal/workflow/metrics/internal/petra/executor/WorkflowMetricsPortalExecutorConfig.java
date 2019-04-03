@@ -28,7 +28,12 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = PortalExecutorConfig.class)
+@Component(
+	immediate = true,
+	service = {
+		PortalExecutorConfig.class, WorkflowMetricsPortalExecutorConfig.class
+	}
+)
 public class WorkflowMetricsPortalExecutorConfig extends PortalExecutorConfig {
 
 	public WorkflowMetricsPortalExecutorConfig() {

@@ -256,19 +256,79 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
-	@Reference
-	protected FilterBuilders filterBuilders;
+	protected static class TaskInterval {
+
+		public LocalDateTime getEndDateLocalDateTime() {
+			return _endDateLocalDateTime;
+		}
+
+		public LocalDateTime getStartDateLocalDateTime() {
+			return _startDateLocalDateTime;
+		}
+
+		public void setEndDateLocalDateTime(
+			LocalDateTime endDateLocalDateTime) {
+
+			_endDateLocalDateTime = endDateLocalDateTime;
+		}
+
+		public void setStartDateLocalDateTime(
+			LocalDateTime startDateLocalDateTime) {
+
+			_startDateLocalDateTime = startDateLocalDateTime;
+		}
+
+		private LocalDateTime _endDateLocalDateTime;
+		private LocalDateTime _startDateLocalDateTime;
+
+	}
+
+	private long _computeElapsedTime(
+		TaskInterval taskInterval,
+		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch) {
+
+		long elapsedTime = 0;
+
+		LocalDateTime endDateLocalDateTime =
+			taskInterval.getEndDateLocalDateTime();
+
+		LocalDateTime startDateLocalDateTime =
+			taskInterval.getStartDateLocalDateTime();
+
+		for (TaskInterval timeMarkerInterval :
+				workflowMetricsSLAStopwatch.getTimeMarkerIntervals()) {
+
+			if (startDateLocalDateTime.isAfter(
+					timeMarkerInterval._endDateLocalDateTime) ||
+				endDateLocalDateTime.isBefore(
+					timeMarkerInterval._startDateLocalDateTime)) {
+
+				continue;
+			}
+
+			Duration duration = Duration.between(
+				LocalDateTimeUtil.max(
+					startDateLocalDateTime,
+					timeMarkerInterval._startDateLocalDateTime),
+				LocalDateTimeUtil.min(
+					endDateLocalDateTime,
+					timeMarkerInterval._endDateLocalDateTime));
+
+			elapsedTime += duration.toMillis();
+		}
+
+		return elapsedTime;
+	}
 
 	private Filter _createCompletionDateRangeFilter(
 		LocalDateTime lastCheckLocalDateTime) {
 
 		DateRangeFilterBuilder completionDateRangeFilterBuilder =
-			filterBuilders.dateRangeFilterBuilder();
+			_filterBuilders.dateRangeFilterBuilder();
 
 		completionDateRangeFilterBuilder.setFieldName("completionDate");
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-			_INDEX_DATE_FORMAT_PATTERN);
+		DateTimeFormatter formatter = LocalDateTimeUtil.getDateTimeFormatter();
 
 		completionDateRangeFilterBuilder.setFrom(
 			formatter.format(lastCheckLocalDateTime));
@@ -276,14 +336,138 @@ public class WorkflowMetricsSLAProcessor {
 		return completionDateRangeFilterBuilder.build();
 	}
 
-	private List<TaskInterval> _getTaskIntervals(
-		long companyId, LocalDateTime lastCheckLocalDateTime,
-		LocalDateTime nowLocalDateTime, long instanceId) {
+	private WorkflowMetricsSLAStopwatch _createWorkflowMetricsSLAStopwatch(
+		List<Document> documents, LocalDateTime createDateLocalDateTime,
+		LocalDateTime lastCheckLocalDateTime, long startNodeId,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
 
-		List<Document> documents = getDocuments(
-			companyId, instanceId, lastCheckLocalDateTime);
+		Map<Long, String> startMarkerMap = _getTimeMarkerMap(
+			StringUtil.split(workflowMetricsSLADefinition.getStartNodeNames()));
+		Map<Long, String> stopMarkerMap = _getTimeMarkerMap(
+			StringUtil.split(workflowMetricsSLADefinition.getStopNodeNames()));
+		Map<Long, String> pauseMarkerMap = _getTimeMarkerMap(
+			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeNames()));
 
-		if (documents.isEmpty()) {
+		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
+			new WorkflowMetricsSLAStopwatch(workfowMetricsSLAStatus);
+
+		if (Objects.equals(
+				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
+
+			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
+		}
+		else if (Objects.equals(
+					workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
+				 startMarkerMap.containsKey(startNodeId)) {
+
+			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
+		}
+
+		Iterator<Document> iterator = documents.iterator();
+
+		while (iterator.hasNext() &&
+			   !workflowMetricsSLAStopwatch.isCompleted()) {
+
+			Document document = iterator.next();
+
+			long taskId = document.getLong("taskId");
+
+			TaskInterval taskInterval = _toTaskInterval(
+				document, lastCheckLocalDateTime, null);
+
+			if (stopMarkerMap.containsKey(taskId)) {
+				if (Objects.equals(stopMarkerMap.get(taskId), "enter")) {
+					workflowMetricsSLAStopwatch.complete(
+						taskInterval._startDateLocalDateTime);
+				}
+
+				if (Objects.equals(stopMarkerMap.get(taskId), "leave") &&
+					(taskInterval._endDateLocalDateTime != null)) {
+
+					workflowMetricsSLAStopwatch.complete(
+						taskInterval._endDateLocalDateTime);
+				}
+			}
+			else if (startMarkerMap.containsKey(taskId)) {
+				if (Objects.equals(startMarkerMap.get(taskId), "leave") &&
+					(taskInterval._endDateLocalDateTime != null)) {
+
+					workflowMetricsSLAStopwatch.run(
+						taskInterval._endDateLocalDateTime);
+				}
+				else if (Objects.equals(startMarkerMap.get(taskId), "enter")) {
+					workflowMetricsSLAStopwatch.run(
+						taskInterval._startDateLocalDateTime);
+				}
+			}
+			else if (pauseMarkerMap.containsKey(taskId)) {
+				workflowMetricsSLAStopwatch.pause(
+					taskInterval._startDateLocalDateTime);
+
+				if (taskInterval._endDateLocalDateTime != null) {
+					workflowMetricsSLAStopwatch.run(
+						taskInterval._endDateLocalDateTime);
+				}
+			}
+		}
+
+		return workflowMetricsSLAStopwatch;
+	}
+
+	private Map<Long, String> _getTimeMarkerMap(List<String> timeMarkers) {
+		Map<Long, String> map = new HashMap<>(timeMarkers.size());
+
+		for (String timeMarker : timeMarkers) {
+			List<String> parts = StringUtil.split(timeMarker, CharPool.COLON);
+
+			long nodeId = Long.valueOf(parts.get(0));
+
+			if (parts.size() == 1) {
+				map.put(nodeId, StringPool.BLANK);
+			}
+			else {
+				map.put(nodeId, parts.get(1));
+			}
+		}
+
+		return map;
+	}
+
+	private TaskInterval _toTaskInterval(
+		Document document, LocalDateTime lastCheckLocalDateTime,
+		LocalDateTime nowLocalDateTime) {
+
+		TaskInterval taskInterval = new TaskInterval();
+
+		if (Validator.isNull(document.getValue("completionDate"))) {
+			taskInterval._endDateLocalDateTime = nowLocalDateTime;
+		}
+		else {
+			taskInterval._endDateLocalDateTime =
+				LocalDateTimeUtil.toLocalDateTime(document, "completionDate");
+		}
+
+		LocalDateTime createDateLocalDateTime =
+			LocalDateTimeUtil.toLocalDateTime(document, "createDate");
+
+		if ((lastCheckLocalDateTime != null) &&
+			lastCheckLocalDateTime.isAfter(createDateLocalDateTime)) {
+
+			taskInterval._startDateLocalDateTime = lastCheckLocalDateTime;
+		}
+		else {
+			taskInterval._startDateLocalDateTime = createDateLocalDateTime;
+		}
+
+		return taskInterval;
+	}
+
+	private List<TaskInterval> _toTaskIntervals(
+		List<Document> documents, LocalDateTime lastCheckLocalDateTime,
+		LocalDateTime nowLocalDateTime) {
+
+		if (ListUtil.isEmpty(documents)) {
 			return Collections.emptyList();
 		}
 
@@ -318,67 +502,13 @@ public class WorkflowMetricsSLAProcessor {
 		return taskIntervals;
 	}
 
-	private LocalDateTime _toLocalDateTime(
-		Document document, String fieldName) {
-
-		String dateString = (String)document.getFieldValue(fieldName);
-
-		return LocalDateTime.parse(
-			dateString,
-			DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN));
-	}
-
-	private TaskInterval _toTaskInterval(
-		Document document, LocalDateTime lastCheckLocalDateTime,
-		LocalDateTime nowLocalDateTime) {
-
-		TaskInterval taskInterval = new TaskInterval();
-
-		if (Validator.isNull(document.getFieldValue("completionDate"))) {
-			taskInterval._endDateLocalDateTime = nowLocalDateTime;
-		}
-		else {
-			taskInterval._endDateLocalDateTime = _toLocalDateTime(
-				document, "completionDate");
-		}
-
-		LocalDateTime createDateLocalDateTime = _toLocalDateTime(
-			document, "createDate");
-
-		if ((lastCheckLocalDateTime != null) &&
-			lastCheckLocalDateTime.isAfter(createDateLocalDateTime)) {
-
-			taskInterval._startDateLocalDateTime = lastCheckLocalDateTime;
-		}
-		else {
-			taskInterval._startDateLocalDateTime = createDateLocalDateTime;
-		}
-
-		return taskInterval;
-	}
-
-	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
-		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+	@Reference
+	private FilterBuilders _filterBuilders;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
 	private Sorts _sorts;
-
-	private class TaskInterval {
-
-		public LocalDateTime getEndDateLocalDateTime() {
-			return _endDateLocalDateTime;
-		}
-
-		public LocalDateTime getStartDateLocalDateTime() {
-			return _startDateLocalDateTime;
-		}
-
-		private LocalDateTime _endDateLocalDateTime;
-		private LocalDateTime _startDateLocalDateTime;
-
-	}
 
 }

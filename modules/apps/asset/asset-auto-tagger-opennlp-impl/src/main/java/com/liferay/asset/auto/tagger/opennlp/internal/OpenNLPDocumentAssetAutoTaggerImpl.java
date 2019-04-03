@@ -15,7 +15,7 @@
 package com.liferay.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
-import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNPLDocumentAssetAutoTagCompanyConfiguration;
+import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.IOException;
@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,11 +53,19 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-		OpenNPLDocumentAssetAutoTagCompanyConfiguration
-			openNPLDocumentAssetAutoTagCompanyConfiguration,
-		String content, String mimeType) {
+			OpenNLPDocumentAssetAutoTagCompanyConfiguration
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
+			String content, Locale locale, String mimeType)
+		throws Exception {
 
-		if (!openNPLDocumentAssetAutoTagCompanyConfiguration.enabled()) {
+		if (Objects.nonNull(locale) &&
+			!Objects.equals(
+				locale.getLanguage(), Locale.ENGLISH.getLanguage())) {
+
+			return Collections.emptyList();
+		}
+
+		if (!openNLPDocumentAssetAutoTagCompanyConfiguration.enabled()) {
 			return Collections.emptyList();
 		}
 
@@ -75,13 +85,25 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		).map(
 			tokens -> _getTagNames(
 				tokens,
-				openNPLDocumentAssetAutoTagCompanyConfiguration.
+				openNLPDocumentAssetAutoTagCompanyConfiguration.
 					confidenceThreshold())
 		).flatMap(
 			Arrays::stream
 		).collect(
 			Collectors.toSet()
 		);
+	}
+
+	@Override
+	public Collection<String> getTagNames(
+			OpenNLPDocumentAssetAutoTagCompanyConfiguration
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
+			String content, String mimeType)
+		throws Exception {
+
+		return getTagNames(
+			openNLPDocumentAssetAutoTagCompanyConfiguration, content, null,
+			mimeType);
 	}
 
 	@Activate

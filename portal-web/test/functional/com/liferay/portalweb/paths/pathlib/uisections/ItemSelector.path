@@ -52,7 +52,7 @@
 <!--SELECT_FILE-->
 <tr>
 	<td>SELECT_FILE_IMAGE_PREVIEW</td>
-	<td>//div[contains(@class,'card')]//div[contains(@style,'${key_imageFileName}')]</td>
+	<td>//div[contains(@class,'card')]//span[contains(@title,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

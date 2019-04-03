@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the level of visibility this transaction has for data changes made
- * by other concurrent transactions.
+ * Defines the level of visibility this transaction has for data changes made by
+ * other concurrent transactions.
  *
  * <p>
  * <code>SERIALIZABLE</code> is the most restrictive.
@@ -54,9 +54,6 @@ public enum Isolation {
 	 * Prevent dirty reads; allow non-repeatable reads and phantom reads.
 	 */
 	READ_COMMITTED(TransactionDefinition.ISOLATION_READ_COMMITTED),
-	/**
-	 * Allow dirty reads, non-repeatable reads, and phantom reads.
-	 */
 	/**
 	 * Allow dirty reads, non-repeatable reads, and phantom reads.
 	 */

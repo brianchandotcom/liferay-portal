@@ -30,9 +30,9 @@ import java.util.stream.Stream;
 /**
  * @author Sarai Díaz
  */
-public class FolderEntityModel implements EntityModel {
+public class DocumentFolderEntityModel implements EntityModel {
 
-	public FolderEntityModel() {
+	public DocumentFolderEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new DateTimeEntityField(
 				"dateCreated",
@@ -57,7 +57,7 @@ public class FolderEntityModel implements EntityModel {
 
 	@Override
 	public String getName() {
-		String name = FolderEntityModel.class.getName();
+		String name = DocumentFolderEntityModel.class.getName();
 
 		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
 	}

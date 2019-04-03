@@ -1930,8 +1930,6 @@ definition {
 
 	macro viewStructureAndTemplateLocalization {
 		if (isSet(structureLocalizationName)) {
-			Panel.expandPanel(panel = "${panel}");
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 				value1 = "${structureLocalizationName}"

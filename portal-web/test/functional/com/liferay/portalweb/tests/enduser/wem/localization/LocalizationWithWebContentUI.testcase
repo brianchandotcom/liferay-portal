@@ -294,7 +294,7 @@ definition {
 		);
 
 		WebContent.viewStructureAndTemplateLocalization(
-			panel = "Structure et gabarit",
+			panel = "Modèle par défaut",
 			structureLocalizationName = "nom de la structure de wc",
 			templateLocalizationName = "nom de la template de wc"
 		);
@@ -314,7 +314,7 @@ definition {
 		);
 
 		WebContent.viewStructureAndTemplateLocalization(
-			panel = "结构和模板",
+			panel = "默认模板",
 			structureLocalizationName = "wc 结构名称",
 			templateLocalizationName = "wc 模板名称"
 		);

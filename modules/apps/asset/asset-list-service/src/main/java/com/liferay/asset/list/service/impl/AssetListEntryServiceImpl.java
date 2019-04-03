@@ -223,6 +223,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AssetListEntry getAssetListEntry(long assetListEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		if (assetListEntry != null) {
+			_assetListEntryModelResourcePermission.check(
+				getPermissionChecker(), assetListEntry, ActionKeys.VIEW);
+		}
+
+		return assetListEntry;
+	}
+
+	@Override
 	public AssetListEntry getAssetListEntry(
 			long groupId, String assetListEntryKey)
 		throws PortalException {

@@ -82,7 +82,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 				<#list properties?keys as propertyName>
 					<#if !freeMarkerTool.isDTOSchemaProperty(openAPIYAML, propertyName, schema) && !stringUtil.equals(propertyName, "id")>
-						if (Validator.isNotNull(${schemaVarName}.get${propertyName?cap_first}())) {
+						if (${schemaVarName}.get${propertyName?cap_first}() != null) {
 							existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
 						}
 					</#if>

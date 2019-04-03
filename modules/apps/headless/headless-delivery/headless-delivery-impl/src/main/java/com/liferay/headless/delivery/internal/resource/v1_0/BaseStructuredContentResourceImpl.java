@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -227,79 +226,79 @@ public abstract class BaseStructuredContentResourceImpl
 		StructuredContent existingStructuredContent = getStructuredContent(
 			structuredContentId);
 
-		if (Validator.isNotNull(structuredContent.getAvailableLanguages())) {
+		if (structuredContent.getAvailableLanguages() != null) {
 			existingStructuredContent.setAvailableLanguages(
 				structuredContent.getAvailableLanguages());
 		}
 
-		if (Validator.isNotNull(structuredContent.getContentSpaceId())) {
+		if (structuredContent.getContentSpaceId() != null) {
 			existingStructuredContent.setContentSpaceId(
 				structuredContent.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(structuredContent.getContentStructureId())) {
+		if (structuredContent.getContentStructureId() != null) {
 			existingStructuredContent.setContentStructureId(
 				structuredContent.getContentStructureId());
 		}
 
-		if (Validator.isNotNull(structuredContent.getDateCreated())) {
+		if (structuredContent.getDateCreated() != null) {
 			existingStructuredContent.setDateCreated(
 				structuredContent.getDateCreated());
 		}
 
-		if (Validator.isNotNull(structuredContent.getDateModified())) {
+		if (structuredContent.getDateModified() != null) {
 			existingStructuredContent.setDateModified(
 				structuredContent.getDateModified());
 		}
 
-		if (Validator.isNotNull(structuredContent.getDatePublished())) {
+		if (structuredContent.getDatePublished() != null) {
 			existingStructuredContent.setDatePublished(
 				structuredContent.getDatePublished());
 		}
 
-		if (Validator.isNotNull(structuredContent.getDescription())) {
+		if (structuredContent.getDescription() != null) {
 			existingStructuredContent.setDescription(
 				structuredContent.getDescription());
 		}
 
-		if (Validator.isNotNull(structuredContent.getFriendlyUrlPath())) {
+		if (structuredContent.getFriendlyUrlPath() != null) {
 			existingStructuredContent.setFriendlyUrlPath(
 				structuredContent.getFriendlyUrlPath());
 		}
 
-		if (Validator.isNotNull(structuredContent.getKey())) {
+		if (structuredContent.getKey() != null) {
 			existingStructuredContent.setKey(structuredContent.getKey());
 		}
 
-		if (Validator.isNotNull(structuredContent.getKeywords())) {
+		if (structuredContent.getKeywords() != null) {
 			existingStructuredContent.setKeywords(
 				structuredContent.getKeywords());
 		}
 
-		if (Validator.isNotNull(structuredContent.getLastReviewed())) {
+		if (structuredContent.getLastReviewed() != null) {
 			existingStructuredContent.setLastReviewed(
 				structuredContent.getLastReviewed());
 		}
 
-		if (Validator.isNotNull(structuredContent.getNumberOfComments())) {
+		if (structuredContent.getNumberOfComments() != null) {
 			existingStructuredContent.setNumberOfComments(
 				structuredContent.getNumberOfComments());
 		}
 
-		if (Validator.isNotNull(structuredContent.getTaxonomyCategoryIds())) {
+		if (structuredContent.getTaxonomyCategoryIds() != null) {
 			existingStructuredContent.setTaxonomyCategoryIds(
 				structuredContent.getTaxonomyCategoryIds());
 		}
 
-		if (Validator.isNotNull(structuredContent.getTitle())) {
+		if (structuredContent.getTitle() != null) {
 			existingStructuredContent.setTitle(structuredContent.getTitle());
 		}
 
-		if (Validator.isNotNull(structuredContent.getUuid())) {
+		if (structuredContent.getUuid() != null) {
 			existingStructuredContent.setUuid(structuredContent.getUuid());
 		}
 
-		if (Validator.isNotNull(structuredContent.getViewableBy())) {
+		if (structuredContent.getViewableBy() != null) {
 			existingStructuredContent.setViewableBy(
 				structuredContent.getViewableBy());
 		}

@@ -18,7 +18,6 @@ import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -131,42 +130,36 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getDateCreated())) {
+		if (knowledgeBaseFolder.getDateCreated() != null) {
 			existingKnowledgeBaseFolder.setDateCreated(
 				knowledgeBaseFolder.getDateCreated());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getDateModified())) {
+		if (knowledgeBaseFolder.getDateModified() != null) {
 			existingKnowledgeBaseFolder.setDateModified(
 				knowledgeBaseFolder.getDateModified());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getDescription())) {
+		if (knowledgeBaseFolder.getDescription() != null) {
 			existingKnowledgeBaseFolder.setDescription(
 				knowledgeBaseFolder.getDescription());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getName())) {
+		if (knowledgeBaseFolder.getName() != null) {
 			existingKnowledgeBaseFolder.setName(knowledgeBaseFolder.getName());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles())) {
-
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles() != null) {
 			existingKnowledgeBaseFolder.setNumberOfKnowledgeBaseArticles(
 				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders())) {
-
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders() != null) {
 			existingKnowledgeBaseFolder.setNumberOfKnowledgeBaseFolders(
 				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseFolder.getParentKnowledgeBaseFolderId())) {
-
+		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() != null) {
 			existingKnowledgeBaseFolder.setParentKnowledgeBaseFolderId(
 				knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
 		}

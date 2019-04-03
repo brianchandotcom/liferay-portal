@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -135,41 +134,41 @@ public abstract class BaseDocumentFolderResourceImpl
 		DocumentFolder existingDocumentFolder = getDocumentFolder(
 			documentFolderId);
 
-		if (Validator.isNotNull(documentFolder.getContentSpaceId())) {
+		if (documentFolder.getContentSpaceId() != null) {
 			existingDocumentFolder.setContentSpaceId(
 				documentFolder.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(documentFolder.getDateCreated())) {
+		if (documentFolder.getDateCreated() != null) {
 			existingDocumentFolder.setDateCreated(
 				documentFolder.getDateCreated());
 		}
 
-		if (Validator.isNotNull(documentFolder.getDateModified())) {
+		if (documentFolder.getDateModified() != null) {
 			existingDocumentFolder.setDateModified(
 				documentFolder.getDateModified());
 		}
 
-		if (Validator.isNotNull(documentFolder.getDescription())) {
+		if (documentFolder.getDescription() != null) {
 			existingDocumentFolder.setDescription(
 				documentFolder.getDescription());
 		}
 
-		if (Validator.isNotNull(documentFolder.getName())) {
+		if (documentFolder.getName() != null) {
 			existingDocumentFolder.setName(documentFolder.getName());
 		}
 
-		if (Validator.isNotNull(documentFolder.getNumberOfDocumentFolders())) {
+		if (documentFolder.getNumberOfDocumentFolders() != null) {
 			existingDocumentFolder.setNumberOfDocumentFolders(
 				documentFolder.getNumberOfDocumentFolders());
 		}
 
-		if (Validator.isNotNull(documentFolder.getNumberOfDocuments())) {
+		if (documentFolder.getNumberOfDocuments() != null) {
 			existingDocumentFolder.setNumberOfDocuments(
 				documentFolder.getNumberOfDocuments());
 		}
 
-		if (Validator.isNotNull(documentFolder.getViewableBy())) {
+		if (documentFolder.getViewableBy() != null) {
 			existingDocumentFolder.setViewableBy(
 				documentFolder.getViewableBy());
 		}

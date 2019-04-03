@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -101,66 +100,62 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		MessageBoardMessage existingMessageBoardMessage =
 			getMessageBoardMessage(messageBoardMessageId);
 
-		if (Validator.isNotNull(messageBoardMessage.getAnonymous())) {
+		if (messageBoardMessage.getAnonymous() != null) {
 			existingMessageBoardMessage.setAnonymous(
 				messageBoardMessage.getAnonymous());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getArticleBody())) {
+		if (messageBoardMessage.getArticleBody() != null) {
 			existingMessageBoardMessage.setArticleBody(
 				messageBoardMessage.getArticleBody());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getContentSpaceId())) {
+		if (messageBoardMessage.getContentSpaceId() != null) {
 			existingMessageBoardMessage.setContentSpaceId(
 				messageBoardMessage.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getDateCreated())) {
+		if (messageBoardMessage.getDateCreated() != null) {
 			existingMessageBoardMessage.setDateCreated(
 				messageBoardMessage.getDateCreated());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getDateModified())) {
+		if (messageBoardMessage.getDateModified() != null) {
 			existingMessageBoardMessage.setDateModified(
 				messageBoardMessage.getDateModified());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getEncodingFormat())) {
+		if (messageBoardMessage.getEncodingFormat() != null) {
 			existingMessageBoardMessage.setEncodingFormat(
 				messageBoardMessage.getEncodingFormat());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getHeadline())) {
+		if (messageBoardMessage.getHeadline() != null) {
 			existingMessageBoardMessage.setHeadline(
 				messageBoardMessage.getHeadline());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getKeywords())) {
+		if (messageBoardMessage.getKeywords() != null) {
 			existingMessageBoardMessage.setKeywords(
 				messageBoardMessage.getKeywords());
 		}
 
-		if (Validator.isNotNull(
-				messageBoardMessage.getNumberOfMessageBoardAttachments())) {
-
+		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
 			existingMessageBoardMessage.setNumberOfMessageBoardAttachments(
 				messageBoardMessage.getNumberOfMessageBoardAttachments());
 		}
 
-		if (Validator.isNotNull(
-				messageBoardMessage.getNumberOfMessageBoardMessages())) {
-
+		if (messageBoardMessage.getNumberOfMessageBoardMessages() != null) {
 			existingMessageBoardMessage.setNumberOfMessageBoardMessages(
 				messageBoardMessage.getNumberOfMessageBoardMessages());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getShowAsAnswer())) {
+		if (messageBoardMessage.getShowAsAnswer() != null) {
 			existingMessageBoardMessage.setShowAsAnswer(
 				messageBoardMessage.getShowAsAnswer());
 		}
 
-		if (Validator.isNotNull(messageBoardMessage.getViewableBy())) {
+		if (messageBoardMessage.getViewableBy() != null) {
 			existingMessageBoardMessage.setViewableBy(
 				messageBoardMessage.getViewableBy());
 		}

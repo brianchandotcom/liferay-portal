@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -97,66 +96,66 @@ public abstract class BaseBlogPostingResourceImpl
 
 		BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
 
-		if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
+		if (blogPosting.getAlternativeHeadline() != null) {
 			existingBlogPosting.setAlternativeHeadline(
 				blogPosting.getAlternativeHeadline());
 		}
 
-		if (Validator.isNotNull(blogPosting.getArticleBody())) {
+		if (blogPosting.getArticleBody() != null) {
 			existingBlogPosting.setArticleBody(blogPosting.getArticleBody());
 		}
 
-		if (Validator.isNotNull(blogPosting.getContentSpaceId())) {
+		if (blogPosting.getContentSpaceId() != null) {
 			existingBlogPosting.setContentSpaceId(
 				blogPosting.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(blogPosting.getDateCreated())) {
+		if (blogPosting.getDateCreated() != null) {
 			existingBlogPosting.setDateCreated(blogPosting.getDateCreated());
 		}
 
-		if (Validator.isNotNull(blogPosting.getDateModified())) {
+		if (blogPosting.getDateModified() != null) {
 			existingBlogPosting.setDateModified(blogPosting.getDateModified());
 		}
 
-		if (Validator.isNotNull(blogPosting.getDatePublished())) {
+		if (blogPosting.getDatePublished() != null) {
 			existingBlogPosting.setDatePublished(
 				blogPosting.getDatePublished());
 		}
 
-		if (Validator.isNotNull(blogPosting.getDescription())) {
+		if (blogPosting.getDescription() != null) {
 			existingBlogPosting.setDescription(blogPosting.getDescription());
 		}
 
-		if (Validator.isNotNull(blogPosting.getEncodingFormat())) {
+		if (blogPosting.getEncodingFormat() != null) {
 			existingBlogPosting.setEncodingFormat(
 				blogPosting.getEncodingFormat());
 		}
 
-		if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {
+		if (blogPosting.getFriendlyUrlPath() != null) {
 			existingBlogPosting.setFriendlyUrlPath(
 				blogPosting.getFriendlyUrlPath());
 		}
 
-		if (Validator.isNotNull(blogPosting.getHeadline())) {
+		if (blogPosting.getHeadline() != null) {
 			existingBlogPosting.setHeadline(blogPosting.getHeadline());
 		}
 
-		if (Validator.isNotNull(blogPosting.getKeywords())) {
+		if (blogPosting.getKeywords() != null) {
 			existingBlogPosting.setKeywords(blogPosting.getKeywords());
 		}
 
-		if (Validator.isNotNull(blogPosting.getNumberOfComments())) {
+		if (blogPosting.getNumberOfComments() != null) {
 			existingBlogPosting.setNumberOfComments(
 				blogPosting.getNumberOfComments());
 		}
 
-		if (Validator.isNotNull(blogPosting.getTaxonomyCategoryIds())) {
+		if (blogPosting.getTaxonomyCategoryIds() != null) {
 			existingBlogPosting.setTaxonomyCategoryIds(
 				blogPosting.getTaxonomyCategoryIds());
 		}
 
-		if (Validator.isNotNull(blogPosting.getViewableBy())) {
+		if (blogPosting.getViewableBy() != null) {
 			existingBlogPosting.setViewableBy(blogPosting.getViewableBy());
 		}
 

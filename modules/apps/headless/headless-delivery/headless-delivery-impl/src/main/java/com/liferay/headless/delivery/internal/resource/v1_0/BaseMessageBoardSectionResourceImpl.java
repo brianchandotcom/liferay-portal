@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -138,46 +137,42 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
-		if (Validator.isNotNull(messageBoardSection.getContentSpaceId())) {
+		if (messageBoardSection.getContentSpaceId() != null) {
 			existingMessageBoardSection.setContentSpaceId(
 				messageBoardSection.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(messageBoardSection.getDateCreated())) {
+		if (messageBoardSection.getDateCreated() != null) {
 			existingMessageBoardSection.setDateCreated(
 				messageBoardSection.getDateCreated());
 		}
 
-		if (Validator.isNotNull(messageBoardSection.getDateModified())) {
+		if (messageBoardSection.getDateModified() != null) {
 			existingMessageBoardSection.setDateModified(
 				messageBoardSection.getDateModified());
 		}
 
-		if (Validator.isNotNull(messageBoardSection.getDescription())) {
+		if (messageBoardSection.getDescription() != null) {
 			existingMessageBoardSection.setDescription(
 				messageBoardSection.getDescription());
 		}
 
-		if (Validator.isNotNull(
-				messageBoardSection.getNumberOfMessageBoardSections())) {
-
+		if (messageBoardSection.getNumberOfMessageBoardSections() != null) {
 			existingMessageBoardSection.setNumberOfMessageBoardSections(
 				messageBoardSection.getNumberOfMessageBoardSections());
 		}
 
-		if (Validator.isNotNull(
-				messageBoardSection.getNumberOfMessageBoardThreads())) {
-
+		if (messageBoardSection.getNumberOfMessageBoardThreads() != null) {
 			existingMessageBoardSection.setNumberOfMessageBoardThreads(
 				messageBoardSection.getNumberOfMessageBoardThreads());
 		}
 
-		if (Validator.isNotNull(messageBoardSection.getTitle())) {
+		if (messageBoardSection.getTitle() != null) {
 			existingMessageBoardSection.setTitle(
 				messageBoardSection.getTitle());
 		}
 
-		if (Validator.isNotNull(messageBoardSection.getViewableBy())) {
+		if (messageBoardSection.getViewableBy() != null) {
 			existingMessageBoardSection.setViewableBy(
 				messageBoardSection.getViewableBy());
 		}

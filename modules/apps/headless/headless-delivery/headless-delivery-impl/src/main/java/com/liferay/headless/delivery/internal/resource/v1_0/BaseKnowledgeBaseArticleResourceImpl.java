@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -138,80 +137,72 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		KnowledgeBaseArticle existingKnowledgeBaseArticle =
 			getKnowledgeBaseArticle(knowledgeBaseArticleId);
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getArticleBody())) {
+		if (knowledgeBaseArticle.getArticleBody() != null) {
 			existingKnowledgeBaseArticle.setArticleBody(
 				knowledgeBaseArticle.getArticleBody());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getContentSpaceId())) {
+		if (knowledgeBaseArticle.getContentSpaceId() != null) {
 			existingKnowledgeBaseArticle.setContentSpaceId(
 				knowledgeBaseArticle.getContentSpaceId());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getDateCreated())) {
+		if (knowledgeBaseArticle.getDateCreated() != null) {
 			existingKnowledgeBaseArticle.setDateCreated(
 				knowledgeBaseArticle.getDateCreated());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getDateModified())) {
+		if (knowledgeBaseArticle.getDateModified() != null) {
 			existingKnowledgeBaseArticle.setDateModified(
 				knowledgeBaseArticle.getDateModified());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getDescription())) {
+		if (knowledgeBaseArticle.getDescription() != null) {
 			existingKnowledgeBaseArticle.setDescription(
 				knowledgeBaseArticle.getDescription());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getEncodingFormat())) {
+		if (knowledgeBaseArticle.getEncodingFormat() != null) {
 			existingKnowledgeBaseArticle.setEncodingFormat(
 				knowledgeBaseArticle.getEncodingFormat());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getFriendlyUrlPath())) {
+		if (knowledgeBaseArticle.getFriendlyUrlPath() != null) {
 			existingKnowledgeBaseArticle.setFriendlyUrlPath(
 				knowledgeBaseArticle.getFriendlyUrlPath());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getKeywords())) {
+		if (knowledgeBaseArticle.getKeywords() != null) {
 			existingKnowledgeBaseArticle.setKeywords(
 				knowledgeBaseArticle.getKeywords());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseArticle.getNumberOfAttachments())) {
-
+		if (knowledgeBaseArticle.getNumberOfAttachments() != null) {
 			existingKnowledgeBaseArticle.setNumberOfAttachments(
 				knowledgeBaseArticle.getNumberOfAttachments());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles())) {
-
+		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() != null) {
 			existingKnowledgeBaseArticle.setNumberOfKnowledgeBaseArticles(
 				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseArticle.getParentKnowledgeBaseFolderId())) {
-
+		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() != null) {
 			existingKnowledgeBaseArticle.setParentKnowledgeBaseFolderId(
 				knowledgeBaseArticle.getParentKnowledgeBaseFolderId());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseArticle.getTaxonomyCategoryIds())) {
-
+		if (knowledgeBaseArticle.getTaxonomyCategoryIds() != null) {
 			existingKnowledgeBaseArticle.setTaxonomyCategoryIds(
 				knowledgeBaseArticle.getTaxonomyCategoryIds());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getTitle())) {
+		if (knowledgeBaseArticle.getTitle() != null) {
 			existingKnowledgeBaseArticle.setTitle(
 				knowledgeBaseArticle.getTitle());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getViewableBy())) {
+		if (knowledgeBaseArticle.getViewableBy() != null) {
 			existingKnowledgeBaseArticle.setViewableBy(
 				knowledgeBaseArticle.getViewableBy());
 		}

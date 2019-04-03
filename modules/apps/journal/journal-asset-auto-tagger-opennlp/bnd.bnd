@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Journal Asset Auto Tagger OpenNLP
+Bundle-SymbolicName: com.liferay.journal.asset.auto.tagger.opennlp
+Bundle-Version: 1.0.0
+Web-ContextPath: /journal-asset-auto-tagger-opennlp

@@ -65,9 +65,11 @@ definition {
 	}
 
 	macro gotoDocumentVersion {
-		DMNavigator.gotoDocumentDetails();
+		DMDocument.expandInfo();
 
-		MenuItem.click(menuItem = "Versions");
+		var key_tab = "Versions";
+
+		AssertClick(locator1 = "NavTab#TAB_LINK", value1 = "Versions");
 	}
 
 	macro gotoFolder {

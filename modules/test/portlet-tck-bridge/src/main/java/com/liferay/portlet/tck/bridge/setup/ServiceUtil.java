@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -33,11 +34,9 @@ public class ServiceUtil {
 		boolean active = true;
 		String friendlyURL =
 			"/" +
-				StringUtil.toLowerCase(
-					name
-				).replaceAll(
-					" ", "-"
-				);
+				StringUtil.replace(
+					StringUtil.toLowerCase(name), CharPool.SPACE,
+					CharPool.DASH);
 		boolean siteFlag = true;
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		boolean manualMembership = false;

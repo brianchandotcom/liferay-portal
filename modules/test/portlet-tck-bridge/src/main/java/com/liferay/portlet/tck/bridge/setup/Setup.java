@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.File;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -74,8 +75,10 @@ public class Setup {
 
 			if ("Liferay".equals(company.getName())) {
 				companyId = id;
-				userId = company.getDefaultUser(
-				).getUserId();
+
+				User user = company.getDefaultUser();
+
+				userId = user.getUserId();
 			}
 		}
 
@@ -85,10 +88,12 @@ public class Setup {
 
 		_addAllUsersToSite(groupId);
 
-		URL configFileURL = new File(
-			tckDeployFilesDir + "/pluto-portal-driver-config.xml"
-		).toURI(
-		).toURL();
+		File configFile = new File(
+			tckDeployFilesDir + "/pluto-portal-driver-config.xml");
+
+		URI configFileURI = configFile.toURI();
+
+		URL configFileURL = configFileURI.toURL();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -181,11 +186,10 @@ public class Setup {
 	private static Portlet _createPortlet(
 		Element element, String context, String pageName) {
 
-		context = context.replaceFirst(
-			"^/", ""
-		).replaceFirst(
-			"(-[0-9.]+)?(-SNAPSHOT)?$", ""
-		);
+		context = context.replaceFirst("^/", "");
+
+		context = context.replaceFirst("(-[0-9.]+)?(-SNAPSHOT)?$", "");
+
 		Attribute nameAttribute = element.attribute("name");
 
 		String portletName = nameAttribute.getValue();
@@ -224,7 +228,9 @@ public class Setup {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(groupId, true);
 
 		for (Layout layout : layouts) {
-			if (layout.getName(Locale.US).equals(portalPageName)) {
+			String layoutName = layout.getName(Locale.US);
+
+			if (layoutName.equals(portalPageName)) {
 				portalPageLayout = layout;
 			}
 		}
@@ -361,11 +367,10 @@ public class Setup {
 			Role administratorRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.ADMINISTRATOR);
 
-			User administratorUser = UserLocalServiceUtil.getRoleUsers(
-				administratorRole.getRoleId()
-			).get(
-				0
-			);
+			List<User> users = UserLocalServiceUtil.getRoleUsers(
+				administratorRole.getRoleId());
+
+			User administratorUser = users.get(0);
 
 			try {
 				permissionChecker = PermissionCheckerFactoryUtil.create(

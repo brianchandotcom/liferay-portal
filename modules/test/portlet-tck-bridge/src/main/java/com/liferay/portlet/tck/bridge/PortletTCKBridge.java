@@ -59,8 +59,12 @@ public class PortletTCKBridge {
 			BundleContext bundleContext = componentContext.getBundleContext();
 
 			Bundle[] bundles = bundleContext.getBundles();
+
 			Setup.setupPortletTCKSite(tckDeployFilesDir, bundles);
-			_log.info("Portlet TCK Bridge is ready");
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Portlet TCK Bridge is ready");
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

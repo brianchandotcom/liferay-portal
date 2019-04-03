@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-change')]]</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-move')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -252,15 +252,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		User user = userLocalService.fetchUser(userId);
+		Group group = groupLocalService.getGroup(groupId);
 
-		if (user == null) {
-			Group group = groupLocalService.getGroup(groupId);
-
-			userId = PortalUtil.getValidUserId(group.getCompanyId(), userId);
-
-			user = userLocalService.getUser(userId);
-		}
+		User user = userLocalService.fetchUser(
+			PortalUtil.getValidUserId(group.getCompanyId(), userId));
 
 		userName = user.isDefaultUser() ? userName : user.getFullName();
 

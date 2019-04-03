@@ -39,16 +39,10 @@ public class MBDiscussionLocalServiceImpl
 			long threadId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.fetchUser(userId);
+		Group group = groupLocalService.getGroup(groupId);
 
-		if (user == null) {
-			Group group = groupLocalService.getGroup(groupId);
-
-			long validUserId = PortalUtil.getValidUserId(
-				group.getCompanyId(), userId);
-
-			user = userLocalService.getUser(validUserId);
-		}
+		User user = userLocalService.fetchUser(
+			PortalUtil.getValidUserId(group.getCompanyId(), userId));
 
 		long discussionId = counterLocalService.increment();
 

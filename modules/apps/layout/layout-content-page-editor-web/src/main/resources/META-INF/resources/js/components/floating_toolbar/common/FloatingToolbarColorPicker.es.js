@@ -32,8 +32,32 @@ class FloatingToolbarColorPicker extends Component {
  * @type {!Object}
  */
 FloatingToolbarColorPicker.STATE = {
+
+	/**
+	 * Available colors
+	 * @instance
+	 * @memberof FloatingToolbarColorPicker
+	 * @review
+	 * @type {array}
+	 */
 	colors: Config.array().required(),
+
+	/**
+	 * Selected color
+	 * @instance
+	 * @memberof FloatingToolbarColorPicker
+	 * @review
+	 * @type {string}
+	 */
 	selectedColor: Config.string(),
+
+	/**
+	 * Show clear button or not
+	 * @instance
+	 * @memberof FloatingToolbarColorPicker
+	 * @review
+	 * @type {boolean}
+	 */
 	showClearButton: Config.bool(false)
 };
 

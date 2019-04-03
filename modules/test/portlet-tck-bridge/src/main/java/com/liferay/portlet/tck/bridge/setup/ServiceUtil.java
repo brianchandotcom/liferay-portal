@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
+import java.util.Locale;
+
 /**
  * @author Vernon Singleton
  */
@@ -45,9 +48,11 @@ public class ServiceUtil {
 
 		return GroupLocalServiceUtil.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null, 0L,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, name, type,
-			manualMembership, membershipRestriction, friendlyURL, siteFlag,
-			active, new ServiceContext());
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			Collections.singletonMap(Locale.US, name),
+			Collections.singletonMap(Locale.US, name), type, manualMembership,
+			membershipRestriction, friendlyURL, siteFlag, false, active,
+			new ServiceContext());
 	}
 
 	public static Layout addLayout(

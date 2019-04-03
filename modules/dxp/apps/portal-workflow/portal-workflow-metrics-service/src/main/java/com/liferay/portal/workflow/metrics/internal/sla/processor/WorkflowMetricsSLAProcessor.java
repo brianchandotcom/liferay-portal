@@ -14,8 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -24,8 +26,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -37,6 +37,8 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.workflow.metrics.internal.sla.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.internal.util.LocalDateTimeUtil;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 
 import java.time.Duration;
@@ -45,7 +47,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -61,16 +67,18 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowMetricsSLAProcessor {
 
 	public Optional<WorkflowMetricsSLAProcessResult> process(
-		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
+		long companyId, LocalDateTime createLocalDateTime, long instanceId,
+		LocalDateTime nowLocalDateTime, long startNodeId,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
 		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult =
 			fetchLastWorkflowMetricsSLAProcessResult(
 				workflowMetricsSLADefinition, instanceId);
 
-		LocalDateTime lastCheckLocalDateTime = null;
-
 		long elapsedTime = 0;
+		LocalDateTime lastCheckLocalDateTime = null;
+		WorkfowMetricsSLAStatus workfowMetricsSLAStatus =
+			WorkfowMetricsSLAStatus.NEW;
 
 		if (lastWorkflowMetricsSLAProcessResult != null) {
 			elapsedTime = lastWorkflowMetricsSLAProcessResult.getElapsedTime();
@@ -78,20 +86,39 @@ public class WorkflowMetricsSLAProcessor {
 			lastCheckLocalDateTime =
 				lastWorkflowMetricsSLAProcessResult.getLastCheckLocalDateTime();
 
-			if (lastCheckLocalDateTime.isAfter(nowLocalDateTime)) {
+			workfowMetricsSLAStatus =
+				lastWorkflowMetricsSLAProcessResult.
+					getWorkfowMetricsSLAStatus();
+
+			if (Objects.equals(
+					workfowMetricsSLAStatus,
+					WorkfowMetricsSLAStatus.COMPLETED) ||
+				lastCheckLocalDateTime.isAfter(nowLocalDateTime)) {
+
 				return Optional.empty();
 			}
 		}
 
-		List<TaskInterval> taskIntervals = _getTaskIntervals(
-			companyId, lastCheckLocalDateTime, nowLocalDateTime, instanceId);
+		List<Document> documents = getDocuments(
+			companyId, instanceId, lastCheckLocalDateTime);
 
-		for (TaskInterval taskInterval : taskIntervals) {
-			Duration duration = Duration.between(
-				taskInterval.getStartDateLocalDateTime(),
-				taskInterval.getEndDateLocalDateTime());
+		List<TaskInterval> taskIntervals = _toTaskIntervals(
+			documents, lastCheckLocalDateTime, nowLocalDateTime);
 
-			elapsedTime += duration.toMillis();
+		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
+			_createWorkflowMetricsSLAStopwatch(
+				documents, createLocalDateTime, lastCheckLocalDateTime,
+				startNodeId, workflowMetricsSLADefinition,
+				workfowMetricsSLAStatus);
+
+		if (!workflowMetricsSLAStopwatch.isEmpty()) {
+			for (TaskInterval taskInterval : taskIntervals) {
+				elapsedTime += _computeElapsedTime(
+					taskInterval, workflowMetricsSLAStopwatch);
+			}
+
+			workfowMetricsSLAStatus =
+				workflowMetricsSLAStopwatch.getWorkfowMetricsSLAStatus();
 		}
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =

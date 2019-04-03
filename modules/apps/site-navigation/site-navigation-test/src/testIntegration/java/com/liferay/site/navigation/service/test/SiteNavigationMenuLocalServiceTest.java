@@ -67,6 +67,25 @@ public class SiteNavigationMenuLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Test
+	public void testAddAutoSiteNavigationMenu() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, false, serviceContext);
+
+		SiteNavigationMenu existingSiteNavigationMenu =
+			SiteNavigationMenuUtil.fetchByPrimaryKey(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
+		Assert.assertEquals(siteNavigationMenu, existingSiteNavigationMenu);
+	}
+
 	@Test(expected = DuplicateSiteNavigationMenuException.class)
 	public void testAddDuplicateSiteNavigationMenu() throws Exception {
 		String navigationMenuName = "Duplicate Name";
@@ -78,7 +97,7 @@ public class SiteNavigationMenuLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSiteNavigationMenu1() throws Exception {
+	public void testAddSiteNavigationMenu() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -96,7 +115,7 @@ public class SiteNavigationMenuLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSiteNavigationMenu2() throws Exception {
+	public void testAddSiteNavigationMenuByType() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -106,25 +125,6 @@ public class SiteNavigationMenuLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
-
-		SiteNavigationMenu existingSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
-				siteNavigationMenu.getSiteNavigationMenuId());
-
-		Assert.assertEquals(siteNavigationMenu, existingSiteNavigationMenu);
-	}
-
-	@Test
-	public void testAddSiteNavigationMenu3() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
-				SiteNavigationConstants.TYPE_DEFAULT, false, serviceContext);
 
 		SiteNavigationMenu existingSiteNavigationMenu =
 			SiteNavigationMenuUtil.fetchByPrimaryKey(

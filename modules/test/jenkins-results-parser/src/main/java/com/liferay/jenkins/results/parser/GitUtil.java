@@ -143,7 +143,7 @@ public class GitUtil {
 
 		List<RemoteGitRef> remoteGitRefs = null;
 
-		if (remoteURL.contains(_GITHUB_CACHE_PROXY_HOSTNAME)) {
+		if (remoteURL.contains(_HOSTNAME_GITHUB_CACHE_PROXY)) {
 			List<String> usedGitHubCacheHostnames = new ArrayList<>(3);
 
 			while ((usedGitHubCacheHostnames.size() < 3) &&
@@ -154,7 +154,7 @@ public class GitUtil {
 						usedGitHubCacheHostnames);
 
 				String gitHubCacheRemoteURL = remoteURL.replace(
-					_GITHUB_CACHE_PROXY_HOSTNAME, gitHubCacheHostname);
+					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
 
 				try {
 					remoteGitRefs = getRemoteGitRefs(
@@ -314,7 +314,7 @@ public class GitUtil {
 
 			for (int i = 0; i < modifiedCommands.length; i++) {
 				modifiedCommands[i] = modifiedCommands[i].replace(
-					_GITHUB_CACHE_PROXY_HOSTNAME, gitHubCacheHostname);
+					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
 			}
 
 			try {
@@ -369,7 +369,7 @@ public class GitUtil {
 			process.exitValue(), standardErr.trim(), standardOut.trim());
 	}
 
-	private static final String _GITHUB_CACHE_PROXY_HOSTNAME =
+	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(

@@ -299,7 +299,7 @@ public class TopLevelBuild extends BaseBuild {
 	public String getStatusSummary() {
 		long currentTimeMillis = System.currentTimeMillis();
 
-		if ((currentTimeMillis - _DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
+		if ((currentTimeMillis - _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
 				_lastDownstreamBuildsListingTimestamp) {
 
 			StringBuilder sb = new StringBuilder(super.getStatusSummary());
@@ -1526,7 +1526,7 @@ public class TopLevelBuild extends BaseBuild {
 		return slaveUsages;
 	}
 
-	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
+	private static final long _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;
 
 	// Skip JavaParser

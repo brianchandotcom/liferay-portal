@@ -106,7 +106,7 @@ public abstract class BaseBatchBuildData
 
 		_setTopLevelRunID();
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	private static String _getDefaultRunID(String runID) {
@@ -127,7 +127,7 @@ public abstract class BaseBatchBuildData
 		put("top_level_run_id", topLevelRunID);
 	}
 
-	private static final String[] _REQUIRED_KEYS = {
+	private static final String[] _KEYS_REQUIRED = {
 		"batch_name", "top_level_run_id", "test_list"
 	};
 

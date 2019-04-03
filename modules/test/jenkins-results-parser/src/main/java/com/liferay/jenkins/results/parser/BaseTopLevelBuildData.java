@@ -131,7 +131,7 @@ public abstract class BaseTopLevelBuildData
 		put("dist_path", _getDistPath());
 		put("top_level_run_id", getRunID());
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	private static String _getDefaultRunID(String runID) {
@@ -178,7 +178,7 @@ public abstract class BaseTopLevelBuildData
 			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
 	}
 
-	private static final String[] _REQUIRED_KEYS = {
+	private static final String[] _KEYS_REQUIRED = {
 		"dist_nodes", "dist_path", "top_level_run_id"
 	};
 

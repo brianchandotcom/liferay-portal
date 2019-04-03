@@ -669,7 +669,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		_includeAutoBalanceTests = _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS;
+		_includeAutoBalanceTests = _ENABLE_INCLUDE_AUTO_BALANCE_TESTS_DEFAULT;
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -729,7 +729,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					new String[testClassNamesIncludesRelativeGlobs.size()])));
 	}
 
-	private static final boolean _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS = false;
+	private static final boolean _ENABLE_INCLUDE_AUTO_BALANCE_TESTS_DEFAULT = false;
 
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");

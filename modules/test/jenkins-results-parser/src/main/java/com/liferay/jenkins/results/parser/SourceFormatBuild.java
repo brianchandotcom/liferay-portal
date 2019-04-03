@@ -154,10 +154,10 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	protected String getTestSuiteName() {
-		return _TEST_SUITE_NAME;
+		return _NAME_TEST_SUITE;
 	}
 
-	private static final String _TEST_SUITE_NAME = "ci:test:sf";
+	private static final String _NAME_TEST_SUITE = "ci:test:sf";
 
 	private PullRequest _pullRequest;
 

@@ -24,7 +24,7 @@ public class GitLPushFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		int index = consoleText.indexOf(_TOKEN_GIT_LPUSH_ERROR);
+		int index = consoleText.indexOf(_TOKEN_GIT_LPUSH_VALIDATION_FAILURE);
 
 		if (index == -1) {
 			return null;
@@ -39,7 +39,7 @@ public class GitLPushFailureMessageGenerator
 
 	private static final String _TOKEN_ERROR = "error:";
 
-	private static final String _TOKEN_GIT_LPUSH_ERROR =
+	private static final String _TOKEN_GIT_LPUSH_VALIDATION_FAILURE =
 		"A git-lpush validation failure has occurred.";
 
 }

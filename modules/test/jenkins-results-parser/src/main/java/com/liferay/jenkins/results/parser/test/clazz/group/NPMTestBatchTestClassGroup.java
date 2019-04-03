@@ -92,7 +92,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 				String classMethodName = jsTestClassMethod.getName();
 
 				int colonIndex = classMethodName.indexOf(
-					_CLASS_METHOD_SEPARATOR_TOKEN);
+					_TOKEN_CLASS_METHOD_SEPARATOR);
 
 				String filePath = classMethodName.substring(0, colonIndex);
 
@@ -100,7 +100,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 					filePath.lastIndexOf("/") + 1);
 
 				String methodName = classMethodName.substring(
-					colonIndex + _CLASS_METHOD_SEPARATOR_TOKEN.length());
+					colonIndex + _TOKEN_CLASS_METHOD_SEPARATOR.length());
 
 				CSVReport.Row csvReportRow = new CSVReport.Row();
 
@@ -219,7 +219,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 							new TestClassMethod(
 								methodIgnored,
 								jsFileRelativePath +
-									_CLASS_METHOD_SEPARATOR_TOKEN + methodName,
+									_TOKEN_CLASS_METHOD_SEPARATOR + methodName,
 								this));
 					}
 				}
@@ -284,6 +284,6 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		axisTestClassGroups.put(0, axisTestClassGroup);
 	}
 
-	private static final String _CLASS_METHOD_SEPARATOR_TOKEN = "::";
+	private static final String _TOKEN_CLASS_METHOD_SEPARATOR = "::";
 
 }

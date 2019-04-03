@@ -97,7 +97,7 @@ public abstract class BaseLocalGitRepository
 	protected BaseLocalGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {
@@ -106,7 +106,7 @@ public abstract class BaseLocalGitRepository
 		_setDirectory(upstreamBranchName);
 		_setUpstreamBranchName(upstreamBranchName);
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	protected String getDefaultRelativeGitRepositoryDirPath(
@@ -169,7 +169,7 @@ public abstract class BaseLocalGitRepository
 		put("upstream_branch_name", upstreamBranchName);
 	}
 
-	private static final String[] _REQUIRED_KEYS = {
+	private static final String[] _KEYS_REQUIRED = {
 		"directory", "upstream_branch_name"
 	};
 

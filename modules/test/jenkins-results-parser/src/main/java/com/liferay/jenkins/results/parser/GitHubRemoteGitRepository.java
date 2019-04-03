@@ -95,7 +95,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 
 		int page = 1;
 
-		while (page <= _MAX_LABEL_PAGES) {
+		while (page <= _PAGES_LABEL_PAGES_SIZE_MAX) {
 			try {
 				labelsJSONArray = JenkinsResultsParserUtil.toJSONArray(
 					JenkinsResultsParserUtil.combine(
@@ -284,7 +284,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 		_labelRequestURL = labelRequestURL;
 	}
 
-	private static final int _MAX_LABEL_PAGES = 10;
+	private static final int _PAGES_LABEL_PAGES_SIZE_MAX = 10;
 
 	private static final Map<String, List<Label>> _labelsLists =
 		new ConcurrentHashMap<>();

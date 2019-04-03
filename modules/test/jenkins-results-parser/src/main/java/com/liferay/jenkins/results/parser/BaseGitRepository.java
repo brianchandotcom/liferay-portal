@@ -47,7 +47,7 @@ public abstract class BaseGitRepository implements GitRepository {
 	protected BaseGitRepository(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	protected BaseGitRepository(String name) {
@@ -55,7 +55,7 @@ public abstract class BaseGitRepository implements GitRepository {
 
 		_setName(name);
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	protected File getFile(String key) {
@@ -77,11 +77,11 @@ public abstract class BaseGitRepository implements GitRepository {
 			_repositoryProperties.load(
 				new StringReader(
 					JenkinsResultsParserUtil.toString(
-						_REPOSITORY_PROPERTIES_URL, false)));
+						_URL_PROPERTIES_REPOSITORY, false)));
 		}
 		catch (IOException ioe) {
 			System.out.println(
-				"Skipped downloading " + _REPOSITORY_PROPERTIES_URL);
+				"Skipped downloading " + _URL_PROPERTIES_REPOSITORY);
 		}
 
 		_repositoryProperties.putAll(
@@ -123,11 +123,11 @@ public abstract class BaseGitRepository implements GitRepository {
 		put("name", name);
 	}
 
-	private static final String _REPOSITORY_PROPERTIES_URL =
+	private static final String _URL_PROPERTIES_REPOSITORY =
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-ee/commands/repository.properties";
 
-	private static final String[] _REQUIRED_KEYS = {"name"};
+	private static final String[] _KEYS_REQUIRED = {"name"};
 
 	private static Properties _repositoryProperties;
 

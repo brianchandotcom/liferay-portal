@@ -51,8 +51,8 @@ public class BuildFactory {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		for (String batchIndicator : _BATCH_INDICATORS) {
-			if (url.contains(batchIndicator)) {
+		for (String batchToken : _TOKENS_BATCH) {
+			if (url.contains(batchToken)) {
 				return new BatchBuild(url, (TopLevelBuild)parentBuild);
 			}
 		}
@@ -105,7 +105,7 @@ public class BuildFactory {
 			archiveProperties.getProperty("top.level.build.url"), null);
 	}
 
-	private static final String[] _BATCH_INDICATORS = {
+	private static final String[] _TOKENS_BATCH = {
 		"-batch", "-dist", "environment-"
 	};
 

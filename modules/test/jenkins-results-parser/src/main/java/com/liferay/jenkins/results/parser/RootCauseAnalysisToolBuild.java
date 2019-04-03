@@ -121,7 +121,7 @@ public class RootCauseAnalysisToolBuild extends TopLevelBuild {
 			"td", null,
 			StringEscapeUtils.escapeXml(
 				JenkinsResultsParserUtil.toDateString(
-					localGitCommit.getCommitDate(), _COMMIT_DATE_FORMAT,
+					localGitCommit.getCommitDate(), _DATE_FORMAT_COMMIT,
 					"PST")));
 	}
 
@@ -340,7 +340,7 @@ public class RootCauseAnalysisToolBuild extends TopLevelBuild {
 	protected Element getJenkinsReportHeadJQueryElement() {
 		Element jqueryElement = Dom4JUtil.getNewElement("script");
 
-		jqueryElement.addAttribute("src", _JQUERY_URL);
+		jqueryElement.addAttribute("src", _URL_JQUERY);
 		jqueryElement.addAttribute("type", "text/javascript");
 		jqueryElement.addText("");
 
@@ -559,9 +559,9 @@ public class RootCauseAnalysisToolBuild extends TopLevelBuild {
 
 	}
 
-	private static final String _COMMIT_DATE_FORMAT = "yyyy-MM-dd h:mm:ss aa z";
+	private static final String _DATE_FORMAT_COMMIT = "yyyy-MM-dd h:mm:ss aa z";
 
-	private static final String _JQUERY_URL =
+	private static final String _URL_JQUERY =
 		"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js";
 
 	private List<BuildData> _downstreamBuildDataList;

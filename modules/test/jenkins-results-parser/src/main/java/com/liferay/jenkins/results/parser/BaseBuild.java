@@ -372,7 +372,7 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getConsoleText() {
 		String consoleText = JenkinsResultsParserUtil.getCachedText(
-			_CONSOLE_TEXT_CACHE_PREFIX + getBuildURL());
+			_PREFIX_CONSOLE_TEXT_CACHE + getBuildURL());
 
 		if (consoleText != null) {
 			return consoleText;
@@ -391,7 +391,7 @@ public abstract class BaseBuild implements Build {
 
 			if (consoleText.contains("\nFinished:")) {
 				JenkinsResultsParserUtil.saveToCacheFile(
-					_CONSOLE_TEXT_CACHE_PREFIX + getBuildURL(), consoleText);
+					_PREFIX_CONSOLE_TEXT_CACHE + getBuildURL(), consoleText);
 			}
 
 			return consoleText;
@@ -1733,10 +1733,10 @@ public abstract class BaseBuild implements Build {
 			Element nameElement = Dom4JUtil.getNewElement(
 				"td", buildInfoElement, expanderAnchorElement, getShortName());
 
-			int indent = getDepth() * _PIXELS_SIZE_INDENT;
+			int indent = getDepth() * _PIXELS_WIDTH_INDENT;
 
 			if (expanderAnchorElement != null) {
-				indent -= _PIXELS_SIZE_EXPANDER;
+				indent -= _PIXELS_WIDTH_EXPANDER;
 			}
 
 			nameElement.addAttribute(
@@ -1893,8 +1893,8 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Unable to format github message", ioe);
 		}
 
-		for (String contentFlag : _HIGH_PRIORITY_CONTENT_FLAGS) {
-			if (content.contains(contentFlag)) {
+		for (String highPriorityContentToken : _TOKENS_HIGH_PRIORITY_CONTENT) {
+			if (content.contains(highPriorityContentToken)) {
 				return true;
 			}
 		}
@@ -2333,10 +2333,10 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), null, getDisplayName()));
 
-		int indent = getDepth() * _PIXELS_SIZE_INDENT;
+		int indent = getDepth() * _PIXELS_WIDTH_INDENT;
 
 		if (stopWatchRecordsExpanderAnchorElement != null) {
-			indent -= _PIXELS_SIZE_EXPANDER;
+			indent -= _PIXELS_WIDTH_EXPANDER;
 		}
 
 		nameCellElement.addAttribute("style", "text-indent: " + indent);
@@ -2451,7 +2451,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getJenkinsReportTimeZoneName() {
-		return _JENKINS_REPORT_TIME_ZONE_NAME;
+		return _NAME_JENKINS_REPORT_TIME_ZONE;
 	}
 
 	protected Set<String> getJobParameterNames() {
@@ -3240,20 +3240,20 @@ public abstract class BaseBuild implements Build {
 		return true;
 	}
 
-	private static final String _CONSOLE_TEXT_CACHE_PREFIX = "console-text-";
+	private static final String _PREFIX_CONSOLE_TEXT_CACHE = "console-text-";
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
 
-	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS = {
+	private static final String[] _TOKENS_HIGH_PRIORITY_CONTENT = {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
 
-	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
+	private static final String _NAME_JENKINS_REPORT_TIME_ZONE;
 
-	private static final int _PIXELS_SIZE_EXPANDER = 20;
+	private static final int _PIXELS_WIDTH_EXPANDER = 20;
 
-	private static final int _PIXELS_SIZE_INDENT = 35;
+	private static final int _PIXELS_WIDTH_INDENT = 35;
 
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
@@ -3277,7 +3277,7 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
-		_JENKINS_REPORT_TIME_ZONE_NAME = properties.getProperty(
+		_NAME_JENKINS_REPORT_TIME_ZONE = properties.getProperty(
 			"jenkins.report.time.zone");
 	}
 

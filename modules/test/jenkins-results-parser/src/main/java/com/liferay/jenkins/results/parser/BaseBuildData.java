@@ -355,7 +355,7 @@ public abstract class BaseBuildData implements BuildData {
 		setJenkinsGitHubURL(DEFAULT_JENKINS_GITHUB_URL);
 		setWorkspaceDir(DEFAULT_WORKSPACE_DIR);
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
 	protected File getFile(String key) {
@@ -479,7 +479,7 @@ public abstract class BaseBuildData implements BuildData {
 		return buildURLJSONObject.getLong("timestamp");
 	}
 
-	private static final String[] _REQUIRED_KEYS = {
+	private static final String[] _KEYS_REQUIRED = {
 		"build_description", "build_number", "build_url", "cohort_name",
 		"hostname", "jenkins_github_url", "job_name", "master_hostname",
 		"run_id", "workspace_dir"

@@ -135,11 +135,11 @@ public class WorkspaceUtil {
 			_workspaceProperties.load(
 				new StringReader(
 					JenkinsResultsParserUtil.toString(
-						_WORKSPACE_PROPERTIES_URL, false)));
+						_URL_WORKSPACE_PROPERTIES, false)));
 		}
 		catch (IOException ioe) {
 			System.out.println(
-				"Skipped downloading " + _WORKSPACE_PROPERTIES_URL);
+				"Skipped downloading " + _URL_WORKSPACE_PROPERTIES);
 		}
 
 		File propertiesFile = new File("workspace.properties");
@@ -150,7 +150,7 @@ public class WorkspaceUtil {
 		return _workspaceProperties;
 	}
 
-	private static final String _WORKSPACE_PROPERTIES_URL =
+	private static final String _URL_WORKSPACE_PROPERTIES =
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-ee/commands/workspace.properties";
 

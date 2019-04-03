@@ -215,7 +215,7 @@ public class UpstreamFailureUtil {
 
 		String url = JenkinsResultsParserUtil.getLocalURL(
 			JenkinsResultsParserUtil.combine(
-				_UPSTREAM_FAILURES_JOB_BASE_URL,
+				_URL_BASE_UPSTREAM_FAILURES_JOB,
 				jobName.replace("pullrequest", "upstream"),
 				"/builds/latest/test.results.json"));
 
@@ -258,7 +258,7 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	private static final String _UPSTREAM_FAILURES_JOB_BASE_URL =
+	private static final String _URL_BASE_UPSTREAM_FAILURES_JOB =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
 	private static boolean _upstreamComparisonAvailable = true;

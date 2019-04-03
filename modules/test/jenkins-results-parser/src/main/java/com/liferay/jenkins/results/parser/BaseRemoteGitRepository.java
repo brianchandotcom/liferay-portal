@@ -97,9 +97,9 @@ public abstract class BaseRemoteGitRepository
 		put("hostname", hostname);
 		put("username", username);
 
-		validateKeys(_REQUIRED_KEYS);
+		validateKeys(_KEYS_REQUIRED);
 	}
 
-	private static final String[] _REQUIRED_KEYS = {"hostname", "username"};
+	private static final String[] _KEYS_REQUIRED = {"hostname", "username"};
 
 }

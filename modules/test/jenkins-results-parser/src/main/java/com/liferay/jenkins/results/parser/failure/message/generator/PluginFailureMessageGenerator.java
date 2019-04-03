@@ -92,7 +92,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 				"To include a plugin fix for this pull request, ",
 				"please edit your ",
 				getGitCommitPluginsAnchorElement(topLevelBuild), ". Click ",
-				Dom4JUtil.getNewAnchorElement(_BLOG_URL, "here"),
+				Dom4JUtil.getNewAnchorElement(_URL_BLOG, "here"),
 				" for more details.",
 				getConsoleTextSnippetElementByEnd(consoleText, true, end));
 		}
@@ -100,7 +100,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 		return messageElement;
 	}
 
-	private static final String _BLOG_URL =
+	private static final String _URL_BLOG =
 		"https://in.liferay.com/web/global.engineering/blog/-/blogs" +
 			"/new-tests-for-the-pull-request-tester-";
 

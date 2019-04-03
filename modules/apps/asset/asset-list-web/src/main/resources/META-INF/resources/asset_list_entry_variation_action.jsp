@@ -26,7 +26,6 @@
 >
 	<c:if test="<%= editAssetListDisplayContext.getSegmentsEntryId() != SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT %>">
 		<portlet:actionURL name="/asset_list/delete_asset_list_entry_variation" var="deleteAssetListEntryVariationURL">
-			<portlet:param name="redirect" value="<%= editAssetListDisplayContext.getRedirectURL() %>" />
 			<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 		</portlet:actionURL>

@@ -59,6 +59,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 												<c:if test="<%= availableSegmentsEntries.size() > 0 %>">
 													<portlet:renderURL var="editAssetListEntryVariationURL">
 														<portlet:param name="mvcPath" value="/edit_asset_list_entry_variation.jsp" />
+														<portlet:param name="redirect" value="<%= currentURL %>" />
 														<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 														<portlet:param name="type" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryType()) %>" />
 													</portlet:renderURL>

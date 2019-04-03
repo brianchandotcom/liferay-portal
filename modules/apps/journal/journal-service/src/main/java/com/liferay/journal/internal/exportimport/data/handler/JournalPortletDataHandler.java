@@ -70,6 +70,7 @@ import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -109,6 +110,7 @@ import org.osgi.service.component.annotations.Reference;
  * @see    PortletDataHandler
  */
 @Component(
+	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = PortletDataHandler.class
 )
@@ -165,6 +167,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Activate
+	@Modified
 	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(

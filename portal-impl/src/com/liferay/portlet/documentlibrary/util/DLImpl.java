@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -1020,9 +1021,11 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
+	public boolean hasViewInContextGroupLayout(
+		long groupId, ThemeDisplay themeDisplay) {
+
 		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			themeDisplay);
+			groupId, themeDisplay);
 
 		if (result == null) {
 			return false;
@@ -1230,8 +1233,10 @@ public class DLImpl implements DL {
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 
+		DLFileEntry fileEntry = dlFileVersion.getFileEntry();
+
 		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			themeDisplay);
+			fileEntry.getGroupId(), themeDisplay);
 
 		if (result != null) {
 			portletId = result.getPortletId();
@@ -1290,12 +1295,12 @@ public class DLImpl implements DL {
 	}
 
 	private PortletLayoutFinder.Result _getPortletLayoutFinderResult(
-		ThemeDisplay themeDisplay) {
+		long groupId, ThemeDisplay themeDisplay) {
 
 		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
 			try {
 				PortletLayoutFinder.Result result = portletLayoutFinder.find(
-					themeDisplay, themeDisplay.getSiteGroupId());
+					themeDisplay, groupId);
 
 				if (result != null) {
 					return result;

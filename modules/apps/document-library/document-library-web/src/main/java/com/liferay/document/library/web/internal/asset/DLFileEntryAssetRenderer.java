@@ -356,7 +356,9 @@ public class DLFileEntryAssetRenderer
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!DLUtil.hasViewInContextGroupLayout(themeDisplay)) {
+		long groupId = _fileEntry.getGroupId();
+
+		if (!DLUtil.hasViewInContextGroupLayout(groupId, themeDisplay)) {
 			return null;
 		}
 

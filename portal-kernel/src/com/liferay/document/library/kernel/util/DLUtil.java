@@ -380,9 +380,9 @@ public class DLUtil {
 	}
 
 	public static boolean hasViewInContextGroupLayout(
-		ThemeDisplay themeDisplay) {
+		long groupId, ThemeDisplay themeDisplay) {
 
-		return getDL().hasViewInContextGroupLayout(themeDisplay);
+		return getDL().hasViewInContextGroupLayout(groupId, themeDisplay);
 	}
 
 	public static boolean hasWorkflowDefinitionLink(

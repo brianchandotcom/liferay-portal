@@ -600,23 +600,6 @@ components:
                     type: integer
                 showAsAnswer:
                     type: boolean
-                taxonomyCategories:
-                    items:
-                        properties:
-                            taxonomyCategoryId:
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                type: string
-                        type: object
-                    readOnly: true
-                    type: array
-                taxonomyCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 viewableBy:
                     enum: [Anyone, Members, Owner]
                     type: string
@@ -691,23 +674,6 @@ components:
                     type: integer
                 showAsQuestion:
                     type: boolean
-                taxonomyCategories:
-                    items:
-                        properties:
-                            taxonomyCategoryId:
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                type: string
-                        type: object
-                    readOnly: true
-                    type: array
-                taxonomyCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 threadType:
                     type: string
                 viewableBy:

@@ -69,20 +69,19 @@
 			transition: border-color ease 0.2s;
 			will-change: border-color;
 
-			&-hover, &-selected {
+			&-selected, &:hover {
 				border-color: #F1F2F5;
 			}
 
 			&-inner {
 				border: none;
-				box-shadow: inset 0 0 0 1px #CDCED9;
 				height: $paletteItemSize;
 				overflow: hidden;
 				width: $paletteItemSize;
-			}
 
-			&-selected .palette-item-inner {
-				background-image: none;
+				&.bg-white {
+					box-shadow: inset 0 0 0 1px #CDCED9;
+				}
 			}
 		}
 

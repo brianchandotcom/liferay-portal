@@ -3,12 +3,6 @@ definition {
 		Panel.expandPanel(panel = "Authentication");
 	}
 
-	macro gotoCAS {
-		PortalSettingsNavigator.expandAuthenticationPanel();
-
-		Navigator.gotoNavTab(navTab = "CAS");
-	}
-
 	macro gotoFacebook {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
@@ -25,12 +19,6 @@ definition {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
 		Navigator.gotoNavTab(navTab = "LDAP");
-	}
-
-	macro gotoNTLM {
-		PortalSettingsNavigator.expandAuthenticationPanel();
-
-		Navigator.gotoNavTab(navTab = "NTLM");
 	}
 
 	macro gotoOpenID {

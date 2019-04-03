@@ -37,16 +37,6 @@ public class SegmentsExperienceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperience
-			addDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
-			groupId, classNameId, classPK);
-	}
-
-	@Override
 	public com.liferay.segments.model.SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
 			java.util.Map<java.util.Locale, String> nameMap, boolean active,
@@ -266,16 +256,6 @@ public class SegmentsExperienceLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _segmentsExperienceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.segments.model.SegmentsExperience
-			getDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperienceLocalService.getDefaultSegmentsExperience(
-			groupId, classNameId, classPK);
 	}
 
 	@Override

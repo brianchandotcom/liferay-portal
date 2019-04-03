@@ -138,7 +138,9 @@ class SLAForm extends React.Component {
 			.get(`/slas/${id}`)
 			.then(result => {
 				const { description = '', duration, name } = result.data;
+
 				const { days, hours, minutes } = getDurationValues(duration);
+
 				const formattedHours = formatHours(hours, minutes);
 
 				this.context.setTitle(Liferay.Language.get(name));

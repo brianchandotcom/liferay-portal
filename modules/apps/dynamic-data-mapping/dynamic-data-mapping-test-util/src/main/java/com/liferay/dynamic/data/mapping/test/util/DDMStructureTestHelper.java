@@ -117,6 +117,22 @@ public class DDMStructureTestHelper {
 			storageType, type);
 	}
 
+	public DDMStructure addStructure(
+			long classNameId, String structureKey, String name,
+			String definition, String storageType)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		return DDMStructureLocalServiceUtil.addStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
+			structureKey, getDefaultLocaleMap(name),
+			getDefaultLocaleMap(StringPool.BLANK), definition, storageType,
+			serviceContext);
+	}
+
 	public DDMStructure updateStructure(long structureId, DDMForm ddmForm)
 		throws Exception {
 

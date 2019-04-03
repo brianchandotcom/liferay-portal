@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +63,9 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 	}
 
-	protected String extractDDMContent(JournalArticle journalArticle) {
+	protected String extractDDMContent(
+		JournalArticle journalArticle, Locale locale) {
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),
@@ -90,18 +93,21 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 
 		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues,
-			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()));
+			ddmStructure, ddmFormValues, locale);
 	}
 
 	private Collection<String> _getTagNames(JournalArticle journalArticle)
 		throws Exception {
 
+		Locale locale = LocaleUtil.fromLanguageId(
+			journalArticle.getDefaultLanguageId());
+
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
 			_configurationProvider.getCompanyConfiguration(
 				OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class,
 				journalArticle.getCompanyId()),
-			extractDDMContent(journalArticle), ContentTypes.TEXT_PLAIN);
+			extractDDMContent(journalArticle, locale), locale,
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

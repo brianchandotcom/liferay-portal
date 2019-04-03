@@ -193,9 +193,7 @@ public class SegmentsExperienceServiceTest {
 				_group, _companyAdminUser.getUserId());
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				_group.getGroupId(), _classNameId, _classPK);
-
+			_addSegmentsExperience(serviceContext);
 		_addSegmentsExperience(serviceContext);
 		_addSegmentsExperience(serviceContext);
 
@@ -233,8 +231,7 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-			_group.getGroupId(), _classNameId, _classPK);
+		_addSegmentsExperience(serviceContext);
 		_addSegmentsExperience(serviceContext);
 		_addSegmentsExperience(serviceContext);
 
@@ -256,9 +253,8 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience1 =
-			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience1 = _addSegmentsExperience(
+			serviceContext);
 		SegmentsExperience segmentsExperience2 = _addSegmentsExperience(
 			serviceContext);
 		SegmentsExperience segmentsExperience3 = _addSegmentsExperience(
@@ -303,9 +299,8 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience1 =
-			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience1 = _addSegmentsExperience(
+			serviceContext);
 		SegmentsExperience segmentsExperience2 = _addSegmentsExperience(
 			serviceContext);
 		SegmentsExperience segmentsExperience3 = _addSegmentsExperience(

@@ -300,16 +300,16 @@ definition {
 
 		PortalSettings.viewAuthenticationGeneralCP();
 
-		PortalSettings.viewAuthenticationCASCP();
-
 		PortalSettings.viewAuthenticationLDAPCP();
 
 		Navigator.gotoBack();
 
-		PortalSettings.viewAuthenticationNTLMCP();
-
 		PortalSettings.viewAuthenticationOpenIDCP();
 
 		PortalSettings.viewAuthenticationOpenSSOCP();
+
+		PortalSettings.viewAuthenticationCASCP();
+
+		PortalSettings.viewAuthenticationNTLMCP();
 	}
 }

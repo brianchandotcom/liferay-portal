@@ -101,6 +101,10 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isBuildFailingInUpstreamJob(Build build) {
+		if (!isUpstreamComparisonAvailable()) {
+			return false;
+		}
+
 		try {
 			List<TestResult> testResults = new ArrayList<>();
 
@@ -152,6 +156,10 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
+		if (!isUpstreamComparisonAvailable()) {
+			return false;
+		}
+
 		Build build = testResult.getBuild();
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
@@ -185,6 +193,10 @@ public class UpstreamFailureUtil {
 
 			return false;
 		}
+	}
+
+	public static boolean isUpstreamComparisonAvailable() {
+		return _upstreamComparisonAvailable;
 	}
 
 	public static void loadUpstreamJobFailuresJSONObject(
@@ -242,12 +254,15 @@ public class UpstreamFailureUtil {
 
 			_upstreamFailuresJobJSONObject = new JSONObject(
 				"{\"SHA\":\"\",\"failedBatches\":[]}");
+
+			_upstreamComparisonAvailable = false;
 		}
 	}
 
 	private static final String _UPSTREAM_FAILURES_JOB_BASE_URL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
+	private static boolean _upstreamComparisonAvailable = true;
 	private static JSONObject _upstreamFailuresJobJSONObject;
 
 }

@@ -1745,7 +1745,7 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static void keepBuildLogs(
+	public static void keepJenkinsBuild(
 		boolean keepBuildLogs, int buildNumber, String jobName,
 		String masterHostname) {
 

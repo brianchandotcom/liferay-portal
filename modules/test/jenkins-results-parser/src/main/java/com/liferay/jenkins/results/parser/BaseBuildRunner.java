@@ -110,8 +110,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	protected abstract void initWorkspace();
 
-	protected void keepBuildLogs(boolean keepLogs) {
-		JenkinsResultsParserUtil.keepBuildLogs(
+	protected void keepJenkinsBuild(boolean keepLogs) {
+		JenkinsResultsParserUtil.keepJenkinsBuild(
 			keepLogs, _buildData.getBuildNumber(), _buildData.getJobName(),
 			_buildData.getMasterHostname());
 	}
@@ -209,7 +209,7 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 				JSONObject envMapJSONObject =
 					injectedEnvVarsJSONObject.getJSONObject("envMap");
 
-				JenkinsResultsParserUtil.keepBuildLogs(
+				JenkinsResultsParserUtil.keepJenkinsBuild(
 					false,
 					Integer.valueOf(envMapJSONObject.getString("BUILD_NUMBER")),
 					envMapJSONObject.getString("JOB_NAME"),

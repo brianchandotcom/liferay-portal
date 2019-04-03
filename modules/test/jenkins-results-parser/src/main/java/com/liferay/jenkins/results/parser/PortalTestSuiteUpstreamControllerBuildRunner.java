@@ -68,7 +68,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		updateBuildDescription();
 
-		keepBuildLogs(true);
+		keepJenkinsBuild(true);
 
 		_invokeJob();
 	}

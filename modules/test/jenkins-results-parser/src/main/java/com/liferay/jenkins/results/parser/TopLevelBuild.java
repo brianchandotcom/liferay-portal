@@ -650,17 +650,14 @@ public class TopLevelBuild extends BaseBuild {
 					"h4", null, "This pull contains no unique failures."));
 		}
 		else {
-			String failureTitle = "Failures unique to this pull";
+			String failureTitle = "Failures unique to this pull:";
 
 			if (!UpstreamFailureUtil.isUpstreamComparisonAvailable() &&
 				isCompareToUpstream()) {
 
 				failureTitle =
-					failureTitle +
-						" (upstream comparison is not currently available)";
+					"Failures (upstream comparison is not available):";
 			}
-
-			failureTitle = failureTitle + ":";
 
 			buildFailureElements.add(
 				Dom4JUtil.getNewElement("h4", null, failureTitle));

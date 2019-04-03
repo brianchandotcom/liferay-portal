@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -134,15 +138,21 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 				properties, availableClassNameIds);
 
 			assetEntryQuery.setClassNameIds(classNameIds);
+
+			long[] classTypeIds = {};
+
+			for (long classNameId : classNameIds) {
+				String className = PortalUtil.getClassName(classNameId);
+
+				classTypeIds = ArrayUtil.append(
+					classTypeIds, _getClassTypeIds(properties, className));
+			}
+
+			assetEntryQuery.setClassTypeIds(classTypeIds);
 		}
 		else {
 			assetEntryQuery.setClassNameIds(availableClassNameIds);
 		}
-
-		long[] classTypeIds = GetterUtil.getLongValues(
-			StringUtil.split(properties.getProperty("classTypeIds", null)));
-
-		assetEntryQuery.setClassTypeIds(classTypeIds);
 
 		String orderByColumn1 = GetterUtil.getString(
 			properties.getProperty("orderByColumn1", "modifiedDate"));
@@ -298,6 +308,54 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		}
 
 		return availableClassNameIds;
+	}
+
+	private long[] _getClassTypeIds(
+		UnicodeProperties properties, String className) {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		long[] availableClassTypeIds = null;
+
+		if (assetRendererFactory != null) {
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+				new long[] {getGroupId()}, LocaleUtil.getDefault());
+
+			Stream<ClassType> stream = classTypes.stream();
+
+			availableClassTypeIds = stream.mapToLong(
+				classType -> classType.getClassTypeId()
+			).toArray();
+		}
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			properties.getProperty(
+				"anyClassType" + className, Boolean.TRUE.toString()));
+
+		if (anyAssetType) {
+			return availableClassTypeIds;
+		}
+
+		long defaultClassTypeId = GetterUtil.getLong(
+			properties.getProperty("anyClassType" + className, null), -1);
+
+		if (defaultClassTypeId > -1) {
+			return new long[] {defaultClassTypeId};
+		}
+
+		long[] classTypeIds = StringUtil.split(
+			properties.getProperty("classTypeIds" + className, null), 0L);
+
+		if (classTypeIds != null) {
+			return classTypeIds;
+		}
+
+		return availableClassTypeIds;
 	}
 
 	private List<AssetEntry> _getDynamicAssetEntries(

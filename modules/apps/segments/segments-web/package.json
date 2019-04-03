@@ -93,7 +93,7 @@
 		"format": "npm run csf -- -i",
 		"start": "webpack-dev-server --config ./webpack.dev.config.js",
 		"test:watch": "jest --watch",
-		"test_DISABLED": "env TZ=utc jest"
+		"test": "env TZ=utc jest"
 	},
 	"version": "1.0.0"
 }

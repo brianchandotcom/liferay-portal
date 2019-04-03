@@ -153,6 +153,13 @@ public class AssetListEntryServiceUtil {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long assetListEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAssetListEntry(assetListEntryId);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
 			long groupId, String assetListEntryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

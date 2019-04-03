@@ -1,5 +1,4 @@
 import * as FormSupport from '../Form/FormSupport.es';
-import autobind from 'autobind-decorator';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {pageStructure, ruleStructure} from '../../util/config.es';
@@ -268,7 +267,6 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	@autobind
 	_handleFocusedFieldUpdated(focusedField) {
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 		const {pages} = this.state;
@@ -511,7 +509,7 @@ class LayoutProvider extends Component {
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
-				focusedFieldUpdated: this._handleFocusedFieldUpdated,
+				focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),

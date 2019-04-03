@@ -1,5 +1,4 @@
 import * as FormSupport from '../Form/FormSupport.es';
-import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
@@ -146,7 +145,7 @@ class Sidebar extends Component {
 		this._bindDragAndDrop();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown, true)
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
 		);
 	}
 
@@ -275,9 +274,9 @@ class Sidebar extends Component {
 		this._eventHandler.add(
 			this._dragAndDrop.on(
 				DragDrop.Events.END,
-				this._handleDragEnded
+				this._handleDragEnded.bind(this)
 			),
-			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted)
+			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted.bind(this))
 		);
 	}
 
@@ -384,7 +383,6 @@ class Sidebar extends Component {
 	 * Handle click on the dropdown to change the field type.
 	 * @protected
 	 */
-	@autobind
 	_handleChangeFieldTypeItemClicked({data}) {
 		const newFieldType = data.item.name;
 
@@ -394,7 +392,6 @@ class Sidebar extends Component {
 	/**
 	 * @protected
 	 */
-	@autobind
 	_handleCloseButtonClicked() {
 		this.close();
 	}
@@ -405,7 +402,6 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	@autobind
 	_handleDocumentMouseDown({target}) {
 		const {transitionEnd} = this;
 		const {open} = this.state;
@@ -431,7 +427,6 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	@autobind
 	_handleDragEnded(data, event) {
 		event.preventDefault();
 
@@ -462,7 +457,6 @@ class Sidebar extends Component {
 	 * Handle with drag and close sidebar when moving.
 	 * @protected
 	 */
-	@autobind
 	_handleDragStarted() {
 		this.refreshDragAndDrop();
 
@@ -474,7 +468,6 @@ class Sidebar extends Component {
 	 * @param {array} data
 	 * @protected
 	 */
-	@autobind
 	_handleEvaluatorChanged(pages) {
 		const {focusedField} = this.props;
 
@@ -495,12 +488,10 @@ class Sidebar extends Component {
 	 * @param {Object} event
 	 * @protected
 	 */
-	@autobind
 	_handleSettingsFieldEdited(event) {
 		this.emit('settingsFieldEdited', event);
 	}
 
-	@autobind
 	_handleSettingsFieldBlurred(event) {
 		this.emit('settingsFieldBlurred', event);
 	}
@@ -509,7 +500,6 @@ class Sidebar extends Component {
 	 * Handle click on the field settings dropdown
 	 * @protected
 	 */
-	@autobind
 	_handleFieldSettingsClicked({data: {item}}) {
 		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
 		const {settingsItem} = item;
@@ -534,7 +524,6 @@ class Sidebar extends Component {
 	 * Handle click on the previous button.
 	 * @protected
 	 */
-	@autobind
 	_handlePreviousButtonClicked() {
 		const {transitionEnd} = this;
 
@@ -556,7 +545,6 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	@autobind
 	_handleTabItemClicked(event) {
 		const {target} = event;
 		const {dataset: {index}} = dom.closest(target, '.nav-item');
@@ -761,7 +749,7 @@ class Sidebar extends Component {
 					<li
 						class="nav-item"
 						data-index={index}
-						data-onclick={this._handleTabItemClicked}
+						data-onclick={this._handleTabItemClicked.bind(this)}
 						key={`tab${index}`}
 						ref={`tab${index}`}
 					>
@@ -780,7 +768,6 @@ class Sidebar extends Component {
 		);
 	}
 
-	@autobind
 	_renderFieldTypeDropdownLabel() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
 		const {icon, label} = fieldTypes.find(({name}) => name === focusedField.type);
@@ -821,7 +808,7 @@ class Sidebar extends Component {
 		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
 		const previousButtonEvents = {
-			click: this._handlePreviousButtonClicked
+			click: this._handlePreviousButtonClicked.bind(this)
 		};
 
 		return (
@@ -853,12 +840,12 @@ class Sidebar extends Component {
 								<ClayDropdownBase
 									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
-										itemClicked: this._handleChangeFieldTypeItemClicked
+										itemClicked: this._handleChangeFieldTypeItemClicked.bind(this)
 									}}
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
 									itemsIconAlignment={'left'}
-									label={this._renderFieldTypeDropdownLabel}
+									label={this._renderFieldTypeDropdownLabel.bind(this)}
 									spritemap={spritemap}
 									style={'secondary'}
 									triggerClasses={'nav-link btn-sm'}
@@ -868,7 +855,7 @@ class Sidebar extends Component {
 						<li class="tbar-item">
 							<ClayActionsDropdown
 								events={{
-									itemClicked: this._handleFieldSettingsClicked
+									itemClicked: this._handleFieldSettingsClicked.bind(this)
 								}}
 								items={fieldActions}
 								ref="fieldSettingsActions"
@@ -881,7 +868,7 @@ class Sidebar extends Component {
 				<li class="tbar-item">
 					<a
 						class="component-action sidebar-close"
-						data-onclick={this._handleCloseButtonClicked}
+						data-onclick={this._handleCloseButtonClicked.bind(this)}
 						href="#1"
 						ref="closeButton"
 						role="button"
@@ -915,9 +902,9 @@ class Sidebar extends Component {
 		const {settingsContext} = focusedField;
 
 		const layoutRenderEvents = {
-			evaluated: this._handleEvaluatorChanged,
-			fieldBlurred: this._handleSettingsFieldBlurred,
-			fieldEdited: this._handleSettingsFieldEdited
+			evaluated: this._handleEvaluatorChanged.bind(this),
+			fieldBlurred: this._handleSettingsFieldBlurred.bind(this),
+			fieldEdited: this._handleSettingsFieldEdited.bind(this)
 		};
 
 		const editMode = this._isEditMode();

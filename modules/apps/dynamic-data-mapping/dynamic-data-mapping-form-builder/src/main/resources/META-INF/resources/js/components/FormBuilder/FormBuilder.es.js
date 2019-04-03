@@ -1,5 +1,4 @@
 import * as FormSupport from '../../components/Form/FormSupport.es';
-import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
@@ -260,7 +259,6 @@ class Builder extends Component {
 	 * @param {!Object} event
 	 * @private
 	 */
-	@autobind
 	_handleSettingsFieldBlurred({fieldInstance, value}) {
 		const {locale} = this.props;
 		const {fieldName} = fieldInstance;
@@ -280,7 +278,6 @@ class Builder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
-	@autobind
 	_handleSidebarFieldBlurred() {
 		this.emit('sidebarFieldBlurred');
 	}
@@ -295,7 +292,6 @@ class Builder extends Component {
 		this.openSidebar();
 	}
 
-	@autobind
 	_handleCancelChangesModalButtonClicked(event) {
 		event.stopPropagation();
 
@@ -351,7 +347,6 @@ class Builder extends Component {
 		deleteModal.show();
 	}
 
-	@autobind
 	_handleDeleteModalButtonClicked(event) {
 		event.stopPropagation();
 
@@ -476,7 +471,6 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	@autobind
 	_handleFieldDuplicated(indexes) {
 		this.emit('fieldDuplicated', indexes);
 	}
@@ -486,7 +480,7 @@ class Builder extends Component {
 	 * @param {!Object} event
 	 * @private
 	 */
-	@autobind
+
 	_handleSettingsFieldEdited({fieldInstance, value}) {
 		this._debouncedFieldEditedHandler(fieldInstance, value);
 	}
@@ -506,7 +500,6 @@ class Builder extends Component {
 	 * @param {!Object}
 	 * @private
 	 */
-	@autobind
 	_handleFocusedFieldUpdated(focusedField) {
 		const settingsContext = focusedField.settingsContext;
 
@@ -614,7 +607,7 @@ class Builder extends Component {
 			columnResized: this._handleColumnResized.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
-			fieldDuplicated: this._handleFieldDuplicated,
+			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
@@ -626,13 +619,13 @@ class Builder extends Component {
 
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdded.bind(this),
-			fieldBlurred: this._handleSidebarFieldBlurred,
+			fieldBlurred: this._handleSidebarFieldBlurred.bind(this),
 			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
-			fieldDuplicated: this._handleFieldDuplicated,
-			focusedFieldUpdated: this._handleFocusedFieldUpdated,
-			settingsFieldBlurred: this._handleSettingsFieldBlurred,
-			settingsFieldEdited: this._handleSettingsFieldEdited
+			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
+			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
+			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
 		};
 
 		return (

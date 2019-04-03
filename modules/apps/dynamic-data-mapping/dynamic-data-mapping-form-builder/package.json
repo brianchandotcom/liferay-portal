@@ -73,8 +73,6 @@
 		}
 	},
 	"dependencies": {
-		"@babel/cli": "^7.2.3",
-		"autobind-decorator": "^2.1.0",
 		"classnames": "^2.2.6",
 		"clay-alert": "2.11.1",
 		"clay-checkbox": "2.11.1",
@@ -97,6 +95,7 @@
 		"whatwg-fetch": "^3.0.0"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.2.3",
 		"@babel/plugin-proposal-class-properties": "^7.4.0",
 		"@babel/plugin-proposal-decorators": "^7.4.0",
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.0",

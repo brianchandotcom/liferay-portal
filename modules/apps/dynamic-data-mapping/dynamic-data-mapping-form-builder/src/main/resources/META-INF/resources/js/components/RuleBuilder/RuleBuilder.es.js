@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import RuleEditor from '../../components/RuleEditor/RuleEditor.es';
@@ -228,7 +227,7 @@ class RuleBuilder extends Component {
 
 		if (visible) {
 			this._eventHandler.add(
-				dom.on('#addFieldButton', 'click', this._handleAddRuleClick)
+				dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this))
 			);
 		}
 		else {
@@ -308,14 +307,12 @@ class RuleBuilder extends Component {
 	 * @private
 	 */
 
-	@autobind
 	_handleAddRuleClick(event) {
 		this._showRuleCreation();
 
 		this._hideAddRuleButton(event.delegateTarget);
 	}
 
-	@autobind
 	_handleRuleAdded(event) {
 		this.emit(
 			'ruleAdded',
@@ -327,7 +324,6 @@ class RuleBuilder extends Component {
 		this._showRuleList();
 	}
 
-	@autobind
 	_handleRuleCanceled(event) {
 		const {index} = this.state;
 		const rules = this.state.rules.map(
@@ -344,7 +340,6 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	@autobind
 	_handleRuleDeleted({ruleId}) {
 		this.emit(
 			'ruleDeleted',
@@ -354,7 +349,6 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	@autobind
 	_handleRuleEdited({ruleId}) {
 		const {rules} = this.state;
 
@@ -369,7 +363,6 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	@autobind
 	_handleRuleSaved(event) {
 		this.emit(
 			'ruleSaved',
@@ -446,10 +439,10 @@ class RuleBuilder extends Component {
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
 						events={{
-							ruleAdded: this._handleRuleAdded,
-							ruleCancel: this._handleRuleCanceled,
-							ruleDeleted: this._handleRuleDeleted,
-							ruleEdited: this._handleRuleEdited
+							ruleAdded: this._handleRuleAdded.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this),
+							ruleDeleted: this._handleRuleDeleted.bind(this),
+							ruleEdited: this._handleRuleEdited.bind(this)
 						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}
@@ -484,10 +477,10 @@ class RuleBuilder extends Component {
 					<RuleList
 						dataProvider={dataProvider}
 						events={{
-							ruleAdded: this._handleRuleAdded,
-							ruleCancel: this._handleRuleCanceled,
-							ruleDeleted: this._handleRuleDeleted,
-							ruleEdited: this._handleRuleEdited
+							ruleAdded: this._handleRuleAdded.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this),
+							ruleDeleted: this._handleRuleDeleted.bind(this),
+							ruleEdited: this._handleRuleEdited.bind(this)
 						}}
 						pages={pages}
 						ref="RuleList"

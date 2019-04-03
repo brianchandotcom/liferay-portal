@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
@@ -62,7 +61,6 @@ const WithEvaluator = ChildComponent => {
 		 * @private
 		 */
 
-		@autobind
 		_handleFieldEdited(event) {
 			const {fieldInstance} = event;
 			const {evaluable} = fieldInstance;
@@ -164,7 +162,7 @@ const WithEvaluator = ChildComponent => {
 					editingLanguageId={editingLanguageId}
 					events={{
 						...events,
-						fieldEdited: this._handleFieldEdited
+						fieldEdited: this._handleFieldEdited.bind(this)
 					}}
 					pages={pages}
 				/>

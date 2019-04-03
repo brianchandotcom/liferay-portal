@@ -109,7 +109,7 @@ public class SortParserImpl implements SortParser {
 
 				throw new InvalidSortException(
 					"Unable to sort because \"" + fieldName +
-						"\" is not a complex field");
+						"\" is not a complex property");
 			}
 
 			ComplexEntityField complexEntityField =
@@ -153,7 +153,7 @@ public class SortParserImpl implements SortParser {
 			entityField -> Optional.of(new SortField(entityField, ascending))
 		).orElseThrow(
 			() -> new InvalidSortException(
-				"Unable to sort by field: " + fieldName)
+				"Unable to sort by property: " + fieldName)
 		);
 	}
 

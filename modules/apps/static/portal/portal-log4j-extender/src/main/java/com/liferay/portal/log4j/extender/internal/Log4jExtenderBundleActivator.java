@@ -43,10 +43,11 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_tracker = new BundleTracker<Void>(bundleContext, Bundle.ACTIVE, null) {
+		_tracker = new BundleTracker<Bundle>(
+			bundleContext, ~(Bundle.INSTALLED | Bundle.UNINSTALLED), null) {
 
 			@Override
-			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 				try {
 					_configureLog4j(bundle, "META-INF/module-log4j.xml");
 					_configureLog4j(bundle, "META-INF/module-log4j-ext.xml");
@@ -59,7 +60,7 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 						ioe);
 				}
 
-				return null;
+				return bundle;
 			}
 
 		};
@@ -111,6 +112,6 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 	private static final Logger _logger = Logger.getLogger(
 		Log4jExtenderBundleActivator.class);
 
-	private volatile BundleTracker<Void> _tracker;
+	private volatile BundleTracker<Bundle> _tracker;
 
 }

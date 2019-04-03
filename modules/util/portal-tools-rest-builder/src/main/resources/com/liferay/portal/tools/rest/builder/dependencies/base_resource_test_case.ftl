@@ -716,7 +716,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				}
 			</#if>
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch")>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id") || arguments?ends_with(",multipartBody")>
@@ -744,7 +744,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				}
 			</#if>
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if arguments?ends_with(",multipartBody")>
@@ -762,7 +762,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put")>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id") || arguments?ends_with(",multipartBody")>

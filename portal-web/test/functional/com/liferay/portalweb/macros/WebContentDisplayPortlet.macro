@@ -72,7 +72,7 @@ definition {
 				webContentTitle = "${webContentTitle}"
 			);
 
-			Panel.expandPanel(panel = "Structure and Template");
+			Panel.expandPanel(panel = "Default Template");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
@@ -113,7 +113,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-			Panel.expandPanel(panel = "Structure and Template");
+			Panel.expandPanel(panel = "Default Template");
 
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#SELECTED_TEMPLATE",

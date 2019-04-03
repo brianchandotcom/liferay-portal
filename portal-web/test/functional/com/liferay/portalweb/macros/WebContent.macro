@@ -406,12 +406,12 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Panel.expandPanel(panel = "Structure and Template");
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 			value1 = "${structureName}"
 		);
+
+		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
@@ -1264,12 +1264,12 @@ definition {
 	macro selectTemplateCP {
 		ScrollBy(value1 = "0, 50");
 
-		Panel.expandPanel(panel = "Structure and Template");
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 			value1 = "${structureName}"
 		);
+
+		Panel.expandPanel(panel = "Default Template");
 
 		AssertClick(locator1 = "WCEditWebContent#SELECT_TEMPLATE", value1 = "Select");
 
@@ -1289,7 +1289,7 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		Panel.expandPanel(panel = "Structure and Template");
+		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
@@ -1888,7 +1888,7 @@ definition {
 	}
 
 	macro viewSelectedTemplateCP {
-		Panel.expandPanel(panel = "Structure and Template");
+		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",

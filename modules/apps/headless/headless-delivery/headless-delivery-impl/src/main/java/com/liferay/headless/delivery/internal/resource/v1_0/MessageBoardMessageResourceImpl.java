@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -66,9 +67,7 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -132,6 +131,13 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
+		if ((messageBoardMessage.getArticleBody() == null) &&
+			(messageBoardMessage.getHeadline() == null)) {
+
+			throw new BadRequestException(
+				"Headline or article body can not be null");
+		}
+
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			messageBoardMessageId);
 
@@ -151,7 +157,7 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
 			ServiceContextUtil.createServiceContext(
-				messageBoardMessage.getKeywords(), null, mbMessage.getGroupId(),
+				mbMessage.getGroupId(),
 				messageBoardMessage.getViewableByAsString()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
@@ -181,7 +187,6 @@ public class MessageBoardMessageResourceImpl
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
 			false,
 			ServiceContextUtil.createServiceContext(
-				messageBoardMessage.getKeywords(), null,
 				parentMBMessage.getGroupId(),
 				messageBoardMessage.getViewableByAsString()));
 

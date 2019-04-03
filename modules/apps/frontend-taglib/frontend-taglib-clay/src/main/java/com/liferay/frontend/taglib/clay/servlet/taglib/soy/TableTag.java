@@ -23,9 +23,9 @@ import com.liferay.frontend.taglib.clay.internal.servlet.taglib.data.ClayPaginat
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagSchemaContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
-import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -235,7 +235,8 @@ public class TableTag<T> extends BaseClayTag {
 		sb.append("/items");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			AbsolutePortalURLBuilderProvider.getAbsolutePortalURLBuilder();
+			AbsolutePortalURLBuilderProvider.getAbsolutePortalURLBuilder(
+				request);
 
 		putValue(
 			"dataSourceURL",

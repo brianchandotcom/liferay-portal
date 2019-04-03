@@ -15,6 +15,9 @@
 package com.liferay.frontend.taglib.clay.internal;
 
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,12 +28,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class AbsolutePortalURLBuilderProvider {
 
-	public static AbsolutePortalURLBuilder getAbsolutePortalURLBuilder() {
+	public static AbsolutePortalURLBuilder getAbsolutePortalURLBuilder(
+		HttpServletRequest httpServletRequest) {
+
 		if (_absolutePortalURLBuilderProvider == null) {
 			return null;
 		}
 
-		return _absolutePortalURLBuilderProvider._absolutePortalURLBuilder;
+		AbsolutePortalURLBuilderFactory absolutePortalURLBuilderFactory =
+			_absolutePortalURLBuilderProvider._absolutePortalURLBuilderFactory;
+
+		return absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+			httpServletRequest);
 	}
 
 	public AbsolutePortalURLBuilderProvider() {
@@ -41,6 +50,6 @@ public class AbsolutePortalURLBuilderProvider {
 		_absolutePortalURLBuilderProvider;
 
 	@Reference
-	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 }

@@ -155,6 +155,21 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof BaseBuild)) {
+			return false;
+		}
+
+		BaseBuild baseBuild = (BaseBuild)object;
+
+		if (hashCode() == baseBuild.hashCode()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String getAppServer() {
 		return null;
 	}

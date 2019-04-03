@@ -16,7 +16,7 @@ package com.liferay.asset.auto.tagger.opennlp.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
-import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNPLDocumentAssetAutoTagCompanyConfiguration;
+import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -44,13 +44,39 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetTagNamesWithTextFile() throws Exception {
-		String fileName =
-			"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
+	public void testGetTagNamesWithConfigurationDisabled() throws Exception {
+		OpenNLPDocumentAssetAutoTagCompanyConfiguration
+			openNLPDocumentAssetAutoTagCompanyConfiguration =
+				new OpenNLPDocumentAssetAutoTagCompanyConfiguration() {
 
-		OpenNPLDocumentAssetAutoTagCompanyConfiguration
-			openNPLDocumentAssetAutoTagCompanyConfiguration =
-				new OpenNPLDocumentAssetAutoTagCompanyConfiguration() {
+					@Override
+					public float confidenceThreshold() {
+						return 0.1F;
+					}
+
+					@Override
+					public boolean enabled() {
+						return false;
+					}
+
+				};
+
+		Collection<String> tagNames =
+			_openNLPDocumentAssetAutoTagger.getTagNames(
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
+				new String(
+					FileUtil.getBytes(
+						getClass(), "dependencies/" + _FILE_NAME)),
+				ContentTypes.TEXT_PLAIN);
+
+		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+	}
+
+	@Test
+	public void testGetTagNamesWithTextFile() throws Exception {
+		OpenNLPDocumentAssetAutoTagCompanyConfiguration
+			openNLPDocumentAssetAutoTagCompanyConfiguration =
+				new OpenNLPDocumentAssetAutoTagCompanyConfiguration() {
 
 					@Override
 					public float confidenceThreshold() {
@@ -66,9 +92,10 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 
 		Collection<String> actualTagNames =
 			_openNLPDocumentAssetAutoTagger.getTagNames(
-				openNPLDocumentAssetAutoTagCompanyConfiguration,
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
 				new String(
-					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+					FileUtil.getBytes(
+						getClass(), "dependencies/" + _FILE_NAME)),
 				ContentTypes.TEXT_PLAIN);
 
 		Collection<String> expectedTagNames = Arrays.asList(
@@ -100,9 +127,9 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 	public void testGetTagNamesWithUnsupportedFile() throws Exception {
 		String fileName = "test.jpg";
 
-		OpenNPLDocumentAssetAutoTagCompanyConfiguration
-			openNPLDocumentAssetAutoTagCompanyConfiguration =
-				new OpenNPLDocumentAssetAutoTagCompanyConfiguration() {
+		OpenNLPDocumentAssetAutoTagCompanyConfiguration
+			openNLPDocumentAssetAutoTagCompanyConfiguration =
+				new OpenNLPDocumentAssetAutoTagCompanyConfiguration() {
 
 					@Override
 					public float confidenceThreshold() {
@@ -118,13 +145,16 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 
 		Collection<String> tagNames =
 			_openNLPDocumentAssetAutoTagger.getTagNames(
-				openNPLDocumentAssetAutoTagCompanyConfiguration,
+				openNLPDocumentAssetAutoTagCompanyConfiguration,
 				new String(
 					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
 				ContentTypes.IMAGE_JPEG);
 
 		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
 	}
+
+	private static final String _FILE_NAME =
+		"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
 
 	@Inject
 	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;

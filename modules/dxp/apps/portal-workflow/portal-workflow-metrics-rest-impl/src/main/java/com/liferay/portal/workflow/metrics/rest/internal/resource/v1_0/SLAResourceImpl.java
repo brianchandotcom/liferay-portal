@@ -75,7 +75,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
 					sla.getName(), sla.getDescription(), sla.getDuration(),
-					processId, sla.getStartNodeNames(), sla.getPauseNodeNames(),
+					processId, sla.getPauseNodeNames(), sla.getStartNodeNames(),
 					sla.getStopNodeNames(), _createServiceContext()));
 	}
 
@@ -85,8 +85,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(
 					slaId, sla.getName(), sla.getDescription(),
-					sla.getDuration(), sla.getStartNodeNames(),
-					sla.getPauseNodeNames(), sla.getStopNodeNames(),
+					sla.getDuration(), sla.getPauseNodeNames(),
+					sla.getStartNodeNames(), sla.getStopNodeNames(),
 					_createServiceContext()));
 	}
 

@@ -338,7 +338,6 @@ class Validation extends Component {
 		return validation;
 	}
 
-	@autobind
 	_updateValue() {
 		const value = this._getValue();
 

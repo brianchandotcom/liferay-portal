@@ -366,6 +366,13 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().getAssetListEntry(assetListEntryId);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAssetListEntry(groupId, assetListEntryKey);
+	}
+
 	/**
 	 * Returns the asset list entry matching the UUID and group.
 	 *

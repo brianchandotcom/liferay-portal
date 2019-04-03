@@ -391,6 +391,15 @@ public class AssetListEntryLocalServiceWrapper
 		return _assetListEntryLocalService.getAssetListEntry(assetListEntryId);
 	}
 
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetListEntryLocalService.getAssetListEntry(
+			groupId, assetListEntryKey);
+	}
+
 	/**
 	 * Returns the asset list entry matching the UUID and group.
 	 *

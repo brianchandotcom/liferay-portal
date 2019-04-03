@@ -19,7 +19,7 @@ import com.liferay.headless.delivery.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -91,8 +91,8 @@ public class ServletDataImpl implements ServletData {
 			_blogPostingImageResourceComponentServiceObjects);
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
-		Query.setContentListElementResourceComponentServiceObjects(
-			_contentListElementResourceComponentServiceObjects);
+		Query.setContentSetElementResourceComponentServiceObjects(
+			_contentSetElementResourceComponentServiceObjects);
 		Query.setContentStructureResourceComponentServiceObjects(
 			_contentStructureResourceComponentServiceObjects);
 		Query.setDocumentResourceComponentServiceObjects(
@@ -197,8 +197,8 @@ public class ServletDataImpl implements ServletData {
 		_structuredContentFolderResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ContentListElementResource>
-		_contentListElementResourceComponentServiceObjects;
+	private ComponentServiceObjects<ContentSetElementResource>
+		_contentSetElementResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentStructureResource>

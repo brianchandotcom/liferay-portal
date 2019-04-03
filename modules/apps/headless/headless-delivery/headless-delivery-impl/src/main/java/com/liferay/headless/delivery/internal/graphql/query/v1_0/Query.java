@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.internal.graphql.query.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
-import com.liferay.headless.delivery.dto.v1_0.ContentListElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
@@ -34,7 +34,7 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
-import com.liferay.headless.delivery.resource.v1_0.ContentListElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -98,12 +98,12 @@ public class Query {
 			commentResourceComponentServiceObjects;
 	}
 
-	public static void setContentListElementResourceComponentServiceObjects(
-		ComponentServiceObjects<ContentListElementResource>
-			contentListElementResourceComponentServiceObjects) {
+	public static void setContentSetElementResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentSetElementResource>
+			contentSetElementResourceComponentServiceObjects) {
 
-		_contentListElementResourceComponentServiceObjects =
-			contentListElementResourceComponentServiceObjects;
+		_contentSetElementResourceComponentServiceObjects =
+			contentSetElementResourceComponentServiceObjects;
 	}
 
 	public static void setContentStructureResourceComponentServiceObjects(
@@ -389,20 +389,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentListElement> getContentListContentListElementsPage(
-			@GraphQLName("contentListId") Long contentListId,
+	public Collection<ContentSetElement> getContentSetContentSetElementsPage(
+			@GraphQLName("contentSetId") Long contentSetId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_contentListElementResourceComponentServiceObjects,
+			_contentSetElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contentListElementResource -> {
+			contentSetElementResource -> {
 				Page paginationPage =
-					contentListElementResource.
-						getContentListContentListElementsPage(
-							contentListId, Pagination.of(pageSize, page));
+					contentSetElementResource.
+						getContentSetContentSetElementsPage(
+							contentSetId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -1386,10 +1386,10 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			ContentListElementResource contentListElementResource)
+			ContentSetElementResource contentSetElementResource)
 		throws Exception {
 
-		contentListElementResource.setContextCompany(
+		contentSetElementResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -1515,8 +1515,8 @@ public class Query {
 		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<ContentListElementResource>
-		_contentListElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentSetElementResource>
+		_contentSetElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>

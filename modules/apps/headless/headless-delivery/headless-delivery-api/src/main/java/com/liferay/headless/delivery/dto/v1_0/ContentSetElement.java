@@ -35,10 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentListElement")
+@GraphQLName("ContentSetElement")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ContentListElement")
-public class ContentListElement {
+@XmlRootElement(name = "ContentSetElement")
+public class ContentSetElement {
 
 	public Object getContent() {
 		return content;
@@ -154,13 +154,13 @@ public class ContentListElement {
 			return true;
 		}
 
-		if (!(object instanceof ContentListElement)) {
+		if (!(object instanceof ContentSetElement)) {
 			return false;
 		}
 
-		ContentListElement contentListElement = (ContentListElement)object;
+		ContentSetElement contentSetElement = (ContentSetElement)object;
 
-		return Objects.equals(toString(), contentListElement.toString());
+		return Objects.equals(toString(), contentSetElement.toString());
 	}
 
 	@Override

@@ -82,7 +82,7 @@ public class OpenAPIResourceImpl {
 
 			add(CommentResourceImpl.class);
 
-			add(ContentListElementResourceImpl.class);
+			add(ContentSetElementResourceImpl.class);
 
 			add(ContentStructureResourceImpl.class);
 

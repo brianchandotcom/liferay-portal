@@ -151,9 +151,7 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
 			ServiceContextUtil.createServiceContext(
-				messageBoardMessage.getKeywords(),
-				messageBoardMessage.getTaxonomyCategoryIds(),
-				mbMessage.getGroupId(),
+				messageBoardMessage.getKeywords(), null, mbMessage.getGroupId(),
 				messageBoardMessage.getViewableByAsString()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
@@ -183,8 +181,7 @@ public class MessageBoardMessageResourceImpl
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
 			false,
 			ServiceContextUtil.createServiceContext(
-				messageBoardMessage.getKeywords(),
-				messageBoardMessage.getTaxonomyCategoryIds(),
+				messageBoardMessage.getKeywords(), null,
 				parentMBMessage.getGroupId(),
 				messageBoardMessage.getViewableByAsString()));
 

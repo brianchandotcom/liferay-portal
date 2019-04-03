@@ -15,15 +15,12 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
@@ -31,7 +28,6 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,11 +73,6 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 						mbMessage.getMessageId(),
 						WorkflowConstants.STATUS_APPROVED);
 				showAsAnswer = mbMessage.isAnswer();
-				taxonomyCategories = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						MBMessage.class.getName(), mbMessage.getMessageId()),
-					TaxonomyCategoryUtil::toTaxonomyCategory,
-					TaxonomyCategory.class);
 
 				setCreator(
 					() -> {
@@ -96,9 +87,6 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 			}
 		};
 	}
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

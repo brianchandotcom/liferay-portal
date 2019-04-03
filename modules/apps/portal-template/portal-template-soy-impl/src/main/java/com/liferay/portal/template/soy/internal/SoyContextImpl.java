@@ -164,7 +164,7 @@ public class SoyContextImpl implements SoyContext {
 			}
 		}
 
-		_map.put(key, value);
+		put(key, value);
 
 		return this;
 	}

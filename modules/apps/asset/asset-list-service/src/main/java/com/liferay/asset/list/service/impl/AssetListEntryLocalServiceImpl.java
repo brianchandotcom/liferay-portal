@@ -289,6 +289,15 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
+	public AssetListEntry getAssetListEntry(
+			long groupId, String assetListEntryKey)
+		throws PortalException {
+
+		return assetListEntryPersistence.findByG_ALEK(
+			groupId, assetListEntryKey);
+	}
+
+	@Override
 	public void moveAssetEntrySelection(
 			long assetListEntryId, long segmentsEntryId, int position,
 			int newPosition)

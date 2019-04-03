@@ -639,7 +639,7 @@ if (portletTitleBasedNavigation) {
 				{
 					label: '<liferay-ui:message key="save" />',
 					callback: function(event) {
-						var data = {};
+						var data = {'updateVersionDetails': true};
 
 						var versionIncreaseNode = document.querySelector('input[name="<portlet:namespace />versionDetailsVersionIncrease"]:checked');
 

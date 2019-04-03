@@ -22,6 +22,8 @@ Liferay.provide(
 						portletURL += '&${namespace}changeLog=' + encodeURIComponent(changeLogElement.value);
 					}
 
+					portletURL += '&${namespace}updateVersionDetails=true'
+
 					window.location.href = portletURL;
 				}
 			},

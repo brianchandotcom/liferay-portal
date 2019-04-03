@@ -17,6 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.servlet.
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -85,23 +86,8 @@ public class
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
-			OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry
-				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry =
-					_configurationProvider.getConfiguration(
-						OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class,
-						new CompanyServiceSettingsLocator(
-							themeDisplay.getCompanyId(),
-							OpenNLPDocumentAssetAutoTagProviderConstants.
-								SERVICE_NAME));
-
-			request.setAttribute(
-				OpenNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class.
-					getName(),
-				openNLPDocumentAssetAutoTagProviderCompanySettingsFormNavigatorEntry);
+			_addConfigurationToRequest(request);
 
 			super.include(request, response);
 		}
@@ -131,6 +117,28 @@ public class
 	@Override
 	protected String getJspPath() {
 		return "/portal_settings/opennlp_auto_tag_provider.jsp";
+	}
+
+	private void _addConfigurationToRequest(HttpServletRequest request)
+		throws ConfigurationException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+			openNPLDocumentAssetAutoTagProviderCompanyConfiguration =
+				_configurationProvider.getConfiguration(
+					OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+						class,
+					new CompanyServiceSettingsLocator(
+						themeDisplay.getCompanyId(),
+						OpenNLPDocumentAssetAutoTagProviderConstants.
+							SERVICE_NAME));
+
+		request.setAttribute(
+			OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class.
+				getName(),
+			openNPLDocumentAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

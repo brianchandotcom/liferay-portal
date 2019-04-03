@@ -658,6 +658,10 @@
 			"slaDefinitionId": {
 				"store": true,
 				"type": "keyword"
+			},
+			"status": {
+				"store": true,
+				"type": "keyword"
 			}
 		}
 	},

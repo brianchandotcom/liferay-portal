@@ -69,6 +69,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"slaDefinitionId",
 			workflowMetricsSLAProcessResult.getSLADefinitionId());
+		document.addKeyword(
+			"status",
+			String.valueOf(
+				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus()));
 
 		return document;
 	}

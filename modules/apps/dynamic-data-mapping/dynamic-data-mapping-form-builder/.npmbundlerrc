@@ -1,29 +1,8 @@
 {
 	"config": {
 		"imports": {
-			"frontend-taglib-clay": {
-				"clay-alert": ">=2.9.0",
-				"clay-button": ">=2.9.0",
-				"clay-dropdown": ">=2.9.0",
-				"clay-icon": ">=2.9.0",
-				"clay-management-toolbar": ">=2.9.0",
-				"clay-modal": ">=2.9.0",
-				"clay-navigation-bar": ">=2.9.0"
-			},
 			"dynamic-data-mapping-form-field-type": {
 				"/": ">=4.0.0"
-			},
-			"frontend-js-metal-web": {
-				"metal": ">=2.16.5",
-				"metal-component": ">=2.16.5",
-				"metal-soy": ">=2.16.5",
-				"metal-jsx": ">=2.16.5",
-				"metal-state": ">=2.16.5",
-				"metal-dom": ">=2.16.5",
-				"metal-events": ">=2.16.5"
-			},
-			"frontend-js-web": {
-				"/": ">=3.0.0"
 			}
 		}
 	},
@@ -33,5 +12,5 @@
 		"!**/*.es.js",
 		"!**/*.soy.js"
 	],
-	"output": "classes/META-INF/resources"
+	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

@@ -38,7 +38,7 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/metal/edit_form_instance.jsp";
+		return "/admin/edit_form_instance.jsp";
 	}
 
 }

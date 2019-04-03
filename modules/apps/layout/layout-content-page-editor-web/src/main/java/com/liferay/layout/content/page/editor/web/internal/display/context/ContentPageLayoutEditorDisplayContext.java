@@ -98,27 +98,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return _fragmentsEditorToolbarSoyContext;
 	}
 
-	private SoyContext _createDefaultSegmentsExperience() {
-		SoyContext segmentsExperienceSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		segmentsExperienceSoyContext.put(
-			"name",
-			SegmentsConstants.getDefaultSegmentsExperienceName(
-				themeDisplay.getLocale())
-		).put(
-			"priority", SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
-		).put(
-			"segmentsEntryId",
-			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
-		).put(
-			"segmentsExperienceId",
-			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
-		);
-
-		return segmentsExperienceSoyContext;
-	}
-
 	private SoyContext _getAvailableSegmentsEntriesSoyContext() {
 		SoyContext availableSegmentsEntriesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
@@ -142,10 +121,10 @@ public class ContentPageLayoutEditorDisplayContext
 				segmentsEntrySoyContext);
 		}
 
-		SoyContext segmentsEntrySoyContext =
+		SoyContext defaultSegmentsEntrySoyContext =
 			SoyContextFactoryUtil.createSoyContext();
 
-		segmentsEntrySoyContext.put(
+		defaultSegmentsEntrySoyContext.put(
 			"name",
 			SegmentsConstants.getDefaultSegmentsEntryName(
 				themeDisplay.getLocale())
@@ -155,13 +134,13 @@ public class ContentPageLayoutEditorDisplayContext
 
 		availableSegmentsEntriesSoyContext.put(
 			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT),
-			segmentsEntrySoyContext);
+			defaultSegmentsEntrySoyContext);
 
 		return availableSegmentsEntriesSoyContext;
 	}
 
 	private SoyContext _getAvailableSegmentsExperiencesSoyContext() {
-		SoyContext availableSegmentsEntriesSoyContext =
+		SoyContext availableSegmentsExperiencesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
 
 		List<SegmentsExperience> segmentsExperiences =
@@ -184,16 +163,33 @@ public class ContentPageLayoutEditorDisplayContext
 				String.valueOf(segmentsExperience.getSegmentsExperienceId())
 			);
 
-			availableSegmentsEntriesSoyContext.put(
+			availableSegmentsExperiencesSoyContext.put(
 				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
 				segmentsExperienceSoyContext);
 		}
 
-		availableSegmentsEntriesSoyContext.put(
-			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
-			_createDefaultSegmentsExperience());
+		SoyContext defaultSegmentsExperienceSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
 
-		return availableSegmentsEntriesSoyContext;
+		defaultSegmentsExperienceSoyContext.put(
+			"name",
+			SegmentsConstants.getDefaultSegmentsExperienceName(
+				themeDisplay.getLocale())
+		).put(
+			"priority", SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
+		).put(
+			"segmentsEntryId",
+			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
+		).put(
+			"segmentsExperienceId",
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+		);
+
+		availableSegmentsExperiencesSoyContext.put(
+			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
+			defaultSegmentsExperienceSoyContext);
+
+		return availableSegmentsExperiencesSoyContext;
 	}
 
 	private SoyContext _editorSoyContext;

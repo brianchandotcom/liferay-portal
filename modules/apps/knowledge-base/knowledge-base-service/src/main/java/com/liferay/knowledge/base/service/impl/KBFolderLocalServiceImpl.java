@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -253,6 +254,10 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
+
+		if (!Objects.equals(name, kbFolder.getName())) {
+			validateName(kbFolder.getGroupId(), parentResourcePrimKey, name);
+		}
 
 		kbFolder.setModifiedDate(new Date());
 		kbFolder.setParentKBFolderId(parentResourcePrimKey);

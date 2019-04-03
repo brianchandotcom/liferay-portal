@@ -861,6 +861,8 @@ definition {
 
 		Button.clickSave();
 
+		SitePages.togglePrivacy(privacy = "Public Pages");
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "Test Page Name"

@@ -153,12 +153,18 @@ public class SoyContextImpl implements SoyContext {
 	public SoyContext put(
 		String key, UnsafeSupplier<?, Exception> unsafeSupplier) {
 
-		try {
-			_map.put(key, unsafeSupplier.get());
+		Object value = null;
+
+		if (unsafeSupplier != null) {
+			try {
+				value = unsafeSupplier.get();
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+
+		_map.put(key, value);
 
 		return this;
 	}

@@ -410,6 +410,53 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<ContentSetElement>
+			getContentSpaceContentSetContentSetElementByKey(
+				@GraphQLName("contentSpaceId") Long contentSpaceId,
+				@GraphQLName("key") String key,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetElementResource -> {
+				Page paginationPage =
+					contentSetElementResource.
+						getContentSpaceContentSetContentSetElementByKey(
+							contentSpaceId, key, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ContentSetElement>
+			getContentSpaceContentSetContentSetElementByUuid(
+				@GraphQLName("contentSpaceId") Long contentSpaceId,
+				@GraphQLName("uuid") String uuid,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetElementResource -> {
+				Page paginationPage =
+					contentSetElementResource.
+						getContentSpaceContentSetContentSetElementByUuid(
+							contentSpaceId, uuid,
+							Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("search") String search,

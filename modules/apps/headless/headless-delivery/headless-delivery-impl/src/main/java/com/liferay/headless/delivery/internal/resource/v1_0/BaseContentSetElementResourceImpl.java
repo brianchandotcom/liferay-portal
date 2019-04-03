@@ -72,6 +72,52 @@ public abstract class BaseContentSetElementResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/content-spaces/{contentSpaceId}/content-sets/{contentSetId}/content-set-elements/by-key/{key}"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ContentSetElement")})
+	public Page<ContentSetElement>
+			getContentSpaceContentSetContentSetElementByKey(
+				@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+				@NotNull @PathParam("key") String key,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/content-spaces/{contentSpaceId}/content-sets/{contentSetId}/content-set-elements/by-uuid/{uuid}"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ContentSetElement")})
+	public Page<ContentSetElement>
+			getContentSpaceContentSetContentSetElementByUuid(
+				@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+				@NotNull @PathParam("uuid") String uuid,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

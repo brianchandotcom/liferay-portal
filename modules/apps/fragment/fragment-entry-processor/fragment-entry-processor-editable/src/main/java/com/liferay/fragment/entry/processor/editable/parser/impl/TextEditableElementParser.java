@@ -64,7 +64,7 @@ public class TextEditableElementParser implements EditableElementParser {
 		EditableElementParserUtil.addClass(
 			element, configJSONObject, "text-", "textAlignment");
 		EditableElementParserUtil.addClass(
-			element, configJSONObject, "text-palette-", "textColor");
+			element, configJSONObject, "text-", "textColor");
 		EditableElementParserUtil.addClass(
 			element, configJSONObject, StringPool.BLANK, "textStyle");
 

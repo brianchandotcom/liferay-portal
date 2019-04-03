@@ -190,8 +190,8 @@ public class EditAssetListDisplayContext {
 							_themeDisplay.getURLCurrent(), "assetListEntryId",
 							getAssetListEntryId());
 						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_request, "personalized-variation"));
+							LanguageUtil.format(
+								_request, "new-x", "personalized-variation"));
 					});
 			}
 		};

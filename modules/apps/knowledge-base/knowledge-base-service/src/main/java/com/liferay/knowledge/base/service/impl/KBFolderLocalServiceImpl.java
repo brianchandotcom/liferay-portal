@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -255,7 +255,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
 
-		if (!Objects.equals(name, kbFolder.getName())) {
+		if (!StringUtil.equals(name, kbFolder.getName())) {
 			validateName(kbFolder.getGroupId(), parentResourcePrimKey, name);
 		}
 

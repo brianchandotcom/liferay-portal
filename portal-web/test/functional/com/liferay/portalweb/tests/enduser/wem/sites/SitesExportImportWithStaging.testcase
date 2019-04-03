@@ -168,7 +168,7 @@ definition {
 		}
 
 		task ("Publish the display page") {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Add a web content article that uses the display page to the first site") {

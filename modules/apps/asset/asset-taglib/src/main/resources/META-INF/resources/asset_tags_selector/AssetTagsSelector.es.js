@@ -88,11 +88,17 @@ class AssetTagsSelector extends Component {
 	 */
 
 	_handleItemAdded(event) {
+		this.selectedItems = event.data.selectedItems;
 		this.tagNames = this._getTagNames();
 
 		if (this.addCallback) {
 			window[this.addCallback](event.data.item);
 		}
+
+		this.emit('itemAdded', {
+			item: event.data.item,
+			selectedItems: this.selectedItems
+		});
 	}
 
 	/**
@@ -103,11 +109,17 @@ class AssetTagsSelector extends Component {
 	 */
 
 	_handleItemRemoved(event) {
+		this.selectedItems = event.data.selectedItems;
 		this.tagNames = this._getTagNames();
 
 		if (this.removeCallback) {
 			window[this.removeCallback](event.data.item);
 		}
+
+		this.emit('itemRemoved', {
+			item: event.data.item,
+			selectedItems: this.selectedItems
+		});
 	}
 
 	/**
@@ -207,6 +219,17 @@ AssetTagsSelector.STATE = {
 	removeCallback: Config.string(),
 
 	/**
+	 * List of the selected Items.
+	 * @default []
+	 * @instance
+	 * @memberof AssetTagsSelector
+	 * @review
+	 * @type {?Array<Object>}
+	 */
+
+	selectedItems: Config.array(Config.object()).value([]),
+
+	/**
 	 * A comma separated version of the list of selected items
 	 * @default undefined
 	 * @instance
@@ -216,6 +239,7 @@ AssetTagsSelector.STATE = {
 	 */
 
 	tagNames: Config.string().value('')
+
 };
 
 Soy.register(AssetTagsSelector, templates);

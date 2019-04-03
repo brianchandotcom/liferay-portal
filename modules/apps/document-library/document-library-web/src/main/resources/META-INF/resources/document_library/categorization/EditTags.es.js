@@ -24,7 +24,7 @@ class EditTags extends Component {
 	 * Close the modal.
 	 */
 	close() {
-		this.showModal = false;
+		this._showModal = false;
 	}
 
 	/**
@@ -42,7 +42,7 @@ class EditTags extends Component {
 		this.fileEntries = fileEntries;
 		this.selectAll = selectAll;
 		this.folderId = folderId;
-		this.showModal = true;
+		this._showModal = true;
 
 		this._getCommonTags();
 	}
@@ -78,6 +78,10 @@ class EditTags extends Component {
 			);
 	}
 
+	_handleSelectedItemsChange(event) {
+		this._commonTags = event.selectedItems;
+	}
+
 	/**
 	 * Gets the common tags for the selected
 	 * file entries and updates the state.
@@ -86,7 +90,7 @@ class EditTags extends Component {
 	 * @review
 	 */
 	_getCommonTags() {
-		this.loading = true;
+		this._loading = true;
 
 		let selection = this._getSelection();
 
@@ -98,8 +102,8 @@ class EditTags extends Component {
 		).then(
 			([responseTags, responseDescription]) => {
 				if (responseTags && responseDescription) {
-					this.loading = false;
-					this.commonTags = (responseTags.items || []).map(item => item.name);
+					this._loading = false;
+					this._commonTags = this._setCommonTags((responseTags.items || []).map(item => item.name));
 					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
@@ -125,7 +129,7 @@ class EditTags extends Component {
 	 * @review
 	 */
 	_handleSaveBtnClick() {
-		let finalTags = this.commonTags.map(tag => tag.label);
+		let finalTags = this._commonTags.map(tag => tag.label);
 
 		let addedTags = [];
 
@@ -219,7 +223,29 @@ EditTags.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonTags: Config.array().setter('_setCommonTags').value([]),
+	_commonTags: Config.array().value([]).internal(),
+
+	/**
+	 * Flag that indicate if loading icon must
+	 * be shown.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {Boolean}
+	 */
+	_loading: Config.bool().value(false).internal(),
+
+	/**
+	 * Flag that indicate if the modal must
+	 * be shown.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {Boolean}
+	 */
+	_showModal: Config.bool().value(false).internal(),
 
 	/**
 	 * Description
@@ -256,17 +282,6 @@ EditTags.STATE = {
 	 * @type {[type]}
 	 */
 	groupIds: Config.array().required(),
-
-	/**
-	 * Flag that indicate if loading icon must
-	 * be shown.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {Boolean}
-	 */
-	loading: Config.bool().value(false).internal(),
 
 	/**
 	 * Flag that indicate if multiple
@@ -319,17 +334,6 @@ EditTags.STATE = {
 	 * @type {Boolean}
 	 */
 	selectAll: Config.bool(),
-
-	/**
-	 * Flag that indicate if the modal must
-	 * be shown.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {Boolean}
-	 */
-	showModal: Config.bool().value(false).internal(),
 
 	/**
 	 * Path to images.

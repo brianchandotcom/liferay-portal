@@ -69,8 +69,6 @@ class AssetVocabularyCategoriesSelector extends Component {
 											};
 										}
 									);
-
-									this.categoryIds = this._getCategoryIds();
 								}
 							}.bind(this)
 						},
@@ -114,35 +112,7 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 */
 
 	_handleItemAdded(event) {
-		const multiSelect = this.refs.multiSelect;
-
-		const match = multiSelect.filteredItems.find(
-			item => {
-				return (event.data.item.label === item.data.label);
-			}
-		);
-
-		let selectedItems = multiSelect.selectedItems;
-
-		if (match) {
-			selectedItems[selectedItems.length - 1].value = match.data.value;
-		}
-
-		if (!this.allowInputCreateItem) {
-			const itemAdded = selectedItems[selectedItems.length - 1];
-
-			this._unexistingCategoryError = itemAdded.label == itemAdded.value;
-
-			if (this._unexistingCategoryError) {
-				selectedItems = selectedItems.splice(-1, 1);
-
-				multiSelect.inputValue = event.data.item.label;
-
-				this._typedCategory = event.data.item.label;
-			}
-		}
-
-		this.categoryIds = this._getCategoryIds();
+		this.selectedItems = event.data.selectedItems;
 	}
 
 	/**
@@ -153,6 +123,10 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 */
 
 	_handleItemRemoved(event) {
+		this.selectedItems = event.data.selectedItems;
+	}
+
+	syncSelectedItems() {
 		this.categoryIds = this._getCategoryIds();
 	}
 
@@ -244,12 +218,12 @@ AssetVocabularyCategoriesSelector.STATE = {
 	portletURL: Config.string(),
 
 	/**
-	 * A function to call when a tag is removed
+	 * List of selected items
 	 * @default undefined
 	 * @instance
 	 * @memberof AssetVocabularyCategoriesSelector
 	 * @review
-	 * @type {?string}
+	 * @type {?Array}
 	 */
 
 	selectedItems: Config.array().value([]),

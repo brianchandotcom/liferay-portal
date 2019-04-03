@@ -7,9 +7,6 @@
 	{@param id: string}
 	{@param inputName: string}
 	{@param spritemap: string}
-	{@param? categoryIds: string}
-	{@param? selectedItems: list<?>}
-	{@param? useFallbackInput: bool}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
 	{@param? _handleInputOnBlur: any}
@@ -17,6 +14,9 @@
 	{@param? _handleItemRemoved: any}
 	{@param? _typedCategory: string}
 	{@param? _unexistingCategoryError: bool}
+	{@param? categoryIds: string}
+	{@param? selectedItems: list<?>}
+	{@param? useFallbackInput: bool}
 
 	<div class="lfr-tags-selector-content {if $_unexistingCategoryError}has-error{/if}" id="{$id}">
 		{if $useFallbackInput}
@@ -24,17 +24,16 @@
 		{/if}
 
 		{call ClayMultiSelect.render}
+			{param autocompleteFilterCondition: 'label' /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
-				'buttonClicked': $_handleButtonClicked,
-				'inputOnBlur': $_handleInputOnBlur,
-				'itemAdded': $_handleItemAdded,
-				'itemRemoved': $_handleItemRemoved,
-				'itemSelected': $_handleItemAdded
+				'selectButtonClick': $_handleButtonClicked,
+				'inputBlur': $_handleInputOnBlur,
+				'labelItemAdded': $_handleItemAdded,
+				'labelItemRemoved': $_handleItemRemoved
 			] /}
 			{param helpText: '' /}
 			{param inputName: $inputName /}
-			{param labelLocator: 'label' /}
 			{param ref: 'multiSelect' /}
 			{param selectedItems: $selectedItems /}
 			{param spritemap: $spritemap /}

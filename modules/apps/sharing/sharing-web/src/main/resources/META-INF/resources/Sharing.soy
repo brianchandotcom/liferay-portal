@@ -13,9 +13,11 @@
 	{@param? _userEmailAddresses: list<?>}
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
+	{@param? _handleInputBlur: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleDataChange: any}
 	{@param? _handleSubmit: any}
+	{@param? _inputValue: string}
 	{@param? _validateEmails: any}
 	{@param? emailErrorMessage: string}
 	{@param? submitting: bool}
@@ -34,11 +36,16 @@
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
 							'dataChange': $_handleDataChange,
-							'itemAdded': $_validateEmails,
-							'itemRemoved': $_validateEmails,
-							'itemSelected': $_validateEmails
+							'inputBlur': $_handleInputBlur,
+							'labelItemAdded': $_validateEmails,
+							'labelItemRemoved': $_validateEmails
 						] /}
-						{param helpText kind="text"} {msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg} {/param}
+
+						{param helpText kind="text"} 
+							{msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg} 
+						{/param}
+
+						{param inputValue: $_inputValue /}
 						{param label kind="text"} {msg desc=""}invite-to-collaborate{/msg} {/param}
 						{param placeholder kind="text"} {msg desc=""}enter-name-or-email-address{/msg} {/param}
 						{param ref: 'multiSelect' /}

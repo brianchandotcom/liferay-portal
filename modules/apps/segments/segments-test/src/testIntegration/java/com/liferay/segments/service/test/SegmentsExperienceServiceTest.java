@@ -192,8 +192,8 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience =
-			_addSegmentsExperience(serviceContext);
+		SegmentsExperience segmentsExperience = _addSegmentsExperience(
+			serviceContext);
 		_addSegmentsExperience(serviceContext);
 		_addSegmentsExperience(serviceContext);
 

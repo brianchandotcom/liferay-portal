@@ -83,7 +83,6 @@ public class SegmentsExperienceLocalServiceTest {
 			_group.getGroupId(), _classNameId, _classPK);
 	}
 
-
 	@Test
 	public void testAddSegmentsExperience() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
@@ -231,8 +230,8 @@ public class SegmentsExperienceLocalServiceTest {
 		SegmentsExperience segmentsExperience1 = _addSegmentsExperience();
 		SegmentsExperience segmentsExperience2 = _addSegmentsExperience();
 
-		int prioritySegmentsExperience1 = segmentsExperience1.getPriority();
-		int prioritySegmentsExperience2 = segmentsExperience2.getPriority();
+		int priority1 = segmentsExperience1.getPriority();
+		int priority2 = segmentsExperience2.getPriority();
 
 		SegmentsExperience movedSegmentsExperience =
 			_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
@@ -248,10 +247,8 @@ public class SegmentsExperienceLocalServiceTest {
 				segmentsExperience2.getSegmentsExperienceId());
 
 		Assert.assertEquals(movedSegmentsExperience, segmentsExperience1);
-		Assert.assertEquals(
-			prioritySegmentsExperience1, segmentsExperience2.getPriority());
-		Assert.assertEquals(
-			prioritySegmentsExperience2, segmentsExperience1.getPriority());
+		Assert.assertEquals(priority1, segmentsExperience2.getPriority());
+		Assert.assertEquals(priority2, segmentsExperience1.getPriority());
 	}
 
 	@Test

@@ -66,6 +66,10 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 			getAssetEntries(long[] segmentsEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
+			getAssetEntries(long[] segmentsEntryIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public int getAssetEntriesCount(long segmentsEntryId);
 
 	public int getAssetEntriesCount(long[] segmentsEntryIds)

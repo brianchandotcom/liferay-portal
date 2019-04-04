@@ -255,7 +255,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			ddmFormFieldValue.getValue();
 
 		if (value == null) {
-			return null;
+			return new Value();
 		}
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
@@ -279,7 +279,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			long classPK = jsonObject.getLong("classPK");
 
 			if (classPK == 0) {
-				return null;
+				return new Value();
 			}
 
 			FileEntry fileEntry = dlAppService.getFileEntry(classPK);
@@ -317,7 +317,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			long fileEntryId = jsonObject.getLong("fileEntryId");
 
 			if (fileEntryId == 0) {
-				return null;
+				return new Value();
 			}
 
 			FileEntry fileEntry = dlAppService.getFileEntry(fileEntryId);
@@ -341,7 +341,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			long classPK = jsonObject.getLong("classPK");
 
 			if (classPK == 0) {
-				return null;
+				return new Value();
 			}
 
 			JournalArticle journalArticle =
@@ -368,7 +368,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			long layoutId = jsonObject.getLong("layoutId");
 
 			if (layoutId == 0) {
-				return null;
+				return new Value();
 			}
 
 			long groupId = jsonObject.getLong("groupId");

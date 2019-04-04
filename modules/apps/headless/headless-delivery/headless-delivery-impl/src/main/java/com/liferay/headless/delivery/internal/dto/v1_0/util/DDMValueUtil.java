@@ -20,10 +20,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.ParseException;
@@ -72,55 +76,84 @@ public class DDMValueUtil {
 						DDMFormFieldType.DOCUMENT_LIBRARY,
 						ddmFormField.getType())) {
 
-				localizedValue.addString(
-					locale, _toJSON(dlAppService, "", value.getDocumentId()));
+				ContentDocument contentDocument = value.getDocument();
+
+				String valueString = StringPool.BLANK;
+
+				if ((contentDocument != null) &&
+					(contentDocument.getId() != null)) {
+
+					valueString = _toJSON(
+						dlAppService, StringPool.BLANK,
+						contentDocument.getId());
+				}
+
+				localizedValue.addString(locale, valueString);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
 
-				localizedValue.addString(
-					locale,
-					_toJSON(
-						dlAppService, value.getImageDescription(),
-						value.getImageId()));
+				ContentDocument imageContentDocument = value.getImage();
+
+				String valueString = StringPool.BLANK;
+
+				if ((imageContentDocument != null) &&
+					(imageContentDocument.getId() != null)) {
+
+					valueString = _toJSON(
+						dlAppService, imageContentDocument.getDescription(),
+						imageContentDocument.getId());
+				}
+
+				localizedValue.addString(locale, valueString);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
 						ddmFormField.getType())) {
 
-				JournalArticle journalArticle = null;
+				StructuredContentLink structuredContentLink =
+					value.getStructuredContentLink();
 
-				try {
-					journalArticle = journalArticleService.getLatestArticle(
-						value.getStructuredContentId());
-				}
-				catch (Exception e) {
-					throw new BadRequestException(
-						"No structured content exists with ID " +
-							value.getStructuredContentId(),
-						e);
-				}
+				String valueString = StringPool.BLANK;
 
-				localizedValue.addString(
-					locale,
-					JSONUtil.put(
+				if ((structuredContentLink != null) &&
+					(structuredContentLink.getId() != null)) {
+
+					JournalArticle journalArticle = null;
+
+					try {
+						journalArticle = journalArticleService.getLatestArticle(
+							structuredContentLink.getId());
+					}
+					catch (Exception e) {
+						throw new BadRequestException(
+							"No structured content exists with ID " +
+								structuredContentLink.getId(),
+							e);
+					}
+
+					valueString = JSONUtil.put(
 						"className", JournalArticle.class.getName()
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					).put(
 						"title", journalArticle.getTitle()
-					).toString());
+					).toString();
+				}
+
+				localizedValue.addString(locale, valueString);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType())) {
 
-				Layout layout = _getLayout(
-					groupId, layoutLocalService, value.getLink());
+				String valueString = StringPool.BLANK;
 
-				localizedValue.addString(
-					locale,
-					JSONUtil.put(
+				if (value.getLink() != null) {
+					Layout layout = _getLayout(
+						groupId, layoutLocalService, value.getLink());
+
+					valueString = JSONUtil.put(
 						"groupId", layout.getGroupId()
 					).put(
 						"label", layout.getFriendlyURL()
@@ -128,10 +161,14 @@ public class DDMValueUtil {
 						"privateLayout", layout.isPrivateLayout()
 					).put(
 						"layoutId", layout.getLayoutId()
-					).toString());
+					).toString();
+				}
+
+				localizedValue.addString(locale, valueString);
 			}
 			else {
-				localizedValue.addString(locale, value.getData());
+				localizedValue.addString(
+					locale, GetterUtil.getString(value.getData()));
 			}
 
 			return localizedValue;
@@ -156,7 +193,7 @@ public class DDMValueUtil {
 				).toString());
 		}
 
-		return new UnlocalizedValue(value.getData());
+		return new UnlocalizedValue(GetterUtil.getString(value.getData()));
 	}
 
 	private static Layout _getLayout(
@@ -190,7 +227,7 @@ public class DDMValueUtil {
 
 	private static String _toDateString(String valueString, Locale locale) {
 		if (Validator.isNull(valueString)) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		try {

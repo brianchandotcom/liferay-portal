@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Asset Info Display Implementation
+Bundle-SymbolicName: com.liferay.asset.info.display.impl
+Bundle-Version: 1.0.0

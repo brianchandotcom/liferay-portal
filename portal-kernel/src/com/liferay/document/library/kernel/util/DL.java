@@ -263,13 +263,6 @@ public interface DL {
 	public boolean hasViewInContextGroupLayout(
 		long groupId, ThemeDisplay themeDisplay);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             DLUtil#hasViewInContextGroupLayout(long, ThemeDisplay)}
-	 */
-	@Deprecated
-	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay);
-
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, long folderId, long fileEntryTypeId)
 		throws Exception;

@@ -385,16 +385,6 @@ public class DLUtil {
 		return getDL().hasViewInContextGroupLayout(groupId, themeDisplay);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link DLUtil#hasViewInContextGroupLayout(long, ThemeDisplay)}
-	 */
-	@Deprecated
-	public static boolean hasViewInContextGroupLayout(
-		ThemeDisplay themeDisplay) {
-
-		return getDL().hasViewInContextGroupLayout(themeDisplay);
-	}
-
 	public static boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, long folderId, long fileEntryTypeId)
 		throws Exception {

@@ -187,7 +187,7 @@
 	{@param? page: ?}
 	{@param? pageIndex: number}
 
-	{for $row in $page.rows}
+	{foreach $row in $page.rows}
 		{delcall PageRenderer.row variant="'grid'"}
 			{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 			{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
@@ -202,7 +202,7 @@
 			{param rowIndex: index($row) /}
 			{param spritemap: $spritemap /}
 		{/delcall}
-	{/for}
+	{/foreach}
 {/deltemplate}
 
 {deltemplate PageRenderer.page variant="'grid'"}
@@ -238,7 +238,7 @@
 				</div>
 			</div>
 		{else}
-			{for $row in $page.rows}
+			{foreach $row in $page.rows}
 				{if isFirst($row) and $editable}
 					{call .fieldEmpty}
 						{param isRow: true /}
@@ -271,7 +271,7 @@
 						{param size: 12 /}
 					{/call}
 				{/if}
-			{/for}
+			{/foreach}
 		{/if}
 	</div>
 {/deltemplate}
@@ -291,7 +291,7 @@
 	{@param? rowIndex: number}
 
 	<div class="position-relative row">
-		{for $column in $row.columns}
+		{foreach $column in $row.columns}
 			{delcall PageRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
@@ -306,7 +306,7 @@
 				{param rowIndex: $rowIndex /}
 				{param spritemap: $spritemap /}
 			{/delcall}
-		{/for}
+		{/foreach}
 	</div>
 {/deltemplate}
 
@@ -326,7 +326,7 @@
 		{/let}
 
 		<div {$attributes}>
-			{for $field in $column.fields}
+			{foreach $field in $column.fields}
 				{let $fieldType: $field.type ?: 'empty' /}
 
 				{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
@@ -338,7 +338,7 @@
 					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 					{param spritemap: $spritemap /}
 				{/delcall}
-			{/for}
+			{/foreach}
 		</div>
 	{/if}
 {/deltemplate}
@@ -380,7 +380,7 @@
 
 		<div {$attributes}>
 			{let $content kind="html"}
-				{for $field in $column.fields}
+				{foreach $field in $column.fields}
 					{let $fieldType: $field.type /}
 
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
@@ -392,7 +392,7 @@
 						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 						{param spritemap: $spritemap /}
 					{/delcall}
-				{/for}
+				{/foreach}
 			{/let}
 
 			{if $editable}

@@ -141,7 +141,7 @@
 								{let $ruleIndex: index($rule) /}
 								{let $isExpanded: $dropdownExpandedIndex == $ruleIndex /}
 
-								<div class="ddm-rule-list-settings" data-card-id={$ruleIndex}>
+								<div class="ddm-rule-list-settings" data-card-id="{$ruleIndex}">
 									{call ClayActionsDropdown.render}
 										{param items: $rulesCardOptions /}
 										{param expanded: $isExpanded /}
@@ -151,7 +151,7 @@
 										{param spritemap: $spritemap /}
 									{/call}
 
-									<button class="component-action cursor-pointer dropdown-toggle" data-rule-index="{$ruleIndex}" data-onclick={$_handleDropdownClicked}>
+									<button class="component-action cursor-pointer dropdown-toggle" data-onclick="{$_handleDropdownClicked}" data-rule-index="{$ruleIndex}">
 										{call ClayIcon.render}
 											{param spritemap: $spritemap /}
 											{param symbol: 'ellipsis-v' /}

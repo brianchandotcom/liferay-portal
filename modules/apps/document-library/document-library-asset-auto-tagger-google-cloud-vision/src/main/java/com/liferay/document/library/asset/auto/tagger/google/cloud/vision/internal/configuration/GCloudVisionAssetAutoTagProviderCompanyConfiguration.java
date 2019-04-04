@@ -39,7 +39,8 @@ public interface GCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	 * Sets the API key for the G Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = GCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
+		descriptionArguments = GCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL,
+		uiRequired = true
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false

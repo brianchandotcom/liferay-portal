@@ -187,28 +187,8 @@ public class Setup {
 		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
 		for (Portlet portlet : portlets) {
-			String servletContextName = portlet.getContext();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"setupPage: searching for servetContextName = " +
-						servletContextName);
-			}
-
-			String portletName = portlet.getPortletName();
-
-			String noDashPortletName = portletName.replaceAll("[-]", "");
-
-			String warContext = "_WAR_" + servletContextName;
-
 			String portletId =
-				noDashPortletName + warContext.replaceAll("[.]", "");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"adding portletId=[" + portletId + "] portletName=[" +
-						portletName + "] ...");
-			}
+				portlet.getPortletName() + "_WAR_" + portlet.getContext();
 
 			layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
 		}

@@ -20,6 +20,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -290,6 +291,10 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		return soyContext;
+	}
+
+	public boolean hasErrors() {
+		return _errors;
 	}
 
 	protected String getFragmentEntryActionURL(String action) {
@@ -935,12 +940,32 @@ public class ContentPageEditorDisplayContext {
 				SoyContext soyContext =
 					SoyContextFactoryUtil.createSoyContext();
 
-				String content =
-					FragmentEntryRenderUtil.renderFragmentEntryLink(
+				String content = StringPool.BLANK;
+
+				try {
+					content = FragmentEntryRenderUtil.renderFragmentEntryLink(
 						fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 						new HashMap<>(), themeDisplay.getLocale(),
 						segmentsExperienceIds, request,
 						PortalUtil.getHttpServletResponse(_renderResponse));
+				}
+				catch (FragmentEntryContentException fece) {
+					Element element = new Element("div");
+
+					element.attr("class", "alert alert-danger m-2");
+
+					element.text(
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							fece.getLocalizedMessage()));
+
+					content = element.outerHtml();
+
+					soyContext.put("error", true);
+
+					_errors = true;
+				}
+
 				JSONObject editableValuesJSONObject =
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getEditableValues());
@@ -1077,6 +1102,7 @@ public class ContentPageEditorDisplayContext {
 
 	private List<SoyContext> _assetBrowserLinksSoyContexts;
 	private Map<String, Object> _defaultConfigurations;
+	private boolean _errors;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private Long _groupId;

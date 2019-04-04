@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
 	},

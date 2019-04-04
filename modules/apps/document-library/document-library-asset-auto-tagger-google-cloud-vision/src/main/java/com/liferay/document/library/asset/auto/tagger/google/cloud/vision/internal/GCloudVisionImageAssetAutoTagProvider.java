@@ -16,7 +16,6 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util.GCloudVisionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -102,11 +100,9 @@ public class GCloudVisionImageAssetAutoTagProvider
 			_getConfiguration(FileEntry fileEntry)
 		throws ConfigurationException {
 
-		return _configurationProvider.getConfiguration(
+		return _configurationProvider.getCompanyConfiguration(
 			GCloudVisionAssetAutoTagProviderCompanyConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				fileEntry.getCompanyId(),
-				GCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME));
+			fileEntry.getCompanyId());
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {

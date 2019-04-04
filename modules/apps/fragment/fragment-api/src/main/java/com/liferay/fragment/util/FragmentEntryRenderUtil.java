@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.util;
 
-import com.liferay.asset.display.contributor.util.ContentAccessorUtil;
+import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;

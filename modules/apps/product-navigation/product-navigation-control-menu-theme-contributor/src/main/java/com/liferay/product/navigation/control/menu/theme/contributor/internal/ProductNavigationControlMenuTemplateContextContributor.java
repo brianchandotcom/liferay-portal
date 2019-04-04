@@ -19,12 +19,19 @@ import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -55,10 +62,6 @@ public class ProductNavigationControlMenuTemplateContextContributor
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isImpersonated()) {
-			return true;
-		}
-
 		if (!themeDisplay.isSignedIn()) {
 			return false;
 		}
@@ -69,7 +72,36 @@ public class ProductNavigationControlMenuTemplateContextContributor
 			return false;
 		}
 
-		return true;
+		List<ProductNavigationControlMenuCategory>
+			productNavigationControlMenuCategories =
+				_productNavigationControlMenuCategoryRegistry.
+					getProductNavigationControlMenuCategories(
+						ProductNavigationControlMenuCategoryKeys.ROOT);
+
+		for (ProductNavigationControlMenuCategory
+				productNavigationControlMenuCategory :
+					productNavigationControlMenuCategories) {
+
+			List<ProductNavigationControlMenuEntry>
+				productNavigationControlMenuEntries =
+					_productNavigationControlMenuEntryRegistry.
+						getProductNavigationControlMenuEntries(
+							productNavigationControlMenuCategory, request);
+
+			if (!productNavigationControlMenuEntries.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
+
+	@Reference
+	private ProductNavigationControlMenuCategoryRegistry
+		_productNavigationControlMenuCategoryRegistry;
+
+	@Reference
+	private ProductNavigationControlMenuEntryRegistry
+		_productNavigationControlMenuEntryRegistry;
 
 }

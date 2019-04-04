@@ -179,8 +179,23 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public String getJenkinsGitHubBranchName() {
+		return getGitHubBranchName(getJenkinsGitHubURL());
+	}
+
+	@Override
+	public String getJenkinsGitHubRepositoryName() {
+		return getGitHubRepositoryName(getJenkinsGitHubURL());
+	}
+
+	@Override
 	public String getJenkinsGitHubURL() {
 		return getString("jenkins_github_url");
+	}
+
+	@Override
+	public String getJenkinsGitHubUsername() {
+		return getGitHubUsername(getJenkinsGitHubURL());
 	}
 
 	@Override
@@ -367,6 +382,39 @@ public abstract class BaseBuildData implements BuildData {
 			new Date(timestamp), "MMM dd, yyyy h:mm:ss a z", "US/Pacific");
 	}
 
+	protected String getGitHubBranchName(String gitHubBranchURL) {
+		Matcher matcher = _gitHubBranchURLPattern.matcher(gitHubBranchURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Invalid GitHub Branch URL " + gitHubBranchURL);
+		}
+
+		return matcher.group("branchName");
+	}
+
+	protected String getGitHubRepositoryName(String gitHubBranchURL) {
+		Matcher matcher = _gitHubBranchURLPattern.matcher(gitHubBranchURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Invalid GitHub Branch URL " + gitHubBranchURL);
+		}
+
+		return matcher.group("repositoryName");
+	}
+
+	protected String getGitHubUsername(String gitHubBranchURL) {
+		Matcher matcher = _gitHubBranchURLPattern.matcher(gitHubBranchURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Invalid GitHub Branch URL " + gitHubBranchURL);
+		}
+
+		return matcher.group("username");
+	}
+
 	protected JSONArray getJSONArray(String key) {
 		return _jsonObject.getJSONArray(key);
 	}
@@ -490,6 +538,9 @@ public abstract class BaseBuildData implements BuildData {
 			"(?<jobURL>https?://(?<masterHostname>",
 			"(?<cohortName>test-\\d+)-\\d+)(\\.liferay\\.com)?/job/",
 			"(?<jobName>[^/]+)/(.*/)?)(?<buildNumber>\\d+)/?"));
+	private static final Pattern _gitHubBranchURLPattern = Pattern.compile(
+		"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)/tree/" +
+			"(?<branchName>.+)");
 
 	private Map<String, String> _buildParameters;
 	private Host _host;

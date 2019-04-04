@@ -21,7 +21,13 @@ public interface PortalBuildData extends BuildData {
 
 	public String getPortalBranchSHA();
 
+	public String getPortalGitHubBranchName();
+
+	public String getPortalGitHubRepositoryName();
+
 	public String getPortalGitHubURL();
+
+	public String getPortalGitHubUsername();
 
 	public String getPortalUpstreamBranchName();
 

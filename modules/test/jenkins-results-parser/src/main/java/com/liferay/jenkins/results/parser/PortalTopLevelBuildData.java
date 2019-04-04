@@ -32,8 +32,23 @@ public class PortalTopLevelBuildData
 	}
 
 	@Override
+	public String getPortalGitHubBranchName() {
+		return getGitHubBranchName(getPortalGitHubURL());
+	}
+
+	@Override
+	public String getPortalGitHubRepositoryName() {
+		return getGitHubRepositoryName(getPortalGitHubURL());
+	}
+
+	@Override
 	public String getPortalGitHubURL() {
 		return getString("portal_github_url");
+	}
+
+	@Override
+	public String getPortalGitHubUsername() {
+		return getGitHubUsername(getPortalGitHubURL());
 	}
 
 	@Override

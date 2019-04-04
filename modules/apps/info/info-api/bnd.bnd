@@ -2,6 +2,7 @@ Bundle-Name: Liferay Info API
 Bundle-SymbolicName: com.liferay.info.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.info.constants,\
 	com.liferay.info.display.contributor,\
 	com.liferay.info.pagination,\
 	com.liferay.info.provider,\

@@ -134,6 +134,14 @@ public class StructuredContentFolderResourceTest
 		return journalFolder.getFolderId();
 	}
 
+	protected StructuredContentFolder
+			testPatchStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
 	@Override
 	protected StructuredContentFolder
 			testPostContentSpaceStructuredContentFolder_addStructuredContentFolder(

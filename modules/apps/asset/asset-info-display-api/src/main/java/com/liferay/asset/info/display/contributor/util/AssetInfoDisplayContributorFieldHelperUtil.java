@@ -14,45 +14,46 @@
 
 package com.liferay.asset.info.display.contributor.util;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jürgen Kappler
  */
 public class AssetInfoDisplayContributorFieldHelperUtil {
 
-	public static List<AssetDisplayContributorField>
-		getAssetDisplayContributorFields(String className) {
+	public static List<InfoDisplayContributorField>
+		getInfoDisplayContributorFields(String className) {
 
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
+		List<InfoDisplayContributorField> infoDisplayContributorFields =
 			_serviceTrackerMap.getService(className);
 
-		if (assetDisplayContributorFields != null) {
-			return assetDisplayContributorFields;
+		if (infoDisplayContributorFields != null) {
+			return infoDisplayContributorFields;
 		}
 
 		return Collections.emptyList();
 	}
 
 	private static final ServiceTrackerMap
-		<String, List<AssetDisplayContributorField>> _serviceTrackerMap;
+		<String, List<InfoDisplayContributorField>> _serviceTrackerMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
-			AssetDisplayContributorFieldHelperUtil.class);
+			AssetInfoDisplayContributorFieldHelperUtil.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AssetDisplayContributorField.class,
+			bundleContext, InfoDisplayContributorField.class,
 			"(model.class.name=*)",
 			(serviceReference, emitter) -> emitter.emit(
 				(String)serviceReference.getProperty("model.class.name")));

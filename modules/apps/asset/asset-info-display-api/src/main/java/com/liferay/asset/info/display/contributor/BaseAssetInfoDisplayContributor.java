@@ -14,31 +14,28 @@
 
 package com.liferay.asset.info.display.contributor;
 
-import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
-import com.liferay.asset.display.contributor.util.ContentAccessor;
+import com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldHelperUtil;
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -47,34 +44,34 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 	implements AssetInfoDisplayContributor {
 
 	@Override
-	public Set<AssetDisplayField> getAssetDisplayFields(
+	public Set<InfoDisplayField> getInfoDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
 		// Fields for asset entry
 
-		Set<AssetDisplayField> assetDisplayFields = _getAssetDisplayFields(
+		Set<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
 			AssetEntry.class.getName(), locale);
 
 		// Fields for the specific asset type
 
-		Set<AssetDisplayField> assetTypeAssetDisplayFields =
-			_getAssetDisplayFields(getClassName(), locale);
+		Set<InfoDisplayField> assetTypeInfoDisplayFields =
+			_getInfoDisplayFields(getClassName(), locale);
 
-		assetDisplayFields.addAll(assetTypeAssetDisplayFields);
+		infoDisplayFields.addAll(assetTypeInfoDisplayFields);
 
 		// Fields for the class type
 
-		List<AssetDisplayField> classTypeFields = getClassTypeFields(
+		List<InfoDisplayField> classTypeFields = getClassTypeFields(
 			classTypeId, locale);
 
-		assetDisplayFields.addAll(classTypeFields);
+		infoDisplayFields.addAll(classTypeFields);
 
-		return assetDisplayFields;
+		return infoDisplayFields;
 	}
 
 	@Override
-	public Map<String, Object> getAssetDisplayFieldsValues(
+	public Map<String, Object> getInfoDisplayFieldsValues(
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
@@ -92,7 +89,27 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 	}
 
 	@Override
-	public Map<String, Object> getAssetDisplayFieldsValues(
+	public Object getInfoDisplayFieldValue(
+			AssetEntry assetEntry, String fieldName, Locale locale)
+		throws PortalException {
+
+		Map<String, Object> infoDisplayFieldsValues =
+			getInfoDisplayFieldsValues(assetEntry, locale);
+
+		Object fieldValue = infoDisplayFieldsValues.getOrDefault(
+			fieldName, StringPool.BLANK);
+
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+			fieldValue = contentAccessor.getContent();
+		}
+
+		return fieldValue;
+	}
+
+	@Override
+	public Map<String, Object> getInfoVersionDisplayFieldsValues(
 			AssetEntry assetEntry, long versionClassPK, Locale locale)
 		throws PortalException {
 
@@ -116,45 +133,8 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 	}
 
 	@Override
-	public Object getAssetDisplayFieldValue(
-			AssetEntry assetEntry, String fieldName, Locale locale)
-		throws PortalException {
-
-		Map<String, Object> assetDisplayFieldsValues =
-			getAssetDisplayFieldsValues(assetEntry, locale);
-
-		Object fieldValue = assetDisplayFieldsValues.getOrDefault(
-			fieldName, StringPool.BLANK);
-
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
-		}
-
-		return fieldValue;
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAssetEntryModelFieldsMap()}
-	 */
-	@Deprecated
-	protected String[] getAssetEntryModelFields() {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), }
-	 */
-	@Deprecated
-	protected Map<String, String> getAssetEntryModelFieldsMap() {
-		throw new UnsupportedOperationException();
 	}
 
 	protected Object getClassTypeFieldValue(
@@ -169,98 +149,56 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 	protected abstract Map<String, Object> getClassTypeValues(
 		T assetEntryObject, Locale locale);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), }
-	 */
-	@Deprecated
-	protected Object getFieldValue(
-		T assetEntryObject, String field, Locale locale) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), }
-	 */
-	@Deprecated
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced with {@link
-	 *             #getResourceBundle(Locale)}
-	 */
-	@Deprecated
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), }
-	 */
-	@Deprecated
-	protected ResourceBundleLoader resourceBundleLoader;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), }
-	 */
-	@Deprecated
-	@Reference
-	protected UserLocalService userLocalService;
-
-	private List<AssetDisplayContributorField>
-		_getAssetDisplayContributorFields(String className) {
-
-		return AssetDisplayContributorFieldHelperUtil.
-			getAssetDisplayContributorFields(className);
-	}
-
-	private Set<AssetDisplayField> _getAssetDisplayFields(
-		String className, Locale locale) {
-
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
-
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				_getAssetDisplayContributorFields(className)) {
-
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetDisplayContributorField.getKey(),
-					assetDisplayContributorField.getLabel(locale),
-					assetDisplayContributorField.getType()));
-		}
-
-		return assetDisplayFields;
-	}
-
-	private Map<String, Object> _getAssetEntryAssetDisplayFieldsValues(
+	private Map<String, Object> _getAssetEntryInfoDisplayFieldsValues(
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
-		Map<String, Object> assetDisplayFieldsValues = new HashMap<>();
+		Map<String, Object> infoDisplayFieldsValues = new HashMap<>();
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				_getAssetDisplayContributorFields(AssetEntry.class.getName())) {
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				_getInfoDisplayContributorFields(AssetEntry.class.getName())) {
 
-			Object assetDisplayFieldValue =
-				assetDisplayContributorField.getValue(assetEntry, locale);
+			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
+				assetEntry, locale);
 
-			if (assetDisplayFieldValue instanceof String) {
-				assetDisplayFieldValue = SanitizerUtil.sanitize(
+			if (infoDisplayFieldValue instanceof String) {
+				infoDisplayFieldValue = SanitizerUtil.sanitize(
 					assetEntry.getCompanyId(), assetEntry.getGroupId(),
 					assetEntry.getUserId(), AssetEntry.class.getName(),
 					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
-					Sanitizer.MODE_ALL, (String)assetDisplayFieldValue, null);
+					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
 			}
 
-			assetDisplayFieldsValues.putIfAbsent(
-				assetDisplayContributorField.getKey(), assetDisplayFieldValue);
+			infoDisplayFieldsValues.putIfAbsent(
+				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
 		}
 
-		return assetDisplayFieldsValues;
+		return infoDisplayFieldsValues;
+	}
+
+	private List<InfoDisplayContributorField> _getInfoDisplayContributorFields(
+		String className) {
+
+		return AssetInfoDisplayContributorFieldHelperUtil.
+			getInfoDisplayContributorFields(className);
+	}
+
+	private Set<InfoDisplayField> _getInfoDisplayFields(
+		String className, Locale locale) {
+
+		Set<InfoDisplayField> infoDisplayFields = new LinkedHashSet<>();
+
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				_getInfoDisplayContributorFields(className)) {
+
+			infoDisplayFields.add(
+				new InfoDisplayField(
+					infoDisplayContributorField.getKey(),
+					infoDisplayContributorField.getLabel(locale),
+					infoDisplayContributorField.getType()));
+		}
+
+		return infoDisplayFields;
 	}
 
 	private Map<String, Object> _getParameterMap(
@@ -270,30 +208,30 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		// Field values for asset entry
 
 		Map<String, Object> parameterMap =
-			_getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
+			_getAssetEntryInfoDisplayFieldsValues(assetEntry, locale);
 
 		// Field values for the specific asset type
 
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			AssetDisplayContributorFieldHelperUtil.
-				getAssetDisplayContributorFields(getClassName());
+		List<InfoDisplayContributorField> infoDisplayContributorFields =
+			AssetInfoDisplayContributorFieldHelperUtil.
+				getInfoDisplayContributorFields(getClassName());
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				infoDisplayContributorFields) {
 
-			Object assetDisplayFieldValue =
-				assetDisplayContributorField.getValue(assetObject, locale);
+			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
+				assetObject, locale);
 
-			if (assetDisplayFieldValue instanceof String) {
-				assetDisplayFieldValue = SanitizerUtil.sanitize(
+			if (infoDisplayFieldValue instanceof String) {
+				infoDisplayFieldValue = SanitizerUtil.sanitize(
 					assetEntry.getCompanyId(), assetEntry.getGroupId(),
 					assetEntry.getUserId(), AssetEntry.class.getName(),
 					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
-					Sanitizer.MODE_ALL, (String)assetDisplayFieldValue, null);
+					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
 			}
 
 			parameterMap.putIfAbsent(
-				assetDisplayContributorField.getKey(), assetDisplayFieldValue);
+				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
 		}
 
 		// Field values for the class type

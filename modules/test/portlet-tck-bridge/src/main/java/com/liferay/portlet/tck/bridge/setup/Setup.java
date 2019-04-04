@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -37,7 +36,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -89,32 +87,18 @@ public class Setup {
 
 		Element renderConfigElement = rootElement.element("render-config");
 
-		Iterator<Element> pageElementIterator =
-			renderConfigElement.elementIterator("page");
-
-		while (pageElementIterator.hasNext()) {
-			Element pageElement = pageElementIterator.next();
-
-			Iterator<Element> portletElementIterator =
-				pageElement.elementIterator("portlet");
-
+		for (Element pageElement : renderConfigElement.elements("page")) {
 			List<String> portletIds = new ArrayList<>();
 
-			while (portletElementIterator.hasNext()) {
-				Element portletElement = portletElementIterator.next();
-
-				Attribute contextAttribute = portletElement.attribute(
-					"context");
-
-				String context = contextAttribute.getValue();
+			for (Element portletElement : pageElement.elements("portlet")) {
+				String context = portletElement.attributeValue("context");
 
 				Matcher matcher = _portletContextPattern.matcher(context);
 
 				if (matcher.find()) {
-					Attribute nameAttribute = portletElement.attribute("name");
-
 					portletIds.add(
-						nameAttribute.getValue() + "_WAR_" + matcher.group(1));
+						portletElement.attributeValue("name") + "_WAR_" +
+							matcher.group(1));
 				}
 			}
 
@@ -122,9 +106,7 @@ public class Setup {
 				continue;
 			}
 
-			Attribute pageNameAttribute = pageElement.attribute("name");
-
-			String pageName = pageNameAttribute.getValue();
+			String pageName = pageElement.attributeValue("name");
 
 			Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
 				userId, group.getGroupId(), true,

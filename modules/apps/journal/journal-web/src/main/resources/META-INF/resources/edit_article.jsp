@@ -105,7 +105,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		</div>
 	</nav>
 
-	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
 		<div class="sidebar-body">
 
 			<%
@@ -208,14 +208,17 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		}
 	);
 
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+
+	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
+		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+	}
 
 	if (contextualSidebarButton) {
 		contextualSidebarButton.addEventListener(
 			'click',
 			function(event) {
-				var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
-
 				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
 					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
 

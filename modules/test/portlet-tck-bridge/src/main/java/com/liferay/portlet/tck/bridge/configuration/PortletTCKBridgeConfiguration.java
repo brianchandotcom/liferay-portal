@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface PortletTCKBridgeConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
-	public String tckDeployFilesDir();
+	@Meta.AD(deflt = "")
+	public String configFile();
 
 }

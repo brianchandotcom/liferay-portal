@@ -79,17 +79,16 @@ public class PortletTCKBridge {
 			ConfigurableUtil.createConfigurable(
 				PortletTCKBridgeConfiguration.class, properties);
 
-		String tckDeployFilesDir =
-			portletTCKBridgeConfiguration.tckDeployFilesDir();
+		String configFile = portletTCKBridgeConfiguration.configFile();
 
-		_setupPortletTCKSite(company, tckDeployFilesDir);
+		_setupPortletTCKSite(company, configFile);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Portlet TCK Bridge is ready");
 		}
 	}
 
-	private void _setupPortletTCKSite(Company company, String tckDeployFilesDir)
+	private void _setupPortletTCKSite(Company company, String configFile)
 		throws Exception {
 
 		User user = _userLocalService.getUserByEmailAddress(
@@ -109,10 +108,7 @@ public class PortletTCKBridge {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck", true,
 			false, true, new ServiceContext());
 
-		File configFile = new File(
-			tckDeployFilesDir + "/pluto-portal-driver-config.xml");
-
-		Document document = SAXReaderUtil.read(configFile);
+		Document document = SAXReaderUtil.read(new File(configFile));
 
 		Element rootElement = document.getRootElement();
 

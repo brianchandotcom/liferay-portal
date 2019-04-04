@@ -6,7 +6,9 @@ import {
 import {
 	updateFocusedFieldDataType,
 	updateFocusedFieldLabel,
-	updateFocusedFieldName
+	updateFocusedFieldName,
+	updateFocusedFieldOptions,
+	updateFocusedFieldProperty
 } from 'source/components/LayoutProvider/util/focusedField.es';
 
 const focusedField = {
@@ -35,6 +37,13 @@ const focusedField = {
 									{
 										fieldName: 'dataType',
 										value: 'oldDataType'
+									},
+									{
+										fieldName: 'predefinedValue',
+										value: [{
+											label: 'Predefined',
+											value: 'Predefined'
+										}]
 									},
 									{
 										fieldName: 'validation',
@@ -221,6 +230,46 @@ describe(
 						const newFocusedField = updateFocusedFieldDataType(state, focusedField, 'newDataType');
 
 						expect(getFieldProperty(newFocusedField.settingsContext.pages, 'validation', 'validation').dataType).toEqual('newDataType');
+					}
+				);
+			}
+		);
+
+		describe(
+			'updateFocusedFieldOptions(state, focusedField, options)',
+			() => {
+				it(
+					'should update the focused field "options" property',
+					() => {
+						const newOptions = [{
+							label: 'New Label',
+							value: 'NewLabel'
+						}];
+						const state = {
+							pages: mockPages
+						};
+
+						const newFocusedField = updateFocusedFieldOptions(state, focusedField, newOptions);
+
+						expect(newFocusedField.options).toEqual(newOptions);
+					}
+				);
+			}
+		);
+
+		describe(
+			'updateFocusedFieldProperty(state, focusedField, options)',
+			() => {
+				it(
+					'should update the desired property',
+					() => {
+						const state = {
+							pages: mockPages
+						};
+
+						const newFocusedField = updateFocusedFieldProperty(state, focusedField, 'readOnly', true);
+
+						expect(newFocusedField.readOnly).toEqual(true);
 					}
 				);
 			}

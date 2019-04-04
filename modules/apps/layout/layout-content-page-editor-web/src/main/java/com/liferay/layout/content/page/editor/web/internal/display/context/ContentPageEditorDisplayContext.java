@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -29,6 +27,9 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -129,10 +130,10 @@ public class ContentPageEditorDisplayContext {
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
 
-		assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)request.getAttribute(
-				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 		classNameId = PortalUtil.getClassNameId(className);
+		infoDisplayContributorTracker =
+			(InfoDisplayContributorTracker)request.getAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_fragmentCollectionContributorTracker =
@@ -391,10 +392,9 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
-	protected final AssetDisplayContributorTracker
-		assetDisplayContributorTracker;
 	protected final long classNameId;
 	protected final long classPK;
+	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
 
@@ -407,18 +407,18 @@ public class ContentPageEditorDisplayContext {
 
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		List<AssetDisplayContributor> assetDisplayContributors =
-			assetDisplayContributorTracker.getAssetDisplayContributors();
+		List<InfoDisplayContributor> infoDisplayContributors =
+			infoDisplayContributorTracker.getInfoDisplayContributors();
 
-		for (AssetDisplayContributor assetDisplayContributor :
-				assetDisplayContributors) {
+		for (InfoDisplayContributor infoDisplayContributor :
+				infoDisplayContributors) {
 
-			if (assetDisplayContributor == null) {
+			if (infoDisplayContributor == null) {
 				continue;
 			}
 
 			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-				request, assetDisplayContributor.getClassName(),
+				request, infoDisplayContributor.getClassName(),
 				PortletProvider.Action.BROWSE);
 
 			if (assetBrowserURL == null) {
@@ -434,7 +434,7 @@ public class ContentPageEditorDisplayContext {
 				"selectedGroupIds",
 				String.valueOf(themeDisplay.getScopeGroupId()));
 			assetBrowserURL.setParameter(
-				"typeSelection", assetDisplayContributor.getClassName());
+				"typeSelection", infoDisplayContributor.getClassName());
 			assetBrowserURL.setParameter(
 				"showNonindexable", String.valueOf(Boolean.TRUE));
 			assetBrowserURL.setParameter(
@@ -448,7 +448,7 @@ public class ContentPageEditorDisplayContext {
 				"href", assetBrowserURL.toString()
 			).put(
 				"typeName",
-				assetDisplayContributor.getLabel(themeDisplay.getLocale())
+				infoDisplayContributor.getLabel(themeDisplay.getLocale())
 			);
 
 			soyContexts.add(assetBrowserSoyContext);

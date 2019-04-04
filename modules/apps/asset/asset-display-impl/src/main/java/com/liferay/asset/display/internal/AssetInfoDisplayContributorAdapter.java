@@ -47,7 +47,14 @@ public class AssetInfoDisplayContributorAdapter
 	}
 
 	@Override
-	public List<InfoDisplayField> getClassTypeFields(
+	public List<ClassType> getClassTypes(long groupId, Locale locale)
+		throws PortalException {
+
+		return _assetDisplayContributor.getClassTypes(groupId, locale);
+	}
+
+	@Override
+	public List<InfoDisplayField> getInfoClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -65,13 +72,6 @@ public class AssetInfoDisplayContributorAdapter
 		}
 
 		return infoDisplayFields;
-	}
-
-	@Override
-	public List<ClassType> getClassTypes(long groupId, Locale locale)
-		throws PortalException {
-
-		return _assetDisplayContributor.getClassTypes(groupId, locale);
 	}
 
 	@Override

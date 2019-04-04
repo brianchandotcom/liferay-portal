@@ -38,7 +38,28 @@ public interface AssetInfoDisplayContributor
 	extends InfoDisplayContributor<AssetEntry> {
 
 	@Override
-	public default List<InfoDisplayField> getClassTypeFields(
+	public default List<ClassType> getClassTypes(long groupId, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getClassName());
+
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
+			return Collections.emptyList();
+		}
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		return classTypeReader.getAvailableClassTypes(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+	}
+
+	@Override
+	public default List<InfoDisplayField> getInfoClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -65,38 +86,17 @@ public interface AssetInfoDisplayContributor
 			return Collections.emptyList();
 		}
 
-		List<InfoDisplayField> classTypeFields = new ArrayList<>();
+		List<InfoDisplayField> infoClassTypeFields = new ArrayList<>();
 
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
-			classTypeFields.add(
+			infoClassTypeFields.add(
 				new InfoDisplayField(
 					classTypeField.getName(),
 					LanguageUtil.get(locale, classTypeField.getLabel()),
 					classTypeField.getType()));
 		}
 
-		return classTypeFields;
-	}
-
-	@Override
-	public default List<ClassType> getClassTypes(long groupId, Locale locale)
-		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return Collections.emptyList();
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		return classTypeReader.getAvailableClassTypes(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+		return infoClassTypeFields;
 	}
 
 }

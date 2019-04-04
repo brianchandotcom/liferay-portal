@@ -29,11 +29,11 @@ public interface InfoDisplayContributor<T> {
 
 	public String getClassName();
 
-	public List<InfoDisplayField> getClassTypeFields(
-			long classTypeId, Locale locale)
+	public List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException;
 
-	public List<ClassType> getClassTypes(long groupId, Locale locale)
+	public List<InfoDisplayField> getInfoClassTypeFields(
+			long classTypeId, Locale locale)
 		throws PortalException;
 
 	public Set<InfoDisplayField> getInfoDisplayFields(

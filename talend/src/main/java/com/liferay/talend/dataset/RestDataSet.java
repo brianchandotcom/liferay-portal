@@ -44,6 +44,10 @@ public class RestDataSet implements Serializable {
     @Required
     @Suggestable(value = "fetchEndpoints", parameters = { "dataStore" })
     @Documentation("Endpoint")
+    /**
+     * DataStore parameter now is not needed, just an example how we can use it
+     * in UIActionService if needed.
+     */
     private String endpoint;
 
     public BasicDataStore getDataStore() {

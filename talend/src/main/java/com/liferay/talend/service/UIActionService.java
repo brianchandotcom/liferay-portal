@@ -15,38 +15,68 @@
 package com.liferay.talend.service;
 
 import com.liferay.talend.datastore.BasicDataStore;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.ArraySchema;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
 import org.talend.sdk.component.api.service.completion.SuggestionValues;
 import org.talend.sdk.component.api.service.completion.Suggestions;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Igor Beslic
+ * @author Zoltán Takács
  */
 @Service
 public class UIActionService {
 
 	@Suggestions("fetchEndpoints")
 	public SuggestionValues fetchEndpoints(@Option("restDataSet") final BasicDataStore dataStore) {
-		SuggestionValues suggestionValues = new SuggestionValues();
 
-		Set<SuggestionValues.Item> items = new HashSet<>();
+		List<SuggestionValues.Item> items = new ArrayList<>();
 
-		items.add(
-			new SuggestionValues.Item(
-				"e4e33e24-eebf-45a4-bbab-4473a3a767ab",
-				"liferay.swagger.api.key"));
-		items.add(
-			new SuggestionValues.Item(
-				"e4e33e24-eebf-45a4-bbab-4473a3a767ab",
-				"liferay.swagger.api.key.backup"));
+		Map<String, String> endpoints = _getEndpointsMap("com/liferay/talend/resource/rest-openapi.yaml");
 
-		suggestionValues.setItems(items);
+		endpoints.forEach(
+			(path, returnSchemaType) -> items.add(new SuggestionValues.Item(path, returnSchemaType))
+		);
 
-		return suggestionValues;
+		return new SuggestionValues(true, items);
 	}
 
+	private Map<String, String> _getEndpointsMap(String location) {
+		OpenAPI openAPI = new OpenAPIV3Parser().read(location);
+		Paths paths = openAPI.getPaths();
+
+		return paths.entrySet().stream()
+			.filter(this::_arrayTypePredicate)
+			.collect(Collectors.toMap(Map.Entry::getKey, this::_mapToArrayItemReferences)
+		);
+	}
+
+	private boolean _arrayTypePredicate(Map.Entry<String, PathItem> pathItemEntry) {
+		String type = pathItemEntry.getValue().getGet().getResponses().get("200").getContent().
+			get("application/json").getSchema().getType();
+
+		if (type != null && type.equals("array")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _mapToArrayItemReferences(Map.Entry<String, PathItem> stringPathItemEntry) {
+		Schema schema = stringPathItemEntry.getValue().getGet().getResponses().get("200").getContent().
+			get("application/json").getSchema();
+
+		return ((ArraySchema) schema).getItems().get$ref();
+	}
 }

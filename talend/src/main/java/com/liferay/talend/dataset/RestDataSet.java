@@ -14,37 +14,43 @@
 
 package com.liferay.talend.dataset;
 
-import com.liferay.talend.datastore.OpenApi3Connection;
+import java.io.Serializable;
+
+import com.liferay.talend.datastore.BasicDataStore;
 
 import org.talend.sdk.component.api.configuration.Option;
+import org.talend.sdk.component.api.configuration.action.Suggestable;
+import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.meta.Documentation;
 
-import java.io.Serializable;
-
 /**
- * @author Igor Beslic
+ * @author Zoltán Takács
  */
-@DataSet("OpenApi3DataSet")
+@DataSet("RestDataSet")
 @GridLayout({
-    @GridLayout.Row({ "_openApi3Connection" })
+    @GridLayout.Row({ "dataStore" }),
+    @GridLayout.Row({ "moduleName" })
 })
-@Documentation("Additional Open Api 3 properties and directives needed for parser services")
-public class OpenApi3DataSet implements Serializable {
+@Documentation("TODO fill the documentation for this configuration")
+public class RestDataSet implements Serializable {
+    @Option
+    @Documentation("TODO fill the documentation for this parameter")
+    private BasicDataStore dataStore;
 
-    public OpenApi3Connection getDataStore() {
-        return _openApi3Connection;
+    @Option
+    @Required
+    @Suggestable(value = "loadSalesforceModules", parameters = { "dataStore" })
+    @Documentation("Endpoints")
+    private String moduleName;
+
+    public BasicDataStore getDataStore() {
+        return dataStore;
     }
 
-    public OpenApi3DataSet setDataStore(OpenApi3Connection dataStore) {
-        _openApi3Connection = dataStore;
-
+    public RestDataSet setDataStore(BasicDataStore dataStore) {
+        this.dataStore = dataStore;
         return this;
     }
-
-	@Option("_openApi3Connection")
-	@Documentation("Connection configuration for Swagger Hub")
-	private OpenApi3Connection _openApi3Connection;
-
 }

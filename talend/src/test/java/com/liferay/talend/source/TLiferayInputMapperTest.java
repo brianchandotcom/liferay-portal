@@ -24,7 +24,7 @@ public class TLiferayInputMapperTest {
         // Source configuration
         // Setup your component configuration for the test here
         final TLiferayInputMapperConfiguration configuration =  new TLiferayInputMapperConfiguration()
-                                                                            /* .setDataset()
+                                                                            /* .setRestDataSet()
                                                                                .setTimeout()
                                                                                .setMaxItemsPerRequest() */;
 

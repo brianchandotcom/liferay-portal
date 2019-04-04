@@ -343,7 +343,27 @@ ManageCollaborators.STATE = {
 	 * List of collaborators
 	 * @type {Array.<Object>}
 	 */
-	collaborators: Config.array().required(),
+	collaborators: Config.arrayOf(
+		Config.shapeOf(
+			{
+				fullName: Config.string(),
+				shareable: Config.bool(),
+				sharingEntryExpirationDate: Config.string(),
+				sharingEntryExpirationDateTooltip: Config.string(),
+				sharingEntryId: Config.string(),
+				sharingEntryPermissionDisplaySelectOptions: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							selected: Config.bool(),
+							value: Config.string()
+						}
+					)
+				),
+				userId: Config.number()
+			}
+		)
+	).required(),
 
 	/**
 	 * Id of the expanded collaborator

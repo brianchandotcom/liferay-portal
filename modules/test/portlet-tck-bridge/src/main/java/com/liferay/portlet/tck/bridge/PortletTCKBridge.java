@@ -25,8 +25,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -41,35 +39,22 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletTCKBridge {
 
 	@Activate
-	@Modified
-	protected void activate(ComponentContext componentContext) {
-		deactivate();
+	protected void activate(ComponentContext componentContext)
+		throws Exception {
 
-		try {
-			PortletTCKBridgeConfiguration portletTCKBridgeConfiguration =
-				ConfigurableUtil.createConfigurable(
-					PortletTCKBridgeConfiguration.class,
-					componentContext.getProperties());
+		PortletTCKBridgeConfiguration portletTCKBridgeConfiguration =
+			ConfigurableUtil.createConfigurable(
+				PortletTCKBridgeConfiguration.class,
+				componentContext.getProperties());
 
-			String tckDeployFilesDir =
-				portletTCKBridgeConfiguration.tckDeployFilesDir();
+		String tckDeployFilesDir =
+			portletTCKBridgeConfiguration.tckDeployFilesDir();
 
-			Setup.setupPortletTCKSite(tckDeployFilesDir);
+		Setup.setupPortletTCKSite(tckDeployFilesDir);
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Portlet TCK Bridge is ready");
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Portlet TCK Bridge is ready");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-
-		// no-op
-
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

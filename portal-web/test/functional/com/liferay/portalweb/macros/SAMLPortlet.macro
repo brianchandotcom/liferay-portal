@@ -148,6 +148,23 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureServiceProviderConnection {
+		Click.waitForMenuToggleJSClick(
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
+			key_samlEntityID = "${samlEntityID}"
+		);
+
+		MenuItem.click(menuItem = "Edit");
+
+		if ("${forceEncryption}" == "enable") {
+			Check(
+				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_FORCE_ENCRYPTION"
+			);
+		}
+
+		PortletEntry.save();
+	}
+
 	macro deleteSAMLConnection {
 		Click.waitForMenuToggleJSClick(
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SERVICE_PROVIDER_CONNECTION_FORCE_ENCRYPTION</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_encryptionForced')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVICE_PROVIDER_CONNECTION_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_nameIdAttribute')]</td>
 	<td></td>

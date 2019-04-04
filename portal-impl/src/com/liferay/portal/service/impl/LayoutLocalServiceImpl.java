@@ -72,7 +72,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LayoutVersioningThreadLocal;
+import com.liferay.portal.kernel.util.ChangeTrackingThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2930,7 +2930,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout publishDraft(Layout draftLayout) throws PortalException {
-		LayoutVersioningThreadLocal.setLayoutUpdateInProgress(true);
+		ChangeTrackingThreadLocal.setLayoutUpdateInProgress(true);
 
 		try {
 			LayoutVersion oldLayoutVersion = fetchLatestVersion(draftLayout);
@@ -2948,7 +2948,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return layout;
 		}
 		finally {
-			LayoutVersioningThreadLocal.setLayoutUpdateInProgress(false);
+			ChangeTrackingThreadLocal.setLayoutUpdateInProgress(false);
 		}
 	}
 

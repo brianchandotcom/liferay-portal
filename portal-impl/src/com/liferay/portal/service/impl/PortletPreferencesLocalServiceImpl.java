@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.LayoutVersioningThreadLocal;
+import com.liferay.portal.kernel.util.ChangeTrackingThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -753,7 +753,7 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private long _swapPlidForPortletPreferences(int ownerType, long plid) {
-		if (LayoutVersioningThreadLocal.isEnabled()) {
+		if (ChangeTrackingThreadLocal.isLayoutTrackingEnabled()) {
 			return _getLayoutVersionId(ownerType, plid);
 		}
 
@@ -771,7 +771,7 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private long _swapPlidForPreferences(int ownerType, long plid) {
-		if (LayoutVersioningThreadLocal.isEnabled()) {
+		if (ChangeTrackingThreadLocal.isLayoutTrackingEnabled()) {
 			return _getLayoutVersionId(ownerType, plid);
 		}
 
@@ -803,7 +803,7 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private long _swapPlidForUpdatePreferences(int ownerType, long plid) {
-		if (LayoutVersioningThreadLocal.isEnabled()) {
+		if (ChangeTrackingThreadLocal.isLayoutTrackingEnabled()) {
 			return _getLayoutVersionId(ownerType, plid);
 		}
 

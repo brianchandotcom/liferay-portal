@@ -91,35 +91,8 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument document;
-
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	@JsonIgnore
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		try {
-			documentId = documentIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long documentId;
 
 	@Schema(description = "https://www.schema.org/GeoCoordinates")
 	public Geo getGeo() {
@@ -171,62 +144,8 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
-
-	public String getImageDescription() {
-		return imageDescription;
-	}
-
-	public void setImageDescription(String imageDescription) {
-		this.imageDescription = imageDescription;
-	}
-
-	@JsonIgnore
-	public void setImageDescription(
-		UnsafeSupplier<String, Exception> imageDescriptionUnsafeSupplier) {
-
-		try {
-			imageDescription = imageDescriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String imageDescription;
-
-	public Long getImageId() {
-		return imageId;
-	}
-
-	public void setImageId(Long imageId) {
-		this.imageId = imageId;
-	}
-
-	@JsonIgnore
-	public void setImageId(
-		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
-
-		try {
-			imageId = imageIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long imageId;
 
 	public String getLink() {
 		return link;
@@ -252,33 +171,6 @@ public class Value {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
-
-	public Long getStructuredContentId() {
-		return structuredContentId;
-	}
-
-	public void setStructuredContentId(Long structuredContentId) {
-		this.structuredContentId = structuredContentId;
-	}
-
-	@JsonIgnore
-	public void setStructuredContentId(
-		UnsafeSupplier<Long, Exception> structuredContentIdUnsafeSupplier) {
-
-		try {
-			structuredContentId = structuredContentIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long structuredContentId;
 
 	public StructuredContentLink getStructuredContentLink() {
 		return structuredContentLink;
@@ -349,11 +241,6 @@ public class Value {
 		sb.append(document);
 		sb.append(", ");
 
-		sb.append("\"documentId\": ");
-
-		sb.append(documentId);
-		sb.append(", ");
-
 		sb.append("\"geo\": ");
 
 		sb.append(geo);
@@ -364,28 +251,11 @@ public class Value {
 		sb.append(image);
 		sb.append(", ");
 
-		sb.append("\"imageDescription\": ");
-
-		sb.append("\"");
-		sb.append(imageDescription);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"imageId\": ");
-
-		sb.append(imageId);
-		sb.append(", ");
-
 		sb.append("\"link\": ");
 
 		sb.append("\"");
 		sb.append(link);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"structuredContentId\": ");
-
-		sb.append(structuredContentId);
 		sb.append(", ");
 
 		sb.append("\"structuredContentLink\": ");

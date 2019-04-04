@@ -62,11 +62,6 @@ public class ValueSerDes {
 		sb.append(value.getDocument());
 		sb.append(", ");
 
-		sb.append("\"documentId\": ");
-
-		sb.append(value.getDocumentId());
-		sb.append(", ");
-
 		sb.append("\"geo\": ");
 
 		sb.append(value.getGeo());
@@ -77,28 +72,11 @@ public class ValueSerDes {
 		sb.append(value.getImage());
 		sb.append(", ");
 
-		sb.append("\"imageDescription\": ");
-
-		sb.append("\"");
-		sb.append(value.getImageDescription());
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"imageId\": ");
-
-		sb.append(value.getImageId());
-		sb.append(", ");
-
 		sb.append("\"link\": ");
 
 		sb.append("\"");
 		sb.append(value.getLink());
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"structuredContentId\": ");
-
-		sb.append(value.getStructuredContentId());
 		sb.append(", ");
 
 		sb.append("\"structuredContentLink\": ");
@@ -158,11 +136,6 @@ public class ValueSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "documentId")) {
-				if (jsonParserFieldValue != null) {
-					value.setDocumentId((Long)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "geo")) {
 				if (jsonParserFieldValue != null) {
 					value.setGeo(GeoSerDes.toDTO((String)jsonParserFieldValue));
@@ -175,26 +148,9 @@ public class ValueSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "imageDescription")) {
-				if (jsonParserFieldValue != null) {
-					value.setImageDescription((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "imageId")) {
-				if (jsonParserFieldValue != null) {
-					value.setImageId((Long)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "link")) {
 				if (jsonParserFieldValue != null) {
 					value.setLink((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "structuredContentId")) {
-
-				if (jsonParserFieldValue != null) {
-					value.setStructuredContentId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

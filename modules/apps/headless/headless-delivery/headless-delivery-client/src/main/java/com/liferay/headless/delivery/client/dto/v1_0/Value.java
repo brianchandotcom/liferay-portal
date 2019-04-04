@@ -65,27 +65,6 @@ public class Value {
 
 	protected ContentDocument document;
 
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		try {
-			documentId = documentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long documentId;
-
 	public Geo getGeo() {
 		return geo;
 	}
@@ -126,48 +105,6 @@ public class Value {
 
 	protected ContentDocument image;
 
-	public String getImageDescription() {
-		return imageDescription;
-	}
-
-	public void setImageDescription(String imageDescription) {
-		this.imageDescription = imageDescription;
-	}
-
-	public void setImageDescription(
-		UnsafeSupplier<String, Exception> imageDescriptionUnsafeSupplier) {
-
-		try {
-			imageDescription = imageDescriptionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String imageDescription;
-
-	public Long getImageId() {
-		return imageId;
-	}
-
-	public void setImageId(Long imageId) {
-		this.imageId = imageId;
-	}
-
-	public void setImageId(
-		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
-
-		try {
-			imageId = imageIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long imageId;
-
 	public String getLink() {
 		return link;
 	}
@@ -186,27 +123,6 @@ public class Value {
 	}
 
 	protected String link;
-
-	public Long getStructuredContentId() {
-		return structuredContentId;
-	}
-
-	public void setStructuredContentId(Long structuredContentId) {
-		this.structuredContentId = structuredContentId;
-	}
-
-	public void setStructuredContentId(
-		UnsafeSupplier<Long, Exception> structuredContentIdUnsafeSupplier) {
-
-		try {
-			structuredContentId = structuredContentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long structuredContentId;
 
 	public StructuredContentLink getStructuredContentLink() {
 		return structuredContentLink;

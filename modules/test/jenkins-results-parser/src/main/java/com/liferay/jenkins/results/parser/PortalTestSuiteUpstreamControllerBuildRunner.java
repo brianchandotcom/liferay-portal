@@ -171,9 +171,9 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		sb.append("&CONTROLLER_BUILD_URL=");
 		sb.append(buildData.getBuildURL());
 		sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
-		sb.append(buildData.getJenkinsBranchName());
+		sb.append(buildData.getJenkinsGitHubBranchName());
 		sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
-		sb.append(buildData.getJenkinsBranchUsername());
+		sb.append(buildData.getJenkinsGitHubUsername());
 		sb.append("&PORTAL_GIT_COMMIT=");
 		sb.append(buildData.getPortalBranchSHA());
 		sb.append("&PORTAL_GITHUB_URL=");

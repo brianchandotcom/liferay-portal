@@ -24,38 +24,6 @@ import java.util.regex.Pattern;
 public class PortalTestSuiteUpstreamControllerBuildData
 	extends PortalTopLevelBuildData {
 
-	public String getJenkinsBranchName() {
-		String jenkinsGitHubURL = getBuildParameter("JENKINS_GITHUB_URL");
-
-		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.isEmpty()) {
-			return "master";
-		}
-
-		Matcher matcher = _jenkinsGitHubURLPattern.matcher(jenkinsGitHubURL);
-
-		if (!matcher.find()) {
-			return "master";
-		}
-
-		return matcher.group("branchName");
-	}
-
-	public String getJenkinsBranchUsername() {
-		String jenkinsGitHubURL = getBuildParameter("JENKINS_GITHUB_URL");
-
-		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.isEmpty()) {
-			return "liferay";
-		}
-
-		Matcher matcher = _jenkinsGitHubURLPattern.matcher(jenkinsGitHubURL);
-
-		if (!matcher.find()) {
-			return "liferay";
-		}
-
-		return matcher.group("username");
-	}
-
 	public String getTestrayBuildName() {
 		return JenkinsResultsParserUtil.combine(
 			String.valueOf(getBuildNumber()), " - ",
@@ -100,6 +68,12 @@ public class PortalTestSuiteUpstreamControllerBuildData
 		setPortalBranchSHA(_getPortalBranchSHA());
 		setPortalGitHubURL(_getPortalGitHubURL());
 		setPortalUpstreamBranchName(_getPortalUpstreamBranchName());
+
+		String jenkinsGitHubURL = getBuildParameter("JENKINS_GITHUB_URL");
+
+		if ((jenkinsGitHubURL != null) && !jenkinsGitHubURL.isEmpty()) {
+			setJenkinsGitHubURL(jenkinsGitHubURL);
+		}
 	}
 
 	private String _getPortalBranchSHA() {
@@ -143,9 +117,6 @@ public class PortalTestSuiteUpstreamControllerBuildData
 		return matcher.group("upstreamBranchName");
 	}
 
-	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
-		"https://github.com/(?<username>[^/]+)/liferay-jenkins-ee/tree/" +
-			"(?<branchName>.+)");
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<upstreamBranchName>[^_]+)_(?<testSuiteName>[^\\)]+)\\)");
 

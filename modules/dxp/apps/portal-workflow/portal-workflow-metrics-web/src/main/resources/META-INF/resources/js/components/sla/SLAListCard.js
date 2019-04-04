@@ -75,7 +75,7 @@ class SLAListCard extends React.Component {
 			.delete(`/slas/${id}`)
 			.then(() => {
 				this.loadData();
-				openSuccessToast(Liferay.Language.get('sla-deleted'));
+				openSuccessToast(Liferay.Language.get('sla-was-deleted'));
 			})
 			.catch(openErrorToast);
 
@@ -100,10 +100,10 @@ class SLAListCard extends React.Component {
 
 		if (status === AppStatus.slaUpdated || status === AppStatus.slaSaved) {
 			if (status === AppStatus.slaUpdated) {
-				openSuccessToast(Liferay.Language.get('sla-updated'));
+				openSuccessToast(Liferay.Language.get('sla-was-updated'));
 			}
 			else {
-				openSuccessToast(Liferay.Language.get('sla-saved'));
+				openSuccessToast(Liferay.Language.get('sla-was-saved'));
 			}
 
 			this.state.showSLAsUpdatingAlert = true;

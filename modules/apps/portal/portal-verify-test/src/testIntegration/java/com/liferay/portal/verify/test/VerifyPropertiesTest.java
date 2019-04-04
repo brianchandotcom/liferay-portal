@@ -340,7 +340,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		}
 	}
 
-	protected String getFirstPortalPropertyKey() throws Exception {
+	protected String getFirstPortalPropertyKey() {
 		VerifyProperties verifyProperties = getVerifyProcess();
 
 		Properties portalProperties = ReflectionTestUtil.invoke(

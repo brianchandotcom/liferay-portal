@@ -58,7 +58,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testVerifyModel() throws Exception {
+	public void testVerifyModel() {
 		ReflectionTestUtil.invoke(
 			_verifyUUID, "doVerify",
 			new Class<?>[] {VerifiableUUIDModel[].class},

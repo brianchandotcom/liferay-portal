@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Asset Auto Tagger Google Cloud Natural Language API
 Bundle-SymbolicName: com.liferay.asset.auto.tagger.google.cloud.natural.language.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.asset.auto.tagger.google.cloud.natural.language.api
+Export-Package:\
+	com.liferay.asset.auto.tagger.google.cloud.natural.language.api,\
+	com.liferay.asset.auto.tagger.google.cloud.natural.language.api.configuration

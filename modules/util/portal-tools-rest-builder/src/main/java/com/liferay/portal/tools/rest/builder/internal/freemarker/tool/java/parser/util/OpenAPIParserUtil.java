@@ -195,6 +195,14 @@ public class OpenAPIParserUtil {
 					javaDataType = Map.class.getName();
 				}
 			}
+			else if (schema.getItems() != null) {
+				Items items = schema.getItems();
+
+				if (items.getReference() != null) {
+					javaDataType = javaDataTypeMap.get(
+						getReferenceName(items.getReference()));
+				}
+			}
 
 			return javaDataType;
 		}

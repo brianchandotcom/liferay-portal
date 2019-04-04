@@ -888,8 +888,6 @@ definition {
 
 		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
-		Check(locator1 = "Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX");
-
 		PortletEntry.save();
 
 		IFrame.closeFrame();

@@ -379,11 +379,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//label[contains(@for,'showTabs')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHOW_SEARCH_CHECKBOX</td>
 	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td></td>

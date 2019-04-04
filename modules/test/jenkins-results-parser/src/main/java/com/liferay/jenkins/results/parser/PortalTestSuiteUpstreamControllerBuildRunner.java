@@ -116,7 +116,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		if (portalGitHubCompareURL != null) {
 			sb.append("<li><strong>Git Compare:</strong> <a href=\"");
 			sb.append(_getPortalGitHubCompareURL());
-			sb.append("\">0 commits</a></li>");
+			sb.append("\">??? commits</a></li>");
 		}
 
 		sb.append("</ul>");
@@ -302,13 +302,17 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			String description = previousBuildJSONObject.optString(
 				"description", "");
 
-			Matcher matcher = _buildURLPattern.matcher(description);
-
-			if (!matcher.find()) {
+			if (!description.contains("IN PROGRESS")) {
 				continue;
 			}
 
-			String buildURL = matcher.group("buildURL");
+			Matcher buildURLMatcher = _buildURLPattern.matcher(description);
+
+			if (!buildURLMatcher.find()) {
+				continue;
+			}
+
+			String buildURL = buildURLMatcher.group("buildURL");
 
 			try {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -320,6 +324,51 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				if (result.equals(JSONObject.NULL)) {
 					return true;
 				}
+
+				JSONObject injectedEnvVarsJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(
+							previousBuildJSONObject.getString("url") +
+								"/injectedEnvVars/api/json"));
+
+				JSONObject envMapJSONObject =
+					injectedEnvVarsJSONObject.getJSONObject("envMap");
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("<strong>FAILURE</strong> - ");
+				sb.append(buildURLMatcher.group());
+
+				Matcher portalBranchSHAMatcher =
+					_portalBranchSHAPattern.matcher(description);
+				Matcher portalGitHubCompareURLMatcher =
+					_portalGitHubCompareURLPattern.matcher(description);
+
+				if (portalBranchSHAMatcher.find() ||
+					portalGitHubCompareURLMatcher.find()) {
+
+					sb.append("<ul>");
+
+					if (portalBranchSHAMatcher.find()) {
+						sb.append("<li>");
+						sb.append(portalBranchSHAMatcher.group());
+						sb.append("</li>");
+					}
+
+					if (portalGitHubCompareURLMatcher.find()) {
+						sb.append("<li>");
+						sb.append(portalGitHubCompareURLMatcher.group());
+						sb.append("</li>");
+					}
+
+					sb.append("</ul>");
+				}
+
+				JenkinsResultsParserUtil.updateBuildDescription(
+					sb.toString(),
+					Integer.valueOf(envMapJSONObject.getString("BUILD_NUMBER")),
+					envMapJSONObject.getString("JOB_NAME"),
+					envMapJSONObject.getString("HOSTNAME"));
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -334,6 +383,9 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	private static final Pattern _portalBranchSHAPattern = Pattern.compile(
 		"<strong>Git ID:</strong> <a href=\"https://github.com/[^/]+/[^/]+/" +
 			"commit/(?<branchSHA>[0-9a-f]{40})\">[0-9a-f]{7}</a>");
+	private static final Pattern _portalGitHubCompareURLPattern =
+		Pattern.compile(
+			"<strong>Git Compare:</strong> <a href=\"[^\"]+\">[^<]+</a>");
 
 	private String _invocationURL;
 

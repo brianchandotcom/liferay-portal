@@ -9,7 +9,7 @@ import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
 import {MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
+import {getItemMoveDirection, getItemPath, getSectionIndex, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
 import {moveItem, removeItem, setIn, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
@@ -30,6 +30,40 @@ const SECTION_FLOATING_TOOLBAR_BUTTONS = [
  * Creates a Fragment Entry Link List Section component.
  */
 class FragmentEntryLinkListSection extends Component {
+
+	/**
+	 * Checks if the given section should be highlighted
+	 * @param {string} dropTargetItemId
+	 * @param {string} dropTargetItemType
+	 * @param {string} rowId
+	 * @param {object} structure
+	 * @private
+	 * @return {boolean}
+	 * @review
+	 */
+	static _isHighlighted(
+		dropTargetItemId,
+		dropTargetItemType,
+		rowId,
+		structure
+	) {
+		const dropTargetPath = getItemPath(
+			dropTargetItemId,
+			dropTargetItemType,
+			structure
+		);
+
+		const sectionInDropTargetPath = itemIsInPath(
+			dropTargetPath,
+			rowId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.section
+		);
+
+		const sectionIsDropTarget = (dropTargetItemId === rowId &&
+			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section);		
+
+		return (sectionInDropTargetPath && !sectionIsDropTarget);
+	}
 
 	created() {
 		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);

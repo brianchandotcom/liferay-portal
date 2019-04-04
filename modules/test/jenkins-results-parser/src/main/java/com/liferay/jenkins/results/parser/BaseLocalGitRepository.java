@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -76,6 +77,41 @@ public abstract class BaseLocalGitRepository
 				getUpstreamBranchName(), getDirectory(), getName());
 
 		return _gitWorkingDirectory;
+	}
+
+	@Override
+	public List<LocalGitCommit> getRangeLocalGitCommits(
+		String earliestSHA, String latestSHA) {
+
+		List<LocalGitCommit> rangeLocalGitCommits = new ArrayList<>();
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		int index = 0;
+
+		while (index < MAX_COMMIT_HISTORY) {
+			int currentGroupSize = COMMIT_HISTORY_GROUP_SIZE;
+
+			if (index > (MAX_COMMIT_HISTORY - COMMIT_HISTORY_GROUP_SIZE)) {
+				currentGroupSize =
+					MAX_COMMIT_HISTORY % COMMIT_HISTORY_GROUP_SIZE;
+			}
+
+			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
+				index, currentGroupSize, latestSHA);
+
+			for (LocalGitCommit localGitCommit : localGitCommits) {
+				rangeLocalGitCommits.add(localGitCommit);
+
+				if (earliestSHA.equals(localGitCommit.getSHA())) {
+					return rangeLocalGitCommits;
+				}
+			}
+
+			index += COMMIT_HISTORY_GROUP_SIZE;
+		}
+
+		return rangeLocalGitCommits;
 	}
 
 	@Override

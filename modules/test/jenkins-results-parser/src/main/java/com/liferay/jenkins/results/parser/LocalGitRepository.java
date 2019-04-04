@@ -16,14 +16,23 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Peter Yoo
  */
 public interface LocalGitRepository extends GitRepository {
 
+	public static final Integer COMMIT_HISTORY_GROUP_SIZE = 100;
+
+	public static final Integer MAX_COMMIT_HISTORY = 25000;
+
 	public File getDirectory();
 
 	public GitWorkingDirectory getGitWorkingDirectory();
+
+	public List<LocalGitCommit> getRangeLocalGitCommits(
+		String earliestSHA, String latestSHA);
 
 	public String getUpstreamBranchName();
 

@@ -91,43 +91,6 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
-	public List<LocalGitCommit> getRangeLocalGitCommits(
-		String earliestSHA, String latestSHA) {
-
-		List<LocalGitCommit> rangeLocalGitCommits = new ArrayList<>();
-
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		int index = 0;
-
-		while (index < COMMITS_HISTORY_SIZE_MAX) {
-			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
-
-			if (index >
-					(COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
-
-				currentGroupSize =
-					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
-			}
-
-			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
-				index, currentGroupSize, latestSHA);
-
-			for (LocalGitCommit localGitCommit : localGitCommits) {
-				rangeLocalGitCommits.add(localGitCommit);
-
-				if (earliestSHA.equals(localGitCommit.getSHA())) {
-					return rangeLocalGitCommits;
-				}
-			}
-
-			index += _COMMITS_HISTORY_GROUP_SIZE;
-		}
-
-		return rangeLocalGitCommits;
-	}
-
-	@Override
 	public Properties getWorkspaceJobProperties(String propertyType, Job job) {
 		Properties jobProperties = job.getJobProperties();
 
@@ -284,14 +247,12 @@ public abstract class BaseWorkspaceGitRepository
 
 		int index = 0;
 
-		while (index < COMMITS_HISTORY_SIZE_MAX) {
-			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
+		while (index < COMMITS_HISTORY_MAX) {
+			int currentGroupSize = COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index >
-					(COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
-
+			if (index > (COMMITS_HISTORY_MAX - COMMITS_HISTORY_GROUP_SIZE)) {
 				currentGroupSize =
-					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
+					COMMITS_HISTORY_MAX % COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
@@ -317,7 +278,7 @@ public abstract class BaseWorkspaceGitRepository
 				break;
 			}
 
-			index += _COMMITS_HISTORY_GROUP_SIZE;
+			index += COMMITS_HISTORY_GROUP_SIZE;
 		}
 
 		if (!requiredCommitSHAs.isEmpty()) {
@@ -556,13 +517,11 @@ public abstract class BaseWorkspaceGitRepository
 		"git_hub_dev_branch_name"
 	};
 
-	private static final Integer _COMMITS_HISTORY_GROUP_SIZE = 100;
-
-	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
-
 	private static final String[] _REQUIRED_KEYS = {
 		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
 	};
+
+	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();

@@ -22,8 +22,6 @@ import java.util.Properties;
  */
 public interface WorkspaceGitRepository extends LocalGitRepository {
 
-	public static final Integer COMMITS_HISTORY_SIZE_MAX = 25000;
-
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();
@@ -31,9 +29,6 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 	public String getGitHubURL();
 
 	public List<LocalGitCommit> getHistoricalLocalGitCommits();
-
-	public List<LocalGitCommit> getRangeLocalGitCommits(
-		String earliestSHA, String latestSHA);
 
 	public String getType();
 

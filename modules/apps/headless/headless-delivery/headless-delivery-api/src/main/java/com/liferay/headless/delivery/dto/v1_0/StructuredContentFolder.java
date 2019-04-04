@@ -26,10 +26,14 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("StructuredContentFolder")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "StructuredContentFolder")
 public class StructuredContentFolder {
 
@@ -259,6 +264,7 @@ public class StructuredContentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String name;
 
 	public Number getNumberOfStructuredContentFolders() {

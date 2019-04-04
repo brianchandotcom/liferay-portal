@@ -1185,6 +1185,22 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	public StructuredContentFolder patchStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("StructuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.patchStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLInvokeDetached
 	public StructuredContentFolder putStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,

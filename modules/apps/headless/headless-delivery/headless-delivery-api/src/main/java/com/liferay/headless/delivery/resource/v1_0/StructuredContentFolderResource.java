@@ -52,6 +52,11 @@ public interface StructuredContentFolderResource {
 			Long structuredContentFolderId)
 		throws Exception;
 
+	public StructuredContentFolder patchStructuredContentFolder(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
 	public StructuredContentFolder putStructuredContentFolder(
 			Long structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)

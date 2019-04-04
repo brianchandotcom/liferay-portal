@@ -42,6 +42,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -120,6 +121,69 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return new StructuredContentFolder();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/structured-content-folders/{structuredContentFolderId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public StructuredContentFolder patchStructuredContentFolder(
+			@NotNull @PathParam("structuredContentFolderId") Long
+				structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		StructuredContentFolder existingStructuredContentFolder =
+			getStructuredContentFolder(structuredContentFolderId);
+
+		if (structuredContentFolder.getContentSpaceId() != null) {
+			existingStructuredContentFolder.setContentSpaceId(
+				structuredContentFolder.getContentSpaceId());
+		}
+
+		if (structuredContentFolder.getDateCreated() != null) {
+			existingStructuredContentFolder.setDateCreated(
+				structuredContentFolder.getDateCreated());
+		}
+
+		if (structuredContentFolder.getDateModified() != null) {
+			existingStructuredContentFolder.setDateModified(
+				structuredContentFolder.getDateModified());
+		}
+
+		if (structuredContentFolder.getDescription() != null) {
+			existingStructuredContentFolder.setDescription(
+				structuredContentFolder.getDescription());
+		}
+
+		if (structuredContentFolder.getName() != null) {
+			existingStructuredContentFolder.setName(
+				structuredContentFolder.getName());
+		}
+
+		if (structuredContentFolder.getNumberOfStructuredContentFolders() !=
+				null) {
+
+			existingStructuredContentFolder.setNumberOfStructuredContentFolders(
+				structuredContentFolder.getNumberOfStructuredContentFolders());
+		}
+
+		if (structuredContentFolder.getNumberOfStructuredContents() != null) {
+			existingStructuredContentFolder.setNumberOfStructuredContents(
+				structuredContentFolder.getNumberOfStructuredContents());
+		}
+
+		if (structuredContentFolder.getViewableBy() != null) {
+			existingStructuredContentFolder.setViewableBy(
+				structuredContentFolder.getViewableBy());
+		}
+
+		preparePatch(structuredContentFolder, existingStructuredContentFolder);
+
+		return putStructuredContentFolder(
+			structuredContentFolderId, existingStructuredContentFolder);
 	}
 
 	@Override

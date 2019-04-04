@@ -735,6 +735,108 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchStructuredContentFolder() throws Exception {
+		StructuredContentFolder postStructuredContentFolder =
+			testPatchStructuredContentFolder_addStructuredContentFolder();
+
+		StructuredContentFolder randomPatchStructuredContentFolder =
+			randomPatchStructuredContentFolder();
+
+		StructuredContentFolder patchStructuredContentFolder =
+			invokePatchStructuredContentFolder(
+				postStructuredContentFolder.getId(),
+				randomPatchStructuredContentFolder);
+
+		StructuredContentFolder expectedPatchStructuredContentFolder =
+			(StructuredContentFolder)BeanUtils.cloneBean(
+				postStructuredContentFolder);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchStructuredContentFolder,
+			randomPatchStructuredContentFolder);
+
+		StructuredContentFolder getStructuredContentFolder =
+			invokeGetStructuredContentFolder(
+				patchStructuredContentFolder.getId());
+
+		assertEquals(
+			expectedPatchStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+	}
+
+	protected StructuredContentFolder
+			testPatchStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder invokePatchStructuredContentFolder(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-content-folders/{structuredContentFolderId}",
+					structuredContentFolderId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, StructuredContentFolder.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePatchStructuredContentFolderResponse(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-content-folders/{structuredContentFolderId}",
+					structuredContentFolderId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testPutStructuredContentFolder() throws Exception {
 		StructuredContentFolder postStructuredContentFolder =
 			testPutStructuredContentFolder_addStructuredContentFolder();

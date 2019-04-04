@@ -85,6 +85,33 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		return predicate.negate();
 	}
 
+	private Collection<String> _getClassificationTagNames(
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			String documentPayload)
+		throws Exception {
+
+		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				classificationEndpointEnabled()) {
+
+			return Collections.emptySet();
+		}
+
+		JSONObject responseJSONObject = _post(
+			_getServiceURL(
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					apiKey(),
+				"classifyText"),
+			documentPayload);
+		float confidence =
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				confidence();
+
+		return _toTagNames(
+			responseJSONObject.getJSONArray("categories"),
+			jsonObject -> jsonObject.getDouble("confidence") > confidence);
+	}
+
 	private GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(FileEntry fileEntry)
 		throws ConfigurationException {
@@ -174,21 +201,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		String documentPayload = GCloudNaturalLanguageUtil.getDocumentPayload(
 			truncatedContent, type);
 
-		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				classificationEndpointEnabled()) {
-
-			JSONObject responseJSONObject = _post(
-				_getServiceURL(apiKey, "classifyText"), documentPayload);
-			float confidence =
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					confidence();
-
-			tagNames.addAll(
-				_toTagNames(
-					responseJSONObject.getJSONArray("categories"),
-					jsonObject ->
-						jsonObject.getDouble("confidence") > confidence));
-		}
+		tagNames.addAll(
+			_getClassificationTagNames(
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+				documentPayload));
 
 		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				entityEndpointEnabled()) {

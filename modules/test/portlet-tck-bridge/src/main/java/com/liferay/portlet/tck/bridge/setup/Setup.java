@@ -85,10 +85,6 @@ public class Setup {
 			Group group = _getTCKSiteGroup(
 				company.getCompanyId(), user.getUserId());
 
-			long groupId = group.getGroupId();
-
-			_addAllUsersToSite(groupId);
-
 			File configFile = new File(
 				tckDeployFilesDir + "/pluto-portal-driver-config.xml");
 
@@ -148,7 +144,8 @@ public class Setup {
 
 				PortalPage portalPage = new PortalPage(pageName, portlets);
 
-				_setupPage(user.getUserId(), groupId, portalPage, bundles);
+				_setupPage(
+					user.getUserId(), group.getGroupId(), portalPage, bundles);
 			}
 		}
 		finally {
@@ -156,26 +153,6 @@ public class Setup {
 				PermissionThreadLocal.setPermissionChecker(null);
 			}
 		}
-	}
-
-	private static void _addAllUsersToSite(long groupId) throws Exception {
-		List<User> users = UserLocalServiceUtil.getUsers(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		ArrayList<Long> userIdList = new ArrayList<>();
-
-		for (User user : users) {
-			if (!user.isDefaultUser()) {
-				userIdList.add(user.getUserId());
-			}
-		}
-
-		long[] userIds = new long[userIdList.size()];
-
-		for (int i = 0; i < userIds.length; i++) {
-			userIds[i] = userIdList.get(i);
-		}
-
-		UserLocalServiceUtil.addGroupUsers(groupId, userIds);
 	}
 
 	private static void _addPortlet(

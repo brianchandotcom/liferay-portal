@@ -262,10 +262,16 @@ function getFragmentEntryLinkContent(
 					throw new Error();
 				}
 
-				return setIn(
+				fragmentEntryLink = setIn(
 					fragmentEntryLink,
 					['content'],
 					response.content
+				);
+
+				return setIn(
+					fragmentEntryLink,
+					['error'],
+					response.error
 				);
 			}
 		);

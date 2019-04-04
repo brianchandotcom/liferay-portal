@@ -142,6 +142,35 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return portalBranchSHA.substring(0, 7);
 	}
 
+	private String _getPreviousPortalBranchSHA() {
+		S buildData = getBuildData();
+
+		String currentPortalBranchSHA = buildData.getPortalBranchSHA();
+
+		for (JSONObject previousBuildJSONObject :
+				getPreviousBuildJSONObjects()) {
+
+			String description = previousBuildJSONObject.optString(
+				"description", "");
+
+			Matcher matcher = _portalBranchSHAPattern.matcher(description);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String previousPortalBranchSHA = matcher.group("branchSHA");
+
+			if (currentPortalBranchSHA.equals(previousPortalBranchSHA)) {
+				continue;
+			}
+
+			return previousPortalBranchSHA;
+		}
+
+		return null;
+	}
+
 	private void _invokeJob() {
 		StringBuilder sb = new StringBuilder();
 
@@ -176,6 +205,15 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		sb.append(buildData.getJenkinsGitHubUsername());
 		sb.append("&PORTAL_GIT_COMMIT=");
 		sb.append(buildData.getPortalBranchSHA());
+
+		String portalGitHubCompareURL = buildData.getPortalGitHubCompareURL(
+			_getPreviousPortalBranchSHA());
+
+		if (portalGitHubCompareURL != null) {
+			sb.append("&PORTAL_GITHUB_COMPARE_URL=");
+			sb.append(portalGitHubCompareURL);
+		}
+
 		sb.append("&PORTAL_GITHUB_URL=");
 		sb.append(buildData.getPortalGitHubURL());
 		sb.append("&TESTRAY_BUILD_NAME=");
@@ -232,7 +270,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			String description = previousBuildJSONObject.optString(
 				"description", "");
 
-			Matcher matcher = _pattern.matcher(description);
+			Matcher matcher = _buildURLPattern.matcher(description);
 
 			if (!matcher.find()) {
 				continue;
@@ -259,8 +297,11 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return false;
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _buildURLPattern = Pattern.compile(
 		"<a href=\"(?<buildURL>[^\"]+)\">Build URL</a>");
+	private static final Pattern _portalBranchSHAPattern = Pattern.compile(
+		"<strong>Git ID:</strong> <a href=\"https://github.com/[^/]+/[^/]+/" +
+			"commit/(?<branchSHA>[0-9a-f]{40})\">[0-9a-f]{7}</a>");
 
 	private String _invocationURL;
 

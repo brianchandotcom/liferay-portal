@@ -24,6 +24,19 @@ import java.util.regex.Pattern;
 public class PortalTestSuiteUpstreamControllerBuildData
 	extends PortalTopLevelBuildData {
 
+	public String getPortalGitHubCompareURL(String previousPortalBranchSHA) {
+		if ((previousPortalBranchSHA == null) ||
+			!previousPortalBranchSHA.matches("[0-9a-f]{40}")) {
+
+			return null;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", getPortalGitHubUsername(), "/",
+			getPortalGitHubRepositoryName(), "/compare/",
+			previousPortalBranchSHA, "...", getPortalBranchSHA());
+	}
+
 	public String getTestrayBuildName() {
 		return JenkinsResultsParserUtil.combine(
 			String.valueOf(getBuildNumber()), " - ",

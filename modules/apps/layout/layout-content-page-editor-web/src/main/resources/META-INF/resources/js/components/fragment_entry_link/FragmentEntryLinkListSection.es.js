@@ -67,7 +67,11 @@ class FragmentEntryLinkListSection extends Component {
 			columnResizerVisible = true;
 		}
 
-		nextState = setIn(nextState, ['_columnResizerVisible'], columnResizerVisible);
+		nextState = setIn(
+			nextState,
+			['_columnResizerVisible'],
+			columnResizerVisible
+		);
 
 		nextState = setIn(
 			nextState,
@@ -76,7 +80,11 @@ class FragmentEntryLinkListSection extends Component {
 		);
 
 		if (nextState._resizing && nextState._resizeSectionColumns) {
-			nextState = setIn(nextState, ['columns'], state._resizeSectionColumns);
+			nextState = setIn(
+				nextState,
+				['columns'],
+				state._resizeSectionColumns
+			);
 		}
 
 		return nextState;

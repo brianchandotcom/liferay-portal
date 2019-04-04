@@ -71,11 +71,13 @@ public class Setup {
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 				company.getMx());
 
+		long userId = user.getUserId();
+
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			Locale.US, _TCK_SITE_GROUP_NAME);
 
 		group = GroupLocalServiceUtil.addGroup(
-			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0L,
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0L,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, false,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck", true,
@@ -132,7 +134,7 @@ public class Setup {
 			String pageName = pageNameAttribute.getValue();
 
 			Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
-				user.getUserId(), group.getGroupId(), true,
+				userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, pageName, pageName,
 				pageName, LayoutConstants.TYPE_PORTLET, false,
 				"/" + StringUtil.toLowerCase(pageName), new ServiceContext());
@@ -140,12 +142,11 @@ public class Setup {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)portalPageLayout.getLayoutType();
 
-			layoutTypePortlet.setLayoutTemplateId(
-				user.getUserId(), "1_column", false);
+			layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
 			for (String portletId : portletIds) {
 				layoutTypePortlet.addPortletId(
-					user.getUserId(), portletId, "column-1", -1, false);
+					userId, portletId, "column-1", -1, false);
 			}
 
 			LayoutLocalServiceUtil.updateLayout(portalPageLayout);

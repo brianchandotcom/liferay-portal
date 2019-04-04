@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.adaptive.media.blogs.web.internal.asset.display.contributor;
+package com.liferay.document.library.web.internal.info.display.contributor;
 
-import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -29,37 +29,39 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.blogs.model.BlogsEntry",
-		"service.ranking:Integer=2"
-	},
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = InfoDisplayContributorField.class
 )
-public class AMBlogsEntryContentAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class DLFileEntryPreviewImageInfoDisplayContributorField
+	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "content";
+		return "previewImage";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "content");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), "preview-image");
 	}
 
 	@Override
 	public String getType() {
-		return "text";
+		return "image";
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		return _contentTransformerHandler.transform(
-			ContentTransformerContentTypes.HTML, blogsEntry.getContent());
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		try {
+			return _dlurlHelper.getImagePreviewURL(fileEntry, null);
+		}
+		catch (Exception pe) {
+			return null;
+		}
 	}
 
 	@Reference
-	private ContentTransformerHandler _contentTransformerHandler;
+	private DLURLHelper _dlurlHelper;
 
 }

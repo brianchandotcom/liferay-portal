@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor;
+package com.liferay.journal.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,10 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class JournalArticleLastEditorProfileImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class JournalArticleLastEditorProfileImageInfoDisplayContributorField
+	implements InfoDisplayContributorField<JournalArticle> {
 
 	@Override
 	public String getKey() {
@@ -83,7 +83,7 @@ public class JournalArticleLastEditorProfileImageAssetDisplayContributorField
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleLastEditorProfileImageAssetDisplayContributorField.class);
+		JournalArticleLastEditorProfileImageInfoDisplayContributorField.class);
 
 	@Reference
 	private UserLocalService _userLocalService;

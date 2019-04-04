@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryCoverImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class BlogsEntryCoverImageInfoDisplayContributorField
+	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
@@ -89,6 +89,6 @@ public class BlogsEntryCoverImageAssetDisplayContributorField
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryCoverImageAssetDisplayContributorField.class);
+		BlogsEntryCoverImageInfoDisplayContributorField.class);
 
 }

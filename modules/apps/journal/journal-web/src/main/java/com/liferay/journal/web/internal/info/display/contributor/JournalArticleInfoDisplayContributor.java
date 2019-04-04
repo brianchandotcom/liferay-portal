@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor;
+package com.liferay.journal.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayField;
-import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
-import com.liferay.asset.display.contributor.util.ContentAccessor;
+import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -27,6 +25,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
@@ -61,14 +61,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetDisplayContributor.class)
-public class JournalArticleAssetDisplayContributor
-	extends BaseAssetDisplayContributor<JournalArticle> {
-
-	@Override
-	public String getAssetURLSeparator() {
-		return "/wc/";
-	}
+@Component(immediate = true, service = InfoDisplayContributor.class)
+public class JournalArticleInfoDisplayContributor
+	extends BaseAssetInfoDisplayContributor<JournalArticle> {
 
 	@Override
 	public String getClassName() {
@@ -76,11 +71,11 @@ public class JournalArticleAssetDisplayContributor
 	}
 
 	@Override
-	public List<AssetDisplayField> getClassTypeFields(
+	public List<InfoDisplayField> getClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		List<AssetDisplayField> assetDisplayFields = super.getClassTypeFields(
+		List<InfoDisplayField> infoDisplayFields = super.getClassTypeFields(
 			classTypeId, locale);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
@@ -90,9 +85,9 @@ public class JournalArticleAssetDisplayContributor
 
 		Stream<DDMTemplate> stream = ddmTemplates.stream();
 
-		assetDisplayFields.addAll(
+		infoDisplayFields.addAll(
 			stream.map(
-				ddmTemplate -> new AssetDisplayField(
+				ddmTemplate -> new InfoDisplayField(
 					_getTemplateKey(ddmTemplate),
 					ddmTemplate.getName(locale) + StringPool.SPACE +
 						StringPool.STAR,
@@ -101,7 +96,12 @@ public class JournalArticleAssetDisplayContributor
 				Collectors.toList()
 			));
 
-		return assetDisplayFields;
+		return infoDisplayFields;
+	}
+
+	@Override
+	public String getInfoURLSeparator() {
+		return "/wc/";
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public class JournalArticleAssetDisplayContributor
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleAssetDisplayContributor.class);
+		JournalArticleInfoDisplayContributor.class);
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

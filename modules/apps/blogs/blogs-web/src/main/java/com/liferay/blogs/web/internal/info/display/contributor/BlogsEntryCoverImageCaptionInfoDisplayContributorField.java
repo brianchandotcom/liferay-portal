@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryCoverImageCaptionAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class BlogsEntryCoverImageCaptionInfoDisplayContributorField
+	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {

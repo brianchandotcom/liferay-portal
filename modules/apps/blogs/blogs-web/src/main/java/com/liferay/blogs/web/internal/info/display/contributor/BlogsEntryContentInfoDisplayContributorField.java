@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -27,19 +27,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class BlogsEntrySubtitleAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class BlogsEntryContentInfoDisplayContributorField
+	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "subtitle";
+		return "content";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "subtitle");
+		return LanguageUtil.get(locale, "content");
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class BlogsEntrySubtitleAssetDisplayContributorField
 
 	@Override
 	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		return blogsEntry.getSubtitle();
+		return blogsEntry.getContent();
 	}
 
 }

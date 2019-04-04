@@ -1,0 +1,46 @@
+{
+	"items" : [
+		{
+			"availableLanguages" : [
+				"en-US"
+			],
+			"contentFields" : [
+				{
+					"dataType" : "html",
+					"name" : "content",
+					"repeatable" : false,
+					"value" : null
+				}
+			],
+			"contentSpaceId" : 20123,
+			"contentStructureId" : 36501,
+			"creator" : {
+				"familyName" : "Test",
+				"givenName" : "Test",
+				"id" : 20129,
+				"name" : "Test Test",
+				"profileURL" : "/web/test"
+			},
+			"dateCreated" : "2019-04-04T17:28:35Z",
+			"dateModified" : "2019-04-04T17:28:35Z",
+			"datePublished" : "2019-04-04T17:28:00Z",
+			"description" : "<p>wc1d</p>",
+			"friendlyUrlPath" : "bwc1-title",
+			"id" : 37249,
+			"key" : "37247",
+			"numberOfComments" : 0,
+			"renderedContents" : [
+				{
+					"renderedContentURL" : "http://localhost:8080/o/headless-delivery/v1.0/structured-contents/37249/rendered-content/36504",
+					"templateName" : "Basic Web Content"
+				}
+			],
+			"title" : "bwc1 title",
+			"uuid" : "9a213fb8-57ca-ae9f-5b07-fd3ffb2f1526"
+		}
+	],
+	"lastPage" : 1,
+	"page" : 1,
+	"pageSize" : 20,
+	"totalCount" : 1
+}

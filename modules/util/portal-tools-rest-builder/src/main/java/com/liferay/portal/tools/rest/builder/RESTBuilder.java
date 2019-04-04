@@ -203,62 +203,6 @@ public class RESTBuilder {
 		FileUtil.write(file, _fixOpenAPIOperationIds(freeMarkerTool, content));
 	}
 
-	private String _fixOpenAPIOperationIds(
-		FreeMarkerTool freeMarkerTool, String content) {
-
-		content = content.replaceAll("\n\\s+operationId:.+", "");
-
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
-
-		Components components = openAPIYAML.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		for (String schemaName : schemas.keySet()) {
-			List<JavaMethodSignature> javaMethodSignatures =
-				freeMarkerTool.getResourceJavaMethodSignatures(
-					_configYAML, openAPIYAML, schemaName);
-
-			for (JavaMethodSignature javaMethodSignature :
-					javaMethodSignatures) {
-
-				int x = content.indexOf(
-					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
-
-				if (x == -1) {
-					x = content.indexOf(javaMethodSignature.getPath() + ":");
-				}
-
-				String pathLine = content.substring(
-					content.lastIndexOf("\n", x) + 1, content.indexOf("\n", x));
-
-				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
-					javaMethodSignature.getOperation());
-
-				int y = content.indexOf(httpMethod + ":", x);
-
-				String httpMethodLine = content.substring(
-					content.lastIndexOf("\n", y) + 1, content.indexOf("\n", y));
-
-				int z = content.indexOf('\n', y);
-
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(content.substring(0, z + 1));
-				sb.append(pathLine.replaceAll("^(\\s+).+", "$1"));
-				sb.append(httpMethodLine.replaceAll("^(\\s+).+", "$1"));
-				sb.append("operationId: ");
-				sb.append(javaMethodSignature.getMethodName());
-				sb.append("\n");
-				sb.append(content.substring(z + 1));
-
-				content = sb.toString();
-			}
-		}
-
-		return content;
-	}
-
 	private void _createApplicationFile(Map<String, Object> context)
 		throws Exception {
 
@@ -742,6 +686,62 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_test", context));
+	}
+
+	private String _fixOpenAPIOperationIds(
+		FreeMarkerTool freeMarkerTool, String content) {
+
+		content = content.replaceAll("\n\\s+operationId:.+", "");
+
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (String schemaName : schemas.keySet()) {
+			List<JavaMethodSignature> javaMethodSignatures =
+				freeMarkerTool.getResourceJavaMethodSignatures(
+					_configYAML, openAPIYAML, schemaName);
+
+			for (JavaMethodSignature javaMethodSignature :
+					javaMethodSignatures) {
+
+				int x = content.indexOf(
+					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
+
+				if (x == -1) {
+					x = content.indexOf(javaMethodSignature.getPath() + ":");
+				}
+
+				String pathLine = content.substring(
+					content.lastIndexOf("\n", x) + 1, content.indexOf("\n", x));
+
+				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
+					javaMethodSignature.getOperation());
+
+				int y = content.indexOf(httpMethod + ":", x);
+
+				String httpMethodLine = content.substring(
+					content.lastIndexOf("\n", y) + 1, content.indexOf("\n", y));
+
+				int z = content.indexOf('\n', y);
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(content.substring(0, z + 1));
+				sb.append(pathLine.replaceAll("^(\\s+).+", "$1"));
+				sb.append(httpMethodLine.replaceAll("^(\\s+).+", "$1"));
+				sb.append("operationId: ");
+				sb.append(javaMethodSignature.getMethodName());
+				sb.append("\n");
+				sb.append(content.substring(z + 1));
+
+				content = sb.toString();
+			}
+		}
+
+		return content;
 	}
 
 	private void _putSchema(

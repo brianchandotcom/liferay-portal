@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.FolderNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DocumentFolderNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class FolderNameExceptionMapper
+public class DocumentFolderNameExceptionMapper
 	implements ExceptionMapper<FolderNameException> {
 
 	@Override

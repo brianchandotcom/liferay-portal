@@ -34,12 +34,14 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		retirePreviousBuilds();
 
 		if (_previousBuildHasCurrentSHA()) {
-			BuildData buildData = getBuildData();
+			S buildData = getBuildData();
 
 			buildData.setBuildDescription(
 				JenkinsResultsParserUtil.combine(
-					"SKIPPED: ", _getPortalBranchAbbreviatedSHA(),
-					" was already ran"));
+					"<strong>SKIPPED</strong> - <a href=\"https://github.com/",
+					"liferay/liferay-portal/commit/",
+					buildData.getPortalBranchSHA(), "\">",
+					_getPortalBranchAbbreviatedSHA(), "</a> was already ran"));
 
 			super.updateBuildDescription();
 
@@ -49,7 +51,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		if (_previousBuildHasExistingInvocation()) {
 			BuildData buildData = getBuildData();
 
-			buildData.setBuildDescription("SKIPPED: Job was already invoked");
+			buildData.setBuildDescription(
+				"<strong>SKIPPED</strong> - Job was already invoked");
 
 			super.updateBuildDescription();
 
@@ -59,7 +62,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		if (_previousBuildHasRunningInvocation()) {
 			BuildData buildData = getBuildData();
 
-			buildData.setBuildDescription("SKIPPED: Job is already running");
+			buildData.setBuildDescription(
+				"<strong>SKIPPED</strong> - Job is already running");
 
 			super.updateBuildDescription();
 
@@ -88,14 +92,36 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	protected void updateBuildDescription() {
-		BuildData buildData = getBuildData();
+		S buildData = getBuildData();
 
-		buildData.setBuildDescription(
-			JenkinsResultsParserUtil.combine(
-				"<strong>GIT ID</strong> - ", _getPortalBranchAbbreviatedSHA(),
-				" - <a href=\"",
-				JenkinsResultsParserUtil.getRemoteURL(_getInvocationURL()),
-				"\">Invocation URL</a>"));
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<strong>IN QUEUE</strong> - <a href=\"");
+		sb.append(JenkinsResultsParserUtil.getRemoteURL(_getInvocationURL()));
+		sb.append("\">Invocation URL</a>");
+
+		sb.append("<ul><li><strong>Git ID:</strong> ");
+		sb.append("<a href=\"https://github.com/");
+		sb.append(buildData.getPortalGitHubUsername());
+		sb.append("/");
+		sb.append(buildData.getPortalGitHubRepositoryName());
+		sb.append("/commit/");
+		sb.append(buildData.getPortalBranchSHA());
+		sb.append("\">");
+		sb.append(_getPortalBranchAbbreviatedSHA());
+		sb.append("</a></li>");
+
+		String portalGitHubCompareURL = _getPortalGitHubCompareURL();
+
+		if (portalGitHubCompareURL != null) {
+			sb.append("<li><strong>Git Compare:</strong> <a href=\"");
+			sb.append(_getPortalGitHubCompareURL());
+			sb.append("\">0 commits</a></li>");
+		}
+
+		sb.append("</ul>");
+
+		buildData.setBuildDescription(sb.toString());
 
 		super.updateBuildDescription();
 	}
@@ -140,6 +166,13 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		String portalBranchSHA = buildData.getPortalBranchSHA();
 
 		return portalBranchSHA.substring(0, 7);
+	}
+
+	private String _getPortalGitHubCompareURL() {
+		S buildData = getBuildData();
+
+		return buildData.getPortalGitHubCompareURL(
+			_getPreviousPortalBranchSHA());
 	}
 
 	private String _getPreviousPortalBranchSHA() {
@@ -206,8 +239,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		sb.append("&PORTAL_GIT_COMMIT=");
 		sb.append(buildData.getPortalBranchSHA());
 
-		String portalGitHubCompareURL = buildData.getPortalGitHubCompareURL(
-			_getPreviousPortalBranchSHA());
+		String portalGitHubCompareURL = _getPortalGitHubCompareURL();
 
 		if (portalGitHubCompareURL != null) {
 			sb.append("&PORTAL_GITHUB_COMPARE_URL=");

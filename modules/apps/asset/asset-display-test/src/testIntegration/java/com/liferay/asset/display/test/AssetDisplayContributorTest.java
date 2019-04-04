@@ -23,7 +23,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,18 +49,17 @@ public class AssetDisplayContributorTest {
 			_infoDisplayContributorFieldTracker.getInfoDisplayContributorFields(
 				AssetEntry.class.getName());
 
-		for (InfoDisplayContributorField infoDisplayContributorField :
-				infoDisplayContributorFields) {
+		Stream<InfoDisplayContributorField> stream =
+			infoDisplayContributorFields.stream();
 
-			if (Objects.equals(
-					infoDisplayContributorField.getKey(),
-					"assetEntryAdapterKey")) {
+		List<String> infoDisplayContributorFieldKeys = stream.map(
+			infoDisplayContributorField -> infoDisplayContributorField.getKey()
+		).collect(
+			Collectors.toList()
+		);
 
-				return;
-			}
-		}
-
-		Assert.fail("Asset display contributor was not registered");
+		Assert.assertTrue(
+			infoDisplayContributorFieldKeys.contains("assetEntryAdapterKey"));
 	}
 
 	@Inject

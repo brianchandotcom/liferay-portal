@@ -335,6 +335,43 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!opennlp-tools.jar</file-name>
+				<version>1.8.1</version>
+				<project-name>Apache OpenNLP Tools</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!org.apache.opennlp.model.en.ner.location.jar</file-name>
+				<version>1.5.0</version>
+				<project-name>com.liferay:org.apache.opennlp.model.en.ner.location</project-name>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!org.apache.opennlp.model.en.ner.organization.jar</file-name>
+				<version>1.5.0</version>
+				<project-name>com.liferay:org.apache.opennlp.model.en.ner.organization</project-name>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!org.apache.opennlp.model.en.ner.person.jar</file-name>
+				<version>1.5.0</version>
+				<project-name>com.liferay:org.apache.opennlp.model.en.ner.person</project-name>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!org.apache.opennlp.model.en.sent.jar</file-name>
+				<version>1.5.0</version>
+				<project-name>com.liferay:org.apache.opennlp.model.en.sent</project-name>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.asset.auto.tagger.opennlp.jar!org.apache.opennlp.model.en.token.jar</file-name>
+				<version>1.5.0</version>
+				<project-name>com.liferay:org.apache.opennlp.model.en.token</project-name>
+			</library>
+			<library>
 				<file-name>com.liferay.document.library.asset.auto.tagger.tensorflow.jar!libtensorflow.jar</file-name>
 				<version>1.10.0</version>
 				<project-name>org.tensorflow:libtensorflow</project-name>
@@ -495,8 +532,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-services-drive.jar</file-name>
-				<version>v3-rev122-1.23.0</version>
-				<project-name>Drive API v3-rev122-1.23.0</project-name>
+				<version>v3-rev20190311-1.28.0</version>
+				<project-name>Drive API v3-rev20190311-1.28.0</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1154,7 +1191,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.frontend.js.loader.modules.extender.jar!json.jar</file-name>
-				<version>20140107</version>
+				<version>20180813</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>
@@ -1744,7 +1781,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.cluster.multiple.jar!jgroups.jar</file-name>
-				<version>3.6.4.Final</version>
+				<version>3.6.16.Final</version>
 				<project-name>JGroups</project-name>
 				<project-url>http://www.jgroups.org</project-url>
 				<licenses>
@@ -1881,12 +1918,6 @@
 				<file-name>com.liferay.portal.remote.axis.extender.jar!org.apache.axis.jar</file-name>
 				<version>1.4.LIFERAY-PATCHED-3</version>
 				<project-name>org.apache.axis</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-bindings-soap.jar</file-name>
@@ -3844,6 +3875,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!aalto-xml.jar</file-name>
+				<version>0.9.10</version>
+				<project-name>aalto-xml</project-name>
+				<project-url>http://github.com/FasterXML/aalto-xml/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!antlr4-runtime.jar</file-name>
 				<version>4.7.1</version>
 				<project-name>ANTLR 4 Runtime</project-name>
@@ -3987,6 +4030,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-jaxrs-xml-provider.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-JAXRS-XML</project-name>
+				<project-url>http://github.com/FasterXML/jackson-jaxrs-providers/jackson-jaxrs-xml-provider</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!java-dataloader.jar</file-name>
 				<version>2.1.1</version>
 				<project-name>java-dataloader</project-name>
@@ -4091,9 +4146,16 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.workflow.kaleo.service.jar!json-java.jar</file-name>
-				<version>20110202</version>
-				<project-name>json-java</project-name>
+				<file-name>com.liferay.portal.workflow.kaleo.service.jar!json.jar</file-name>
+				<version>20180813</version>
+				<project-name>JSON in Java</project-name>
+				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
+				<licenses>
+					<license>
+						<license-name>The JSON License</license-name>
+						<license-url>http://json.org/license.html</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.workflow.kaleo.service.jar!org.jabsorb.jar</file-name>
@@ -7499,19 +7561,6 @@
 						<copyright-notice>Copyright (c) 2003, IBM Corporation., http://www.ibm.com</copyright-notice>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/sigar.jar</file-name>
-				<version>1.6.4</version>
-				<project-name>Sigar</project-name>
-				<project-url>https://sourceforge.net/projects/sigar/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-				<comments>This includes modifications for compatibility with JDK 5.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/simplecaptcha.jar</file-name>

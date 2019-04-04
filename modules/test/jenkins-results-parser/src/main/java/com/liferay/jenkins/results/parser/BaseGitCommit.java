@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -24,8 +25,16 @@ import org.json.JSONObject;
 public abstract class BaseGitCommit implements GitCommit {
 
 	@Override
-	public boolean equals(Object object) {
-		if (object.hashCode() == hashCode()) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BaseGitCommit)) {
+			return false;
+		}
+
+		if (Objects.equals(hashCode(), obj.hashCode())) {
 			return true;
 		}
 

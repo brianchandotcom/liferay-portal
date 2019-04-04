@@ -18,6 +18,7 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -30,53 +31,33 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BaseLocalGitRepository)) {
 			return false;
 		}
 
-		if (!(obj instanceof LocalGitRepository)) {
-			return false;
+		BaseLocalGitRepository baseLocalGitRepository =
+			(BaseLocalGitRepository)obj;
+
+		if (Objects.equals(
+				getDirectory(), baseLocalGitRepository.getDirectory()) &&
+			Objects.equals(
+				getGitWorkingDirectory(),
+				baseLocalGitRepository.getGitWorkingDirectory()) &&
+			JenkinsResultsParserUtil.isJSONObjectEqual(
+				getJSONObject(), baseLocalGitRepository.getJSONObject()) &&
+			Objects.equals(getName(), baseLocalGitRepository.getName()) &&
+			Objects.equals(
+				getUpstreamBranchName(),
+				baseLocalGitRepository.getUpstreamBranchName())) {
+
+			return true;
 		}
 
-		LocalGitRepository localGitRepository = (LocalGitRepository)obj;
-
-		File directory = getDirectory();
-
-		if (!directory.equals(localGitRepository.getDirectory())) {
-			return false;
-		}
-
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		if (!gitWorkingDirectory.equals(
-				localGitRepository.getGitWorkingDirectory())) {
-
-			return false;
-		}
-
-		JSONObject jsonObject = getJSONObject();
-
-		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
-				jsonObject, localGitRepository.getJSONObject())) {
-
-			return false;
-		}
-
-		String name = getName();
-
-		if (!name.equals(localGitRepository.getName())) {
-			return false;
-		}
-
-		String upstreamBranchName = getUpstreamBranchName();
-
-		if (!upstreamBranchName.equals(
-				localGitRepository.getUpstreamBranchName())) {
-
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override

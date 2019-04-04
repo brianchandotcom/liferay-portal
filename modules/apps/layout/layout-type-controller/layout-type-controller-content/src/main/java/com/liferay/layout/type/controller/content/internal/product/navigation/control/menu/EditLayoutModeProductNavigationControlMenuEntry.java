@@ -50,13 +50,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class ToggleEditLayoutModeProductNavigationControlMenuEntry
+public class EditLayoutModeProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/toggle_edit_layout_mode.jsp";
+		return "/entries/edit_layout_mode.jsp";
 	}
 
 	@Override

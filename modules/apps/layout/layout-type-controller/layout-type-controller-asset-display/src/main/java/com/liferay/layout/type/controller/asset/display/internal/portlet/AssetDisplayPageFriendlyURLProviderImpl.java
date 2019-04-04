@@ -25,6 +25,8 @@ import com.liferay.layout.type.controller.asset.display.internal.constants.Asset
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,9 +62,11 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		StringBundler sb = new StringBundler(3);
 
+		Group group = _groupLocalService.getGroup(assetEntry.getGroupId());
+
 		sb.append(
 			_portal.getGroupFriendlyURL(
-				themeDisplay.getLayoutSet(), themeDisplay));
+				group.getPublicLayoutSet(), themeDisplay));
 
 		String urlTitle = null;
 
@@ -106,6 +110,9 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

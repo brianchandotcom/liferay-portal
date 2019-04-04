@@ -1,3 +1,4 @@
+import 'clay-progress-bar';
 import Ajax from 'metal-ajax';
 import Component from 'metal-component';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
@@ -244,6 +245,16 @@ AdaptiveMediaProgress.STATE = {
 	showLoadingIndicator_: {
 		validator: core.isBoolean,
 		value: false
+	},
+
+	/**
+	 * The path to the SVG spritemap file containing the icons.
+	 * @memberof AdaptiveMediaProgress
+	 * @protected
+	 * @type {String}
+	 */
+	spritemap: {
+		validator: core.isString
 	},
 
 	/**

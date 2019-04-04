@@ -41,7 +41,7 @@ export default class ProcessListTable extends React.Component {
 								style={{ width: '15%' }}
 							>
 								<ProcessListHeadItem
-									name="ontimeInstanceCount"
+									name="onTimeInstanceCount"
 									title={onTimeTitle}
 								/>
 							</th>

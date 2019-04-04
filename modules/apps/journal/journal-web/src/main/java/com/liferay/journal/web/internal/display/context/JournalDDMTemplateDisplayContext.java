@@ -142,6 +142,16 @@ public class JournalDDMTemplateDisplayContext {
 		return ddmTemplateSearch;
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+
+		return _displayStyle;
+	}
+
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -219,6 +229,7 @@ public class JournalDDMTemplateDisplayContext {
 	private Long _classPK;
 	private DDMStructure _ddmStructure;
 	private SearchContainer _ddmTemplateSearch;
+	private String _displayStyle;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;

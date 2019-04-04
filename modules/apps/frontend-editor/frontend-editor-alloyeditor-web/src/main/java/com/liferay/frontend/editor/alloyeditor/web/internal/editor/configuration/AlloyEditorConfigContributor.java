@@ -225,7 +225,7 @@ public class AlloyEditorConfigContributor
 			"buttons",
 			toJSONArray("['imageLeft', 'imageCenter', 'imageRight']"));
 		jsonObject.put("name", "embedurl");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.embedurl");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.embedUrl");
 
 		return jsonObject;
 	}

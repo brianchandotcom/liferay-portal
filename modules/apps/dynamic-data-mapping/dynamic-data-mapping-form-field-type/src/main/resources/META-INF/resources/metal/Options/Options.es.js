@@ -226,7 +226,7 @@ class Options extends Component {
 		return parseInt(dom.closest(element, '.ddm-field-options').dataset.index, 10);
 	}
 
-	getItems(options) {
+	getItems(options = []) {
 		return [
 			...options,
 			{

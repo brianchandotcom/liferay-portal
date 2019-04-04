@@ -65,13 +65,10 @@ resourceURL.setResourceID("/get_personal_menu_items");
 					}
 				).then(
 					function(personalMenuItems) {
-						new ClayDropdown.default(
+						var personalMenu = new ClayDropdown.default(
 							{
 								element: '#<%= namespace + "personal_menu_dropdown_toggle" %>',
 								events: {
-									'itemClicked': function(event) {
-										this.refs.dropdown.refs.portal.detach();
-									},
 									'willAttach': function(event) {
 										if (<%= expanded %>) {
 											this.expanded = true;
@@ -88,6 +85,13 @@ resourceURL.setResourceID("/get_personal_menu_items");
 								spritemap: '<%= themeDisplay.getPathThemeImages().concat("/clay/icons.svg") %>'
 							},
 							'#<%= namespace + "personal_menu_dropdown" %>'
+						);
+
+						Liferay.once(
+							'beforeNavigate',
+							function(event) {
+								personalMenu.refs.dropdown.refs.portal.detach();
+							}
 						);
 					}
 				);

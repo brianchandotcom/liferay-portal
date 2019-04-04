@@ -158,6 +158,19 @@ $productMenuWidth: 320px;
 			@media (min-width: 768px) {
 				margin-top: $toolbarDesktopHeight;
 			}
+
+			@media (max-width: 769px) {
+				> .container-fluid {
+					margin: 0;
+					padding: 0;
+
+					> .sheet {
+						border: none;
+						border-radius: 0;
+						min-height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+					}
+				}
+			}
 		}
 
 		.edit-article-sidebar {
@@ -166,11 +179,13 @@ $productMenuWidth: 320px;
 			height: calc(100vh - #{$controlMenuHeight + $toolbarHeight}) !important;
 			overflow-y: scroll;
 			top: $controlMenuHeight + $toolbarHeight !important;
+			width: 100%;
 			z-index: 1;
 
 			@media (min-width: 768px) {
 				height: calc(100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}) !important;
 				top: $controlMenuDesktopHeight + $toolbarDesktopHeight !important;
+				width: $productMenuWidth;
 			}
 
 			.article-content-description {

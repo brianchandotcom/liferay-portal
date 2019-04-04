@@ -122,6 +122,7 @@ openapi: 3.0.1
 paths:
     "/roles/{roleId}/workflow-tasks":
         get:
+            operationId: getRoleWorkflowTasksPage
             parameters:
                 - in: path
                   name: roleId
@@ -149,6 +150,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-logs/{workflowLogId}":
         get:
+            operationId: getWorkflowLog
             parameters:
                 - in: path
                   name: workflowLogId
@@ -166,6 +168,7 @@ paths:
             tags: ["WorkflowLog"]
     "/workflow-tasks/assigned-to-me":
         get:
+            operationId: getWorkflowTasksAssignedToMePage
             parameters:
                 - in: query
                   name: page
@@ -187,6 +190,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/assigned-to-my-roles":
         get:
+            operationId: getWorkflowTasksAssignedToMyRolesPage
             parameters:
                 - in: query
                   name: page
@@ -208,6 +212,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}":
         get:
+            operationId: getWorkflowTask
             parameters:
                 - in: path
                   name: workflowTaskId
@@ -225,6 +230,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/assign-to-me":
         post:
+            operationId: postWorkflowTaskAssignToMe
             parameters:
                 - in: path
                   name: workflowTaskId
@@ -247,6 +253,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/assign-to-user":
         post:
+            operationId: postWorkflowTaskAssignToUser
             parameters:
                 - in: path
                   name: workflowTaskId
@@ -269,6 +276,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/change-transition":
         post:
+            operationId: postWorkflowTaskChangeTransition
             parameters:
                 - in: path
                   name: workflowTaskId
@@ -291,6 +299,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/update-due-date":
         post:
+            operationId: postWorkflowTaskUpdateDueDate
             parameters:
                 - in: path
                   name: workflowTaskId
@@ -313,6 +322,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/workflow-logs":
         get:
+            operationId: getWorkflowTaskWorkflowLogsPage
             parameters:
                 - in: path
                   name: workflowTaskId

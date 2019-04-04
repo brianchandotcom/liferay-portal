@@ -822,6 +822,7 @@ openapi: 3.0.1
 paths:
     "/blog-posting-images/{blogPostingImageId}":
         delete:
+            operationId: deleteBlogPostingImage
             parameters:
                 - in: path
                   name: blogPostingImageId
@@ -836,6 +837,7 @@ paths:
                     description: ""
             tags: ["BlogPostingImage"]
         get:
+            operationId: getBlogPostingImage
             parameters:
                 - in: path
                   name: blogPostingImageId
@@ -853,6 +855,7 @@ paths:
             tags: ["BlogPostingImage"]
     "/blog-postings/{blogPostingId}":
         delete:
+            operationId: deleteBlogPosting
             parameters:
                 - in: path
                   name: blogPostingId
@@ -867,6 +870,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         get:
+            operationId: getBlogPosting
             parameters:
                 - in: path
                   name: blogPostingId
@@ -883,6 +887,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         patch:
+            operationId: patchBlogPosting
             parameters:
                 - in: path
                   name: blogPostingId
@@ -904,6 +909,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         put:
+            operationId: putBlogPosting
             parameters:
                 - in: path
                   name: blogPostingId
@@ -926,6 +932,7 @@ paths:
             tags: ["BlogPosting"]
     "/blog-postings/{blogPostingId}/comments":
         get:
+            operationId: getBlogPostingCommentsPage
             parameters:
                 - in: path
                   name: blogPostingId
@@ -964,6 +971,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            operationId: postBlogPostingComment
             parameters:
                 - in: path
                   name: blogPostingId
@@ -986,6 +994,7 @@ paths:
             tags: ["Comment"]
     "/blog-postings/{blogPostingId}/ratings":
         get:
+            operationId: getBlogPostingRatingsPage
             parameters:
                 - in: path
                   name: blogPostingId
@@ -1004,6 +1013,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postBlogPostingRating
             parameters:
                 - in: path
                   name: blogPostingId
@@ -1026,6 +1036,7 @@ paths:
             tags: ["Rating"]
     "/comments/{commentId}":
         delete:
+            operationId: deleteComment
             parameters:
                 - in: path
                   name: commentId
@@ -1040,6 +1051,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         get:
+            operationId: getComment
             parameters:
                 - in: path
                   name: commentId
@@ -1056,6 +1068,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         put:
+            operationId: putComment
             parameters:
                 - in: path
                   name: commentId
@@ -1078,6 +1091,7 @@ paths:
             tags: ["Comment"]
     "/comments/{commentId}/comments":
         get:
+            operationId: getCommentCommentsPage
             parameters:
                 - in: path
                   name: commentId
@@ -1116,6 +1130,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            operationId: postCommentComment
             parameters:
                 - in: path
                   name: commentId
@@ -1138,6 +1153,7 @@ paths:
             tags: ["Comment"]
     "/content-sets/{contentSetId}/content-set-elements":
         get:
+            operationId: getContentSetContentSetElementsPage
             parameters:
                 - in: path
                   name: contentSetId
@@ -1165,6 +1181,7 @@ paths:
             tags: ["ContentSetElement"]
     "/content-spaces/{contentSpaceId}/blog-posting-images":
         get:
+            operationId: getContentSpaceBlogPostingImagesPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1203,6 +1220,7 @@ paths:
                     description: ""
             tags: ["BlogPostingImage"]
         post:
+            operationId: postContentSpaceBlogPostingImage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1231,6 +1249,7 @@ paths:
             tags: ["BlogPostingImage"]
     "/content-spaces/{contentSpaceId}/blog-postings":
         get:
+            operationId: getContentSpaceBlogPostingsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1269,6 +1288,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         post:
+            operationId: postContentSpaceBlogPosting
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1291,6 +1311,7 @@ paths:
             tags: ["BlogPosting"]
     "/content-spaces/{contentSpaceId}/content-sets/by-key/{key}/content-set-elements":
         get:
+            operationId: getContentSpaceContentSetByKeyContentSetElementsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1323,6 +1344,7 @@ paths:
             tags: ["ContentSetElement"]
     "/content-spaces/{contentSpaceId}/content-sets/by-uuid/{uuid}/content-set-elements":
         get:
+            operationId: getContentSpaceContentSetByUuidContentSetElementsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1355,6 +1377,7 @@ paths:
             tags: ["ContentSetElement"]
     "/content-spaces/{contentSpaceId}/content-structures":
         get:
+            operationId: getContentSpaceContentStructuresPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1394,6 +1417,7 @@ paths:
             tags: ["ContentStructure"]
     "/content-spaces/{contentSpaceId}/document-folders":
         get:
+            operationId: getContentSpaceDocumentFoldersPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1436,6 +1460,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         post:
+            operationId: postContentSpaceDocumentFolder
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1458,6 +1483,7 @@ paths:
             tags: ["DocumentFolder"]
     "/content-spaces/{contentSpaceId}/documents":
         get:
+            operationId: getContentSpaceDocumentsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1500,6 +1526,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
+            operationId: postContentSpaceDocument
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1528,6 +1555,7 @@ paths:
             tags: ["Document"]
     "/content-spaces/{contentSpaceId}/knowledge-base-articles":
         get:
+            operationId: getContentSpaceKnowledgeBaseArticlesPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1570,6 +1598,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
+            operationId: postContentSpaceKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1592,6 +1621,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/content-spaces/{contentSpaceId}/knowledge-base-folders":
         get:
+            operationId: getContentSpaceKnowledgeBaseFoldersPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1618,6 +1648,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
+            operationId: postContentSpaceKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1640,6 +1671,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/content-spaces/{contentSpaceId}/message-board-sections":
         get:
+            operationId: getContentSpaceMessageBoardSectionsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1682,6 +1714,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         post:
+            operationId: postContentSpaceMessageBoardSection
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1704,6 +1737,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/content-spaces/{contentSpaceId}/message-board-threads":
         get:
+            operationId: getContentSpaceMessageBoardThreadsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1746,6 +1780,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         post:
+            operationId: postContentSpaceMessageBoardThread
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1768,6 +1803,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/content-spaces/{contentSpaceId}/structured-content-folders":
         get:
+            operationId: getContentSpaceStructuredContentFoldersPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1810,6 +1846,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
+            operationId: postContentSpaceStructuredContentFolder
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -1832,6 +1869,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/content-spaces/{contentSpaceId}/structured-contents":
         get:
+            operationId: getContentSpaceStructuredContentsPage
             parameters:
                 - in: header
                   name: Accept-Language
@@ -1878,6 +1916,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
+            operationId: postContentSpaceStructuredContent
             parameters:
                 - in: header
                   name: Accept-Language
@@ -1904,6 +1943,7 @@ paths:
             tags: ["StructuredContent"]
     "/content-spaces/{contentSpaceId}/structured-contents/by-key/{key}":
         get:
+            operationId: getContentSpaceStructuredContentByKey
             parameters:
                 - in: header
                   name: Accept-Language
@@ -1930,6 +1970,7 @@ paths:
             tags: ["StructuredContent"]
     "/content-spaces/{contentSpaceId}/structured-contents/by-uuid/{uuid}":
         get:
+            operationId: getContentSpaceStructuredContentByUuid
             parameters:
                 - in: header
                   name: Accept-Language
@@ -1956,6 +1997,7 @@ paths:
             tags: ["StructuredContent"]
     "/content-structures/{contentStructureId}":
         get:
+            operationId: getContentStructure
             parameters:
                 - in: path
                   name: contentStructureId
@@ -1973,6 +2015,7 @@ paths:
             tags: ["ContentStructure"]
     "/content-structures/{contentStructureId}/structured-contents":
         get:
+            operationId: getContentStructureStructuredContentsPage
             parameters:
                 - in: header
                   name: Accept-Language
@@ -2016,6 +2059,7 @@ paths:
             tags: ["StructuredContent"]
     "/document-folders/{documentFolderId}":
         delete:
+            operationId: deleteDocumentFolder
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2030,6 +2074,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         get:
+            operationId: getDocumentFolder
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2046,6 +2091,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         patch:
+            operationId: patchDocumentFolder
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2067,6 +2113,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         put:
+            operationId: putDocumentFolder
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2089,6 +2136,7 @@ paths:
             tags: ["DocumentFolder"]
     "/document-folders/{documentFolderId}/document-folders":
         get:
+            operationId: getDocumentFolderDocumentFoldersPage
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2127,6 +2175,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         post:
+            operationId: postDocumentFolderDocumentFolder
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2149,6 +2198,7 @@ paths:
             tags: ["DocumentFolder"]
     "/document-folders/{documentFolderId}/documents":
         get:
+            operationId: getDocumentFolderDocumentsPage
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2187,6 +2237,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
+            operationId: postDocumentFolderDocument
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2215,6 +2266,7 @@ paths:
             tags: ["Document"]
     "/documents/{documentId}":
         delete:
+            operationId: deleteDocument
             parameters:
                 - in: path
                   name: documentId
@@ -2229,6 +2281,7 @@ paths:
                     description: ""
             tags: ["Document"]
         get:
+            operationId: getDocument
             parameters:
                 - in: path
                   name: documentId
@@ -2245,6 +2298,7 @@ paths:
                     description: ""
             tags: ["Document"]
         patch:
+            operationId: patchDocument
             parameters:
                 - in: path
                   name: documentId
@@ -2272,6 +2326,7 @@ paths:
                     description: ""
             tags: ["Document"]
         put:
+            operationId: putDocument
             parameters:
                 - in: path
                   name: documentId
@@ -2300,6 +2355,7 @@ paths:
             tags: ["Document"]
     "/documents/{documentId}/comments":
         get:
+            operationId: getDocumentCommentsPage
             parameters:
                 - in: path
                   name: documentId
@@ -2338,6 +2394,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            operationId: postDocumentComment
             parameters:
                 - in: path
                   name: documentId
@@ -2360,6 +2417,7 @@ paths:
             tags: ["Comment"]
     "/documents/{documentId}/ratings":
         get:
+            operationId: getDocumentRatingsPage
             parameters:
                 - in: path
                   name: documentId
@@ -2378,6 +2436,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postDocumentRating
             parameters:
                 - in: path
                   name: documentId
@@ -2400,6 +2459,7 @@ paths:
             tags: ["Rating"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
+            operationId: deleteKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2414,6 +2474,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         get:
+            operationId: getKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2430,6 +2491,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         patch:
+            operationId: patchKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2451,6 +2513,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         put:
+            operationId: putKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2473,6 +2536,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles":
         get:
+            operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2511,6 +2575,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
+            operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2533,6 +2598,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments":
         get:
+            operationId: getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2551,6 +2617,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
         post:
+            operationId: postKnowledgeBaseArticleKnowledgeBaseAttachment
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2579,6 +2646,7 @@ paths:
             tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/ratings":
         get:
+            operationId: getKnowledgeBaseArticleRatingsPage
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2597,6 +2665,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postKnowledgeBaseArticleRating
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2619,6 +2688,7 @@ paths:
             tags: ["Rating"]
     "/knowledge-base-attachments/{knowledgeBaseAttachmentId}":
         delete:
+            operationId: deleteKnowledgeBaseAttachment
             parameters:
                 - in: path
                   name: knowledgeBaseAttachmentId
@@ -2633,6 +2703,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
         get:
+            operationId: getKnowledgeBaseAttachment
             parameters:
                 - in: path
                   name: knowledgeBaseAttachmentId
@@ -2650,6 +2721,7 @@ paths:
             tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}":
         delete:
+            operationId: deleteKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2664,6 +2736,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         get:
+            operationId: getKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2680,6 +2753,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         patch:
+            operationId: patchKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2701,6 +2775,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         put:
+            operationId: putKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2723,6 +2798,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles":
         get:
+            operationId: getKnowledgeBaseFolderKnowledgeBaseArticlesPage
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2765,6 +2841,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
+            operationId: postKnowledgeBaseFolderKnowledgeBaseArticle
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2787,6 +2864,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders":
         get:
+            operationId: getKnowledgeBaseFolderKnowledgeBaseFoldersPage
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2813,6 +2891,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
+            operationId: postKnowledgeBaseFolderKnowledgeBaseFolder
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -2835,6 +2914,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/message-board-attachments/{messageBoardAttachmentId}":
         delete:
+            operationId: deleteMessageBoardAttachment
             parameters:
                 - in: path
                   name: messageBoardAttachmentId
@@ -2849,6 +2929,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         get:
+            operationId: getMessageBoardAttachment
             parameters:
                 - in: path
                   name: messageBoardAttachmentId
@@ -2866,6 +2947,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-messages/{messageBoardMessageId}":
         delete:
+            operationId: deleteMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2880,6 +2962,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         get:
+            operationId: getMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2896,6 +2979,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         patch:
+            operationId: patchMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2917,6 +3001,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         put:
+            operationId: putMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2939,6 +3024,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/message-board-attachments":
         get:
+            operationId: getMessageBoardMessageMessageBoardAttachmentsPage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2957,6 +3043,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
+            operationId: postMessageBoardMessageMessageBoardAttachment
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -2985,6 +3072,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-messages/{messageBoardMessageId}/message-board-messages":
         get:
+            operationId: getMessageBoardMessageMessageBoardMessagesPage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3023,6 +3111,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
+            operationId: postMessageBoardMessageMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3045,6 +3134,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/ratings":
         get:
+            operationId: getMessageBoardMessageRatingsPage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3063,6 +3153,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postMessageBoardMessageRating
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3085,6 +3176,7 @@ paths:
             tags: ["Rating"]
     "/message-board-sections/{messageBoardSectionId}":
         delete:
+            operationId: deleteMessageBoardSection
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3099,6 +3191,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         get:
+            operationId: getMessageBoardSection
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3115,6 +3208,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         patch:
+            operationId: patchMessageBoardSection
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3136,6 +3230,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         put:
+            operationId: putMessageBoardSection
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3158,6 +3253,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/message-board-sections/{messageBoardSectionId}/message-board-sections":
         get:
+            operationId: getMessageBoardSectionMessageBoardSectionsPage
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3196,6 +3292,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         post:
+            operationId: postMessageBoardSectionMessageBoardSection
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3218,6 +3315,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/message-board-sections/{messageBoardSectionId}/message-board-threads":
         get:
+            operationId: getMessageBoardSectionMessageBoardThreadsPage
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3256,6 +3354,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         post:
+            operationId: postMessageBoardSectionMessageBoardThread
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -3278,6 +3377,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}":
         delete:
+            operationId: deleteMessageBoardThread
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3292,6 +3392,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         get:
+            operationId: getMessageBoardThread
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3308,6 +3409,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         patch:
+            operationId: patchMessageBoardThread
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3329,6 +3431,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         put:
+            operationId: putMessageBoardThread
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3351,6 +3454,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}/message-board-attachments":
         get:
+            operationId: getMessageBoardThreadMessageBoardAttachmentsPage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3369,6 +3473,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
+            operationId: postMessageBoardThreadMessageBoardAttachment
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3397,6 +3502,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-threads/{messageBoardThreadId}/message-board-messages":
         get:
+            operationId: getMessageBoardThreadMessageBoardMessagesPage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3435,6 +3541,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
+            operationId: postMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3457,6 +3564,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-threads/{messageBoardThreadId}/ratings":
         get:
+            operationId: getMessageBoardThreadRatingsPage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3475,6 +3583,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postMessageBoardThreadRating
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -3497,6 +3606,7 @@ paths:
             tags: ["Rating"]
     "/ratings/{ratingId}":
         delete:
+            operationId: deleteRating
             parameters:
                 - in: path
                   name: ratingId
@@ -3511,6 +3621,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         get:
+            operationId: getRating
             parameters:
                 - in: path
                   name: ratingId
@@ -3527,6 +3638,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         put:
+            operationId: putRating
             parameters:
                 - in: path
                   name: ratingId
@@ -3549,6 +3661,7 @@ paths:
             tags: ["Rating"]
     "/structured-content-folders/{structuredContentFolderId}":
         delete:
+            operationId: deleteStructuredContentFolder
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -3563,6 +3676,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         get:
+            operationId: getStructuredContentFolder
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -3578,6 +3692,7 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
         put:
+            operationId: putStructuredContentFolder
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -3600,6 +3715,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/structured-content-folders/{structuredContentFolderId}/structured-content-folders":
         get:
+            operationId: getStructuredContentFolderStructuredContentFoldersPage
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -3638,6 +3754,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
+            operationId: postStructuredContentFolderStructuredContentFolder
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -3660,6 +3777,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/structured-content-folders/{structuredContentFolderId}/structured-contents":
         get:
+            operationId: getStructuredContentFolderStructuredContentsPage
             parameters:
                 - in: header
                   name: Accept-Language
@@ -3702,6 +3820,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
+            operationId: postStructuredContentFolderStructuredContent
             parameters:
                 - in: header
                   name: Accept-Language
@@ -3728,6 +3847,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}":
         delete:
+            operationId: deleteStructuredContent
             parameters:
                 - in: path
                   name: structuredContentId
@@ -3742,6 +3862,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         get:
+            operationId: getStructuredContent
             parameters:
                 - in: header
                   name: Accept-Language
@@ -3762,6 +3883,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         patch:
+            operationId: patchStructuredContent
             parameters:
                 - in: header
                   name: Accept-Language
@@ -3787,6 +3909,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         put:
+            operationId: putStructuredContent
             parameters:
                 - in: header
                   name: Accept-Language
@@ -3813,6 +3936,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/comments":
         get:
+            operationId: getStructuredContentCommentsPage
             parameters:
                 - in: path
                   name: structuredContentId
@@ -3851,6 +3975,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            operationId: postStructuredContentComment
             parameters:
                 - in: path
                   name: structuredContentId
@@ -3873,6 +3998,7 @@ paths:
             tags: ["Comment"]
     "/structured-contents/{structuredContentId}/ratings":
         get:
+            operationId: getStructuredContentRatingsPage
             parameters:
                 - in: path
                   name: structuredContentId
@@ -3891,6 +4017,7 @@ paths:
                     description: ""
             tags: ["Rating"]
         post:
+            operationId: postStructuredContentRating
             parameters:
                 - in: path
                   name: structuredContentId
@@ -3913,6 +4040,7 @@ paths:
             tags: ["Rating"]
     "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
+            operationId: getStructuredContentRenderedContentTemplate
             parameters:
                 - in: path
                   name: structuredContentId

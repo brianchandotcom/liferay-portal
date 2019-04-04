@@ -325,6 +325,7 @@ openapi: 3.0.1
 paths:
     "/content-spaces/{contentSpaceId}/form-structures":
         get:
+            operationId: getContentSpaceFormStructuresPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -352,6 +353,7 @@ paths:
             tags: ["FormStructure"]
     "/content-spaces/{contentSpaceId}/forms":
         get:
+            operationId: getContentSpaceFormsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -379,6 +381,7 @@ paths:
             tags: ["Form"]
     "/form-documents/{formDocumentId}":
         delete:
+            operationId: deleteFormDocument
             parameters:
                 - in: path
                   name: formDocumentId
@@ -393,6 +396,7 @@ paths:
                     description: ""
             tags: ["FormDocument"]
         get:
+            operationId: getFormDocument
             parameters:
                 - in: path
                   name: formDocumentId
@@ -410,6 +414,7 @@ paths:
             tags: ["FormDocument"]
     "/form-records/{formRecordId}":
         get:
+            operationId: getFormRecord
             parameters:
                 - in: path
                   name: formRecordId
@@ -426,6 +431,7 @@ paths:
                     description: ""
             tags: ["FormRecord"]
         put:
+            operationId: putFormRecord
             parameters:
                 - in: header
                   name: Accept-Language
@@ -452,6 +458,7 @@ paths:
             tags: ["FormRecordForm"]
     "/form-structures/{formStructureId}":
         get:
+            operationId: getFormStructure
             parameters:
                 - in: path
                   name: formStructureId
@@ -469,6 +476,7 @@ paths:
             tags: ["FormStructure"]
     "/forms/{formId}":
         get:
+            operationId: getForm
             parameters:
                 - in: path
                   name: formId
@@ -486,6 +494,7 @@ paths:
             tags: ["Form"]
     "/forms/{formId}/evaluate-context":
         post:
+            operationId: postFormEvaluateContext
             parameters:
                 - in: header
                   name: Accept-Language
@@ -512,6 +521,7 @@ paths:
             tags: ["Form"]
     "/forms/{formId}/fetch-latest-draft":
         get:
+            operationId: getFormFetchLatestDraft
             parameters:
                 - in: path
                   name: formId
@@ -529,6 +539,7 @@ paths:
             tags: ["FormRecord"]
     "/forms/{formId}/form-records":
         get:
+            operationId: getFormFormRecordsPage
             parameters:
                 - in: path
                   name: formId
@@ -555,6 +566,7 @@ paths:
                     description: ""
             tags: ["FormRecord"]
         post:
+            operationId: postFormFormRecord
             parameters:
                 - in: header
                   name: Accept-Language
@@ -581,6 +593,7 @@ paths:
             tags: ["FormRecord"]
     "/forms/{formId}/upload-file":
         post:
+            operationId: postFormUploadFile
             parameters:
                 - in: path
                   name: formId

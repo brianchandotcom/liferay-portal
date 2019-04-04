@@ -483,6 +483,7 @@ openapi: 3.0.1
 paths:
     "/content-spaces/{contentSpaceId}/keywords":
         get:
+            operationId: getContentSpaceKeywordsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -521,6 +522,7 @@ paths:
                     description: ""
             tags: ["Keyword"]
         post:
+            operationId: postContentSpaceKeyword
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -543,6 +545,7 @@ paths:
             tags: ["Keyword"]
     "/content-spaces/{contentSpaceId}/segments":
         get:
+            operationId: getContentSpaceSegmentsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -570,6 +573,7 @@ paths:
             tags: ["Segment"]
     "/content-spaces/{contentSpaceId}/taxonomy-vocabularies":
         get:
+            operationId: getContentSpaceTaxonomyVocabulariesPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -608,6 +612,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         post:
+            operationId: postContentSpaceTaxonomyVocabulary
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -630,6 +635,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/content-spaces/{contentSpaceId}/user-accounts/{userAccountId}/segments":
         get:
+            operationId: getContentSpaceUserAccountSegmentsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -663,6 +669,7 @@ paths:
             tags: ["Segment"]
     "/emails/{emailId}":
         get:
+            operationId: getEmail
             parameters:
                 - in: path
                   name: emailId
@@ -680,6 +687,7 @@ paths:
             tags: ["Email"]
     "/keywords/{keywordId}":
         delete:
+            operationId: deleteKeyword
             parameters:
                 - in: path
                   name: keywordId
@@ -694,6 +702,7 @@ paths:
                     description: ""
             tags: ["Keyword"]
         get:
+            operationId: getKeyword
             parameters:
                 - in: path
                   name: keywordId
@@ -710,6 +719,7 @@ paths:
                     description: ""
             tags: ["Keyword"]
         put:
+            operationId: putKeyword
             parameters:
                 - in: path
                   name: keywordId
@@ -732,6 +742,7 @@ paths:
             tags: ["Keyword"]
     "/my-user-accounts/{userAccountId}":
         get:
+            operationId: getMyUserAccount
             parameters:
                 - in: path
                   name: userAccountId
@@ -749,6 +760,7 @@ paths:
             tags: ["UserAccount"]
     "/my-user-accounts/{userAccountId}/organizations":
         get:
+            operationId: getMyUserAccountOrganizationsPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -776,6 +788,7 @@ paths:
             tags: ["Organization"]
     "/my-user-accounts/{userAccountId}/roles":
         get:
+            operationId: getMyUserAccountRolesPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -803,6 +816,7 @@ paths:
             tags: ["Role"]
     "/organizations":
         get:
+            operationId: getOrganizationsPage
             parameters:
                 - in: query
                   name: filter
@@ -836,6 +850,7 @@ paths:
             tags: ["Organization"]
     "/organizations/{organizationId}":
         get:
+            operationId: getOrganization
             parameters:
                 - in: path
                   name: organizationId
@@ -853,6 +868,7 @@ paths:
             tags: ["Organization"]
     "/organizations/{organizationId}/emails":
         get:
+            operationId: getOrganizationEmailsPage
             parameters:
                 - in: path
                   name: organizationId
@@ -872,6 +888,7 @@ paths:
             tags: ["Email"]
     "/organizations/{organizationId}/organizations":
         get:
+            operationId: getOrganizationOrganizationsPage
             parameters:
                 - in: path
                   name: organizationId
@@ -911,6 +928,7 @@ paths:
             tags: ["Organization"]
     "/organizations/{organizationId}/phones":
         get:
+            operationId: getOrganizationPhonesPage
             parameters:
                 - in: path
                   name: organizationId
@@ -938,6 +956,7 @@ paths:
             tags: ["Phone"]
     "/organizations/{organizationId}/postal-addresses":
         get:
+            operationId: getOrganizationPostalAddressesPage
             parameters:
                 - in: path
                   name: organizationId
@@ -965,6 +984,7 @@ paths:
             tags: ["PostalAddress"]
     "/organizations/{organizationId}/user-accounts":
         get:
+            operationId: getOrganizationUserAccountsPage
             parameters:
                 - in: path
                   name: organizationId
@@ -1004,6 +1024,7 @@ paths:
             tags: ["UserAccount"]
     "/organizations/{organizationId}/web-urls":
         get:
+            operationId: getOrganizationWebUrlsPage
             parameters:
                 - in: path
                   name: organizationId
@@ -1031,6 +1052,7 @@ paths:
             tags: ["WebUrl"]
     "/phones/{phoneId}":
         get:
+            operationId: getPhone
             parameters:
                 - in: path
                   name: phoneId
@@ -1048,6 +1070,7 @@ paths:
             tags: ["Phone"]
     "/postal-addresses/{postalAddressId}":
         get:
+            operationId: getPostalAddress
             parameters:
                 - in: path
                   name: postalAddressId
@@ -1065,6 +1088,7 @@ paths:
             tags: ["PostalAddress"]
     "/roles":
         get:
+            operationId: getRolesPage
             parameters:
                 - in: query
                   name: page
@@ -1086,6 +1110,7 @@ paths:
             tags: ["Role"]
     "/roles/{roleId}":
         get:
+            operationId: getRole
             parameters:
                 - in: path
                   name: roleId
@@ -1103,6 +1128,7 @@ paths:
             tags: ["Role"]
     "/segments/{segmentId}/user-accounts":
         get:
+            operationId: getSegmentUserAccountsPage
             parameters:
                 - in: path
                   name: segmentId
@@ -1130,6 +1156,7 @@ paths:
             tags: ["SegmentUser"]
     "/taxonomy-categories/{taxonomyCategoryId}":
         delete:
+            operationId: deleteTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1144,6 +1171,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         get:
+            operationId: getTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1160,6 +1188,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         patch:
+            operationId: patchTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1181,6 +1210,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         put:
+            operationId: putTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1203,6 +1233,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories":
         get:
+            operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1241,6 +1272,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         post:
+            operationId: postTaxonomyCategoryTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1263,6 +1295,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
+            operationId: deleteTaxonomyVocabulary
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1277,6 +1310,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         get:
+            operationId: getTaxonomyVocabulary
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1293,6 +1327,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         patch:
+            operationId: patchTaxonomyVocabulary
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1314,6 +1349,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         put:
+            operationId: putTaxonomyVocabulary
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1336,6 +1372,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
+            operationId: getTaxonomyVocabularyTaxonomyCategoriesPage
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1374,6 +1411,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         post:
+            operationId: postTaxonomyVocabularyTaxonomyCategory
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1396,6 +1434,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/user-accounts":
         get:
+            operationId: getUserAccountsPage
             parameters:
                 - in: query
                   name: filter
@@ -1428,6 +1467,8 @@ paths:
                     description: ""
             tags: ["UserAccount"]
         post:
+            operationId: postUserAccount
+            operationId: postUserAccount
             parameters: []
             requestBody:
                 content:
@@ -1453,6 +1494,7 @@ paths:
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
         delete:
+            operationId: deleteUserAccount
             parameters:
                 - in: path
                   name: userAccountId
@@ -1467,6 +1509,7 @@ paths:
                     description: ""
             tags: ["UserAccount"]
         get:
+            operationId: getUserAccount
             parameters:
                 - in: path
                   name: userAccountId
@@ -1483,6 +1526,7 @@ paths:
                     description: ""
             tags: ["UserAccount"]
         put:
+            operationId: putUserAccount
             parameters:
                 - in: path
                   name: userAccountId
@@ -1505,6 +1549,7 @@ paths:
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}/emails":
         get:
+            operationId: getUserAccountEmailsPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1524,6 +1569,7 @@ paths:
             tags: ["Email"]
     "/user-accounts/{userAccountId}/organizations":
         get:
+            operationId: getUserAccountOrganizationsPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1551,6 +1597,7 @@ paths:
             tags: ["Organization"]
     "/user-accounts/{userAccountId}/phones":
         get:
+            operationId: getUserAccountPhonesPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1578,6 +1625,7 @@ paths:
             tags: ["Phone"]
     "/user-accounts/{userAccountId}/postal-addresses":
         get:
+            operationId: getUserAccountPostalAddressesPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1605,6 +1653,7 @@ paths:
             tags: ["PostalAddress"]
     "/user-accounts/{userAccountId}/roles":
         get:
+            operationId: getUserAccountRolesPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1632,6 +1681,7 @@ paths:
             tags: ["Role"]
     "/user-accounts/{userAccountId}/web-urls":
         get:
+            operationId: getUserAccountWebUrlsPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1659,6 +1709,7 @@ paths:
             tags: ["WebUrl"]
     "/web-sites/{webSiteId}/user-accounts":
         get:
+            operationId: getWebSiteUserAccountsPage
             parameters:
                 - in: path
                   name: webSiteId
@@ -1698,6 +1749,7 @@ paths:
             tags: ["UserAccount"]
     "/web-urls/{webUrlId}":
         get:
+            operationId: getWebUrl
             parameters:
                 - in: path
                   name: webUrlId

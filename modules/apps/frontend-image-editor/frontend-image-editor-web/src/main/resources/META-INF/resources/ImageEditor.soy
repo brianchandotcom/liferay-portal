@@ -17,6 +17,7 @@
  * @param? getImageEditorCanvas
  * @param? getImageEditorImageData
  * @param? requestImageEditorEdit
+ * @param? requestImageEditorEditFilters
  * @param? requestImageEditorPreview
  */
 {template .render}
@@ -35,6 +36,7 @@
 				{call .tools data="all"}
 					{param getImageEditorCanvas: $getImageEditorCanvas /}
 					{param getImageEditorImageData: $getImageEditorImageData /}
+					{param requestImageEditorEditFilters: $requestImageEditorEditFilters /}
 					{param requestImageEditorEdit: $requestImageEditorEdit /}
 					{param requestImageEditorPreview: $requestImageEditorPreview /}
 				{/call}
@@ -124,7 +126,7 @@
 	{else}
 		{let $control : $tool.controls[0] /}
 
-		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
+		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEditFilters" data-tool="tool-{$toolIndex}" href="javascript:;">
 			<svg class="lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
@@ -145,26 +147,20 @@
  * @param toolIndex
  */
 {template .tool_dropdown}
-	{call liferay.frontend.Dropdown.render}
-		{param header kind="html"}
-			<a class="btn btn-monospaced" data-onclick="toggle" href="javascript:;">
-				<svg class="lexicon-icon" data-icon="{$tool.icon}">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
-				</svg>
-			</a>
-		{/param}
-
-		{param body kind="html"}
-			{foreach $control in $tool.controls}
-				<li data-onclick="toggle">
-					<a data-control="{$control.variant}" data-onclick="{$requestImageEditorEdit}" data-tool="tool-{$toolIndex}" href="javascript:;">{$control.label}</a>
-				</li>
-			{/foreach}
-		{/param}
-
-		{param classMap: ['dropdown-menu-top'] /}
-		{param position: 0 /}
-		{param positionClassOnMenu: true /}
+	{call ClayDropdown.render}
+		{param contentRenderer: 'item' /}
+		{param data: [
+			'tool': 'tool-' + $toolIndex
+		] /}
+		{param events: [
+			'itemClicked': $requestImageEditorEdit
+		] /}
+		{param icon: $tool.icon /}
+		{param items: $tool.controls /}
+		{param preferredAlign: 'TopCenter' /}
+		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+		{param style: 'link' /}
+		{param triggerClasses: 'btn btn-monospaced' /}
 	{/call}
 
 	{foreach $control in $tool.controls}

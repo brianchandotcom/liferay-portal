@@ -1,10 +1,11 @@
+import 'clay-dropdown';
+
 import Soy from 'metal-soy';
 import dom from 'metal-dom';
 import {CancellablePromise} from 'metal-promise';
 import {async, core} from 'metal';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
-import 'frontend-js-web/liferay/compat/dropdown/Dropdown.es';
 import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
 import ImageEditorLoading from './ImageEditorLoading.es';
 import templates from './ImageEditor.soy';
@@ -184,6 +185,14 @@ class ImageEditor extends PortletBase {
 	}
 
 	/**
+	 * Returns a list of all possible image editor capabilities
+	 * @return {Array<{Object}>}
+	 */
+	getPossibleControls() {
+		return this.imageEditorCapabilities.tools.reduce((prev, curr) => prev.concat(curr.controls), []);
+	}
+
+	/**
 	 * Normalizes different MIME types to the most similar MIME type available
 	 * to canvas implementations.
 	 * @param  {String} mimeType The original MIME type.
@@ -228,15 +237,32 @@ class ImageEditor extends PortletBase {
 	}
 
 	/**
-	 * Selects a control and starts its editing phase.
+	 * Selects a control and starts its editing phase with filters.
 	 * @param  {MouseEvent} event The mouse event.
 	 */
-	requestImageEditorEdit(event) {
-		let controls = this.imageEditorCapabilities.tools.reduce(
-			(prev, curr) => prev.concat(curr.controls), []);
+	requestImageEditorEditFilters(event) {
+		let controls = this.getPossibleControls();
 
 		let target = event.delegateTarget || event.currentTarget;
 		let targetControl = target.getAttribute('data-control');
+		let targetTool = target.getAttribute('data-tool');
+
+		this.syncHistory_()
+			.then(() => {
+				this.selectedControl = controls.filter(tool => tool.variant === targetControl)[0];
+				this.selectedTool = targetTool;
+			});
+	}
+
+	/**
+	 * Select a control and starts its editing phase.
+	 * @param {MouseEvent} event The mouse event.
+	 */
+	requestImageEditorEdit(event) {
+		let controls = this.getPossibleControls();
+
+		let target = event.target.element;
+		let targetControl = event.data.item.variant;
 		let targetTool = target.getAttribute('data-tool');
 
 		this.syncHistory_()

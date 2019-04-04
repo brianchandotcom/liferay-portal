@@ -96,7 +96,9 @@ public class ContentSetElementResourceImpl
 
 		return Page.of(
 			transform(
-				assetListEntry.getAssetEntries(segmentsEntryIds),
+				assetListEntry.getAssetEntries(
+					segmentsEntryIds, pagination.getStartPosition(),
+					pagination.getEndPosition()),
 				this::_toContentSetElement),
 			pagination, assetListEntry.getAssetEntriesCount(segmentsEntryIds));
 	}

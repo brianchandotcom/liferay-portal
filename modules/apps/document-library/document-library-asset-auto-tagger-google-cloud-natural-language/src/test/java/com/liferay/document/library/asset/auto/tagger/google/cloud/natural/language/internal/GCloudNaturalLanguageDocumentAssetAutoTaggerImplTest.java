@@ -109,6 +109,56 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 	}
 
 	@Test
+	public void testGetEntitiesTagNamesWithDisabledEntitiesEndpoint()
+		throws Exception {
+
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+
+					@Override
+					public String apiKey() {
+						return null;
+					}
+
+					@Override
+					public boolean classificationEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float confidence() {
+						return 0;
+					}
+
+					@Override
+					public boolean entityEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float salience() {
+						return 0;
+					}
+
+				};
+
+		Set<String> tagNames = ReflectionTestUtil.invoke(
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
+			"_getEntitiesTagNames",
+			new Class<?>[] {
+				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					class,
+				String.class
+			},
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			tagNames.toString(), Collections.emptySet(), tagNames);
+	}
+
+	@Test
 	public void testToTagNamesWithClassification() throws Exception {
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
 			new String(

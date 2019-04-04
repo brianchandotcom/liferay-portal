@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.segments">
 	<author>Eduardo Garcia</author>
 	<namespace>Segments</namespace>
-	<entity local-service="true" name="SegmentsEntry" remote-service="true">
+	<entity local-service="true" name="SegmentsEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -31,6 +31,7 @@
 		<column name="criteria" type="String" />
 		<column name="source" type="String" />
 		<column name="type" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

@@ -121,10 +121,6 @@ public class Setup {
 			while (pageElementIterator.hasNext()) {
 				Element pageElement = pageElementIterator.next();
 
-				Attribute pageNameAttribute = pageElement.attribute("name");
-
-				String pageName = pageNameAttribute.getValue();
-
 				Iterator<Element> portletElementIterator =
 					pageElement.elementIterator("portlet");
 
@@ -139,13 +135,7 @@ public class Setup {
 					String context = contextAttribute.getValue();
 
 					if (context.startsWith("/tck-")) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"setupPortletTCKSite: pageName = " + pageName);
-						}
-
-						portlets.add(
-							_createPortlet(portletElement, context, pageName));
+						portlets.add(_createPortlet(portletElement, context));
 					}
 				}
 
@@ -153,9 +143,11 @@ public class Setup {
 					continue;
 				}
 
+				Attribute pageNameAttribute = pageElement.attribute("name");
+
 				_setupPage(
-					user.getUserId(), group.getGroupId(), pageName, portlets,
-					bundles);
+					user.getUserId(), group.getGroupId(),
+					pageNameAttribute.getValue(), portlets, bundles);
 			}
 		}
 		finally {
@@ -165,9 +157,7 @@ public class Setup {
 		}
 	}
 
-	private static Portlet _createPortlet(
-		Element element, String context, String pageName) {
-
+	private static Portlet _createPortlet(Element element, String context) {
 		context = context.replaceFirst("^/", "");
 
 		context = context.replaceFirst("(-[0-9.]+)?(-SNAPSHOT)?$", "");
@@ -176,7 +166,7 @@ public class Setup {
 
 		String portletName = nameAttribute.getValue();
 
-		return new Portlet(context, portletName, pageName);
+		return new Portlet(context, portletName);
 	}
 
 	private static void _setupPage(

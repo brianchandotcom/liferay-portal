@@ -19,14 +19,9 @@ package com.liferay.portlet.tck.bridge.setup;
  */
 public class Portlet {
 
-	public Portlet(String context, String portletName, String bundleName) {
+	public Portlet(String context, String portletName) {
 		_context = context;
 		_portletName = portletName;
-		_bundleName = bundleName;
-	}
-
-	public String getBundleName() {
-		return _bundleName;
 	}
 
 	public String getContext() {
@@ -37,7 +32,6 @@ public class Portlet {
 		return _portletName;
 	}
 
-	private final String _bundleName;
 	private final String _context;
 	private final String _portletName;
 

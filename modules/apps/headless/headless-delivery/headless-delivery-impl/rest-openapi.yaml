@@ -813,6 +813,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - name
             type: object
 info:
     description: ""
@@ -3691,6 +3693,28 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
+        patch:
+            operationId: patchStructuredContentFolder
+            parameters:
+                - in: path
+                  name: structuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+            tags: ["StructuredContentFolder"]
         put:
             operationId: putStructuredContentFolder
             parameters:

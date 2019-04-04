@@ -311,7 +311,7 @@ public class ProcessResourceImpl
 		}
 
 		if (processes.size() > pagination.getPageSize()) {
-			processes = processes.subList(0, processes.size() - 1);
+			return processes.subList(0, processes.size() - 1);
 		}
 
 		return processes;

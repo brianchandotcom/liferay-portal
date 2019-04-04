@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants;
+package com.liferay.asset.auto.tagger.google.cloud.natural.language.api.constants;
 
 /**
+ * @author Cristina González
  * @author Alicia García
  */
-public class PortalSettingsGCloudNaturalLanguageAssetAutoTagProviderConstants {
+public class GCloudNaturalLanguageAssetAutoTagProviderConstants {
 
-	public static final String FORM_PARAMETER_NAMESPACE =
-		"documentLibraryAssetAutoTaggerGoogleCloudNatualLanguage_";
+	public static final String API_KEY_DOCS_URL =
+		"https://cloud.google.com/docs/authentication/api-keys";
+
+	/**
+	 * The document maximum size is 1000000 bytes.
+	 */
+	public static final int MAX_CHARACTERS_SERVICE = 1000000;
 
 }

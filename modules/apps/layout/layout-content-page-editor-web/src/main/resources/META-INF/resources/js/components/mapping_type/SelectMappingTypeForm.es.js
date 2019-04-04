@@ -182,7 +182,7 @@ class SelectMappingTypeForm extends PortletBase {
 		this._mappingSubtypes = null;
 
 		return this.fetch(
-			this.getAssetClassTypesURL,
+			this.getInfoClassTypesURL,
 			{
 				classNameId: this._selectedMappingTypeId
 			}
@@ -204,7 +204,7 @@ class SelectMappingTypeForm extends PortletBase {
 	 * @review
 	 */
 	_loadMappingTypes() {
-		return this.fetch(this.getAssetDisplayContributorsURL, {})
+		return this.fetch(this.getInfoDisplayContributorsURL, {})
 			.then(
 				response => response.json()
 			)
@@ -305,8 +305,8 @@ const ConnectedSelectMappingTypeForm = getConnectedComponent(
 	SelectMappingTypeForm,
 	[
 		'classPK',
-		'getAssetClassTypesURL',
-		'getAssetDisplayContributorsURL',
+		'getInfoClassTypesURL',
+		'getInfoDisplayContributorsURL',
 		'portletNamespace',
 		'savingChanges',
 		'selectedMappingTypes'

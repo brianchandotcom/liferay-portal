@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -159,18 +158,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 
-		if (!StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
-			!StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
-
-			throw new BadRequestException(
-				"Operation must be 'delete' or 'save'");
-		}
-
-		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.DEFINE_PERMISSIONS, contentSpaceId,
-			_groupLocalService);
+		DataEnginePermissionUtil.checkPermissionOperation(
+			contentSpaceId, _groupLocalService, operation);
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -186,42 +175,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			return;
 		}
 
-		if (StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
-
-			List<Role> roles = DataEnginePermissionUtil.getRoles(
-				contextCompany, _roleLocalService,
-				dataDefinitionPermission.getRoleNames());
-
-			for (Role role : roles) {
-				_resourcePermissionLocalService.setResourcePermissions(
-					contextCompany.getCompanyId(),
-					DataEngineConstants.RESOURCE_NAME,
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(contextCompany.getCompanyId()),
-					role.getRoleId(), ArrayUtil.toStringArray(actionIds));
-			}
-		}
-		else {
-			List<Role> roles = DataEnginePermissionUtil.getRoles(
-				contextCompany, _roleLocalService,
-				dataDefinitionPermission.getRoleNames());
-
-			for (Role role : roles) {
-				ResourcePermission resourcePermission =
-					_resourcePermissionLocalService.fetchResourcePermission(
-						contextCompany.getCompanyId(),
-						DataEngineConstants.RESOURCE_NAME,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(contextCompany.getCompanyId()),
-						role.getRoleId());
-
-				if (resourcePermission != null) {
-					_resourcePermissionLocalService.deleteResourcePermission(
-						resourcePermission);
-				}
-			}
-		}
+		DataEnginePermissionUtil.persistPermission(
+			contextCompany, actionIds, operation,
+			_resourcePermissionLocalService, _roleLocalService,
+			dataDefinitionPermission.getRoleNames());
 	}
 
 	@Override

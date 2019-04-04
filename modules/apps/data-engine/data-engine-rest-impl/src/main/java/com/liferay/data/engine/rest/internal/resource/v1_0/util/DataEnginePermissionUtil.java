@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0.util;
 
+import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataEngineConstants;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,13 +22,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,25 @@ public class DataEnginePermissionUtil {
 		}
 	}
 
+	public static void checkPermissionOperation(
+			long contentSpaceId, GroupLocalService groupLocalService,
+			String operation)
+		throws Exception {
+
+		if (!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
+			!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			throw new BadRequestException(
+				"Operation must be 'delete' or 'save'");
+		}
+
+		checkPermission(
+			DataActionKeys.DEFINE_PERMISSIONS, contentSpaceId,
+			groupLocalService);
+	}
+
 	public static List<Role> getRoles(
 			Company company, RoleLocalService roleLocalService,
 			String[] roleNames)
@@ -93,6 +117,45 @@ public class DataEnginePermissionUtil {
 		}
 
 		return roles;
+	}
+
+	public static void persistPermission(
+			Company company, List<String> actionIds, String operation,
+			ResourcePermissionLocalService resourcePermissionLocalService,
+			RoleLocalService roleLocalService, String[] roleNames)
+		throws Exception {
+
+		if (StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			List<Role> roles = getRoles(company, roleLocalService, roleNames);
+
+			for (Role role : roles) {
+				resourcePermissionLocalService.setResourcePermissions(
+					company.getCompanyId(), DataEngineConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(company.getCompanyId()), role.getRoleId(),
+					ArrayUtil.toStringArray(actionIds));
+			}
+		}
+		else {
+			List<Role> roles = getRoles(company, roleLocalService, roleNames);
+
+			for (Role role : roles) {
+				ResourcePermission resourcePermission =
+					resourcePermissionLocalService.fetchResourcePermission(
+						company.getCompanyId(),
+						DataEngineConstants.RESOURCE_NAME,
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(company.getCompanyId()),
+						role.getRoleId());
+
+				if (resourcePermission != null) {
+					resourcePermissionLocalService.deleteResourcePermission(
+						resourcePermission);
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

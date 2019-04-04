@@ -22,12 +22,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -99,10 +101,60 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					class,
-				String.class
+				String.class, Locale.class
 			},
 			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), null);
+
+		Assert.assertEquals(
+			tagNames.toString(), Collections.emptySet(), tagNames);
+	}
+
+	@Test
+	public void testGetClassificationTagNamesWithInvalidLanguage()
+		throws Exception {
+
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+
+					@Override
+					public String apiKey() {
+						return null;
+					}
+
+					@Override
+					public boolean classificationEndpointEnabled() {
+						return true;
+					}
+
+					@Override
+					public float confidence() {
+						return 0;
+					}
+
+					@Override
+					public boolean entityEndpointEnabled() {
+						return true;
+					}
+
+					@Override
+					public float salience() {
+						return 0;
+					}
+
+				};
+
+		Set<String> tagNames = ReflectionTestUtil.invoke(
+			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			"_getClassificationTagNames",
+			new Class<?>[] {
+				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					class,
+				String.class, Locale.class
+			},
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			RandomTestUtil.randomString(), Locale.GERMAN);
 
 		Assert.assertEquals(
 			tagNames.toString(), Collections.emptySet(), tagNames);
@@ -149,10 +201,58 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					class,
-				String.class
+				String.class, Locale.class
 			},
 			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), null);
+
+		Assert.assertEquals(
+			tagNames.toString(), Collections.emptySet(), tagNames);
+	}
+
+	@Test
+	public void testGetEntitiesTagNamesWithInvalidLanguage() throws Exception {
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+
+					@Override
+					public String apiKey() {
+						return null;
+					}
+
+					@Override
+					public boolean classificationEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float confidence() {
+						return 0;
+					}
+
+					@Override
+					public boolean entityEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float salience() {
+						return 0;
+					}
+
+				};
+
+		Set<String> tagNames = ReflectionTestUtil.invoke(
+			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			"_getEntitiesTagNames",
+			new Class<?>[] {
+				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					class,
+				String.class, Locale.class
+			},
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			RandomTestUtil.randomString(), LocaleUtil.TAIWAN);
 
 		Assert.assertEquals(
 			tagNames.toString(), Collections.emptySet(), tagNames);

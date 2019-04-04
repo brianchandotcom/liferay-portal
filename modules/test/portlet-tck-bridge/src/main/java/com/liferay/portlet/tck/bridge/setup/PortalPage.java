@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,17 +26,6 @@ public class PortalPage {
 		_portlets = portlets;
 	}
 
-	public PortalPage(String pageName, Portlet... portlets) {
-		_pageName = pageName;
-		_portlets = new ArrayList<>(portlets.length);
-
-		Collections.addAll(_portlets, portlets);
-	}
-
-	public String getLayoutTemplateId() {
-		return _layoutTemplateId;
-	}
-
 	public String getPageName() {
 		return _pageName;
 	}
@@ -46,14 +33,6 @@ public class PortalPage {
 	public List<Portlet> getPortlets() {
 		return _portlets;
 	}
-
-	public void setLayoutTemplateId(String layoutTemplateId) {
-		_layoutTemplateId = layoutTemplateId;
-	}
-
-	private String _layoutTemplateId = "1_column";
-
-	// Private Data Members
 
 	private final String _pageName;
 	private final List<Portlet> _portlets;

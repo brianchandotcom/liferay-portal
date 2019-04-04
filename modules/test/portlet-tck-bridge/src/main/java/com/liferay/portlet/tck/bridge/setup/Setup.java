@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -206,8 +205,7 @@ public class Setup {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)portalPageLayout.getLayoutType();
 
-		layoutTypePortlet.setLayoutTemplateId(
-			userId, portalPage.getLayoutTemplateId(), false);
+		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
 		for (Portlet portlet : portlets) {
 			String servletContextName = portlet.getContext();

@@ -57,18 +57,12 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 										<ul class="navbar-nav">
 											<li>
 												<c:if test="<%= availableSegmentsEntries.size() > 0 %>">
-													<portlet:renderURL var="editAssetListEntryVariationURL">
-														<portlet:param name="mvcPath" value="/edit_asset_list_entry_variation.jsp" />
-														<portlet:param name="redirect" value="<%= currentURL %>" />
-														<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
-														<portlet:param name="type" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryType()) %>" />
-													</portlet:renderURL>
-
 													<liferay-ui:icon
 														icon="plus"
 														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+														id="addAssetListEntryVariationIcon"
 														markupView="lexicon"
-														url="<%= editAssetListEntryVariationURL %>"
+														url='<%= "javascript:" + renderResponse.getNamespace() + "openSelectSegmentsEntryDialog();" %>'
 													/>
 												</c:if>
 											</li>
@@ -139,3 +133,35 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		</div>
 	</div>
 </div>
+
+<script>
+	<portlet:actionURL name="/asset_list/add_asset_list_entry_variation" var="addAssetListEntryVariationURL">
+		<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+		<portlet:param name="type" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryType()) %>" />
+	</portlet:actionURL>
+
+	function <portlet:namespace />openSelectSegmentsEntryDialog() {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					modal: true
+				},
+				id: '<portlet:namespace />selectEntity',
+				title: '<liferay-ui:message arguments="personalized-variation" key="new-x" />',
+				uri: '<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>'
+			},
+			function(event) {
+				Liferay.Util.postForm(
+					document.<portlet:namespace />fm,
+					{
+						data: {
+							segmentsEntryId: event.entityid
+						},
+						url: '<%= addAssetListEntryVariationURL %>'
+					}
+				);
+			}
+		);
+	};
+</script>

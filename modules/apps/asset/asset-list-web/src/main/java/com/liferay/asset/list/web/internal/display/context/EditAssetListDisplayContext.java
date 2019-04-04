@@ -177,18 +177,13 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<DropdownItem> getAssetListEntryVariationActionDropdownItems() {
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit_asset_list_entry_variation.jsp", "redirect",
-							_themeDisplay.getURLCurrent(), "assetListEntryId",
-							getAssetListEntryId());
+							"javascript:" + _portletResponse.getNamespace() +
+								"openSelectSegmentsEntryDialog();");
 						dropdownItem.setLabel(
 							LanguageUtil.format(
 								_request, "new-x", "personalized-variation"));
@@ -350,21 +345,7 @@ public class EditAssetListDisplayContext {
 			return _availableSegmentsEntries;
 		}
 
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			getAssetListEntrySegmentsEntryRels();
-
-		if (assetListEntrySegmentsEntryRels == null) {
-			return null;
-		}
-
-		Stream<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelsStream =
-				assetListEntrySegmentsEntryRels.stream();
-
-		long[] currentSegmentsEntryIds =
-			assetListEntrySegmentsEntryRelsStream.mapToLong(
-				AssetListEntrySegmentsEntryRel::getSegmentsEntryId
-			).toArray();
+		long[] selectedSegmentsEntryIds = getSelectedSegmentsEntryIds();
 
 		List<SegmentsEntry> segmentsEntries =
 			SegmentsEntryServiceUtil.getSegmentsEntries(
@@ -375,7 +356,7 @@ public class EditAssetListDisplayContext {
 
 		_availableSegmentsEntries = segmentsEntryStream.filter(
 			segmentsEntry -> !ArrayUtil.contains(
-				currentSegmentsEntryIds, segmentsEntry.getSegmentsEntryId())
+				selectedSegmentsEntryIds, segmentsEntry.getSegmentsEntryId())
 		).collect(
 			Collectors.toList()
 		);
@@ -833,8 +814,53 @@ public class EditAssetListDisplayContext {
 		return GroupLocalServiceUtil.getGroups(groupIds);
 	}
 
+	public long[] getSelectedSegmentsEntryIds() {
+		if (_selectedSegmentsEntryIds != null) {
+			return _selectedSegmentsEntryIds;
+		}
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			getAssetListEntrySegmentsEntryRels();
+
+		if (assetListEntrySegmentsEntryRels == null) {
+			return null;
+		}
+
+		Stream<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelsStream =
+				assetListEntrySegmentsEntryRels.stream();
+
+		_selectedSegmentsEntryIds =
+			assetListEntrySegmentsEntryRelsStream.mapToLong(
+				AssetListEntrySegmentsEntryRel::getSegmentsEntryId
+			).toArray();
+
+		return _selectedSegmentsEntryIds;
+	}
+
 	public String getSelectGroupEventName() {
 		return _portletResponse.getNamespace() + "_selectSite";
+	}
+
+	public String getSelectSegmentsEntryURL() throws Exception {
+		if (_selectSegmentsEntryURL != null) {
+			return _selectSegmentsEntryURL;
+		}
+
+		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
+			_request, SegmentsEntry.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		selectCategoryURL.setParameter(
+			"eventName", _portletResponse.getNamespace() + "selectEntity");
+		selectCategoryURL.setParameter(
+			"selectedSegmentsEntryIds",
+			StringUtil.merge(getSelectedSegmentsEntryIds()));
+		selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
+
+		_selectSegmentsEntryURL = selectCategoryURL.toString();
+
+		return _selectSegmentsEntryURL;
 	}
 
 	public String getTagSelectorURL() {
@@ -1040,6 +1066,8 @@ public class EditAssetListDisplayContext {
 	private SearchContainer _searchContainer;
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
+	private long[] _selectedSegmentsEntryIds;
+	private String _selectSegmentsEntryURL;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
 

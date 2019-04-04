@@ -232,11 +232,11 @@ class Sharing extends PortletBase {
 		}, invalidEmails);
 
 		if (invalidEmails.length > 0) {
-			this.emailErrorMessage = 
+			this.emailErrorMessage =
 				Liferay.Language.get('please-enter-a-valid-email-address');
 
-				this._inputValue = invalidEmails.map(item => item.value).join(',');
-				this._inputValue = this._inputValue;
+			this._inputValue = invalidEmails.map(item => item.value).join(',');
+			this._inputValue = this._inputValue;
 		}
 
 		this._userEmailAddresses = selectedItems;

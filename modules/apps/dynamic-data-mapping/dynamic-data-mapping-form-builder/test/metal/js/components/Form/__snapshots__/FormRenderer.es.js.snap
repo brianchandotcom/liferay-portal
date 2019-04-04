@@ -184,7 +184,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
@@ -614,7 +614,7 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
@@ -906,7 +906,7 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
@@ -1206,7 +1206,7 @@ exports[`FormRenderer should change the active page 1`] = `
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
@@ -1360,7 +1360,7 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
@@ -1696,7 +1696,7 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
     </div>
   </div>
   <div class="ddm-layout-builder ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>

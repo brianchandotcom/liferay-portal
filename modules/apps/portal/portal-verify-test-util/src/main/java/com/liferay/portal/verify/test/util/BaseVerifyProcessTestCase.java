@@ -17,6 +17,7 @@ package com.liferay.portal.verify.test.util;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -44,11 +45,9 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_dataSource = InfrastructureUtil.getDataSource();
+		_dataSource = _infrastructureUtil.getDataSource();
 
-		InfrastructureUtil infrastructureUtil = new InfrastructureUtil();
-
-		infrastructureUtil.setDataSource(
+		_infrastructureUtil.setDataSource(
 			(DataSource)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
 				new Class<?>[] {DataSource.class},
@@ -57,9 +56,7 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		InfrastructureUtil infrastructureUtil = new InfrastructureUtil();
-
-		infrastructureUtil.setDataSource(_dataSource);
+		_infrastructureUtil.setDataSource(_dataSource);
 	}
 
 	@Test
@@ -103,6 +100,10 @@ public abstract class BaseVerifyProcessTestCase {
 	protected abstract VerifyProcess getVerifyProcess();
 
 	private DataSource _dataSource;
+
+	@Inject
+	private InfrastructureUtil _infrastructureUtil;
+
 	private final Queue<ObjectValuePair<Connection, Exception>>
 		_objectValuePairs = new ConcurrentLinkedQueue<>();
 

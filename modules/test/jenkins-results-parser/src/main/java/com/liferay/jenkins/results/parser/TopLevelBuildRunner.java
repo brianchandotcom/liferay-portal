@@ -395,16 +395,18 @@ public abstract class TopLevelBuildRunner
 		JenkinsResultsParserUtil.combine(
 			"find ", BuildData.DIST_ROOT_PATH,
 			"/*/* -maxdepth 1 -type d -mmin +",
-			String.valueOf(TopLevelBuildRunner._MILLIS_FILE_PROPAGATOR_EXPIRATION),
+			String.valueOf(
+				TopLevelBuildRunner._MILLIS_FILE_PROPAGATOR_EXPIRATION),
 			" -exec rm -frv {} \\;");
 
 	private static final int _MILLIS_FILE_PROPAGATOR_EXPIRATION = 1440;
 
-	private static final int _THREADS_FILE_PROPAGATOR_THREAD_SIZE = 1;
-
-	private static final long _MILLIS_REPORT_GENERATION_INTERVAL = 1000 * 60 * 5;
+	private static final long _MILLIS_REPORT_GENERATION_INTERVAL =
+		1000 * 60 * 5;
 
 	private static final int _SECONDS_WAIT_FOR_INVOKED_JOB_DURATION = 30;
+
+	private static final int _THREADS_FILE_PROPAGATOR_THREAD_SIZE = 1;
 
 	private final List<BuildData> _downstreamBuildDataList = new ArrayList<>();
 	private long _lastGeneratedReportTime = -1;

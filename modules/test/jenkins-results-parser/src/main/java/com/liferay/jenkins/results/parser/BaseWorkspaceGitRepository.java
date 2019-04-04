@@ -548,17 +548,17 @@ public abstract class BaseWorkspaceGitRepository
 		put("type", getType());
 	}
 
-	private static final Integer _COMMITS_HISTORY_GROUP_SIZE = 100;
-
 	private static final String[] _CI_KEYS_REQUIRED = {
 		"git_hub_dev_branch_name"
 	};
 
+	private static final Integer _COMMITS_HISTORY_GROUP_SIZE = 100;
+
+	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
+
 	private static final String[] _REQUIRED_KEYS = {
 		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
 	};
-
-	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();

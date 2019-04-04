@@ -99,7 +99,8 @@ public abstract class BasePortalWorkspace
 		}
 
 		workspaceGitRepository = WorkspaceUtil.getWorkspaceGitRepository(
-			LegacyWorkspaceGitRepository.TYPE, _URL_GITHUB_PORTAL_LEGACY_EE_REPOSITORY, "master");
+			LegacyWorkspaceGitRepository.TYPE,
+			_URL_GITHUB_PORTAL_LEGACY_EE_REPOSITORY, "master");
 
 		if (!(workspaceGitRepository instanceof LegacyWorkspaceGitRepository)) {
 			throw new RuntimeException("Invalid workspace Git repository");

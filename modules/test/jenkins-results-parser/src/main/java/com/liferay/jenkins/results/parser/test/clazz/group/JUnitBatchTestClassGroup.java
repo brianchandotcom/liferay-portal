@@ -729,7 +729,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					new String[testClassNamesIncludesRelativeGlobs.size()])));
 	}
 
-	private static final boolean _ENABLE_INCLUDE_AUTO_BALANCE_TESTS_DEFAULT = false;
+	private static final boolean _ENABLE_INCLUDE_AUTO_BALANCE_TESTS_DEFAULT =
+		false;
 
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");

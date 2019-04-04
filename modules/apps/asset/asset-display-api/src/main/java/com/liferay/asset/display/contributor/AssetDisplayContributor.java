@@ -33,7 +33,10 @@ import java.util.Set;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.asset.info.display.contributor.AssetInfoDisplayContributor}
  */
+@Deprecated
 public interface AssetDisplayContributor {
 
 	public Set<AssetDisplayField> getAssetDisplayFields(

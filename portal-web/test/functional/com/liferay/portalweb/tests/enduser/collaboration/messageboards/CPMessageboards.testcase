@@ -56,18 +56,12 @@ definition {
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
-		Navigator.openURL();
+		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
-
-		MessageboardsCategory.addSubcategoryCP(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name"
+		MessageboardsCategory.addCP(
+			categoryDescription = "MB Subcategory Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Subcategory Name"
 		);
 	}
 

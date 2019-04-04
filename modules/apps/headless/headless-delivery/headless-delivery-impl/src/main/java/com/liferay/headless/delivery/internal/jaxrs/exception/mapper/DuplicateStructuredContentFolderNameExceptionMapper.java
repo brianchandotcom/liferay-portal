@@ -14,13 +14,13 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
-import com.liferay.portal.kernel.util.StringUtil;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.journal.exception.DuplicateFolderNameException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Converts any {@code DuplicateFolderNameException} to a {@code 409} error.
@@ -32,7 +32,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateFolderNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateStructuredContentFolderNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
@@ -46,7 +46,8 @@ public class DuplicateStructuredContentFolderNameExceptionMapper
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(dfne.getMessage(), "folder", "document folder")
+			"A structured content folder already exists with name " +
+				dfne.getMessage()
 		).build();
 	}
 

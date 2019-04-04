@@ -19,9 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -40,8 +40,8 @@ import java.util.Map;
  */
 @ProviderType
 public interface SegmentsEntryModel
-	extends BaseModel<SegmentsEntry>, GroupedModel, LocalizedModel,
-			ShardedModel {
+	extends BaseModel<SegmentsEntry>, LocalizedModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -62,6 +62,23 @@ public interface SegmentsEntryModel
 	 * @param primaryKey the primary key of this segments entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this segments entry.
+	 *
+	 * @return the uuid of this segments entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this segments entry.
+	 *
+	 * @param uuid the uuid of this segments entry
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the segments entry ID of this segments entry.
@@ -470,6 +487,22 @@ public interface SegmentsEntryModel
 	 * @param type the type of this segments entry
 	 */
 	public void setType(String type);
+
+	/**
+	 * Returns the last publish date of this segments entry.
+	 *
+	 * @return the last publish date of this segments entry
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this segments entry.
+	 *
+	 * @param lastPublishDate the last publish date of this segments entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public String[] getAvailableLanguageIds();

@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.segments.model.SegmentsEntry">
+		<field name="uuid" type="String" />
 		<field name="segmentsEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -20,6 +21,7 @@
 		</field>
 		<field name="source" type="String" />
 		<field name="type" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.segments.model.SegmentsEntryRel">
 		<field name="segmentsEntryRelId" type="long" />

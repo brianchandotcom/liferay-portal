@@ -49,6 +49,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Vernon Singleton
@@ -131,18 +133,15 @@ public class Setup {
 
 					String context = contextAttribute.getValue();
 
-					if (context.startsWith("/tck-")) {
-						context = context.replaceFirst("^/", "");
+					Matcher matcher = _portletContextPattern.matcher(context);
 
-						context = context.replaceFirst(
-							"(-[0-9.]+)?(-SNAPSHOT)?$", "");
-
+					if (matcher.find()) {
 						Attribute nameAttribute = portletElement.attribute(
 							"name");
 
-						String portletName = nameAttribute.getValue();
-
-						portlets.add(new Portlet(context, portletName));
+						portlets.add(
+							new Portlet(
+								matcher.group(1), nameAttribute.getValue()));
 					}
 				}
 
@@ -211,5 +210,8 @@ public class Setup {
 	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";
 
 	private static final Log _log = LogFactoryUtil.getLog(Setup.class);
+
+	private static final Pattern _portletContextPattern = Pattern.compile(
+		"/(tck-.*)(-[0-9.]+)-SNAPSHOT");
 
 }

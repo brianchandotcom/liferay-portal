@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,7 +44,6 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -68,6 +66,13 @@ public class Setup {
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
 			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			company.getCompanyId(), _TCK_SITE_GROUP_NAME);
+
+		if (group != null) {
+			return;
+		}
+
 		User user = UserLocalServiceUtil.getUserByEmailAddress(
 			company.getCompanyId(),
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
@@ -81,9 +86,16 @@ public class Setup {
 				PermissionCheckerFactoryUtil.create(user));
 		}
 
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			Locale.US, _TCK_SITE_GROUP_NAME);
+
 		try {
-			Group group = _getTCKSiteGroup(
-				company.getCompanyId(), user.getUserId());
+			group = GroupLocalServiceUtil.addGroup(
+				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				(String)null, 0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+				nameMap, GroupConstants.TYPE_SITE_OPEN, false,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
+				true, false, true, new ServiceContext());
 
 			File configFile = new File(
 				tckDeployFilesDir + "/pluto-portal-driver-config.xml");
@@ -179,57 +191,6 @@ public class Setup {
 		return new Portlet(context, portletName, pageName);
 	}
 
-	private static Layout _getPortalPageLayout(
-			long userId, long groupId, String portalPageName)
-		throws Exception {
-
-		Layout portalPageLayout = null;
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(groupId, true);
-
-		for (Layout layout : layouts) {
-			String layoutName = layout.getName(Locale.US);
-
-			if (layoutName.equals(portalPageName)) {
-				portalPageLayout = layout;
-			}
-		}
-
-		if (portalPageLayout == null) {
-			long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
-			String type = LayoutConstants.TYPE_PORTLET;
-			String friendlyURL = "/" + StringUtil.toLowerCase(portalPageName);
-
-			portalPageLayout = ServiceUtil.addLayout(
-				userId, groupId, true, parentLayoutId, portalPageName,
-				portalPageName, portalPageName, type, false, friendlyURL);
-		}
-
-		return portalPageLayout;
-	}
-
-	private static Group _getTCKSiteGroup(long companyId, long userId)
-		throws Exception {
-
-		String name = "Portlet TCK";
-
-		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
-
-		if (group == null) {
-			Map<Locale, String> nameMap = Collections.singletonMap(
-				Locale.US, name);
-
-			group = GroupLocalServiceUtil.addGroup(
-				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null,
-				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
-				GroupConstants.TYPE_SITE_OPEN, false,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
-				true, false, true, new ServiceContext());
-		}
-
-		return group;
-	}
-
 	private static void _setupPage(
 			long userId, long groupId, PortalPage portalPage, Bundle[] bundles)
 		throws Exception {
@@ -242,8 +203,11 @@ public class Setup {
 
 		List<Portlet> portlets = portalPage.getPortlets();
 
-		Layout portalPageLayout = _getPortalPageLayout(
-			userId, groupId, portalPageName);
+		Layout portalPageLayout = ServiceUtil.addLayout(
+			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			portalPageName, portalPageName, portalPageName,
+			LayoutConstants.TYPE_PORTLET, false,
+			"/" + StringUtil.toLowerCase(portalPageName));
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)portalPageLayout.getLayoutType();
@@ -327,6 +291,8 @@ public class Setup {
 				"setupPage: LayoutLocalServiceUtil.updateLookAndFeel ...");
 		}
 	}
+
+	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";
 
 	private static final Log _log = LogFactoryUtil.getLog(Setup.class);
 

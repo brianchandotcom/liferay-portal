@@ -14,10 +14,14 @@
 
 package com.liferay.asset.info.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.text.Format;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -29,14 +33,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class AssetEntryTitleAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class AssetEntryPublishDateInfoDisplayContributorField
+	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "title";
+		return "publishDate";
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class AssetEntryTitleAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "title");
+		return LanguageUtil.get(resourceBundle, "publish-date");
 	}
 
 	@Override
@@ -54,7 +58,14 @@ public class AssetEntryTitleAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return assetEntry.getTitle(locale);
+		if (assetEntry.getPublishDate() == null) {
+			return StringPool.BLANK;
+		}
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			locale);
+
+		return dateFormatDateTime.format(assetEntry.getPublishDate());
 	}
 
 }

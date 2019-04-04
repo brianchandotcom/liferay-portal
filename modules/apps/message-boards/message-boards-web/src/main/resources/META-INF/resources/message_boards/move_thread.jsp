@@ -88,7 +88,14 @@ if (portletTitleBasedNavigation) {
 					</aui:input>
 
 					<aui:field-wrapper label="body">
-						<%@ include file="/message_boards/bbcode_editor.jspf" %>
+						<c:choose>
+							<c:when test='<%= message.isFormatBBCode() || messageFormat.equals("bbcode") %>'>
+								<%@ include file="/message_boards/bbcode_editor.jspf" %>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/message_boards/html_editor.jspf" %>
+							</c:otherwise>
+						</c:choose>
 
 						<aui:input name="body" type="hidden" />
 					</aui:field-wrapper>

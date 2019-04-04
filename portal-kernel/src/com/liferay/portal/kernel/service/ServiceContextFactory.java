@@ -281,6 +281,8 @@ public class ServiceContextFactory {
 
 		// Asset
 
+		long[] assetCategoryIds = new long[0];
+
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
 		List<Long> assetCategoryIdsList = new ArrayList<>();
@@ -305,11 +307,12 @@ public class ServiceContextFactory {
 		}
 
 		if (updateAssetCategoryIds) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(
-					assetCategoryIdsList.toArray(
-						new Long[assetCategoryIdsList.size()])));
+			assetCategoryIds = ArrayUtil.toArray(
+				assetCategoryIdsList.toArray(
+					new Long[assetCategoryIdsList.size()]));
 		}
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		serviceContext.setAssetEntryVisible(
 			ParamUtil.getBoolean(request, "assetEntryVisible", true));
@@ -441,6 +444,8 @@ public class ServiceContextFactory {
 
 		// Asset
 
+		long[] assetCategoryIds = new long[0];
+
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
 		List<Long> assetCategoryIdsList = new ArrayList<>();
@@ -465,11 +470,12 @@ public class ServiceContextFactory {
 		}
 
 		if (updateAssetCategoryIds) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(
-					assetCategoryIdsList.toArray(
-						new Long[assetCategoryIdsList.size()])));
+			assetCategoryIds = ArrayUtil.toArray(
+				assetCategoryIdsList.toArray(
+					new Long[assetCategoryIdsList.size()]));
 		}
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		serviceContext.setAssetEntryVisible(
 			ParamUtil.getBoolean(portletRequest, "assetEntryVisible", true));

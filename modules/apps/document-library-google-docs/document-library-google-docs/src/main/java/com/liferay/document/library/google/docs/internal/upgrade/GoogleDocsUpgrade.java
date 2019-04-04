@@ -15,7 +15,10 @@
 package com.liferay.document.library.google.docs.internal.upgrade;
 
 import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.UpgradeFileEntryTypeName;
+import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,9 +35,18 @@ public class GoogleDocsUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.0", "1.0.0",
 			new UpgradeFileEntryTypeName(_dlFileEntryTypeLocalService));
+		registry.register(
+			"1.0.0", "1.0.1",
+			new UpgradePortletPreferences(_configurationProvider, _prefsProps));
 	}
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 }

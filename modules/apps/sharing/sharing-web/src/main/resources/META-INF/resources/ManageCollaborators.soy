@@ -4,7 +4,19 @@
  *
  */
 {template .render}
-	{@param collaborators: ?}
+	{@param collaborators: list<[
+		fullName: string,
+		shareable: bool,
+		sharingEntryExpirationDate: string,
+		sharingEntryExpirationDateTooltip: string,
+		sharingEntryId: string,
+		sharingEntryPermissionDisplaySelectOptions: list<[
+			label: string,
+			selected: bool,
+			value: string
+		]>,
+		userId: number
+	]>}
 	{@param id: string}
 	{@param spritemap: string}
 	{@param? _handleBlurExpirationDate: any}

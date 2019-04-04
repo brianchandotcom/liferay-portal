@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -90,12 +88,6 @@ public class Setup {
 
 		URL configFileURL = configFileURI.toURL();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"setupPortletTCKSite: configFileURL = " +
-					configFileURL.toString());
-		}
-
 		Document document = SAXReaderUtil.read(configFileURL);
 
 		Element rootElement = document.getRootElement();
@@ -165,25 +157,9 @@ public class Setup {
 		}
 
 		LayoutLocalServiceUtil.updateLayout(portalPageLayout);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("setupPage: groupId = " + groupId);
-			_log.debug(
-				"setupPage: portalPageLayout.getLayoutId() = " +
-					portalPageLayout.getLayoutId());
-			_log.debug("setupPage: themeId = portlettck_WAR_potlettcktheme");
-			_log.debug(
-				"setupPage: portalPageLayout.getColorSchemetId() = " +
-					portalPageLayout.getColorSchemeId());
-			_log.debug("setupPage: css = ");
-			_log.debug(
-				"setupPage: LayoutLocalServiceUtil.updateLookAndFeel ...");
-		}
 	}
 
 	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";
-
-	private static final Log _log = LogFactoryUtil.getLog(Setup.class);
 
 	private static final Pattern _portletContextPattern = Pattern.compile(
 		"/(tck-.*)(-[0-9.]+)-SNAPSHOT");

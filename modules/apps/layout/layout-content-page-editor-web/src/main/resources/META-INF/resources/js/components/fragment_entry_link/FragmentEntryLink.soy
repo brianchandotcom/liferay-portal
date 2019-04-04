@@ -20,6 +20,7 @@
 	{@param? dropTargetItemId: ?}
 	{@param? dropTargetItemType: ?}
 	{@param? editableValues: ?}
+	{@param? error: bool}
 	{@param? imageSelectorURL: ?}
 	{@param? languageId: string}
 	{@param? name: string}
@@ -56,6 +57,10 @@
 		{if $_hovered}
 			{sp}fragments-editor__topper-wrapper--hovered
 			{sp}fragment-entry-link-wrapper--hovered
+		{/if}
+
+		{if $error}
+			{sp}fragments-editor__topper-wrapper--error
 		{/if}
 	{/let}
 

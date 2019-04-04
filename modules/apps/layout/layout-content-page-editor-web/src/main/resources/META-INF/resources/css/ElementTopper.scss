@@ -90,6 +90,20 @@
 		z-index: $topperHoverZIndex;
 	}
 
+	&-wrapper--error > & {
+		background-color: $fragmentEntryLinkErrorBorderColor !important;
+		box-shadow: 0 0 0 $topperBorderWidth $fragmentEntryLinkErrorBorderColor !important;
+	}
+
+	&-wrapper--error {
+		border-color: $fragmentEntryLinkErrorBorderColor !important;
+	}
+
+	&-wrapper--error:after {
+		box-shadow: inset 0 0 0 $topperFocusedBorderWidth $fragmentEntryLinkErrorBorderColor !important;
+		transition: box-shadow ease ($topperShowDuration * 0.5);
+	}
+
 	&-wrapper--active,
 	&-wrapper--active > & {
 		z-index: $topperActiveZIndex;

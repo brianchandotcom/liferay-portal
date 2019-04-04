@@ -14,16 +14,11 @@
 
 package com.liferay.asset.info.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -38,14 +33,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class AssetEntryAuthorProfileImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class AssetEntryAuthorNamInfoDisplayContributorField
+	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "authorProfileImage";
+		return "authorName";
 	}
 
 	@Override
@@ -53,12 +48,12 @@ public class AssetEntryAuthorProfileImageAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-profile-image");
+		return LanguageUtil.get(resourceBundle, "author-name");
 	}
 
 	@Override
 	public String getType() {
-		return "image";
+		return "text";
 	}
 
 	@Override
@@ -66,24 +61,11 @@ public class AssetEntryAuthorProfileImageAssetDisplayContributorField
 		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
 		if (user != null) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			try {
-				return user.getPortraitURL(serviceContext.getThemeDisplay());
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
+			return user.getFullName();
 		}
 
 		return StringPool.BLANK;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetEntryAuthorProfileImageAssetDisplayContributorField.class);
 
 	@Reference
 	private UserLocalService _userLocalService;

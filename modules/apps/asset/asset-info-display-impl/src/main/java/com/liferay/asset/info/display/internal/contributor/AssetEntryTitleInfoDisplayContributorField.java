@@ -14,8 +14,8 @@
 
 package com.liferay.asset.info.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class AssetEntryDescriptionAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class AssetEntryTitleInfoDisplayContributorField
+	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "description";
+		return "title";
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class AssetEntryDescriptionAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "description");
+		return LanguageUtil.get(resourceBundle, "title");
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class AssetEntryDescriptionAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return assetEntry.getDescription(locale);
+		return assetEntry.getTitle(locale);
 	}
 
 }

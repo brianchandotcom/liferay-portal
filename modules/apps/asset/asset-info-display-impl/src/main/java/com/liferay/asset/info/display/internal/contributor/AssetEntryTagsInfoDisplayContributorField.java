@@ -14,33 +14,31 @@
 
 package com.liferay.asset.info.display.internal.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.petra.string.StringPool;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class AssetEntryAuthorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class AssetEntryTagsInfoDisplayContributorField
+	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "authorName";
+		return "tagNames";
 	}
 
 	@Override
@@ -48,7 +46,7 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-name");
+		return LanguageUtil.get(resourceBundle, "tags");
 	}
 
 	@Override
@@ -58,16 +56,7 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		User user = _userLocalService.fetchUser(assetEntry.getUserId());
-
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
+		return ListUtil.toString(assetEntry.getTags(), AssetTag.NAME_ACCESSOR);
 	}
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

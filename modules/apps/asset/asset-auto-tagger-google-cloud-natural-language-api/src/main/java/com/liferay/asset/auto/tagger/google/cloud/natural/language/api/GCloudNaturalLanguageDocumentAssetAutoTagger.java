@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.google.cloud.natural.language.api;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
 
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * Models a Google Cloud Natural Language Document Asset Auto Tagger.
@@ -25,6 +26,23 @@ import java.util.Collection;
  * @review
  */
 public interface GCloudNaturalLanguageDocumentAssetAutoTagger {
+
+	/**
+	 * Returns a list of tag names from Google Cloud Natural Language
+	 * Classification API from the configuration, the text and its mimetype.
+	 *
+	 * @param gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration the configuration.
+	 * @param content the text to be tagged.
+	 * @param locale the text's locale
+	 * @param mimeType the text mimeType.
+	 * @return a list of tag names.
+	 * @review
+	 */
+	public Collection<String> getTagNames(
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			String content, Locale locale, String mimeType)
+		throws Exception;
 
 	/**
 	 * Returns a list of tag names from Google Cloud Natural Language

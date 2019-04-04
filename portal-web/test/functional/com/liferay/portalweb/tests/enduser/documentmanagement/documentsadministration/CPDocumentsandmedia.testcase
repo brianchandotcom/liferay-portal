@@ -125,14 +125,7 @@ definition {
 			dmDocumentTitle = "Check in as current version"
 		);
 
-		Click(locator1 = "Icon#INFO");
-
-		DMDocument.selectVersion();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
-			value1 = "Version 1.0"
-		);
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
 	}
 
 	@description = "This test ensures that a user can check in a document as a major version."
@@ -177,14 +170,7 @@ definition {
 			dmDocumentTitle = "Check in as major version"
 		);
 
-		Click(locator1 = "Icon#INFO");
-
-		DMDocument.selectVersion();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
-			value1 = "Version 2.0"
-		);
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 	}
 
 	@description = "This test ensures that a user can check in a document as a minor version."
@@ -229,14 +215,7 @@ definition {
 			dmDocumentTitle = "Check in as minor version"
 		);
 
-		Click(locator1 = "Icon#INFO");
-
-		DMDocument.selectVersion();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
-			value1 = "Version 1.1"
-		);
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
 
 	@description = "This test asserts that major version increment will occur even if only metadata was changed if version increment was selected manually."

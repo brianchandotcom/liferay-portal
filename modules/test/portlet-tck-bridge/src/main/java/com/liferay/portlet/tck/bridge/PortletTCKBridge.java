@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -65,10 +65,10 @@ public class PortletTCKBridge {
 
 	@Activate
 	protected void activate(Map<String, String> properties) throws Exception {
-		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+		Company company = _companyLocalService.getCompanyByWebId(
 			PropsValues.COMPANY_DEFAULT_WEB_ID);
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
+		Group group = _groupLocalService.fetchGroup(
 			company.getCompanyId(), _TCK_SITE_GROUP_NAME);
 
 		if (group != null) {
@@ -92,7 +92,7 @@ public class PortletTCKBridge {
 	private void _setupPortletTCKSite(Company company, String tckDeployFilesDir)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.getUserByEmailAddress(
+		User user = _userLocalService.getUserByEmailAddress(
 			company.getCompanyId(),
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 				company.getMx());
@@ -102,7 +102,7 @@ public class PortletTCKBridge {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			Locale.US, _TCK_SITE_GROUP_NAME);
 
-		Group group = GroupLocalServiceUtil.addGroup(
+		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0L,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, false,
@@ -139,7 +139,7 @@ public class PortletTCKBridge {
 
 			String pageName = pageElement.attributeValue("name");
 
-			Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
+			Layout portalPageLayout = _layoutLocalService.addLayout(
 				userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, pageName, pageName,
 				pageName, LayoutConstants.TYPE_PORTLET, false,
@@ -155,7 +155,7 @@ public class PortletTCKBridge {
 					userId, portletId, "column-1", -1, false);
 			}
 
-			LayoutLocalServiceUtil.updateLayout(portalPageLayout);
+			_layoutLocalService.updateLayout(portalPageLayout);
 		}
 	}
 
@@ -167,7 +167,19 @@ public class PortletTCKBridge {
 	private static final Pattern _portletContextPattern = Pattern.compile(
 		"/(tck-.*)(-[0-9.]+)-SNAPSHOT");
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

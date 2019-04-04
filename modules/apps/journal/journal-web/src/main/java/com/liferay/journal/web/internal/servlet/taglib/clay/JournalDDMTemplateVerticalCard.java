@@ -16,7 +16,10 @@ package com.liferay.journal.web.internal.servlet.taglib.clay;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.security.permission.resource.DDMTemplatePermission;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalDDMTemplateActionDropdownItemsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -48,6 +52,29 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 
 		_ddmTemplate = (DDMTemplate)baseModel;
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		JournalDDMTemplateActionDropdownItemsProvider
+			ddmTemplateActionDropdownItemsProvider =
+				new JournalDDMTemplateActionDropdownItemsProvider(
+					_ddmTemplate, renderRequest, _renderResponse);
+
+		try {
+			return ddmTemplateActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return JournalWebConstants.
+			JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

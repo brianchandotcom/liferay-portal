@@ -79,9 +79,9 @@ if (ddmStructure != null) {
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalDDMTemplateDisplayContext.getDisplayStyle(), "icon") %>'>
 
-                    <%
-                    row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-                    %>
+					<%
+					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+					%>
 
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
@@ -147,9 +147,12 @@ if (ddmStructure != null) {
 						value="<%= ddmTemplate.getModifiedDate() %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/ddm_template_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							defaultEventHandler="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= journalDDMTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
@@ -164,4 +167,9 @@ if (ddmStructure != null) {
 <liferay-frontend:component
 	componentId="<%= journalDDMTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/DDMTemplatesManagementToolbarDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+	module="js/DDMTemplateElementsDefaultEventHandler.es"
 />

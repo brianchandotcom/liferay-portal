@@ -19,8 +19,10 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalDDMTemplateActionDropdownItemsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -82,6 +84,18 @@ public class JournalDDMTemplateDisplayContext {
 			getClassPK());
 
 		return _ddmStructure;
+	}
+
+	public List<DropdownItem> getDDMTemplateActionDropdownItems(
+			DDMTemplate ddmTemplate)
+		throws Exception {
+
+		JournalDDMTemplateActionDropdownItemsProvider
+			ddmTemplateActionDropdownItems =
+				new JournalDDMTemplateActionDropdownItemsProvider(
+					ddmTemplate, _renderRequest, _renderResponse);
+
+		return ddmTemplateActionDropdownItems.getActionDropdownItems();
 	}
 
 	public SearchContainer getDDMTemplateSearch() throws Exception {

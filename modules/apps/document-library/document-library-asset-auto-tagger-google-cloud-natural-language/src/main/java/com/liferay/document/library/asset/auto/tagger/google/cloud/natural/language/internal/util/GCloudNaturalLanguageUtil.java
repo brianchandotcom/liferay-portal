@@ -15,6 +15,7 @@
 package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.util;
 
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.nio.charset.StandardCharsets;
 
@@ -34,6 +35,14 @@ public class GCloudNaturalLanguageUtil {
 				"content", content
 			)
 		).toString();
+	}
+
+	public static String getType(String mimeType) {
+		if (ContentTypes.TEXT_HTML.equals(mimeType)) {
+			return "HTML";
+		}
+
+		return "PLAIN_TEXT";
 	}
 
 	public static String truncateToSize(String content, int size) {

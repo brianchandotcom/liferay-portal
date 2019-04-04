@@ -124,6 +124,20 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 					SERVICE_NAME));
 	}
 
+	private String _getDocumentPayload(String content, String mimeType) {
+		String type = GCloudNaturalLanguageUtil.getType(mimeType);
+
+		int size =
+			GCloudNaturalLanguageAssetAutoTagProviderConstants.
+				MAX_CHARACTERS_SERVICE - _MINIMUM_PAYLOAD_SIZE - type.length();
+
+		String truncatedContent = GCloudNaturalLanguageUtil.truncateToSize(
+			content, size);
+
+		return GCloudNaturalLanguageUtil.getDocumentPayload(
+			truncatedContent, type);
+	}
+
 	private Collection<String> _getEntitiesTagNames(
 			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
 				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
@@ -174,14 +188,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		}
 	}
 
-	private String _getFileEntryType(FileEntry fileEntry) {
-		if (ContentTypes.TEXT_HTML.equals(fileEntry.getMimeType())) {
-			return "HTML";
-		}
-
-		return "PLAIN_TEXT";
-	}
-
 	private String _getServiceURL(String apiKey, String endpoint) {
 		return StringBundler.concat(
 			"https://language.googleapis.com/v1/documents:", endpoint, "?key=",
@@ -210,17 +216,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		String type = _getFileEntryType(fileEntry);
-
-		int size =
-			GCloudNaturalLanguageAssetAutoTagProviderConstants.
-				MAX_CHARACTERS_SERVICE - _MINIMUM_PAYLOAD_SIZE - type.length();
-
-		String truncatedContent = GCloudNaturalLanguageUtil.truncateToSize(
-			_getFileEntryContent(fileEntry), size);
-
-		String documentPayload = GCloudNaturalLanguageUtil.getDocumentPayload(
-			truncatedContent, type);
+		String documentPayload = _getDocumentPayload(
+			_getFileEntryContent(fileEntry), fileEntry.getMimeType());
 
 		Collection<String> classificationTagNames = _getClassificationTagNames(
 			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,

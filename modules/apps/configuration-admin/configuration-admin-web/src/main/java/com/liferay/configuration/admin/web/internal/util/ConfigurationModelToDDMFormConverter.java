@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
@@ -93,17 +94,22 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	protected void addOptionalDDMFormFields(DDMForm ddmForm) {
-		AttributeDefinition[] optionalAttributeDefinitions =
+		AttributeDefinition[] optionalAttributeDefinitions = ArrayUtil.filter(
 			_configurationModel.getAttributeDefinitions(
-				ObjectClassDefinition.OPTIONAL);
+				ObjectClassDefinition.OPTIONAL),
+			((Predicate<AttributeDefinition>)this::_isUiRequired).negate());
 
 		addDDMFormFields(optionalAttributeDefinitions, ddmForm, false);
 	}
 
 	protected void addRequiredDDMFormFields(DDMForm ddmForm) {
-		AttributeDefinition[] requiredAttributeDefinitions =
+		AttributeDefinition[] requiredAttributeDefinitions = ArrayUtil.append(
 			_configurationModel.getAttributeDefinitions(
-				ObjectClassDefinition.REQUIRED);
+				ObjectClassDefinition.REQUIRED),
+			ArrayUtil.filter(
+				_configurationModel.getAttributeDefinitions(
+					ObjectClassDefinition.OPTIONAL),
+				this::_isUiRequired));
 
 		addDDMFormFields(requiredAttributeDefinitions, ddmForm, true);
 	}
@@ -384,6 +390,13 @@ public class ConfigurationModelToDDMFormConverter {
 		return extendedAttributeDefinition.getExtensionAttributes(
 			com.liferay.portal.configuration.metatype.annotations.
 				ExtendedAttributeDefinition.XML_NAMESPACE);
+	}
+
+	private boolean _isUiRequired(AttributeDefinition attributeDefinition) {
+		Map<String, String> extensionAttributes = _getExtensionAttributes(
+			attributeDefinition);
+
+		return Boolean.valueOf(extensionAttributes.get("uiRequired"));
 	}
 
 	private final ConfigurationModel _configurationModel;

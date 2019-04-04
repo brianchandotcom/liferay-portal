@@ -112,7 +112,7 @@ if (portletTitleBasedNavigation) {
 			form,
 			{
 				data: {
-					<portlet:namespace />body: <portlet:namespace />getHTML()
+					body: <portlet:namespace />getHTML()
 				}
 			}
 		);

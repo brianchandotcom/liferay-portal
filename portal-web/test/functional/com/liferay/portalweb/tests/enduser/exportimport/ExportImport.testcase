@@ -586,7 +586,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		ApplicationDisplayTemplates.selectPortletADT(templateName = "Blogs Test ADT");
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Blogs",
+			templateName = "Blogs Test ADT"
+		);
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 

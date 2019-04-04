@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Asset Auto Tagger Google Cloud Natural Language Implementation
+Bundle-SymbolicName: com.liferay.asset.auto.tagger.google.cloud.natural.language.impl
+Bundle-Version: 1.0.0

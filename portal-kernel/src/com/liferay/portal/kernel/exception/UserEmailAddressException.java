@@ -25,14 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class UserEmailAddressException extends PortalException {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public UserEmailAddressException(String msg) {
-		super(msg);
-	}
-
 	public static class MustBeEqual extends UserEmailAddressException {
 
 		public MustBeEqual(
@@ -172,6 +164,10 @@ public class UserEmailAddressException extends PortalException {
 		public String emailAddress;
 		public final EmailAddressValidator emailAddressValidator;
 
+	}
+
+	private UserEmailAddressException(String msg) {
+		super(msg);
 	}
 
 }

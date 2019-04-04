@@ -19,14 +19,6 @@ package com.liferay.portal.kernel.exception;
  */
 public class UserSmsException extends PortalException {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public UserSmsException(String msg) {
-		super(msg);
-	}
-
 	public static class MustBeEmailAddress extends UserSmsException {
 
 		public MustBeEmailAddress(String smsSn) {
@@ -37,6 +29,10 @@ public class UserSmsException extends PortalException {
 
 		public final String smsSn;
 
+	}
+
+	private UserSmsException(String msg) {
+		super(msg);
 	}
 
 }

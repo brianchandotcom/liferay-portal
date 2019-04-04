@@ -5,7 +5,7 @@
 	.lfr-adapted-images-column {
 		.progress-container {
 			float: left;
-			margin-top: 7px;
+			margin-top: 5px;
 			min-height: 25px;
 			width: 90%;
 
@@ -14,13 +14,11 @@
 			}
 		}
 
-		.progress {
-			margin-bottom: 0;
-		}
-
-		.loading-icon {
+		.loading-animation {
 			float: right;
-			margin-top: 9px;
+			margin-bottom: 0;
+			margin-top: 8px;
+			width: 5%;
 		}
 	}
 }

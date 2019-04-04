@@ -4,10 +4,9 @@
  * It renders a progressbar and a loading icon.
  *
  * @param disabled
- * @param progressBarClass_
- * @param progressBarLabel_
- * @param progressBarValue_
+ * @param percentage_
  * @param progressBarTooltip_
+ * @param spritemap
  * @param? id_
  * @param showLoadingIndicator_
  * @param tooltipPosition
@@ -21,14 +20,14 @@
 			{param title: $progressBarTooltip_ /}
 			{param visible: false /}
 		{/call}
+
 		<div class="progress-container {$disabled ? 'disabled' : ''}">
-			{call liferay.frontend.ProgressBar.render}
-				{param barClass: $progressBarClass_ /}
-				{param label: $progressBarLabel_ /}
-				{param value: $progressBarValue_ /}
+			{call ClayProgressBar.render}
+				{param spritemap: $spritemap /}
+				{param value: $percentage_ /}
 			{/call}
 		</div>
 
-		<div class="{$showLoadingIndicator_ ? '' : 'hide '}loading-icon linear"></div>
+		<span class="{$showLoadingIndicator_ ? '' : 'hide '}loading-animation loading-animation-sm"></span>
 	</div>
 {/template}

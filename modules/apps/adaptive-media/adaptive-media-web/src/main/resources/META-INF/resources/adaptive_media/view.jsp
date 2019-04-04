@@ -170,6 +170,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 										disabled: <%= !amImageConfigurationEntry.isEnabled() %>,
 										namespace: '<portlet:namespace />',
 										percentageUrl: '<%= adaptedImagesPercentageURL.toString() %>',
+										spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 										totalImages: <%= totalImages %>,
 										uuid: '<%= uuid %>'
 									},

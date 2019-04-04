@@ -294,6 +294,7 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -399,6 +400,7 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -504,6 +506,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -609,6 +612,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -714,6 +718,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -819,6 +824,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>
@@ -924,6 +930,7 @@ exports[`Sidebar should render the default markup 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+          <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
         </ul>
       </div>
     </nav>

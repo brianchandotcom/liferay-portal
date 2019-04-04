@@ -200,6 +200,7 @@ exports[`Builder should render the default markup 1`] = `
         <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
           <ul class="nav navbar-nav" role="tablist">
             <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+            <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
           </ul>
         </div>
       </nav>
@@ -437,6 +438,7 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
         <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
           <ul class="nav navbar-nav" role="tablist">
             <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+            <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
           </ul>
         </div>
       </nav>
@@ -674,6 +676,7 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
         <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
           <ul class="nav navbar-nav" role="tablist">
             <li class="nav-item" data-index="0" ref="tab0"><a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">elements</span></a></li>
+            <li class="nav-item" data-index="1" ref="tab1"><a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab"><span class="navbar-text-truncate">element-sets</span></a></li>
           </ul>
         </div>
       </nav>

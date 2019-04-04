@@ -91,16 +91,8 @@ if (ddmStructure != null) {
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="description"
-			>
-				<c:choose>
-					<c:when test="<%= ddmTemplate.isSmallImage() %>">
-						<img alt="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" class="lfr-ddm-small-image-view" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-					</c:when>
-					<c:otherwise>
-						<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
+			/>
 
 			<c:if test="<%= journalDDMTemplateDisplayContext.getClassPK() <= 0 %>">
 

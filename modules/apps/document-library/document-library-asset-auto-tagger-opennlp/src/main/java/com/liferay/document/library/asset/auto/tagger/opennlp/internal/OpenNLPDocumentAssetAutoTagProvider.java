@@ -17,16 +17,13 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.IOException;
@@ -60,17 +57,6 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 	}
 
-	private OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
-			_getConfiguration(long companyId)
-		throws ConfigurationException {
-
-		return _configurationProvider.getConfiguration(
-			OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId,
-				OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
-	}
-
 	private String _getFileEntryContent(FileEntry fileEntry)
 		throws IOException, PortalException {
 
@@ -90,12 +76,10 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
-				_getConfiguration(fileEntry.getCompanyId());
-
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration,
+			_configurationProvider.getCompanyConfiguration(
+				OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class,
+				fileEntry.getCompanyId()),
 			_getFileEntryContent(fileEntry), fileEntry.getMimeType());
 	}
 

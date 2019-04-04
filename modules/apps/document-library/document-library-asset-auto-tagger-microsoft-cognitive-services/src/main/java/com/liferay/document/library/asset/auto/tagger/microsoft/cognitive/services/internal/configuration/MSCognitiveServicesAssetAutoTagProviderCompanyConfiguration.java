@@ -39,7 +39,8 @@ public interface MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration {
 	 * Sets the API Key for the Computer Vision API V2.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = MSCognitiveServicesAssetAutoTagProviderConstants.API_KEY_DOCS_URL
+		descriptionArguments = MSCognitiveServicesAssetAutoTagProviderConstants.API_KEY_DOCS_URL,
+		uiRequired = true
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false

@@ -275,24 +275,28 @@ class FragmentEntryLinkListSection extends Component {
 	 * @param {Event} event
 	 */
 	_handleSectionKeyUp(event) {
-		const direction = getItemMoveDirection(event.which);
-		const sectionId = document.activeElement.dataset.layoutSectionId;
-		const sectionIndex = getSectionIndex(
-			this.layoutData.structure,
-			sectionId
-		);
-		const targetItem = this.layoutData.structure[
-			sectionIndex + direction
-		];
+		if (this.activeItemId === this.rowId &&
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 
-		if (direction && targetItem) {
-			const moveItemPayload = {
-				sectionId,
-				targetBorder: getTargetBorder(direction),
-				targetItemId: targetItem.rowId
-			};
+			const direction = getItemMoveDirection(event.which);
+			const sectionId = document.activeElement.dataset.layoutSectionId;
+			const sectionIndex = getSectionIndex(
+				this.layoutData.structure,
+				sectionId
+			);
+			const targetItem = this.layoutData.structure[
+				sectionIndex + direction
+			];
 
-			moveItem(this.store, MOVE_SECTION, moveItemPayload);
+			if (direction && targetItem) {
+				const moveItemPayload = {
+					sectionId,
+					targetBorder: getTargetBorder(direction),
+					targetItemId: targetItem.rowId
+				};
+
+				moveItem(this.store, MOVE_SECTION, moveItemPayload);
+			}
 		}
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsEntry;
@@ -155,6 +156,11 @@ public class SelectSegmentsEntryDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public long[] getSelectedSegmentsEntryIds() {
+		return StringUtil.split(
+			ParamUtil.getString(_request, "selectedSegmentsEntryIds"), 0L);
 	}
 
 	public String getSortingURL() {

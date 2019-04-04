@@ -64,7 +64,7 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 				data.put("entityname", segmentsEntry.getName(locale));
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= ArrayUtil.contains(selectSegmentsEntryDisplayContext.getSelectedSegmentsEntryIds(), segmentsEntry.getSegmentsEntryId()) %>" value="choose" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

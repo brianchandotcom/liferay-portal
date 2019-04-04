@@ -50,16 +50,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.framework.Bundle;
-
 /**
  * @author Vernon Singleton
  * @author Kyle Stiemann
  */
 public class Setup {
 
-	public static void setupPortletTCKSite(
-			String tckDeployFilesDir, Bundle[] bundles)
+	public static void setupPortletTCKSite(String tckDeployFilesDir)
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
@@ -147,7 +144,7 @@ public class Setup {
 
 				_setupPage(
 					user.getUserId(), group.getGroupId(),
-					pageNameAttribute.getValue(), portlets, bundles);
+					pageNameAttribute.getValue(), portlets);
 			}
 		}
 		finally {
@@ -171,7 +168,7 @@ public class Setup {
 
 	private static void _setupPage(
 			long userId, long groupId, String portalPageName,
-			List<Portlet> portlets, Bundle[] bundles)
+			List<Portlet> portlets)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -198,56 +195,22 @@ public class Setup {
 						servletContextName);
 			}
 
-			long bundleId = 0L;
-			int bundleState = Bundle.UNINSTALLED;
-
-			for (Bundle bundle : bundles) {
-				String symbolicName = bundle.getSymbolicName();
-
-				if (symbolicName.startsWith(servletContextName)) {
-					bundleId = bundle.getBundleId();
-					bundleState = bundle.getState();
-				}
-			}
-
 			String portletName = portlet.getPortletName();
 
+			String noDashPortletName = portletName.replaceAll("[-]", "");
+
+			String warContext = "_WAR_" + servletContextName;
+
+			String portletId =
+				noDashPortletName + warContext.replaceAll("[.]", "");
+
 			if (_log.isDebugEnabled()) {
-				_log.debug("setupPage: final bundleId = " + bundleId);
+				_log.debug(
+					"adding portletId=[" + portletId + "] portletName=[" +
+						portletName + "] ...");
 			}
 
-			if (bundleId > 0) {
-				if (bundleState == Bundle.ACTIVE) {
-					String noDashPortletName = portletName.replaceAll(
-						"[-]", "");
-
-					String warContext = "_WAR_" + servletContextName;
-
-					String portletId =
-						noDashPortletName + warContext.replaceAll("[.]", "");
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"adding portletId=[" + portletId +
-								"] portletName=[" + portletName + "] ...");
-					}
-
-					layoutTypePortlet.addPortletId(
-						userId, portletId, "column-1", -1);
-				}
-				else {
-					throw new Exception(
-						"Unable to add portletName=[" + portletName +
-							"] since bundle =[" + servletContextName +
-								"] is not active.");
-				}
-			}
-			else {
-				throw new Exception(
-					"Unable to add portletName=[" + portletName +
-						"] since bundleName=[" + servletContextName +
-							"] is not deployed.");
-			}
+			layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
 		}
 
 		LayoutLocalServiceUtil.updateLayout(portalPageLayout);

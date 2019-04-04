@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration;
 import com.liferay.portlet.tck.bridge.setup.Setup;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -56,11 +54,7 @@ public class PortletTCKBridge {
 			String tckDeployFilesDir =
 				portletTCKBridgeConfiguration.tckDeployFilesDir();
 
-			BundleContext bundleContext = componentContext.getBundleContext();
-
-			Bundle[] bundles = bundleContext.getBundles();
-
-			Setup.setupPortletTCKSite(tckDeployFilesDir, bundles);
+			Setup.setupPortletTCKSite(tckDeployFilesDir);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Portlet TCK Bridge is ready");
@@ -78,12 +72,10 @@ public class PortletTCKBridge {
 
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletTCKBridge.class);
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

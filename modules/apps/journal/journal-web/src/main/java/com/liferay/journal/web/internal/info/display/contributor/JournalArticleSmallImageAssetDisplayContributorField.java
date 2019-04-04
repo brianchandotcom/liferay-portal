@@ -14,12 +14,11 @@
 
 package com.liferay.journal.web.internal.info.display.contributor;
 
+import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	service = InfoDisplayContributorField.class
 )
 public class JournalArticleSmallImageAssetDisplayContributorField
-	implements InfoDisplayContributorField<JournalArticle> {
+	extends BaseInfoDisplayContributorField<JournalArticle> {
 
 	@Override
 	public String getKey() {
@@ -58,24 +57,13 @@ public class JournalArticleSmallImageAssetDisplayContributorField
 
 	@Override
 	public String getValue(JournalArticle article, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
 			return article.getArticleImageURL(themeDisplay);
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
 	}
 
 }

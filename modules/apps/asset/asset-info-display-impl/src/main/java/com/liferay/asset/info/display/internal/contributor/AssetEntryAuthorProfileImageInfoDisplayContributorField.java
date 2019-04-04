@@ -15,6 +15,7 @@
 package com.liferay.asset.info.display.internal.contributor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,9 +23,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = InfoDisplayContributorField.class
 )
 public class AssetEntryAuthorProfileImageInfoDisplayContributorField
-	implements InfoDisplayContributorField<AssetEntry> {
+	extends BaseInfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
@@ -65,12 +65,15 @@ public class AssetEntryAuthorProfileImageInfoDisplayContributorField
 	public String getValue(AssetEntry assetEntry, Locale locale) {
 		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
-		if (user != null) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		if (user == null) {
+			return StringPool.BLANK;
+		}
 
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		if (themeDisplay != null) {
 			try {
-				return user.getPortraitURL(serviceContext.getThemeDisplay());
+				return user.getPortraitURL(getThemeDisplay());
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {

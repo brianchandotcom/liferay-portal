@@ -15,14 +15,13 @@
 package com.liferay.blogs.web.internal.info.display.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -39,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	service = InfoDisplayContributorField.class
 )
 public class BlogsEntrySmallImageAssetDisplayContributorField
-	implements InfoDisplayContributorField<BlogsEntry> {
+	extends BaseInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
@@ -61,7 +60,7 @@ public class BlogsEntrySmallImageAssetDisplayContributorField
 
 	@Override
 	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
 			try {
@@ -75,17 +74,6 @@ public class BlogsEntrySmallImageAssetDisplayContributorField
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

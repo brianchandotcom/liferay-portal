@@ -153,10 +153,9 @@ public class Setup {
 					continue;
 				}
 
-				PortalPage portalPage = new PortalPage(pageName, portlets);
-
 				_setupPage(
-					user.getUserId(), group.getGroupId(), portalPage, bundles);
+					user.getUserId(), group.getGroupId(), pageName, portlets,
+					bundles);
 			}
 		}
 		finally {
@@ -181,16 +180,9 @@ public class Setup {
 	}
 
 	private static void _setupPage(
-			long userId, long groupId, PortalPage portalPage, Bundle[] bundles)
+			long userId, long groupId, String portalPageName,
+			List<Portlet> portlets, Bundle[] bundles)
 		throws Exception {
-
-		String portalPageName = portalPage.getPageName();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("setupPage: portalPageName = " + portalPageName);
-		}
-
-		List<Portlet> portlets = portalPage.getPortlets();
 
 		ServiceContext serviceContext = new ServiceContext();
 

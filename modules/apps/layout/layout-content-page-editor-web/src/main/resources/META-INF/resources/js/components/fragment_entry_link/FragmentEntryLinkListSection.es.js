@@ -60,7 +60,7 @@ class FragmentEntryLinkListSection extends Component {
 		);
 
 		const sectionIsDropTarget = (dropTargetItemId === rowId &&
-			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section);		
+			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section);
 
 		return (sectionInDropTargetPath && !sectionIsDropTarget);
 	}
@@ -111,6 +111,17 @@ class FragmentEntryLinkListSection extends Component {
 			nextState,
 			['_fragmentsEditorRowTypes'],
 			FRAGMENTS_EDITOR_ROW_TYPES
+		);
+
+		nextState = setIn(
+			nextState,
+			['_highlighted'],
+			FragmentEntryLinkListSection._isHighlighted(
+				state.dropTargetItemId,
+				state.dropTargetItemType,
+				state.rowId,
+				state.layoutData.structure
+			)
 		);
 
 		if (nextState._resizing && nextState._resizeSectionColumns) {
@@ -468,6 +479,7 @@ const ConnectedFragmentEntryLinkListSection = getConnectedComponent(
 		'dropTargetItemType',
 		'hoveredItemId',
 		'hoveredItemType',
+		'layoutData',
 		'selectedMappingTypes',
 		'spritemap'
 	]

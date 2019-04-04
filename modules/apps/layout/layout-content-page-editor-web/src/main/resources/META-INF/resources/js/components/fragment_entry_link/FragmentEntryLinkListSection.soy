@@ -20,6 +20,7 @@
 	{@param? _handleResizerMouseDown: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? _highlighted: bool}
 	{@param? _resizeColumnIndex: number}
 	{@param? _resizeHighlightedColumn: number}
 	{@param? _resizing: bool}
@@ -74,6 +75,10 @@
 
 		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
 			{sp}{$dropTargetBorder}
+		{/if}
+
+		{if $_highlighted}
+			{sp}fragments-editor__topper-wrapper--highlighted
 		{/if}
 
 		{if not $_resizing and $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}

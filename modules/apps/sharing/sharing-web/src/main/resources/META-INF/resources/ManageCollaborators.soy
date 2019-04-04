@@ -32,7 +32,7 @@
 				{/if}
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
-						{let $expanded: $collaborator.id == $expandedCollaboratorId /}
+						{let $expanded: $collaborator.userId == $expandedCollaboratorId /}
 						<li
 							class="
 								list-group-item
@@ -40,9 +40,9 @@
 								list-group-item-flex
 								{if $expanded}{sp}active{/if}
 							"
-							data-collaboratorid="{$collaborator.id}"
+							data-collaboratorid="{$collaborator.userId}"
 							data-onclick="{$_handleExpandCollaborator}"
-							id="collaborator{$collaborator.id}"
+							id="collaborator{$collaborator.userId}"
 						>
 							{call .collaborator}
 								{param _handleBlurExpirationDate: $_handleBlurExpirationDate /}
@@ -137,7 +137,7 @@
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
 				<strong class="text-truncate-inline">
-					<span class="text-truncate">{$collaborator.name}</span>
+					<span class="text-truncate">{$collaborator.fullName}</span>
 				</strong>
 			</div>
 
@@ -190,7 +190,7 @@
 			<div class="autofit-col">
 				<button
 					class="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-					data-collaborator-id="{$collaborator.id}"
+					data-collaborator-id="{$collaborator.userId}"
 					data-sharingentry-id="{$collaborator.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"
 					{if $_loadingResponse}disabled{/if}
@@ -215,7 +215,7 @@
 									class="custom-control-input"
 									name="shareable"
 									type="checkbox"
-									data-collaborator-id="{$collaborator.id}"
+									data-collaborator-id="{$collaborator.userId}"
 									data-sharingentry-id="{$collaborator.sharingEntryId}"
 									data-onchange="{$_handleChangeShareable}"
 								/>
@@ -237,7 +237,7 @@
 								<input
 									class="custom-control-input"
 									type="checkbox"
-									data-collaborator-id="{$collaborator.id}"
+									data-collaborator-id="{$collaborator.userId}"
 									data-onchange="{$_handleEnableDisableExpirationDate}"
 									{if $collaborator.sharingEntryExpirationDate}
 										checked
@@ -255,7 +255,7 @@
 				<div class="autofit-col no-padding {if $collaborator.sharingEntryExpirationDateError}has-error{/if}">
 					<input
 						class="form-control"
-						data-collaborator-id="{$collaborator.id}"
+						data-collaborator-id="{$collaborator.userId}"
 						data-onblur="{$_handleBlurExpirationDate}"
 						data-sharingentry-id="{$collaborator.sharingEntryId}"
 						min="{$_tomorrowDate}"

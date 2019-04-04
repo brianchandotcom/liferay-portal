@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -69,6 +71,12 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
+		String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(mode, Constants.EDIT)) {
+			return false;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

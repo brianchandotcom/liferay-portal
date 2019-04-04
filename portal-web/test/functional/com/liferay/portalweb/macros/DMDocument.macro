@@ -1136,12 +1136,6 @@ definition {
 		}
 	}
 
-	macro selectVersion {
-		var key_tab = "Versions";
-
-		AssertClick(locator1 = "NavTab#NAV_TABS", value1 = "Versions");
-	}
-
 	macro sharePG {
 		IFrame.selectModalFrame();
 

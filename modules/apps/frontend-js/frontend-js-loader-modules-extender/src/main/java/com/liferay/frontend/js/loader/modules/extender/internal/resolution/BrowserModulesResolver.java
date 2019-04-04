@@ -195,6 +195,9 @@ public class BrowserModulesResolver {
 		BrowserModule browserModule = browserModulesMap.get(mappedModuleName);
 
 		if (browserModule == null) {
+			browserModulesResolution.addResolvedModuleName(
+				":ERROR:Missing required module '" + moduleName + "'");
+
 			return;
 		}
 

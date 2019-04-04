@@ -34,25 +34,20 @@ public class ServiceUtil {
 	public static Group addActiveOpenGroup(long userId, String name)
 		throws Exception {
 
-		boolean active = true;
 		String friendlyURL =
 			"/" +
 				StringUtil.replace(
 					StringUtil.toLowerCase(name), CharPool.SPACE,
 					CharPool.DASH);
-		boolean siteFlag = true;
-		int type = GroupConstants.TYPE_SITE_OPEN;
-		boolean manualMembership = false;
-		int membershipRestriction =
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
 		return GroupLocalServiceUtil.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null, 0L,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			Collections.singletonMap(Locale.US, name),
-			Collections.singletonMap(Locale.US, name), type, manualMembership,
-			membershipRestriction, friendlyURL, siteFlag, false, active,
-			new ServiceContext());
+			Collections.singletonMap(Locale.US, name),
+			GroupConstants.TYPE_SITE_OPEN, false,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, true,
+			false, true, new ServiceContext());
 	}
 
 	public static Layout addLayout(

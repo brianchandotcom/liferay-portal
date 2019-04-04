@@ -19,6 +19,7 @@ import static java.util.Collections.singletonList;
 import java.io.Serializable;
 import java.util.List;
 
+import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
 import org.talend.sdk.component.api.component.Icon;
 import org.talend.sdk.component.api.component.Version;
 import org.talend.sdk.component.api.configuration.Option;
@@ -39,14 +40,14 @@ import com.liferay.talend.service.TalendService;
 @Icon(Icon.IconType.STAR)
 @PartitionMapper(name = "tLiferayInput")
 @Documentation("TODO fill the documentation for this mapper")
-public class TLiferayInputMapper implements Serializable {
-    private final TLiferayInputMapperConfiguration configuration;
+public class LiferayInputMapper implements Serializable {
+    private final LiferayInputMapperConfiguration configuration;
     private final TalendService service;
     private final RecordBuilderFactory recordBuilderFactory;
 
-    public TLiferayInputMapper(@Option("configuration") final TLiferayInputMapperConfiguration configuration,
-                        final TalendService service,
-                        final RecordBuilderFactory recordBuilderFactory) {
+    public LiferayInputMapper(@Option("configuration") final LiferayInputMapperConfiguration configuration,
+                              final TalendService service,
+                              final RecordBuilderFactory recordBuilderFactory) {
         this.configuration = configuration;
         this.service = service;
         this.recordBuilderFactory = recordBuilderFactory;
@@ -58,12 +59,12 @@ public class TLiferayInputMapper implements Serializable {
     }
 
     @Split
-    public List<TLiferayInputMapper> split(@PartitionSize final long bundles) {
+    public List<LiferayInputMapper> split(@PartitionSize final long bundles) {
         return singletonList(this);
     }
 
     @Emitter
-    public TLiferayInputSource createWorker() {
-        return new TLiferayInputSource(configuration, service, recordBuilderFactory);
+    public LiferayInputEmitter createWorker() {
+        return new LiferayInputEmitter(configuration, service, recordBuilderFactory);
     }
 }

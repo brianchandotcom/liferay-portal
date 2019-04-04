@@ -27,21 +27,11 @@ import org.talend.sdk.component.api.meta.Documentation;
     names = GridLayout.FormType.MAIN,
     value =
     {
-    @GridLayout.Row({ "authorization" }),
     @GridLayout.Row({ "serverURL", "anonymous" }),
     @GridLayout.Row({ "user", "password"}),
 })
 @Documentation("TODO fill the documentation for this configuration")
 public class BasicDataStore implements Serializable {
-
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    Authorization authorization;
-
-    enum Authorization {
-        Basic,
-        OAuth2
-    }
 
     @Option
     @Documentation("TODO fill the documentation for this parameter")

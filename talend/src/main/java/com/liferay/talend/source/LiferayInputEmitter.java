@@ -19,6 +19,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.input.Producer;
 import org.talend.sdk.component.api.meta.Documentation;
@@ -32,14 +33,14 @@ import com.liferay.talend.service.TalendService;
  * @author Zoltán Takács
  */
 @Documentation("TODO fill the documentation for this source")
-public class TLiferayInputSource implements Serializable {
-    private final TLiferayInputMapperConfiguration configuration;
+public class LiferayInputEmitter implements Serializable {
+    private final LiferayInputMapperConfiguration configuration;
     private final TalendService service;
     private final RecordBuilderFactory builderFactory;
 
-    public TLiferayInputSource(@Option("configuration") final TLiferayInputMapperConfiguration configuration,
-                        final TalendService service,
-                        final RecordBuilderFactory builderFactory) {
+    public LiferayInputEmitter(@Option("configuration") final LiferayInputMapperConfiguration configuration,
+                               final TalendService service,
+                               final RecordBuilderFactory builderFactory) {
         this.configuration = configuration;
         this.service = service;
         this.builderFactory = builderFactory;

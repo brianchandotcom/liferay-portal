@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.source;
+package com.liferay.talend.configuration;
 
 import java.io.Serializable;
 
@@ -33,7 +33,7 @@ import org.talend.sdk.component.api.meta.Documentation;
     @GridLayout.Row({ "maxItemsPerRequest" })
 })
 @Documentation("TODO fill the documentation for this configuration")
-public class TLiferayInputMapperConfiguration implements Serializable {
+public class LiferayInputMapperConfiguration implements Serializable {
     @Option
     @Documentation("TODO fill the documentation for this parameter")
     private RestDataSet restDataSet;
@@ -50,7 +50,7 @@ public class TLiferayInputMapperConfiguration implements Serializable {
         return restDataSet;
     }
 
-    public TLiferayInputMapperConfiguration setRestDataSet(RestDataSet restDataSet) {
+    public LiferayInputMapperConfiguration setRestDataSet(RestDataSet restDataSet) {
         this.restDataSet = restDataSet;
         return this;
     }
@@ -59,7 +59,7 @@ public class TLiferayInputMapperConfiguration implements Serializable {
         return timeout;
     }
 
-    public TLiferayInputMapperConfiguration setTimeout(int timeout) {
+    public LiferayInputMapperConfiguration setTimeout(int timeout) {
         this.timeout = timeout;
         return this;
     }
@@ -68,7 +68,7 @@ public class TLiferayInputMapperConfiguration implements Serializable {
         return maxItemsPerRequest;
     }
 
-    public TLiferayInputMapperConfiguration setMaxItemsPerRequest(int maxItemsPerRequest) {
+    public LiferayInputMapperConfiguration setMaxItemsPerRequest(int maxItemsPerRequest) {
         this.maxItemsPerRequest = maxItemsPerRequest;
         return this;
     }

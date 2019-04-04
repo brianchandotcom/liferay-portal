@@ -29,8 +29,8 @@ import java.util.Set;
 @Service
 public class UIActionService {
 
-	@Suggestions("loadSalesforceModules")
-	public SuggestionValues loadSalesforceModules(@Option("restDataSet") final BasicDataStore dataStore) {
+	@Suggestions("fetchEndpoints")
+	public SuggestionValues fetchEndpoints(@Option("restDataSet") final BasicDataStore dataStore) {
 		SuggestionValues suggestionValues = new SuggestionValues();
 
 		Set<SuggestionValues.Item> items = new HashSet<>();

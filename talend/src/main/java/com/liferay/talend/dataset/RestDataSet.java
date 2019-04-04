@@ -31,19 +31,20 @@ import org.talend.sdk.component.api.meta.Documentation;
 @DataSet("RestDataSet")
 @GridLayout({
     @GridLayout.Row({ "dataStore" }),
-    @GridLayout.Row({ "moduleName" })
+    @GridLayout.Row({ "endpoint" })
 })
 @Documentation("TODO fill the documentation for this configuration")
 public class RestDataSet implements Serializable {
+
     @Option
     @Documentation("TODO fill the documentation for this parameter")
     private BasicDataStore dataStore;
 
     @Option
     @Required
-    @Suggestable(value = "loadSalesforceModules", parameters = { "dataStore" })
-    @Documentation("Endpoints")
-    private String moduleName;
+    @Suggestable(value = "fetchEndpoints", parameters = { "dataStore" })
+    @Documentation("Endpoint")
+    private String endpoint;
 
     public BasicDataStore getDataStore() {
         return dataStore;

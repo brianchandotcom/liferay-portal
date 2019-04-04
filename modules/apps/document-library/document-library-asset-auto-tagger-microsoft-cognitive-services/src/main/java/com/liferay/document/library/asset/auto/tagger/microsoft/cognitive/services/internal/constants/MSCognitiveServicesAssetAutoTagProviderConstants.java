@@ -26,8 +26,4 @@ public class MSCognitiveServicesAssetAutoTagProviderConstants {
 	public static final String SAMPLE_API_ENDPOINT =
 		"https://westcentralus.api.cognitive.microsoft.com/vision/v2.0";
 
-	public static final String SERVICE_NAME =
-		"com.liferay.document.library.asset.auto.tagger.microsoft.cognitive." +
-			"services";
-
 }

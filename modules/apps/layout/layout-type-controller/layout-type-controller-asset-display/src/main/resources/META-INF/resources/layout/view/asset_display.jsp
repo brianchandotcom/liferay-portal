@@ -50,7 +50,7 @@ if (assetEntry != null) {
 	<c:when test="<%= structureJSONArray != null %>">
 
 		<%
-		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
 
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
@@ -115,7 +115,7 @@ if (assetEntry != null) {
 											}
 										%>
 
-											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues(), locale, segmentsExperienceIds, request, response) %>
+											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues(), locale, segmentsExperienceIds, request, response) %>
 
 										<%
 										}

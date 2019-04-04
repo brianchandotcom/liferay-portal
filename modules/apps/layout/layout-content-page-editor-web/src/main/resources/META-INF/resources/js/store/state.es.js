@@ -353,28 +353,6 @@ const INITIAL_STATE = {
 		.value({}),
 
 	/**
-   * URL for obtaining the asset types for which asset display pages can be
-   * created.
-   * @default '''
-   * @review
-   * @type {string}
-   */
-	getAssetClassTypesURL: Config
-		.string()
-		.value(''),
-
-	/**
-   * URL for obtaining the asset types for which asset display pages can be
-   * created.
-   * @default '''
-   * @review
-   * @type {string}
-   */
-	getAssetDisplayContributorsURL: Config
-		.string()
-		.value(''),
-
-	/**
 	 * URL for getting an asset field value
 	 * @default ''
 	 * @review
@@ -391,6 +369,28 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	getAssetMappingFieldsURL: Config
+		.string()
+		.value(''),
+
+	/**
+	 * URL for obtaining the asset types for which info display pages can be
+	 * created.
+	 * @default '''
+	 * @review
+	 * @type {string}
+	 */
+	getInfoClassTypesURL: Config
+		.string()
+		.value(''),
+
+	/**
+	 * URL for obtaining the asset types for which info display pages can be
+	 * created.
+	 * @default '''
+	 * @review
+	 * @type {string}
+	 */
+	getInfoDisplayContributorsURL: Config
 		.string()
 		.value(''),
 

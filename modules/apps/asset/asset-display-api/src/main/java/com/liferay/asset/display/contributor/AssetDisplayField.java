@@ -22,7 +22,10 @@ import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             #InfoDisplayField()}
  */
+@Deprecated
 public class AssetDisplayField {
 
 	public AssetDisplayField(String key, String label) {

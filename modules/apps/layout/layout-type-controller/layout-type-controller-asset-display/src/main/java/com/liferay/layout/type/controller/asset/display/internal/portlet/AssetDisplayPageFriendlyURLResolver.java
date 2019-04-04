@@ -14,15 +14,15 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
@@ -70,11 +70,11 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		AssetEntry assetEntry = _getAssetEntry(friendlyURL);
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				assetEntry.getClassName());
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			throw new PortalException();
 		}
 
@@ -82,11 +82,11 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
-			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
-			assetDisplayContributor);
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
+			infoDisplayContributor);
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		request.setAttribute(
-			AssetDisplayWebKeys.VERSION_CLASS_PK, versionClassPK);
+			InfoDisplayWebKeys.VERSION_CLASS_PK, versionClassPK);
 
 		Locale locale = _portal.getLocale(request);
 
@@ -173,9 +173,6 @@ public class AssetDisplayPageFriendlyURLResolver
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
@@ -184,6 +181,9 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

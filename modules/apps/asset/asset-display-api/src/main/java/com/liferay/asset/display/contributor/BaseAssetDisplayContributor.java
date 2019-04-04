@@ -15,7 +15,6 @@
 package com.liferay.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
-import com.liferay.asset.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -42,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             #BaseAssetInfoDisplayContributor()}
  */
+@Deprecated
 public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
@@ -125,12 +127,6 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		Object fieldValue = assetDisplayFieldsValues.getOrDefault(
 			fieldName, StringPool.BLANK);
-
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
-		}
 
 		return fieldValue;
 	}

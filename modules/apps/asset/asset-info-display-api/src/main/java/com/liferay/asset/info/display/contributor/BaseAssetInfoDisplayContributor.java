@@ -1,0 +1,247 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.asset.info.display.contributor;
+
+import com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldHelperUtil;
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author Jürgen Kappler
+ */
+public abstract class BaseAssetInfoDisplayContributor<T>
+	implements AssetInfoDisplayContributor {
+
+	@Override
+	public Set<InfoDisplayField> getInfoDisplayFields(
+			long classTypeId, Locale locale)
+		throws PortalException {
+
+		// Fields for asset entry
+
+		Set<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
+			AssetEntry.class.getName(), locale);
+
+		// Fields for the specific asset type
+
+		Set<InfoDisplayField> assetTypeInfoDisplayFields =
+			_getInfoDisplayFields(getClassName(), locale);
+
+		infoDisplayFields.addAll(assetTypeInfoDisplayFields);
+
+		// Fields for the class type
+
+		List<InfoDisplayField> classTypeFields = getClassTypeFields(
+			classTypeId, locale);
+
+		infoDisplayFields.addAll(classTypeFields);
+
+		return infoDisplayFields;
+	}
+
+	@Override
+	public Map<String, Object> getInfoDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		T assetObject = assetRenderer.getAssetObject();
+
+		return _getParameterMap(assetEntry, assetObject, locale);
+	}
+
+	@Override
+	public Object getInfoDisplayFieldValue(
+			AssetEntry assetEntry, String fieldName, Locale locale)
+		throws PortalException {
+
+		Map<String, Object> infoDisplayFieldsValues =
+			getInfoDisplayFieldsValues(assetEntry, locale);
+
+		Object fieldValue = infoDisplayFieldsValues.getOrDefault(
+			fieldName, StringPool.BLANK);
+
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+			fieldValue = contentAccessor.getContent();
+		}
+
+		return fieldValue;
+	}
+
+	@Override
+	public Map<String, Object> getInfoVersionDisplayFieldsValues(
+			AssetEntry assetEntry, long versionClassPK, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		T assetObject = assetRenderer.getAssetObject(versionClassPK);
+
+		if (assetObject == null) {
+			throw new NoSuchEntryException(
+				"No asset entry exists with version class PK " +
+					versionClassPK);
+		}
+
+		return _getParameterMap(assetEntry, assetObject, locale);
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	protected Object getClassTypeFieldValue(
+		T assetEntryObject, String fieldName, Locale locale) {
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetEntryObject, locale);
+
+		return classTypeValues.getOrDefault(fieldName, StringPool.BLANK);
+	}
+
+	protected abstract Map<String, Object> getClassTypeValues(
+		T assetEntryObject, Locale locale);
+
+	private Map<String, Object> _getAssetEntryInfoDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		Map<String, Object> infoDisplayFieldsValues = new HashMap<>();
+
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				_getInfoDisplayContributorFields(AssetEntry.class.getName())) {
+
+			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
+				assetEntry, locale);
+
+			if (infoDisplayFieldValue instanceof String) {
+				infoDisplayFieldValue = SanitizerUtil.sanitize(
+					assetEntry.getCompanyId(), assetEntry.getGroupId(),
+					assetEntry.getUserId(), AssetEntry.class.getName(),
+					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
+					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
+			}
+
+			infoDisplayFieldsValues.putIfAbsent(
+				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
+		}
+
+		return infoDisplayFieldsValues;
+	}
+
+	private List<InfoDisplayContributorField> _getInfoDisplayContributorFields(
+		String className) {
+
+		return AssetInfoDisplayContributorFieldHelperUtil.
+			getInfoDisplayContributorFields(className);
+	}
+
+	private Set<InfoDisplayField> _getInfoDisplayFields(
+		String className, Locale locale) {
+
+		Set<InfoDisplayField> infoDisplayFields = new LinkedHashSet<>();
+
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				_getInfoDisplayContributorFields(className)) {
+
+			infoDisplayFields.add(
+				new InfoDisplayField(
+					infoDisplayContributorField.getKey(),
+					infoDisplayContributorField.getLabel(locale),
+					infoDisplayContributorField.getType()));
+		}
+
+		return infoDisplayFields;
+	}
+
+	private Map<String, Object> _getParameterMap(
+			AssetEntry assetEntry, T assetObject, Locale locale)
+		throws PortalException {
+
+		// Field values for asset entry
+
+		Map<String, Object> parameterMap =
+			_getAssetEntryInfoDisplayFieldsValues(assetEntry, locale);
+
+		// Field values for the specific asset type
+
+		List<InfoDisplayContributorField> infoDisplayContributorFields =
+			AssetInfoDisplayContributorFieldHelperUtil.
+				getInfoDisplayContributorFields(getClassName());
+
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				infoDisplayContributorFields) {
+
+			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
+				assetObject, locale);
+
+			if (infoDisplayFieldValue instanceof String) {
+				infoDisplayFieldValue = SanitizerUtil.sanitize(
+					assetEntry.getCompanyId(), assetEntry.getGroupId(),
+					assetEntry.getUserId(), AssetEntry.class.getName(),
+					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
+					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
+			}
+
+			parameterMap.putIfAbsent(
+				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
+		}
+
+		// Field values for the class type
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetObject, locale);
+
+		parameterMap.putAll(classTypeValues);
+
+		return parameterMap;
+	}
+
+}

@@ -24,7 +24,10 @@ definition {
 			samlRoleType = "Identity Provider"
 		);
 
-		SAMLRole.configureCertificateAndPrivateKey(samlKeyPassword = "${samlEntityID}");
+		SAMLRole.configureCertificateAndPrivateKey(
+			certificateUsage = "SIGNING",
+			samlKeyPassword = "${samlEntityID}"
+		);
 
 		if ((isSet(idpSessionIdleTimeout)) || (isSet(idpSessionMaximumAge))) {
 			SAMLNavigation.gotoIdentityProvider();
@@ -64,7 +67,20 @@ definition {
 			samlRoleType = "Service Provider"
 		);
 
-		SAMLRole.configureCertificateAndPrivateKey(samlKeyPassword = "${samlEntityID}");
+		if ("${encryptionCertificate}" == "true") {
+			for (var certificateUsage : list "SIGNING,ENCRYPTION") {
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "${certificateUsage}",
+					samlKeyPassword = "${samlEntityID}"
+				);
+			}
+		}
+		else {
+			SAMLRole.configureCertificateAndPrivateKey(
+				certificateUsage = "SIGNING",
+				samlKeyPassword = "${samlEntityID}"
+			);
+		}
 
 		SAML.connectSPAndIdP(
 			attributes = "${attributes}",

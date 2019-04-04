@@ -1982,7 +1982,7 @@ axios@^0.15.3:
   dependencies:
     follow-redirects "1.0.0"
 
-babel-cli@6.26.0, babel-cli@^6.26.0:
+babel-cli@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.26.0.tgz#502ab54874d7db88ad00b887a06383ce03d002f1"
   integrity sha1-UCq1SHTX24itALiHoGODzgPQAvE=
@@ -3980,11 +3980,6 @@ clay-component@2.12.1, clay-component@^2.12.1:
     metal-dom "^2.16.0"
     metal-state "^2.16.0"
 
-clay-css@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.10.0.tgz#c9849944d78e94c86045ba16006fb4ae26e358d7"
-  integrity sha512-QDl0iUoCLQbMaCR1HyekPEAnKQFw7mMpdjNpVzkTQkzvcx9UAL5LP77+3cq4L/8Hq9voP2nw6YsvzQzR+zhXtw==
-
 clay-css@2.12.1:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.12.1.tgz#5b67ead1dd334c0a50b8658ab342d300dd956f41"
@@ -4861,7 +4856,7 @@ create-react-context@^0.2.2:
     fbjs "^0.8.0"
     gud "^1.0.0"
 
-cross-env@^5.1.3, cross-env@^5.2.0:
+cross-env@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.0.tgz#6ecd4c015d5773e614039ee529076669b9d126f2"
   integrity sha512-jtdNFfFW1hB7sMhr/H6rW1Z45LFqyI431m3qU6bFXcQ3Eh7LtBuG3h74o7ohHZ3crrRkkqHlo4jYHFPcjroANg==
@@ -11034,18 +11029,6 @@ liferay-frontend-common-css@1.0.4, liferay-frontend-common-css@^1.0.4:
   resolved "https://registry.yarnpkg.com/liferay-frontend-common-css/-/liferay-frontend-common-css-1.0.4.tgz#e4d73e406020d907c909bcacb2700a52fa1c7f16"
   integrity sha1-5Nc+QGAg2QfJCbyssnAKUvocfxY=
 
-liferay-frontend-theme-styled@4.0.0-alpha.1552930087997:
-  version "4.0.0-alpha.1552930087997"
-  resolved "https://registry.yarnpkg.com/liferay-frontend-theme-styled/-/liferay-frontend-theme-styled-4.0.0-alpha.1552930087997.tgz#24cdec06a0874be6358ebed7ab2c00b418fe6526"
-  integrity sha512-LWLH8LCrP7mtUoX/gg9pJa0Br4tbt8Th6ba9ycsck27lN2JTN2GdUTgo9ayLP0Pfuk8g2FpzRmgBU9cvyN4glw==
-
-liferay-frontend-theme-unstyled@4.0.0-alpha.1552930030671:
-  version "4.0.0-alpha.1552930030671"
-  resolved "https://registry.yarnpkg.com/liferay-frontend-theme-unstyled/-/liferay-frontend-theme-unstyled-4.0.0-alpha.1552930030671.tgz#a60678fb560ea085d4641148d65025d232b5aaf4"
-  integrity sha512-nom2B+86/EEUpT5QxPQgt81hk6mjvxqgWy7lSrAw0oR7lPqZ19q2ITQ5PaKT2hTJipio1gMCutWgUdljGoFFow==
-  dependencies:
-    clay-css "2.10.0"
-
 liferay-jest-junit-reporter@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/liferay-jest-junit-reporter/-/liferay-jest-junit-reporter-1.0.1.tgz#20e9c8a690017c6e3659a0bf15e7c6534d31c9e7"
@@ -12520,7 +12503,7 @@ metal-tools-soy@4.3.2, metal-tools-soy@^4.1.2:
     vinyl-fs "^2.2.1"
     yargs "^8.0.2"
 
-metal-tools-soy@^4.0.0, metal-tools-soy@^4.2.1:
+metal-tools-soy@^4.2.1:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/metal-tools-soy/-/metal-tools-soy-4.2.9.tgz#6fdbd06cf3da1b6822b1e87122c6090d71f3b6a6"
   integrity sha512-4HY1JkMThHIypnqAZeB0iJ+LjzURnok5Vl5Zh3XGZRuktVmHF5wRIOZT2thmgQZ2VwY/EAjCw/5tLCFmPc8tdQ==

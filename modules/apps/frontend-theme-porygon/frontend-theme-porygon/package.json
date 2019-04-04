@@ -25,7 +25,7 @@
 	"name": "liferay-porygon-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "gulp build"
+		"build": "gulp build --css-common-path ./build_gradle/frontend-css-common --styled-path ../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled --unstyled-path ../../frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled"
 	},
 	"version": "2.0.0"
 }

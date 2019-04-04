@@ -1222,9 +1222,11 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		for (var entryCount : list "1,2,3") {
-			var key_dmDocumentTitle = "Document_${entryCount}.doc";
+			var dmDocumentTitle = "Document_${entryCount}.doc";
 
-			Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+			LexiconCard.checkCardCheckbox(
+				card = "${dmDocumentTitle}"
+			);
 		}
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");

@@ -83,6 +83,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 							String containerType = StringPool.BLANK;
 							long paddingHorizontal = 3L;
 							long paddingVertical = 3L;
+							String type = "fragments-editor-component-row";
 
 							if (rowConfigJSONObject != null) {
 								backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
@@ -91,12 +92,13 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 								containerType = rowConfigJSONObject.getString("containerType");
 								paddingHorizontal = GetterUtil.getLong(rowConfigJSONObject.getString("paddingHorizontal"), paddingHorizontal);
 								paddingVertical = GetterUtil.getLong(rowConfigJSONObject.getString("paddingVertical"), paddingVertical);
+								type = GetterUtil.getString(rowJSONObject.getString("type"), type);
 							}
 					%>
 
 							<div class="container-fluid bg-<%= backgroundColorCssClass %> px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
 								<div class="<%= Objects.equals(containerType, "fixed") ? "container" : "container-fluid" %> p-0">
-									<div class="row <%= columnSpacing ? StringPool.BLANK : "no-gutters" %>">
+									<div class="row <%= (!columnSpacing || Objects.equals(type, "fragments-editor-section-row")) ? "no-gutters" : StringPool.BLANK %>">
 
 										<%
 										JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");

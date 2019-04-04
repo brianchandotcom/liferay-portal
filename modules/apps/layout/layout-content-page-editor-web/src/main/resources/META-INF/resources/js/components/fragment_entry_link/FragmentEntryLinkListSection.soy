@@ -161,7 +161,7 @@
 			fragment-entry-link-list__row
 			{sp}row
 
-			{if $row and $row.config and ($row.config.columnSpacing == false)}
+			{if ($row.config and ($row.config.columnSpacing == false)) or ($row.type == $_fragmentsEditorRowTypes.sectionRow)}
 				{sp}no-gutters
 			{/if}
 		{/let}

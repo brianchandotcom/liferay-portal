@@ -38,7 +38,13 @@ export class MockRouter extends React.Component {
 
 		const initialEntries = [
 			{
-				match: { params: { page, search, sort } },
+				match: {
+					params: {
+						page,
+						search,
+						sort
+					}
+				},
 				pathname: `/processes/1/10/${encodeURIComponent('title:asc')}`,
 				search: '?backPath=%2F'
 			},

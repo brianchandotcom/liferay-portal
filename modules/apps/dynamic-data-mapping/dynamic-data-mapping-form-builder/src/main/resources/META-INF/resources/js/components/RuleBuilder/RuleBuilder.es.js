@@ -459,8 +459,8 @@ class RuleBuilder extends Component {
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
 						events={{
-							ruleAdded: this._handleRuleSaved,
-							ruleCancel: this._handleRuleCanceled
+							ruleAdded: this._handleRuleSaved.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this)
 						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}

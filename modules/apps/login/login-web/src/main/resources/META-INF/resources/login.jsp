@@ -80,22 +80,14 @@
 
 						<%
 						String userEmailAddress = (String)SessionMessages.get(request, "userAdded");
-						String userPassword = (String)SessionMessages.get(request, "userAddedPassword");
 						%>
 
 						<div class="alert alert-success">
-							<c:choose>
-								<c:when test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
-									<liferay-ui:message key="thank-you-for-creating-an-account" />
+							<liferay-ui:message key="thank-you-for-creating-an-account" />
 
-									<c:if test="<%= company.isStrangersVerify() %>">
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(userPassword) %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
-								</c:otherwise>
-							</c:choose>
+							<c:if test="<%= company.isStrangersVerify() %>">
+								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
+							</c:if>
 
 							<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
 								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-password-was-sent-to-x" translateArguments="<%= false %>" />

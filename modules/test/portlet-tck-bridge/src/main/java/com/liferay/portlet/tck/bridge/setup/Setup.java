@@ -148,15 +148,11 @@ public class Setup {
 			List<String> portletIds)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-
 		Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
 			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			portalPageName, portalPageName, portalPageName,
 			LayoutConstants.TYPE_PORTLET, false,
-			"/" + StringUtil.toLowerCase(portalPageName), serviceContext);
+			"/" + StringUtil.toLowerCase(portalPageName), new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)portalPageLayout.getLayoutType();

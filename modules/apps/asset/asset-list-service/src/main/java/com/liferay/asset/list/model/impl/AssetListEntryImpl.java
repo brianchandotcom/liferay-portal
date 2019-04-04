@@ -81,6 +81,15 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
+	public List<AssetEntry> getAssetEntries(
+			long[] segmentsEntryIds, int start, int end)
+		throws PortalException {
+
+		return getAssetEntries(
+			_getFirstSegmentsEntryId(segmentsEntryIds), start, end);
+	}
+
+	@Override
 	public int getAssetEntriesCount(long segmentsEntryId) {
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {

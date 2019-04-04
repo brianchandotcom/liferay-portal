@@ -18,6 +18,8 @@
 
 <%
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
+
+SoyContext editorSoyContext = contentPageEditorDisplayContext.getEditorSoyContext();
 %>
 
 <liferay-editor:resources
@@ -28,9 +30,20 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/css/main.css") %>" rel="stylesheet">
 </liferay-util:html-top>
 
+<c:if test="<%= contentPageEditorDisplayContext.hasErrors() %>">
+	<clay:alert
+		closeable="<%= true %>"
+		destroyOnHide="<%= true %>"
+		elementClasses="my-4"
+		message='<%= LanguageUtil.get(resourceBundle, "one-or-more-fragments-could-not-be-rendered") %>'
+		style="danger"
+		title='<%= LanguageUtil.get(resourceBundle, "error") + ":" %>'
+	/>
+</c:if>
+
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
-	context="<%= contentPageEditorDisplayContext.getEditorSoyContext() %>"
+	context="<%= editorSoyContext %>"
 	module="js/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditor.render"
 />

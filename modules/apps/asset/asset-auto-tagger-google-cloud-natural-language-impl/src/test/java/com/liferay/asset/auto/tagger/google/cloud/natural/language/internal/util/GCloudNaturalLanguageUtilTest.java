@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.util;
+package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -155,7 +155,7 @@ public class GCloudNaturalLanguageUtilTest {
 			StringPool.BLANK,
 			GCloudNaturalLanguageUtil.truncateToSize(
 				RandomTestUtil.randomString(size + 1) + StringPool.SPACE +
-					RandomTestUtil.randomString(size + 1),
+				RandomTestUtil.randomString(size + 1),
 				size));
 	}
 
@@ -165,7 +165,7 @@ public class GCloudNaturalLanguageUtilTest {
 
 		String text =
 			RandomTestUtil.randomString(size - 1) + StringPool.SPACE +
-				RandomTestUtil.randomString(size - 1);
+			RandomTestUtil.randomString(size - 1);
 
 		Assert.assertEquals(
 			text,
@@ -192,7 +192,7 @@ public class GCloudNaturalLanguageUtilTest {
 
 		String text =
 			RandomTestUtil.randomString((size / 2) - 1) + StringPool.SPACE +
-				RandomTestUtil.randomString((size / 2) - 1);
+			RandomTestUtil.randomString((size / 2) - 1);
 
 		Assert.assertEquals(
 			text, GCloudNaturalLanguageUtil.truncateToSize(text, size));

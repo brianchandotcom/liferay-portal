@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.util;
+package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.util;
 
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -23,6 +23,7 @@ import java.util.Arrays;
 
 /**
  * @author Alicia García
+ * @author Cristina González
  */
 public class GCloudNaturalLanguageUtil {
 

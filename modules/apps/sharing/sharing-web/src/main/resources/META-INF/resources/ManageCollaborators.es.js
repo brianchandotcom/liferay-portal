@@ -78,8 +78,10 @@ class ManageCollaborators extends PortletBase {
 	 * @return {Object} Collaborator
 	 */
 	_getCollaborator(collaboratorId) {
+		const collaboratorIdNumber = Number(collaboratorId);
+
 		let collaborator = this.collaborators.find(
-			collaborator => collaborator.id === collaboratorId
+			collaborator => collaborator.userId === collaboratorIdNumber
 		);
 
 		return collaborator;
@@ -168,13 +170,13 @@ class ManageCollaborators extends PortletBase {
 	_handleDeleteCollaborator(event) {
 		const target = event.delegateTarget;
 
-		const collaboratorId = target.dataset.collaboratorId;
+		const collaboratorId = Number(target.dataset.collaboratorId);
 		const sharingEntryId = target.dataset.sharingentryId;
 
 		event.stopPropagation();
 
 		this.collaborators = this.collaborators.filter(
-			collaborator => collaborator.id != collaboratorId
+			collaborator => collaborator.userId != collaboratorId
 		);
 
 		this._deleteSharingEntryIds.push(sharingEntryId);

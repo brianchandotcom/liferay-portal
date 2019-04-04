@@ -31,7 +31,7 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_THUMBNAIL</td>
-	<td>//div[contains(@title,'${key_mgDocumentTitle}')]//span/img</td>
+	<td>//div[contains(@title,'${key_mgDocumentTitle}')]//div/img</td>
 	<td></td>
 </tr>
 <tr>

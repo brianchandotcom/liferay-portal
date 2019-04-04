@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 
 import org.junit.runner.Description;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClearThreadLocalTestCallback
-	extends BaseTestCallback<Object, Object> {
+public class ClearThreadLocalTestRule extends ClassTestRule<Void> {
 
-	public static final ClearThreadLocalTestCallback INSTANCE =
-		new ClearThreadLocalTestCallback();
+	public static final ClearThreadLocalTestRule INSTANCE =
+		new ClearThreadLocalTestRule();
 
 	@Override
-	public void afterClass(Description description, Object object) {
+	protected void afterClass(Description description, Void v) {
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
-	private ClearThreadLocalTestCallback() {
+	@Override
+	protected Void beforeClass(Description description) {
+		return null;
+	}
+
+	private ClearThreadLocalTestRule() {
 	}
 
 }

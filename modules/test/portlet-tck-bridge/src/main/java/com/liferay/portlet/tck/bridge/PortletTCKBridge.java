@@ -129,14 +129,14 @@ public class PortletTCKBridge {
 
 			String pageName = pageElement.attributeValue("name");
 
-			Layout portalPageLayout = _layoutLocalService.addLayout(
+			Layout layout = _layoutLocalService.addLayout(
 				userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, pageName, pageName,
 				pageName, LayoutConstants.TYPE_PORTLET, false,
 				"/" + StringUtil.toLowerCase(pageName), new ServiceContext());
 
 			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)portalPageLayout.getLayoutType();
+				(LayoutTypePortlet)layout.getLayoutType();
 
 			layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
@@ -145,7 +145,7 @@ public class PortletTCKBridge {
 					userId, portletId, "column-1", -1, false);
 			}
 
-			_layoutLocalService.updateLayout(portalPageLayout);
+			_layoutLocalService.updateLayout(layout);
 		}
 	}
 

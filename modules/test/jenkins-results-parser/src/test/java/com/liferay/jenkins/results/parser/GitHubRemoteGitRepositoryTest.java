@@ -41,7 +41,7 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 	public void testGetLabelRequestURL() throws Exception {
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", REPOSITORY_NAME, REPOSITORY_USERNAME);
+				"github.com", NAME_REPOSITORY, USERNAME_REPOSITORY);
 
 		if (!(remoteGitRepository instanceof GitHubRemoteGitRepository)) {
 			throw new RuntimeException(
@@ -54,8 +54,8 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 		gitHubRemoteGitRepository.setLabelRequestURL(null);
 
 		String expectedLabelRequestURL = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", REPOSITORY_USERNAME, "/",
-			REPOSITORY_NAME, "/labels");
+			"https://api.github.com/repos/", USERNAME_REPOSITORY, "/",
+			NAME_REPOSITORY, "/labels");
 
 		if (!expectedLabelRequestURL.contains(
 				gitHubRemoteGitRepository.getLabelRequestURL())) {
@@ -229,7 +229,7 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 	private GitHubRemoteGitRepository _getGitHubRemoteGitRepository() {
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", REPOSITORY_NAME, REPOSITORY_USERNAME);
+				"github.com", NAME_REPOSITORY, USERNAME_REPOSITORY);
 
 		if (!(remoteGitRepository instanceof GitHubRemoteGitRepository)) {
 			errorCollector.addError(

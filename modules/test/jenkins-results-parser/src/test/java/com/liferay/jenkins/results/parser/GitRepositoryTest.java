@@ -34,26 +34,26 @@ public class GitRepositoryTest extends Test {
 
 		repositoryProperties.put(
 			JenkinsResultsParserUtil.combine(
-				"repository.dir[", REPOSITORY_NAME, "][",
-				REPOSITORY_UPSTREAM_BRANCH_NAME, "]"),
-			REPOSITORY_DIR);
+				"repository.dir[", NAME_REPOSITORY, "][",
+				NAME_REPOSITORY_UPSTREAM_BRANCH, "]"),
+			FILE_PATH_REPOSITORY);
 
 		BaseGitRepository.setRepositoryProperties(repositoryProperties);
 	}
 
-	protected static final String REPOSITORY_DIR =
-		TestPropertiesValues.REPOSITORY_DIR;
+	protected static final String FILE_PATH_REPOSITORY =
+		TestPropertiesValues.FILE_PATH_REPOSITORY;
 
-	protected static final String REPOSITORY_HOSTNAME =
-		TestPropertiesValues.REPOSITORY_HOSTNAME;
+	protected static final String HOSTNAME_REPOSITORY =
+		TestPropertiesValues.HOSTNAME_REPOSITORY;
 
-	protected static final String REPOSITORY_NAME =
-		TestPropertiesValues.REPOSITORY_NAME;
+	protected static final String NAME_REPOSITORY =
+		TestPropertiesValues.NAME_REPOSITORY;
 
-	protected static final String REPOSITORY_UPSTREAM_BRANCH_NAME =
-		TestPropertiesValues.REPOSITORY_UPSTREAM_BRANCH_NAME;
+	protected static final String NAME_REPOSITORY_UPSTREAM_BRANCH =
+		TestPropertiesValues.NAME_REPOSITORY_UPSTREAM_BRANCH;
 
-	protected static final String REPOSITORY_USERNAME =
-		TestPropertiesValues.REPOSITORY_USERNAME;
+	protected static final String USERNAME_REPOSITORY =
+		TestPropertiesValues.USERNAME_REPOSITORY;
 
 }

@@ -25,11 +25,11 @@ public class RemoteGitRefTest extends GitRefTest {
 	public void testGetName() {
 		RemoteGitRef remoteGitRef = _getRemoteGitRef();
 
-		if (!REF_NAME.equals(remoteGitRef.getName())) {
+		if (!NAME_REF.equals(remoteGitRef.getName())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REF_NAME, remoteGitRef.getName(), "ref name")));
+						NAME_REF, remoteGitRef.getName(), "ref name")));
 		}
 	}
 
@@ -52,8 +52,8 @@ public class RemoteGitRefTest extends GitRefTest {
 		RemoteGitRef remoteGitRef = _getRemoteGitRef();
 
 		String remoteURL = JenkinsResultsParserUtil.combine(
-			"git@", REPOSITORY_HOSTNAME, ":", REPOSITORY_USERNAME, "/",
-			REPOSITORY_NAME);
+			"git@", HOSTNAME_REPOSITORY, ":", USERNAME_REPOSITORY, "/",
+			NAME_REPOSITORY);
 
 		if (!remoteURL.equals(remoteGitRef.getRemoteURL())) {
 			errorCollector.addError(
@@ -67,11 +67,11 @@ public class RemoteGitRefTest extends GitRefTest {
 	public void testGetRepositoryName() {
 		RemoteGitRef remoteGitRef = _getRemoteGitRef();
 
-		if (!REPOSITORY_NAME.equals(remoteGitRef.getRepositoryName())) {
+		if (!NAME_REPOSITORY.equals(remoteGitRef.getRepositoryName())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REPOSITORY_NAME, remoteGitRef.getRepositoryName(),
+						NAME_REPOSITORY, remoteGitRef.getRepositoryName(),
 						"repository name")));
 		}
 	}
@@ -80,11 +80,11 @@ public class RemoteGitRefTest extends GitRefTest {
 	public void testGetSHA() {
 		RemoteGitRef remoteGitRef = _getRemoteGitRef();
 
-		if (!REF_SHA.equals(remoteGitRef.getSHA())) {
+		if (!SHA_REF.equals(remoteGitRef.getSHA())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REF_SHA, remoteGitRef.getSHA(), "ref SHA")));
+						SHA_REF, remoteGitRef.getSHA(), "ref SHA")));
 		}
 	}
 
@@ -92,11 +92,11 @@ public class RemoteGitRefTest extends GitRefTest {
 	public void testGetUsername() {
 		RemoteGitRef remoteGitRef = _getRemoteGitRef();
 
-		if (!REPOSITORY_USERNAME.equals(remoteGitRef.getUsername())) {
+		if (!USERNAME_REPOSITORY.equals(remoteGitRef.getUsername())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REPOSITORY_USERNAME, remoteGitRef.getUsername(),
+						USERNAME_REPOSITORY, remoteGitRef.getUsername(),
 						"username")));
 		}
 	}
@@ -105,12 +105,12 @@ public class RemoteGitRefTest extends GitRefTest {
 		RemoteGitRepository remoteGitRepository = _getRemoteGitRepository();
 
 		return GitBranchFactory.newRemoteGitRef(
-			remoteGitRepository, REF_NAME, REF_SHA, "tag");
+			remoteGitRepository, NAME_REF, SHA_REF, "tag");
 	}
 
 	private RemoteGitRepository _getRemoteGitRepository() {
 		return GitRepositoryFactory.getRemoteGitRepository(
-			REPOSITORY_HOSTNAME, REPOSITORY_NAME, REPOSITORY_USERNAME);
+			HOSTNAME_REPOSITORY, NAME_REPOSITORY, USERNAME_REPOSITORY);
 	}
 
 }

@@ -25,12 +25,12 @@ import org.json.JSONObject;
  */
 public interface BuildData {
 
-	public static final String DEFAULT_JENKINS_GITHUB_URL =
+	public static final String URL_JENKINS_GITHUB_DEFAULT =
 		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
 
-	public static final File DEFAULT_WORKSPACE_DIR = new File(".");
+	public static final File DIR_WORKSPACE_DEFAULT = new File(".");
 
-	public static final String DIST_ROOT_PATH = "/tmp/dist";
+	public static final String FILE_PATH_DIST_ROOT = "/tmp/dist";
 
 	public File getArtifactDir();
 

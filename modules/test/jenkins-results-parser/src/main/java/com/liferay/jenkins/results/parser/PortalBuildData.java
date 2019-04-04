@@ -31,9 +31,9 @@ public interface PortalBuildData extends BuildData {
 
 	public void setPortalUpstreamBranchName(String portalUpstreamBranchName);
 
-	public final String DEFAULT_PORTAL_GITHUB_URL =
+	public final String URL_PORTAL_GITHUB_BRANCH_DEFAULT =
 		"https://github.com/liferay/liferay-portal/tree/master";
 
-	public final String DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME = "master";
+	public final String NAME_PORTAL_UPSTREAM_BRANCH_DEFAULT = "master";
 
 }

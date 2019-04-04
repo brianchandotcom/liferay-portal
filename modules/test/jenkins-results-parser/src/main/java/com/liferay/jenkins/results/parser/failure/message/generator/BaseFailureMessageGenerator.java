@@ -190,19 +190,19 @@ public abstract class BaseFailureMessageGenerator
 		return start;
 	}
 
-	protected static final int MAX_CONSOLE_TEXT_SNIPPET_LENGTH = 2500;
+	protected static final int CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX = 2500;
 
 	private String _getConsoleTextSnippet(
 		String consoleText, boolean truncateTop, int start, int end) {
 
-		if ((end - start) > MAX_CONSOLE_TEXT_SNIPPET_LENGTH) {
+		if ((end - start) > CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX) {
 			if (truncateTop) {
-				start = end - MAX_CONSOLE_TEXT_SNIPPET_LENGTH;
+				start = end - CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX;
 
 				start = consoleText.indexOf("\n", start);
 			}
 			else {
-				end = start + MAX_CONSOLE_TEXT_SNIPPET_LENGTH;
+				end = start + CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX;
 
 				int newlineEnd = consoleText.lastIndexOf("\n", end);
 

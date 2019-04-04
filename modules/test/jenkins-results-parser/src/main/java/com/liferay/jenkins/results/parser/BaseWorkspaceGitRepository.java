@@ -100,12 +100,12 @@ public abstract class BaseWorkspaceGitRepository
 
 		int index = 0;
 
-		while (index < MAX_COMMIT_HISTORY) {
+		while (index < COMMITS_HISTORY_SIZE_MAX) {
 			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (MAX_COMMIT_HISTORY - _COMMITS_HISTORY_GROUP_SIZE)) {
+			if (index > (COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
 				currentGroupSize =
-					MAX_COMMIT_HISTORY % _COMMITS_HISTORY_GROUP_SIZE;
+					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
@@ -282,12 +282,12 @@ public abstract class BaseWorkspaceGitRepository
 
 		int index = 0;
 
-		while (index < MAX_COMMIT_HISTORY) {
+		while (index < COMMITS_HISTORY_SIZE_MAX) {
 			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (MAX_COMMIT_HISTORY - _COMMITS_HISTORY_GROUP_SIZE)) {
+			if (index > (COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
 				currentGroupSize =
-					MAX_COMMIT_HISTORY % _COMMITS_HISTORY_GROUP_SIZE;
+					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(

@@ -25,7 +25,7 @@ public class GitRepositoryFactoryTest extends GitRepositoryTest {
 	public void testGetLocalGitRepository() {
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				REPOSITORY_NAME, REPOSITORY_UPSTREAM_BRANCH_NAME);
+				NAME_REPOSITORY, NAME_REPOSITORY_UPSTREAM_BRANCH);
 
 		if (!(localGitRepository instanceof DefaultLocalGitRepository)) {
 			errorCollector.addError(
@@ -37,7 +37,7 @@ public class GitRepositoryFactoryTest extends GitRepositoryTest {
 	public void testGetRemoteGitRepository() {
 		RemoteGitRepository gitHubRemoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", REPOSITORY_NAME, REPOSITORY_USERNAME);
+				"github.com", NAME_REPOSITORY, USERNAME_REPOSITORY);
 
 		if (!(gitHubRemoteGitRepository instanceof GitHubRemoteGitRepository)) {
 			errorCollector.addError(
@@ -46,7 +46,7 @@ public class GitRepositoryFactoryTest extends GitRepositoryTest {
 
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
-				"github-dev.liferay.com", REPOSITORY_NAME, REPOSITORY_USERNAME);
+				"github-dev.liferay.com", NAME_REPOSITORY, USERNAME_REPOSITORY);
 
 		if (!(remoteGitRepository instanceof DefaultRemoteGitRepository)) {
 			errorCollector.addError(

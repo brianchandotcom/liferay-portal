@@ -27,7 +27,7 @@ public class LocalGitBranchTest extends GitRefTest {
 	public void testGetDirectory() {
 		LocalGitBranch localGitBranch = _getLocalGitBranch();
 
-		File directory = new File(REPOSITORY_DIR);
+		File directory = new File(FILE_PATH_REPOSITORY);
 
 		if (!directory.equals(localGitBranch.getDirectory())) {
 			File localGitBranchDirectory = localGitBranch.getDirectory();
@@ -75,11 +75,11 @@ public class LocalGitBranchTest extends GitRefTest {
 	public void testGetName() {
 		LocalGitBranch localGitBranch = _getLocalGitBranch();
 
-		if (!REF_NAME.equals(localGitBranch.getName())) {
+		if (!NAME_REF.equals(localGitBranch.getName())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REF_NAME, localGitBranch.getName(), "branch name")));
+						NAME_REF, localGitBranch.getName(), "branch name")));
 		}
 	}
 
@@ -87,11 +87,11 @@ public class LocalGitBranchTest extends GitRefTest {
 	public void testGetSHA() {
 		LocalGitBranch localGitBranch = _getLocalGitBranch();
 
-		if (!REF_SHA.equals(localGitBranch.getSHA())) {
+		if (!SHA_REF.equals(localGitBranch.getSHA())) {
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REF_SHA, localGitBranch.getSHA(), "branch SHA")));
+						SHA_REF, localGitBranch.getSHA(), "branch SHA")));
 		}
 	}
 
@@ -99,13 +99,13 @@ public class LocalGitBranchTest extends GitRefTest {
 	public void testGetUpstreamBranchName() {
 		LocalGitBranch localGitBranch = _getLocalGitBranch();
 
-		if (!REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
+		if (!NAME_REPOSITORY_UPSTREAM_BRANCH.equals(
 				localGitBranch.getUpstreamBranchName())) {
 
 			errorCollector.addError(
 				new Throwable(
 					getMismatchMessage(
-						REPOSITORY_UPSTREAM_BRANCH_NAME,
+						NAME_REPOSITORY_UPSTREAM_BRANCH,
 						localGitBranch.getUpstreamBranchName(),
 						"upstream branch name")));
 		}
@@ -115,12 +115,12 @@ public class LocalGitBranchTest extends GitRefTest {
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
 		return GitBranchFactory.newLocalGitBranch(
-			localGitRepository, REF_NAME, REF_SHA);
+			localGitRepository, NAME_REF, SHA_REF);
 	}
 
 	private LocalGitRepository _getLocalGitRepository() {
 		return GitRepositoryFactory.getLocalGitRepository(
-			REPOSITORY_NAME, REPOSITORY_UPSTREAM_BRANCH_NAME);
+			NAME_REPOSITORY, NAME_REPOSITORY_UPSTREAM_BRANCH);
 	}
 
 }

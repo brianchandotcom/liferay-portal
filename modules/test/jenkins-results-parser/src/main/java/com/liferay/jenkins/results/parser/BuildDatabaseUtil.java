@@ -62,7 +62,7 @@ public class BuildDatabaseUtil {
 		File baseDir, String distNodes, String distPath) {
 
 		File buildDatabaseFile = new File(
-			baseDir, BuildDatabase.BUILD_DATABASE_FILE_NAME);
+			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
 		if (buildDatabaseFile.exists()) {
 			return;
@@ -91,7 +91,7 @@ public class BuildDatabaseUtil {
 
 				String command = JenkinsResultsParserUtil.combine(
 					"time rsync -Iqs --timeout=1200 ", distNode, ":", distPath,
-					"/", BuildDatabase.BUILD_DATABASE_FILE_NAME, " ",
+					"/", BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
 					JenkinsResultsParserUtil.getCanonicalPath(
 						buildDatabaseFile));
 
@@ -105,7 +105,7 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to download ",
-							BuildDatabase.BUILD_DATABASE_FILE_NAME));
+							BuildDatabase.FILE_NAME_BUILD_DATABASE));
 				}
 
 				break;
@@ -115,7 +115,7 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.BUILD_DATABASE_FILE_NAME, " file"),
+							BuildDatabase.FILE_NAME_BUILD_DATABASE, " file"),
 						e);
 				}
 

@@ -112,7 +112,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				JenkinsResultsParserUtil.combine(
 					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS,
 					" has SHAs that are not be found within the latest ",
-					String.valueOf(WorkspaceGitRepository.MAX_COMMIT_HISTORY),
+					String.valueOf(WorkspaceGitRepository.COMMITS_HISTORY_SIZE_MAX),
 					" commits of <a href=\"", portalGitHubURL, "\">",
 					portalGitHubURL, "</a>"),
 				e);

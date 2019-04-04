@@ -27,9 +27,9 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 	public void testGetHostname() {
 		RemoteGitRepository remoteGitRepository = _getRemoteGitRepository();
 
-		if (!REPOSITORY_HOSTNAME.equals(remoteGitRepository.getHostname())) {
+		if (!HOSTNAME_REPOSITORY.equals(remoteGitRepository.getHostname())) {
 			errorCollector.addError(
-				new Throwable("The hostname should be " + REPOSITORY_HOSTNAME));
+				new Throwable("The hostname should be " + HOSTNAME_REPOSITORY));
 		}
 	}
 
@@ -39,9 +39,9 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("hostname", REPOSITORY_HOSTNAME);
-		expectedJSONObject.put("name", REPOSITORY_NAME);
-		expectedJSONObject.put("username", REPOSITORY_USERNAME);
+		expectedJSONObject.put("hostname", HOSTNAME_REPOSITORY);
+		expectedJSONObject.put("name", NAME_REPOSITORY);
+		expectedJSONObject.put("username", USERNAME_REPOSITORY);
 
 		JSONObject actualJSONObject = remoteGitRepository.getJSONObject();
 
@@ -61,10 +61,10 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 	public void testGetName() {
 		RemoteGitRepository remoteGitRepository = _getRemoteGitRepository();
 
-		if (!REPOSITORY_NAME.equals(remoteGitRepository.getName())) {
+		if (!NAME_REPOSITORY.equals(remoteGitRepository.getName())) {
 			errorCollector.addError(
 				new Throwable(
-					"The repository name should be " + REPOSITORY_NAME));
+					"The repository name should be " + NAME_REPOSITORY));
 		}
 	}
 
@@ -73,8 +73,8 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 		RemoteGitRepository remoteGitRepository = _getRemoteGitRepository();
 
 		String remoteURL = JenkinsResultsParserUtil.combine(
-			"git@", REPOSITORY_HOSTNAME, ":", REPOSITORY_USERNAME, "/",
-			REPOSITORY_NAME);
+			"git@", HOSTNAME_REPOSITORY, ":", USERNAME_REPOSITORY, "/",
+			NAME_REPOSITORY);
 
 		if (!remoteURL.equals(remoteGitRepository.getRemoteURL())) {
 			errorCollector.addError(
@@ -86,15 +86,15 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 	public void testGetUsername() {
 		RemoteGitRepository remoteGitRepository = _getRemoteGitRepository();
 
-		if (!REPOSITORY_USERNAME.equals(remoteGitRepository.getUsername())) {
+		if (!USERNAME_REPOSITORY.equals(remoteGitRepository.getUsername())) {
 			errorCollector.addError(
-				new Throwable("The username should be " + REPOSITORY_USERNAME));
+				new Throwable("The username should be " + USERNAME_REPOSITORY));
 		}
 	}
 
 	private RemoteGitRepository _getRemoteGitRepository() {
 		return GitRepositoryFactory.getRemoteGitRepository(
-			REPOSITORY_HOSTNAME, REPOSITORY_NAME, REPOSITORY_USERNAME);
+			HOSTNAME_REPOSITORY, NAME_REPOSITORY, USERNAME_REPOSITORY);
 	}
 
 }

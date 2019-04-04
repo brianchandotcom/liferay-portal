@@ -1507,7 +1507,7 @@ public abstract class BaseBuild implements Build {
 					if (this instanceof AxisBuild ||
 						this instanceof BatchBuild ||
 						this instanceof TopLevelBuild || fromArchive ||
-						(badBuildNumbers.size() >= MAX_REINVOCATIONS)) {
+						(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
 
 						return;
 					}
@@ -3057,18 +3057,18 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsResultsParserUtil.write(
 			JenkinsResultsParserUtil.combine(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE.substring(
+				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
 					"file:".length()),
 				"/", path),
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
-	protected static final int MAX_REINVOCATIONS = 1;
+	protected static final int REINVOCATIONS_SIZE_MAX = 1;
 
-	protected static final String TEMP_MAP_BASE_URL =
+	protected static final String URL_BASE_TEMP_MAP =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
-	protected static final String UPSTREAM_FAILURES_JOB_BASE_URL =
+	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
@@ -3258,8 +3258,8 @@ public abstract class BaseBuild implements Build {
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"(", Pattern.quote("${dependencies.url}"), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
+			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE), "|",
+			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP),
 			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
 			".*/(?<buildNumber>\\d+)/?"));
 	private static final Pattern _buildURLPattern = Pattern.compile(

@@ -19,8 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public class GitRefTest extends GitRepositoryTest {
 
-	protected static final String REF_NAME = "master-temp";
+	protected static final String NAME_REF = "master-temp";
 
-	protected static final String REF_SHA = "a1b2c3d";
+	protected static final String SHA_REF = "a1b2c3d";
 
 }

@@ -237,7 +237,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	protected BaseBuildDatabase(File baseDir) {
 		_jsonObjectFile = new File(
-			baseDir, BuildDatabase.BUILD_DATABASE_FILE_NAME);
+			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
 		_jsonObject = _getJSONObject();
 

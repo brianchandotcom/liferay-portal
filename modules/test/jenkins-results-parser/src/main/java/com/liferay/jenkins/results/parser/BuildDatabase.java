@@ -29,7 +29,7 @@ import org.json.JSONObject;
  */
 public interface BuildDatabase {
 
-	public static final String BUILD_DATABASE_FILE_NAME = "build-database.json";
+	public static final String FILE_NAME_BUILD_DATABASE = "build-database.json";
 
 	public File getBuildDatabaseJSFile();
 

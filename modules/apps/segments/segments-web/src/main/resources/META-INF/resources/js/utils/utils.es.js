@@ -1,6 +1,6 @@
 import dateFns from 'date-fns';
-import {getUid} from 'metal';
 import {CONJUNCTIONS} from 'utils/constants.es';
+import {getUid} from 'metal';
 
 const GROUP_ID_NAMESPACE = 'group_';
 

@@ -2,11 +2,11 @@ import ClayButton from '../shared/ClayButton.es';
 import ClaySpinner from '../shared/ClaySpinner.es';
 import ClayToggle from '../shared/ClayToggle.es';
 import ContributorBuilder from '../criteria_builder/ContributorBuilder.es';
-import {debounce} from 'metal-debounce';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import TitleEditor from '../title_editor/TitleEditor.es';
+import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
 import {getPluralMessage, sub} from '../../utils/utils.es';
 import {

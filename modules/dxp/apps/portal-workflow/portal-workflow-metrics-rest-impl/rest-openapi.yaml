@@ -84,6 +84,7 @@ openapi: 3.0.1
 paths:
     "/processes":
         get:
+            operationId: getProcessesPage
             parameters:
                 - in: query
                   name: page
@@ -115,6 +116,7 @@ paths:
             tags: ["Process"]
     "/processes/{processId}":
         get:
+            operationId: getProcess
             parameters:
                 - in: path
                   name: processId
@@ -132,6 +134,7 @@ paths:
             tags: ["Process"]
     "/processes/{processId}/nodes":
         get:
+            operationId: getProcessNodesPage
             parameters:
                 - in: path
                   name: processId
@@ -151,6 +154,7 @@ paths:
             tags: ["Node"]
     "/processes/{processId}/slas":
         get:
+            operationId: getProcessSLAsPage
             parameters:
                 - in: path
                   name: processId
@@ -179,6 +183,7 @@ paths:
                     description: ""
             tags: ["SLA"]
         post:
+            operationId: postProcessSLA
             parameters:
                 - in: path
                   name: processId
@@ -207,6 +212,7 @@ paths:
             tags: ["SLA"]
     "/slas/{slaId}":
         delete:
+            operationId: deleteSLA
             parameters:
                 - in: path
                   name: slaId
@@ -221,6 +227,7 @@ paths:
                     description: ""
             tags: ["SLA"]
         get:
+            operationId: getSLA
             parameters:
                 - in: path
                   name: slaId
@@ -237,6 +244,7 @@ paths:
                     description: ""
             tags: ["SLA"]
         put:
+            operationId: putSLA
             parameters:
                 - in: path
                   name: slaId

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
@@ -33,6 +34,9 @@ import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Operation;
+import com.liferay.portal.vulcan.yaml.openapi.Parameter;
+import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.io.File;
@@ -198,7 +202,7 @@ public class RESTBuilder {
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
-		String content = FileUtil.read(file);
+		String content = _fixOpenAPIPathParameters(FileUtil.read(file));
 
 		FileUtil.write(file, _fixOpenAPIOperationIds(freeMarkerTool, content));
 	}
@@ -742,6 +746,94 @@ public class RESTBuilder {
 		}
 
 		return content;
+	}
+
+	private String _fixOpenAPIPathParameters(String content) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+
+			int x = content.indexOf(StringUtil.quote(path, '"') + ":");
+
+			if (x == -1) {
+				x = content.indexOf(path + ":");
+			}
+
+			String pathLine = content.substring(
+				content.lastIndexOf("\n", x) + 1, content.indexOf("\n", x));
+
+			for (Operation operation : _getOperations(entry.getValue())) {
+				int y = content.indexOf(
+					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
+
+				for (Parameter parameter : operation.getParameters()) {
+					String in = parameter.getIn();
+					String parameterName = parameter.getName();
+
+					if (in.equals("path") && parameterName.contains("-")) {
+						String newParameterName = CamelCaseUtil.toCamelCase(
+							parameterName);
+
+						int z = content.indexOf(" " + parameterName + "\n", y);
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(content.substring(0, z + 1));
+						sb.append(newParameterName);
+						sb.append("\n");
+						sb.append(
+							content.substring(z + parameterName.length() + 2));
+
+						content = sb.toString();
+
+						String newPathLine = pathLine.replace(
+							"{" + parameterName + "}",
+							"{" + newParameterName + "}");
+
+						content = content.replace(pathLine, newPathLine);
+					}
+				}
+			}
+		}
+
+		return content;
+	}
+
+	private List<Operation> _getOperations(PathItem pathItem) {
+		List<Operation> operations = new ArrayList<>();
+
+		if (pathItem.getDelete() != null) {
+			operations.add(pathItem.getDelete());
+		}
+
+		if (pathItem.getGet() != null) {
+			operations.add(pathItem.getGet());
+		}
+
+		if (pathItem.getHead() != null) {
+			operations.add(pathItem.getHead());
+		}
+
+		if (pathItem.getOptions() != null) {
+			operations.add(pathItem.getOptions());
+		}
+
+		if (pathItem.getPatch() != null) {
+			operations.add(pathItem.getPatch());
+		}
+
+		if (pathItem.getPost() != null) {
+			operations.add(pathItem.getPost());
+		}
+
+		if (pathItem.getPut() != null) {
+			operations.add(pathItem.getPut());
+		}
+
+		return operations;
 	}
 
 	private void _putSchema(

@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -28,38 +30,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Jürgen Kappler
  */
-public interface AssetInfoDisplayContributor {
+public interface AssetInfoDisplayContributor
+	extends InfoDisplayContributor<AssetEntry> {
 
-	public Set<AssetDisplayField> getAssetDisplayFields(
-			long classTypeId, Locale locale)
-		throws PortalException;
-
-	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException;
-
-	public default Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, long versionClassPK, Locale locale)
-		throws PortalException {
-
-		return getAssetDisplayFieldsValues(assetEntry, locale);
-	}
-
-	public Object getAssetDisplayFieldValue(
-			AssetEntry assetEntry, String fieldName, Locale locale)
-		throws PortalException;
-
-	public String getAssetURLSeparator();
-
-	public String getClassName();
-
-	public default List<AssetDisplayField> getClassTypeFields(
+	@Override
+	public default List<InfoDisplayField> getClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -86,11 +65,11 @@ public interface AssetInfoDisplayContributor {
 			return Collections.emptyList();
 		}
 
-		List<AssetDisplayField> classTypeFields = new ArrayList<>();
+		List<InfoDisplayField> classTypeFields = new ArrayList<>();
 
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			classTypeFields.add(
-				new AssetDisplayField(
+				new InfoDisplayField(
 					classTypeField.getName(),
 					LanguageUtil.get(locale, classTypeField.getLabel()),
 					classTypeField.getType()));
@@ -99,6 +78,7 @@ public interface AssetInfoDisplayContributor {
 		return classTypeFields;
 	}
 
+	@Override
 	public default List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException {
 
@@ -118,7 +98,5 @@ public interface AssetInfoDisplayContributor {
 		return classTypeReader.getAvailableClassTypes(
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 	}
-
-	public String getLabel(Locale locale);
 
 }

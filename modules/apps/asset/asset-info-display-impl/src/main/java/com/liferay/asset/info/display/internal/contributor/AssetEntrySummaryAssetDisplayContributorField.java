@@ -12,21 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.contributor;
+package com.liferay.asset.info.display.internal.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -35,12 +31,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AssetDisplayContributorField.class
 )
-public class AssetEntryAuthorNameAssetDisplayContributorField
+public class AssetEntrySummaryAssetDisplayContributorField
 	implements AssetDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "authorName";
+		return "summary";
 	}
 
 	@Override
@@ -48,7 +44,7 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-name");
+		return LanguageUtil.get(resourceBundle, "summary");
 	}
 
 	@Override
@@ -58,16 +54,7 @@ public class AssetEntryAuthorNameAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		User user = _userLocalService.fetchUser(assetEntry.getUserId());
-
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
+		return assetEntry.getSummary(locale);
 	}
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -25,7 +25,6 @@ import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 
 import javax.ws.rs.core.Context;
@@ -87,12 +86,6 @@ public class ContentSetElementResourceImpl
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			assetListEntry.getGroupId(), _user.getModelClassName(),
 			_user.getPrimaryKey());
-
-		if (segmentsEntryIds.length == 0) {
-			segmentsEntryIds = new long[] {
-				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
-			};
-		}
 
 		return Page.of(
 			transform(

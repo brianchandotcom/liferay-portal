@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -320,9 +321,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
 	}
 
-	private long _getFirstSegmentsEntryId(long[] segmentsEntryIds)
-		throws PortalException {
-
+	private long _getFirstSegmentsEntryId(long[] segmentsEntryIds) {
 		LongStream stream = Arrays.stream(segmentsEntryIds);
 
 		return stream.filter(
@@ -335,10 +334,8 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 				return assetListEntrySegmentsEntryRel != null;
 			}
 		).findFirst(
-		).orElseThrow(
-			() -> new PortalException(
-				"No segment entry was found for asset list " +
-					getAssetListEntryId())
+		).orElse(
+			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		);
 	}
 

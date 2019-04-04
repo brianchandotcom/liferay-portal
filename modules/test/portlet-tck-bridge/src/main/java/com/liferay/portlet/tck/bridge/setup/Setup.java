@@ -172,9 +172,6 @@ public class Setup {
 		throws PortalException {
 
 		layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
-
-		layoutTypePortlet.resetModes();
-		layoutTypePortlet.resetStates();
 	}
 
 	private static Portlet _createPortlet(

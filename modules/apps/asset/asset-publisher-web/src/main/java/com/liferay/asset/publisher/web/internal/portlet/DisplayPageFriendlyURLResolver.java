@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.portlet;
 
-import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
@@ -454,7 +454,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 		if (friendlyURLEntryLocalization != null) {
 			request.setAttribute(
-				AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID,
+				AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID,
 				LocaleUtil.toLanguageId(locale));
 			request.setAttribute(
 				WebKeys.I18N_LANGUAGE_ID,

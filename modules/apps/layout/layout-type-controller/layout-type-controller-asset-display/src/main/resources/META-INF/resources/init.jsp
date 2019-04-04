@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys" %><%@
+<%@ page import="com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@

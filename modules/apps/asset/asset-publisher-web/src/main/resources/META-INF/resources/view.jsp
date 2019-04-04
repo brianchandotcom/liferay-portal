@@ -24,46 +24,48 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 }
 %>
 
-<div class="subscribe-action">
-	<c:if test="<%= assetPublisherDisplayContext.isSubscriptionEnabled() %>">
-		<c:choose>
-			<c:when test="<%= assetPublisherWebUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
-				<portlet:actionURL name="unsubscribe" var="unsubscribeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
+<c:if test="<%= assetPublisherDisplayContext.isEnableSubscribe() %>">
+	<div class="subscribe-action">
+		<c:if test="<%= assetPublisherDisplayContext.isSubscriptionEnabled() %>">
+			<c:choose>
+				<c:when test="<%= assetPublisherWebUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
+					<portlet:actionURL name="unsubscribe" var="unsubscribeURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm mb-4"
-					markupView="lexicon"
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="subscribe" var="subscribeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
+					<liferay-ui:icon
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm mb-4"
+						markupView="lexicon"
+						message="unsubscribe"
+						url="<%= unsubscribeURL %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL name="subscribe" var="subscribeURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm mb-4"
-					markupView="lexicon"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+					<liferay-ui:icon
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm mb-4"
+						markupView="lexicon"
+						message="subscribe"
+						url="<%= subscribeURL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 
-	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
-		<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
+			<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
-		<liferay-rss:rss
-			resourceURL="<%= rssURL %>"
-		/>
-	</c:if>
-</div>
+			<liferay-rss:rss
+				resourceURL="<%= rssURL %>"
+			/>
+		</c:if>
+	</div>
+</c:if>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
 	<liferay-asset:categorization-filter

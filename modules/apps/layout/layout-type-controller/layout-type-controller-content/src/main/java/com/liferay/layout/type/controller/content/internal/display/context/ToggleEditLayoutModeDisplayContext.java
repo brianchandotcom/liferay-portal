@@ -15,21 +15,13 @@
 package com.liferay.layout.type.controller.content.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,23 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ToggleEditLayoutModeDisplayContext {
 
 	public ToggleEditLayoutModeDisplayContext(HttpServletRequest request) {
-		_request = request;
-
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getMode() {
-		if (Validator.isNotNull(_mode)) {
-			return _mode;
-		}
-
-		_mode = ParamUtil.getString(_request, "p_l_mode", Constants.VIEW);
-
-		return _mode;
-	}
-
-	public String getRedirect() throws PortalException {
+	public String getEditModeURL() throws PortalException {
 		String redirect = _themeDisplay.getURLCurrent();
 
 		Layout layout = _themeDisplay.getLayout();
@@ -78,31 +58,12 @@ public class ToggleEditLayoutModeDisplayContext {
 			}
 		}
 
-		if (Objects.equals(getMode(), Constants.EDIT)) {
-			redirect = HttpUtil.setParameter(
-				redirect, "p_l_mode", Constants.VIEW);
-		}
-		else {
-			redirect = HttpUtil.setParameter(
-				redirect, "p_l_mode", Constants.EDIT);
-		}
+		redirect = HttpUtil.setParameter(
+			redirect, "p_l_back_url", _themeDisplay.getURLCurrent());
 
-		return HtmlUtil.escapeJS(redirect);
+		return HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
 	}
 
-	public String getTitle() {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(), getClass());
-
-		if (Objects.equals(getMode(), Constants.EDIT)) {
-			return LanguageUtil.get(resourceBundle, "edit-mode");
-		}
-
-		return LanguageUtil.get(resourceBundle, "view-mode");
-	}
-
-	private String _mode;
-	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 
 }

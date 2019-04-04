@@ -14,16 +14,11 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys" %><%@
-page import="com.liferay.layout.type.controller.content.internal.display.context.ToggleEditLayoutModeDisplayContext" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
-
-<%@ page import="java.util.Objects" %>
+<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.ToggleEditLayoutModeDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

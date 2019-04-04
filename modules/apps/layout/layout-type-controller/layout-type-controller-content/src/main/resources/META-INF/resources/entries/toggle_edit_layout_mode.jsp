@@ -16,40 +16,4 @@
 
 <%@ include file="/entries/init.jsp" %>
 
-<%
-String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
-%>
-
-<label class="align-text-top toggle-switch">
-	<input <%= Objects.equals(toggleEditLayoutModeDisplayContext.getMode(), Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<%= portletNamespace %>mode" type="checkbox" />
-
-	<span aria-hidden="true" class="toggle-switch-bar">
-		<span class="toggle-switch-handle" data-label-off="" data-label-on="" title="<%= toggleEditLayoutModeDisplayContext.getTitle() %>">
-			<span class="button-icon button-icon-on toggle-switch-icon">
-				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-pencil">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#pencil" %>"></use>
-				</svg>
-			</span>
-			<span class="button-icon button-icon-off toggle-switch-icon">
-				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-view">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#view" %>"></use>
-				</svg>
-			</span>
-		</span>
-	</span>
-</label>
-
-<script>
-	(function() {
-		var modeInput = document.getElementById('<%= portletNamespace %>mode');
-
-		if (modeInput) {
-			modeInput.addEventListener(
-				'change',
-				function(event) {
-					Liferay.Util.navigate('<%= toggleEditLayoutModeDisplayContext.getRedirect() %>');
-				}
-			);
-		}
-	})();
-</script>
+<aui:icon cssClass="btn btn-monospaced" image="pencil" markupView="lexicon" url="<%= toggleEditLayoutModeDisplayContext.getEditModeURL() %>" />

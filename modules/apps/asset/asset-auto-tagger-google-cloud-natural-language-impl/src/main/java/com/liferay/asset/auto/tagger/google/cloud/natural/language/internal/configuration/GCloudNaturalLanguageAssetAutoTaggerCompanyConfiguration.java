@@ -43,7 +43,8 @@ public interface GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration {
 	 * Sets the API key for the Google Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = GCloudNaturalLanguageDocumentAssetAutoTaggerConstants.API_KEY_DOCS_URL
+		descriptionArguments = GCloudNaturalLanguageDocumentAssetAutoTaggerConstants.API_KEY_DOCS_URL,
+		uiRequired = true
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false

@@ -12,40 +12,44 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AssetDisplayContributor.class)
-public class BlogsEntryAssetDisplayContributor
-	extends BaseAssetDisplayContributor<BlogsEntry> {
+@Component(
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = InfoDisplayContributorField.class
+)
+public class BlogsEntrySubtitleInfoDisplayContributorField
+	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
-	public String getAssetURLSeparator() {
-		return "/b/";
+	public String getKey() {
+		return "subtitle";
 	}
 
 	@Override
-	public String getClassName() {
-		return BlogsEntry.class.getName();
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "subtitle");
 	}
 
 	@Override
-	protected Map<String, Object> getClassTypeValues(
-		BlogsEntry blogsEntry, Locale locale) {
+	public String getType() {
+		return "text";
+	}
 
-		return new HashMap<>();
+	@Override
+	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+		return blogsEntry.getSubtitle();
 	}
 
 }

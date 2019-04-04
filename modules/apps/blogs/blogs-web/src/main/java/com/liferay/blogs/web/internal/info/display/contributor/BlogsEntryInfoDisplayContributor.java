@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,23 +27,23 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AssetDisplayContributor.class)
-public class DLFileEntryAssetDisplayContributor
-	extends BaseAssetDisplayContributor<FileEntry> {
-
-	@Override
-	public String getAssetURLSeparator() {
-		return "/d/";
-	}
+@Component(service = InfoDisplayContributor.class)
+public class BlogsEntryInfoDisplayContributor
+	extends BaseAssetInfoDisplayContributor<BlogsEntry> {
 
 	@Override
 	public String getClassName() {
-		return DLFileEntryConstants.getClassName();
+		return BlogsEntry.class.getName();
+	}
+
+	@Override
+	public String getInfoURLSeparator() {
+		return "/b/";
 	}
 
 	@Override
 	protected Map<String, Object> getClassTypeValues(
-		FileEntry fileEntry, Locale locale) {
+		BlogsEntry blogsEntry, Locale locale) {
 
 		return new HashMap<>();
 	}

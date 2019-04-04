@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor;
+package com.liferay.blogs.reading.time.internal.info.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.StringPool;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.reading.time.message.ReadingTimeMessageProvider;
+import com.liferay.reading.time.model.ReadingTimeEntry;
+import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -29,26 +29,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = InfoDisplayContributorField.class
 )
-public class JournalArticleLastEditorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class BlogsEntryReadingTimeInfoDisplayContributorField
+	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "lastEditorName";
+		return "readingTime";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.lang");
+			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "last-editor-name");
+		return LanguageUtil.get(resourceBundle, "reading-time");
 	}
 
 	@Override
@@ -57,17 +57,18 @@ public class JournalArticleLastEditorNameAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(JournalArticle article, Locale locale) {
-		User user = _userLocalService.fetchUser(article.getUserId());
+	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+		ReadingTimeEntry readingTimeEntry =
+			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
+				blogsEntry);
 
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
+		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
 	}
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
+
+	@Reference
+	private ReadingTimeMessageProvider _readingTimeMessageProvider;
 
 }

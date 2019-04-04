@@ -132,23 +132,38 @@ public class StructuredContentSerDes {
 
 		sb.append("\"dateCreated\": ");
 
-		sb.append("\"");
-		sb.append(structuredContent.getDateCreated());
-		sb.append("\"");
+		if (structuredContent.getDateCreated() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(_dateFormat.format(structuredContent.getDateCreated()));
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"dateModified\": ");
 
-		sb.append("\"");
-		sb.append(structuredContent.getDateModified());
-		sb.append("\"");
+		if (structuredContent.getDateModified() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(_dateFormat.format(structuredContent.getDateModified()));
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"datePublished\": ");
 
-		sb.append("\"");
-		sb.append(structuredContent.getDatePublished());
-		sb.append("\"");
+		if (structuredContent.getDatePublished() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(_dateFormat.format(structuredContent.getDatePublished()));
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"description\": ");

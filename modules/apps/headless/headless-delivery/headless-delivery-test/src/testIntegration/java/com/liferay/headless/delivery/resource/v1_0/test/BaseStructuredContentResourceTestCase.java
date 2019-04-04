@@ -14,15 +14,12 @@
 
 package com.liferay.headless.delivery.resource.v1_0.test;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
-import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
+import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.client.dto.v1_0.page.Page;
+import com.liferay.headless.delivery.client.serdes.v1_0.RatingSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.page.PageSerDes;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,7 +39,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -67,7 +63,6 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -459,10 +454,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return outputObjectMapper.readValue(
-			string,
-			new TypeReference<Page<StructuredContent>>() {
-			});
+		return PageSerDes.toPage(string, StructuredContentSerDes::toDTO);
 	}
 
 	protected Http.Response
@@ -817,10 +809,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return outputObjectMapper.readValue(
-			string,
-			new TypeReference<Page<StructuredContent>>() {
-			});
+		return PageSerDes.toPage(string, StructuredContentSerDes::toDTO);
 	}
 
 	protected Http.Response invokeGetSiteStructuredContentsPageResponse(
@@ -878,7 +867,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -896,8 +885,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -913,7 +901,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -972,8 +960,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1044,8 +1031,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1421,10 +1407,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return outputObjectMapper.readValue(
-			string,
-			new TypeReference<Page<StructuredContent>>() {
-			});
+		return PageSerDes.toPage(string, StructuredContentSerDes::toDTO);
 	}
 
 	protected Http.Response
@@ -1489,7 +1472,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1509,8 +1492,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1528,7 +1510,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1650,8 +1632,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1718,7 +1699,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1738,8 +1719,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1755,7 +1735,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1807,7 +1787,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1827,8 +1807,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(
-				string, StructuredContent.class);
+			return StructuredContentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1844,7 +1823,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			inputObjectMapper.writeValueAsString(structuredContent),
+			StructuredContentSerDes.toJSON(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1956,7 +1935,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(string, Rating.class);
+			return RatingSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -2012,7 +1991,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(string, Rating.class);
+			return RatingSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -2070,7 +2049,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(string, Rating.class);
+			return RatingSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -2887,77 +2866,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return randomStructuredContent();
 	}
 
-	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	protected static final ObjectMapper outputObjectMapper =
-		new ObjectMapper() {
-			{
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
-			}
-		};
-
+	protected String contentType = "application/json";
 	protected Group irrelevantGroup;
 	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	protected static class Page<T> {
-
-		public Collection<T> getItems() {
-			return new ArrayList<>(items);
-		}
-
-		public long getLastPage() {
-			return lastPage;
-		}
-
-		public long getPage() {
-			return page;
-		}
-
-		public long getPageSize() {
-			return pageSize;
-		}
-
-		public long getTotalCount() {
-			return totalCount;
-		}
-
-		@JsonProperty
-		protected Collection<T> items;
-
-		@JsonProperty
-		protected long lastPage;
-
-		@JsonProperty
-		protected long page;
-
-		@JsonProperty
-		protected long pageSize;
-
-		@JsonProperty
-		protected long totalCount;
-
-	}
 
 	private Http.Options _createHttpOptions() {
 		Http.Options options = new Http.Options();

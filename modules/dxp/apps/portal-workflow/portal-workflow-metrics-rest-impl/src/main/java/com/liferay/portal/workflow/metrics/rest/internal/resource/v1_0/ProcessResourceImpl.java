@@ -220,7 +220,7 @@ public class ProcessResourceImpl
 			bucketSortPipelineAggregation.addSortFields(fieldSort);
 			bucketSortPipelineAggregation.setFrom(
 				pagination.getStartPosition());
-			bucketSortPipelineAggregation.setSize(pagination.getPageSize());
+			bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
 
 			termsAggregation.addPipelineAggregation(
 				bucketSortPipelineAggregation);
@@ -310,6 +310,10 @@ public class ProcessResourceImpl
 			}
 		}
 
+		if (processes.size() > pagination.getPageSize()) {
+			processes = processes.subList(0, processes.size() - 1);
+		}
+
 		return processes;
 	}
 
@@ -393,7 +397,7 @@ public class ProcessResourceImpl
 			bucketSortPipelineAggregation.addSortFields(fieldSort);
 			bucketSortPipelineAggregation.setFrom(
 				pagination.getStartPosition());
-			bucketSortPipelineAggregation.setSize(pagination.getPageSize());
+			bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
 
 			termsAggregation.addPipelineAggregation(
 				bucketSortPipelineAggregation);

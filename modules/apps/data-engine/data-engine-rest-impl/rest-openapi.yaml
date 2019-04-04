@@ -258,31 +258,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/content-spaces/{content-space-id}/data-layout-permissions":
-        post:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataLayoutPermission"
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["DataLayout"]
     "/content-spaces/{contentSpaceId}/data-definition-permissions":
         post:
             parameters:
@@ -389,6 +364,31 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataLayout"
                                 type: array
+                    description: ""
+            tags: ["DataLayout"]
+    "/content-spaces/{contentSpaceId}/data-layout-permissions":
+        post:
+            parameters:
+                - in: path
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: operation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataLayoutPermission"
+            responses:
+                204:
+                    content:
+                        application/json: {}
                     description: ""
             tags: ["DataLayout"]
     "/content-spaces/{contentSpaceId}/data-record-collection-permissions":

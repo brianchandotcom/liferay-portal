@@ -16,7 +16,10 @@ package com.liferay.asset.display.contributor.constants;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.info.constants.InfoDisplayWebKeys}
  */
+@Deprecated
 public class AssetDisplayWebKeys {
 
 	public static final String ASSET_DISPLAY_CONTRIBUTOR =

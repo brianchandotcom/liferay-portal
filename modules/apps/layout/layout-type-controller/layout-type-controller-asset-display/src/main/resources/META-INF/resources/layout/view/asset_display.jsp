@@ -115,7 +115,7 @@ if (assetEntry != null) {
 											}
 										%>
 
-											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues(), locale, segmentsExperienceIds, request, response) %>
+											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues(), locale, segmentsExperienceIds, request, response) %>
 
 										<%
 										}

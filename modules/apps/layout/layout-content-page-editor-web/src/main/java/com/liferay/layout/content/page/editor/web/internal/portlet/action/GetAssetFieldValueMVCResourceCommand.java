@@ -14,10 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,11 +56,11 @@ public class GetAssetFieldValueMVCResourceCommand
 
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_portal.getClassName(classNameId));
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONFactoryUtil.createJSONObject());
@@ -93,7 +93,7 @@ public class GetAssetFieldValueMVCResourceCommand
 		jsonObject.put("fieldId", fieldId);
 		jsonObject.put(
 			"fieldValue",
-			assetDisplayContributor.getAssetDisplayFieldValue(
+			infoDisplayContributor.getInfoDisplayFieldValue(
 				assetEntry, fieldId, themeDisplay.getLocale()));
 
 		JSONPortletResponseUtil.writeJSON(
@@ -101,10 +101,10 @@ public class GetAssetFieldValueMVCResourceCommand
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

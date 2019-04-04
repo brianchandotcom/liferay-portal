@@ -107,6 +107,14 @@ AUI.add(
 						CheckboxMultipleField.superclass.showErrorMessage.apply(instance, arguments);
 					},
 
+					showPendingErrorMessage: function() {
+						var instance = this;
+
+						if (!instance.hasFocus()) {
+							instance.showErrorMessage();
+						}
+					},
+
 					_getOptions: function(options) {
 						var instance = this;
 

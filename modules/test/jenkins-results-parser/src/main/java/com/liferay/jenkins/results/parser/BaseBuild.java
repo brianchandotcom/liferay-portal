@@ -3065,11 +3065,11 @@ public abstract class BaseBuild implements Build {
 
 	protected static final int REINVOCATIONS_SIZE_MAX = 1;
 
-	protected static final String URL_BASE_TEMP_MAP =
-		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
-
 	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
 		"https://test-1-0.liferay.com/userContent/testResults/";
+
+	protected static final String URL_BASE_TEMP_MAP =
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
 		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");

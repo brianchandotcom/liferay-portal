@@ -103,7 +103,9 @@ public abstract class BaseWorkspaceGitRepository
 		while (index < COMMITS_HISTORY_SIZE_MAX) {
 			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
+			if (index >
+					(COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
+
 				currentGroupSize =
 					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
 			}
@@ -285,7 +287,9 @@ public abstract class BaseWorkspaceGitRepository
 		while (index < COMMITS_HISTORY_SIZE_MAX) {
 			int currentGroupSize = _COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
+			if (index >
+					(COMMITS_HISTORY_SIZE_MAX - _COMMITS_HISTORY_GROUP_SIZE)) {
+
 				currentGroupSize =
 					COMMITS_HISTORY_SIZE_MAX % _COMMITS_HISTORY_GROUP_SIZE;
 			}

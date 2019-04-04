@@ -29,11 +29,11 @@ import java.util.regex.Pattern;
  */
 public class GitUtil {
 
-	public static final int RETRIES_SIZE_MAX = 1;
-
 	public static final long MILLIS_RETRY_DELAY = 1000;
 
 	public static final long MILLIS_TIMEOUT = 30 * 1000;
+
+	public static final int RETRIES_SIZE_MAX = 1;
 
 	public static void clone(String remoteURL, File workingDirectory) {
 		String command = JenkinsResultsParserUtil.combine(
@@ -68,7 +68,8 @@ public class GitUtil {
 
 	public static String getDefaultBranchName(File workingDirectory) {
 		ExecutionResult executionResult = executeBashCommands(
-			RETRIES_SIZE_MAX, MILLIS_RETRY_DELAY, MILLIS_TIMEOUT, workingDirectory,
+			RETRIES_SIZE_MAX, MILLIS_RETRY_DELAY, MILLIS_TIMEOUT,
+			workingDirectory,
 			JenkinsResultsParserUtil.combine(
 				"git remote show origin | grep \"HEAD branch\" | ",
 				"cut -d \":\" -f 2"));
@@ -206,8 +207,8 @@ public class GitUtil {
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10,
-			workingDirectory, command);
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			1000 * 60 * 10, workingDirectory, command);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

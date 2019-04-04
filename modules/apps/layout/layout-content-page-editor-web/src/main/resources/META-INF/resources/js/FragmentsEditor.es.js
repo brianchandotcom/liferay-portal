@@ -115,27 +115,33 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updateActiveItem(event) {
-		const {fragmentsEditorItemId, fragmentsEditorItemType} = FragmentsEditor._getItemTarget(event);
+		if (this._activeElement !== document.activeElement) {
+			const {
+				fragmentsEditorItemId,
+				fragmentsEditorItemType
+			} = FragmentsEditor._getItemTarget(event);
 
-		if (fragmentsEditorItemId && fragmentsEditorItemType) {
-			this.store.dispatchAction(
-				UPDATE_ACTIVE_ITEM,
-				{
-					activeItemId: fragmentsEditorItemId,
-					activeItemType: fragmentsEditorItemType
-				}
-			);
-		}
-		else if (event.target instanceof HTMLElement &&
-			event.target.parentElement !== document.body &&
-			!dom.closest(event.target, '.modal')) {
+			if (fragmentsEditorItemId && fragmentsEditorItemType) {
+				this.store.dispatchAction(
+					UPDATE_ACTIVE_ITEM,
+					{
+						activeItemId: fragmentsEditorItemId,
+						activeItemType: fragmentsEditorItemType
+					}
+				);
+			}
+			else if (event.target instanceof HTMLElement &&
+				event.target.parentElement !== document.body &&
+				!dom.closest(event.target, '.modal')) {
 
-			this.store.dispatchAction(
-				CLEAR_ACTIVE_ITEM
-			);
+				this.store.dispatchAction(
+					CLEAR_ACTIVE_ITEM
+				);
+			}
 		}
+
+		this._activeElement = document.activeElement;
 	}
-
 }
 
 /**
@@ -146,6 +152,16 @@ class FragmentsEditor extends Component {
  */
 FragmentsEditor.STATE = Object.assign(
 	{
+
+		/**
+		 * Previous document active element
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {object}
+		 */
+		_activeElement: Config.object(),
 
 		/**
 		 * Store instance

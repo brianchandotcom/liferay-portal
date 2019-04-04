@@ -89,7 +89,7 @@ public class SegmentsEntryStagedModelDataHandlerTest
 			segmentsEntry.getDescription(),
 			importedSegmentsEntry.getDescription());
 		Assert.assertEquals(
-			segmentsEntry.getActive(), importedSegmentsEntry.getActive());
+			segmentsEntry.isActive(), importedSegmentsEntry.isActive());
 		Assert.assertEquals(
 			segmentsEntry.getCriteria(), importedSegmentsEntry.getCriteria());
 		Assert.assertEquals(

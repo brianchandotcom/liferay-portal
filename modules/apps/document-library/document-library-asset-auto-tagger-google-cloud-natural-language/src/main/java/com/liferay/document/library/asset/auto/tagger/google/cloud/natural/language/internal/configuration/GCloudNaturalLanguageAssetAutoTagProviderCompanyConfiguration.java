@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
@@ -34,11 +34,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "google-cloud-natural-language-asset-auto-tag-provider-configuration-name"
 )
-public interface GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration {
+public interface GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+	extends com.liferay.asset.auto.tagger.google.cloud.natural.language.api.
+		configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration {
 
-	/**
-	 * Sets the API key for the Google Cloud Vision API.
-	 */
 	@ExtendedAttributeDefinition(
 		descriptionArguments = GCloudNaturalLanguageAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 	)
@@ -47,43 +46,24 @@ public interface GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration {
 	)
 	public String apiKey();
 
-	/**
-	 * Enables auto tagging of documents using the Google Cloud Natural Language
-	 * API.
-	 */
 	@Meta.AD(
 		description = "classification-endpoint-enabled-description",
 		name = "classification-endpoint-enabled", required = false
 	)
 	public boolean classificationEndpointEnabled();
 
-	/**
-	 * Enables auto tagging of documents using the Google Cloud Natural Language
-	 * API.
-	 */
 	@Meta.AD(
 		description = "entity-endpoint-enabled-description",
 		name = "entity-endpoint-enabled", required = false
 	)
 	public boolean entityEndpointEnabled();
 
-	/**
-	 * Sets the salience score for an entity. The salience provides information
-	 * about the importance or centrality of that entity to the entire document
-	 * text. Scores closer to 0 are less salient, while scores closer to 1.0 are
-	 * highly salient
-	 */
 	@Meta.AD(
 		deflt = "0.02", description = "salience-description", name = "salience",
 		required = false
 	)
 	public float salience();
 
-	/**
-	 * Sets the classifier's confidence of the category. This number represents
-	 * how certain the classifier is that this category represents the given
-	 * text.
-	 */
 	@Meta.AD(
 		deflt = "0.5", description = "confidence-description",
 		name = "confidence", required = false

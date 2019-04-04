@@ -14,10 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %><%@
-page import="com.liferay.asset.auto.tagger.web.internal.constants.PortalSettingsAssetAutoTaggerConstants" %>
-
-<%@ page import="javax.portlet.ActionRequest" %>
+<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %>

@@ -16,7 +16,6 @@ package com.liferay.asset.auto.tagger.internal.configuration;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.asset.auto.tagger.constants.AssetAutoTaggerConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -127,11 +125,9 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			throws ConfigurationException {
 
 			_assetAutoTaggerCompanyConfiguration =
-				_configurationProvider.getConfiguration(
+				_configurationProvider.getCompanyConfiguration(
 					AssetAutoTaggerCompanyConfiguration.class,
-					new CompanyServiceSettingsLocator(
-						company.getCompanyId(),
-						AssetAutoTaggerConstants.SERVICE_NAME));
+					company.getCompanyId());
 		}
 
 		@Override

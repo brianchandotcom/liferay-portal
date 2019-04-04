@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alejandro Tardín
  */
 @ExtendedObjectClassDefinition(
-	category = "assets", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "assets", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",

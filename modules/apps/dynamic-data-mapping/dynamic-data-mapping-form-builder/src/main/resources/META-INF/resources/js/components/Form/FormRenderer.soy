@@ -119,7 +119,7 @@
 				{param ref: 'successPage' /}
 			{/call}
 		{else}
-			{for $page in $pages}
+			{foreach $page in $pages}
 				{call PageRenderer.render}
 					{param activePage: $activePage /}
 					{param contentRenderer: $contentRenderer /}
@@ -141,7 +141,7 @@
 					{param total: $total /}
 					{param view: $view /}
 				{/call}
-			{/for}
+			{/foreach}
 		{/if}
 
 		{let $multiple: length($pages) > 1 /}
@@ -249,7 +249,7 @@
 	{@param? successPageSettings: ?}
 
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-		{for $page in $pages}
+		{foreach $page in $pages}
 			{let $title: $page.title ? $page.title : $defaultPageTitle /}
 			{let $pageIndex: index($page) /}
 			{let $step: $pageIndex + 1 /}
@@ -272,7 +272,7 @@
 					<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
 				</div>
 			</li>
-		{/for}
+		{/foreach}
 
 		{if $successPageSettings.enabled}
 			{let $classes kind="text"}
@@ -320,7 +320,7 @@
 			</a>
 		</li>
 
-		{for $page in $pages}
+		{foreach $page in $pages}
 			{let $pageIndex: index($page) /}
 			{let $step: $pageIndex + 1 /}
 			{let $classes kind="text"}
@@ -334,7 +334,7 @@
 			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="{$pageIndex}">
 				<a class="page-link" href="javascript:;">{$step}</a>
 			</li>
-		{/for}
+		{/foreach}
 
 		{if $successPageSettings.enabled}
 			{let $classes kind="text"}
@@ -381,7 +381,7 @@
 	{@param? total: int}
 
 	<div class="ddm-page-list-container">
-		{for $page in $pages}
+		{foreach $page in $pages}
 			{call PageRenderer.render}
 				{param activePage: $activePage /}
 				{param contentRenderer: $contentRenderer /}
@@ -398,6 +398,6 @@
 				{param spritemap: $spritemap /}
 				{param total: $total /}
 			{/call}
-		{/for}
+		{/foreach}
 	</div>
 {/deltemplate}

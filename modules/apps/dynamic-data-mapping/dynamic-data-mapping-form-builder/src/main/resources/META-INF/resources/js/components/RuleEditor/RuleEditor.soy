@@ -898,7 +898,7 @@
 			<span class="dropdown-toggle-selected-value">{$logicalOperator}</span> <span class="caret"></span>
 		</button>
 
-		<ul class="dropdown-menu" data-onclick={$_handleLogicalOperationChange}>
+		<ul class="dropdown-menu" data-onclick="{$_handleLogicalOperationChange}">
 			<li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>{$strings['or']}</a></li>
 			<li class="divider"></li>
 			<li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>{$strings['and']}</a></li>
@@ -1049,7 +1049,7 @@
 							</label>
 						</div>
 						{let $index: index($input) /}
-						<div class="col-md-9 container-input-field container-input-field-{$index}" container-input-field-index={$index}>
+						<div class="col-md-9 container-input-field container-input-field-{$index}">
 							{delcall PageRenderer.RegisterFieldType variant="'select'"}
 								{param events: [
 									'fieldEdited': $_handleDataProviderInputEdited
@@ -1079,7 +1079,7 @@
 							{$output.name}
 						</div>
 						{let $index: index($output) /}
-						<div class="col-md-9 container-output-field container-output-field-{$index}" container-output-field-index={$index}>
+						<div class="col-md-9 container-output-field container-output-field-{$index}" container-output-field-index="{$index}">
 							{delcall PageRenderer.RegisterFieldType variant="'select'"}
 								{param events: [
 									'fieldEdited': $_handleDataProviderOutputEdited

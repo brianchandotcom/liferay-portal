@@ -167,13 +167,6 @@ public class Setup {
 		}
 	}
 
-	private static void _addPortlet(
-			LayoutTypePortlet layoutTypePortlet, long userId, String portletId)
-		throws PortalException {
-
-		layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
-	}
-
 	private static Portlet _createPortlet(
 		Element element, String context, String pageName) {
 
@@ -259,7 +252,8 @@ public class Setup {
 								"] portletName=[" + portletName + "] ...");
 					}
 
-					_addPortlet(layoutTypePortlet, userId, portletId);
+					layoutTypePortlet.addPortletId(
+						userId, portletId, "column-1", -1);
 				}
 				else {
 					throw new Exception(

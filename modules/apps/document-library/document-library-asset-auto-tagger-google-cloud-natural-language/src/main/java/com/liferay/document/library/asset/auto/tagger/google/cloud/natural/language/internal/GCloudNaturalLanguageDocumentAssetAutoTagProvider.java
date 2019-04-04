@@ -124,6 +124,33 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 					SERVICE_NAME));
 	}
 
+	private Collection<String> _getEntitiesTagNames(
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			String documentPayload)
+		throws Exception {
+
+		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				entityEndpointEnabled()) {
+
+			return Collections.emptySet();
+		}
+
+		JSONObject responseJSONObject = _post(
+			_getServiceURL(
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					apiKey(),
+				"analyzeEntities"),
+			documentPayload);
+		float salience =
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				salience();
+
+		return _toTagNames(
+			responseJSONObject.getJSONArray("entities"),
+			jsonObject -> jsonObject.getDouble("salience") > salience);
+	}
+
 	private String _getFileEntryContent(FileEntry fileEntry)
 		throws IOException, PortalException {
 
@@ -183,12 +210,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		Set<String> tagNames = new HashSet<>();
-
-		String apiKey =
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				apiKey();
-
 		String type = _getFileEntryType(fileEntry);
 
 		int size =
@@ -201,27 +222,19 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		String documentPayload = GCloudNaturalLanguageUtil.getDocumentPayload(
 			truncatedContent, type);
 
-		tagNames.addAll(
-			_getClassificationTagNames(
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-				documentPayload));
+		Collection<String> classificationTagNames = _getClassificationTagNames(
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			documentPayload);
 
-		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				entityEndpointEnabled()) {
+		Collection<String> entitiesTagNames = _getEntitiesTagNames(
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			documentPayload);
 
-			JSONObject responseJSONObject = _post(
-				_getServiceURL(apiKey, "analyzeEntities"), documentPayload);
-			float salience =
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					salience();
-
-			tagNames.addAll(
-				_toTagNames(
-					responseJSONObject.getJSONArray("entities"),
-					jsonObject -> jsonObject.getDouble("salience") > salience));
-		}
-
-		return tagNames;
+		return Stream.concat(
+			classificationTagNames.stream(), entitiesTagNames.stream()
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private JSONObject _post(String serviceURL, String body) throws Exception {

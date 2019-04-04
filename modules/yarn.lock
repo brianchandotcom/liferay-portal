@@ -1499,12 +1499,12 @@ alloy-ui@^3.1.0-deprecated.1, alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.0.0-beta.6:
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0-beta.6.tgz#8179f8edc928d25727a282f5753b768848f92372"
-  integrity sha512-76uXL261RESskOc/YR9IiUKGgi8GxD/yXcd6iEYWNi+SB1/Ra+p8qgCuiEC6J++8r/zbXlpprQT9fgDDD+WmyA==
+alloyeditor@2.0.0-beta.7:
+  version "2.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0-beta.7.tgz#23acf20bee6ad369dd0ef1de6aaf75755e6f7527"
+  integrity sha512-gX8U0j4Kb6ItNCzdw/nVcp8nWBZ7oDouILbwUbk+EpfdoAQMnmCO8PeBrZ0h4VJYP5KRUeHJt3DdW3UKfgsnxw==
   dependencies:
-    clay-css "2.5.1"
+    clay-css "^2.11.1"
     prop-types "^15.6.2"
     react "^16.8.3"
     react-dom "^16.8.3"
@@ -3985,10 +3985,10 @@ clay-css@2.12.1:
   resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.12.1.tgz#5b67ead1dd334c0a50b8658ab342d300dd956f41"
   integrity sha512-qpYMacnXS1VInedk8VkH5gVRXB6dsgKL+wUKenkSfnE+if66h4AWCk4ao90S2gD2C6TMfk4bSJxDTgk/Z7guSw==
 
-clay-css@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.5.1.tgz#e47a2427d16766502b09487441ec31dc48873720"
-  integrity sha512-J9EEbLe7X9BA1mS4DZXqKM/J6ukt5Gw++67KTMuwooSUc2TH3tLkadueBibNhxTGSkAHWQwPk4VU3BtONC89fQ==
+clay-css@^2.11.1:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.12.0.tgz#984163b32848a17691a76b99cdeaa3aef5653c5c"
+  integrity sha512-Jwh7oiZ3VSvJPC0OMXwfJe1IBUkaD/w5IOtLkkv+4E8z8JXG7m4C+iACxJxunJsPxnC66SgWt9Lq2RbZUvv87w==
 
 clay-data-provider@2.12.1, clay-data-provider@^2.12.1:
   version "2.12.1"

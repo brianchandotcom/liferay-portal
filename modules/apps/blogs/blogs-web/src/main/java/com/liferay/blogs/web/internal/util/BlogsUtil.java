@@ -25,12 +25,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
-import com.liferay.portal.kernel.portlet.PortletLayoutFinderRegistryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -286,33 +282,5 @@ public class BlogsUtil {
 		return ModelHintsUtil.trimString(
 			BlogsEntry.class.getName(), "urlTitle", title);
 	}
-
-	public static boolean hasViewInContextGroupLayout(
-		long groupId, ThemeDisplay themeDisplay) {
-
-		try {
-			PortletLayoutFinder portletLayoutFinder =
-				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
-					BlogsEntry.class.getName());
-
-			PortletLayoutFinder.Result result = portletLayoutFinder.find(
-				themeDisplay, groupId);
-
-			if (result == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(BlogsUtil.class);
 
 }

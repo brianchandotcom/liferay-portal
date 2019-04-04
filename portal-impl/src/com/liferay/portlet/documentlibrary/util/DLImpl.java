@@ -1019,33 +1019,6 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public boolean hasViewInContextGroupLayout(
-		long groupId, ThemeDisplay themeDisplay) {
-
-		try {
-			PortletLayoutFinder portletLayoutFinder =
-				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
-					DLFileEntryConstants.getClassName());
-
-			PortletLayoutFinder.Result result = portletLayoutFinder.find(
-				themeDisplay, groupId);
-
-			if (result == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-	}
-
-	@Override
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, long folderId, long fileEntryTypeId)
 		throws Exception {

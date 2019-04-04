@@ -96,7 +96,7 @@ public class CTCollectionLocalServiceImpl
 	public CTCollection deleteCTCollection(CTCollection ctCollection)
 		throws PortalException {
 
-		List<CTEntry> ctEntries = ctCollectionPersistence.getCTEntries(
+		List<CTEntry> ctEntries = ctEntryPersistence.getCTCollectionCTEntries(
 			ctCollection.getCtCollectionId());
 
 		for (CTEntry ctEntry : ctEntries) {
@@ -111,7 +111,7 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		List<CTEntryAggregate> ctEntryAggregates =
-			ctCollectionPersistence.getCTEntryAggregates(
+			ctEntryAggregatePersistence.getCTCollectionCTEntryAggregates(
 				ctCollection.getCtCollectionId());
 
 		for (CTEntryAggregate ctEntryAggregate : ctEntryAggregates) {

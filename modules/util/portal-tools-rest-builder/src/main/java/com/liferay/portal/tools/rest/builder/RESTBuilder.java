@@ -200,6 +200,12 @@ public class RESTBuilder {
 
 		String content = FileUtil.read(file);
 
+		FileUtil.write(file, _fixOpenAPIOperationIds(freeMarkerTool, content));
+	}
+
+	private String _fixOpenAPIOperationIds(
+		FreeMarkerTool freeMarkerTool, String content) {
+
 		content = content.replaceAll("\n\\s+operationId:.+", "");
 
 		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
@@ -250,7 +256,7 @@ public class RESTBuilder {
 			}
 		}
 
-		FileUtil.write(file, content);
+		return content;
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)

@@ -92,6 +92,7 @@ openapi: "3.0.1"
 paths:
     "/bulk-selection":
         post:
+            operationId: postBulkSelection
             requestBody:
                 content:
                     application/json:
@@ -107,6 +108,7 @@ paths:
             tags: ["MessageSelection"]
     "/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common":
         post:
+            operationId: postContentSpaceTaxonomyVocabulariesCommonPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -131,6 +133,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/keywords/batch":
         patch:
+            operationId: patchKeywordBatch
             requestBody:
                 content:
                     application/json:
@@ -143,6 +146,7 @@ paths:
                     description: ""
             tags: ["Keyword"]
         put:
+            operationId: putKeywordBatch
             requestBody:
                 content:
                     application/json:
@@ -156,6 +160,7 @@ paths:
             tags: ["Keyword"]
     "/keywords/common":
         post:
+            operationId: postKeywordsCommonPage
             requestBody:
                 content:
                     application/json:
@@ -173,6 +178,7 @@ paths:
             tags: ["Keyword"]
     "/status":
         get:
+            operationId: getStatus
             responses:
                 200:
                     content:
@@ -183,6 +189,7 @@ paths:
             tags: ["Status"]
     "/taxonomy-categories/batch":
         patch:
+            operationId: patchTaxonomyCategoryBatch
             requestBody:
                 content:
                     application/json:
@@ -195,6 +202,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         put:
+            operationId: putTaxonomyCategoryBatch
             requestBody:
                 content:
                     application/json:

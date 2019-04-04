@@ -242,6 +242,7 @@ openapi: 3.0.1
 paths:
     "/content-spaces/{contentSpaceId}/data-definition-permissions":
         post:
+            operationId: postContentSpaceDataDefinitionPermission
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -267,6 +268,7 @@ paths:
             tags: ["DataDefinition"]
     "/content-spaces/{contentSpaceId}/data-definitions":
         get:
+            operationId: getContentSpaceDataDefinitionsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -299,6 +301,7 @@ paths:
                     description: ""
             tags: ["DataDefinition"]
         post:
+            operationId: postContentSpaceDataDefinition
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -321,6 +324,7 @@ paths:
             tags: ["DataDefinition"]
     "/content-spaces/{contentSpaceId}/data-layout":
         get:
+            operationId: getContentSpaceDataLayoutPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -350,6 +354,7 @@ paths:
             tags: ["DataLayout"]
     "/content-spaces/{contentSpaceId}/data-record-collection-permissions":
         post:
+            operationId: postContentSpaceDataRecordCollectionPermission
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -375,6 +380,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/content-spaces/{contentSpaceId}/data-record-collections":
         get:
+            operationId: getContentSpaceDataRecordCollectionsPage
             parameters:
                 - in: path
                   name: contentSpaceId
@@ -408,6 +414,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/data-definitions/{dataDefinitionId}":
         delete:
+            operationId: deleteDataDefinition
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -422,6 +429,7 @@ paths:
                     description: ""
             tags: ["DataDefinition"]
         get:
+            operationId: getDataDefinition
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -438,6 +446,7 @@ paths:
                     description: ""
             tags: ["DataDefinition"]
         put:
+            operationId: putDataDefinition
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -460,6 +469,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-permissions":
         post:
+            operationId: postDataDefinitionDataDefinitionPermission
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -486,6 +496,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-layouts":
         post:
+            operationId: postDataDefinitionDataLayout
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -508,6 +519,7 @@ paths:
             tags: ["DataLayout"]
     "/data-definitions/{dataDefinitionId}/data-record-collections":
         get:
+            operationId: getDataDefinitionDataRecordCollectionsPage
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -540,6 +552,7 @@ paths:
                     description: ""
             tags: ["DataRecordCollection"]
         post:
+            operationId: postDataDefinitionDataRecordCollection
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -562,6 +575,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/data-layouts/{dataLayoutId}":
         delete:
+            operationId: deleteDataLayout
             parameters:
                 - in: path
                   name: dataLayoutId
@@ -576,6 +590,7 @@ paths:
                     description: ""
             tags: ["DataLayout"]
         get:
+            operationId: getDataLayout
             parameters:
                 - in: path
                   name: dataLayoutId
@@ -592,6 +607,7 @@ paths:
                     description: ""
             tags: ["DataLayout"]
         put:
+            operationId: putDataLayout
             parameters:
                 - in: path
                   name: dataLayoutId
@@ -614,6 +630,7 @@ paths:
             tags: ["DataLayout"]
     "/data-record-collections/{dataRecordCollectionId}":
         delete:
+            operationId: deleteDataRecordCollection
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -628,6 +645,7 @@ paths:
                     description: ""
             tags: ["DataRecordCollection"]
         get:
+            operationId: getDataRecordCollection
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -644,6 +662,7 @@ paths:
                     description: ""
             tags: ["DataRecordCollection"]
         put:
+            operationId: putDataRecordCollection
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -666,6 +685,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions":
         post:
+            operationId: postDataRecordCollectionDataRecordCollectionPermission
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -692,6 +712,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-records":
         get:
+            operationId: getDataRecordCollectionDataRecordsPage
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -720,6 +741,7 @@ paths:
                     description: ""
             tags: ["DataRecord"]
         post:
+            operationId: postDataRecordCollectionDataRecord
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -742,6 +764,7 @@ paths:
             tags: ["DataRecord"]
     "/data-record-collections/{dataRecordCollectionId}/data-records/export":
         get:
+            operationId: getDataRecordCollectionDataRecordExport
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -759,6 +782,7 @@ paths:
             tags: ["DataRecord"]
     "/data-records/{dataRecordId}":
         delete:
+            operationId: deleteDataRecord
             parameters:
                 - in: path
                   name: dataRecordId
@@ -773,6 +797,7 @@ paths:
                     description: ""
             tags: ["DataRecord"]
         get:
+            operationId: getDataRecord
             parameters:
                 - in: path
                   name: dataRecordId
@@ -789,6 +814,7 @@ paths:
                     description: ""
             tags: ["DataRecord"]
         put:
+            operationId: putDataRecord
             parameters:
                 - in: path
                   name: dataRecordId

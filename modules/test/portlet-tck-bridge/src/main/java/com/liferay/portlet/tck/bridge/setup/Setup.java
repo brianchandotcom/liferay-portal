@@ -132,7 +132,17 @@ public class Setup {
 					String context = contextAttribute.getValue();
 
 					if (context.startsWith("/tck-")) {
-						portlets.add(_createPortlet(portletElement, context));
+						context = context.replaceFirst("^/", "");
+
+						context = context.replaceFirst(
+							"(-[0-9.]+)?(-SNAPSHOT)?$", "");
+
+						Attribute nameAttribute = portletElement.attribute(
+							"name");
+
+						String portletName = nameAttribute.getValue();
+
+						portlets.add(new Portlet(context, portletName));
 					}
 				}
 
@@ -152,18 +162,6 @@ public class Setup {
 				PermissionThreadLocal.setPermissionChecker(null);
 			}
 		}
-	}
-
-	private static Portlet _createPortlet(Element element, String context) {
-		context = context.replaceFirst("^/", "");
-
-		context = context.replaceFirst("(-[0-9.]+)?(-SNAPSHOT)?$", "");
-
-		Attribute nameAttribute = element.attribute("name");
-
-		String portletName = nameAttribute.getValue();
-
-		return new Portlet(context, portletName);
 	}
 
 	private static void _setupPage(

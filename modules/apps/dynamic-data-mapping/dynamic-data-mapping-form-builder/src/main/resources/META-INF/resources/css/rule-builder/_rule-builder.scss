@@ -1,11 +1,35 @@
 @import "./data-provider-container";
 @import "./rule-list";
 @import "./rule-list-settings";
+@import "./timeline-item";
 
 .liferay-ddm-form-builder-rule-builder-content {
-	.liferay-ddm-form-rule-builder-timeline .form-group-item div.dropdown, .action {
-		position: relative!important;
-		right: inherit!important;
-		top: inherit!important;
+	.form-builder-section-title {
+		font-size: 32px;
+		margin: 0;
+		padding-top: 40px;
+
+		&.text-default {
+			font-weight: normal;
+		}
 	}
+
+	h4 {
+		font-size: 1rem;
+	}
+}
+
+.liferay-ddm-form-rule-builder-footer {
+	margin: $baseline * 3 0;
+	padding: 12px 54px;
+
+	.btn:not(:last-child) {
+		margin-right: 5px;
+	}
+}
+
+.liferay-ddm-form-builder-calculator {
+	align-content: center;
+	display: flex;
+	justify-content: center;
 }

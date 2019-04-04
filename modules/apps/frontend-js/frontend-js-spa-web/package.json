@@ -1,32 +1,15 @@
 {
-	"csfConfig": {
-		"path:**/*.es.js": {
-			"js": {
-				"lint": {
-					"rules": {
-						"no-console": 0
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"metal": "^2.4.7",
 		"metal-dom": "^2.4.7",
 		"metal-uri": "^2.0.2",
 		"senna": "2.7.3"
 	},
-	"devDependencies": {
-		"babel-cli": "6.26.0",
-		"babel-preset-env": "^1.6.1",
-		"check-source-formatting": "^2.0.14"
-	},
 	"name": "frontend-js-spa-web",
 	"scripts": {
-		"build": "babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator",
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.es*.js",
-		"format": "npm run csf -- -i"
+		"build": "liferay-npm-scripts build --bridge --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"
 }

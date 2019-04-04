@@ -135,6 +135,18 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 		return liferayPortletURL.toString();
 	}
 
+	@Override
+	public boolean isActive(String displayURL, String portletId) {
+		if (displayURL.endsWith(
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) &&
+			portletId.equals(getPortletId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected Layout addEmbeddedPersonalApplicationLayout(
 			long userId, long groupId, boolean privateLayout)
 		throws PortalException {

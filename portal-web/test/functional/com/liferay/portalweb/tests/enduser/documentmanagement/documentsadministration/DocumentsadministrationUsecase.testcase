@@ -2007,6 +2007,8 @@ definition {
 			portlet = "Documents and Media"
 		);
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document1 Description",
 			dmDocumentFile = "Document_1.jpg",

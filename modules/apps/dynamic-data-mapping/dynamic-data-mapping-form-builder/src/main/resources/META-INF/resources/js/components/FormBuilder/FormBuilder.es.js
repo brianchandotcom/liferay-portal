@@ -310,7 +310,7 @@ class Builder extends Component {
 	_fetchElementSetURL(elementSetId) {
 		const {fieldSetDefinitionURL, groupId, namespace} = this.props;
 
-		let language = themeDisplay.getLanguageId();
+		const language = themeDisplay.getLanguageId();
 
 		return makeFetch(
 			{
@@ -673,8 +673,8 @@ class Builder extends Component {
 			rules,
 			spritemap,
 			successPageSettings,
-			visible,
-			view
+			view,
+			visible
 		} = props;
 
 		const FormRendererEvents = {

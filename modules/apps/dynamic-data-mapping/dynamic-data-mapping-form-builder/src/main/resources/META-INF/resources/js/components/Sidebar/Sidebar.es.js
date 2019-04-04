@@ -775,9 +775,9 @@ class Sidebar extends Component {
 							aria-labelledby={`#ddm-field-types-${key}-header`}
 							class="panel-collapse show"
 							id={`ddm-field-types-${key}-body`}
+							key={key}
 							role="tabpanel"
 						>
-
 							<div class="panel-body p-0 m-0 list-group">
 								<div
 									class="ddm-drag-item list-group-item list-group-item-flex"

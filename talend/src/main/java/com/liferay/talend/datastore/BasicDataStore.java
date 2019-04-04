@@ -22,21 +22,26 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 import org.talend.sdk.component.api.meta.Documentation;
 
-@DataStore("LiferayDXPConnection")
-@GridLayout({
-    // the generated layout put one configuration entry per line,
-    // customize it as much as needed
+@DataStore("BasicDataStore")
+@GridLayout(
+    names = GridLayout.FormType.MAIN,
+    value =
+    {
     @GridLayout.Row({ "authorization" }),
-    @GridLayout.Row({ "serverURL" }),
-    @GridLayout.Row({ "anonymous" }),
-    @GridLayout.Row({ "user" }),
-    @GridLayout.Row({ "password" })
+    @GridLayout.Row({ "serverURL", "anonymous" }),
+    @GridLayout.Row({ "user", "password"}),
 })
 @Documentation("TODO fill the documentation for this configuration")
-public class LiferayDXPConnection implements Serializable {
+public class BasicDataStore implements Serializable {
+
     @Option
     @Documentation("TODO fill the documentation for this parameter")
-    private String authorization;
+    Authorization authorization;
+
+    enum Authorization {
+        Basic,
+        OAuth2
+    }
 
     @Option
     @Documentation("TODO fill the documentation for this parameter")
@@ -55,20 +60,11 @@ public class LiferayDXPConnection implements Serializable {
     @Documentation("TODO fill the documentation for this parameter")
     private String password;
 
-    public String getAuthorization() {
-        return authorization;
-    }
-
-    public LiferayDXPConnection setAuthorization(String authorization) {
-        this.authorization = authorization;
-        return this;
-    }
-
     public java.net.URL getServerURL() {
         return serverURL;
     }
 
-    public LiferayDXPConnection setServerURL(java.net.URL serverURL) {
+    public BasicDataStore setServerURL(java.net.URL serverURL) {
         this.serverURL = serverURL;
         return this;
     }
@@ -77,7 +73,7 @@ public class LiferayDXPConnection implements Serializable {
         return anonymous;
     }
 
-    public LiferayDXPConnection setAnonymous(boolean anonymous) {
+    public BasicDataStore setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
         return this;
     }
@@ -86,7 +82,7 @@ public class LiferayDXPConnection implements Serializable {
         return user;
     }
 
-    public LiferayDXPConnection setUser(String user) {
+    public BasicDataStore setUser(String user) {
         this.user = user;
         return this;
     }
@@ -95,7 +91,7 @@ public class LiferayDXPConnection implements Serializable {
         return password;
     }
 
-    public LiferayDXPConnection setPassword(String password) {
+    public BasicDataStore setPassword(String password) {
         this.password = password;
         return this;
     }

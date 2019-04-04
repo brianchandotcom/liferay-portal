@@ -16,7 +16,7 @@ package com.liferay.talend.source;
 
 import java.io.Serializable;
 
-import com.liferay.talend.dataset.Dataset;
+import com.liferay.talend.dataset.RestDataSet;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
@@ -28,7 +28,7 @@ import org.talend.sdk.component.api.meta.Documentation;
 @GridLayout({
     // the generated layout put one configuration entry per line,
     // customize it as much as needed
-    @GridLayout.Row({ "dataset" }),
+    @GridLayout.Row({ "restDataSet" }),
     @GridLayout.Row({ "timeout" }),
     @GridLayout.Row({ "maxItemsPerRequest" })
 })
@@ -36,7 +36,7 @@ import org.talend.sdk.component.api.meta.Documentation;
 public class TLiferayInputMapperConfiguration implements Serializable {
     @Option
     @Documentation("TODO fill the documentation for this parameter")
-    private Dataset dataset;
+    private RestDataSet restDataSet;
 
     @Option
     @Documentation("TODO fill the documentation for this parameter")
@@ -46,12 +46,12 @@ public class TLiferayInputMapperConfiguration implements Serializable {
     @Documentation("TODO fill the documentation for this parameter")
     private int maxItemsPerRequest;
 
-    public Dataset getDataset() {
-        return dataset;
+    public RestDataSet getRestDataSet() {
+        return restDataSet;
     }
 
-    public TLiferayInputMapperConfiguration setDataset(Dataset dataset) {
-        this.dataset = dataset;
+    public TLiferayInputMapperConfiguration setRestDataSet(RestDataSet restDataSet) {
+        this.restDataSet = restDataSet;
         return this;
     }
 

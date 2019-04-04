@@ -18,7 +18,10 @@ import java.util.Locale;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             #InfoDisplayContributorField()}
  */
+@Deprecated
 public interface AssetDisplayContributorField<T> {
 
 	public String getKey();

@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             #BaseAssetInfoDisplayContributor()}
  */
+@Deprecated
 public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 

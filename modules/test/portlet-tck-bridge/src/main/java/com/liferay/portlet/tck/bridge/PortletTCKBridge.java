@@ -15,8 +15,6 @@
 package com.liferay.portlet.tck.bridge;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -82,10 +80,6 @@ public class PortletTCKBridge {
 		String configFile = portletTCKBridgeConfiguration.configFile();
 
 		_setupPortletTCKSite(company, configFile);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Portlet TCK Bridge is ready");
-		}
 	}
 
 	private void _setupPortletTCKSite(Company company, String configFile)
@@ -156,9 +150,6 @@ public class PortletTCKBridge {
 	}
 
 	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletTCKBridge.class);
 
 	private static final Pattern _portletContextPattern = Pattern.compile(
 		"/(tck-.*)(-[0-9.]+)-SNAPSHOT");

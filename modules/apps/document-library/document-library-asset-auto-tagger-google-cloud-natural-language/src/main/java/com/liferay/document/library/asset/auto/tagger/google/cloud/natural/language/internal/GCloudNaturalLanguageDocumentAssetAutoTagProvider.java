@@ -50,9 +50,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.Spliterator;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -181,10 +183,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					confidence();
 
-			_processTagNames(
-				responseJSONObject.getJSONArray("categories"),
-				jsonObject -> jsonObject.getDouble("confidence") > confidence,
-				tagNames::add);
+			tagNames.addAll(
+				_toTagNames(
+					responseJSONObject.getJSONArray("categories"),
+					jsonObject ->
+						jsonObject.getDouble("confidence") > confidence));
 		}
 
 		if (gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
@@ -196,10 +199,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 					salience();
 
-			_processTagNames(
-				responseJSONObject.getJSONArray("entities"),
-				jsonObject -> jsonObject.getDouble("salience") > salience,
-				tagNames::add);
+			tagNames.addAll(
+				_toTagNames(
+					responseJSONObject.getJSONArray("entities"),
+					jsonObject -> jsonObject.getDouble("salience") > salience));
 		}
 
 		return tagNames;
@@ -238,36 +241,36 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 				errorMessage));
 	}
 
-	private void _processTagNames(
-		JSONArray jsonArray, Predicate<JSONObject> predicate,
-		Consumer<String> consumer) {
+	private Set<String> _toTagNames(
+		JSONArray jsonArray, Predicate<JSONObject> predicate) {
 
 		if (jsonArray == null) {
-			return;
+			return Collections.emptySet();
 		}
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (predicate.test(jsonObject)) {
-				String tagName = StringUtil.removeChars(
-					jsonObject.getString("name"), CharPool.APOSTROPHE,
-					CharPool.DASH);
-
-				Stream.of(
-					StringUtil.split(tagName, CharPool.AMPERSAND)
-				).flatMap(
-					tagNamePart -> Stream.of(
-						StringUtil.split(tagNamePart, CharPool.FORWARD_SLASH))
-				).map(
-					String::trim
-				).filter(
-					_negate(String::isEmpty)
-				).forEach(
-					consumer
-				);
-			}
-		}
+		return StreamSupport.stream(
+			(Spliterator<JSONObject>)jsonArray.spliterator(), false
+		).filter(
+			predicate
+		).map(
+			jsonObject -> StringUtil.removeChars(
+				jsonObject.getString("name"), CharPool.APOSTROPHE,
+				CharPool.DASH)
+		).map(
+			tagName -> StringUtil.split(tagName, CharPool.AMPERSAND)
+		).flatMap(
+			Stream::of
+		).map(
+			tagNamePart -> StringUtil.split(tagNamePart, CharPool.FORWARD_SLASH)
+		).flatMap(
+			Stream::of
+		).map(
+			String::trim
+		).filter(
+			_negate(String::isEmpty)
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private static final int _MINIMUM_PAYLOAD_SIZE;

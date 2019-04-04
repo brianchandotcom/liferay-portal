@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"liferay-ckeditor": "4.11.3-liferay.1"
+	},
+	"name": "frontend-editor-ckeditor-web",
+	"version": "3.0.0"
+}

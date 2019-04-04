@@ -2,17 +2,13 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import com.liferay.gradle.util.tasks.ConcatenateTask
 
-configurations {
-	ckEditor
-}
-
 task buildCKEditor(type: Copy)
 task buildCKEditorBBCode(type: ConcatenateTask)
+task buildCKEditorPlugins(type: Copy)
 task buildCKEditorScayt(type: Copy)
 task buildCKEditorWsc(type: Copy)
 
-String ckEditorVersion = "4.6.0"
-String ckEditorVersionLfr = "4.6.0.6"
+String ckEditorVersion = "4.11.3"
 
 String ckEditorScaytUrl = "https://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
 String ckEditorWscUrl = "https://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
@@ -29,17 +25,9 @@ buildCKEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from {
-		zipTree(configurations.ckEditor.singleFile)
-	} {
-		eachFile new StripPathSegmentsAction(5)
-
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/ckeditor/"
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/samples/"
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/gulpfile.js"
-	}
-
-	from new File(editorSrcDir, "_diffs")
+	eachFile new StripPathSegmentsAction(2)
+	from npmInstall.nodeModulesDir
+	include "liferay-ckeditor/ckeditor/"
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
 }
@@ -57,6 +45,16 @@ buildCKEditorBBCode {
 	sourceFiles new File(bbCodeDir, "lexer.js")
 	sourceFiles new File(bbCodeDir, "parser.js")
 	sourceFiles new File(bbCodeDir, "converter.js")
+}
+
+buildCKEditorPlugins {
+	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
+
+	dependsOn buildCKEditor
+
+	from new File(editorSrcDir, "_diffs")
+	includeEmptyDirs = false
+	into ckEditorDestinationDir
 }
 
 buildCKEditorScayt {
@@ -84,7 +82,7 @@ buildCKEditorWsc {
 }
 
 classes {
-	dependsOn buildCKEditor, buildCKEditorScayt, buildCKEditorWsc
+	dependsOn buildCKEditor, buildCKEditorPlugins, buildCKEditorScayt, buildCKEditorWsc
 }
 
 clean {
@@ -92,8 +90,6 @@ clean {
 }
 
 dependencies {
-	ckEditor group: "com.liferay.webjars", name: "com.liferay.webjars.ckeditor", version: ckEditorVersionLfr
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"

@@ -16,16 +16,22 @@ package com.liferay.users.admin.web.internal.product.navigation.personal.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -55,5 +61,33 @@ public class MyProfilePersonalMenuEntry implements PersonalMenuEntry {
 
 		return user.getDisplayURL(themeDisplay, false);
 	}
+
+	@Override
+	public boolean isActive(PortletRequest portletRequest, String portletId)
+		throws PortalException {
+
+		if (Validator.isNotNull(portletId)) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String displayURL = layout.getRegularURL(
+			_portal.getHttpServletRequest(portletRequest));
+
+		User user = themeDisplay.getUser();
+
+		if (displayURL.startsWith(user.getDisplayURL(themeDisplay, false))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

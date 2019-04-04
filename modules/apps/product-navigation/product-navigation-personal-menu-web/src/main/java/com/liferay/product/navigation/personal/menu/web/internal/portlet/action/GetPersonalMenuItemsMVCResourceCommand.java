@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -39,7 +38,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -97,29 +95,23 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				continue;
 			}
 
-			HttpServletRequest httpServletRequest =
-				_portal .getHttpServletRequest(portletRequest);
-
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			try {
 				jsonObject.put(
 					"href",
-					personalMenuEntry.getPortletURL(httpServletRequest));
+					personalMenuEntry.getPortletURL(
+						_portal.getHttpServletRequest(portletRequest)));
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);
 			}
 
-			Layout layout = themeDisplay.getLayout();
-
-			String displayURL = layout.getRegularURL(httpServletRequest);
-
-			String portletId = ParamUtil.getString(
-				portletRequest, "portletId");
+			String portletId = ParamUtil.getString(portletRequest, "portletId");
 
 			jsonObject.put(
-				"active", personalMenuEntry.isActive(displayURL, portletId));
+				"active",
+				personalMenuEntry.isActive(portletRequest, portletId));
 
 			jsonObject.put(
 				"label", personalMenuEntry.getLabel(themeDisplay.getLocale()));

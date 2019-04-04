@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -136,11 +138,22 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Override
-	public boolean isActive(String displayURL, String portletId) {
-		if (displayURL.endsWith(
-				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) &&
-			portletId.equals(getPortletId())) {
+	public boolean isActive(PortletRequest portletRequest, String portletId) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
+		String layoutFriendlyURL = layout.getFriendlyURL();
+
+		if ((!layout.isSystem() && !layout.isTypeControlPanel()) ||
+			!layoutFriendlyURL.equals(
+				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
+
+			return false;
+		}
+
+		if (portletId.equals(getPortletId())) {
 			return true;
 		}
 

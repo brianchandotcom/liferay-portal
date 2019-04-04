@@ -65,13 +65,16 @@ public interface PersonalMenuEntry {
 	/**
 	 * Returns <code>true</code> if the entry is the current active entry.
 	 *
-	 * @param  displayURL the display URL
+	 * @param  portletRequest the portlet request
 	 * @param  portletId the portlet ID
 	 * @return <code>true</code> if the entry is the current active entry;
 	 *         <code>false</code> otherwise
 	 * @review
 	 */
-	public default boolean isActive(String displayURL, String portletId) {
+	public default boolean isActive(
+			PortletRequest portletRequest, String portletId)
+		throws PortalException {
+
 		return false;
 	}
 

@@ -348,6 +348,78 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@description = "This is a use case for LPS-88924"
+	@priority = "4"
+	test AssertSSOWithEncryptionAndDecryption {
+		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
+
+		SAML.configureLiferaySAMLAsIdP(
+			samlEntityID = "samlidp"
+		);
+
+		SAML.configureLiferaySAMLAsSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
+
+		SAMLNavigation.gotoServiceProviderConnection();
+
+		SAMLPortlet.configureServiceProviderConnection(
+			forceEncryption = "enable",
+			samlEntityID = "samlsp"
+		);
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			Navigator.gotoLoginPage();
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLRole.deleteCertificate();
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User._login(
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		AssertTextEquals(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "Unable to process SAML request."
+		);
+
+		AssertConsoleTextPresent(value1 = "Data encryption key was null");
+	}
+
 	@priority = "4"
 	test AssertSSOWithSignAuthnRequests {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";

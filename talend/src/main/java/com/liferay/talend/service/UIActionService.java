@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 public class UIActionService {
 
 	@Suggestions("fetchEndpoints")
-	public SuggestionValues fetchEndpoints(@Option("restDataSet") final BasicDataStore dataStore) {
+	public SuggestionValues fetchEndpoints(@Option("dataStore") final BasicDataStore dataStore) {
 
 		List<SuggestionValues.Item> items = new ArrayList<>();
 

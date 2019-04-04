@@ -62,10 +62,10 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 
 		// Fields for the class type
 
-		List<InfoDisplayField> classTypeFields = getClassTypeFields(
+		List<InfoDisplayField> infoClassTypeFields = getInfoClassTypeFields(
 			classTypeId, locale);
 
-		infoDisplayFields.addAll(classTypeFields);
+		infoDisplayFields.addAll(infoClassTypeFields);
 
 		return infoDisplayFields;
 	}

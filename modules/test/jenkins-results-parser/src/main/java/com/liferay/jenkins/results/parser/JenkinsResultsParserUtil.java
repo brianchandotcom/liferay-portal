@@ -395,15 +395,16 @@ public class JenkinsResultsParserUtil {
 		throws IOException, TimeoutException {
 
 		return executeBashCommands(
-			exitOnFirstFail, new File("."), _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT,
-			commands);
+			exitOnFirstFail, new File("."),
+			_MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
 	}
 
 	public static Process executeBashCommands(String... commands)
 		throws IOException, TimeoutException {
 
 		return executeBashCommands(
-			true, new File("."), _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
+			true, new File("."), _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT,
+			commands);
 	}
 
 	public static void executeJenkinsScript(
@@ -2053,16 +2054,16 @@ public class JenkinsResultsParserUtil {
 
 	public static JSONArray toJSONArray(String url) throws IOException {
 		return toJSONArray(
-			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, _SECONDS_RETRY_PERIOD_DEFAULT,
-			_MILLIS_TIMEOUT_DEFAULT, null);
+			url, true, _RETRIES_SIZE_MAX_DEFAULT, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONArray toJSONArray(String url, boolean checkCache)
 		throws IOException {
 
 		return toJSONArray(
-			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, _SECONDS_RETRY_PERIOD_DEFAULT,
-			_MILLIS_TIMEOUT_DEFAULT, null);
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONArray toJSONArray(
@@ -2107,13 +2108,14 @@ public class JenkinsResultsParserUtil {
 
 		return toJSONArray(
 			url, false, _RETRIES_SIZE_MAX_DEFAULT, postContent,
-			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, httpAuthorization);
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorization);
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
 		return toJSONObject(
-			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null, _SECONDS_RETRY_PERIOD_DEFAULT,
-			_MILLIS_TIMEOUT_DEFAULT, null);
+			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
@@ -2195,7 +2197,8 @@ public class JenkinsResultsParserUtil {
 
 		return toJSONObject(
 			url, false, _RETRIES_SIZE_MAX_DEFAULT, null, postContent,
-			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, httpAuthorization);
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorization);
 	}
 
 	public static List<PathMatcher> toPathMatchers(
@@ -2227,8 +2230,8 @@ public class JenkinsResultsParserUtil {
 
 	public static String toString(String url) throws IOException {
 		return toString(
-			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null, _SECONDS_RETRY_PERIOD_DEFAULT,
-			_MILLIS_TIMEOUT_DEFAULT, null);
+			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, boolean checkCache)
@@ -2458,13 +2461,13 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toString(
-			String url, boolean checkCache, int maxRetries, int retryPeriodSeconds,
-			int timeout)
+			String url, boolean checkCache, int maxRetries,
+			int retryPeriodSeconds, int timeout)
 		throws IOException {
 
 		return toString(
-			url, checkCache, maxRetries, null, null, retryPeriodSeconds, timeout,
-			null);
+			url, checkCache, maxRetries, null, null, retryPeriodSeconds,
+			timeout, null);
 	}
 
 	public static String toString(
@@ -2508,7 +2511,8 @@ public class JenkinsResultsParserUtil {
 
 		return toString(
 			url, false, _RETRIES_SIZE_MAX_DEFAULT, null, postContent,
-			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, httpAuthorization);
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorization);
 	}
 
 	public static void updateBuildDescription(
@@ -2915,14 +2919,8 @@ public class JenkinsResultsParserUtil {
 		return true;
 	}
 
-	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
-
-	private static final String _URL_LOAD_BALANCER_SERVICE_TEMPLATE = combine(
-		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/",
-		"load_balancer?baseInvocationURL=${baseInvocationURL}",
-		"&invokedJobBatchSize=${invokedBatchSize}");
-
-	private static final int _RETRIES_SIZE_MAX_DEFAULT = 3;
+	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT =
+		1000 * 60 * 60;
 
 	private static final long _MILLIS_DAY = 24L * 60L * 60L * 1000L;
 
@@ -2932,11 +2930,18 @@ public class JenkinsResultsParserUtil {
 
 	private static final long _MILLIS_SECOND = 1000L;
 
-	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
-
 	private static final int _MILLIS_TIMEOUT_DEFAULT = 0;
 
 	private static final String _PREFIX_TO_STRING_CACHE = "toStringCache-";
+
+	private static final int _RETRIES_SIZE_MAX_DEFAULT = 3;
+
+	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
+
+	private static final String _URL_LOAD_BALANCER_SERVICE_TEMPLATE = combine(
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/",
+		"load_balancer?baseInvocationURL=${baseInvocationURL}",
+		"&invokedJobBatchSize=${invokedBatchSize}");
 
 	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;

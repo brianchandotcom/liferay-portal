@@ -3240,20 +3240,20 @@ public abstract class BaseBuild implements Build {
 		return true;
 	}
 
-	private static final String _PREFIX_CONSOLE_TEXT_CACHE = "console-text-";
-
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
-
-	private static final String[] _TOKENS_HIGH_PRIORITY_CONTENT = {
-		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
-	};
 
 	private static final String _NAME_JENKINS_REPORT_TIME_ZONE;
 
 	private static final int _PIXELS_WIDTH_EXPANDER = 20;
 
 	private static final int _PIXELS_WIDTH_INDENT = 35;
+
+	private static final String _PREFIX_CONSOLE_TEXT_CACHE = "console-text-";
+
+	private static final String[] _TOKENS_HIGH_PRIORITY_CONTENT = {
+		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
+	};
 
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(

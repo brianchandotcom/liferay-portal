@@ -1526,28 +1526,24 @@ public class TopLevelBuild extends BaseBuild {
 		return slaveUsages;
 	}
 
-	private static final long _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL =
-		1000 * 60 * 5;
-
-	// Skip JavaParser
-
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new CompileFailureMessageGenerator(),
 			new PoshiValidationFailureMessageGenerator(),
-
 			new PoshiTestFailureMessageGenerator(),
-
 			new GitLPushFailureMessageGenerator(),
 			new GradleTaskFailureMessageGenerator(),
 			new JenkinsRegenFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
-
 			new CIFailureMessageGenerator(),
 			new DownstreamFailureMessageGenerator(),
-
 			new GenericFailureMessageGenerator()
 		};
+
+	// Skip JavaParser
+
+	private static final long _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL =
+		1000 * 60 * 5;
 
 	private static final String _URL_CHART_JS =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";

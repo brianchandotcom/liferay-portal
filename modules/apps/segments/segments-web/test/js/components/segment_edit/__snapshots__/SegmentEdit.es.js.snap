@@ -79,17 +79,66 @@ exports[`SegmentEdit should render 1`] = `
           class="form-header-section-right"
         >
           <div
-            class="btn-group mr-3"
+            class="btn-group"
           >
             <div
               class="btn-group-item"
             >
               <button
-                class="btn btn-secondary btn-sm members-count-button"
+                class="btn btn-secondary btn-sm"
                 type="button"
               >
                 x-members
               </button>
+            </div>
+            <div
+              class="btn-group-item mr-2"
+            >
+              <label
+                class="toggle-switch toggle-editing"
+              >
+                <input
+                  class="toggle-switch-check"
+                  type="checkbox"
+                />
+                <span
+                  aria-hidden="true"
+                  class="toggle-switch-bar"
+                >
+                  <span
+                    class="toggle-switch-handle"
+                    data-label-off=""
+                    data-label-on=""
+                  >
+                    <span
+                      class="button-icon button-icon-off toggle-switch-icon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="lexicon-icon lexicon-icon-view"
+                        viewBox="0 0 512 512"
+                      >
+                        <use
+                          xlink:href="#view"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="button-icon button-icon-on toggle-switch-icon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="lexicon-icon lexicon-icon-pencil"
+                        viewBox="0 0 512 512"
+                      >
+                        <use
+                          xlink:href="#pencil"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </label>
             </div>
           </div>
           <div
@@ -100,6 +149,7 @@ exports[`SegmentEdit should render 1`] = `
             >
               <button
                 class="btn btn-secondary btn-sm"
+                disabled=""
                 type="button"
               >
                 cancel

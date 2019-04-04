@@ -164,10 +164,13 @@ describe(
 		afterEach(cleanup);
 
 		it(
-			'should render',
+			'should render builder with sidebar',
 			() => {
+				const editing = true;
+
 				const {asFragment} = render(
 					<ContributorBuilder
+						editing={editing}
 						initialContributors={initialContributors}
 						propertyGroups={propertyGroups}
 						supportedConjunctions={SUPPORTED_CONJUNCTIONS}
@@ -177,7 +180,29 @@ describe(
 				);
 
 				expect(asFragment()).toMatchSnapshot(
-					'initialRender'
+					'initialRenderEditing'
+				);
+			}
+		);
+
+		it(
+			'should render builder without sidebar',
+			() => {
+				const editing = false;
+
+				const {asFragment} = render(
+					<ContributorBuilder
+						editing={editing}
+						initialContributors={initialContributors}
+						propertyGroups={propertyGroups}
+						supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+						supportedOperators={SUPPORTED_OPERATORS}
+						supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot(
+					'initialRenderNotEditing'
 				);
 			}
 		);

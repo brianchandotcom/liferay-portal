@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -708,20 +707,8 @@ public class EditAssetListDisplayContext {
 		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
-
-		String screenNavigationCategoryKey = ParamUtil.getString(
-			_request, "screenNavigationCategoryKey",
-			AssetListFormConstants.CATEGORY_KEY_GENERAL);
-
 		portletURL.setParameter(
-			"screenNavigationCategoryKey", screenNavigationCategoryKey);
-
-		String screenNavigationEntryKey = ParamUtil.getString(
-			_request, "screenNavigationCategoryKey",
-			AssetListFormConstants.ENTRY_KEY_ASSET_ENTRIES);
-
-		portletURL.setParameter(
-			"screenNavigationEntryKey", screenNavigationEntryKey);
+			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 
 		return portletURL;
 	}

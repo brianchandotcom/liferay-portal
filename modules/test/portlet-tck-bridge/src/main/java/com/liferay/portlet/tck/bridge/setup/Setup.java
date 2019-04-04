@@ -43,9 +43,9 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -123,7 +123,7 @@ public class Setup {
 				Iterator<Element> portletElementIterator =
 					pageElement.elementIterator("portlet");
 
-				List<Portlet> portlets = new LinkedList<>();
+				List<String> portletIds = new ArrayList<>();
 
 				while (portletElementIterator.hasNext()) {
 					Element portletElement = portletElementIterator.next();
@@ -139,13 +139,13 @@ public class Setup {
 						Attribute nameAttribute = portletElement.attribute(
 							"name");
 
-						portlets.add(
-							new Portlet(
-								matcher.group(1), nameAttribute.getValue()));
+						portletIds.add(
+							nameAttribute.getValue() + "_WAR_" +
+								matcher.group(1));
 					}
 				}
 
-				if (portlets.isEmpty()) {
+				if (portletIds.isEmpty()) {
 					continue;
 				}
 
@@ -153,7 +153,7 @@ public class Setup {
 
 				_setupPage(
 					user.getUserId(), group.getGroupId(),
-					pageNameAttribute.getValue(), portlets);
+					pageNameAttribute.getValue(), portletIds);
 			}
 		}
 		finally {
@@ -165,7 +165,7 @@ public class Setup {
 
 	private static void _setupPage(
 			long userId, long groupId, String portalPageName,
-			List<Portlet> portlets)
+			List<String> portletIds)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -183,10 +183,7 @@ public class Setup {
 
 		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
-		for (Portlet portlet : portlets) {
-			String portletId =
-				portlet.getPortletName() + "_WAR_" + portlet.getContext();
-
+		for (String portletId : portletIds) {
 			layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
 		}
 

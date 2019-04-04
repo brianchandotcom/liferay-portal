@@ -27,17 +27,18 @@ import com.liferay.journal.asset.auto.tagger.google.cloud.natural.language.inter
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,7 +66,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		}
 	}
 
-	protected String extractDDMContent(JournalArticle journalArticle) {
+	protected String extractDDMContent(
+		JournalArticle journalArticle, Locale locale) {
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),
@@ -93,8 +96,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		}
 
 		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues,
-			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()));
+			ddmStructure, ddmFormValues, locale);
 	}
 
 	private GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
@@ -112,9 +114,13 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 	private Collection<String> _getTagNames(JournalArticle journalArticle)
 		throws Exception {
 
+		Locale locale = _language.getLocale(
+			journalArticle.getDefaultLanguageId());
+
 		return _gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 			_getConfiguration(journalArticle),
-			extractDDMContent(journalArticle), ContentTypes.TEXT_PLAIN);
+			extractDDMContent(journalArticle, locale), locale,
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -138,6 +144,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

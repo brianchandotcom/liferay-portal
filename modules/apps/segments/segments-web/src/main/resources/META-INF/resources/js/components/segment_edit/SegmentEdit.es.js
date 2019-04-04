@@ -1,5 +1,6 @@
 import ClayButton from '../shared/ClayButton.es';
 import ClaySpinner from '../shared/ClaySpinner.es';
+import ClayToggle from '../shared/ClayToggle.es';
 import ContributorBuilder from '../criteria_builder/ContributorBuilder.es';
 import {debounce} from 'metal-debounce';
 import PropTypes from 'prop-types';
@@ -59,6 +60,7 @@ class SegmentEdit extends Component {
 	};
 
 	state = {
+		editing: false,
 		membersCount: this.props.initialMembersCount,
 		membersCountLoading: false
 	};
@@ -115,6 +117,14 @@ class SegmentEdit extends Component {
 		this._debouncedFetchMembersCount();
 	};
 
+	_handleCriteriaEdit = () => {
+		this.setState(
+			{
+				editing: !this.state.editing
+			}
+		);
+	}
+
 	_handleSegmentNameBlur = event => {
 		const {
 			handleBlur
@@ -146,9 +156,12 @@ class SegmentEdit extends Component {
 	_renderContributors = () => {
 		const {contributors, propertyGroups} = this.props;
 
+		const {editing} = this.state;
+
 		return (
 			(propertyGroups && contributors) ?
 				<ContributorBuilder
+					editing={editing}
 					initialContributors={contributors}
 					onQueryChange={this._handleQueryChange}
 					propertyGroups={propertyGroups}
@@ -223,7 +236,7 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {membersCount, membersCountLoading} = this.state;
+		const {editing, membersCount, membersCountLoading} = this.state;
 
 		const {assetsPath} = this.context;
 
@@ -276,7 +289,7 @@ class SegmentEdit extends Component {
 						</div>
 
 						<div className="form-header-section-right">
-							<div className="btn-group mr-3">
+							<div className="btn-group">
 								<div className="btn-group-item">
 									<ClaySpinner
 										className="mr-4"
@@ -285,7 +298,6 @@ class SegmentEdit extends Component {
 									/>
 
 									<ClayButton
-										className="members-count-button"
 										label={getPluralMessage(
 											Liferay.Language.get('x-member'),
 											Liferay.Language.get('x-members'),
@@ -296,11 +308,22 @@ class SegmentEdit extends Component {
 										type="button"
 									/>
 								</div>
+								<div className="btn-group-item mr-2">
+									<ClayToggle
+										checked={editing}
+										className="toggle-editing"
+										iconOff="view"
+										iconOn="pencil"
+										onChange={this._handleCriteriaEdit}
+									/>
+								</div>
 							</div>
 
 							<div className="btn-group">
 								<div className="btn-group-item">
 									<ClayButton
+										className={(!editing || this._isQueryEmpty()) && "disabled"}
+										disabled={!editing}
 										href={redirect}
 										label={Liferay.Language.get('cancel')}
 										size="sm"
@@ -309,7 +332,7 @@ class SegmentEdit extends Component {
 
 								<div className="btn-group-item">
 									<ClayButton
-										disabled={this._isQueryEmpty()}
+										disabled={!editing || this._isQueryEmpty()}
 										label={Liferay.Language.get('save')}
 										onClick={this._handleValidate}
 										size="sm"

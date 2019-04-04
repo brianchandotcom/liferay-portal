@@ -63,6 +63,7 @@ const propertyTypeShape = PropTypes.shape(
 
 class ContributorBuilder extends React.Component {
 	static propTypes = {
+		editing: PropTypes.bool.isRequired,
 		initialContributors: PropTypes.arrayOf(initialContributorShape),
 		onQueryChange: PropTypes.func,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
@@ -106,7 +107,7 @@ class ContributorBuilder extends React.Component {
 		this.state = {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
-			editingId: undefined,
+			editingId: propertyGroups.length && propertyGroups[0].propertyKey,
 			newPropertyKey: propertyGroups.length && propertyGroups[0].propertyKey
 		};
 	}
@@ -197,6 +198,7 @@ class ContributorBuilder extends React.Component {
 
 	render() {
 		const {
+			editing,
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
@@ -208,7 +210,7 @@ class ContributorBuilder extends React.Component {
 		const rootClasses = getCN(
 			'contributor-builder-root',
 			{
-				editing: typeof editingId !== 'undefined'
+				editing
 			}
 		);
 
@@ -251,7 +253,7 @@ class ContributorBuilder extends React.Component {
 
 											<CriteriaBuilder
 												criteria={criteria.criteriaMap}
-												editing={editingId === criteria.propertyKey}
+												editing={editing && editingId === criteria.propertyKey}
 												entityName={criteria.entityName}
 												id={criteria.propertyKey}
 												modelLabel={criteria.modelLabel}

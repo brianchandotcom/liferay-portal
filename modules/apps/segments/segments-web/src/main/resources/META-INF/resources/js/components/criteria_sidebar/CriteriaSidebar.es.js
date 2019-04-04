@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 
 class CriteriaSidebar extends Component {
 	static propTypes = {
-		editing: PropTypes.bool,
 		onTitleClicked: PropTypes.func,
 		propertyGroups: PropTypes.array,
 		propertyKey: PropTypes.string

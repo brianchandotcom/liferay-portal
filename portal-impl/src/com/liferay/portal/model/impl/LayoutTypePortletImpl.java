@@ -1320,13 +1320,10 @@ public class LayoutTypePortletImpl
 				return null;
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (checkPermission &&
 				!PortletPermissionUtil.contains(
-					permissionChecker, layout, portlet,
-					ActionKeys.ADD_TO_PAGE)) {
+					PermissionThreadLocal.getPermissionChecker(), layout,
+					portlet, ActionKeys.ADD_TO_PAGE)) {
 
 				return null;
 			}

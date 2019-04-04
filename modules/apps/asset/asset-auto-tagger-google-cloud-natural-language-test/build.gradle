@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationCompile project(":apps:asset:asset-auto-tagger-google-cloud-natural-language-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

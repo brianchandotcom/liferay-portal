@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Collaboration.KBArticleUrlTitleExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.KBArticleUrlTitleExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

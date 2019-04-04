@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration;
 import com.liferay.portlet.tck.bridge.setup.Setup;
 
-import org.osgi.service.component.ComponentContext;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -39,13 +40,10 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletTCKBridge {
 
 	@Activate
-	protected void activate(ComponentContext componentContext)
-		throws Exception {
-
+	protected void activate(Map<String, String> properties) throws Exception {
 		PortletTCKBridgeConfiguration portletTCKBridgeConfiguration =
 			ConfigurableUtil.createConfigurable(
-				PortletTCKBridgeConfiguration.class,
-				componentContext.getProperties());
+				PortletTCKBridgeConfiguration.class, properties);
 
 		String tckDeployFilesDir =
 			portletTCKBridgeConfiguration.tckDeployFilesDir();

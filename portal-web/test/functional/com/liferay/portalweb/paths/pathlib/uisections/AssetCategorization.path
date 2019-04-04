@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CATEGORY</td>
-	<td>//div[contains(@id,'assetCategoriesSelector')]//span[normalize-space(text())='${key_categoryName}']</td>
+	<td>//div[contains(@id,'form-control-tag-group')]//span[normalize-space(text())='${key_categoryName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_AUTOCOMPLETE_SPECIFIC</td>
-	<td>//div[contains(@id,'assetCategoriesSelector')]//ul/li/a[.='${key_categoryName}']</td>
+	<td>//div[contains(@id,'clay_dropdown_portal')]//ul/li/a[.='${key_categoryName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -34,6 +34,7 @@ public class SegmentsEntrySoap implements Serializable {
 	public static SegmentsEntrySoap toSoapModel(SegmentsEntry model) {
 		SegmentsEntrySoap soapModel = new SegmentsEntrySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setSegmentsEntryId(model.getSegmentsEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -48,6 +49,7 @@ public class SegmentsEntrySoap implements Serializable {
 		soapModel.setCriteria(model.getCriteria());
 		soapModel.setSource(model.getSource());
 		soapModel.setType(model.getType());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -99,6 +101,14 @@ public class SegmentsEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSegmentsEntryId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getSegmentsEntryId() {
@@ -217,6 +227,15 @@ public class SegmentsEntrySoap implements Serializable {
 		_type = type;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _segmentsEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -231,5 +250,6 @@ public class SegmentsEntrySoap implements Serializable {
 	private String _criteria;
 	private String _source;
 	private String _type;
+	private Date _lastPublishDate;
 
 }

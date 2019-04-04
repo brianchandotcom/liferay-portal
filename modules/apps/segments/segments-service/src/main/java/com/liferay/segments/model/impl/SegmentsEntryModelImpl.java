@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsEntry;
@@ -80,19 +82,21 @@ public class SegmentsEntryModelImpl
 	public static final String TABLE_NAME = "SegmentsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"segmentsEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryKey", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"active_", Types.BOOLEAN}, {"criteria", Types.CLOB},
-		{"source", Types.VARCHAR}, {"type_", Types.VARCHAR}
+		{"uuid_", Types.VARCHAR}, {"segmentsEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"segmentsEntryKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"active_", Types.BOOLEAN},
+		{"criteria", Types.CLOB}, {"source", Types.VARCHAR},
+		{"type_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,10 +111,11 @@ public class SegmentsEntryModelImpl
 		TABLE_COLUMNS_MAP.put("criteria", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("source", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryKey VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
+		"create table SegmentsEntry (uuid_ VARCHAR(75) null,segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryKey VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,source VARCHAR(75) null,type_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntry";
 
@@ -143,15 +148,19 @@ public class SegmentsEntryModelImpl
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long SEGMENTSENTRYKEY_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long SOURCE_COLUMN_BITMASK = 8L;
+	public static final long SEGMENTSENTRYKEY_COLUMN_BITMASK = 8L;
 
-	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long SOURCE_COLUMN_BITMASK = 16L;
 
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -166,6 +175,7 @@ public class SegmentsEntryModelImpl
 
 		SegmentsEntry model = new SegmentsEntryImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setSegmentsEntryId(soapModel.getSegmentsEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -180,6 +190,7 @@ public class SegmentsEntryModelImpl
 		model.setCriteria(soapModel.getCriteria());
 		model.setSource(soapModel.getSource());
 		model.setType(soapModel.getType());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -308,6 +319,9 @@ public class SegmentsEntryModelImpl
 		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
 
+		attributeGetterFunctions.put("uuid", SegmentsEntry::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUuid);
 		attributeGetterFunctions.put(
 			"segmentsEntryId", SegmentsEntry::getSegmentsEntryId);
 		attributeSetterBiConsumers.put(
@@ -368,11 +382,42 @@ public class SegmentsEntryModelImpl
 		attributeGetterFunctions.put("type", SegmentsEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setType);
+		attributeGetterFunctions.put(
+			"lastPublishDate", SegmentsEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -417,7 +462,19 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -827,6 +884,23 @@ public class SegmentsEntryModelImpl
 		return GetterUtil.getString(_originalType);
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(SegmentsEntry.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -947,6 +1021,7 @@ public class SegmentsEntryModelImpl
 	public Object clone() {
 		SegmentsEntryImpl segmentsEntryImpl = new SegmentsEntryImpl();
 
+		segmentsEntryImpl.setUuid(getUuid());
 		segmentsEntryImpl.setSegmentsEntryId(getSegmentsEntryId());
 		segmentsEntryImpl.setGroupId(getGroupId());
 		segmentsEntryImpl.setCompanyId(getCompanyId());
@@ -961,6 +1036,7 @@ public class SegmentsEntryModelImpl
 		segmentsEntryImpl.setCriteria(getCriteria());
 		segmentsEntryImpl.setSource(getSource());
 		segmentsEntryImpl.setType(getType());
+		segmentsEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		segmentsEntryImpl.resetOriginalValues();
 
@@ -1024,10 +1100,17 @@ public class SegmentsEntryModelImpl
 	public void resetOriginalValues() {
 		SegmentsEntryModelImpl segmentsEntryModelImpl = this;
 
+		segmentsEntryModelImpl._originalUuid = segmentsEntryModelImpl._uuid;
+
 		segmentsEntryModelImpl._originalGroupId =
 			segmentsEntryModelImpl._groupId;
 
 		segmentsEntryModelImpl._setOriginalGroupId = false;
+
+		segmentsEntryModelImpl._originalCompanyId =
+			segmentsEntryModelImpl._companyId;
+
+		segmentsEntryModelImpl._setOriginalCompanyId = false;
 
 		segmentsEntryModelImpl._setModifiedDate = false;
 
@@ -1049,6 +1132,14 @@ public class SegmentsEntryModelImpl
 	public CacheModel<SegmentsEntry> toCacheModel() {
 		SegmentsEntryCacheModel segmentsEntryCacheModel =
 			new SegmentsEntryCacheModel();
+
+		segmentsEntryCacheModel.uuid = getUuid();
+
+		String uuid = segmentsEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			segmentsEntryCacheModel.uuid = null;
+		}
 
 		segmentsEntryCacheModel.segmentsEntryId = getSegmentsEntryId();
 
@@ -1134,6 +1225,15 @@ public class SegmentsEntryModelImpl
 			segmentsEntryCacheModel.type = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			segmentsEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			segmentsEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return segmentsEntryCacheModel;
 	}
 
@@ -1206,11 +1306,15 @@ public class SegmentsEntryModelImpl
 		SegmentsEntry.class, ModelWrapper.class
 	};
 
+	private String _uuid;
+	private String _originalUuid;
 	private long _segmentsEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1230,6 +1334,7 @@ public class SegmentsEntryModelImpl
 	private String _originalSource;
 	private String _type;
 	private String _originalType;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private SegmentsEntry _escapedModel;
 

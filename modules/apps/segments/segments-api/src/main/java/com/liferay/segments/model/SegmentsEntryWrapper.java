@@ -16,6 +16,7 @@ package com.liferay.segments.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -45,6 +46,7 @@ public class SegmentsEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -59,12 +61,19 @@ public class SegmentsEntryWrapper
 		attributes.put("criteria", getCriteria());
 		attributes.put("source", getSource());
 		attributes.put("type", getType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
 
 		if (segmentsEntryId != null) {
@@ -147,6 +156,12 @@ public class SegmentsEntryWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -289,6 +304,16 @@ public class SegmentsEntryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the last publish date of this segments entry.
+	 *
+	 * @return the last publish date of this segments entry
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -458,6 +483,16 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
+	 * Returns the uuid of this segments entry.
+	 *
+	 * @return the uuid of this segments entry
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this segments entry is active.
 	 *
 	 * @return <code>true</code> if this segments entry is active; <code>false</code> otherwise
@@ -602,6 +637,16 @@ public class SegmentsEntryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the last publish date of this segments entry.
+	 *
+	 * @param lastPublishDate the last publish date of this segments entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -755,6 +800,21 @@ public class SegmentsEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this segments entry.
+	 *
+	 * @param uuid the uuid of this segments entry
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

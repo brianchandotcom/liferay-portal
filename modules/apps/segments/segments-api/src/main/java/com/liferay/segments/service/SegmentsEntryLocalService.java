@@ -16,8 +16,10 @@ package com.liferay.segments.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -202,8 +204,23 @@ public interface SegmentsEntryLocalService
 		long groupId, String segmentsEntryKey,
 		boolean includeAncestorSegmentsEntries);
 
+	/**
+	 * Returns the segments entry matching the UUID and group.
+	 *
+	 * @param uuid the segments entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsEntry fetchSegmentsEntryByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -250,6 +267,32 @@ public interface SegmentsEntryLocalService
 		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	/**
+	 * Returns all the segments entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments entries
+	 * @param companyId the primary key of the company
+	 * @return the matching segments entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of segments entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching segments entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	/**
 	 * Returns the number of segments entries.
 	 *
 	 * @return the number of segments entries
@@ -270,6 +313,19 @@ public interface SegmentsEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns the segments entry matching the UUID and group.
+	 *
+	 * @param uuid the segments entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments entry
+	 * @throws PortalException if a matching segments entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsEntry getSegmentsEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

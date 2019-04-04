@@ -14,9 +14,6 @@
 
 package com.liferay.asset.info.display.internal.portlet;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
@@ -26,6 +23,9 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = FriendlyURLResolver.class)
-public class AssetDisplayContributorFriendlyURLResolver
+public class AssetInfoDisplayContributorFriendlyURLResolver
 	implements FriendlyURLResolver {
 
 	@Override
@@ -68,19 +68,19 @@ public class AssetDisplayContributorFriendlyURLResolver
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
 			"request");
 
-		AssetDisplayContributor assetDisplayContributor =
-			_getAssetDisplayContributor(friendlyURL);
+		InfoDisplayContributor infoDisplayContributor =
+			_getInfoDisplayContributor(friendlyURL);
 
 		request.setAttribute(
-			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
-			assetDisplayContributor);
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
+			infoDisplayContributor);
 
 		request.setAttribute(
-			AssetDisplayWebKeys.VERSION_CLASS_PK,
+			InfoDisplayWebKeys.VERSION_CLASS_PK,
 			_getVersionClassPK(friendlyURL));
 
 		AssetEntry assetEntry = _getAssetEntry(
-			assetDisplayContributor, groupId, friendlyURL);
+			infoDisplayContributor, groupId, friendlyURL);
 
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
@@ -107,11 +107,11 @@ public class AssetDisplayContributorFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		AssetDisplayContributor assetDisplayContributor =
-			_getAssetDisplayContributor(friendlyURL);
+		InfoDisplayContributor infoDisplayContributor =
+			_getInfoDisplayContributor(friendlyURL);
 
 		Layout layout = _getAssetEntryLayout(
-			_getAssetEntry(assetDisplayContributor, groupId, friendlyURL));
+			_getAssetEntry(infoDisplayContributor, groupId, friendlyURL));
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
@@ -125,44 +125,24 @@ public class AssetDisplayContributorFriendlyURLResolver
 	public String[] getURLSeparators() {
 		Set<String> urlSeparators = new HashSet<>();
 
-		List<AssetDisplayContributor> assetDisplayContributors =
-			_assetDisplayContributorTracker.getAssetDisplayContributors();
+		List<InfoDisplayContributor> infoDisplayContributors =
+			_infoDisplayContributorTracker.getInfoDisplayContributors();
 
-		for (AssetDisplayContributor assetDisplayContributor :
-				assetDisplayContributors) {
+		for (InfoDisplayContributor infoDisplayContributor :
+				infoDisplayContributors) {
 
-			urlSeparators.add(assetDisplayContributor.getAssetURLSeparator());
+			urlSeparators.add(infoDisplayContributor.getInfoURLSeparator());
 		}
 
 		return ArrayUtil.toStringArray(urlSeparators);
 	}
 
-	private AssetDisplayContributor _getAssetDisplayContributor(
-			String friendlyURL)
-		throws PortalException {
-
-		String assetURLSeparator = _getAssetURLSeparator(friendlyURL);
-
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.
-				getAssetDisplayContributorByAssetURLSeparator(
-					assetURLSeparator);
-
-		if (assetDisplayContributor == null) {
-			throw new PortalException(
-				"Asset display contributor is not available for " +
-					assetURLSeparator);
-		}
-
-		return assetDisplayContributor;
-	}
-
 	private AssetEntry _getAssetEntry(
-			AssetDisplayContributor assetDisplayContributor, long groupId,
+			InfoDisplayContributor infoDisplayContributor, long groupId,
 			String friendlyURL)
 		throws PortalException {
 
-		String className = assetDisplayContributor.getClassName();
+		String className = infoDisplayContributor.getClassName();
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -206,7 +186,26 @@ public class AssetDisplayContributorFriendlyURLResolver
 		return null;
 	}
 
-	private String _getAssetURLSeparator(String friendlyURL) {
+	private InfoDisplayContributor _getInfoDisplayContributor(
+			String friendlyURL)
+		throws PortalException {
+
+		String infoURLSeparator = _getInfoURLSeparator(friendlyURL);
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.
+				getInfoDisplayContributorByURLSeparator(infoURLSeparator);
+
+		if (infoDisplayContributor == null) {
+			throw new PortalException(
+				"Info display contributor is not available for " +
+					infoURLSeparator);
+		}
+
+		return infoDisplayContributor;
+	}
+
+	private String _getInfoURLSeparator(String friendlyURL) {
 		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
 		return CharPool.SLASH + paths.get(0) + CharPool.SLASH;
@@ -229,9 +228,6 @@ public class AssetDisplayContributorFriendlyURLResolver
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
@@ -240,6 +236,9 @@ public class AssetDisplayContributorFriendlyURLResolver
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

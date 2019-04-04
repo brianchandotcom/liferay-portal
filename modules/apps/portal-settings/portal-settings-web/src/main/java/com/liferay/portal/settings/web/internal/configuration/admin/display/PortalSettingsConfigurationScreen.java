@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
 
 import java.io.IOException;
 
@@ -74,14 +75,15 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 
 		try {
 			request.setAttribute(
-				"deleteConfirmationText",
+				PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT,
 				UnicodeLanguageUtil.get(
 					ResourceBundleUtil.getBundle(
 						request.getLocale(),
 						PortalSettingsConfigurationScreen.class),
 					"are-you-sure-you-want-to-reset-the-configured-values"));
 			request.setAttribute(
-				"portalSettingsConfigurationScreenContributor",
+				PortalSettingsWebKeys.
+					PORTAL_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR,
 				_portalSettingsConfigurationScreenContributor);
 
 			_portalSettingsConfigurationScreenContributor.setAttributes(

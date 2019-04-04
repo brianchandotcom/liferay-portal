@@ -25,7 +25,7 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenContributor = (PortalSettingsConfigurationScreenContributor)request.getAttribute("portalSettingsConfigurationScreenContributor");
+PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenContributor = (PortalSettingsConfigurationScreenContributor)request.getAttribute(PortalSettingsWebKeys.PORTAL_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR);
 %>
 
 <portlet:actionURL var="editCompanyURL" />
@@ -50,7 +50,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 						</portlet:actionURL>
 
 						<%
-						String taglibOnClick = "if (confirm('" + request.getAttribute("deleteConfirmationText") + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
+						String taglibOnClick = "if (confirm('" + request.getAttribute(PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT) + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
 						%>
 
 						<liferay-ui:icon

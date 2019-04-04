@@ -14,9 +14,7 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +51,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.framework.Bundle;
 
@@ -83,7 +82,7 @@ public class Setup {
 		}
 
 		try {
-			Group group = _getGroupForSite(
+			Group group = _getTCKSiteGroup(
 				company.getCompanyId(), user.getUserId());
 
 			long groupId = group.getGroupId();
@@ -203,41 +202,6 @@ public class Setup {
 		return new Portlet(context, portletName, pageName);
 	}
 
-	private static Group _getGroupForSite(long companyId, long userId)
-		throws Exception {
-
-		Group group;
-		String name = "Portlet TCK";
-
-		try {
-			group = GroupLocalServiceUtil.getGroup(companyId, name);
-		}
-		catch (NoSuchGroupException nsge) {
-			String friendlyURL =
-				"/" +
-					StringUtil.replace(
-						StringUtil.toLowerCase(name), CharPool.SPACE,
-						CharPool.DASH);
-
-			group = GroupLocalServiceUtil.addGroup(
-				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null,
-				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				Collections.singletonMap(Locale.US, name),
-				Collections.singletonMap(Locale.US, name),
-				GroupConstants.TYPE_SITE_OPEN, false,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
-				true, false, true, new ServiceContext());
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Setting up site name=[" + group.getName() +
-					"] publicLayouts=[" + group.hasPublicLayouts() + "]");
-		}
-
-		return group;
-	}
-
 	private static Layout _getPortalPageLayout(
 			long userId, long groupId, String portalPageName)
 		throws Exception {
@@ -265,6 +229,28 @@ public class Setup {
 		}
 
 		return portalPageLayout;
+	}
+
+	private static Group _getTCKSiteGroup(long companyId, long userId)
+		throws Exception {
+
+		String name = "Portlet TCK";
+
+		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
+
+		if (group == null) {
+			Map<Locale, String> nameMap = Collections.singletonMap(
+				Locale.US, name);
+
+			group = GroupLocalServiceUtil.addGroup(
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null,
+				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
+				GroupConstants.TYPE_SITE_OPEN, false,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
+				true, false, true, new ServiceContext());
+		}
+
+		return group;
 	}
 
 	private static void _setupPage(

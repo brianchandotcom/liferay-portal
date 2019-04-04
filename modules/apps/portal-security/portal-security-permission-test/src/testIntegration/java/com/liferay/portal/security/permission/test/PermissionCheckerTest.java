@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -911,7 +911,10 @@ public class PermissionCheckerTest {
 	private void _deployRemotePortlet(long companyId, String portletName)
 		throws PortalException {
 
-		Portlet portlet = new PortletImpl(companyId, portletName);
+		Portlet portlet = _portletPersistence.create(0);
+
+		portlet.setCompanyId(companyId);
+		portlet.setPortletId(portletName);
 
 		_portletLocalService.deployRemotePortlet(portlet, "category.hidden");
 	}
@@ -990,6 +993,9 @@ public class PermissionCheckerTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private PortletPersistence _portletPersistence;
 
 	@Inject
 	private ResourceLocalService _resourceLocalService;

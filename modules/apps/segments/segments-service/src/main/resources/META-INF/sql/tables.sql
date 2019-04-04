@@ -1,4 +1,5 @@
 create table SegmentsEntry (
+	uuid_ VARCHAR(75) null,
 	segmentsEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -12,7 +13,8 @@ create table SegmentsEntry (
 	active_ BOOLEAN,
 	criteria TEXT null,
 	source VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table SegmentsEntryRel (

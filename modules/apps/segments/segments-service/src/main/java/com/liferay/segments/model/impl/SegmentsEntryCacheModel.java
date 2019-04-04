@@ -65,9 +65,11 @@ public class SegmentsEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
-		sb.append("{segmentsEntryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", segmentsEntryId=");
 		sb.append(segmentsEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -95,6 +97,8 @@ public class SegmentsEntryCacheModel
 		sb.append(source);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,6 +107,13 @@ public class SegmentsEntryCacheModel
 	@Override
 	public SegmentsEntry toEntityModel() {
 		SegmentsEntryImpl segmentsEntryImpl = new SegmentsEntryImpl();
+
+		if (uuid == null) {
+			segmentsEntryImpl.setUuid("");
+		}
+		else {
+			segmentsEntryImpl.setUuid(uuid);
+		}
 
 		segmentsEntryImpl.setSegmentsEntryId(segmentsEntryId);
 		segmentsEntryImpl.setGroupId(groupId);
@@ -174,6 +185,13 @@ public class SegmentsEntryCacheModel
 			segmentsEntryImpl.setType(type);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			segmentsEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			segmentsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		segmentsEntryImpl.resetOriginalValues();
 
 		return segmentsEntryImpl;
@@ -181,6 +199,8 @@ public class SegmentsEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		segmentsEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -199,10 +219,18 @@ public class SegmentsEntryCacheModel
 		criteria = objectInput.readUTF();
 		source = objectInput.readUTF();
 		type = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(segmentsEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -264,8 +292,11 @@ public class SegmentsEntryCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long segmentsEntryId;
 	public long groupId;
 	public long companyId;
@@ -280,5 +311,6 @@ public class SegmentsEntryCacheModel
 	public String criteria;
 	public String source;
 	public String type;
+	public long lastPublishDate;
 
 }

@@ -124,6 +124,8 @@ public class SegmentsEntryPersistenceTest {
 
 		SegmentsEntry newSegmentsEntry = _persistence.create(pk);
 
+		newSegmentsEntry.setUuid(RandomTestUtil.randomString());
+
 		newSegmentsEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newSegmentsEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -150,11 +152,15 @@ public class SegmentsEntryPersistenceTest {
 
 		newSegmentsEntry.setType(RandomTestUtil.randomString());
 
+		newSegmentsEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_segmentsEntries.add(_persistence.update(newSegmentsEntry));
 
 		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(
 			newSegmentsEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSegmentsEntry.getUuid(), newSegmentsEntry.getUuid());
 		Assert.assertEquals(
 			existingSegmentsEntry.getSegmentsEntryId(),
 			newSegmentsEntry.getSegmentsEntryId());
@@ -191,6 +197,36 @@ public class SegmentsEntryPersistenceTest {
 			existingSegmentsEntry.getSource(), newSegmentsEntry.getSource());
 		Assert.assertEquals(
 			existingSegmentsEntry.getType(), newSegmentsEntry.getType());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSegmentsEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newSegmentsEntry.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -305,10 +341,11 @@ public class SegmentsEntryPersistenceTest {
 
 	protected OrderByComparator<SegmentsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SegmentsEntry", "segmentsEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "segmentsEntryKey", true, "name", true,
-			"description", true, "active", true, "source", true, "type", true);
+			"SegmentsEntry", "uuid", true, "segmentsEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "segmentsEntryKey", true,
+			"name", true, "description", true, "active", true, "source", true,
+			"type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -533,6 +570,17 @@ public class SegmentsEntryPersistenceTest {
 		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(
 			newSegmentsEntry.getPrimaryKey());
 
+		Assert.assertTrue(
+			Objects.equals(
+				existingSegmentsEntry.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingSegmentsEntry, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingSegmentsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsEntry, "getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(
 			Long.valueOf(existingSegmentsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -549,6 +597,8 @@ public class SegmentsEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SegmentsEntry segmentsEntry = _persistence.create(pk);
+
+		segmentsEntry.setUuid(RandomTestUtil.randomString());
 
 		segmentsEntry.setGroupId(RandomTestUtil.nextLong());
 
@@ -575,6 +625,8 @@ public class SegmentsEntryPersistenceTest {
 		segmentsEntry.setSource(RandomTestUtil.randomString());
 
 		segmentsEntry.setType(RandomTestUtil.randomString());
+
+		segmentsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_segmentsEntries.add(_persistence.update(segmentsEntry));
 

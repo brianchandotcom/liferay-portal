@@ -174,11 +174,6 @@ components:
                         document:
                             allOf:
                                 - $ref: "#/components/schemas/ContentDocument"
-                            readOnly: true
-                        documentId:
-                            format: int64
-                            type: integer
-                            writeOnly: true
                         geo:
                             description: https://www.schema.org/GeoCoordinates
                             properties:
@@ -193,21 +188,9 @@ components:
                         image:
                             allOf:
                                 - $ref: "#/components/schemas/ContentDocument"
-                            readOnly: true
-                        imageDescription:
-                            type: string
-                            writeOnly: true
-                        imageId:
-                            format: int64
-                            type: integer
-                            writeOnly: true
                         link:
                             format: uri
                             type: string
-                        structuredContentId:
-                            format: int64
-                            type: integer
-                            writeOnly: true
                         structuredContentLink:
                             properties:
                                 id:

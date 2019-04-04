@@ -7,9 +7,9 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
-	compileOnly project(":apps:asset:asset-display-api")
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:export-import:export-import-api")
+	compileOnly project(":apps:info:info-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")

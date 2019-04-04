@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetDisplayContributorField.class
+	service = InfoDisplayContributorField.class
 )
-public class JournalArticleLastEditorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class JournalArticleLastEditorNameInfoDisplayContributorField
+	implements InfoDisplayContributorField<JournalArticle> {
 
 	@Override
 	public String getKey() {

@@ -12,45 +12,48 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.journal.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryCoverImageAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class JournalArticleLastEditorProfileImageInfoDisplayContributorField
+	implements InfoDisplayContributorField<JournalArticle> {
 
 	@Override
 	public String getKey() {
-		return "coverImage";
+		return "lastEditorProfileImage";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
+			locale, "com.liferay.journal.lang");
 
-		return LanguageUtil.get(resourceBundle, "cover-image");
+		return LanguageUtil.get(resourceBundle, "last-editor-profile-image");
 	}
 
 	@Override
@@ -59,36 +62,30 @@ public class BlogsEntryCoverImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+	public String getValue(JournalArticle article, Locale locale) {
+		User user = _userLocalService.fetchUser(article.getUserId());
 
-		if (themeDisplay != null) {
+		if (user != null) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			try {
-				return blogsEntry.getCoverImageURL(themeDisplay);
+				return user.getPortraitURL(serviceContext.getThemeDisplay());
 			}
 			catch (PortalException pe) {
-				_log.error(pe, pe);
-
-				return null;
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 		}
-		else {
-			return blogsEntry.getCoverImageURL();
-		}
-	}
 
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryCoverImageAssetDisplayContributorField.class);
+		JournalArticleLastEditorProfileImageInfoDisplayContributorField.class);
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

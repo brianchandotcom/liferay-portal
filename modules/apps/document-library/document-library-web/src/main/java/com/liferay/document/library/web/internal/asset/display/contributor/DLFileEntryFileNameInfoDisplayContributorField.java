@@ -14,39 +14,44 @@
 
 package com.liferay.document.library.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AssetDisplayContributor.class)
-public class DLFileEntryAssetDisplayContributor
-	extends BaseAssetDisplayContributor<FileEntry> {
+@Component(
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = InfoDisplayContributorField.class
+)
+public class DLFileEntryFileNameInfoDisplayContributorField
+	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
-	public String getAssetURLSeparator() {
-		return "/d/";
+	public String getKey() {
+		return "fileName";
 	}
 
 	@Override
-	public String getClassName() {
-		return DLFileEntryConstants.getClassName();
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), "file-name");
 	}
 
 	@Override
-	protected Map<String, Object> getClassTypeValues(
-		FileEntry fileEntry, Locale locale) {
+	public String getType() {
+		return "text";
+	}
 
-		return new HashMap<>();
+	@Override
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		return fileEntry.getFileName();
 	}
 
 }

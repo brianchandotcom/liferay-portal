@@ -14,9 +14,9 @@
 
 package com.liferay.blogs.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
+import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -27,18 +27,18 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AssetDisplayContributor.class)
-public class BlogsEntryAssetDisplayContributor
-	extends BaseAssetDisplayContributor<BlogsEntry> {
-
-	@Override
-	public String getAssetURLSeparator() {
-		return "/b/";
-	}
+@Component(service = InfoDisplayContributor.class)
+public class BlogsEntryInfoDisplayContributor
+	extends BaseAssetInfoDisplayContributor<BlogsEntry> {
 
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
+	}
+
+	@Override
+	public String getInfoURLSeparator() {
+		return "/b/";
 	}
 
 	@Override

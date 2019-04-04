@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.document.library.web.internal.asset.display.contributor;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -26,20 +27,21 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = AssetDisplayContributorField.class
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = InfoDisplayContributorField.class
 )
-public class BlogsEntrySubtitleAssetDisplayContributorField
-	implements AssetDisplayContributorField<BlogsEntry> {
+public class DLFileEntryMimeTypeInfoDisplayContributorField
+	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "subtitle";
+		return "mimeType";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "subtitle");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), "content-type");
 	}
 
 	@Override
@@ -48,8 +50,8 @@ public class BlogsEntrySubtitleAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		return blogsEntry.getSubtitle();
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		return fileEntry.getMimeType();
 	}
 
 }

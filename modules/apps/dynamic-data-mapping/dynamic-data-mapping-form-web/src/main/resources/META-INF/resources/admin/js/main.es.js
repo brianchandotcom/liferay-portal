@@ -797,24 +797,29 @@ class Form extends Component {
 			formBasicInfo.classList.add('hide');
 			formBuilderButtons.classList.add('hide');
 			shareURLButton.classList.add('hide');
+
+			if (publishIcon) {
+				publishIcon.classList.add('hide');
+			}
+
+			if (translationManager) {
+				translationManager.classList.add('hide');
+			}
 		}
 		else {
 			formBasicInfo.classList.remove('hide');
 			formBuilderButtons.classList.remove('hide');
 
+			if (publishIcon) {
+				publishIcon.classList.remove('hide');
+			}
+
+			if (translationManager) {
+				translationManager.classList.remove('hide');
+			}
+
 			if (saved || published) {
 				shareURLButton.classList.remove('hide');
-			}
-		}
-
-		if (publishIcon && translationManager) {
-			if (ruleBuilderVisible) {
-				publishIcon.classList.add('hide');
-				translationManager.classList.add('hide');
-			}
-			else {
-				publishIcon.classList.remove('hide');
-				translationManager.classList.remove('hide');
 			}
 		}
 	}

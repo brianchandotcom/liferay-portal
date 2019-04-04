@@ -35,9 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
-import java.net.URI;
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -86,11 +83,7 @@ public class Setup {
 		File configFile = new File(
 			tckDeployFilesDir + "/pluto-portal-driver-config.xml");
 
-		URI configFileURI = configFile.toURI();
-
-		URL configFileURL = configFileURI.toURL();
-
-		Document document = SAXReaderUtil.read(configFileURL);
+		Document document = SAXReaderUtil.read(configFile);
 
 		Element rootElement = document.getRootElement();
 

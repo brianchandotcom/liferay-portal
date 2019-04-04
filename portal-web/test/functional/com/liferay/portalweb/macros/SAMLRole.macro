@@ -82,6 +82,19 @@ definition {
 		AssertClick(locator1 = "Button#SUBMIT", value1 = "Save");
 	}
 
+	macro deleteCertificate {
+		ClickNoError(
+			locator1 = "Button#DELETE_CERTIFICATE",
+			value1 = "Delete Certificate"
+		);
+
+		AssertConfirm.waitForConfirmation(
+			value1 = "Are you sure you want to delete this certificate from the keystore?"
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro enable {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",

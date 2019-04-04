@@ -17,6 +17,7 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.base.CTEntryAggregateLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -92,7 +94,7 @@ public class CTEntryAggregateLocalServiceImpl
 		ctEntryAggregatePersistence.addCTEntry(
 			ctEntryAggregate.getCtEntryAggregateId(), ownerCTEntryId);
 
-		ctCollectionLocalService.addCTEntryAggregateCTCollection(
+		_ctCollectionLocalService.addCTEntryAggregateCTCollection(
 			ctEntryAggregate.getCtEntryAggregateId(), ctCollectionId);
 
 		return ctEntryAggregate;
@@ -174,7 +176,7 @@ public class CTEntryAggregateLocalServiceImpl
 	}
 
 	private boolean _isProductionCTCollectionId(long ctCollectionId) {
-		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
 		if (ctCollection == null) {
@@ -183,5 +185,8 @@ public class CTEntryAggregateLocalServiceImpl
 
 		return ctCollection.isProduction();
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

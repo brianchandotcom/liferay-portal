@@ -21,20 +21,6 @@
 	</target>
 
 	<target name="prepare-tck-app-server">
-		<propertycopy from="app.server.${app.server.type}.bin.dir" name="app.server.bin.dir" override="true" />
-
-		<replaceregexp
-			flags="gm"
-			match="[-]XX[:]MaxMetaspaceSize[=][0-9]+[a-zA-Z]"
-			replace="-XX:MaxMetaspaceSize=1024m"
-		>
-			<fileset
-				dir="${app.server.bin.dir}"
-			>
-				<include name="setenv.*" />
-			</fileset>
-		</replaceregexp>
-
 		<antcall target="prepare-portal-ssl" />
 
 		<propertycopy from="app.server.${app.server.type}.classes.portal.dir" name="app.server.classes.portal.dir" override="true" />
@@ -91,6 +77,8 @@
 		</copy>
 
 		<update-gradle-properties />
+
+		<propertycopy from="app.server.${app.server.type}.bin.dir" name="app.server.bin.dir" override="true" />
 
 		<antcall inheritall="false" target="start-app-server">
 			<param name="app.server.bin.dir" value="${app.server.bin.dir}" />

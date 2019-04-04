@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.search.document.Document;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -33,13 +33,13 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
-import com.liferay.portal.workflow.metrics.internal.util.LocalDateTimeUtil;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.io.Serializable;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Map;
@@ -81,22 +81,22 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				fetchWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinitionId);
 
-		Map<Long, LocalDateTime> map = _getInstanceIdCreateDateMap(
-			workflowMetricsSLADefinition.getCompanyId(),
-			workflowMetricsSLADefinition.getProcessId());
+		Map<Long, LocalDateTime> createLocalDateTimes =
+			_getCreateLocalDateTimes(
+				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinition.getProcessId());
 
 		long startNodeId = _getStartNodeId(
 			workflowMetricsSLADefinition.getCompanyId(),
 			workflowMetricsSLADefinition.getProcessId());
 
-		map.forEach(
-			(instanceId, createDateLocalDateTime) -> {
+		createLocalDateTimes.forEach(
+			(instanceId, createLocalDateTime) -> {
 				Optional<WorkflowMetricsSLAProcessResult> optional =
 					_workflowMetricsSLAProcessor.process(
 						workflowMetricsSLADefinition.getCompanyId(),
-						createDateLocalDateTime, instanceId,
-						LocalDateTime.now(), startNodeId,
-						workflowMetricsSLADefinition);
+						createLocalDateTime, instanceId, LocalDateTime.now(),
+						startNodeId, workflowMetricsSLADefinition);
 
 				optional.ifPresent(
 					_slaProcessResultWorkflowMetricsIndexer::addDocument);
@@ -112,7 +112,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	private Map<Long, LocalDateTime> _getInstanceIdCreateDateMap(
+	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
 		long companyId, long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -142,6 +142,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
+		String formatPattern = PropsUtil.get(
+			PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
 		return Stream.of(
 			searchHits.getSearchHits()
 		).flatMap(
@@ -151,8 +154,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).collect(
 			Collectors.toMap(
 				document -> document.getLong("instanceId"),
-				document -> LocalDateTimeUtil.toLocalDateTime(
-					document, "createDate"))
+				document -> LocalDateTime.parse(
+					document.getString("createDate"),
+					DateTimeFormatter.ofPattern(formatPattern)))
 		);
 	}
 
@@ -180,17 +184,18 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		List<SearchHit> searchHitList = searchHits.getSearchHits();
-
-		if (ListUtil.isEmpty(searchHitList)) {
-			return 0;
-		}
-
-		SearchHit searchHit = searchHitList.get(0);
-
-		Document document = searchHit.getDocument();
-
-		return document.getLong("nodeId");
+		return Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> document.getLong("nodeId")
+		).orElse(
+			0L
+		);
 	}
 
 	@Reference

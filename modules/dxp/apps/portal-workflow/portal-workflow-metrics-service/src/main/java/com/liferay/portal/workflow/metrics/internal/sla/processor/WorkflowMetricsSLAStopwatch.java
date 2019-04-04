@@ -33,22 +33,22 @@ public class WorkflowMetricsSLAStopwatch {
 		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
-	public void complete(LocalDateTime stopLocalDateTime) {
+	public void complete(LocalDateTime endLocalDateTime) {
 		if (isCompleted()) {
 			throw new IllegalStateException("Stopwatch is already completed");
 		}
 
 		if (!isEmpty()) {
-			TaskInterval timeMarkInterval = _timeMarkerIntervals.peek();
+			TaskInterval taskInterval = _taskIntervals.peek();
 
-			timeMarkInterval.setEndDateLocalDateTime(stopLocalDateTime);
+			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
 
 		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.COMPLETED;
 	}
 
-	public List<TaskInterval> getTimeMarkerIntervals() {
-		return _timeMarkerIntervals;
+	public List<TaskInterval> getTaskIntervals() {
+		return _taskIntervals;
 	}
 
 	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
@@ -64,7 +64,7 @@ public class WorkflowMetricsSLAStopwatch {
 	}
 
 	public boolean isEmpty() {
-		return _timeMarkerIntervals.isEmpty();
+		return _taskIntervals.isEmpty();
 	}
 
 	public boolean isRunning() {
@@ -75,15 +75,15 @@ public class WorkflowMetricsSLAStopwatch {
 		return false;
 	}
 
-	public void pause(LocalDateTime pauseLocalDateTime) {
+	public void pause(LocalDateTime endLocalDateTime) {
 		if (isCompleted()) {
 			throw new IllegalStateException("Stopwatch is completed");
 		}
 
 		if (!isEmpty()) {
-			TaskInterval timeMarkInterval = _timeMarkerIntervals.peek();
+			TaskInterval taskInterval = _taskIntervals.peek();
 
-			timeMarkInterval.setEndDateLocalDateTime(pauseLocalDateTime);
+			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
 
 		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.PAUSED;
@@ -98,17 +98,17 @@ public class WorkflowMetricsSLAStopwatch {
 			return;
 		}
 
-		TaskInterval timeMarkInterval = new TaskInterval();
+		TaskInterval taskInterval = new TaskInterval();
 
-		timeMarkInterval.setStartDateLocalDateTime(startLocalDateTime);
-		timeMarkInterval.setEndDateLocalDateTime(LocalDateTime.MAX);
+		taskInterval.setEndLocalDateTime(LocalDateTime.MAX);
+		taskInterval.setStartLocalDateTime(startLocalDateTime);
 
-		_timeMarkerIntervals.push(timeMarkInterval);
+		_taskIntervals.push(taskInterval);
 
 		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.RUNNING;
 	}
 
-	private final Stack<TaskInterval> _timeMarkerIntervals = new Stack<>();
+	private final Stack<TaskInterval> _taskIntervals = new Stack<>();
 	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
 
 }

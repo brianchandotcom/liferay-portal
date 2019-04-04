@@ -123,7 +123,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		when(
 			workflowMetricsSLADefinition.getPauseNodeNames()
 		).thenReturn(
-			"2:enter"
+			"2"
 		);
 
 		when(

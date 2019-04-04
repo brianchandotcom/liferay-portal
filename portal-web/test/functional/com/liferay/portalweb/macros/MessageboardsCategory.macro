@@ -8,6 +8,10 @@ definition {
 
 		PortletEntry.inputName(name = "${categoryName}");
 
+		if ("${categoryDescriptionEnabled}" == "true") {
+			PortletEntry.inputDescription(description = "${categoryDescription}");
+		}
+
 		PortletEntry.save();
 	}
 

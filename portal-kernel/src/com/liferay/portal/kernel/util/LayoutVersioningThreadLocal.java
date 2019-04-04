@@ -42,7 +42,7 @@ public class LayoutVersioningThreadLocal {
 	private static final ThreadLocal<Boolean> _enabled =
 		new CentralizedThreadLocal<>(
 			LayoutVersioningThreadLocal.class + "._enabled",
-			() -> Boolean.TRUE);
+			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutUpdateInProgress =
 		new CentralizedThreadLocal<>(
 			LayoutVersioningThreadLocal.class + "._layoutUpdateInProgress",

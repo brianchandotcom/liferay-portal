@@ -84,6 +84,7 @@ public class SegmentsEntryLocalServiceImpl
 		SegmentsEntry segmentsEntry = segmentsEntryPersistence.create(
 			segmentsEntryId);
 
+		segmentsEntry.setUuid(serviceContext.getUuid());
 		segmentsEntry.setGroupId(groupId);
 		segmentsEntry.setCompanyId(user.getCompanyId());
 		segmentsEntry.setUserId(user.getUserId());

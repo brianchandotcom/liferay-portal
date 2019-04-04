@@ -125,7 +125,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		List<String> actionIds = new ArrayList<>();
 
 		if (dataLayoutPermission.getAddDataLayout()) {
-			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+			actionIds.add(DataActionKeys.ADD_DATA_LAYOUT);
 		}
 
 		if (dataLayoutPermission.getDefinePermissions()) {

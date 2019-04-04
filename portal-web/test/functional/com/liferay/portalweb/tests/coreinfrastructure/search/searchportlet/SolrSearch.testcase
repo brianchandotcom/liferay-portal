@@ -1082,6 +1082,8 @@ definition {
 	}
 
 	test SearchUsingCustomFacet {
+		property portal.suite.search.engine = "disable";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

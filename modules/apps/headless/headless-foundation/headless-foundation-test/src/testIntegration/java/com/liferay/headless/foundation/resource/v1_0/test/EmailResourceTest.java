@@ -81,7 +81,7 @@ public class EmailResourceTest extends BaseEmailResourceTestCase {
 		return new Email() {
 			{
 				email = RandomTestUtil.randomString() + "@liferay.com";
-				primary = RandomTestUtil.randomBoolean();
+				primary = false;
 			}
 		};
 	}

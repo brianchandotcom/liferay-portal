@@ -38,50 +38,53 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Drew Brokke
  */
 @Component(service = {})
-public class
-	PortalSettingsConfigurationScreenContributorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<PortalSettingsConfigurationScreenContributor,
-			 ConfigurationScreen> {
+public class PortalSettingsConfigurationScreenContributorTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, PortalSettingsConfigurationScreenContributor.class,
-			this);
-	}
+			new ServiceTrackerCustomizer
+				<PortalSettingsConfigurationScreenContributor,
+				 ConfigurationScreen>() {
 
-	@Override
-	public ConfigurationScreen addingService(
-		ServiceReference<PortalSettingsConfigurationScreenContributor>
-			serviceReference) {
+				@Override
+				public ConfigurationScreen addingService(
+					ServiceReference
+						<PortalSettingsConfigurationScreenContributor>
+							serviceReference) {
 
-		return _registerConfigurationScreen(
-			_bundleContext.getService(serviceReference));
+					return _registerConfigurationScreen(
+						_bundleContext.getService(serviceReference));
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference
+						<PortalSettingsConfigurationScreenContributor>
+							serviceReference,
+					ConfigurationScreen configurationScreen) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference
+						<PortalSettingsConfigurationScreenContributor>
+							serviceReference,
+					ConfigurationScreen configurationScreen) {
+
+					_unregisterConfigurationScreen(
+						_bundleContext.getService(serviceReference));
+				}
+
+			});
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTracker.close();
-	}
-
-	@Override
-	public void modifiedService(
-		ServiceReference<PortalSettingsConfigurationScreenContributor>
-			serviceReference,
-		ConfigurationScreen service) {
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<PortalSettingsConfigurationScreenContributor>
-			serviceReference,
-		ConfigurationScreen service) {
-
-		_unregisterConfigurationScreen(
-			_bundleContext.getService(serviceReference));
 	}
 
 	private ConfigurationScreen _registerConfigurationScreen(

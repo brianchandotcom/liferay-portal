@@ -795,7 +795,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Portlet#TITLE");
 
-		MouseOver(locator1 = "AP#ASSET_ABSTRACT_EDIT");
+		MouseOver.mouseOverNotVisible(locator1 = "AP#ASSET_EDIT");
 
 		Click.clickNoMouseOver(locator1 = "AP#ASSET_EDIT");
 

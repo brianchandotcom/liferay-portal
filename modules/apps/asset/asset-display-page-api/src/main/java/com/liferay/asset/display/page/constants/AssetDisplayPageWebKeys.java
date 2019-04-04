@@ -12,22 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.display.contributor.constants;
+package com.liferay.asset.display.page.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
-public class AssetDisplayWebKeys {
+public class AssetDisplayPageWebKeys {
 
-	public static final String ASSET_DISPLAY_CONTRIBUTOR =
-		"ASSET_DISPLAY_CONTRIBUTOR";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String ASSET_ENTRY = "ASSET_ENTRY";
-
-	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
+	public static final String CURRENT_I18N_LANGUAGE_ID =
+		"CURRENT_I18N_LANGUAGE_ID";
 
 }

@@ -1,2 +1,8 @@
 dependencies {
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.8"
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.8"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":apps:headless:headless-delivery:headless-delivery-api")
+	testCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testCompile project(":core:petra:petra-function")
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -45,6 +48,7 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -209,7 +213,20 @@ public class Setup {
 			group = GroupLocalServiceUtil.getGroup(companyId, name);
 		}
 		catch (NoSuchGroupException nsge) {
-			group = ServiceUtil.addActiveOpenGroup(userId, name);
+			String friendlyURL =
+				"/" +
+					StringUtil.replace(
+						StringUtil.toLowerCase(name), CharPool.SPACE,
+						CharPool.DASH);
+
+			group = GroupLocalServiceUtil.addGroup(
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null,
+				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				Collections.singletonMap(Locale.US, name),
+				Collections.singletonMap(Locale.US, name),
+				GroupConstants.TYPE_SITE_OPEN, false,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
+				true, false, true, new ServiceContext());
 		}
 
 		if (_log.isInfoEnabled()) {

@@ -14,41 +14,14 @@
 
 package com.liferay.portlet.tck.bridge.setup;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Collections;
-import java.util.Locale;
 
 /**
  * @author Vernon Singleton
  */
 public class ServiceUtil {
-
-	public static Group addActiveOpenGroup(long userId, String name)
-		throws Exception {
-
-		String friendlyURL =
-			"/" +
-				StringUtil.replace(
-					StringUtil.toLowerCase(name), CharPool.SPACE,
-					CharPool.DASH);
-
-		return GroupLocalServiceUtil.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, (String)null, 0L,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			Collections.singletonMap(Locale.US, name),
-			Collections.singletonMap(Locale.US, name),
-			GroupConstants.TYPE_SITE_OPEN, false,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, true,
-			false, true, new ServiceContext());
-	}
 
 	public static Layout addLayout(
 			long userId, long groupId, boolean privateLayout,

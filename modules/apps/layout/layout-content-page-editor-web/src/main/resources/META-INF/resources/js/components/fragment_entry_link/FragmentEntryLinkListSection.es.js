@@ -426,6 +426,7 @@ const ConnectedFragmentEntryLinkListSection = getConnectedComponent(
 		'dropTargetItemType',
 		'hoveredItemId',
 		'hoveredItemType',
+		'layoutData',
 		'selectedMappingTypes',
 		'spritemap'
 	]

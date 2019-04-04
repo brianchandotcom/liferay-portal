@@ -136,7 +136,7 @@
 					] /}
 					{param page: $page /}
 					{param pageIndex: index($page) /}
-					{param ref: 'pageRenderer' /}
+					{param ref: 'pageRenderer' + index($page) /}
 					{param spritemap: $spritemap /}
 					{param total: $total /}
 					{param view: $view /}

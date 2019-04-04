@@ -59,19 +59,6 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/data-layout-permissions")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postContentSpaceDataLayoutPermission(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@NotNull @QueryParam("operation") String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-	}
-
-	@Override
 	@GET
 	@Parameters(
 		value = {
@@ -88,6 +75,19 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/content-spaces/{contentSpaceId}/data-layout-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public void postContentSpaceDataLayoutPermission(
+			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+			@NotNull @QueryParam("operation") String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
 	}
 
 	@Override

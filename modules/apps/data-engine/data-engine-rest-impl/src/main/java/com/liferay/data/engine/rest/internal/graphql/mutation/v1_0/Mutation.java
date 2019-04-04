@@ -155,7 +155,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public void postContentSpaceDataLayoutPermission(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("DataLayoutPermission") DataLayoutPermission
 				dataLayoutPermission)

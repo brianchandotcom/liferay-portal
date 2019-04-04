@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinderRegistryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -81,8 +82,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.Serializable;
@@ -142,7 +141,6 @@ public class DLImpl implements DL {
 	}
 
 	public void destroy() {
-		_serviceTrackerList.close();
 	}
 
 	@Override
@@ -1024,14 +1022,27 @@ public class DLImpl implements DL {
 	public boolean hasViewInContextGroupLayout(
 		long groupId, ThemeDisplay themeDisplay) {
 
-		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			groupId, themeDisplay);
+		try {
+			PortletLayoutFinder portletLayoutFinder =
+				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
+					DLFileEntryConstants.getClassName());
 
-		if (result == null) {
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, groupId);
+
+			if (result == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
-
-		return true;
 	}
 
 	@Override
@@ -1235,8 +1246,12 @@ public class DLImpl implements DL {
 
 		DLFileEntry fileEntry = dlFileVersion.getFileEntry();
 
-		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			fileEntry.getGroupId(), themeDisplay);
+		PortletLayoutFinder portletLayoutFinder =
+			PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
+				DLFileEntryConstants.getClassName());
+
+		PortletLayoutFinder.Result result = portletLayoutFinder.find(
+			themeDisplay, fileEntry.getGroupId());
 
 		if (result != null) {
 			portletId = result.getPortletId();
@@ -1292,28 +1307,6 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
-	}
-
-	private PortletLayoutFinder.Result _getPortletLayoutFinderResult(
-		long groupId, ThemeDisplay themeDisplay) {
-
-		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
-			try {
-				PortletLayoutFinder.Result result = portletLayoutFinder.find(
-					themeDisplay, groupId);
-
-				if (result != null) {
-					return result;
-				}
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";
@@ -1403,10 +1396,5 @@ public class DLImpl implements DL {
 			_populateGenericNamesMap(genericName);
 		}
 	}
-
-	private final ServiceTrackerList<PortletLayoutFinder> _serviceTrackerList =
-		ServiceTrackerCollections.openList(
-			PortletLayoutFinder.class,
-			"(model.class.name=" + FileEntry.class.getName() + ")");
 
 }

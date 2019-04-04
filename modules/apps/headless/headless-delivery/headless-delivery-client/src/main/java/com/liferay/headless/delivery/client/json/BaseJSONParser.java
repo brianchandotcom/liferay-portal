@@ -430,12 +430,18 @@ public abstract class BaseJSONParser<T> {
 
 		_readNextChar();
 
+		if (_isLastChar('}')) {
+			_readNextChar();
+
+			return _getCapturedSubstring();
+		}
+
 		_readWhileLastCharIsWhiteSpace();
 
 		if (_isLastChar('}')) {
 			_readNextChar();
 
-			return "{}";
+			return _getCapturedSubstring();
 		}
 
 		do {

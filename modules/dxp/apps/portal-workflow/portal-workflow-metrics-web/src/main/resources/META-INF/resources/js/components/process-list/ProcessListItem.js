@@ -20,7 +20,7 @@ export default class ProcessListItem extends React.Component {
 			<tr>
 				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
 					<ChildLink to={`/process-dashboard/${id}`}>
-						<span title={title}>{title}</span>
+						<span>{title}</span>
 					</ChildLink>
 				</td>
 

@@ -49,11 +49,11 @@ class FragmentsEditor extends Component {
 	 */
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
-		this._handleDocumentFocus = this._handleDocumentFocus.bind(this);
+		this._handleDocumentKeyUp = this._handleDocumentKeyUp.bind(this);
 		this._handleDocumentMouseOver = this._handleDocumentMouseOver.bind(this);
 
 		document.addEventListener('click', this._handleDocumentClick, true);
-		document.addEventListener('focusin', this._handleDocumentFocus);
+		document.addEventListener('keyup', this._handleDocumentKeyUp);
 		document.addEventListener('mouseover', this._handleDocumentMouseOver);
 	}
 
@@ -63,7 +63,7 @@ class FragmentsEditor extends Component {
 	 */
 	disposed() {
 		document.removeEventListener('click', this._handleDocumentClick, true);
-		document.removeEventListener('focusin', this._handleDocumentFocus);
+		document.removeEventListener('keyup', this._handleDocumentKeyUp);
 		document.removeEventListener('mouseover', this._handleDocumentMouseOver);
 	}
 
@@ -77,11 +77,11 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * @param {FocusEvent} event
+	 * @param {KeyboardEvent} event
 	 * @private
 	 * @review
 	 */
-	_handleDocumentFocus(event) {
+	_handleDocumentKeyUp(event) {
 		this._updateActiveItem(event);
 	}
 

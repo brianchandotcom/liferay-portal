@@ -171,7 +171,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					);
 				},
 				function(error) {
-					console.log(error);
+					throw error;
 				}
 			);
 		}

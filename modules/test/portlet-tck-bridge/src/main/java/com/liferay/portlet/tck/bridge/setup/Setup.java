@@ -92,7 +92,7 @@ public class Setup {
 		try {
 			group = GroupLocalServiceUtil.addGroup(
 				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				(String)null, 0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+				null, 0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
 				nameMap, GroupConstants.TYPE_SITE_OPEN, false,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
 				true, false, true, new ServiceContext());

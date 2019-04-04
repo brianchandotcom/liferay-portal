@@ -22,7 +22,7 @@ import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributorRegistryUtil;
 import com.liferay.asset.util.comparator.AssetEntryUsageModifiedDateComparator;
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -206,9 +206,7 @@ public class AssetEntryUsagesDisplayContext {
 			FragmentEntryLocalServiceUtil.getFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
 
-		if (fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_COMPONENT) {
-
+		if (fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT) {
 			return LanguageUtil.format(
 				request, "x-element", fragmentEntry.getName());
 		}

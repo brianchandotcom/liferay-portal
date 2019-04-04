@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.contributor;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -131,7 +131,7 @@ public abstract class BaseFragmentCollectionContributor
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
 		String thumbnailURL = _getImagePreviewURL(
 			jsonObject.getString("thumbnail"));
-		int type = FragmentEntryTypeConstants.getTypeFromLabel(
+		int type = FragmentConstants.getTypeFromLabel(
 			jsonObject.getString("type"));
 
 		FragmentEntry fragmentEntry =

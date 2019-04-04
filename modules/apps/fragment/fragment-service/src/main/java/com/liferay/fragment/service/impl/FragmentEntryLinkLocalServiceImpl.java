@@ -100,10 +100,10 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLink.setEditableValues(editableValues);
 
+		fragmentEntryLink.setNamespace(StringUtil.randomId());
 		fragmentEntryLink.setPosition(position);
 		fragmentEntryLink.setLastPropagationDate(
 			serviceContext.getCreateDate(new Date()));
-		fragmentEntryLink.setNamespace(StringUtil.randomId());
 
 		fragmentEntryLinkPersistence.update(fragmentEntryLink);
 
@@ -382,7 +382,6 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLink.setCss(fragmentEntry.getCss());
 			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 			fragmentEntryLink.setJs(fragmentEntry.getJs());
-
 			fragmentEntryLink.setLastPropagationDate(new Date());
 
 			updateClassedModel(

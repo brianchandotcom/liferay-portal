@@ -15,7 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -205,13 +205,13 @@ public class FragmentManagementToolbarDisplayContext
 			{
 				addPrimaryDropdownItem(
 					_getAddFragmentEntryDropdownItem(
-						FragmentEntryTypeConstants.TYPE_SECTION,
-						FragmentEntryTypeConstants.TYPE_SECTION_LABEL));
+						FragmentConstants.TYPE_SECTION,
+						FragmentConstants.TYPE_SECTION_LABEL));
 
 				addPrimaryDropdownItem(
 					_getAddFragmentEntryDropdownItem(
-						FragmentEntryTypeConstants.TYPE_COMPONENT,
-						FragmentEntryTypeConstants.TYPE_COMPONENT_LABEL));
+						FragmentConstants.TYPE_COMPONENT,
+						FragmentConstants.TYPE_COMPONENT_LABEL));
 			}
 		};
 	}

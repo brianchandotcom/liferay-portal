@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentEntryActionDropdownItemsProvider;
@@ -124,9 +124,7 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		if (_fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_COMPONENT) {
-
+		if (_fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT) {
 			return "file-icon-color-4";
 		}
 
@@ -135,9 +133,7 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		if (_fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_COMPONENT) {
-
+		if (_fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT) {
 			return "cards2";
 		}
 

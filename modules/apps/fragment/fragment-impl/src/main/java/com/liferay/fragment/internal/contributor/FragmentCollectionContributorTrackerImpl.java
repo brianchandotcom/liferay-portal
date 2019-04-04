@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.internal.contributor;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -63,7 +63,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 		_fragmentCollectionContributors.add(fragmentCollectionContributor);
 
-		for (int type : _SUPPORTED_FRAGMENT_ENTRY_TYPES) {
+		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(type)) {
 
@@ -76,7 +76,7 @@ public class FragmentCollectionContributorTrackerImpl
 	protected void unsetFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
-		for (int type : _SUPPORTED_FRAGMENT_ENTRY_TYPES) {
+		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(type)) {
 
@@ -88,9 +88,8 @@ public class FragmentCollectionContributorTrackerImpl
 		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
 	}
 
-	private static final int[] _SUPPORTED_FRAGMENT_ENTRY_TYPES = {
-		FragmentEntryTypeConstants.TYPE_COMPONENT,
-		FragmentEntryTypeConstants.TYPE_SECTION
+	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {
+		FragmentConstants.TYPE_COMPONENT, FragmentConstants.TYPE_SECTION
 	};
 
 	private final Map<String, FragmentEntry>

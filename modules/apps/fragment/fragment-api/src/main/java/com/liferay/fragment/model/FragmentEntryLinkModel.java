@@ -336,6 +336,21 @@ public interface FragmentEntryLinkModel
 	public void setEditableValues(String editableValues);
 
 	/**
+	 * Returns the namespace of this fragment entry link.
+	 *
+	 * @return the namespace of this fragment entry link
+	 */
+	@AutoEscape
+	public String getNamespace();
+
+	/**
+	 * Sets the namespace of this fragment entry link.
+	 *
+	 * @param namespace the namespace of this fragment entry link
+	 */
+	public void setNamespace(String namespace);
+
+	/**
 	 * Returns the position of this fragment entry link.
 	 *
 	 * @return the position of this fragment entry link
@@ -350,6 +365,21 @@ public interface FragmentEntryLinkModel
 	public void setPosition(int position);
 
 	/**
+	 * Returns the renderer key of this fragment entry link.
+	 *
+	 * @return the renderer key of this fragment entry link
+	 */
+	@AutoEscape
+	public String getRendererKey();
+
+	/**
+	 * Sets the renderer key of this fragment entry link.
+	 *
+	 * @param rendererKey the renderer key of this fragment entry link
+	 */
+	public void setRendererKey(String rendererKey);
+
+	/**
 	 * Returns the last propagation date of this fragment entry link.
 	 *
 	 * @return the last propagation date of this fragment entry link
@@ -362,21 +392,6 @@ public interface FragmentEntryLinkModel
 	 * @param lastPropagationDate the last propagation date of this fragment entry link
 	 */
 	public void setLastPropagationDate(Date lastPropagationDate);
-
-	/**
-	 * Returns the namespace of this fragment entry link.
-	 *
-	 * @return the namespace of this fragment entry link
-	 */
-	@AutoEscape
-	public String getNamespace();
-
-	/**
-	 * Sets the namespace of this fragment entry link.
-	 *
-	 * @param namespace the namespace of this fragment entry link
-	 */
-	public void setNamespace(String namespace);
 
 	/**
 	 * Returns the last publish date of this fragment entry link.

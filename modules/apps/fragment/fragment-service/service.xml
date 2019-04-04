@@ -172,9 +172,10 @@
 		<column name="html" type="String" />
 		<column name="js" type="String" />
 		<column name="editableValues" type="String" />
-		<column name="position" type="int" />
-		<column name="lastPropagationDate" type="Date" />
 		<column name="namespace" type="String" />
+		<column name="position" type="int" />
+		<column name="rendererKey" type="String" />
+		<column name="lastPropagationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

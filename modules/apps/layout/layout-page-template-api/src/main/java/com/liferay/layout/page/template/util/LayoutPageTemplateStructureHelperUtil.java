@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.util;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
@@ -89,8 +89,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 				fragmentEntryLink.getFragmentEntryId());
 
 		if ((fragmentEntry != null) &&
-			(fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_COMPONENT)) {
+			(fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT)) {
 
 			return "fragments-editor-component-row";
 		}

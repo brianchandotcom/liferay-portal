@@ -15,7 +15,7 @@
 package com.liferay.fragment.model.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
@@ -65,7 +65,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getTypeLabel() {
-		return FragmentEntryTypeConstants.getTypeLabel(getType());
+		return FragmentConstants.getTypeLabel(getType());
 	}
 
 	@Override

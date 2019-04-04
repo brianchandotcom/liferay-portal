@@ -14,22 +14,26 @@
 
 package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal;
 
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author Cristina González
@@ -52,6 +56,56 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_gCloudNaturalLanguageDocumentAssetAutoTagProvider, "_http",
 			new HttpImpl());
+	}
+
+	@Test
+	public void testGetClassificationTagNamesWithDisabledClassifcationEndpoint()
+		throws Exception {
+
+		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+
+					@Override
+					public String apiKey() {
+						return null;
+					}
+
+					@Override
+					public boolean classificationEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float confidence() {
+						return 0;
+					}
+
+					@Override
+					public boolean entityEndpointEnabled() {
+						return false;
+					}
+
+					@Override
+					public float salience() {
+						return 0;
+					}
+
+				};
+
+		Set<String> tagNames = ReflectionTestUtil.invoke(
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
+			"_getClassificationTagNames",
+			new Class<?>[] {
+				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					class,
+				String.class
+			},
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			tagNames.toString(), Collections.emptySet(), tagNames);
 	}
 
 	@Test

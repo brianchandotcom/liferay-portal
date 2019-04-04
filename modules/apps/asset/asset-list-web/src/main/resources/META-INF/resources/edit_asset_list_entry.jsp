@@ -88,7 +88,6 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 											PortletURL editAssetListEntryURL = renderResponse.createRenderURL();
 
 											editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-											editAssetListEntryURL.setParameter("redirect", currentURL);
 											editAssetListEntryURL.setParameter("assetListEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getAssetListEntryId()));
 											editAssetListEntryURL.setParameter("segmentsEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getSegmentsEntryId()));
 											%>

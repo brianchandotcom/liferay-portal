@@ -16,6 +16,7 @@ package com.liferay.fragment.util;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -24,6 +25,8 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -213,7 +216,17 @@ public class FragmentEntryRenderUtil {
 
 		template.prepare(request);
 
-		template.processTemplate(unsyncStringWriter);
+		try {
+			template.processTemplate(unsyncStringWriter);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to render fragment entry", pe);
+			}
+
+			throw new FragmentEntryContentException(
+				"an-unexpected-error-occurred");
+		}
 
 		return unsyncStringWriter.toString();
 	}
@@ -238,6 +251,9 @@ public class FragmentEntryRenderUtil {
 
 		return unsyncStringWriter.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryRenderUtil.class);
 
 	private static final ServiceTracker<PortletRegistry, PortletRegistry>
 		_portletRegistryServiceTracler = ServiceTrackerFactory.open(

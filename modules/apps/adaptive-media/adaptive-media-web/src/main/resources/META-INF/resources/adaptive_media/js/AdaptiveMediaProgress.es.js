@@ -112,13 +112,8 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @protected
 	 */
 	updateProgressBar_(adaptedImages, totalImages) {
-		let percentage = Math.round(adaptedImages / totalImages * 100) || 0;
-
-		this.progressBarClass_ = (percentage >= 100) ? 'progress-bar-success' : '';
-		this.progressBarLabel_ = percentage + '%';
-		this.progressBarValue_ = percentage;
+		this.percentage_ = Math.round(adaptedImages / totalImages * 100) || 0;
 		this.progressBarTooltip_ = this.tooltip ? this.tooltip : adaptedImages + '/' + totalImages;
-		this.percentage_ = percentage;
 	}
 }
 
@@ -187,39 +182,6 @@ AdaptiveMediaProgress.STATE = {
 	 */
 	percentageUrl: {
 		validator: core.isString
-	},
-
-	/**
-	 * The progress bar class.
-	 *
-	 * @memberof AdaptiveMediaProgress
-	 * @protected
-	 * @type {String}
-	 */
-	progressBarClass_: {
-		validator: core.isString
-	},
-
-	/**
-	 * The progress bar label.
-	 *
-	 * @memberof AdaptiveMediaProgress
-	 * @protected
-	 * @type {String}
-	 */
-	progressBarLabel_: {
-		validator: core.isString
-	},
-
-	/**
-	 * The progress bar value.
-	 *
-	 * @memberof AdaptiveMediaProgress
-	 * @protected
-	 * @type {Number}
-	 */
-	progressBarValue_: {
-		validator: core.isNumber
 	},
 
 	/**

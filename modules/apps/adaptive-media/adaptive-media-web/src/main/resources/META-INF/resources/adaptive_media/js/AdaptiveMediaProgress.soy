@@ -4,7 +4,7 @@
  * It renders a progressbar and a loading icon.
  *
  * @param disabled
- * @param progressBarValue_
+ * @param percentage_
  * @param progressBarTooltip_
  * @param spritemap
  * @param? id_
@@ -24,7 +24,7 @@
 		<div class="progress-container {$disabled ? 'disabled' : ''}">
 			{call ClayProgressBar.render}
 				{param spritemap: $spritemap /}
-				{param value: $progressBarValue_ /}
+				{param value: $percentage_ /}
 			{/call}
 		</div>
 

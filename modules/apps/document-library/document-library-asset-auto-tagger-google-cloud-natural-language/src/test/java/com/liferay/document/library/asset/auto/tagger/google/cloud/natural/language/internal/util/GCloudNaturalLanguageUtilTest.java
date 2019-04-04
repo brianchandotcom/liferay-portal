@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
@@ -80,6 +81,26 @@ public class GCloudNaturalLanguageUtilTest {
 							_fileVersion.getContentStream(false))),
 					5000),
 				StringPool.BLANK));
+	}
+
+	@Test
+	public void testGetTypeWithMSWord() {
+		Assert.assertEquals(
+			"PLAIN_TEXT",
+			GCloudNaturalLanguageUtil.getType(ContentTypes.APPLICATION_MSWORD));
+	}
+
+	@Test
+	public void testGetTypeWithTextPlain() {
+		Assert.assertEquals(
+			"PLAIN_TEXT",
+			GCloudNaturalLanguageUtil.getType(ContentTypes.TEXT_PLAIN));
+	}
+
+	@Test
+	public void testGetTypeWitHTML() {
+		Assert.assertEquals(
+			"HTML", GCloudNaturalLanguageUtil.getType(ContentTypes.TEXT_HTML));
 	}
 
 	@Test

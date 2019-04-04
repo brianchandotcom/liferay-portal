@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -119,8 +121,9 @@ public class DataEnginePermissionUtil {
 		return roles;
 	}
 
-	public static void persistPermission(
-			Company company, List<String> actionIds, String operation,
+	public static void persistModelPermission(
+			List<String> actionIds, Company company, long contentSpaceId,
+			long modelId, String operation, String resourceName,
 			ResourcePermissionLocalService resourcePermissionLocalService,
 			RoleLocalService roleLocalService, String[] roleNames)
 		throws Exception {
@@ -128,7 +131,40 @@ public class DataEnginePermissionUtil {
 		if (StringUtil.equalsIgnoreCase(
 				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
 
-			List<Role> roles = getRoles(company, roleLocalService, roleNames);
+			ModelPermissions modelPermissions = new ModelPermissions();
+
+			for (String roleName : roleNames) {
+				modelPermissions.addRolePermissions(
+					roleName, ArrayUtil.toStringArray(actionIds));
+			}
+
+			resourcePermissionLocalService.addModelResourcePermissions(
+				company.getCompanyId(), contentSpaceId,
+				PrincipalThreadLocal.getUserId(), resourceName,
+				String.valueOf(modelId), modelPermissions);
+		}
+		else {
+			for (Role role : getRoles(company, roleLocalService, roleNames)) {
+				for (String actionId : actionIds) {
+					resourcePermissionLocalService.removeResourcePermission(
+						company.getCompanyId(), resourceName,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(modelId), role.getRoleId(), actionId);
+				}
+			}
+		}
+	}
+
+	public static void persistPermission(
+			List<String> actionIds, Company company, String operation,
+			ResourcePermissionLocalService resourcePermissionLocalService,
+			RoleLocalService roleLocalService, String[] roleNames)
+		throws Exception {
+
+		List<Role> roles = getRoles(company, roleLocalService, roleNames);
+
+		if (StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
 
 			for (Role role : roles) {
 				resourcePermissionLocalService.setResourcePermissions(
@@ -139,8 +175,6 @@ public class DataEnginePermissionUtil {
 			}
 		}
 		else {
-			List<Role> roles = getRoles(company, roleLocalService, roleNames);
-
 			for (Role role : roles) {
 				ResourcePermission resourcePermission =
 					resourcePermissionLocalService.fetchResourcePermission(

@@ -17,7 +17,6 @@ package com.liferay.data.engine.rest.internal.resource.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
-import com.liferay.data.engine.rest.internal.constants.DataEngineConstants;
 import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
@@ -30,8 +29,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -41,17 +38,12 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -183,7 +175,7 @@ public class DataRecordCollectionResourceImpl
 		}
 
 		DataEnginePermissionUtil.persistPermission(
-			contextCompany, actionIds, operation,
+			actionIds, contextCompany, operation,
 			_resourcePermissionLocalService, _roleLocalService,
 			dataRecordCollectionPermission.getRoleNames());
 	}
@@ -227,21 +219,11 @@ public class DataRecordCollectionResourceImpl
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
 
-		if (!StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
-			!StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
-
-			throw new BadRequestException(
-				"Operation must be 'delete' or 'save'");
-		}
-
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 			dataRecordCollectionId);
 
-		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.DEFINE_PERMISSIONS, ddlRecordSet.getGroupId(),
-			_groupLocalService);
+		DataEnginePermissionUtil.checkPermissionOperation(
+			ddlRecordSet.getGroupId(), _groupLocalService, operation);
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -261,40 +243,12 @@ public class DataRecordCollectionResourceImpl
 			return;
 		}
 
-		if (StringUtil.equalsIgnoreCase(
-				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
-
-			ModelPermissions modelPermissions = new ModelPermissions();
-
-			for (String roleName :
-					dataRecordCollectionPermission.getRoleNames()) {
-
-				modelPermissions.addRolePermissions(
-					roleName, ArrayUtil.toStringArray(actionIds));
-			}
-
-			_resourcePermissionLocalService.addModelResourcePermissions(
-				contextCompany.getCompanyId(), ddlRecordSet.getGroupId(),
-				PrincipalThreadLocal.getUserId(),
-				DataRecordCollectionConstants.RESOURCE_NAME,
-				String.valueOf(dataRecordCollectionId), modelPermissions);
-		}
-		else {
-			List<Role> roles = DataEnginePermissionUtil.getRoles(
-				contextCompany, _roleLocalService,
-				dataRecordCollectionPermission.getRoleNames());
-
-			for (Role role : roles) {
-				for (String actionId : actionIds) {
-					_resourcePermissionLocalService.removeResourcePermission(
-						contextCompany.getCompanyId(),
-						DataRecordCollectionConstants.RESOURCE_NAME,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(dataRecordCollectionId),
-						role.getRoleId(), actionId);
-				}
-			}
-		}
+		DataEnginePermissionUtil.persistModelPermission(
+			actionIds, contextCompany, ddlRecordSet.getGroupId(),
+			dataRecordCollectionId, operation,
+			DataRecordCollectionConstants.RESOURCE_NAME,
+			_resourcePermissionLocalService, _roleLocalService,
+			dataRecordCollectionPermission.getRoleNames());
 	}
 
 	@Override

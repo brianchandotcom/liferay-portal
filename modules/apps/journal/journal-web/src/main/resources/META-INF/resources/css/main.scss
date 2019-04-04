@@ -1,5 +1,7 @@
 @import "mixins";
 
+$toolbarDesktopHeight: 62px;
+$toolbarHeight: 110px;
 $toolbarZIndex: 971;
 
 $controlMenuDesktopHeight: 56px;
@@ -79,9 +81,32 @@ $productMenuWidth: 320px;
 				width: calc(100% - #{$productMenuWidth});
 			}
 
-			@media (min-width: 768px) {
-				min-height: $controlMenuDesktopHeight;
-				top: $controlMenuDesktopHeight;
+			> .container-fluid {
+				padding: 0;
+
+				> .tbar-nav {
+					flex-wrap: wrap;
+
+					> .tbar-item {
+						padding: 0.5em;
+					}
+
+					> .tbar-item:first-child {
+						border-top: solid thin #E7E7ED;
+						order: 1;
+						width: 100%;
+					}
+
+					> .tbar-item:last-child {
+						flex-grow: 1;
+						padding-right: 1em;
+
+						> .tbar-section {
+							display: flex;
+							justify-content: flex-end;
+						}
+					}
+				}
 			}
 
 			.form-text {
@@ -89,6 +114,8 @@ $productMenuWidth: 320px;
 			}
 
 			.input-localized {
+				flex-direction: row-reverse;
+
 				.form-validator-stack {
 					display: none;
 				}
@@ -102,27 +129,48 @@ $productMenuWidth: 320px;
 					padding-right: 0.5rem;
 				}
 			}
+
+			@media (min-width: 768px) {
+				min-height: $controlMenuDesktopHeight;
+				top: $controlMenuDesktopHeight;
+
+				> .container-fluid > .tbar-nav {
+					> .tbar-item:first-child {
+						border-top: none;
+						order: 0;
+						width: auto;
+					}
+
+					> .tbar-item:last-child {
+						flex-grow: 0;
+					}
+				}
+
+				.input-localized {
+					flex-direction: row;
+				}
+			}
 		}
 
 		.contextual-sidebar-content {
-			margin-top: $controlMenuHeight;
+			margin-top: $toolbarHeight;
 
 			@media (min-width: 768px) {
-				margin-top: $controlMenuDesktopHeight;
+				margin-top: $toolbarDesktopHeight;
 			}
 		}
 
 		.edit-article-sidebar {
 			border-left: 1px #E7E7ED solid;
 			box-shadow: none;
-			height: calc(100vh - #{$controlMenuHeight * 2}) !important;
+			height: calc(100vh - #{$controlMenuHeight + $toolbarHeight}) !important;
 			overflow-y: scroll;
-			top: $controlMenuHeight * 2 !important;
+			top: $controlMenuHeight + $toolbarHeight !important;
 			z-index: 1;
 
 			@media (min-width: 768px) {
-				height: calc(100vh - #{$controlMenuDesktopHeight * 2}) !important;
-				top: $controlMenuDesktopHeight * 2 !important;
+				height: calc(100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}) !important;
+				top: $controlMenuDesktopHeight + $toolbarDesktopHeight !important;
 			}
 
 			.article-content-description {

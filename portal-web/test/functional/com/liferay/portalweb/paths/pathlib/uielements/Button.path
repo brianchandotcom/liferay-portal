@@ -185,12 +185,17 @@
 </tr>
 <tr>
 	<td>CREATE_CERTIFICATE</td>
-	<td>//button[contains(.,'Create Certificate')]</td>
+	<td>//button[contains(@onclick,'${key_certificateUsage}')]/span[contains(.,'Create Certificate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE</td>
 	<td>//*[@data-qa-id='deleteButton'] | //button[contains(.,'Delete')] | //button[contains(.,'delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_CERTIFICATE</td>
+	<td>//button[contains(.,'Delete Certificate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,7 +225,7 @@
 </tr>
 <tr>
 	<td>DOWNLOAD_CERTIFICATE</td>
-	<td>//a[contains(.,'Download Certificate')]</td>
+	<td>//a[contains(@href,'${key_certificateUsage}')]/span[contains(.,'Download Certificate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -440,7 +445,7 @@
 </tr>
 <tr>
 	<td>REPLACE_CERTIFICATE</td>
-	<td>//button[contains(.,'Replace Certificate')]</td>
+	<td>//button[contains(@onclick,'${key_certificateUsage}')]/span[contains(.,'Replace Certificate')]</td>
 	<td></td>
 </tr>
 <tr>

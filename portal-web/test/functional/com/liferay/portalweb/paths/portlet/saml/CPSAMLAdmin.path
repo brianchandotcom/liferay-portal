@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD</td>
-	<td>//input[contains(@id,'saml-keystore-credential-password')]</td>
+	<td>//input[contains(@id,'credential-password')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -129,34 +129,27 @@ public class Setup {
 
 			Attribute pageNameAttribute = pageElement.attribute("name");
 
-			_setupPage(
-				user.getUserId(), group.getGroupId(),
-				pageNameAttribute.getValue(), portletIds);
+			String pageName = pageNameAttribute.getValue();
+
+			Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
+				user.getUserId(), group.getGroupId(), true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, pageName, pageName,
+				pageName, LayoutConstants.TYPE_PORTLET, false,
+				"/" + StringUtil.toLowerCase(pageName), new ServiceContext());
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)portalPageLayout.getLayoutType();
+
+			layoutTypePortlet.setLayoutTemplateId(
+				user.getUserId(), "1_column", false);
+
+			for (String portletId : portletIds) {
+				layoutTypePortlet.addPortletId(
+					user.getUserId(), portletId, "column-1", -1, false);
+			}
+
+			LayoutLocalServiceUtil.updateLayout(portalPageLayout);
 		}
-	}
-
-	private static void _setupPage(
-			long userId, long groupId, String portalPageName,
-			List<String> portletIds)
-		throws Exception {
-
-		Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			portalPageName, portalPageName, portalPageName,
-			LayoutConstants.TYPE_PORTLET, false,
-			"/" + StringUtil.toLowerCase(portalPageName), new ServiceContext());
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)portalPageLayout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
-
-		for (String portletId : portletIds) {
-			layoutTypePortlet.addPortletId(
-				userId, portletId, "column-1", -1, false);
-		}
-
-		LayoutLocalServiceUtil.updateLayout(portalPageLayout);
 	}
 
 	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";

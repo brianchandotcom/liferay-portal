@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -76,90 +73,73 @@ public class Setup {
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 				company.getMx());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-		}
-
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			Locale.US, _TCK_SITE_GROUP_NAME);
 
-		try {
-			group = GroupLocalServiceUtil.addGroup(
-				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null,
-				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
-				GroupConstants.TYPE_SITE_OPEN, false,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
-				true, false, true, new ServiceContext());
+		group = GroupLocalServiceUtil.addGroup(
+			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0L,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
+			GroupConstants.TYPE_SITE_OPEN, false,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck", true,
+			false, true, new ServiceContext());
 
-			File configFile = new File(
-				tckDeployFilesDir + "/pluto-portal-driver-config.xml");
+		File configFile = new File(
+			tckDeployFilesDir + "/pluto-portal-driver-config.xml");
 
-			URI configFileURI = configFile.toURI();
+		URI configFileURI = configFile.toURI();
 
-			URL configFileURL = configFileURI.toURL();
+		URL configFileURL = configFileURI.toURL();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"setupPortletTCKSite: configFileURL = " +
-						configFileURL.toString());
-			}
-
-			Document document = SAXReaderUtil.read(configFileURL);
-
-			Element rootElement = document.getRootElement();
-
-			Element renderConfigElement = rootElement.element("render-config");
-
-			Iterator<Element> pageElementIterator =
-				renderConfigElement.elementIterator("page");
-
-			while (pageElementIterator.hasNext()) {
-				Element pageElement = pageElementIterator.next();
-
-				Iterator<Element> portletElementIterator =
-					pageElement.elementIterator("portlet");
-
-				List<String> portletIds = new ArrayList<>();
-
-				while (portletElementIterator.hasNext()) {
-					Element portletElement = portletElementIterator.next();
-
-					Attribute contextAttribute = portletElement.attribute(
-						"context");
-
-					String context = contextAttribute.getValue();
-
-					Matcher matcher = _portletContextPattern.matcher(context);
-
-					if (matcher.find()) {
-						Attribute nameAttribute = portletElement.attribute(
-							"name");
-
-						portletIds.add(
-							nameAttribute.getValue() + "_WAR_" +
-								matcher.group(1));
-					}
-				}
-
-				if (portletIds.isEmpty()) {
-					continue;
-				}
-
-				Attribute pageNameAttribute = pageElement.attribute("name");
-
-				_setupPage(
-					user.getUserId(), group.getGroupId(),
-					pageNameAttribute.getValue(), portletIds);
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"setupPortletTCKSite: configFileURL = " +
+					configFileURL.toString());
 		}
-		finally {
-			if (permissionChecker == null) {
-				PermissionThreadLocal.setPermissionChecker(null);
+
+		Document document = SAXReaderUtil.read(configFileURL);
+
+		Element rootElement = document.getRootElement();
+
+		Element renderConfigElement = rootElement.element("render-config");
+
+		Iterator<Element> pageElementIterator =
+			renderConfigElement.elementIterator("page");
+
+		while (pageElementIterator.hasNext()) {
+			Element pageElement = pageElementIterator.next();
+
+			Iterator<Element> portletElementIterator =
+				pageElement.elementIterator("portlet");
+
+			List<String> portletIds = new ArrayList<>();
+
+			while (portletElementIterator.hasNext()) {
+				Element portletElement = portletElementIterator.next();
+
+				Attribute contextAttribute = portletElement.attribute(
+					"context");
+
+				String context = contextAttribute.getValue();
+
+				Matcher matcher = _portletContextPattern.matcher(context);
+
+				if (matcher.find()) {
+					Attribute nameAttribute = portletElement.attribute("name");
+
+					portletIds.add(
+						nameAttribute.getValue() + "_WAR_" + matcher.group(1));
+				}
 			}
+
+			if (portletIds.isEmpty()) {
+				continue;
+			}
+
+			Attribute pageNameAttribute = pageElement.attribute("name");
+
+			_setupPage(
+				user.getUserId(), group.getGroupId(),
+				pageNameAttribute.getValue(), portletIds);
 		}
 	}
 
@@ -184,7 +164,8 @@ public class Setup {
 		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
 		for (String portletId : portletIds) {
-			layoutTypePortlet.addPortletId(userId, portletId, "column-1", -1);
+			layoutTypePortlet.addPortletId(
+				userId, portletId, "column-1", -1, false);
 		}
 
 		LayoutLocalServiceUtil.updateLayout(portalPageLayout);

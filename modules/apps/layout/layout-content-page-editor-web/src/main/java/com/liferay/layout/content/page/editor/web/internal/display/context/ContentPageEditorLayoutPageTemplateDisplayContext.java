@@ -58,12 +58,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		SoyContext soyContext = super.getEditorSoyContext();
 
 		soyContext.put(
-			"getAssetDisplayContributorsURL",
-			getFragmentEntryActionURL(
-				"/content_layout/get_asset_display_contributors")
+			"getInfoClassTypesURL",
+			getFragmentEntryActionURL("/content_layout/get_info_class_types")
 		).put(
-			"getAssetClassTypesURL",
-			getFragmentEntryActionURL("/content_layout/get_asset_class_types")
+			"getInfoDisplayContributorsURL",
+			getFragmentEntryActionURL(
+				"/content_layout/get_info_display_contributors")
 		).put(
 			"lastSaveDate", StringPool.BLANK
 		);

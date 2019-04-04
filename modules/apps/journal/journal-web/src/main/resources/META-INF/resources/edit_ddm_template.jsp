@@ -74,7 +74,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		</div>
 	</nav>
 
-	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
 		<div class="sidebar-header">
 			<h4 class="component-title">
 				<liferay-ui:message key="properties" />
@@ -116,14 +116,17 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		}
 	);
 
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+
+	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
+		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+	}
 
 	if (contextualSidebarButton) {
 		contextualSidebarButton.addEventListener(
 			'click',
 			function(event) {
-				var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
-
 				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
 					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
 

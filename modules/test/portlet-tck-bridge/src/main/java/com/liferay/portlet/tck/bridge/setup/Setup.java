@@ -91,9 +91,9 @@ public class Setup {
 
 		try {
 			group = GroupLocalServiceUtil.addGroup(
-				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				null, 0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
-				nameMap, GroupConstants.TYPE_SITE_OPEN, false,
+				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null,
+				0L, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
+				GroupConstants.TYPE_SITE_OPEN, false,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/portlet-tck",
 				true, false, true, new ServiceContext());
 
@@ -203,11 +203,15 @@ public class Setup {
 
 		List<Portlet> portlets = portalPage.getPortlets();
 
-		Layout portalPageLayout = ServiceUtil.addLayout(
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+
+		Layout portalPageLayout = LayoutLocalServiceUtil.addLayout(
 			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			portalPageName, portalPageName, portalPageName,
 			LayoutConstants.TYPE_PORTLET, false,
-			"/" + StringUtil.toLowerCase(portalPageName));
+			"/" + StringUtil.toLowerCase(portalPageName), serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)portalPageLayout.getLayoutType();

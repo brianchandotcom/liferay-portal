@@ -833,7 +833,7 @@ components:
             type: object
 info:
     description: ""
-    title: "Headless Collaboration"
+    title: "Headless Delivery"
     version: v1.0
 openapi: 3.0.1
 paths:

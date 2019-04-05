@@ -251,19 +251,7 @@ public class GraphQLOpenAPIParser {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("@GraphQLName(\"");
-
-		String name = javaMethodParameter.getParameterType();
-
-		if (name.startsWith("[")) {
-			name = OpenAPIParserUtil.getElementClassName(name) + "[]";
-		}
-
-		if (name.lastIndexOf('.') != -1) {
-			name = name.substring(name.lastIndexOf(".") + 1);
-		}
-
-		sb.append(name);
-
+		sb.append(javaMethodParameter.getParameterName());
 		sb.append("\")");
 
 		return sb.toString();

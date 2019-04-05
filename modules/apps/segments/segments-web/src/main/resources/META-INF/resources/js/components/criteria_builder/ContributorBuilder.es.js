@@ -231,54 +231,57 @@ class ContributorBuilder extends React.Component {
 						<div className="container-fluid container-fluid-max-xl">
 							<div className="content-wrapper">
 								{contributors.map(
-									(criteria, i) => (
-										<React.Fragment key={i}>
-											{(i !== 0) &&
-												<React.Fragment>
-													<Conjunction
-														className="ml-0"
-														conjunctionName={criteria.conjunctionId}
-														editing
-														onClick={this._handleRootConjunctionClick}
-														supportedConjunctions={supportedConjunctions}
-													/>
+									(criteria, i) => {
+										const editingCriteria = editing && editingId === criteria.propertyKey;
+										return (
+											<React.Fragment key={i}>
+												{(i !== 0) &&
+													<React.Fragment>
+														<Conjunction
+															className="ml-0"
+															conjunctionName={criteria.conjunctionId}
+															editing
+															onClick={this._handleRootConjunctionClick}
+															supportedConjunctions={supportedConjunctions}
+														/>
 
-													<input
-														id={criteria.conjunctionInputId}
-														name={criteria.conjunctionInputId}
-														readOnly
-														type="hidden"
-														value={criteria.conjunctionId}
-													/>
-												</React.Fragment>
-											}
+														<input
+															id={criteria.conjunctionInputId}
+															name={criteria.conjunctionInputId}
+															readOnly
+															type="hidden"
+															value={criteria.conjunctionId}
+														/>
+													</React.Fragment>
+												}
 
-											<CriteriaBuilder
-												criteria={criteria.criteriaMap}
-												editing={editing && editingId === criteria.propertyKey}
-												entityName={criteria.entityName}
-												id={criteria.propertyKey}
-												modelLabel={criteria.modelLabel}
-												onChange={this._handleCriteriaChange}
-												onEditToggle={this._handleCriteriaEdit}
-												propertyKey={criteria.propertyKey}
-												supportedConjunctions={supportedConjunctions}
-												supportedOperators={supportedOperators}
-												supportedProperties={criteria.properties}
-												supportedPropertyTypes={supportedPropertyTypes}
-											/>
+												<CriteriaBuilder
+													criteria={criteria.criteriaMap}
+													editing={editingCriteria}
+													entityName={criteria.entityName}
+													id={criteria.propertyKey}
+													modelLabel={criteria.modelLabel}
+													onChange={this._handleCriteriaChange}
+													onEditToggle={this._handleCriteriaEdit}
+													propertyKey={criteria.propertyKey}
+													supportedConjunctions={supportedConjunctions}
+													supportedOperators={supportedOperators}
+													supportedProperties={criteria.properties}
+													supportedPropertyTypes={supportedPropertyTypes}
+												/>
 
-											<input
-												className="field form-control"
-												data-testid={criteria.inputId}
-												id={criteria.inputId}
-												name={criteria.inputId}
-												readOnly
-												type="hidden"
-												value={criteria.query}
-											/>
-										</React.Fragment>
-									)
+												<input
+													className="field form-control"
+													data-testid={criteria.inputId}
+													id={criteria.inputId}
+													name={criteria.inputId}
+													readOnly
+													type="hidden"
+													value={criteria.query}
+												/>
+											</React.Fragment>
+										);
+									}
 								)}
 							</div>
 						</div>

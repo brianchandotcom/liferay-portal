@@ -14,8 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.knowledge.base.exception.KBArticleContentException;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,7 +23,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code KBArticleContentException} to a {@code 400} error.
+ * Converts any {@code InvalidKBFolderNameException} to a {@code 409} error.
  *
  * @author Víctor Galán
  * @review
@@ -33,21 +32,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.KBArticleContentExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.InvalidKnowledgeBaseFolderNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class KBArticleContentExceptionMapper
-	implements ExceptionMapper<KBArticleContentException> {
+public class InvalidKnowledgeBaseFolderNameExceptionMapper
+	implements ExceptionMapper<InvalidKBFolderNameException> {
 
 	@Override
-	public Response toResponse(KBArticleContentException kbace) {
+	public Response toResponse(InvalidKBFolderNameException ikbfne) {
 		return Response.status(
-			400
+			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(kbace.getMessage(), "Content", "Article body")
+			ikbfne.getMessage()
 		).build();
 	}
 

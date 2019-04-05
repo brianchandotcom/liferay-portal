@@ -14,8 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.blogs.exception.EntryTitleException;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,30 +23,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code EntryTitleException} to a {@code 400} error.
+ * Converts any {@code FileSizeException} to a {@code 400} error.
  *
- * @author Víctor Galán
+ * @author Alejandro Hernández
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.EntryTitleExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DocumentFileSizeExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class EntryTitleExceptionMapper
-	implements ExceptionMapper<EntryTitleException> {
+public class DocumentFileSizeExceptionMapper
+	implements ExceptionMapper<FileSizeException> {
 
 	@Override
-	public Response toResponse(EntryTitleException ete) {
+	public Response toResponse(FileSizeException fse) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(ete.getMessage(), "Title", "Headline")
+			fse.getMessage()
 		).build();
 	}
 

@@ -14,7 +14,8 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.document.library.kernel.exception.FileNameException;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,7 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code FileNameException} to a {@code 400} error.
+ * Converts any {@code DuplicateFileEntryException} to a {@code 409} error.
  *
  * @author Alejandro Hernández
  * @review
@@ -32,21 +33,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.FileNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateDocumentExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class FileNameExceptionMapper
-	implements ExceptionMapper<FileNameException> {
+public class DuplicateDocumentExceptionMapper
+	implements ExceptionMapper<DuplicateFileEntryException> {
 
 	@Override
-	public Response toResponse(FileNameException fne) {
+	public Response toResponse(DuplicateFileEntryException dfee) {
 		return Response.status(
-			400
+			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			fne.getMessage()
+			StringUtil.replace(dfee.getMessage(), "file entry", "document")
 		).build();
 	}
 

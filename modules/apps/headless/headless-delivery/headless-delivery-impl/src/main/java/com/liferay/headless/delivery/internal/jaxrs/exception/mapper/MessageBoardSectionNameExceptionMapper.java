@@ -14,7 +14,8 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.message.boards.exception.CategoryNameException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,30 +24,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code SourceFileNameException} to a {@code 400} error.
+ * Converts any {@code CategoryNameException} to a {@code 400} error.
  *
- * @author Alejandro Hernández
+ * @author Víctor Galán
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.SourceFileNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.MessageBoardSectionNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class SourceFileNameExceptionMapper
-	implements ExceptionMapper<SourceFileNameException> {
+public class MessageBoardSectionNameExceptionMapper
+	implements ExceptionMapper<CategoryNameException> {
 
 	@Override
-	public Response toResponse(SourceFileNameException sfne) {
+	public Response toResponse(CategoryNameException cne) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			sfne.getMessage()
+			StringUtil.replace(cne.getMessage(), "Name", "Title")
 		).build();
 	}
 

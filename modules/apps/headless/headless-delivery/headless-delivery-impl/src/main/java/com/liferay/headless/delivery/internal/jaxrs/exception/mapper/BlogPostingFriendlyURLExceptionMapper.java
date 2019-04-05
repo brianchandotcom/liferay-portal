@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.ws.rs.core.MediaType;
@@ -24,30 +24,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code DuplicateFileEntryException} to a {@code 409} error.
+ * Converts any {@code EntryUrlTitleException} to a {@code 400} error.
  *
- * @author Alejandro Hernández
+ * @author Víctor Galán
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateFileEntryExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.EntryUrlTitleExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateFileEntryExceptionMapper
-	implements ExceptionMapper<DuplicateFileEntryException> {
+public class BlogPostingFriendlyURLExceptionMapper
+	implements ExceptionMapper<EntryUrlTitleException> {
 
 	@Override
-	public Response toResponse(DuplicateFileEntryException dfee) {
+	public Response toResponse(EntryUrlTitleException eute) {
 		return Response.status(
-			409
+			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(dfee.getMessage(), "file entry", "document")
+			StringUtil.replace(eute.getMessage(), "URL title", "Friendly URL")
 		).build();
 	}
 

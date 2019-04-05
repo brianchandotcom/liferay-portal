@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
+import com.liferay.document.library.kernel.exception.SourceFileNameException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,30 +23,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code InvalidKBFolderNameException} to a {@code 409} error.
+ * Converts any {@code SourceFileNameException} to a {@code 400} error.
  *
- * @author Víctor Galán
+ * @author Alejandro Hernández
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.InvalidKBFolderNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DocumentSourceFileNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class InvalidKBFolderNameExceptionMapper
-	implements ExceptionMapper<InvalidKBFolderNameException> {
+public class DocumentSourceFileNameExceptionMapper
+	implements ExceptionMapper<SourceFileNameException> {
 
 	@Override
-	public Response toResponse(InvalidKBFolderNameException ikbfne) {
+	public Response toResponse(SourceFileNameException sfne) {
 		return Response.status(
-			409
+			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			ikbfne.getMessage()
+			sfne.getMessage()
 		).build();
 	}
 

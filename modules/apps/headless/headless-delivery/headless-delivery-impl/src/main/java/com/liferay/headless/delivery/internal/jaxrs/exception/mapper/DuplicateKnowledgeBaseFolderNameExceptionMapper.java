@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateKBFolderNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DuplicateKnowledgeBaseFolderNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateKBFolderNameExceptionMapper
+public class DuplicateKnowledgeBaseFolderNameExceptionMapper
 	implements ExceptionMapper<DuplicateKBFolderNameException> {
 
 	@Override

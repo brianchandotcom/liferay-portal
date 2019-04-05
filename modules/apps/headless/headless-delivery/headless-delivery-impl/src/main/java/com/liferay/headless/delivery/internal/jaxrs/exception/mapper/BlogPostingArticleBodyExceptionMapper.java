@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.message.boards.exception.CategoryNameException;
+import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.ws.rs.core.MediaType;
@@ -24,7 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code CategoryNameException} to a {@code 400} error.
+ * Converts any {@code EntryContentException} to a {@code 400} error.
  *
  * @author Víctor Galán
  * @review
@@ -33,21 +33,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.CategoryNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.BlogPostingArticleBodyExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class CategoryNameExceptionMapper
-	implements ExceptionMapper<CategoryNameException> {
+public class BlogPostingArticleBodyExceptionMapper
+	implements ExceptionMapper<EntryContentException> {
 
 	@Override
-	public Response toResponse(CategoryNameException cne) {
+	public Response toResponse(EntryContentException ece) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(cne.getMessage(), "Name", "Title")
+			StringUtil.replace(ece.getMessage(), "Content", "Article body")
 		).build();
 	}
 

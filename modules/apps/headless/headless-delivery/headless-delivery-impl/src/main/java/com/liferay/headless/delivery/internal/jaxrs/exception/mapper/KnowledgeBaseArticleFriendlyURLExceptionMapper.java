@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.blogs.exception.EntryUrlTitleException;
+import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.ws.rs.core.MediaType;
@@ -24,7 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code EntryUrlTitleException} to a {@code 400} error.
+ * Converts any {@code KBArticleUrlTitleException} to a {@code 400} error.
  *
  * @author Víctor Galán
  * @review
@@ -33,21 +33,27 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.EntryUrlTitleExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.KnowledgeBaseArticleFriendlyURLExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class EntryURLTitleExceptionMapper
-	implements ExceptionMapper<EntryUrlTitleException> {
+public class KnowledgeBaseArticleFriendlyURLExceptionMapper
+	implements ExceptionMapper<KBArticleUrlTitleException> {
 
 	@Override
-	public Response toResponse(EntryUrlTitleException eute) {
+	public Response toResponse(KBArticleUrlTitleException kbaute) {
+		int statusCode = 400;
+
+		if (kbaute instanceof KBArticleUrlTitleException.MustNotBeDuplicate) {
+			statusCode = 409;
+		}
+
 		return Response.status(
-			400
+			statusCode
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(eute.getMessage(), "URL title", "Friendly URL")
+			StringUtil.replace(kbaute.getMessage(), "URL title", "Friendly URL")
 		).build();
 	}
 

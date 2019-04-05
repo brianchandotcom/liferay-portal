@@ -14,8 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.message.boards.exception.MessageSubjectException;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.knowledge.base.exception.KBArticleTitleException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,7 +23,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code MessageSubjectException} to a {@code 400} error.
+ * Converts any {@code KBArticleTitleException} to a {@code 400} error.
  *
  * @author Víctor Galán
  * @review
@@ -33,23 +32,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.MessageSubjectExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.KBArticleTitleException"
 	},
 	service = ExceptionMapper.class
 )
-public class MessageSubjectExceptionMapper
-	implements ExceptionMapper<MessageSubjectException> {
+public class KnowledgeBaseArticleTitleExceptionMapper
+	implements ExceptionMapper<KBArticleTitleException> {
 
 	@Override
-	public Response toResponse(MessageSubjectException mse) {
+	public Response toResponse(KBArticleTitleException kbate) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			StringUtil.replace(
-				mse.getMessage(), new String[] {"Subject", "body"},
-				new String[] {"Headline", "article body"})
+			kbate.getMessage()
 		).build();
 	}
 

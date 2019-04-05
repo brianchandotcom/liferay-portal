@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.knowledge.base.exception.KBArticleTitleException;
+import com.liferay.document.library.kernel.exception.FileNameException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,30 +23,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code KBArticleTitleException} to a {@code 400} error.
+ * Converts any {@code FileNameException} to a {@code 400} error.
  *
- * @author Víctor Galán
+ * @author Alejandro Hernández
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.KBArticleTitleException"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DocumentFileNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class KBArticleTitleExceptionMapper
-	implements ExceptionMapper<KBArticleTitleException> {
+public class DocumentFileNameExceptionMapper
+	implements ExceptionMapper<FileNameException> {
 
 	@Override
-	public Response toResponse(KBArticleTitleException kbate) {
+	public Response toResponse(FileNameException fne) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			kbate.getMessage()
+			fne.getMessage()
 		).build();
 	}
 

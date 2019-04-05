@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
-import com.liferay.message.boards.exception.LockedThreadException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,30 +23,30 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code LockedThreadException} to a {@code 400} error.
+ * Converts any {@code FileExtensionException} to a {@code 400} error.
  *
- * @author Víctor Galán
+ * @author Alejandro Hernández
  * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.LockedThreadExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Delivery.DocumentFileExtensionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class LockedThreadExceptionMapper
-	implements ExceptionMapper<LockedThreadException> {
+public class DocumentFileExtensionExceptionMapper
+	implements ExceptionMapper<FileExtensionException> {
 
 	@Override
-	public Response toResponse(LockedThreadException lte) {
+	public Response toResponse(FileExtensionException fee) {
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			lte.getMessage()
+			fee.getMessage()
 		).build();
 	}
 

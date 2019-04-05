@@ -78,20 +78,6 @@ public class BaseTestRule<C, M> implements TestRule {
 		};
 	}
 
-	public abstract static class StatementWrapper extends Statement {
-
-		public StatementWrapper(Statement statement) {
-			this.statement = statement;
-		}
-
-		public Statement getStatement() {
-			return statement;
-		}
-
-		protected final Statement statement;
-
-	}
-
 	protected Object inspectTarget(Statement statement) {
 		while (statement instanceof StatementWrapper) {
 			StatementWrapper statementWrapper = (StatementWrapper)statement;

@@ -45,7 +45,7 @@ public abstract class AbstractTestRule<C, M> implements TestRule {
 	protected Statement createClassStatement(
 		Statement statement, Description description) {
 
-		return new BaseTestCallbackTestRule.StatementWrapper(statement) {
+		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {
@@ -65,7 +65,7 @@ public abstract class AbstractTestRule<C, M> implements TestRule {
 	protected Statement createMethodStatement(
 		Statement statement, Description description) {
 
-		return new BaseTestCallbackTestRule.StatementWrapper(statement) {
+		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {

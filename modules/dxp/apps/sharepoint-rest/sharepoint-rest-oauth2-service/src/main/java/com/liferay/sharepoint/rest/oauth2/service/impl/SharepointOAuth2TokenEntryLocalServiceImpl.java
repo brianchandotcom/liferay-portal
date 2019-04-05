@@ -83,6 +83,11 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteUserSharepointOAuth2TokenEntries(long userId) {
+		sharepointOAuth2TokenEntryPersistence.removeByUserId(userId);
+	}
+
+	@Override
 	public SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
 		long userId, String configurationPid) {
 
@@ -97,6 +102,11 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 
 		return sharepointOAuth2TokenEntryPersistence.findByU_C(
 			userId, configurationPid);
+	}
+
+	@Override
+	public int getUserSharepointOAuth2TokenEntriesCount(long userId) {
+		return sharepointOAuth2TokenEntryPersistence.countByUserId(userId);
 	}
 
 }

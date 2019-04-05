@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule.callback;
+package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -23,18 +23,18 @@ import org.junit.runner.Description;
 /**
  * @author Cristina González
  */
-public class CompanyProviderTestCallback extends BaseTestCallback<Long, Void> {
+public class CompanyProviderTestRule extends ClassTestRule<Long> {
 
-	public static final CompanyProviderTestCallback INSTANCE =
-		new CompanyProviderTestCallback();
+	public static final CompanyProviderTestRule INSTANCE =
+		new CompanyProviderTestRule();
 
 	@Override
-	public void afterClass(Description description, Long previousCompanyId) {
+	protected void afterClass(Description description, Long previousCompanyId) {
 		CompanyThreadLocal.setCompanyId(previousCompanyId);
 	}
 
 	@Override
-	public Long beforeClass(Description description) throws PortalException {
+	protected Long beforeClass(Description description) throws PortalException {
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
@@ -42,7 +42,7 @@ public class CompanyProviderTestCallback extends BaseTestCallback<Long, Void> {
 		return companyId;
 	}
 
-	private CompanyProviderTestCallback() {
+	private CompanyProviderTestRule() {
 	}
 
 }

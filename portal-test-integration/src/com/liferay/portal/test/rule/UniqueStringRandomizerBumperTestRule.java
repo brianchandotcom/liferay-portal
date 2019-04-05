@@ -12,30 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 
 import org.junit.runner.Description;
 
 /**
  * @author Shuyang Zhou
  */
-public class UniqueStringRandomizerBumperTestCallback
-	extends BaseTestCallback<Object, Object> {
+public class UniqueStringRandomizerBumperTestRule extends ClassTestRule<Void> {
 
-	public static final UniqueStringRandomizerBumperTestCallback INSTANCE =
-		new UniqueStringRandomizerBumperTestCallback();
+	public static final UniqueStringRandomizerBumperTestRule INSTANCE =
+		new UniqueStringRandomizerBumperTestRule();
 
 	@Override
-	public Object beforeClass(Description description) {
+	public Void beforeClass(Description description) {
 		UniqueStringRandomizerBumper.reset();
 
 		return null;
 	}
 
-	private UniqueStringRandomizerBumperTestCallback() {
+	@Override
+	protected void afterClass(Description description, Void v) {
+	}
+
+	private UniqueStringRandomizerBumperTestRule() {
 	}
 
 }

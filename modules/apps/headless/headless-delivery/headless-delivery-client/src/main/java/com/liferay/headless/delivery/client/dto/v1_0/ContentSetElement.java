@@ -67,26 +67,24 @@ public class ContentSetElement {
 
 	protected String contentType;
 
-	public Number getOrder() {
-		return order;
+	public Long getId() {
+		return id;
 	}
 
-	public void setOrder(Number order) {
-		this.order = order;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setOrder(
-		UnsafeSupplier<Number, Exception> orderUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
-			order = orderUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Number order;
+	protected Long id;
 
 	public String getTitle() {
 		return title;

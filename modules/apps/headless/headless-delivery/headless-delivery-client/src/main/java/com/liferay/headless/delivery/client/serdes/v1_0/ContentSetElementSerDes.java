@@ -64,9 +64,9 @@ public class ContentSetElementSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"order\": ");
+		sb.append("\"id\": ");
 
-		sb.append(contentSetElement.getOrder());
+		sb.append(contentSetElement.getId());
 		sb.append(", ");
 
 		sb.append("\"title\": ");
@@ -130,9 +130,9 @@ public class ContentSetElementSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "order")) {
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					contentSetElement.setOrder((Number)jsonParserFieldValue);
+					contentSetElement.setId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

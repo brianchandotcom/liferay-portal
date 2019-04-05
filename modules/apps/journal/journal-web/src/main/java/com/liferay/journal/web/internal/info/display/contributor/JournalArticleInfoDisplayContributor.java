@@ -197,7 +197,7 @@ public class JournalArticleInfoDisplayContributor
 	private String _getTemplateKey(DDMTemplate ddmTemplate) {
 		String templateKey = ddmTemplate.getTemplateKey();
 
-		return _DDM_TEMPLATE + templateKey.replaceAll("\\W]", "_");
+		return _DDM_TEMPLATE + templateKey.replaceAll("\\W", "_");
 	}
 
 	private Object _sanitizeFieldValue(

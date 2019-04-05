@@ -731,6 +731,13 @@ public class RESTBuilder {
 
 				int z = content.indexOf('\n', y);
 
+				String line = content.substring(
+					z + 1, content.indexOf("\n", z + 1));
+
+				if (line.contains("operationId:")) {
+					continue;
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(content.substring(0, z + 1));

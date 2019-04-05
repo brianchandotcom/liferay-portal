@@ -112,15 +112,7 @@ class SidebarStructurePanel extends Component {
 	 * @static
 	 */
 	static _getRowTree(state, row) {
-		let children = row.columns.map(
-			column => SidebarStructurePanel._getColumnTree(
-				state,
-				column
-			)
-		);
-		let elementId = row.rowId;
-		let elementType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
-		let label = Liferay.Language.get('section');
+		let treeNode;
 
 		if (row.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 			const [fragmentEntryLinkId] = getSectionFragmentEntryLinkIds(row);
@@ -129,23 +121,34 @@ class SidebarStructurePanel extends Component {
 				fragmentEntryLinkId
 			];
 
-			children = [];
-			elementId = fragmentEntryLinkId;
-			elementType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-			label = fragmentEntryLink.name;
+			if (fragmentEntryLink) {
+				treeNode = SidebarStructurePanel._getFragmentEntryLinkTree(
+					state,
+					fragmentEntryLink
+				);
+			}
 		}
 
-		return SidebarStructurePanel._getTreeNode(
-			state,
-			{
-				children,
-				elementId,
-				elementType,
-				key: `${FRAGMENTS_EDITOR_ITEM_TYPES.section}-${row.rowId}`,
-				label,
-				removable: true
-			}
-		);
+		if (!treeNode) {
+			treeNode = SidebarStructurePanel._getTreeNode(
+				state,
+				{
+					children: row.columns.map(
+						column => SidebarStructurePanel._getColumnTree(
+							state,
+							column
+						)
+					),
+					elementId: row.rowId,
+					elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
+					key: `${FRAGMENTS_EDITOR_ITEM_TYPES.section}-${row.rowId}`,
+					label: Liferay.Language.get('section'),
+					removable: true
+				}
+			);
+		}
+
+		return treeNode;
 	}
 
 	/**

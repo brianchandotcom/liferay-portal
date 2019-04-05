@@ -50,7 +50,9 @@ components:
                         $ref: '#/components/schemas/CustomProperty'
                     type: array
                 defaultValue:
-                    type: object
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
                 fieldType:
                     type: string
                 id:
@@ -261,7 +263,7 @@ components:
                 key:
                     type: string
                 value:
-                    type: string
+                    type: object
 info:
     description: ""
     title: ""

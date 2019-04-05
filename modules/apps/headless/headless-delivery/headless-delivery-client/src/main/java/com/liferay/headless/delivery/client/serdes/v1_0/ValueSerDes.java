@@ -91,7 +91,8 @@ public class ValueSerDes {
 
 		sb.append("\"structuredContentLink\": ");
 
-		sb.append(value.getStructuredContentLink());
+		sb.append(StructuredContentLinkSerDes.toJSON(
+			value.getStructuredContentLink()));
 
 		sb.append("}");
 

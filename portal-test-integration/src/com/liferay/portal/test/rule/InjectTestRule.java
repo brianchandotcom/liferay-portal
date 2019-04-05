@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.test.rule.callback.TestCallback;
+import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 
 import org.junit.runner.Description;
 
 /**
  * @author Preston Crary
  */
-public class InjectTestCallback
-	implements TestCallback<InjectTestBag, InjectTestBag> {
+public class InjectTestRule
+	extends AbstractTestRule<InjectTestBag, InjectTestBag> {
 
-	public static final InjectTestCallback INSTANCE = new InjectTestCallback();
+	public static final InjectTestRule INSTANCE = new InjectTestRule();
 
 	@Override
 	public void afterClass(Description description, InjectTestBag injectTestBag)

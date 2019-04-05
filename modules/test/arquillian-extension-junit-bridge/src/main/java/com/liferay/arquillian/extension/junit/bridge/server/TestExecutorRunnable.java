@@ -118,7 +118,8 @@ public class TestExecutorRunnable implements Runnable {
 						statement.evaluate();
 					}
 					catch (Throwable t) {
-						_processThrowable(t, objectOutputStream, description);
+						_processThrowable(
+							false, t, objectOutputStream, description);
 					}
 					finally {
 						objectOutputStream.writeObject(
@@ -155,18 +156,7 @@ public class TestExecutorRunnable implements Runnable {
 			statement.evaluate();
 		}
 		catch (Throwable t) {
-			if (t instanceof AssumptionViolatedException) {
-				objectOutputStream.writeObject(
-					RunNotifierCommand.testStarted(description));
-
-				_processThrowable(t, objectOutputStream, description);
-
-				objectOutputStream.writeObject(
-					RunNotifierCommand.testFinished(description));
-			}
-			else {
-				_processThrowable(t, objectOutputStream, description);
-			}
+			_processThrowable(true, t, objectOutputStream, description);
 		}
 	}
 
@@ -250,11 +240,15 @@ public class TestExecutorRunnable implements Runnable {
 	}
 
 	private static void _processThrowable(
-			Throwable throwable, ObjectOutputStream objectOutputStream,
-			Description description)
+			boolean classLevel, Throwable throwable,
+			ObjectOutputStream objectOutputStream, Description description)
 		throws IOException {
 
 		if (throwable instanceof AssumptionViolatedException) {
+			if (classLevel) {
+				objectOutputStream.writeObject(
+					RunNotifierCommand.testStarted(description));
+			}
 
 			// To neutralize the nonserializable Matcher field inside
 			// AssumptionViolatedException
@@ -266,6 +260,11 @@ public class TestExecutorRunnable implements Runnable {
 
 			objectOutputStream.writeObject(
 				RunNotifierCommand.assumptionFailed(description, ave));
+
+			if (classLevel) {
+				objectOutputStream.writeObject(
+					RunNotifierCommand.testFinished(description));
+			}
 		}
 		else if (throwable instanceof MultipleFailureException) {
 			MultipleFailureException mfe = (MultipleFailureException)throwable;

@@ -18,7 +18,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -300,8 +299,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		ctEntry = ctEntryPersistence.update(ctEntry);
 
-		_ctCollectionLocalService.addCTEntryCTCollection(
-			ctEntry.getCtEntryId(), ctCollectionId);
+		ctCollectionPersistence.addCTEntry(ctCollectionId, ctEntry);
 
 		return ctEntry;
 	}
@@ -434,7 +432,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	private boolean _isProductionCTCollectionId(long ctCollectionId) {
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
 
 		if (ctCollection == null) {
@@ -514,7 +512,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			throw new DuplicateCTEntryException();
 		}
 
-		_ctCollectionLocalService.getCTCollection(ctCollectionId);
+		ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 
 		if ((changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) &&
 			(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
@@ -526,9 +524,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTEntryLocalServiceImpl.class);
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

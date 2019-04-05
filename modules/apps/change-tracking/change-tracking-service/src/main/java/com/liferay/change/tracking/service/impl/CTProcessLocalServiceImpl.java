@@ -17,7 +17,6 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
-import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -140,13 +139,10 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 	}
 
 	private void _validate(long ctCollectionId) throws PortalException {
-		_ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
+		ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 	}
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
-	private CTCollectionPersistence _ctCollectionPersistence;
 
 }

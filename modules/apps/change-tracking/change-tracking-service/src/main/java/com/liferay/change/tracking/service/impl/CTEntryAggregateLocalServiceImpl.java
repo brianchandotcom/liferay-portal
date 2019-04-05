@@ -17,7 +17,6 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.base.CTEntryAggregateLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -33,7 +32,6 @@ import java.util.List;
 import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -54,7 +52,7 @@ public class CTEntryAggregateLocalServiceImpl
 		}
 
 		ctEntryAggregatePersistence.addCTEntry(
-			ctEntryAggregate.getCtEntryAggregateId(), ctEntry.getCtEntryId());
+			ctEntryAggregate.getCtEntryAggregateId(), ctEntry);
 	}
 
 	@Override
@@ -91,11 +89,11 @@ public class CTEntryAggregateLocalServiceImpl
 
 		ctEntryAggregatePersistence.update(ctEntryAggregate);
 
-		ctEntryAggregatePersistence.addCTEntry(
-			ctEntryAggregate.getCtEntryAggregateId(), ownerCTEntryId);
+		ctEntryPersistence.addCTEntryAggregate(
+			ownerCTEntryId, ctEntryAggregate);
 
-		_ctCollectionLocalService.addCTEntryAggregateCTCollection(
-			ctEntryAggregate.getCtEntryAggregateId(), ctCollectionId);
+		ctCollectionPersistence.addCTEntryAggregate(
+			ctCollectionId, ctEntryAggregate);
 
 		return ctEntryAggregate;
 	}
@@ -156,7 +154,7 @@ public class CTEntryAggregateLocalServiceImpl
 		}
 
 		ctEntryAggregatePersistence.removeCTEntry(
-			ctEntryAggregate.getCtEntryAggregateId(), ctEntry.getCtEntryId());
+			ctEntryAggregate.getCtEntryAggregateId(), ctEntry);
 	}
 
 	@Override
@@ -176,7 +174,7 @@ public class CTEntryAggregateLocalServiceImpl
 	}
 
 	private boolean _isProductionCTCollectionId(long ctCollectionId) {
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
 
 		if (ctCollection == null) {
@@ -185,8 +183,5 @@ public class CTEntryAggregateLocalServiceImpl
 
 		return ctCollection.isProduction();
 	}
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

@@ -128,7 +128,7 @@ public class CTCollectionLocalServiceImpl
 			ctEntryAggregatePersistence.remove(ctEntryAggregate);
 		}
 
-		List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
+		List<CTProcess> ctProcesses = ctProcessPersistence.findByCollectionId(
 			ctCollection.getCtCollectionId());
 
 		for (CTProcess ctProcess : ctProcesses) {

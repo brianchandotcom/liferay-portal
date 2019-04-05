@@ -312,7 +312,6 @@ public class WorkflowMetricsSLAProcessor {
 			_filterBuilders.dateRangeFilterBuilder();
 
 		completionDateRangeFilterBuilder.setFieldName("completionDate");
-
 		completionDateRangeFilterBuilder.setFrom(
 			_dateTimeFormatter.format(lastCheckLocalDateTime));
 

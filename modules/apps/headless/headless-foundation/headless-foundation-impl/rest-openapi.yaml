@@ -66,6 +66,8 @@ components:
                     type: number
                 name:
                     type: string
+            required:
+                - name
             type: object
         Organization:
             description: https://www.schema.org/Organization
@@ -351,6 +353,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - name
             type: object
         UserAccount:
             description: https://www.schema.org/UserAccount

@@ -17,8 +17,6 @@ package com.liferay.asset.service.impl;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -39,11 +37,8 @@ public class AssetEntryUsageLocalServiceImpl
 
 	@Override
 	public AssetEntryUsage addAssetEntryUsage(
-			long userId, long groupId, long assetEntryId, long classNameId,
-			long classPK, String portletId, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = userLocalService.getUser(userId);
+		long groupId, long assetEntryId, long classNameId, long classPK,
+		String portletId, ServiceContext serviceContext) {
 
 		long assetEntryUsageId = counterLocalService.increment();
 
@@ -52,12 +47,8 @@ public class AssetEntryUsageLocalServiceImpl
 
 		assetEntryUsage.setUuid(serviceContext.getUuid());
 		assetEntryUsage.setGroupId(groupId);
-		assetEntryUsage.setCompanyId(user.getCompanyId());
-		assetEntryUsage.setUserId(userId);
-		assetEntryUsage.setUserName(user.getFullName());
-		assetEntryUsage.setCreateDate(serviceContext.getCreateDate(new Date()));
-		assetEntryUsage.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
+		assetEntryUsage.setCreateDate(new Date());
+		assetEntryUsage.setModifiedDate(new Date());
 		assetEntryUsage.setAssetEntryId(assetEntryId);
 		assetEntryUsage.setClassNameId(classNameId);
 		assetEntryUsage.setClassPK(classPK);

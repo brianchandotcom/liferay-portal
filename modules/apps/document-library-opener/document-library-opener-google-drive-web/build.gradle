@@ -26,7 +26,7 @@ dependencies {
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-google-drive-api")
 	compileOnly project(":apps:document-library:document-library-api")
-	compileOnly project(":apps:document-library:document-library-google-drive-configuration-api")
+	compileOnly project(":apps:document-library:document-library-google-drive-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.google.drive.configuration.internal;
+package com.liferay.document.library.google.drive.internal.configuration;
 
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

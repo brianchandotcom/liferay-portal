@@ -236,7 +236,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -273,7 +273,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -297,7 +297,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -331,7 +331,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -353,7 +353,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -375,7 +375,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -466,7 +466,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -505,7 +505,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -528,7 +528,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -576,7 +576,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -612,7 +612,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -638,7 +638,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -693,7 +693,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -721,7 +721,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -928,7 +928,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -954,7 +954,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -981,7 +981,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1022,7 +1022,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1049,7 +1049,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1076,7 +1076,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1129,7 +1129,7 @@ public class Query {
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1186,7 +1186,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1213,7 +1213,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1284,7 +1284,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1311,7 +1311,7 @@ public class Query {
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

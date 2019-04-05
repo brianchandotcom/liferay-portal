@@ -51,7 +51,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
+			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToUser") WorkflowTaskAssignToUser
+			@GraphQLName("workflowTaskAssignToUser") WorkflowTaskAssignToUser
 				workflowTaskAssignToUser)
 		throws Exception {
 
@@ -83,7 +83,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("ChangeTransition") ChangeTransition changeTransition)
+			@GraphQLName("changeTransition") ChangeTransition changeTransition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -98,7 +98,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
+			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)
 		throws Exception {
 

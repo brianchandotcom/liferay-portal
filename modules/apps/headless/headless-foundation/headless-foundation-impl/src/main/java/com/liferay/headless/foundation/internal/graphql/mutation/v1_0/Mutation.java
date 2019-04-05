@@ -79,7 +79,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("Keyword") Keyword keyword)
+			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -102,7 +102,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Keyword putKeyword(
 			@GraphQLName("keywordId") Long keywordId,
-			@GraphQLName("Keyword") Keyword keyword)
+			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -116,7 +116,7 @@ public class Mutation {
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -143,7 +143,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyCategory patchTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -157,7 +157,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyCategory putTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -172,7 +172,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -187,7 +187,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {
 
@@ -215,7 +215,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {
 
@@ -230,7 +230,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {
 
@@ -245,7 +245,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccount(
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			@GraphQLName("userAccount") UserAccount userAccount)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -259,7 +259,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postUserAccountMultipartBody")
 	public UserAccount postUserAccount(
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -284,7 +284,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public UserAccount putUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			@GraphQLName("userAccount") UserAccount userAccount)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

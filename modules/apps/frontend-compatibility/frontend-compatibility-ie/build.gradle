@@ -3,6 +3,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 configurations {
 	arrayFill
 	arrayFind
+	arrayFindIndex
 	arrayFrom
 	arrayIncludes
 	arrayOf
@@ -18,6 +19,7 @@ configurations {
 
 task buildArrayFill(type: Copy)
 task buildArrayFind(type: Copy)
+task buildArrayFindIndex(type: Copy)
 task buildArrayFrom(type: Copy)
 task buildArrayIncludes(type: Copy)
 task buildArrayOf(type: Copy)
@@ -59,6 +61,22 @@ buildArrayFind {
 
 	rename {
 		it.replace "index", "array.find"
+	}
+}
+
+buildArrayFindIndex {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.arrayFindIndex.singleFile)
+	}
+
+	include "META-INF/resources/webjars/Array.prototype.findIndex/1.0.0/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "index", "array.findindex"
 	}
 }
 
@@ -237,6 +255,7 @@ buildUrlSearchParams {
 classes {
 	dependsOn buildArrayFill
 	dependsOn buildArrayFind
+	dependsOn buildArrayFindIndex
 	dependsOn buildArrayFrom
 	dependsOn buildArrayIncludes
 	dependsOn buildArrayOf
@@ -254,6 +273,8 @@ dependencies {
 	arrayFill group: "org.webjars.npm", name: "array.prototype.fill", transitive: false, version: "1.0.2"
 
 	arrayFind group: "org.webjars.bower", name: "Array.prototype.find", transitive: false, version: "1.0.0"
+
+	arrayFindIndex group: "org.webjars.bower", name: "Array.prototype.findIndex", transitive: false, version: "1.0.0"
 
 	arrayFrom group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
 

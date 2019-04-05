@@ -81,10 +81,11 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String[] _FILE_NAMES = {
-		"/array.fill.js", "/array.find.js", "/array.from.js",
-		"/array.includes.js", "/array.of.js", "/fetch.js", "/formdata.js",
-		"/object.assign.js", "/object.entries.js", "/object.values.js",
-		"/promise.js", "/string.endswith.js", "/url.search.params.js"
+		"/array.fill.js", "/array.find.js", "/array.findindex.js",
+		"/array.from.js", "/array.includes.js", "/array.of.js", "/fetch.js",
+		"/formdata.js", "/object.assign.js", "/object.entries.js",
+		"/object.values.js", "/promise.js", "/string.endswith.js",
+		"/url.search.params.js"
 	};
 
 	@Reference

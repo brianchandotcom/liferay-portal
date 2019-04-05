@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule.callback;
+package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -49,15 +48,13 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class DeleteAfterTestRunTestCallback
-	extends BaseTestCallback<Object, Object> {
+public class DeleteAfterTestRunTestRule extends MethodTestRule<Void> {
 
-	public static final DeleteAfterTestRunTestCallback INSTANCE =
-		new DeleteAfterTestRunTestCallback();
+	public static final DeleteAfterTestRunTestRule INSTANCE =
+		new DeleteAfterTestRunTestRule();
 
 	@Override
-	public void afterMethod(
-			Description description, Object object, Object target)
+	public void afterMethod(Description description, Void v, Object target)
 		throws Exception {
 
 		Class<?> testClass = description.getTestClass();
@@ -188,6 +185,11 @@ public class DeleteAfterTestRunTestCallback
 		fieldBag.addField(field);
 	}
 
+	@Override
+	protected Void beforeMethod(Description description, Object target) {
+		return null;
+	}
+
 	protected Class<? extends PersistedModel> getCollectionType(
 		Collection<?> collection) {
 
@@ -292,7 +294,7 @@ public class DeleteAfterTestRunTestCallback
 
 	}
 
-	private DeleteAfterTestRunTestCallback() {
+	private DeleteAfterTestRunTestRule() {
 	}
 
 	private static final Set<Class<?>> _orderedClasses = new LinkedHashSet<>(

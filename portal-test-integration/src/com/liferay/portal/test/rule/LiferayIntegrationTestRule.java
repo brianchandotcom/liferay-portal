@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
 import com.liferay.portal.kernel.test.rule.StatementWrapper;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
-import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallback;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -74,15 +74,13 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(_mainServletTestRule);
 		testRules.add(_destinationAwaitTestRule);
 		testRules.add(CompanyProviderTestRule.INSTANCE);
-		testRules.add(_deleteAfterTestRunTestRule);
+		testRules.add(DeleteAfterTestRunTestRule.INSTANCE);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(_injectTestRule);
 
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}
 
-	private static final TestRule _deleteAfterTestRunTestRule =
-		new BaseTestRule<>(DeleteAfterTestRunTestCallback.INSTANCE);
 	private static final TestRule _destinationAwaitTestRule =
 		new BaseTestRule<>(DestinationAwaitTestCallback.INSTANCE);
 	private static final TestRule _injectTestRule = new BaseTestRule<>(

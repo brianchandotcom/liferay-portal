@@ -366,10 +366,10 @@ public class UnsyncStringWriterTest extends BaseWriterTestCase {
 
 		unsyncStringWriter.reset();
 
-		unsyncStringWriter.write('¡');
+		unsyncStringWriter.write('\u00a1');
 
 		Assert.assertEquals(1, stringBundler.length());
-		Assert.assertEquals("¡", stringBundler.stringAt(0));
+		Assert.assertEquals("\u00a1", stringBundler.stringAt(0));
 	}
 
 	@Test

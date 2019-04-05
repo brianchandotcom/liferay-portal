@@ -47,7 +47,9 @@ public class PageSerDes {
 		return sb.toString();
 	}
 
-	public static <T> String toJSON(Page<T> page) {
+	public static <T> String toJSON(
+		Page<T> page, Function<T, String> toJSONFunction) {
+
 		if (page == null) {
 			return "{}";
 		}
@@ -69,7 +71,7 @@ public class PageSerDes {
 			List<T> itemsList = (List<T>)items;
 
 			for (int i = 0; i < items.size(); i++) {
-				sb.append(itemsList.get(i));
+				sb.append(toJSONFunction.apply(itemsList.get(i)));
 
 				if ((i + 1) < itemsList.size()) {
 					sb.append(", ");

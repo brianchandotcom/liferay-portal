@@ -70,23 +70,12 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Clean inputValue and error messages
-	 * @param {!Event} event
+	 * Show error messages
 	 * @private
 	 * @review
 	 */
-	_handleInputBlur(event) {
-		const {inputValue} = event.target;
-
-		const empty = (!inputValue || inputValue === '') && this._userEmailAddresses.length === 0;
-
-		if (empty) {
-			this.emailErrorMessage = Liferay.Language.get('this-field-is-required');
-		}
-		else if (this._userEmailAddresses.length > 0) {
-			this.emailErrorMessage = '';
-			this.inputValue = inputValue;
-		}
+	_handleInputBlur() {
+		this._validateRequiredEmail()
 	}
 
 	/**
@@ -212,7 +201,7 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Check if the userEmailAddresses is filled
+	 * Check if the userEmailAddresses is filled and show error message
 	 * @private
 	 * @review
 	 * @return {Boolean} is valid or not
@@ -269,7 +258,7 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
-	_inputValue: Config.string(),
+	_inputValue: Config.string().internal(),
 	emailErrorMessage: Config.string().value(''),
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),

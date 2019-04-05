@@ -53,7 +53,7 @@ public class StructuredContentSerDes {
 
 	public static String toJSON(StructuredContent structuredContent) {
 		if (structuredContent == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();

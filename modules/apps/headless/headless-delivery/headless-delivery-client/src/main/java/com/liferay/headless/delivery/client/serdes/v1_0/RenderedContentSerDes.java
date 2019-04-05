@@ -45,7 +45,7 @@ public class RenderedContentSerDes {
 
 	public static String toJSON(RenderedContent renderedContent) {
 		if (renderedContent == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();

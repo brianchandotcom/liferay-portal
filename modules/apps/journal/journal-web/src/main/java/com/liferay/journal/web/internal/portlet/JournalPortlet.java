@@ -1432,11 +1432,14 @@ public class JournalPortlet extends MVCPortlet {
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
-		String portletId = _http.getParameter(redirect, "p_p_id", false);
+		String portletId = _http.getParameter(
+			redirect, "portletResource", false);
 
 		String namespace = _portal.getPortletNamespace(portletId);
 
-		if (Validator.isNotNull(oldUrlTitle)) {
+		if (Validator.isNotNull(oldUrlTitle) &&
+			Validator.isNotNull(portletId)) {
+
 			String oldRedirectParam = namespace + "redirect";
 
 			String oldRedirect = _http.getParameter(
@@ -1484,7 +1487,9 @@ public class JournalPortlet extends MVCPortlet {
 		else {
 			redirect = _portal.escapeRedirect(redirect);
 
-			if (Validator.isNotNull(redirect)) {
+			if (Validator.isNotNull(redirect) &&
+				Validator.isNotNull(portletId)) {
+
 				if (actionName.equals("addArticle") && (article != null) &&
 					Validator.isNotNull(namespace)) {
 

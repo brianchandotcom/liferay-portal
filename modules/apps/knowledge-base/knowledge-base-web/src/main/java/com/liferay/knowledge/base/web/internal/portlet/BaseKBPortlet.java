@@ -630,11 +630,12 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	protected String getContentRedirect(
 		Class<?> clazz, long classPK, String redirect) {
 
-		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+		String portletId = HttpUtil.getParameter(
+			redirect, "portletResource", false);
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		if (Validator.isNotNull(namespace)) {
+		if (Validator.isNotNull(portletId)) {
 			redirect = HttpUtil.addParameter(
 				redirect, namespace + "className", clazz.getName());
 			redirect = HttpUtil.addParameter(

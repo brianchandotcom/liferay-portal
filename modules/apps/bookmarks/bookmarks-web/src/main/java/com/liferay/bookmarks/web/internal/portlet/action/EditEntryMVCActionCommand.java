@@ -159,11 +159,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(redirect)) {
 				if (cmd.equals(Constants.ADD) && (entry != null)) {
 					String portletId = _http.getParameter(
-						redirect, "p_p_id", false);
+						redirect, "portletResource", false);
 
 					String namespace = _portal.getPortletNamespace(portletId);
 
-					if (Validator.isNotNull(namespace)) {
+					if (Validator.isNotNull(portletId)) {
 						redirect = _http.addParameter(
 							redirect, namespace + "className",
 							BookmarksEntry.class.getName());

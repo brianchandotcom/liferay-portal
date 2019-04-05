@@ -107,10 +107,10 @@ public class WorkflowMetricsSLAProcessor {
 				startNodeId, workflowMetricsSLADefinition,
 				workfowMetricsSLAStatus);
 
-		List<TaskInterval> taskIntervals = _toTaskIntervals(
-			documents, lastCheckLocalDateTime, nowLocalDateTime);
-
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
+			List<TaskInterval> taskIntervals = _toTaskIntervals(
+				documents, lastCheckLocalDateTime, nowLocalDateTime);
+
 			for (TaskInterval taskInterval : taskIntervals) {
 				elapsedTime += _computeElapsedTime(
 					taskInterval.getEndLocalDateTime(),

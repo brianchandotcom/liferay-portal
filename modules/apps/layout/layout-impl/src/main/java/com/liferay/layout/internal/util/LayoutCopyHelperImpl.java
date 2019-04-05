@@ -22,8 +22,10 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -245,6 +247,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
+	private ImageLocalService _imageLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -275,7 +280,22 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			_copyPortletPreferences(_sourceLayout, _targetLayout);
 
-			return _layoutLocalService.getLayout(_targetLayout.getPlid());
+			Image image = _imageLocalService.getImage(
+				_sourceLayout.getIconImageId());
+
+			if (image != null) {
+				_layoutLocalService.updateIconImage(
+					_targetLayout.getPlid(), image.getTextObj());
+			}
+
+			_targetLayout.setTypeSettings(_sourceLayout.getTypeSettings());
+			_targetLayout.setNameMap(_sourceLayout.getNameMap());
+			_targetLayout.setDescriptionMap(_sourceLayout.getDescriptionMap());
+			_targetLayout.setTitleMap(_sourceLayout.getTitleMap());
+			_targetLayout.setRobotsMap(_sourceLayout.getRobotsMap());
+			_targetLayout.setKeywordsMap(_sourceLayout.getKeywordsMap());
+
+			return _layoutLocalService.updateLayout(_targetLayout);
 		}
 
 		private CopyLayoutCallable(Layout sourceLayout, Layout targetLayout) {

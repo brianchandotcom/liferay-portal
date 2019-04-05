@@ -81,14 +81,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				fetchWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinitionId);
 
+		long startNodeId = _getStartNodeId(
+			workflowMetricsSLADefinition.getCompanyId(),
+			workflowMetricsSLADefinition.getProcessId());
+
 		Map<Long, LocalDateTime> createLocalDateTimes =
 			_getCreateLocalDateTimes(
 				workflowMetricsSLADefinition.getCompanyId(),
 				workflowMetricsSLADefinition.getProcessId());
-
-		long startNodeId = _getStartNodeId(
-			workflowMetricsSLADefinition.getCompanyId(),
-			workflowMetricsSLADefinition.getProcessId());
 
 		createLocalDateTimes.forEach(
 			(instanceId, createLocalDateTime) -> {

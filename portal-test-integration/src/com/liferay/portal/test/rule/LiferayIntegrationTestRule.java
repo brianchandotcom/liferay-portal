@@ -17,9 +17,9 @@ package com.liferay.portal.test.rule;
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.kernel.test.rule.StatementWrapper;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,7 +40,6 @@ import org.apache.log4j.Level;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 import org.springframework.mock.web.MockServletContext;
 
@@ -76,66 +75,56 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	}
 
 	private static final TestRule _springInitializationTestRule =
-		new TestRule() {
+		new ClassTestRule<Void>() {
 
 			@Override
-			public Statement apply(
-				Statement statement, Description description) {
+			protected void afterClass(Description description, Void v) {
+			}
 
-				return new StatementWrapper(statement) {
+			@Override
+			protected Void beforeClass(Description description) {
+				if (!InitUtil.isInitialized()) {
+					List<String> configLocations = ListUtil.fromArray(
+						PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 
-					@Override
-					public void evaluate() throws Throwable {
-						if (!InitUtil.isInitialized()) {
-							List<String> configLocations = ListUtil.fromArray(
-								PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+					boolean configureLog4j = false;
 
-							boolean configureLog4j = false;
+					if (GetterUtil.getBoolean(
+							SystemProperties.get("log4j.configure.on.startup"),
+							true)) {
 
-							if (GetterUtil.getBoolean(
-									SystemProperties.get(
-										"log4j.configure.on.startup"),
-									true)) {
+						SystemProperties.set(
+							"log4j.configure.on.startup", "false");
 
-								SystemProperties.set(
-									"log4j.configure.on.startup", "false");
-
-								configureLog4j = true;
-							}
-
-							Log4JUtil.setLevel(
-								DialectDetector.class.getName(),
-								Level.INFO.toString(), false);
-
-							ClassPathUtil.initializeClassPaths(
-								new MockServletContext());
-							PortalClassPathUtil.initializeClassPaths(
-								new MockServletContext());
-
-							InitUtil.initWithSpring(
-								configLocations, true, true);
-
-							if (configureLog4j) {
-								Log4JUtil.configureLog4J(
-									InitUtil.class.getClassLoader());
-
-								LogAssertionTestCallback.startAssert(
-									Collections.<ExpectedLogs>emptyList());
-							}
-
-							if (System.getProperty("external-properties") ==
-									null) {
-
-								System.setProperty(
-									"external-properties",
-									"portal-test.properties");
-							}
-						}
-
-						statement.evaluate();
+						configureLog4j = true;
 					}
 
-				};
+					Log4JUtil.setLevel(
+						DialectDetector.class.getName(), Level.INFO.toString(),
+						false);
+
+					ClassPathUtil.initializeClassPaths(
+						new MockServletContext());
+					PortalClassPathUtil.initializeClassPaths(
+						new MockServletContext());
+
+					InitUtil.initWithSpring(configLocations, true, true);
+
+					if (configureLog4j) {
+						Log4JUtil.configureLog4J(
+							InitUtil.class.getClassLoader());
+
+						LogAssertionTestCallback.startAssert(
+							Collections.<ExpectedLogs>emptyList());
+					}
+
+					if (System.getProperty("external-properties") == null) {
+						System.setProperty(
+							"external-properties", "portal-test.properties");
+					}
+				}
+
+				return null;
 			}
 
 		};

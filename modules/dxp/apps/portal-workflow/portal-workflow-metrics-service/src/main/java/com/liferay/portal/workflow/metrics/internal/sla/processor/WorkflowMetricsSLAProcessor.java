@@ -239,7 +239,6 @@ public class WorkflowMetricsSLAProcessor {
 						});
 				}
 			});
-
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =

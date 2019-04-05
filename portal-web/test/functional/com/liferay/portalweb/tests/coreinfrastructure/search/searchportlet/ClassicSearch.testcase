@@ -202,10 +202,6 @@ definition {
 
 		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
 		ClassicSearch.search(searchTerm = "WC Title");
 
 		ClassicSearch.viewSearchResultPG(

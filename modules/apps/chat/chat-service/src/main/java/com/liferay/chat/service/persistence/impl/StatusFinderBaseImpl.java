@@ -16,7 +16,9 @@ package com.liferay.chat.service.persistence.impl;
 
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.persistence.StatusPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.chat.service.persistence.impl.constants.ChatPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class StatusFinderBaseImpl extends BasePersistenceImpl<Status> {
+public abstract class StatusFinderBaseImpl extends BasePersistenceImpl<Status> {
 
 	public StatusFinderBaseImpl() {
 		setModelClass(Status.class);
@@ -43,28 +49,37 @@ public class StatusFinderBaseImpl extends BasePersistenceImpl<Status> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getStatusPersistence().getBadColumnNames();
+		return statusPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the status persistence.
-	 *
-	 * @return the status persistence
-	 */
-	public StatusPersistence getStatusPersistence() {
-		return statusPersistence;
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the status persistence.
-	 *
-	 * @param statusPersistence the status persistence
-	 */
-	public void setStatusPersistence(StatusPersistence statusPersistence) {
-		this.statusPersistence = statusPersistence;
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = StatusPersistence.class)
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected StatusPersistence statusPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

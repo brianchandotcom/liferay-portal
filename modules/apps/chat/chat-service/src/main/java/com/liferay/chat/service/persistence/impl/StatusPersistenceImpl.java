@@ -21,7 +21,9 @@ import com.liferay.chat.model.Status;
 import com.liferay.chat.model.impl.StatusImpl;
 import com.liferay.chat.model.impl.StatusModelImpl;
 import com.liferay.chat.service.persistence.StatusPersistence;
+import com.liferay.chat.service.persistence.impl.constants.ChatPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,13 +31,14 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -47,6 +50,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the status service.
  *
@@ -57,6 +67,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = StatusPersistence.class)
 @ProviderType
 public class StatusPersistenceImpl
 	extends BasePersistenceImpl<Status> implements StatusPersistence {
@@ -1831,7 +1842,6 @@ public class StatusPersistenceImpl
 
 		setModelImplClass(StatusImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(StatusModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1848,8 +1858,8 @@ public class StatusPersistenceImpl
 	@Override
 	public void cacheResult(Status status) {
 		entityCache.putResult(
-			StatusModelImpl.ENTITY_CACHE_ENABLED, StatusImpl.class,
-			status.getPrimaryKey(), status);
+			entityCacheEnabled, StatusImpl.class, status.getPrimaryKey(),
+			status);
 
 		finderCache.putResult(
 			_finderPathFetchByUserId, new Object[] {status.getUserId()},
@@ -1867,7 +1877,7 @@ public class StatusPersistenceImpl
 	public void cacheResult(List<Status> statuses) {
 		for (Status status : statuses) {
 			if (entityCache.getResult(
-					StatusModelImpl.ENTITY_CACHE_ENABLED, StatusImpl.class,
+					entityCacheEnabled, StatusImpl.class,
 					status.getPrimaryKey()) == null) {
 
 				cacheResult(status);
@@ -1904,8 +1914,7 @@ public class StatusPersistenceImpl
 	@Override
 	public void clearCache(Status status) {
 		entityCache.removeResult(
-			StatusModelImpl.ENTITY_CACHE_ENABLED, StatusImpl.class,
-			status.getPrimaryKey());
+			entityCacheEnabled, StatusImpl.class, status.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1920,8 +1929,7 @@ public class StatusPersistenceImpl
 
 		for (Status status : statuses) {
 			entityCache.removeResult(
-				StatusModelImpl.ENTITY_CACHE_ENABLED, StatusImpl.class,
-				status.getPrimaryKey());
+				entityCacheEnabled, StatusImpl.class, status.getPrimaryKey());
 
 			clearUniqueFindersCache((StatusModelImpl)status, true);
 		}
@@ -2097,7 +2105,7 @@ public class StatusPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!StatusModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2189,8 +2197,8 @@ public class StatusPersistenceImpl
 		}
 
 		entityCache.putResult(
-			StatusModelImpl.ENTITY_CACHE_ENABLED, StatusImpl.class,
-			status.getPrimaryKey(), status, false);
+			entityCacheEnabled, StatusImpl.class, status.getPrimaryKey(),
+			status, false);
 
 		clearUniqueFindersCache(statusModelImpl, false);
 		cacheUniqueFindersCache(statusModelImpl);
@@ -2470,40 +2478,38 @@ public class StatusPersistenceImpl
 	/**
 	 * Initializes the status persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		StatusModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		StatusModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathFetchByUserId = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
 			new String[] {Long.class.getName()},
 			StatusModelImpl.USERID_COLUMN_BITMASK);
 
 		_finderPathCountByUserId = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByModifiedDate = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedDate",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2511,21 +2517,18 @@ public class StatusPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByModifiedDate = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByModifiedDate",
 			new String[] {Long.class.getName()},
 			StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByModifiedDate = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByModifiedDate",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByOnline = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOnline",
 			new String[] {
 				Boolean.class.getName(), Integer.class.getName(),
@@ -2533,21 +2536,18 @@ public class StatusPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByOnline = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOnline",
 			new String[] {Boolean.class.getName()},
 			StatusModelImpl.ONLINE_COLUMN_BITMASK);
 
 		_finderPathCountByOnline = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOnline",
 			new String[] {Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByM_O = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByM_O",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -2556,31 +2556,64 @@ public class StatusPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByM_O = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+			entityCacheEnabled, finderCacheEnabled, StatusImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByM_O",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
 			StatusModelImpl.ONLINE_COLUMN_BITMASK);
 
 		_finderPathCountByM_O = new FinderPath(
-			StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByM_O",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(StatusImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.chat.model.Status"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_STATUS =

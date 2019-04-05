@@ -99,21 +99,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.chat.model.Entry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.chat.model.Entry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.chat.model.Entry"),
-		true);
-
 	public static final long CONTENT_COLUMN_BITMASK = 1L;
 
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
@@ -122,9 +107,13 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	public static final long TOUSERID_COLUMN_BITMASK = 8L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.chat.model.Entry"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public EntryModelImpl() {
 	}
@@ -484,12 +473,12 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -604,6 +593,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		Entry.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _entryId;
 	private long _createDate;

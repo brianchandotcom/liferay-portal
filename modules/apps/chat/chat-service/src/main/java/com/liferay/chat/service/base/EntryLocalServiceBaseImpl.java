@@ -22,7 +22,7 @@ import com.liferay.chat.service.persistence.EntryFinder;
 import com.liferay.chat.service.persistence.EntryPersistence;
 import com.liferay.chat.service.persistence.StatusFinder;
 import com.liferay.chat.service.persistence.StatusPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -40,19 +40,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the entry local service.
@@ -68,7 +67,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class EntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements EntryLocalService, IdentifiableOSGiService {
+	implements EntryLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -324,253 +323,17 @@ public abstract class EntryLocalServiceBaseImpl
 		return entryPersistence.update(entry);
 	}
 
-	/**
-	 * Returns the entry local service.
-	 *
-	 * @return the entry local service
-	 */
-	public EntryLocalService getEntryLocalService() {
-		return entryLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			EntryLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the entry local service.
-	 *
-	 * @param entryLocalService the entry local service
-	 */
-	public void setEntryLocalService(EntryLocalService entryLocalService) {
-		this.entryLocalService = entryLocalService;
-	}
-
-	/**
-	 * Returns the entry persistence.
-	 *
-	 * @return the entry persistence
-	 */
-	public EntryPersistence getEntryPersistence() {
-		return entryPersistence;
-	}
-
-	/**
-	 * Sets the entry persistence.
-	 *
-	 * @param entryPersistence the entry persistence
-	 */
-	public void setEntryPersistence(EntryPersistence entryPersistence) {
-		this.entryPersistence = entryPersistence;
-	}
-
-	/**
-	 * Returns the entry finder.
-	 *
-	 * @return the entry finder
-	 */
-	public EntryFinder getEntryFinder() {
-		return entryFinder;
-	}
-
-	/**
-	 * Sets the entry finder.
-	 *
-	 * @param entryFinder the entry finder
-	 */
-	public void setEntryFinder(EntryFinder entryFinder) {
-		this.entryFinder = entryFinder;
-	}
-
-	/**
-	 * Returns the status local service.
-	 *
-	 * @return the status local service
-	 */
-	public com.liferay.chat.service.StatusLocalService getStatusLocalService() {
-		return statusLocalService;
-	}
-
-	/**
-	 * Sets the status local service.
-	 *
-	 * @param statusLocalService the status local service
-	 */
-	public void setStatusLocalService(
-		com.liferay.chat.service.StatusLocalService statusLocalService) {
-
-		this.statusLocalService = statusLocalService;
-	}
-
-	/**
-	 * Returns the status persistence.
-	 *
-	 * @return the status persistence
-	 */
-	public StatusPersistence getStatusPersistence() {
-		return statusPersistence;
-	}
-
-	/**
-	 * Sets the status persistence.
-	 *
-	 * @param statusPersistence the status persistence
-	 */
-	public void setStatusPersistence(StatusPersistence statusPersistence) {
-		this.statusPersistence = statusPersistence;
-	}
-
-	/**
-	 * Returns the status finder.
-	 *
-	 * @return the status finder
-	 */
-	public StatusFinder getStatusFinder() {
-		return statusFinder;
-	}
-
-	/**
-	 * Sets the status finder.
-	 *
-	 * @param statusFinder the status finder
-	 */
-	public void setStatusFinder(StatusFinder statusFinder) {
-		this.statusFinder = statusFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.chat.model.Entry", entryLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.chat.model.Entry");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		entryLocalService = (EntryLocalService)aopProxy;
 	}
 
 	/**
@@ -615,56 +378,34 @@ public abstract class EntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = EntryLocalService.class)
 	protected EntryLocalService entryLocalService;
 
-	@BeanReference(type = EntryPersistence.class)
+	@Reference
 	protected EntryPersistence entryPersistence;
 
-	@BeanReference(type = EntryFinder.class)
+	@Reference
 	protected EntryFinder entryFinder;
 
-	@BeanReference(type = com.liferay.chat.service.StatusLocalService.class)
-	protected com.liferay.chat.service.StatusLocalService statusLocalService;
-
-	@BeanReference(type = StatusPersistence.class)
+	@Reference
 	protected StatusPersistence statusPersistence;
 
-	@BeanReference(type = StatusFinder.class)
+	@Reference
 	protected StatusFinder statusFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

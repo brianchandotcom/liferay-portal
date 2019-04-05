@@ -21,7 +21,9 @@ import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.impl.EntryImpl;
 import com.liferay.chat.model.impl.EntryModelImpl;
 import com.liferay.chat.service.persistence.EntryPersistence;
+import com.liferay.chat.service.persistence.impl.constants.ChatPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,12 +31,13 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -44,6 +47,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the entry service.
@@ -55,6 +65,7 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = EntryPersistence.class)
 @ProviderType
 public class EntryPersistenceImpl
 	extends BasePersistenceImpl<Entry> implements EntryPersistence {
@@ -4444,7 +4455,6 @@ public class EntryPersistenceImpl
 
 		setModelImplClass(EntryImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(EntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -4455,8 +4465,7 @@ public class EntryPersistenceImpl
 	@Override
 	public void cacheResult(Entry entry) {
 		entityCache.putResult(
-			EntryModelImpl.ENTITY_CACHE_ENABLED, EntryImpl.class,
-			entry.getPrimaryKey(), entry);
+			entityCacheEnabled, EntryImpl.class, entry.getPrimaryKey(), entry);
 
 		entry.resetOriginalValues();
 	}
@@ -4470,7 +4479,7 @@ public class EntryPersistenceImpl
 	public void cacheResult(List<Entry> entries) {
 		for (Entry entry : entries) {
 			if (entityCache.getResult(
-					EntryModelImpl.ENTITY_CACHE_ENABLED, EntryImpl.class,
+					entityCacheEnabled, EntryImpl.class,
 					entry.getPrimaryKey()) == null) {
 
 				cacheResult(entry);
@@ -4507,8 +4516,7 @@ public class EntryPersistenceImpl
 	@Override
 	public void clearCache(Entry entry) {
 		entityCache.removeResult(
-			EntryModelImpl.ENTITY_CACHE_ENABLED, EntryImpl.class,
-			entry.getPrimaryKey());
+			entityCacheEnabled, EntryImpl.class, entry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -4521,8 +4529,7 @@ public class EntryPersistenceImpl
 
 		for (Entry entry : entries) {
 			entityCache.removeResult(
-				EntryModelImpl.ENTITY_CACHE_ENABLED, EntryImpl.class,
-				entry.getPrimaryKey());
+				entityCacheEnabled, EntryImpl.class, entry.getPrimaryKey());
 		}
 	}
 
@@ -4667,7 +4674,7 @@ public class EntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!EntryModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -4910,8 +4917,8 @@ public class EntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			EntryModelImpl.ENTITY_CACHE_ENABLED, EntryImpl.class,
-			entry.getPrimaryKey(), entry, false);
+			entityCacheEnabled, EntryImpl.class, entry.getPrimaryKey(), entry,
+			false);
 
 		entry.resetOriginalValues();
 
@@ -5183,27 +5190,27 @@ public class EntryPersistenceImpl
 	/**
 	 * Initializes the entry persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		EntryModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		EntryModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCreateDate = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCreateDate",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -5211,21 +5218,18 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCreateDate = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCreateDate",
 			new String[] {Long.class.getName()},
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCreateDate = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCreateDate",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByFromUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFromUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -5233,22 +5237,19 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByFromUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFromUserId",
 			new String[] {Long.class.getName()},
 			EntryModelImpl.FROMUSERID_COLUMN_BITMASK |
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByFromUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFromUserId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByToUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -5256,22 +5257,19 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByToUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToUserId",
 			new String[] {Long.class.getName()},
 			EntryModelImpl.TOUSERID_COLUMN_BITMASK |
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByToUserId = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToUserId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_F = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5280,22 +5278,19 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_F = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK |
 			EntryModelImpl.FROMUSERID_COLUMN_BITMASK);
 
 		_finderPathCountByC_F = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5304,22 +5299,19 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK |
 			EntryModelImpl.TOUSERID_COLUMN_BITMASK);
 
 		_finderPathCountByC_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByF_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5328,8 +5320,7 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByF_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_T",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			EntryModelImpl.FROMUSERID_COLUMN_BITMASK |
@@ -5337,14 +5328,12 @@ public class EntryPersistenceImpl
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByF_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_T",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_F_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5353,8 +5342,7 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_F_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -5364,16 +5352,14 @@ public class EntryPersistenceImpl
 			EntryModelImpl.TOUSERID_COLUMN_BITMASK);
 
 		_finderPathCountByC_F_T = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 		_finderPathWithPaginationFindByF_T_C = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_T_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5382,8 +5368,7 @@ public class EntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByF_T_C = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, EntryImpl.class,
+			entityCacheEnabled, finderCacheEnabled, EntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_T_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5395,8 +5380,7 @@ public class EntryPersistenceImpl
 			EntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByF_T_C = new FinderPath(
-			EntryModelImpl.ENTITY_CACHE_ENABLED,
-			EntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_T_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5404,17 +5388,52 @@ public class EntryPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(EntryImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.chat.model.Entry"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = ChatPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_ENTRY =

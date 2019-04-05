@@ -2176,68 +2176,6 @@ paths:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
             tags: ["DocumentFolder"]
-    "/document-folders/{parentDocumentFolderId}/document-folders":
-        get:
-            operationId: getDocumentFolderDocumentFoldersPage
-            parameters:
-                - in: path
-                  name: parentDocumentFolderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DocumentFolder"
-                                type: array
-                    description: ""
-            tags: ["DocumentFolder"]
-        post:
-            operationId: postDocumentFolderDocumentFolder
-            parameters:
-                - in: path
-                  name: parentDocumentFolderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentFolder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/DocumentFolder"
-                    description: ""
-            tags: ["DocumentFolder"]
     "/document-folders/{documentFolderId}/documents":
         get:
             operationId: getDocumentFolderDocumentsPage
@@ -2306,6 +2244,68 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
+    "/document-folders/{parentDocumentFolderId}/document-folders":
+        get:
+            operationId: getDocumentFolderDocumentFoldersPage
+            parameters:
+                - in: path
+                  name: parentDocumentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+                    description: ""
+            tags: ["DocumentFolder"]
+        post:
+            operationId: postDocumentFolderDocumentFolder
+            parameters:
+                - in: path
+                  name: parentDocumentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                    description: ""
+            tags: ["DocumentFolder"]
     "/documents/{documentId}":
         delete:
             operationId: deleteDocument
@@ -2611,68 +2611,6 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
-        get:
-            operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
-            parameters:
-                - in: path
-                  name: parentKnowledgeBaseArticleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-        post:
-            operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
-            parameters:
-                - in: path
-                  name: parentKnowledgeBaseArticleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments":
         get:
             operationId: getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage
@@ -2796,6 +2734,68 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
+        get:
+            operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
+            parameters:
+                - in: path
+                  name: parentKnowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
+            parameters:
+                - in: path
+                  name: parentKnowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-attachments/{knowledgeBaseAttachmentId}":
@@ -3182,68 +3182,6 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
-        get:
-            operationId: getMessageBoardMessageMessageBoardMessagesPage
-            parameters:
-                - in: path
-                  name: parentMessageBoardMessageId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MessageBoardMessage"
-                                type: array
-                    description: ""
-            tags: ["MessageBoardMessage"]
-        post:
-            operationId: postMessageBoardMessageMessageBoardMessage
-            parameters:
-                - in: path
-                  name: parentMessageBoardMessageId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/MessageBoardMessage"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/MessageBoardMessage"
-                    description: ""
-            tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/my-rating":
         delete:
             operationId: deleteMessageBoardMessageMyRating
@@ -3319,6 +3257,68 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["MessageBoardMessage"]
+    "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
+        get:
+            operationId: getMessageBoardMessageMessageBoardMessagesPage
+            parameters:
+                - in: path
+                  name: parentMessageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+                    description: ""
+            tags: ["MessageBoardMessage"]
+        post:
+            operationId: postMessageBoardMessageMessageBoardMessage
+            parameters:
+                - in: path
+                  name: parentMessageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
     "/message-board-sections/{messageBoardSectionId}":
@@ -3398,68 +3398,6 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
-        get:
-            operationId: getMessageBoardSectionMessageBoardSectionsPage
-            parameters:
-                - in: path
-                  name: parentMessageBoardSectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MessageBoardSection"
-                                type: array
-                    description: ""
-            tags: ["MessageBoardSection"]
-        post:
-            operationId: postMessageBoardSectionMessageBoardSection
-            parameters:
-                - in: path
-                  name: parentMessageBoardSectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/MessageBoardSection"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/MessageBoardSection"
-                    description: ""
-            tags: ["MessageBoardSection"]
     "/message-board-sections/{messageBoardSectionId}/message-board-threads":
         get:
             operationId: getMessageBoardSectionMessageBoardThreadsPage
@@ -3522,6 +3460,68 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
+    "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
+        get:
+            operationId: getMessageBoardSectionMessageBoardSectionsPage
+            parameters:
+                - in: path
+                  name: parentMessageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSection"
+                                type: array
+                    description: ""
+            tags: ["MessageBoardSection"]
+        post:
+            operationId: postMessageBoardSectionMessageBoardSection
+            parameters:
+                - in: path
+                  name: parentMessageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                    description: ""
+            tags: ["MessageBoardSection"]
     "/message-board-threads/{messageBoardThreadId}":
         delete:
             operationId: deleteMessageBoardThread
@@ -3786,6 +3786,68 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["MessageBoardThread"]
+    "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
+        get:
+            operationId: getStructuredContentFolderStructuredContentFoldersPage
+            parameters:
+                - in: path
+                  name: parentStructuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContentFolder"
+                                type: array
+                    description: ""
+            tags: ["StructuredContentFolder"]
+        post:
+            operationId: postStructuredContentFolderStructuredContentFolder
+            parameters:
+                - in: path
+                  name: parentStructuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+            tags: ["StructuredContentFolder"]
     "/structured-content-folders/{structuredContentFolderId}":
         delete:
             operationId: deleteStructuredContentFolder
@@ -3845,68 +3907,6 @@ paths:
             parameters:
                 - in: path
                   name: structuredContentFolderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/StructuredContentFolder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/StructuredContentFolder"
-                    description: ""
-            tags: ["StructuredContentFolder"]
-    "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
-        get:
-            operationId: getStructuredContentFolderStructuredContentFoldersPage
-            parameters:
-                - in: path
-                  name: parentStructuredContentFolderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/StructuredContentFolder"
-                                type: array
-                    description: ""
-            tags: ["StructuredContentFolder"]
-        post:
-            operationId: postStructuredContentFolderStructuredContentFolder
-            parameters:
-                - in: path
-                  name: parentStructuredContentFolderId
                   required: true
                   schema:
                       format: int64

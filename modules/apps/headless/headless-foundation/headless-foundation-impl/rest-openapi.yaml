@@ -890,46 +890,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/organizations/{parentOrganizationId}/organizations":
-        get:
-            operationId: getOrganizationOrganizationsPage
-            parameters:
-                - in: path
-                  name: parentOrganizationId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Organization"
-                                type: array
-                    description: ""
-            tags: ["Organization"]
     "/organizations/{organizationId}/phones":
         get:
             operationId: getOrganizationPhonesPage
@@ -1054,6 +1014,46 @@ paths:
                                 type: array
                     description: ""
             tags: ["WebUrl"]
+    "/organizations/{parentOrganizationId}/organizations":
+        get:
+            operationId: getOrganizationOrganizationsPage
+            parameters:
+                - in: path
+                  name: parentOrganizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description: ""
+            tags: ["Organization"]
     "/phones/{phoneId}":
         get:
             operationId: getPhone
@@ -1158,6 +1158,68 @@ paths:
                                 type: array
                     description: ""
             tags: ["SegmentUser"]
+    "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
+        get:
+            operationId: getTaxonomyCategoryTaxonomyCategoriesPage
+            parameters:
+                - in: path
+                  name: parentTaxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyCategory"
+                                type: array
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        post:
+            operationId: postTaxonomyCategoryTaxonomyCategory
+            parameters:
+                - in: path
+                  name: parentTaxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{taxonomyCategoryId}":
         delete:
             operationId: deleteTaxonomyCategory
@@ -1218,68 +1280,6 @@ paths:
             parameters:
                 - in: path
                   name: taxonomyCategoryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/TaxonomyCategory"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
-            tags: ["TaxonomyCategory"]
-    "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
-        get:
-            operationId: getTaxonomyCategoryTaxonomyCategoriesPage
-            parameters:
-                - in: path
-                  name: parentTaxonomyCategoryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/TaxonomyCategory"
-                                type: array
-                    description: ""
-            tags: ["TaxonomyCategory"]
-        post:
-            operationId: postTaxonomyCategoryTaxonomyCategory
-            parameters:
-                - in: path
-                  name: parentTaxonomyCategoryId
                   required: true
                   schema:
                       format: int64

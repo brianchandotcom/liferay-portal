@@ -33,7 +33,11 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import java.util.Arrays;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -72,8 +76,10 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 			_sharingEntryLocalService.addSharingEntry(
 				sharerUser.getUserId(), user.getUserId(),
 				_portal.getClassNameId(DLFileEntry.class),
-				fileEntry.getFileEntryId(), group.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+				fileEntry.getFileEntryId(), group.getGroupId(), i % 3 == 0,
+				Arrays.asList(SharingEntryAction.VIEW),
+				(i % 2 == 0) ? _getExpirationDate(i + 1) : null,
+				serviceContext);
 		}
 	}
 
@@ -86,6 +92,14 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private Date _getExpirationDate(int daysFromNow) {
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		localDateTime = localDateTime.plusDays(daysFromNow);
+
+		return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
 	}
 
 	@Reference

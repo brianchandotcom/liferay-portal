@@ -29,11 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,7 +40,6 @@ import java.io.Writer;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -165,39 +160,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return ddmFormTemplateContext;
 	}
 
-	protected String getDefaultLanguageId(
-		DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext) {
-
-		if (!ddmFormRenderingContext.isSharedURL()) {
-			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-			Locale displayLocale = _portal.getLocale(
-				ddmFormRenderingContext.getHttpServletRequest());
-
-			if (availableLocales.contains(displayLocale)) {
-				return LocaleUtil.toLanguageId(displayLocale);
-			}
-		}
-
-		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
-	}
-
-	protected String render(Template template, String namespace)
-		throws TemplateException {
-
-		Writer writer = new UnsyncStringWriter();
-
-		template.put(TemplateConstants.NAMESPACE, namespace);
-		template.put(TemplateConstants.RENDER_STRICT, Boolean.FALSE);
-
-		template.processTemplate(writer);
-
-		return writer.toString();
-	}
-
 	private static final String _MODULE_NAME =
 		"dynamic-data-mapping-form-builder/metal/js/components/Form" +
-			"/FormRenderer.es";
+			"/FormRendererWithProvider.es";
 
 	private static final String _TEMPLATE_NAMESPACE = "FormRenderer.render";
 

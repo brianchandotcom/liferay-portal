@@ -34,13 +34,11 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {

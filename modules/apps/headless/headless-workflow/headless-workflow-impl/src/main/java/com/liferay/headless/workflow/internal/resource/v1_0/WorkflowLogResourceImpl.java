@@ -16,7 +16,7 @@ package com.liferay.headless.workflow.internal.resource.v1_0;
 
 import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	scope = ServiceScope.PROTOTYPE, service = WorkflowLogResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 
 	@Override

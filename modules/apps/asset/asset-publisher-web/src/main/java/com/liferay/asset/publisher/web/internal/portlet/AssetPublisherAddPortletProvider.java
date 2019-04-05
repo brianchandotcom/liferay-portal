@@ -18,13 +18,18 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -92,12 +97,38 @@ public class AssetPublisherAddPortletProvider
 		_assetPublisherWebUtil.addSelection(
 			portletPreferences, assetEntry.getEntryId(), -1,
 			assetEntry.getClassName());
+
+		_addAssetEntryUsage(assetEntry, themeDisplay.getLayout(), portletId);
+	}
+
+	private void _addAssetEntryUsage(
+			AssetEntry assetEntry, Layout layout, String portletId)
+		throws PortalException {
+
+		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
+			assetEntry.getEntryId(), portletId);
+
+		if (count > 0) {
+			return;
+		}
+
+		_assetEntryUsageLocalService.addAssetEntryUsage(
+			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
+			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+			layout.getPlid(), portletId,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+
+	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
+
+	@Reference
+	private Portal _portal;
 
 }

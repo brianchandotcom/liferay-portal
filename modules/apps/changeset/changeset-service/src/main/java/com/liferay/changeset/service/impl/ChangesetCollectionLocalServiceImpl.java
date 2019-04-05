@@ -16,6 +16,7 @@ package com.liferay.changeset.service.impl;
 
 import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.changeset.service.base.ChangesetCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,7 +64,7 @@ public class ChangesetCollectionLocalServiceImpl
 			long changesetCollectionId)
 		throws PortalException {
 
-		changesetEntryLocalService.deleteChangesetEntries(
+		_changesetEntryLocalService.deleteChangesetEntries(
 			changesetCollectionId);
 
 		return super.deleteChangesetCollection(changesetCollectionId);
@@ -102,5 +104,8 @@ public class ChangesetCollectionLocalServiceImpl
 
 		return changesetCollectionPersistence.findByG_N(groupId, name);
 	}
+
+	@Reference
+	private ChangesetEntryLocalService _changesetEntryLocalService;
 
 }

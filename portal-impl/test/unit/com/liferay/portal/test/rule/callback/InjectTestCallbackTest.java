@@ -17,6 +17,8 @@ package com.liferay.portal.test.rule.callback;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.InjectTestBag;
+import com.liferay.portal.test.rule.InjectTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -61,25 +63,25 @@ public class InjectTestCallbackTest {
 		Description description = Description.createTestDescription(
 			TestCase1.class, TestCase1.class.getName());
 
-		InjectTestBag classInjectTestBag =
-			InjectTestCallback.INSTANCE.beforeClass(description);
+		InjectTestBag classInjectTestBag = InjectTestRule.INSTANCE.beforeClass(
+			description);
 
 		Assert.assertSame(service1, TestCase1.getService1());
 		Assert.assertNull(testCase1.getService2());
 
 		InjectTestBag methodInjectTestBag =
-			InjectTestCallback.INSTANCE.beforeMethod(description, testCase1);
+			InjectTestRule.INSTANCE.beforeMethod(description, testCase1);
 
 		Assert.assertSame(service1, TestCase1.getService1());
 		Assert.assertSame(service2, testCase1.getService2());
 
-		InjectTestCallback.INSTANCE.afterMethod(
+		InjectTestRule.INSTANCE.afterMethod(
 			description, methodInjectTestBag, testCase1);
 
 		Assert.assertSame(service1, TestCase1.getService1());
 		Assert.assertNull(testCase1.getService2());
 
-		InjectTestCallback.INSTANCE.afterClass(description, classInjectTestBag);
+		InjectTestRule.INSTANCE.afterClass(description, classInjectTestBag);
 
 		Assert.assertNull(TestCase1.getService1());
 		Assert.assertNull(testCase1.getService2());
@@ -124,8 +126,7 @@ public class InjectTestCallbackTest {
 
 			registerThread.start();
 
-			injectTestBag = InjectTestCallback.INSTANCE.beforeClass(
-				description);
+			injectTestBag = InjectTestRule.INSTANCE.beforeClass(description);
 
 			registerThread.join();
 		}
@@ -151,7 +152,7 @@ public class InjectTestCallbackTest {
 
 			});
 
-		InjectTestCallback.INSTANCE.afterClass(description, injectTestBag);
+		InjectTestRule.INSTANCE.afterClass(description, injectTestBag);
 
 		Assert.assertNull(TestCase2._service1);
 
@@ -164,7 +165,7 @@ public class InjectTestCallbackTest {
 			TestCase2.class, TestCase2.class.getName());
 		TestCase2 testCase2 = new TestCase2();
 
-		InjectTestBag injectTestBag = InjectTestCallback.INSTANCE.beforeMethod(
+		InjectTestBag injectTestBag = InjectTestRule.INSTANCE.beforeMethod(
 			description, testCase2);
 
 		Assert.assertNull(testCase2._service2);
@@ -202,7 +203,7 @@ public class InjectTestCallbackTest {
 		Assert.assertNull(TestCase2._service1);
 		Assert.assertNull(testCase2._service3);
 
-		InjectTestCallback.INSTANCE.afterMethod(
+		InjectTestRule.INSTANCE.afterMethod(
 			description, injectTestBag, testCase2);
 
 		Assert.assertNull(testCase2._service2);

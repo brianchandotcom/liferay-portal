@@ -17,7 +17,6 @@ package com.liferay.portal.test.rule;
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
 import com.liferay.portal.kernel.test.rule.StatementWrapper;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.spring.hibernate.DialectDetector;
-import com.liferay.portal.test.rule.callback.InjectTestCallback;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
@@ -72,13 +70,10 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(CompanyProviderTestRule.INSTANCE);
 		testRules.add(DeleteAfterTestRunTestRule.INSTANCE);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
-		testRules.add(_injectTestRule);
+		testRules.add(InjectTestRule.INSTANCE);
 
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}
-
-	private static final TestRule _injectTestRule = new BaseTestRule<>(
-		InjectTestCallback.INSTANCE);
 
 	private static final TestRule _springInitializationTestRule =
 		new TestRule() {

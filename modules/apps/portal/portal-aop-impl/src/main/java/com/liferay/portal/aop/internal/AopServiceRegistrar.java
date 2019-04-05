@@ -110,18 +110,20 @@ public class AopServiceRegistrar {
 	private Dictionary<String, Object> _getProperties(
 		ServiceReference<AopService> serviceReference) {
 
-		Dictionary<String, Object> properties = null;
+		Dictionary<String, Object> properties = _aopService.getProperties();
 
-		for (String key : serviceReference.getPropertyKeys()) {
-			if (_frameworkKeys.contains(key)) {
-				continue;
+		if (properties == null) {
+			for (String key : serviceReference.getPropertyKeys()) {
+				if (_frameworkKeys.contains(key)) {
+					continue;
+				}
+
+				if (properties == null) {
+					properties = new HashMapDictionary<>();
+				}
+
+				properties.put(key, serviceReference.getProperty(key));
 			}
-
-			if (properties == null) {
-				properties = new HashMapDictionary<>();
-			}
-
-			properties.put(key, serviceReference.getProperty(key));
 		}
 
 		return properties;

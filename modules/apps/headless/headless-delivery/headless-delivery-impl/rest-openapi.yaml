@@ -207,8 +207,9 @@ components:
                     type: object
                 contentType:
                     type: string
-                order:
-                    type: number
+                id:
+                    format: int64
+                    type: integer
                 title:
                     type: string
         ContentStructure:

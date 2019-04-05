@@ -161,7 +161,7 @@ definition {
 			);
 		}
 
-		task ("Assert the Button fragment was removed, but all other fragments and the empty section where the Button fragment used to be are present") {
+		task ("Assert the Button fragment was removed, but all other fragments are present") {
 			AssertVisible(
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
@@ -176,8 +176,6 @@ definition {
 				key_position = "2"
 			);
 
-			AssertVisible(locator1 = "PageEditor#SECTION", key_position = "3");
-
 			AssertElementNotPresent(
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Submit",
@@ -187,19 +185,6 @@ definition {
 
 			Button.viewNotPresent(button = "Submit");
 
-			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
-				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
-				key_fragmentClass = "body",
-				key_position = "4"
-			);
-		}
-
-		task ("Remove the empty section where the Button fragment used to be") {
-			PageEditor.removeSection(position = "3");
-		}
-
-		task ("Assert the empty section was removed") {
 			AssertVisible(
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
@@ -343,7 +328,7 @@ definition {
 			);
 		}
 
-		task ("Assert the Button fragment was removed, but all other fragments and the empty section where the Button fragment used to be are present") {
+		task ("Assert the Button fragment was removed, but all other fragments are present") {
 			AssertVisible(
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
@@ -358,8 +343,6 @@ definition {
 				key_position = "2"
 			);
 
-			AssertVisible(locator1 = "PageEditor#SECTION", key_position = "3");
-
 			AssertElementNotPresent(
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Submit",
@@ -373,7 +356,7 @@ definition {
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "4"
+				key_position = "3"
 			);
 		}
 	}

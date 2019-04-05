@@ -119,6 +119,8 @@ public interface SharepointOAuth2TokenEntryLocalService
 	public SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
 
+	public void deleteUserSharepointOAuth2TokenEntries(long userId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
@@ -250,6 +252,9 @@ public interface SharepointOAuth2TokenEntryLocalService
 	public SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
 			long userId, String configurationPid)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSharepointOAuth2TokenEntriesCount(long userId);
 
 	/**
 	 * Updates the sharepoint o auth2 token entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

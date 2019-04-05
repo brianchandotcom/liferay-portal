@@ -77,6 +77,524 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
+
+	/**
+	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching sharepoint o auth2 token entries
+	 */
+	@Override
+	public List<SharepointOAuth2TokenEntry> findByUserId(long userId) {
+		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @return the range of matching sharepoint o auth2 token entries
+	 */
+	@Override
+	public List<SharepointOAuth2TokenEntry> findByUserId(
+		long userId, int start, int end) {
+
+		return findByUserId(userId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sharepoint o auth2 token entries
+	 */
+	@Override
+	public List<SharepointOAuth2TokenEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
+
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching sharepoint o auth2 token entries
+	 */
+	@Override
+	public List<SharepointOAuth2TokenEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByUserId;
+			finderArgs = new Object[] {userId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByUserId;
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
+		}
+
+		List<SharepointOAuth2TokenEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<SharepointOAuth2TokenEntry>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
+						list) {
+
+					if ((userId != sharepointOAuth2TokenEntry.getUserId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SharepointOAuth2TokenEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (!pagination) {
+					list = (List<SharepointOAuth2TokenEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SharepointOAuth2TokenEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first sharepoint o auth2 token entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharepoint o auth2 token entry
+	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
+	 */
+	@Override
+	public SharepointOAuth2TokenEntry findByUserId_First(
+			long userId,
+			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
+		throws NoSuch2TokenEntryException {
+
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
+			fetchByUserId_First(userId, orderByComparator);
+
+		if (sharepointOAuth2TokenEntry != null) {
+			return sharepointOAuth2TokenEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append("}");
+
+		throw new NoSuch2TokenEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first sharepoint o auth2 token entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
+	 */
+	@Override
+	public SharepointOAuth2TokenEntry fetchByUserId_First(
+		long userId,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
+
+		List<SharepointOAuth2TokenEntry> list = findByUserId(
+			userId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sharepoint o auth2 token entry
+	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
+	 */
+	@Override
+	public SharepointOAuth2TokenEntry findByUserId_Last(
+			long userId,
+			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
+		throws NoSuch2TokenEntryException {
+
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
+			fetchByUserId_Last(userId, orderByComparator);
+
+		if (sharepointOAuth2TokenEntry != null) {
+			return sharepointOAuth2TokenEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append("}");
+
+		throw new NoSuch2TokenEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
+	 */
+	@Override
+	public SharepointOAuth2TokenEntry fetchByUserId_Last(
+		long userId,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
+
+		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SharepointOAuth2TokenEntry> list = findByUserId(
+			userId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the sharepoint o auth2 token entries before and after the current sharepoint o auth2 token entry in the ordered set where userId = &#63;.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the primary key of the current sharepoint o auth2 token entry
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sharepoint o auth2 token entry
+	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
+	 */
+	@Override
+	public SharepointOAuth2TokenEntry[] findByUserId_PrevAndNext(
+			long sharepointOAuth2TokenEntryId, long userId,
+			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
+		throws NoSuch2TokenEntryException {
+
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
+			findByPrimaryKey(sharepointOAuth2TokenEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SharepointOAuth2TokenEntry[] array =
+				new SharepointOAuth2TokenEntryImpl[3];
+
+			array[0] = getByUserId_PrevAndNext(
+				session, sharepointOAuth2TokenEntry, userId, orderByComparator,
+				true);
+
+			array[1] = sharepointOAuth2TokenEntry;
+
+			array[2] = getByUserId_PrevAndNext(
+				session, sharepointOAuth2TokenEntry, userId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SharepointOAuth2TokenEntry getByUserId_PrevAndNext(
+		Session session, SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry,
+		long userId,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SharepointOAuth2TokenEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						sharepointOAuth2TokenEntry)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<SharepointOAuth2TokenEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the sharepoint o auth2 token entries where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	@Override
+	public void removeByUserId(long userId) {
+		for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
+				findByUserId(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(sharepointOAuth2TokenEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching sharepoint o auth2 token entries
+	 */
+	@Override
+	public int countByUserId(long userId) {
+		FinderPath finderPath = _finderPathCountByUserId;
+
+		Object[] finderArgs = new Object[] {userId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_USERID_USERID_2 =
+		"sharepointOAuth2TokenEntry.userId = ?";
+
 	private FinderPath _finderPathFetchByU_C;
 	private FinderPath _finderPathCountByU_C;
 
@@ -665,9 +1183,39 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
+			Object[] args = new Object[] {
+				sharepointOAuth2TokenEntryModelImpl.getUserId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUserId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUserId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((sharepointOAuth2TokenEntryModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUserId.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					sharepointOAuth2TokenEntryModelImpl.getOriginalUserId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
+
+				args = new Object[] {
+					sharepointOAuth2TokenEntryModelImpl.getUserId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
+			}
 		}
 
 		entityCache.putResult(
@@ -980,6 +1528,30 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByUserId = new FinderPath(
+			SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+			SharepointOAuth2TokenEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
+			SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+			SharepointOAuth2TokenEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+			new String[] {Long.class.getName()},
+			SharepointOAuth2TokenEntryModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(
+			SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUserId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByU_C = new FinderPath(
 			SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,

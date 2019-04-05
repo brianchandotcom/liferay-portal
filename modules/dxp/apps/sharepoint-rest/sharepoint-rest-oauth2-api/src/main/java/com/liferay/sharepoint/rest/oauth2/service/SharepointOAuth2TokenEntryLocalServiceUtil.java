@@ -134,6 +134,10 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 			sharepointOAuth2TokenEntry);
 	}
 
+	public static void deleteUserSharepointOAuth2TokenEntries(long userId) {
+		getService().deleteUserSharepointOAuth2TokenEntries(userId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
 		dynamicQuery() {
 
@@ -316,6 +320,10 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 
 		return getService().getSharepointOAuth2TokenEntry(
 			userId, configurationPid);
+	}
+
+	public static int getUserSharepointOAuth2TokenEntriesCount(long userId) {
+		return getService().getUserSharepointOAuth2TokenEntriesCount(userId);
 	}
 
 	/**

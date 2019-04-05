@@ -135,6 +135,12 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteUserSharepointOAuth2TokenEntries(long userId) {
+		_sharepointOAuth2TokenEntryLocalService.
+			deleteUserSharepointOAuth2TokenEntries(userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _sharepointOAuth2TokenEntryLocalService.dynamicQuery();
 	}
@@ -333,6 +339,12 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 		return _sharepointOAuth2TokenEntryLocalService.
 			getSharepointOAuth2TokenEntry(userId, configurationPid);
+	}
+
+	@Override
+	public int getUserSharepointOAuth2TokenEntriesCount(long userId) {
+		return _sharepointOAuth2TokenEntryLocalService.
+			getUserSharepointOAuth2TokenEntriesCount(userId);
 	}
 
 	/**

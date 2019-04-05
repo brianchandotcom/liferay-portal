@@ -188,6 +188,13 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
+
+		_persistence.countByUserId(0L);
+	}
+
+	@Test
 	public void testCountByU_C() throws Exception {
 		_persistence.countByU_C(RandomTestUtil.nextLong(), "");
 

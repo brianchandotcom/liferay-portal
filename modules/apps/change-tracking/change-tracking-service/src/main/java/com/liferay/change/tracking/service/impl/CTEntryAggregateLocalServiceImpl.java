@@ -45,9 +45,7 @@ public class CTEntryAggregateLocalServiceImpl
 
 	@Override
 	public void addCTEntry(CTEntryAggregate ctEntryAggregate, CTEntry ctEntry) {
-		if ((ctEntryAggregate == null) || (ctEntry == null) ||
-			hasCTEntry(ctEntryAggregate, ctEntry)) {
-
+		if ((ctEntryAggregate == null) || (ctEntry == null)) {
 			return;
 		}
 
@@ -148,10 +146,6 @@ public class CTEntryAggregateLocalServiceImpl
 	@Override
 	public void removeCTEntry(
 		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry) {
-
-		if (!hasCTEntry(ctEntryAggregate, ctEntry)) {
-			return;
-		}
 
 		ctEntryAggregatePersistence.removeCTEntry(
 			ctEntryAggregate.getCtEntryAggregateId(), ctEntry);

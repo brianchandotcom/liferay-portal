@@ -161,9 +161,7 @@ exports[`Should render component 1`] = `
             href="/process-dashboard/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
-            <span
-              title="test"
-            >
+            <span>
               test
             </span>
           </a>

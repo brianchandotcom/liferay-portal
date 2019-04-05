@@ -35,12 +35,14 @@ public abstract class AbstractTestRule<C, M> implements TestRule {
 	protected abstract void afterClass(Description description, C c)
 		throws Throwable;
 
-	protected abstract void afterMethod(Description description, M m)
+	protected abstract void afterMethod(
+			Description description, M m, Object target)
 		throws Throwable;
 
 	protected abstract C beforeClass(Description description) throws Throwable;
 
-	protected abstract M beforeMethod(Description description) throws Throwable;
+	protected abstract M beforeMethod(Description description, Object target)
+		throws Throwable;
 
 	protected Statement createClassStatement(
 		Statement statement, Description description) {
@@ -69,13 +71,15 @@ public abstract class AbstractTestRule<C, M> implements TestRule {
 
 			@Override
 			public void evaluate() throws Throwable {
-				M m = beforeMethod(description);
+				Object target = inspectTarget(statement);
+
+				M m = beforeMethod(description, target);
 
 				try {
 					statement.evaluate();
 				}
 				finally {
-					afterMethod(description, m);
+					afterMethod(description, m, target);
 				}
 			}
 

@@ -23,11 +23,11 @@ import org.junit.runners.model.Statement;
 public abstract class ClassTestRule<C> extends AbstractTestRule<C, Void> {
 
 	@Override
-	protected void afterMethod(Description description, Void v) {
+	protected void afterMethod(Description description, Void v, Object target) {
 	}
 
 	@Override
-	protected Void beforeMethod(Description description) {
+	protected Void beforeMethod(Description description, Object target) {
 		return null;
 	}
 

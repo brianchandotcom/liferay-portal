@@ -75,20 +75,21 @@ public class KnowledgeBaseFolderResourceImpl
 	@Override
 	public Page<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(
+			parentKnowledgeBaseFolderId);
 
 		return Page.of(
 			transform(
 				_kbFolderService.getKBFolders(
-					kbFolder.getGroupId(), knowledgeBaseFolderId,
+					kbFolder.getGroupId(), parentKnowledgeBaseFolderId,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toKnowledgeBaseFolder),
 			pagination,
 			_kbFolderService.getKBFoldersCount(
-				kbFolder.getGroupId(), knowledgeBaseFolderId));
+				kbFolder.getGroupId(), parentKnowledgeBaseFolderId));
 	}
 
 	@Override
@@ -108,15 +109,17 @@ public class KnowledgeBaseFolderResourceImpl
 
 	@Override
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+			Long parentKnowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(
+			parentKnowledgeBaseFolderId);
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				kbFolder.getGroupId(), _getClassNameId(), knowledgeBaseFolderId,
-				knowledgeBaseFolder.getName(),
+				kbFolder.getGroupId(), _getClassNameId(),
+				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
 					kbFolder.getGroupId(),

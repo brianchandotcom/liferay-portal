@@ -101,20 +101,20 @@ public class TaxonomyCategoryResourceImpl
 
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long taxonomyCategoryId, String search, Filter filter,
+			Long parentTaxonomyCategoryId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getCategoriesPage(
 			booleanQuery -> {
-				if (taxonomyCategoryId != null) {
+				if (parentTaxonomyCategoryId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
 					booleanFilter.add(
 						new TermFilter(
 							Field.ASSET_PARENT_CATEGORY_ID,
-							String.valueOf(taxonomyCategoryId)),
+							String.valueOf(parentTaxonomyCategoryId)),
 						BooleanClauseOccur.MUST);
 				}
 			},
@@ -188,11 +188,11 @@ public class TaxonomyCategoryResourceImpl
 
 	@Override
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
-			taxonomyCategoryId);
+			parentTaxonomyCategoryId);
 
 		return _addTaxonomyCategory(
 			assetCategory.getGroupId(), assetCategory.getDefaultLanguageId(),

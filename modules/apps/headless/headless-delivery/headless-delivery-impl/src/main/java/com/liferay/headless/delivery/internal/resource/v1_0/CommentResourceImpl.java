@@ -84,15 +84,15 @@ public class CommentResourceImpl
 
 	@Override
 	public Page<Comment> getCommentCommentsPage(
-			Long commentId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long parentCommentId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
 		return spiCommentResource.getCommentCommentsPage(
-			commentId, search, filter, pagination, sorts);
+			parentCommentId, search, filter, pagination, sorts);
 	}
 
 	@Override

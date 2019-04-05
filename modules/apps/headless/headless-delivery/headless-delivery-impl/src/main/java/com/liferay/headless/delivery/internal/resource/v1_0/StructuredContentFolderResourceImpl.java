@@ -97,15 +97,15 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				Long structuredContentFolderId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long parentStructuredContentFolderId, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderService.getFolder(
-			structuredContentFolderId);
+			parentStructuredContentFolderId);
 
 		return _getFoldersPage(
-			journalFolder.getGroupId(), structuredContentFolderId, search,
+			journalFolder.getGroupId(), parentStructuredContentFolderId, search,
 			filter, pagination, sorts);
 	}
 
@@ -123,15 +123,15 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				Long structuredContentFolderId,
+				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderService.getFolder(
-			structuredContentFolderId);
+			parentStructuredContentFolderId);
 
 		return _addStructuredContentFolder(
-			journalFolder.getGroupId(), structuredContentFolderId,
+			journalFolder.getGroupId(), parentStructuredContentFolderId,
 			structuredContentFolder);
 	}
 

@@ -101,12 +101,12 @@ public class MessageBoardSectionResourceImpl
 	@Override
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				Long messageBoardSectionId, String search, Filter filter,
+				Long parentMessageBoardSectionId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		MBCategory mbCategory = _mbCategoryService.getCategory(
-			messageBoardSectionId);
+			parentMessageBoardSectionId);
 
 		return _getContentSpaceMessageBoardSectionsPage(
 			booleanQuery -> {
@@ -132,14 +132,15 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+			Long parentMessageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		MBCategory mbCategory = _mbCategoryService.getCategory(
-			messageBoardSectionId);
+			parentMessageBoardSectionId);
 
 		return _addMessageBoardSection(
-			mbCategory.getGroupId(), messageBoardSectionId,
+			mbCategory.getGroupId(), parentMessageBoardSectionId,
 			messageBoardSection);
 	}
 

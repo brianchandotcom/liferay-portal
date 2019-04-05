@@ -87,12 +87,12 @@ public class DocumentFolderResourceImpl
 
 	@Override
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			Long documentFolderId, String search, Filter filter,
+			Long parentDocumentFolderId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(
-			_dlAppService.getFolder(documentFolderId));
+			_dlAppService.getFolder(parentDocumentFolderId));
 
 		return _getDocumentFoldersPage(
 			parentDocumentFolder.getContentSpaceId(), search, filter,
@@ -135,11 +135,11 @@ public class DocumentFolderResourceImpl
 
 	@Override
 	public DocumentFolder postDocumentFolderDocumentFolder(
-			Long documentFolderId, DocumentFolder documentFolder)
+			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(
-			_dlAppService.getFolder(documentFolderId));
+			_dlAppService.getFolder(parentDocumentFolderId));
 
 		return _addFolder(
 			parentDocumentFolder.getContentSpaceId(),

@@ -97,12 +97,12 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				Long messageBoardMessageId, String search, Filter filter,
+				Long parentMessageBoardMessageId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
-			messageBoardMessageId, search, filter, pagination, sorts);
+			parentMessageBoardMessageId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -130,11 +130,12 @@ public class MessageBoardMessageResourceImpl
 
 	@Override
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+			Long parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _addMessageBoardThread(
-			messageBoardMessageId, messageBoardMessage);
+			parentMessageBoardMessageId, messageBoardMessage);
 	}
 
 	@Override

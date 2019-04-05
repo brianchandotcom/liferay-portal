@@ -103,12 +103,12 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long organizationId, String search, Filter filter,
+			Long parentOrganizationId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getOrganizationsPage(
-			organizationId, search, filter, pagination, sorts);
+			parentOrganizationId, search, filter, pagination, sorts);
 	}
 
 	@Override

@@ -125,12 +125,12 @@ public class KnowledgeBaseArticleResourceImpl
 	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, String search, Filter filter,
+				Long parentKnowledgeBaseArticleId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticlesPage(
 			booleanQuery -> {
@@ -198,17 +198,17 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId,
+			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticle(
 			kbArticle.getGroupId(),
 			_portal.getClassNameId(KBArticle.class.getName()),
-			knowledgeBaseArticleId, knowledgeBaseArticle);
+			parentKnowledgeBaseArticleId, knowledgeBaseArticle);
 	}
 
 	@Override

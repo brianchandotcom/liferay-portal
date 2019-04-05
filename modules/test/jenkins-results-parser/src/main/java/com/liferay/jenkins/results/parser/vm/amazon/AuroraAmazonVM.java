@@ -60,7 +60,7 @@ public abstract class AuroraAmazonVM extends VM {
 
 		System.out.println("Waiting for the DB cluster to start");
 
-		long timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
+		long timeout = System.currentTimeMillis() + MILLIS_TIMEOUT_DURATION;
 
 		while (!dbClusterStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
@@ -90,7 +90,7 @@ public abstract class AuroraAmazonVM extends VM {
 
 		System.out.println("Waiting for the DB instance to start");
 
-		timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
+		timeout = System.currentTimeMillis() + MILLIS_TIMEOUT_DURATION;
 
 		while (!dbInstanceStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {

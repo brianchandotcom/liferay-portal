@@ -333,7 +333,7 @@ public class BatchBuild extends BaseBuild {
 	public void update() {
 		super.update();
 
-		if (badBuildNumbers.size() >= MAX_REINVOCATIONS) {
+		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
 			return;
 		}
 

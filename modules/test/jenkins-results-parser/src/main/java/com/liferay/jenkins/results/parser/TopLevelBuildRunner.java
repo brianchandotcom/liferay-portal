@@ -141,7 +141,7 @@ public abstract class TopLevelBuildRunner
 		File workspaceDir = topLevelBuildData.getWorkspaceDir();
 
 		FilePropagator filePropagator = new FilePropagator(
-			new String[] {BuildDatabase.BUILD_DATABASE_FILE_NAME},
+			new String[] {BuildDatabase.FILE_NAME_BUILD_DATABASE},
 			JenkinsResultsParserUtil.combine(
 				topLevelBuildData.getHostname(), ":", workspaceDir.toString()),
 			topLevelBuildData.getDistPath(), topLevelBuildData.getDistNodes());
@@ -393,7 +393,7 @@ public abstract class TopLevelBuildRunner
 
 	private static final String _COMMAND_FILE_PROPAGATOR_CLEAN_UP =
 		JenkinsResultsParserUtil.combine(
-			"find ", BuildData.DIST_ROOT_PATH,
+			"find ", BuildData.FILE_PATH_DIST_ROOT,
 			"/*/* -maxdepth 1 -type d -mmin +",
 			String.valueOf(
 				TopLevelBuildRunner._MILLIS_FILE_PROPAGATOR_EXPIRATION),

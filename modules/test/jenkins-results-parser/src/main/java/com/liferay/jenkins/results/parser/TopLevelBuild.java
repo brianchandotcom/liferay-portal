@@ -878,7 +878,7 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelBuild.getJenkinsMaster();
 
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, topLevelBuildJenkinsMaster.getName(), "/",
+			URL_BASE_TEMP_MAP, topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			String.valueOf(topLevelBuild.getBuildNumber()), "/",
 			topLevelBuild.getJobName(), "/git.", gitRepositoryType,
@@ -1271,7 +1271,7 @@ public class TopLevelBuild extends BaseBuild {
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, jenkinsMaster.getName(), "/", getJobName(), "/",
+			URL_BASE_TEMP_MAP, jenkinsMaster.getName(), "/", getJobName(), "/",
 			String.valueOf(getBuildNumber()), "/", getJobName(), "/",
 			"start.properties");
 	}
@@ -1285,7 +1285,7 @@ public class TopLevelBuild extends BaseBuild {
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, jenkinsMaster.getName(), "/", getJobName(), "/",
+			URL_BASE_TEMP_MAP, jenkinsMaster.getName(), "/", getJobName(), "/",
 			String.valueOf(getBuildNumber()), "/", getJobName(), "/",
 			"stop.properties");
 	}

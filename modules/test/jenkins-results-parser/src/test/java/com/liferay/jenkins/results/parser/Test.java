@@ -221,15 +221,15 @@ public class Test {
 	}
 
 	protected String fixMessage(String message) {
-		if (message.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE)) {
+		if (message.contains(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE)) {
 			message = message.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE,
+				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE,
 				"${dependencies.url}");
 		}
 
-		if (message.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP)) {
+		if (message.contains(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP)) {
 			message = message.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP,
+				JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP,
 				"${dependencies.url}");
 		}
 

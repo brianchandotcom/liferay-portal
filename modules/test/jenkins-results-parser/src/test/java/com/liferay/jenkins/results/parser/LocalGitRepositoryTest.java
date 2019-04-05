@@ -32,19 +32,20 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 		File directory = localGitRepository.getDirectory();
 
 		try {
-			if (!REPOSITORY_DIR.equals(
+			if (!FILE_PATH_REPOSITORY.equals(
 					JenkinsResultsParserUtil.getCanonicalPath(directory))) {
 
 				errorCollector.addError(
 					new Throwable(
 						"The repository directorydirectory should be " +
-							REPOSITORY_DIR));
+							FILE_PATH_REPOSITORY));
 			}
 		}
 		catch (RuntimeException re) {
 			errorCollector.addError(
 				new Throwable(
-					"The repository directory should be " + REPOSITORY_DIR));
+					"The repository directory should be " +
+						FILE_PATH_REPOSITORY));
 		}
 	}
 
@@ -67,10 +68,10 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("directory", REPOSITORY_DIR);
-		expectedJSONObject.put("name", REPOSITORY_NAME);
+		expectedJSONObject.put("directory", FILE_PATH_REPOSITORY);
+		expectedJSONObject.put("name", NAME_REPOSITORY);
 		expectedJSONObject.put(
-			"upstream_branch_name", REPOSITORY_UPSTREAM_BRANCH_NAME);
+			"upstream_branch_name", NAME_REPOSITORY_UPSTREAM_BRANCH);
 
 		JSONObject actualJSONObject = localGitRepository.getJSONObject();
 
@@ -90,10 +91,10 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 	public void testGetName() {
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
-		if (!REPOSITORY_NAME.equals(localGitRepository.getName())) {
+		if (!NAME_REPOSITORY.equals(localGitRepository.getName())) {
 			errorCollector.addError(
 				new Throwable(
-					"The repository name should be " + REPOSITORY_NAME));
+					"The repository name should be " + NAME_REPOSITORY));
 		}
 	}
 
@@ -101,20 +102,20 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 	public void testGetUpstreamBranchName() {
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
-		if (!REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
+		if (!NAME_REPOSITORY_UPSTREAM_BRANCH.equals(
 				localGitRepository.getUpstreamBranchName())) {
 
 			errorCollector.addError(
 				new Throwable(
 					JenkinsResultsParserUtil.combine(
 						"The upstream branch name should be ",
-						REPOSITORY_UPSTREAM_BRANCH_NAME)));
+						NAME_REPOSITORY_UPSTREAM_BRANCH)));
 		}
 	}
 
 	private LocalGitRepository _getLocalGitRepository() {
 		return GitRepositoryFactory.getLocalGitRepository(
-			REPOSITORY_NAME, REPOSITORY_UPSTREAM_BRANCH_NAME);
+			NAME_REPOSITORY, NAME_REPOSITORY_UPSTREAM_BRANCH);
 	}
 
 }

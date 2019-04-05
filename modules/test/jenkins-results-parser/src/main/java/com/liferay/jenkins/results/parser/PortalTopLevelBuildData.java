@@ -61,8 +61,8 @@ public class PortalTopLevelBuildData
 
 		super(runID, jobName, buildURL);
 
-		setPortalGitHubURL(DEFAULT_PORTAL_GITHUB_URL);
-		setPortalUpstreamBranchName(DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME);
+		setPortalGitHubURL(URL_PORTAL_GITHUB_BRANCH_DEFAULT);
+		setPortalUpstreamBranchName(NAME_PORTAL_UPSTREAM_BRANCH_DEFAULT);
 
 		validateKeys(_REQUIRED_KEYS);
 	}

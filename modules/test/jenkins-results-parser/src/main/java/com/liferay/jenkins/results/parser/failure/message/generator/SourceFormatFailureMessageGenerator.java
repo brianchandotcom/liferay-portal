@@ -37,7 +37,7 @@ public class SourceFormatFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		int end = start + MAX_CONSOLE_TEXT_SNIPPET_LENGTH;
+		int end = start + CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX;
 
 		end = consoleText.lastIndexOf("\n", end);
 

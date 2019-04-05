@@ -19,19 +19,19 @@ package com.liferay.jenkins.results.parser.util;
  */
 public class TestPropertiesValues {
 
-	public static final String REPOSITORY_DIR = TestPropertiesUtil.get(
+	public static final String FILE_PATH_REPOSITORY = TestPropertiesUtil.get(
 		"repository.dir");
 
-	public static final String REPOSITORY_HOSTNAME = TestPropertiesUtil.get(
+	public static final String HOSTNAME_REPOSITORY = TestPropertiesUtil.get(
 		"repository.hostname");
 
-	public static final String REPOSITORY_NAME = TestPropertiesUtil.get(
+	public static final String NAME_REPOSITORY = TestPropertiesUtil.get(
 		"repository.name");
 
-	public static final String REPOSITORY_UPSTREAM_BRANCH_NAME =
+	public static final String NAME_REPOSITORY_UPSTREAM_BRANCH =
 		TestPropertiesUtil.get("repository.upstream.branch.name");
 
-	public static final String REPOSITORY_USERNAME = TestPropertiesUtil.get(
+	public static final String USERNAME_REPOSITORY = TestPropertiesUtil.get(
 		"repository.username");
 
 }

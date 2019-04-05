@@ -93,7 +93,7 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
-	public static final String[] DEFAULT_BUILD_PROPERTIES_URLS = {
+	public static final String[] URLS_BUILD_PROPERTIES_DEFAULT = {
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-ee/build.properties",
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
@@ -106,7 +106,7 @@ public class JenkinsResultsParserUtil {
 			"/liferay-portal/test.properties"
 	};
 
-	public static final String[] DEFAULT_JENKINS_PROPERTIES_URLS = {
+	public static final String[] URLS_JENKINS_PROPERTIES_DEFAULT = {
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-ee/jenkins.properties"
 	};
@@ -731,7 +731,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if (_buildPropertiesURLs == null) {
-			_buildPropertiesURLs = DEFAULT_BUILD_PROPERTIES_URLS;
+			_buildPropertiesURLs = URLS_BUILD_PROPERTIES_DEFAULT;
 		}
 
 		for (String url : _buildPropertiesURLs) {
@@ -1031,7 +1031,7 @@ public class JenkinsResultsParserUtil {
 			return properties;
 		}
 
-		for (String url : DEFAULT_JENKINS_PROPERTIES_URLS) {
+		for (String url : URLS_JENKINS_PROPERTIES_DEFAULT) {
 			properties.load(
 				new StringReader(toString(getLocalURL(url), false)));
 		}
@@ -1112,7 +1112,7 @@ public class JenkinsResultsParserUtil {
 			remoteURL = fixFileName(remoteURL);
 
 			String fileURL = remoteURL.replace(
-				"${dependencies.url}", DEPENDENCIES_URL_FILE);
+				"${dependencies.url}", URL_DEPENDENCIES_FILE);
 
 			File file = new File(fileURL.substring("file:".length()));
 
@@ -1121,7 +1121,7 @@ public class JenkinsResultsParserUtil {
 			}
 			else {
 				remoteURL = remoteURL.replace(
-					"${dependencies.url}", DEPENDENCIES_URL_HTTP);
+					"${dependencies.url}", URL_DEPENDENCIES_HTTP);
 			}
 		}
 
@@ -2553,7 +2553,7 @@ public class JenkinsResultsParserUtil {
 		if (path.startsWith("${dependencies.url}")) {
 			path = path.replace(
 				"${dependencies.url}",
-				DEPENDENCIES_URL_FILE.replace("file:", ""));
+				URL_DEPENDENCIES_FILE.replace("file:", ""));
 		}
 
 		write(new File(path), content);
@@ -2664,9 +2664,9 @@ public class JenkinsResultsParserUtil {
 
 	}
 
-	protected static final String DEPENDENCIES_URL_FILE;
+	protected static final String URL_DEPENDENCIES_FILE;
 
-	protected static final String DEPENDENCIES_URL_HTTP =
+	protected static final String URL_DEPENDENCIES_HTTP =
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-results-parser-samples-ee/1/";
 
@@ -2678,7 +2678,7 @@ public class JenkinsResultsParserUtil {
 
 			URL url = uri.toURL();
 
-			DEPENDENCIES_URL_FILE = url.toString();
+			URL_DEPENDENCIES_FILE = url.toString();
 		}
 		catch (MalformedURLException murle) {
 			throw new RuntimeException(murle);

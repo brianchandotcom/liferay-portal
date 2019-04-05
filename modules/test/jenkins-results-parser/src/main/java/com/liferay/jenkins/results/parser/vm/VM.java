@@ -23,6 +23,6 @@ public abstract class VM {
 
 	public abstract void delete();
 
-	protected static final long TIMEOUT_DURATION = 1000 * 60 * 10;
+	protected static final long MILLIS_TIMEOUT_DURATION = 1000 * 60 * 10;
 
 }

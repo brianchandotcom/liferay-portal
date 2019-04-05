@@ -46,7 +46,7 @@ public class ContentFieldSerDes {
 
 	public static String toJSON(ContentField contentField) {
 		if (contentField == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();

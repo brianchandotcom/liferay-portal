@@ -152,7 +152,7 @@ class ManageCollaborators extends PortletBase {
 		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
-			collaborator.shareable = shareable;
+			collaborator.sharingEntryShareable = shareable;
 
 			this.collaborators = this.collaborators;
 		}
@@ -347,7 +347,7 @@ ManageCollaborators.STATE = {
 		Config.shapeOf(
 			{
 				fullName: Config.string(),
-				shareable: Config.bool(),
+				sharingEntryShareable: Config.bool(),
 				sharingEntryExpirationDate: Config.string(),
 				sharingEntryExpirationDateTooltip: Config.string(),
 				sharingEntryId: Config.string(),

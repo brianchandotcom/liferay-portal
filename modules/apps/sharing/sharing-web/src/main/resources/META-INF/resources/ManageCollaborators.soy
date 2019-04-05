@@ -6,7 +6,7 @@
 {template .render}
 	{@param collaborators: list<[
 		fullName: string,
-		shareable: bool,
+		sharingEntryShareable: bool,
 		sharingEntryExpirationDate: string,
 		sharingEntryExpirationDateTooltip: string,
 		sharingEntryId: string,
@@ -172,7 +172,7 @@
 			</div>
 
 			<div class="autofit-col">
-				{if $collaborator.shareable}
+				{if $collaborator.sharingEntryShareable}
 					{let $tooltipMessage kind="text"}
 						{msg desc=""}can-share-and-manage-permissions{/msg}
 					{/let}
@@ -221,7 +221,7 @@
 						<div class="custom-checkbox custom-control">
 							<label>
 								<input
-									{if $collaborator.shareable}
+									{if $collaborator.sharingEntryShareable}
 										checked
 									{/if}
 									class="custom-control-input"

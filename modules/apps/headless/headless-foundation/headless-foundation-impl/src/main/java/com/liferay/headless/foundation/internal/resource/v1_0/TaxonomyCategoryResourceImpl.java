@@ -194,19 +194,10 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
 			taxonomyCategoryId);
 
-		return _toTaxonomyCategory(
-			_assetCategoryService.addCategory(
-				assetCategory.getGroupId(), taxonomyCategoryId,
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getName()),
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getDescription()),
-				assetCategory.getVocabularyId(), null,
-				ServiceContextUtil.createServiceContext(
-					assetCategory.getGroupId(),
-					taxonomyCategory.getViewableByAsString())));
+		return _addTaxonomyCategory(
+			assetCategory.getGroupId(), assetCategory.getDefaultLanguageId(),
+			taxonomyCategory, assetCategory.getCategoryId(),
+			assetCategory.getVocabularyId());
 	}
 
 	@Override
@@ -217,19 +208,10 @@ public class TaxonomyCategoryResourceImpl
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			taxonomyVocabularyId);
 
-		return _toTaxonomyCategory(
-			_assetCategoryService.addCategory(
-				assetVocabulary.getGroupId(), 0,
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getName()),
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getDescription()),
-				taxonomyVocabularyId, null,
-				ServiceContextUtil.createServiceContext(
-					assetVocabulary.getGroupId(),
-					taxonomyCategory.getViewableByAsString())));
+		return _addTaxonomyCategory(
+			assetVocabulary.getGroupId(),
+			assetVocabulary.getDefaultLanguageId(), taxonomyCategory, 0,
+			assetVocabulary.getVocabularyId());
 	}
 
 	@Override
@@ -254,6 +236,36 @@ public class TaxonomyCategoryResourceImpl
 						contextAcceptLanguage.getPreferredLocale(),
 						taxonomyCategory.getDescription())),
 				assetCategory.getVocabularyId(), null, new ServiceContext()));
+	}
+
+	private TaxonomyCategory _addTaxonomyCategory(
+			long groupId, String languageId, TaxonomyCategory taxonomyCategory,
+			long taxonomyCategoryId, long taxonomyVocabularyId)
+		throws Exception {
+
+		if (!LocaleUtil.equals(
+				LocaleUtil.fromLanguageId(languageId),
+				contextAcceptLanguage.getPreferredLocale())) {
+
+			String w3cLanguageId = LocaleUtil.toW3cLanguageId(languageId);
+
+			throw new BadRequestException(
+				"Taxonomy categories can only be created with the default " +
+					"language " + w3cLanguageId);
+		}
+
+		return _toTaxonomyCategory(
+			_assetCategoryService.addCategory(
+				groupId, taxonomyCategoryId,
+				Collections.singletonMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getName()),
+				Collections.singletonMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getDescription()),
+				taxonomyVocabularyId, null,
+				ServiceContextUtil.createServiceContext(
+					groupId, taxonomyCategory.getViewableByAsString())));
 	}
 
 	private Page<TaxonomyCategory> _getCategoriesPage(

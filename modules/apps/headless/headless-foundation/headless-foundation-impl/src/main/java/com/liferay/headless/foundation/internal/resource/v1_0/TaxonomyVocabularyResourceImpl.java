@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -55,6 +56,7 @@ import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -182,6 +184,20 @@ public class TaxonomyVocabularyResourceImpl
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
 			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
+
+		Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		if (!LocaleUtil.equals(
+				siteDefaultLocale,
+				contextAcceptLanguage.getPreferredLocale())) {
+
+			String w3cLanguageId = LocaleUtil.toW3cLanguageId(
+				siteDefaultLocale);
+
+			throw new BadRequestException(
+				"Taxonomy vocabularies can only be created with the default " +
+					"language " + w3cLanguageId);
+		}
 
 		return _toTaxonomyVocabulary(
 			_assetVocabularyService.addVocabulary(

@@ -65,7 +65,7 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -73,12 +73,6 @@ public class AssetEntryUsageCacheModel
 		sb.append(assetEntryUsageId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
-		sb.append(", userId=");
-		sb.append(userId);
-		sb.append(", userName=");
-		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -111,15 +105,6 @@ public class AssetEntryUsageCacheModel
 
 		assetEntryUsageImpl.setAssetEntryUsageId(assetEntryUsageId);
 		assetEntryUsageImpl.setGroupId(groupId);
-		assetEntryUsageImpl.setCompanyId(companyId);
-		assetEntryUsageImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetEntryUsageImpl.setUserName("");
-		}
-		else {
-			assetEntryUsageImpl.setUserName(userName);
-		}
 
 		if (createDate == Long.MIN_VALUE) {
 			assetEntryUsageImpl.setCreateDate(null);
@@ -165,11 +150,6 @@ public class AssetEntryUsageCacheModel
 		assetEntryUsageId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
-
-		companyId = objectInput.readLong();
-
-		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -194,18 +174,6 @@ public class AssetEntryUsageCacheModel
 		objectOutput.writeLong(assetEntryUsageId);
 
 		objectOutput.writeLong(groupId);
-
-		objectOutput.writeLong(companyId);
-
-		objectOutput.writeLong(userId);
-
-		if (userName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(userName);
-		}
-
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -228,9 +196,6 @@ public class AssetEntryUsageCacheModel
 	public String uuid;
 	public long assetEntryUsageId;
 	public long groupId;
-	public long companyId;
-	public long userId;
-	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long assetEntryId;

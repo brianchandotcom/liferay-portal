@@ -128,12 +128,6 @@ public class AssetEntryUsagePersistenceTest {
 
 		newAssetEntryUsage.setGroupId(RandomTestUtil.nextLong());
 
-		newAssetEntryUsage.setCompanyId(RandomTestUtil.nextLong());
-
-		newAssetEntryUsage.setUserId(RandomTestUtil.nextLong());
-
-		newAssetEntryUsage.setUserName(RandomTestUtil.randomString());
-
 		newAssetEntryUsage.setCreateDate(RandomTestUtil.nextDate());
 
 		newAssetEntryUsage.setModifiedDate(RandomTestUtil.nextDate());
@@ -161,15 +155,6 @@ public class AssetEntryUsagePersistenceTest {
 		Assert.assertEquals(
 			existingAssetEntryUsage.getGroupId(),
 			newAssetEntryUsage.getGroupId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getCompanyId(),
-			newAssetEntryUsage.getCompanyId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getUserId(),
-			newAssetEntryUsage.getUserId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getUserName(),
-			newAssetEntryUsage.getUserName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingAssetEntryUsage.getCreateDate()),
 			Time.getShortTimestamp(newAssetEntryUsage.getCreateDate()));
@@ -210,15 +195,6 @@ public class AssetEntryUsagePersistenceTest {
 		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
-
-		_persistence.countByUuid_C("null", 0L);
-
-		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -292,10 +268,9 @@ public class AssetEntryUsagePersistenceTest {
 	protected OrderByComparator<AssetEntryUsage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"AssetEntryUsage", "uuid", true, "assetEntryUsageId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "assetEntryId",
-			true, "classNameId", true, "classPK", true, "portletId", true,
-			"lastPublishDate", true);
+			"groupId", true, "createDate", true, "modifiedDate", true,
+			"assetEntryId", true, "classNameId", true, "classPK", true,
+			"portletId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -565,12 +540,6 @@ public class AssetEntryUsagePersistenceTest {
 		assetEntryUsage.setUuid(RandomTestUtil.randomString());
 
 		assetEntryUsage.setGroupId(RandomTestUtil.nextLong());
-
-		assetEntryUsage.setCompanyId(RandomTestUtil.nextLong());
-
-		assetEntryUsage.setUserId(RandomTestUtil.nextLong());
-
-		assetEntryUsage.setUserName(RandomTestUtil.randomString());
 
 		assetEntryUsage.setCreateDate(RandomTestUtil.nextDate());
 

@@ -16,7 +16,6 @@ package com.liferay.asset.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -49,9 +48,6 @@ public class AssetEntryUsageWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("assetEntryUsageId", getAssetEntryUsageId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetEntryId", getAssetEntryId());
@@ -81,24 +77,6 @@ public class AssetEntryUsageWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -195,16 +173,6 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Returns the company ID of this asset entry usage.
-	 *
-	 * @return the company ID of this asset entry usage
-	 */
-	@Override
-	public long getCompanyId() {
-		return model.getCompanyId();
-	}
-
-	/**
 	 * Returns the create date of this asset entry usage.
 	 *
 	 * @return the create date of this asset entry usage
@@ -262,36 +230,6 @@ public class AssetEntryUsageWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the user ID of this asset entry usage.
-	 *
-	 * @return the user ID of this asset entry usage
-	 */
-	@Override
-	public long getUserId() {
-		return model.getUserId();
-	}
-
-	/**
-	 * Returns the user name of this asset entry usage.
-	 *
-	 * @return the user name of this asset entry usage
-	 */
-	@Override
-	public String getUserName() {
-		return model.getUserName();
-	}
-
-	/**
-	 * Returns the user uuid of this asset entry usage.
-	 *
-	 * @return the user uuid of this asset entry usage
-	 */
-	@Override
-	public String getUserUuid() {
-		return model.getUserUuid();
 	}
 
 	/**
@@ -355,16 +293,6 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Sets the company ID of this asset entry usage.
-	 *
-	 * @param companyId the company ID of this asset entry usage
-	 */
-	@Override
-	public void setCompanyId(long companyId) {
-		model.setCompanyId(companyId);
-	}
-
-	/**
 	 * Sets the create date of this asset entry usage.
 	 *
 	 * @param createDate the create date of this asset entry usage
@@ -425,36 +353,6 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Sets the user ID of this asset entry usage.
-	 *
-	 * @param userId the user ID of this asset entry usage
-	 */
-	@Override
-	public void setUserId(long userId) {
-		model.setUserId(userId);
-	}
-
-	/**
-	 * Sets the user name of this asset entry usage.
-	 *
-	 * @param userName the user name of this asset entry usage
-	 */
-	@Override
-	public void setUserName(String userName) {
-		model.setUserName(userName);
-	}
-
-	/**
-	 * Sets the user uuid of this asset entry usage.
-	 *
-	 * @param userUuid the user uuid of this asset entry usage
-	 */
-	@Override
-	public void setUserUuid(String userUuid) {
-		model.setUserUuid(userUuid);
-	}
-
-	/**
 	 * Sets the uuid of this asset entry usage.
 	 *
 	 * @param uuid the uuid of this asset entry usage
@@ -462,11 +360,6 @@ public class AssetEntryUsageWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return model.getStagedModelType();
 	}
 
 	@Override

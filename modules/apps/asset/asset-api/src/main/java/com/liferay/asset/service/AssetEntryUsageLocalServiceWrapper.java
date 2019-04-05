@@ -51,13 +51,12 @@ public class AssetEntryUsageLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.model.AssetEntryUsage addAssetEntryUsage(
-			long userId, long groupId, long assetEntryId, long classNameId,
-			long classPK, String portletId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, long assetEntryId, long classNameId, long classPK,
+		String portletId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _assetEntryUsageLocalService.addAssetEntryUsage(
-			userId, groupId, assetEntryId, classNameId, classPK, portletId,
+			groupId, assetEntryId, classNameId, classPK, portletId,
 			serviceContext);
 	}
 
@@ -351,43 +350,6 @@ public class AssetEntryUsageLocalServiceWrapper
 	}
 
 	/**
-	 * Returns all the asset entry usages matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset entry usages
-	 * @param companyId the primary key of the company
-	 * @return the matching asset entry usages, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List<com.liferay.asset.model.AssetEntryUsage>
-		getAssetEntryUsagesByUuidAndCompanyId(String uuid, long companyId) {
-
-		return _assetEntryUsageLocalService.
-			getAssetEntryUsagesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of asset entry usages matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset entry usages
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of asset entry usages
-	 * @param end the upper bound of the range of asset entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching asset entry usages, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List<com.liferay.asset.model.AssetEntryUsage>
-		getAssetEntryUsagesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
-
-		return _assetEntryUsageLocalService.
-			getAssetEntryUsagesByUuidAndCompanyId(
-				uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns the number of asset entry usages.
 	 *
 	 * @return the number of asset entry usages
@@ -413,16 +375,6 @@ public class AssetEntryUsageLocalServiceWrapper
 	public int getAssetEntryUsagesCount(long assetEntryId, String portletId) {
 		return _assetEntryUsageLocalService.getAssetEntryUsagesCount(
 			assetEntryId, portletId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
-		getExportActionableDynamicQuery(
-			com.liferay.exportimport.kernel.lar.PortletDataContext
-				portletDataContext) {
-
-		return _assetEntryUsageLocalService.getExportActionableDynamicQuery(
-			portletDataContext);
 	}
 
 	@Override

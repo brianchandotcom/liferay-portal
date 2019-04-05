@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.util.Date;
 
@@ -37,8 +35,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AssetEntryUsageModel
-	extends AttachedModel, BaseModel<AssetEntryUsage>, ShardedModel,
-			StagedGroupedModel {
+	extends AttachedModel, BaseModel<AssetEntryUsage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -66,7 +63,6 @@ public interface AssetEntryUsageModel
 	 * @return the uuid of this asset entry usage
 	 */
 	@AutoEscape
-	@Override
 	public String getUuid();
 
 	/**
@@ -74,7 +70,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param uuid the uuid of this asset entry usage
 	 */
-	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -96,7 +91,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @return the group ID of this asset entry usage
 	 */
-	@Override
 	public long getGroupId();
 
 	/**
@@ -104,80 +98,13 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param groupId the group ID of this asset entry usage
 	 */
-	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this asset entry usage.
-	 *
-	 * @return the company ID of this asset entry usage
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this asset entry usage.
-	 *
-	 * @param companyId the company ID of this asset entry usage
-	 */
-	@Override
-	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the user ID of this asset entry usage.
-	 *
-	 * @return the user ID of this asset entry usage
-	 */
-	@Override
-	public long getUserId();
-
-	/**
-	 * Sets the user ID of this asset entry usage.
-	 *
-	 * @param userId the user ID of this asset entry usage
-	 */
-	@Override
-	public void setUserId(long userId);
-
-	/**
-	 * Returns the user uuid of this asset entry usage.
-	 *
-	 * @return the user uuid of this asset entry usage
-	 */
-	@Override
-	public String getUserUuid();
-
-	/**
-	 * Sets the user uuid of this asset entry usage.
-	 *
-	 * @param userUuid the user uuid of this asset entry usage
-	 */
-	@Override
-	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the user name of this asset entry usage.
-	 *
-	 * @return the user name of this asset entry usage
-	 */
-	@AutoEscape
-	@Override
-	public String getUserName();
-
-	/**
-	 * Sets the user name of this asset entry usage.
-	 *
-	 * @param userName the user name of this asset entry usage
-	 */
-	@Override
-	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this asset entry usage.
 	 *
 	 * @return the create date of this asset entry usage
 	 */
-	@Override
 	public Date getCreateDate();
 
 	/**
@@ -185,7 +112,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param createDate the create date of this asset entry usage
 	 */
-	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -193,7 +119,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @return the modified date of this asset entry usage
 	 */
-	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -201,7 +126,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param modifiedDate the modified date of this asset entry usage
 	 */
-	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -280,7 +204,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @return the last publish date of this asset entry usage
 	 */
-	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -288,7 +211,6 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param lastPublishDate the last publish date of this asset entry usage
 	 */
-	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 }

@@ -773,6 +773,8 @@ public class RESTBuilder {
 			String pathLine = content.substring(
 				content.lastIndexOf("\n", x) + 1, content.indexOf("\n", x));
 
+			// /blogs/{blog-id}/blogs --> /blogs/{blogId}/blogs
+
 			for (Operation operation : _getOperations(entry.getValue())) {
 				int y = content.indexOf(
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
@@ -805,6 +807,8 @@ public class RESTBuilder {
 					}
 				}
 			}
+
+			// /blogs/{blogId}/blogs --> /blogs/{parentBlogId}/blogs
 
 			List<String> pathSegments = new ArrayList<>();
 

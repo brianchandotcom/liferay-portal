@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,15 +31,15 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class DestinationAwaitTestCallback
-	extends BaseTestCallback<Set<CountDownLatch>, Void> {
+public class DestinationAwaitTestRule
+	extends ClassTestRule<Set<CountDownLatch>> {
 
-	public static final DestinationAwaitTestCallback INSTANCE =
-		new DestinationAwaitTestCallback(
+	public static final DestinationAwaitTestRule INSTANCE =
+		new DestinationAwaitTestRule(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
 			DestinationNames.HOT_DEPLOY);
 
-	public DestinationAwaitTestCallback(String... destinationNames) {
+	public DestinationAwaitTestRule(String... destinationNames) {
 		_destinationNames = destinationNames;
 	}
 

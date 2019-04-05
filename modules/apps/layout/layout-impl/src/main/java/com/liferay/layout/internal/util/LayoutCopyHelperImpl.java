@@ -288,12 +288,12 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_targetLayout.getPlid(), image.getTextObj());
 			}
 
-			_targetLayout.setTypeSettings(_sourceLayout.getTypeSettings());
 			_targetLayout.setNameMap(_sourceLayout.getNameMap());
-			_targetLayout.setDescriptionMap(_sourceLayout.getDescriptionMap());
 			_targetLayout.setTitleMap(_sourceLayout.getTitleMap());
-			_targetLayout.setRobotsMap(_sourceLayout.getRobotsMap());
+			_targetLayout.setDescriptionMap(_sourceLayout.getDescriptionMap());
 			_targetLayout.setKeywordsMap(_sourceLayout.getKeywordsMap());
+			_targetLayout.setRobotsMap(_sourceLayout.getRobotsMap());
+			_targetLayout.setTypeSettings(_sourceLayout.getTypeSettings());
 
 			return _layoutLocalService.updateLayout(_targetLayout);
 		}

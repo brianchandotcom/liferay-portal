@@ -162,6 +162,10 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					"sharingEntryPermissionDisplaySelectOptions",
 					_getSharingEntryPermissionDisplaySelectOptions(
 						sharingEntry, renderRequest));
+
+				collaboratorJSONObject.put(
+					"sharingEntryShareable", sharingEntry.isShareable());
+
 				collaboratorJSONObject.put(
 					"userId", Long.valueOf(sharingEntryToUser.getUserId()));
 

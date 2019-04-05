@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.servlet.MainServlet;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.ArquillianUtil;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -40,17 +40,17 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Shuyang Zhou
  */
-public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
+public class MainServletTestRule extends ClassTestRule<Void> {
 
-	public static final MainServletTestCallback INSTANCE =
-		new MainServletTestCallback();
+	public static final MainServletTestRule INSTANCE =
+		new MainServletTestRule();
 
 	public static MainServlet getMainServlet() {
 		return _mainServlet;
 	}
 
 	@Override
-	public void afterClass(Description description, Void c)
+	public void afterClass(Description description, Void v)
 		throws PortalException {
 
 		if (ArquillianUtil.isArquillianTest(description)) {
@@ -121,7 +121,7 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 		return null;
 	}
 
-	protected MainServletTestCallback() {
+	protected MainServletTestRule() {
 	}
 
 	private static MainServlet _mainServlet;

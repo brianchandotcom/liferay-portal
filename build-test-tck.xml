@@ -9,7 +9,7 @@
 		<exec dir="${tck.home}/.." executable="git" failonerror="false">
 			<arg value="apply" />
 			<arg value="--reverse" />
-			<arg value="${project.dir}/tck/pluto-patch.diff" />
+			<arg value="${project.dir}/tools/tck/pluto-patch.diff" />
 		</exec>
 	</target>
 
@@ -61,7 +61,7 @@
 
 		<exec dir="${tck.home}/.." executable="git" failonerror="true">
 			<arg value="apply" />
-			<arg value="${project.dir}/tck/pluto-patch.diff" />
+			<arg value="${project.dir}/tools/tck/pluto-patch.diff" />
 		</exec>
 
 		<execute dir="${tck.home}/..">
@@ -97,7 +97,7 @@
 		<tempfile
 			createfile="true"
 			deleteonexit="true"
-			destDir="${project.dir}/tck"
+			destDir="${project.dir}/tools/tck"
 			prefix="tck-tests_"
 			property="tck.tests.xml"
 			suffix=".xml"
@@ -109,7 +109,7 @@
 			tofile="${tck.tests.xml}"
 		/>
 
-		<xmltask preserveType="true" source="${project.dir}/tck/htmlunit-tests.xml">
+		<xmltask preserveType="true" source="${project.dir}/tools/tck/htmlunit-tests.xml">
 			<call path="//*[local-name()='entry'][@key]">
 				<param name="key" path="@key" />
 				<actions>
@@ -123,20 +123,20 @@
 			</call>
 		</xmltask>
 
-		<var name="tck.properties" value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tck/nonExclusiveTestCases.xml" />
+		<var name="tck.properties" value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tools/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tools/tck/nonExclusiveTestCases.xml" />
 
 		<execute dir="${tck.home}" failonerror="false">
-			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tck/htmlunit-tests.xml test
+			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tools/tck/htmlunit-tests.xml test
 		</execute>
 
 		<if>
 			<available file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml" />
 			<then>
-				<mkdir dir="${project.dir}/tck/test-results" />
+				<mkdir dir="${project.dir}/tools/tck/test-results" />
 
 				<copy
 					file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml"
-					tofile="${project.dir}/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-htmlunit.xml"
+					tofile="${project.dir}/tools/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-htmlunit.xml"
 				/>
 			</then>
 			<else>
@@ -153,17 +153,17 @@
 		<propertycopy from="selenium.${browser.type[tck]}.driver.executable" name="tck.selenium.browser.driver.executable" silent="true" />
 
 		<execute dir="${tck.home}" failonerror="false">
-			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${tck.browser.bin.file}' -Dtest.browser.webDriver=${project.dir}/tck/${selenium.executable.dir.name}${tck.selenium.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} test
+			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${tck.browser.bin.file}' -Dtest.browser.webDriver=${project.dir}/tools/tck/${selenium.executable.dir.name}${tck.selenium.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} test
 		</execute>
 
 		<if>
 			<available file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml" />
 			<then>
-				<mkdir dir="${project.dir}/tck/test-results" />
+				<mkdir dir="${project.dir}/tools/tck/test-results" />
 
 				<copy
 					file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml"
-					tofile="${project.dir}/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-${browser.type[tck]}.xml"
+					tofile="${project.dir}/tools/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-${browser.type[tck]}.xml"
 				/>
 			</then>
 			<else>

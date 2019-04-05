@@ -154,29 +154,27 @@ public class ContentSetElementResourceImpl
 			pagination, assetListEntry.getAssetEntriesCount(segmentsEntryIds));
 	}
 
-	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {
+	private ContentSetElement _toContentSetElement(AssetEntry assetEntry)
+		throws Exception {
+
+		DTOConverter dtoConverter = _dtoConverterRegistry.getDTOConverter(
+			assetEntry.getClassName());
+
 		return new ContentSetElement() {
 			{
-				contentType = assetEntry.getClassName();
-				order = assetEntry.getPriority();
+				contentType = "Unknown";
+				id = assetEntry.getClassPK();
 				title = assetEntry.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 
-				setContent(
-					() -> {
-						DTOConverter dtoConverter =
-							_dtoConverterRegistry.getDTOConverter(
-								assetEntry.getClassName());
+				if (dtoConverter != null) {
+					content = dtoConverter.toDTO(
+						new DefaultDTOConverterContext(
+							contextAcceptLanguage.getPreferredLocale(),
+							assetEntry.getClassPK(), contextUriInfo));
 
-						if (dtoConverter == null) {
-							return null;
-						}
-
-						return dtoConverter.toDTO(
-							new DefaultDTOConverterContext(
-								contextAcceptLanguage.getPreferredLocale(),
-								assetEntry.getClassPK(), contextUriInfo));
-					});
+					contentType = dtoConverter.getContentType();
+				}
 			}
 		};
 	}

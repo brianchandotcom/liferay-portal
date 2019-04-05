@@ -25,13 +25,16 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(service = EntryFinder.class)
 public class EntryFinderImpl
 	extends EntryFinderBaseImpl implements EntryFinder {
 
@@ -146,7 +149,7 @@ public class EntryFinderImpl
 
 	private static final String _FLAG_SQL = "(flag = ?)";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

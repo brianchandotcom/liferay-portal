@@ -26,18 +26,21 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Tibor Lipusz
  */
+@Component(service = StatusFinder.class)
 public class StatusFinderImpl
 	extends StatusFinderBaseImpl implements StatusFinder {
 
@@ -67,7 +70,7 @@ public class StatusFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(ClassNameLocalServiceUtil.getClassNameId(User.class));
+			qPos.add(_classNameLocalService.getClassNameId(User.class));
 			qPos.add(companyId);
 			qPos.add(userId);
 			qPos.add(modifiedDate);
@@ -99,7 +102,7 @@ public class StatusFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(ClassNameLocalServiceUtil.getClassNameId(User.class));
+			qPos.add(_classNameLocalService.getClassNameId(User.class));
 			qPos.add(userId);
 
 			if (types.length > 0) {
@@ -138,7 +141,7 @@ public class StatusFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(ClassNameLocalServiceUtil.getClassNameId(User.class));
+			qPos.add(_classNameLocalService.getClassNameId(User.class));
 			qPos.add(CompanyThreadLocal.getCompanyId());
 			qPos.add(userId);
 			qPos.add(userId);
@@ -251,10 +254,13 @@ public class StatusFinderImpl
 		return newObjectArrayList;
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

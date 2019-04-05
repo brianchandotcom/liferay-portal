@@ -50,7 +50,7 @@ public class TimeoutTestRule implements TestRule {
 			return statement;
 		}
 
-		return new BaseTestRule.StatementWrapper(statement) {
+		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {

@@ -18,7 +18,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
+import com.liferay.portal.kernel.test.rule.StatementWrapper;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -77,9 +77,9 @@ public class TransactionalTestRule implements TestRule {
 		Statement currentStatement = statement;
 
 		while (true) {
-			if (currentStatement instanceof BaseTestRule.StatementWrapper) {
-				BaseTestRule.StatementWrapper statementWrapper =
-					(BaseTestRule.StatementWrapper)currentStatement;
+			if (currentStatement instanceof StatementWrapper) {
+				StatementWrapper statementWrapper =
+					(StatementWrapper)currentStatement;
 
 				currentStatement = statementWrapper.getStatement();
 
@@ -111,7 +111,7 @@ public class TransactionalTestRule implements TestRule {
 				continue;
 			}
 
-			return new BaseTestRule.StatementWrapper(statement) {
+			return new StatementWrapper(statement) {
 
 				@Override
 				public void evaluate() throws Throwable {

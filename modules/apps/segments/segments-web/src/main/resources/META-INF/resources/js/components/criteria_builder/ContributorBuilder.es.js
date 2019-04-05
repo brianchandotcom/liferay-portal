@@ -104,11 +104,13 @@ class ContributorBuilder extends React.Component {
 			}
 		);
 
+		const firstPropertyKey = propertyGroups.length && propertyGroups[0].propertyKey;
+
 		this.state = {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
-			editingId: propertyGroups.length && propertyGroups[0].propertyKey,
-			newPropertyKey: propertyGroups.length && propertyGroups[0].propertyKey
+			editingId: firstPropertyKey,
+			newPropertyKey: firstPropertyKey
 		};
 	}
 

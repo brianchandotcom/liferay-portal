@@ -89,10 +89,10 @@ public class WorkflowMetricsSLAProcessor {
 				lastWorkflowMetricsSLAProcessResult.
 					getWorkfowMetricsSLAStatus();
 
-			if (Objects.equals(
+			if (lastCheckLocalDateTime.isAfter(nowLocalDateTime) ||
+				Objects.equals(
 					workfowMetricsSLAStatus,
-					WorkfowMetricsSLAStatus.COMPLETED) ||
-				lastCheckLocalDateTime.isAfter(nowLocalDateTime)) {
+					WorkfowMetricsSLAStatus.COMPLETED)) {
 
 				return Optional.empty();
 			}

@@ -2,7 +2,6 @@ import ClayButton from '../shared/ClayButton.es';
 import ClaySpinner from '../shared/ClaySpinner.es';
 import ClayToggle from '../shared/ClayToggle.es';
 import ContributorBuilder from '../criteria_builder/ContributorBuilder.es';
-import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
@@ -243,12 +242,6 @@ class SegmentEdit extends Component {
 
 		const disabled = !editing || this._isQueryEmpty();
 
-		const disabledClassNames = getCN(
-			{
-				disabled
-			}
-		);
-
 		return (
 			<div className="segment-edit-page-root">
 				<input
@@ -331,7 +324,7 @@ class SegmentEdit extends Component {
 							<div className="btn-group">
 								<div className="btn-group-item">
 									<ClayButton
-										className={disabledClassNames}
+										disabled={disabled}
 										href={redirect}
 										label={Liferay.Language.get('cancel')}
 										size="sm"

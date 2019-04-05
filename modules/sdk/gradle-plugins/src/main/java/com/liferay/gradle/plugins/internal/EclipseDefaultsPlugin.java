@@ -16,10 +16,13 @@ package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
 import groovy.util.Node;
+
+import java.io.File;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,8 +53,11 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	protected void configureDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
+		final File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
 		_configureEclipseClasspathFile(project);
-		_configureEclipseProject(project);
+		_configureEclipseProject(project, portalRootDir);
 		_configureTaskEclipse(project);
 	}
 
@@ -103,13 +109,24 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	private void _configureEclipseProject(Project project) {
+	private void _configureEclipseProject(Project project, File portalRootDir) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 
 		EclipseProject eclipseProject = eclipseModel.getProject();
 
-		eclipseProject.setName(project.getName());
+		String name = project.getName();
+
+		if (portalRootDir.exists()) {
+			String gitWorkingBranchName = GradleUtil.getProperty(
+				project, "git.working.branch.name", (String)null);
+
+			if (Validator.isNotNull(gitWorkingBranchName)) {
+				name = name + '-' + gitWorkingBranchName;
+			}
+		}
+
+		eclipseProject.setName(name);
 
 		List<String> natures = eclipseProject.getNatures();
 

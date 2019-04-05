@@ -241,7 +241,7 @@ class ManageCollaborators extends PortletBase {
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
 				sharingEntryIdActionIdPairs: mapToPair(this._sharingEntryIdsAndPermissions),
 				sharingEntryIdExpirationDatePairs: mapToPair(this._sharingEntryIdsAndExpirationDate),
-				sharingEntryIdsAndShareables: mapToPair(this._sharingEntryIdsAndShareables)
+				sharingEntryIdShareablePairs: mapToPair(this._sharingEntryIdsAndShareables)
 			}
 		)
 			.then(

@@ -25,6 +25,7 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -59,6 +60,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	public static final String EVALUATE_POSHI_CONSOLE_TASK_NAME =
 		"evaluatePoshiConsole";
 
+	public static final String EXECUTE_PQL_QUERY_TASK_NAME = "executePQLQuery";
+
 	public static final String EXPAND_POSHI_RUNNER_TASK_NAME =
 		"expandPoshiRunner";
 
@@ -89,6 +92,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_addConfigurationPoshiRunnerResources(project);
 
+		final JavaExec executePQLQueryTask = _addTaskExecutePQLQuery(project);
 		final JavaExec evaluatePoshiConsoleTask = _addTaskEvaluatePoshiConsole(
 			project);
 
@@ -116,6 +120,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 							poshiPropertiesFile);
 					}
 
+					_configureTaskExecutePQLQuery(
+						executePQLQueryTask, poshiProperties,
+						poshiRunnerExtension);
 					_configureTaskEvaluatePoshiConsole(
 						evaluatePoshiConsoleTask, poshiProperties,
 						poshiRunnerExtension);
@@ -245,6 +252,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return javaExec;
 	}
 
+	private JavaExec _addTaskExecutePQLQuery(Project project) {
+		JavaExec javaExec = GradleUtil.addTask(
+			project, EXECUTE_PQL_QUERY_TASK_NAME, JavaExec.class);
+
+		javaExec.args(Collections.singleton("executePQLQuery"));
+
+		javaExec.setClasspath(_getPoshiRunnerClasspath(project));
+		javaExec.setDescription("Execute the PQL query.");
+		javaExec.setGroup("verification");
+		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerCommandExecutor");
+
+		return javaExec;
+	}
+
 	private Copy _addTaskExpandPoshiRunner(final Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, EXPAND_POSHI_RUNNER_TASK_NAME, Copy.class);
@@ -348,6 +369,15 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskEvaluatePoshiConsole(
+		JavaExec javaExec, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
+
+		_populateSystemProperties(
+			javaExec.getSystemProperties(), poshiProperties,
+			javaExec.getProject(), poshiRunnerExtension);
+	}
+
+	private void _configureTaskExecutePQLQuery(
 		JavaExec javaExec, Properties poshiProperties,
 		PoshiRunnerExtension poshiRunnerExtension) {
 

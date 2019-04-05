@@ -55,6 +55,8 @@ public class JSLoaderConfigServlet extends HttpServlet {
 	protected void activate(Map<String, Object> properties) {
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
+
+		_lastModified = System.currentTimeMillis();
 	}
 
 	@Override
@@ -92,9 +94,15 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		printWriter.close();
 	}
 
+	public long getLastModified() {
+		return _lastModified;
+	}
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Details _details;
+
+	private volatile long _lastModified;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSLoaderConfigServlet;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -49,9 +50,10 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String url = absolutePortalURLBuilder.forWhiteboard(
-			"/js_loader_config"
-		).build();
+		String url =
+			"/js_loader_config?t=" + _jsLoaderConfigServlet.getLastModified();
+
+		url = absolutePortalURLBuilder.forWhiteboard(url).build();
 
 		printWriter.println(
 			"<script src=\"" + url + "\" type=\"text/javascript\"></script>");
@@ -66,4 +68,6 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
+	@Reference
+	private JSLoaderConfigServlet _jsLoaderConfigServlet;
 }

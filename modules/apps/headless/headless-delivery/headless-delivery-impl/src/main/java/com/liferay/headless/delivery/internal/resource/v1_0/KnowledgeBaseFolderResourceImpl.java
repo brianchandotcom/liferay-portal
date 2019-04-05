@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
@@ -99,7 +100,10 @@ public class KnowledgeBaseFolderResourceImpl
 			_kbFolderService.addKBFolder(
 				contentSpaceId, _getClassNameId(), 0,
 				knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(), new ServiceContext()));
+				knowledgeBaseFolder.getDescription(),
+				ServiceContextUtil.createServiceContext(
+					contentSpaceId,
+					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
 	@Override
@@ -113,7 +117,10 @@ public class KnowledgeBaseFolderResourceImpl
 			_kbFolderService.addKBFolder(
 				kbFolder.getGroupId(), _getClassNameId(), knowledgeBaseFolderId,
 				knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(), new ServiceContext()));
+				knowledgeBaseFolder.getDescription(),
+				ServiceContextUtil.createServiceContext(
+					kbFolder.getGroupId(),
+					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
 	@Override

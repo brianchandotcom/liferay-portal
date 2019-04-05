@@ -102,6 +102,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
+		urlMenuItem.setIcon("document");
 		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));

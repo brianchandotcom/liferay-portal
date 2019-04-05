@@ -1,13 +1,12 @@
 diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
-index cfbdab1cc6d5..c0baa891844b 100644
+index ebe7251ed084..1f4882f9d3a4 100644
 --- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
 +++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
-@@ -1224,10 +1224,10 @@ public class DirectoryWatcher extends Thread implements BundleListener
-     private void startBundles(Collection<Bundle> bundles)
+@@ -1232,10 +1232,9 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     private void startBundles(Set<Bundle> bundles)
      {
          // Check if this is the consistent set of bundles which failed previously.
--        boolean logFailures = bundles.equals(consistentlyFailingBundles);
-+
+-        boolean logFailures = !consistentlyFailingBundles.equals(bundles);
          for (Iterator<Bundle> b = bundles.iterator(); b.hasNext(); )
          {
 -            if (startBundle(b.next(), logFailures))
@@ -15,7 +14,7 @@ index cfbdab1cc6d5..c0baa891844b 100644
              {
                  b.remove();
              }
-@@ -1264,7 +1264,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+@@ -1271,7 +1270,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
                  // Don't log this as an error, instead we start the bundle repeatedly.
                  if (logFailures)
                  {

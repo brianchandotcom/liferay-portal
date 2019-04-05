@@ -1232,10 +1232,9 @@ public class DirectoryWatcher extends Thread implements BundleListener
     private void startBundles(Set<Bundle> bundles)
     {
         // Check if this is the consistent set of bundles which failed previously.
-        boolean logFailures = !consistentlyFailingBundles.equals(bundles);
         for (Iterator<Bundle> b = bundles.iterator(); b.hasNext(); )
         {
-            if (startBundle(b.next(), logFailures))
+            if (startBundle(b.next(), true))
             {
                 b.remove();
             }
@@ -1271,7 +1270,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
                 // Don't log this as an error, instead we start the bundle repeatedly.
                 if (logFailures)
                 {
-                    log(Logger.LOG_WARNING, "Error while starting bundle: " + bundle.getLocation(), e);
+                    log(Logger.LOG_ERROR, "Error while starting bundle: " + bundle.getLocation(), e);
                 }
             }
         }

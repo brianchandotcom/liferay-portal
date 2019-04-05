@@ -83,6 +83,11 @@ import org.osgi.service.component.annotations.Reference;
 public class StructuredContentDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return StructuredContent.class.getSimpleName();
+	}
+
+	@Override
 	public StructuredContent toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

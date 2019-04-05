@@ -51,6 +51,11 @@ import org.osgi.service.component.annotations.Reference;
 public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return KnowledgeBaseArticle.class.getSimpleName();
+	}
+
+	@Override
 	public KnowledgeBaseArticle toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

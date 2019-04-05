@@ -52,6 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogPostingDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return BlogPosting.class.getSimpleName();
+	}
+
+	@Override
 	public BlogPosting toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

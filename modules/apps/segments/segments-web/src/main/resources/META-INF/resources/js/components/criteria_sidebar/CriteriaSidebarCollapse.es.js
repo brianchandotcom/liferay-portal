@@ -79,68 +79,71 @@ class CriteriaSidebarCollapse extends Component {
 
 		return (
 			<ul className="sidebar-collapse-groups list-unstyled">
-				{propertyGroups.map(
-					propertyGroup => {
-						const active = propertyGroup.propertyKey === propertyKey;
+				{
+					propertyGroups.map(
+						propertyGroup => {
+							const active = propertyGroup.propertyKey === propertyKey;
 
-						const activeClasses = getCN(
-							{
-								active
-							}
-						);
-
-						const propertyListClasses = getCN(
-							'properties-list',
-							activeClasses
-						);
-
-						const key = propertyGroup.propertyKey;
-
-						return (<li className={`sidebar-collapse-${propertyGroup.propertyKey}`} key={key}>
-							<div className="sidebar-collapse-header-root" onClick={this._handleClick(key, active)}>
-								<a className="sidebar-collapse-header d-flex justify-content-between">
-									{propertyGroup.name}
-									<span className="collapse-icon">
-										<ClayIcon className={activeClasses} iconName="angle-right" />
-									</span>
-								</a>
-							</div>
-							<ul className={propertyListClasses}>
-								{active && filteredProperties.length === 0 &&
-									<li className="empty-message">
-										{Liferay.Language.get('no-results-were-found')}
-									</li>
+							const activeClasses = getCN(
+								{
+									active
 								}
+							);
 
-								{active && filteredProperties.length &&
-									filteredProperties.map(
-										({label, name, options, type}) => {
-											const defaultValue = getDefaultValue(
-												{
-													label,
-													name,
-													options,
-													type
-												}
-											);
+							const propertyListClasses = getCN(
+								'properties-list',
+								activeClasses
+							);
 
-											return (
-												<CriteriaSidebarItem
-													className={`color--${key}`}
-													defaultValue={defaultValue}
-													key={name}
-													label={label}
-													name={name}
-													propertyKey={key}
-													type={type}
-												/>
-											);
-										}
-									)
-								}
-							</ul>
-						</li>);
-					})}
+							const key = propertyGroup.propertyKey;
+
+							return (<li className={`sidebar-collapse-${propertyGroup.propertyKey}`} key={key}>
+								<div className="sidebar-collapse-header-root" onClick={this._handleClick(key, active)}>
+									<a className="sidebar-collapse-header d-flex justify-content-between">
+										{propertyGroup.name}
+										<span className="collapse-icon">
+											<ClayIcon className={activeClasses} iconName="angle-right" />
+										</span>
+									</a>
+								</div>
+								<ul className={propertyListClasses}>
+									{active && filteredProperties.length === 0 &&
+										<li className="empty-message">
+											{Liferay.Language.get('no-results-were-found')}
+										</li>
+									}
+
+									{active && filteredProperties.length &&
+										filteredProperties.map(
+											({label, name, options, type}) => {
+												const defaultValue = getDefaultValue(
+													{
+														label,
+														name,
+														options,
+														type
+													}
+												);
+
+												return (
+													<CriteriaSidebarItem
+														className={`color--${key}`}
+														defaultValue={defaultValue}
+														key={name}
+														label={label}
+														name={name}
+														propertyKey={key}
+														type={type}
+													/>
+												);
+											}
+										)
+									}
+								</ul>
+							</li>);
+						}
+					)
+				}
 			</ul>
 		);
 	}

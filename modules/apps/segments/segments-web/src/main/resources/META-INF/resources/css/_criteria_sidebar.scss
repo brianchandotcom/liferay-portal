@@ -104,8 +104,7 @@
 		.sidebar-collapse-groups {
 			bottom: 0;
 			display: flex;
-			flex-direction: column;
-			flex-wrap: nowrap;
+			flex-flow: column nowrap;
 			left: 0;
 			position: absolute;
 			right: 0;

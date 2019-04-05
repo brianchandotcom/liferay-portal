@@ -17,6 +17,7 @@ describe(
 				const {asFragment} = render(
 					<SegmentEdit
 						locale="en_US"
+						redirect="/test-url"
 					/>
 				);
 
@@ -32,6 +33,7 @@ describe(
 				const {getByTestId} = render(
 					<SegmentEdit
 						locale="en_US"
+						redirect="/test-url"
 						source={name}
 					/>
 				);
@@ -50,6 +52,7 @@ describe(
 				const {getByTestId} = render(
 					<SegmentEdit
 						locale="en_US"
+						redirect="/test-url"
 						source={name}
 					/>
 				);

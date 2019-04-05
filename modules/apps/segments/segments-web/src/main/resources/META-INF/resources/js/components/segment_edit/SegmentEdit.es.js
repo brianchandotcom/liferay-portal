@@ -45,7 +45,7 @@ class SegmentEdit extends Component {
 		portletNamespace: PropTypes.string,
 		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.array,
-		redirect: PropTypes.string,
+		redirect: PropTypes.string.isRequired,
 		requestMembersCountURL: PropTypes.string,
 		setValues: PropTypes.func,
 		source: PropTypes.string,
@@ -332,7 +332,6 @@ class SegmentEdit extends Component {
 								<div className="btn-group-item">
 									<ClayButton
 										className={disabledClassNames}
-										disabled={!editing}
 										href={redirect}
 										label={Liferay.Language.get('cancel')}
 										size="sm"

@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -45,6 +47,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "KnowledgeBaseFolder")
 public class KnowledgeBaseFolder {
+
+	public static enum ViewableBy {
+
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		@JsonCreator
+		public static ViewableBy create(String value) {
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value)) {
+					return viewableBy;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	public Creator getCreator() {
 		return creator;
@@ -329,6 +364,42 @@ public class KnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	public ViewableBy getViewableBy() {
+		return viewableBy;
+	}
+
+	@JsonIgnore
+	public String getViewableByAsString() {
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
+	}
+
+	public void setViewableBy(ViewableBy viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected ViewableBy viewableBy;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -412,6 +483,13 @@ public class KnowledgeBaseFolder {
 		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
 		sb.append(parentKnowledgeBaseFolderId);
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(viewableBy);
+		sb.append("\"");
 
 		sb.append("}");
 

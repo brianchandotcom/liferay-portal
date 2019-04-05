@@ -109,6 +109,13 @@ public class KnowledgeBaseFolderSerDes {
 		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
 		sb.append(knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(knowledgeBaseFolder.getViewableBy());
+		sb.append("\"");
 
 		sb.append("}");
 
@@ -219,6 +226,13 @@ public class KnowledgeBaseFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
 						(Long)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setViewableBy(
+						KnowledgeBaseFolder.ViewableBy.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

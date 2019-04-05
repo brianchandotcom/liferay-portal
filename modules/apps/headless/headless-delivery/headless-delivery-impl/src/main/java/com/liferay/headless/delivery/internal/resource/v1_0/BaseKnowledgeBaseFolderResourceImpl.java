@@ -164,6 +164,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
 		}
 
+		if (knowledgeBaseFolder.getViewableBy() != null) {
+			existingKnowledgeBaseFolder.setViewableBy(
+				knowledgeBaseFolder.getViewableBy());
+		}
+
 		preparePatch(knowledgeBaseFolder, existingKnowledgeBaseFolder);
 
 		return putKnowledgeBaseFolder(

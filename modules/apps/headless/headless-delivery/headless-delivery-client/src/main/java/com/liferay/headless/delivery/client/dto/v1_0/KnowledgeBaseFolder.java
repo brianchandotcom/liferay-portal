@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -26,6 +27,37 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class KnowledgeBaseFolder {
+
+	public static enum ViewableBy {
+
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		public static ViewableBy create(String value) {
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value)) {
+					return viewableBy;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	public Creator getCreator() {
 		return creator;
@@ -248,5 +280,34 @@ public class KnowledgeBaseFolder {
 	}
 
 	protected Long parentKnowledgeBaseFolderId;
+
+	public ViewableBy getViewableBy() {
+		return viewableBy;
+	}
+
+	public String getViewableByAsString() {
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
+	}
+
+	public void setViewableBy(ViewableBy viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	public void setViewableBy(
+		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ViewableBy viewableBy;
 
 }

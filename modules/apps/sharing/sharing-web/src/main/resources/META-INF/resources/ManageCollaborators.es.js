@@ -347,7 +347,6 @@ ManageCollaborators.STATE = {
 		Config.shapeOf(
 			{
 				fullName: Config.string(),
-				sharingEntryShareable: Config.bool(),
 				sharingEntryExpirationDate: Config.string(),
 				sharingEntryExpirationDateTooltip: Config.string(),
 				sharingEntryId: Config.string(),
@@ -360,6 +359,7 @@ ManageCollaborators.STATE = {
 						}
 					)
 				),
+				sharingEntryShareable: Config.bool(),
 				userId: Config.number()
 			}
 		)

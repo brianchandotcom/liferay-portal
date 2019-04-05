@@ -150,6 +150,20 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							<%= ddmFormDisplayContext.getDDMFormHTML() %>
 
 							<aui:input name="empty" type="hidden" value="" />
+
+							<div class="lfr-ddm-form-pagination-controls">
+								<button class="btn btn-primary lfr-ddm-form-pagination-prev" type="button">
+									<i class="icon-angle-left"></i> <%= LanguageUtil.get(resourceBundle, "previous") %>
+								</button>
+
+								<button class="btn btn-primary lfr-ddm-form-pagination-next pull-right" type="button">
+									<%= LanguageUtil.get(resourceBundle, "next") %> <i class="icon-angle-right"></i>
+								</button>
+
+								<c:if test="<%= ddmFormDisplayContext.isShowSubmitButton() %>">
+									<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit"><%= ddmFormDisplayContext.getSubmitLabel() %></button>
+								</c:if>
+							</div>
 						</div>
 					</aui:form>
 				</div>

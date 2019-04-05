@@ -311,6 +311,33 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	private void _test(
+		LocalDateTime createDateLocalDateTime, long duration, long elapsedTime,
+		LocalDateTime localDateTime, boolean onTime, long remainingTime,
+		WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
+		Document... documents) {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
+			WorkflowMetricsSLADefinition.class);
+
+		when(
+			workflowMetricsSLADefinition.getDuration()
+		).thenReturn(
+			duration
+		);
+
+		when(
+			workflowMetricsSLADefinition.getStartNodeNames()
+		).thenReturn(
+			"0"
+		);
+
+		_test(
+			createDateLocalDateTime, elapsedTime, null, localDateTime, onTime,
+			remainingTime, 0, workflowMetricsSLADefinition,
+			workfowMetricsSLAStatus, documents);
+	}
+
+	private void _test(
 		LocalDateTime createDateLocalDateTime, long elapsedTime,
 		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
 		LocalDateTime localDateTime, boolean onTime, long remainingTime,
@@ -358,33 +385,6 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus(),
 			workfowMetricsSLAStatus);
 		Assert.assertEquals(workflowMetricsSLAProcessResult.isOnTime(), onTime);
-	}
-
-	private void _test(
-		LocalDateTime createDateLocalDateTime, long duration, long elapsedTime,
-		LocalDateTime localDateTime, boolean onTime, long remainingTime,
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
-		Document... documents) {
-
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
-
-		when(
-			workflowMetricsSLADefinition.getDuration()
-		).thenReturn(
-			duration
-		);
-
-		when(
-			workflowMetricsSLADefinition.getStartNodeNames()
-		).thenReturn(
-			"0"
-		);
-
-		_test(
-			createDateLocalDateTime, elapsedTime, null, localDateTime, onTime,
-			remainingTime, 0, workflowMetricsSLADefinition,
-			workfowMetricsSLAStatus, documents);
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =

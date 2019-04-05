@@ -153,8 +153,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				document -> document.getLong("instanceId"),
 				document -> LocalDateTime.parse(
 					document.getString("createDate"),
-					DateTimeFormatter.ofPattern(
-						_INDEX_DATE_FORMAT_PATTERN)))
+					DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN)))
 		);
 	}
 

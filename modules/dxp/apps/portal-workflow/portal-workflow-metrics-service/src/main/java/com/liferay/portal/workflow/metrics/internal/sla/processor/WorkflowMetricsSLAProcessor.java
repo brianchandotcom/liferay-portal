@@ -413,7 +413,8 @@ public class WorkflowMetricsSLAProcessor {
 					workflowMetricsSLAStopwatch.run(
 						taskInterval._startLocalDateTime);
 				}
-				else if (Objects.equals(startTimeMarkers.get(taskId), "leave") &&
+				else if (Objects.equals(
+							startTimeMarkers.get(taskId), "leave") &&
 						 (taskInterval._endLocalDateTime != null)) {
 
 					workflowMetricsSLAStopwatch.run(

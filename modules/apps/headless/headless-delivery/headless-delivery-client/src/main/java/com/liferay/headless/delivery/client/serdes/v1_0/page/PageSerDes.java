@@ -25,28 +25,6 @@ import java.util.function.Function;
  */
 public class PageSerDes {
 
-	public static String toJSON(Collection<Page> pages) {
-		if (pages == null) {
-			return "[]";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("[");
-
-		for (Page page : pages) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(toJSON(page));
-		}
-
-		sb.append("]");
-
-		return sb.toString();
-	}
-
 	public static <T> String toJSON(
 		Page<T> page, Function<T, String> toJSONFunction) {
 

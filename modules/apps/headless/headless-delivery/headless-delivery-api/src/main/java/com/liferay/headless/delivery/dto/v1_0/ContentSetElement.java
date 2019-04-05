@@ -94,20 +94,18 @@ public class ContentSetElement {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
-	public Number getOrder() {
-		return order;
+	public Long getId() {
+		return id;
 	}
 
-	public void setOrder(Number order) {
-		this.order = order;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setOrder(
-		UnsafeSupplier<Number, Exception> orderUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
-			order = orderUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -119,7 +117,7 @@ public class ContentSetElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number order;
+	protected Long id;
 
 	public String getTitle() {
 		return title;
@@ -187,9 +185,9 @@ public class ContentSetElement {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"order\": ");
+		sb.append("\"id\": ");
 
-		sb.append(order);
+		sb.append(id);
 		sb.append(", ");
 
 		sb.append("\"title\": ");

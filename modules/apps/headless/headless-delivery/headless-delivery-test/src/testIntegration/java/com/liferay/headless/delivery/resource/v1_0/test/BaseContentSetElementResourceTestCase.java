@@ -831,7 +831,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("order")) {
+		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -852,6 +852,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 		return new ContentSetElement() {
 			{
 				contentType = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}
 		};

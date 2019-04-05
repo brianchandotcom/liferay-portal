@@ -7,6 +7,7 @@ import ListView from '../../shared/components/list/ListView';
 import PaginationBar from '../../shared/components/pagination/PaginationBar';
 import ProcessListTable from './ProcessListTable';
 import React from 'react';
+import ResultsBar from './ResultsBar';
 import Search from '../../shared/components/pagination/Search';
 
 /**
@@ -93,6 +94,8 @@ class ProcessListCard extends React.Component {
 						</div>
 					</div>
 				</nav>
+
+				{this.props.search && <ResultsBar totalCount={totalCount} />}
 
 				<div className="lfr-search-container-wrapper container-fluid-1280">
 					<ListView

@@ -2987,32 +2987,76 @@ ${tomcat-gc-log}
 							<if>
 								<isset property="lpkg.path" />
 								<then>
+									<local name="tstamp.value" />
+
 									<tstamp>
 										<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 									</tstamp>
 
-									<mkdir dir="${tstamp.value}" />
+									<local name="lpkg.dir" />
+									<local name="lpkg.impl.dir" />
+									<local name="war.dir" />
+
+									<property name="lpkg.dir" value="${tstamp.value}/lpkg-dir" />
+									<property name="lpkg.impl.dir" value="${tstamp.value}/lpkg-impl-dir" />
+									<property name="war.dir" value="${tstamp.value}/war-dir" />
+
+									<mkdir dir="${lpkg.dir}" />
+									<mkdir dir="${lpkg.impl.dir}" />
+									<mkdir dir="${war.dir}" />
+
+									<local name="lpkg.impl.include.name" />
+
+									<property name="lpkg.impl.include.name" value="Liferay Documentum Connector - Impl.lpkg" />
 
 									<unzip
-										dest="${tstamp.value}"
+										dest="${lpkg.dir}"
 										src="${lpkg.path}"
 									>
 										<patternset>
-											<include name="documentum-hook-*.war" />
+											<include name="${lpkg.impl.include.name}" />
 										</patternset>
 									</unzip>
+
+									<local name="lpkg.impl.path" />
+
+									<pathconvert property="lpkg.impl.path" setonempty="false">
+										<path>
+											<fileset
+												dir="${lpkg.dir}"
+											>
+												<include name="${lpkg.impl.include.name}" />
+											</fileset>
+										</path>
+									</pathconvert>
+
+									<local name="war.include.name" />
+
+									<property name="war.include.name" value="documentum-hook-*.war" />
+
+									<unzip
+										dest="${lpkg.impl.dir}"
+										src="${lpkg.impl.path}"
+									>
+										<patternset>
+											<include name="${war.include.name}" />
+										</patternset>
+									</unzip>
+
+									<local name="war.path" />
 
 									<pathconvert property="war.path" setonempty="false">
 										<path>
 											<fileset
-												dir="${tstamp.value}"
-												includes="documentum-hook-*.war"
-											/>
+												dir="${lpkg.impl.dir}"
+											>
+												<include name="${war.include.name}" />
+											</fileset>
 										</path>
 									</pathconvert>
 
 									<unzip
-										dest="${tstamp.value}"
+										dest="${war.dir}"
 										src="${war.path}"
 									>
 										<flattenmapper />
@@ -3021,7 +3065,7 @@ ${tomcat-gc-log}
 										</patternset>
 									</unzip>
 
-									<propertyfile file="${tstamp.value}/dfc.properties">
+									<propertyfile file="${war.dir}/dfc.properties">
 										<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
 									</propertyfile>
 
@@ -3030,21 +3074,31 @@ ${tomcat-gc-log}
 										update="true"
 									>
 										<zipfileset
-											file="${tstamp.value}/dfc.properties"
+											file="${war.dir}/dfc.properties"
 											fullpath="WEB-INF/classes/dfc.properties"
 										/>
 									</war>
 
-									<delete file="${tstamp.value}/dfc.properties" />
+									<zip
+										destfile="${lpkg.impl.path}"
+										update="true"
+									>
+										<zipfileset
+											dir="${lpkg.impl.dir}"
+										>
+											<include name="${war.include.name}" />
+										</zipfileset>
+									</zip>
 
 									<zip
 										destfile="${lpkg.path}"
 										update="true"
 									>
 										<zipfileset
-											dir="${tstamp.value}"
-											includes="documentum-hook-*.war"
-										/>
+											dir="${lpkg.dir}"
+										>
+											<include name="${lpkg.impl.include.name}" />
+										</zipfileset>
 									</zip>
 
 									<delete dir="${tstamp.value}" />

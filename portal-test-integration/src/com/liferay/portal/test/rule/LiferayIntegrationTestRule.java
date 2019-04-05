@@ -31,7 +31,6 @@ import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.test.rule.callback.InjectTestCallback;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.test.rule.callback.MainServletTestCallback;
-import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLogTestCallback;
 import com.liferay.portal.test.rule.callback.UniqueStringRandomizerBumperTestCallback;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
@@ -67,7 +66,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
 		testRules.add(_springInitializationTestRule);
-		testRules.add(_sybaseDumpTransactionLogTestRule);
+		testRules.add(SybaseDumpTransactionLogTestRule.INSTANCE);
 		testRules.add(ClearThreadLocalTestRule.INSTANCE);
 		testRules.add(_uniqueStringRandomizerBumperTestRule);
 		testRules.add(_mainServletTestRule);
@@ -150,8 +149,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 
 		};
 
-	private static final TestRule _sybaseDumpTransactionLogTestRule =
-		new BaseTestRule<>(SybaseDumpTransactionLogTestCallback.INSTANCE);
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
 		new BaseTestRule<>(UniqueStringRandomizerBumperTestCallback.INSTANCE);
 

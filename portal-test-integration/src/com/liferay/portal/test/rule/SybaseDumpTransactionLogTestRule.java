@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.sql.Connection;
@@ -30,11 +30,11 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class SybaseDumpTransactionLogTestCallback
-	extends BaseTestCallback<Void, Void> {
+public class SybaseDumpTransactionLogTestRule
+	extends AbstractTestRule<Void, Void> {
 
-	public static final SybaseDumpTransactionLogTestCallback INSTANCE =
-		new SybaseDumpTransactionLogTestCallback();
+	public static final SybaseDumpTransactionLogTestRule INSTANCE =
+		new SybaseDumpTransactionLogTestRule();
 
 	@Override
 	public void afterMethod(Description description, Void v, Object target)
@@ -96,7 +96,7 @@ public class SybaseDumpTransactionLogTestCallback
 							}
 						}
 					},
-					SybaseDumpTransactionLogTestCallback.class.getName());
+					SybaseDumpTransactionLogTestRule.class.getName());
 
 				_thread.setDaemon(true);
 
@@ -107,7 +107,11 @@ public class SybaseDumpTransactionLogTestCallback
 		return null;
 	}
 
-	private SybaseDumpTransactionLogTestCallback() {
+	@Override
+	protected void afterClass(Description description, Void v) {
+	}
+
+	private SybaseDumpTransactionLogTestRule() {
 	}
 
 	private void _dumpTransactionLog() throws SQLException {

@@ -189,8 +189,7 @@ public class AssetPublisherPortletLayoutListener
 
 			for (AssetEntry assetEntry : assetEntries) {
 				_assetEntryUsageLocalService.addAssetEntryUsage(
-					serviceContext.getUserId(), themeDisplay.getScopeGroupId(),
-					assetEntry.getEntryId(),
+					themeDisplay.getScopeGroupId(), assetEntry.getEntryId(),
 					_portal.getClassNameId(Layout.class), plid, portletId,
 					serviceContext);
 			}

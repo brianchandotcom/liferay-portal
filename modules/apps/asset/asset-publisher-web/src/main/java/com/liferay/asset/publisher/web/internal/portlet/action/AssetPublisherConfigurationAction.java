@@ -367,7 +367,6 @@ public class AssetPublisherConfigurationAction
 		String assetEntryType = ParamUtil.getString(
 			actionRequest, "assetEntryType");
 
-		long userId = portal.getUserId(actionRequest);
 		long groupId = portal.getScopeGroupId(actionRequest);
 		long classNameId = portal.getClassNameId(Layout.class);
 
@@ -381,9 +380,8 @@ public class AssetPublisherConfigurationAction
 				preferences, assetEntryId, assetEntryOrder, assetEntryType);
 
 			assetEntryUsageLocalService.addAssetEntryUsage(
-				userId, groupId, assetEntryId, classNameId,
-				themeDisplay.getPlid(), portletDisplay.getPortletResource(),
-				serviceContext);
+				groupId, assetEntryId, classNameId, themeDisplay.getPlid(),
+				portletDisplay.getPortletResource(), serviceContext);
 		}
 	}
 

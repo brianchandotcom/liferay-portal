@@ -86,9 +86,8 @@ public class JournalArticleAssetEntryUsageRecorder
 		_recordPortletPreferences(assetEntry, false);
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			assetEntry.getUserId(), assetEntry.getGroupId(),
-			assetEntry.getEntryId(), 0, 0, StringPool.BLANK,
-			ServiceContextThreadLocal.getServiceContext());
+			assetEntry.getGroupId(), assetEntry.getEntryId(), 0, 0,
+			StringPool.BLANK, ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _recordJournalContentSearches(AssetEntry assetEntry)
@@ -126,9 +125,9 @@ public class JournalArticleAssetEntryUsageRecorder
 			}
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
-				article.getUserId(), contentSearch.getGroupId(),
-				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
+				contentSearch.getGroupId(), assetEntry.getEntryId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				contentSearch.getPortletId(), serviceContext);
 		}
 	}
 
@@ -182,8 +181,8 @@ public class JournalArticleAssetEntryUsageRecorder
 			}
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
-				assetEntry.getUserId(), assetEntry.getGroupId(),
-				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+				assetEntry.getGroupId(), assetEntry.getEntryId(),
+				_portal.getClassNameId(Layout.class),
 				portletPreferences.getPlid(), portletPreferences.getPortletId(),
 				serviceContext);
 		}

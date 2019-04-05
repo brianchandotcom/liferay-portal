@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,8 +101,7 @@ public class AssetPublisherAddPortletProvider
 	}
 
 	private void _addAssetEntryUsage(
-			AssetEntry assetEntry, Layout layout, String portletId)
-		throws PortalException {
+		AssetEntry assetEntry, Layout layout, String portletId) {
 
 		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
 			assetEntry.getEntryId(), portletId);
@@ -113,9 +111,8 @@ public class AssetPublisherAddPortletProvider
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
-			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(), portletId,
+			layout.getGroupId(), assetEntry.getEntryId(),
+			_portal.getClassNameId(Layout.class), layout.getPlid(), portletId,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

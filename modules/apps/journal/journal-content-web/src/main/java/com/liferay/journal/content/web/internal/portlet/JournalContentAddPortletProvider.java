@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -131,9 +130,8 @@ public class JournalContentAddPortletProvider
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
-			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(), portletId,
+			layout.getGroupId(), assetEntry.getEntryId(),
+			_portal.getClassNameId(Layout.class), layout.getPlid(), portletId,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

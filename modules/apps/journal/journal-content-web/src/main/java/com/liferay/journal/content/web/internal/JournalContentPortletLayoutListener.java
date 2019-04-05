@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -298,9 +297,8 @@ public class JournalContentPortletLayoutListener
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
-			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(), portletId,
+			layout.getGroupId(), assetEntry.getEntryId(),
+			_portal.getClassNameId(Layout.class), layout.getPlid(), portletId,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

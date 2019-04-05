@@ -66,8 +66,6 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
-
 		if (!_isLastServedContentStale()) {
 			_writeResponse(response, _lastServedContent.getValue());
 
@@ -112,6 +110,8 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 	private void _writeResponse(HttpServletResponse response, String content)
 		throws IOException {
+
+		response.setContentType(Details.CONTENT_TYPE);
 
 		PrintWriter printWriter =
 			new PrintWriter(response.getOutputStream(), true);

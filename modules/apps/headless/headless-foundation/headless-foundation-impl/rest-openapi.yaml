@@ -890,12 +890,12 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/organizations/{organizationId}/organizations":
+    "/organizations/{parentOrganizationId}/organizations":
         get:
             operationId: getOrganizationOrganizationsPage
             parameters:
                 - in: path
-                  name: organizationId
+                  name: parentOrganizationId
                   required: true
                   schema:
                       format: int64
@@ -1235,12 +1235,12 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyCategory"
                     description: ""
             tags: ["TaxonomyCategory"]
-    "/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories":
+    "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 - in: path
-                  name: taxonomyCategoryId
+                  name: parentTaxonomyCategoryId
                   required: true
                   schema:
                       format: int64
@@ -1279,7 +1279,7 @@ paths:
             operationId: postTaxonomyCategoryTaxonomyCategory
             parameters:
                 - in: path
-                  name: taxonomyCategoryId
+                  name: parentTaxonomyCategoryId
                   required: true
                   schema:
                       format: int64

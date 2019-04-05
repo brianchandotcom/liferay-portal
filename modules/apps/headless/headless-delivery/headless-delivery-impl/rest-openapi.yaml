@@ -1131,12 +1131,12 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/comments/{commentId}/comments":
+    "/comments/{parentCommentId}/comments":
         get:
             operationId: getCommentCommentsPage
             parameters:
                 - in: path
-                  name: commentId
+                  name: parentCommentId
                   required: true
                   schema:
                       format: int64
@@ -1175,7 +1175,7 @@ paths:
             operationId: postCommentComment
             parameters:
                 - in: path
-                  name: commentId
+                  name: parentCommentId
                   required: true
                   schema:
                       format: int64
@@ -2176,12 +2176,12 @@ paths:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
             tags: ["DocumentFolder"]
-    "/document-folders/{documentFolderId}/document-folders":
+    "/document-folders/{parentDocumentFolderId}/document-folders":
         get:
             operationId: getDocumentFolderDocumentFoldersPage
             parameters:
                 - in: path
-                  name: documentFolderId
+                  name: parentDocumentFolderId
                   required: true
                   schema:
                       format: int64
@@ -2220,7 +2220,7 @@ paths:
             operationId: postDocumentFolderDocumentFolder
             parameters:
                 - in: path
-                  name: documentFolderId
+                  name: parentDocumentFolderId
                   required: true
                   schema:
                       format: int64
@@ -2611,12 +2611,12 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles":
+    "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
         get:
             operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
             parameters:
                 - in: path
-                  name: knowledgeBaseArticleId
+                  name: parentKnowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2655,7 +2655,7 @@ paths:
             operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
             parameters:
                 - in: path
-                  name: knowledgeBaseArticleId
+                  name: parentKnowledgeBaseArticleId
                   required: true
                   schema:
                       format: int64
@@ -2974,12 +2974,12 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders":
+    "/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders":
         get:
             operationId: getKnowledgeBaseFolderKnowledgeBaseFoldersPage
             parameters:
                 - in: path
-                  name: knowledgeBaseFolderId
+                  name: parentKnowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -3006,7 +3006,7 @@ paths:
             operationId: postKnowledgeBaseFolderKnowledgeBaseFolder
             parameters:
                 - in: path
-                  name: knowledgeBaseFolderId
+                  name: parentKnowledgeBaseFolderId
                   required: true
                   schema:
                       format: int64
@@ -3182,12 +3182,12 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
-    "/message-board-messages/{messageBoardMessageId}/message-board-messages":
+    "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
         get:
             operationId: getMessageBoardMessageMessageBoardMessagesPage
             parameters:
                 - in: path
-                  name: messageBoardMessageId
+                  name: parentMessageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3226,7 +3226,7 @@ paths:
             operationId: postMessageBoardMessageMessageBoardMessage
             parameters:
                 - in: path
-                  name: messageBoardMessageId
+                  name: parentMessageBoardMessageId
                   required: true
                   schema:
                       format: int64
@@ -3398,12 +3398,12 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
-    "/message-board-sections/{messageBoardSectionId}/message-board-sections":
+    "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
         get:
             operationId: getMessageBoardSectionMessageBoardSectionsPage
             parameters:
                 - in: path
-                  name: messageBoardSectionId
+                  name: parentMessageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3442,7 +3442,7 @@ paths:
             operationId: postMessageBoardSectionMessageBoardSection
             parameters:
                 - in: path
-                  name: messageBoardSectionId
+                  name: parentMessageBoardSectionId
                   required: true
                   schema:
                       format: int64
@@ -3862,12 +3862,12 @@ paths:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
             tags: ["StructuredContentFolder"]
-    "/structured-content-folders/{structuredContentFolderId}/structured-content-folders":
+    "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
         get:
             operationId: getStructuredContentFolderStructuredContentFoldersPage
             parameters:
                 - in: path
-                  name: structuredContentFolderId
+                  name: parentStructuredContentFolderId
                   required: true
                   schema:
                       format: int64
@@ -3906,7 +3906,7 @@ paths:
             operationId: postStructuredContentFolderStructuredContentFolder
             parameters:
                 - in: path
-                  name: structuredContentFolderId
+                  name: parentStructuredContentFolderId
                   required: true
                   schema:
                       format: int64

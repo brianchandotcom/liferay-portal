@@ -380,7 +380,6 @@ public class WorkflowMetricsSLAProcessor {
 
 		Map<Long, String> pauseTimeMarkers = _getTimeMarkers(
 			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeNames()));
-
 		Map<Long, String> stopTimeMarkers = _getTimeMarkers(
 			StringUtil.split(workflowMetricsSLADefinition.getStopNodeNames()));
 

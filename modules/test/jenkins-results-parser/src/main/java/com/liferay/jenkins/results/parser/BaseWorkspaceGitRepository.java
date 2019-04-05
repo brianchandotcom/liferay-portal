@@ -247,12 +247,14 @@ public abstract class BaseWorkspaceGitRepository
 
 		int index = 0;
 
-		while (index < COMMITS_HISTORY_MAX) {
+		while (index < COMMITS_HISTORY_SIZE_MAX) {
 			int currentGroupSize = COMMITS_HISTORY_GROUP_SIZE;
 
-			if (index > (COMMITS_HISTORY_MAX - COMMITS_HISTORY_GROUP_SIZE)) {
+			if (index >
+					(COMMITS_HISTORY_SIZE_MAX - COMMITS_HISTORY_GROUP_SIZE)) {
+
 				currentGroupSize =
-					COMMITS_HISTORY_MAX % COMMITS_HISTORY_GROUP_SIZE;
+					COMMITS_HISTORY_SIZE_MAX % COMMITS_HISTORY_GROUP_SIZE;
 			}
 
 			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
@@ -517,11 +519,11 @@ public abstract class BaseWorkspaceGitRepository
 		"git_hub_dev_branch_name"
 	};
 
+	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
+
 	private static final String[] _REQUIRED_KEYS = {
 		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
 	};
-
-	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();

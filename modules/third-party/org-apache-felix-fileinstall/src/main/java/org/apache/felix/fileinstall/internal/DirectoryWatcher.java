@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Pattern;
 
 import org.apache.felix.fileinstall.ArtifactInstaller;
 import org.apache.felix.fileinstall.ArtifactListener;
@@ -100,6 +102,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
     public final static String NO_INITIAL_DELAY = "felix.fileinstall.noInitialDelay";
     public final static String DISABLE_CONFIG_SAVE = "felix.fileinstall.disableConfigSave";
     public final static String ENABLE_CONFIG_SAVE = "felix.fileinstall.enableConfigSave";
+    public final static String CONFIG_ENCODING = "felix.fileinstall.configEncoding";
     public final static String START_LEVEL = "felix.fileinstall.start.level";
     public final static String ACTIVE_LEVEL = "felix.fileinstall.active.level";
     public final static String UPDATE_WITH_LISTENERS = "felix.fileinstall.bundles.updateWithListeners";
@@ -136,6 +139,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
     String fragmentScope;
     String optionalScope;
     boolean disableNio2;
+    int frameworkStartLevel;
 
     // Map of all installed artifacts
     final Map<File, Artifact> currentManagedArtifacts = new HashMap<File, Artifact>();
@@ -501,20 +505,25 @@ public class DirectoryWatcher extends Thread implements BundleListener
             }
         }
 
-        if (startBundles && isStateChanged())
-        {
-            // Try to start all the bundles that are not persistently stopped
-            startAllBundles();
-            
-            delayedStart.addAll(installedBundles);
-            delayedStart.removeAll(uninstalledBundles);
-            // Try to start newly installed bundles, or bundles which we missed on a previous round
-            startBundles(delayedStart);
-            consistentlyFailingBundles.clear();
-            consistentlyFailingBundles.addAll(delayedStart);
+        if (startBundles) {
+            int startLevel = systemBundle.adapt(FrameworkStartLevel.class).getStartLevel();
+            boolean doStart = isStateChanged() || startLevel != frameworkStartLevel;
+            frameworkStartLevel = startLevel;
+            if (doStart)
+            {
+                // Try to start all the bundles that are not persistently stopped
+                startAllBundles();
 
-            // set the state as unchanged to not reattempt starting failed bundles
-            setStateChanged(false);
+                delayedStart.addAll(installedBundles);
+                delayedStart.removeAll(uninstalledBundles);
+                // Try to start newly installed bundles, or bundles which we missed on a previous round
+                startBundles(delayedStart);
+                consistentlyFailingBundles.clear();
+                consistentlyFailingBundles.addAll(delayedStart);
+
+                // set the state as unchanged to not reattempt starting failed bundles
+                setStateChanged(false);
+            }
         }
     }
 
@@ -802,6 +811,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
         Bundle[] bundles = this.context.getBundles();
         String watchedDirPath = watchedDirectory.toURI().normalize().getPath();
         Map<File, Long> checksums = new HashMap<File, Long>();
+        Pattern filePattern = filter == null || filter.isEmpty() ? null : Pattern.compile(filter);
         for (Bundle bundle : bundles) {
             // Convert to a URI because the location of a bundle
             // is typically a URI. At least, that's the case for
@@ -847,13 +857,16 @@ public class DirectoryWatcher extends Thread implements BundleListener
             }
             final int index = path.lastIndexOf('/');
             if (index != -1 && path.startsWith(watchedDirPath)) {
-                Artifact artifact = new Artifact();
-                artifact.setBundleId(bundle.getBundleId());
-                artifact.setChecksum(Util.loadChecksum(bundle, context));
-                artifact.setListener(null);
-                artifact.setPath(new File(path));
-                setArtifact(new File(path), artifact);
-                checksums.put(new File(path), artifact.getChecksum());
+                final String fileName = path.substring(index + 1);
+                if (filePattern == null || filePattern.matcher(fileName).matches()) {
+                    Artifact artifact = new Artifact();
+                    artifact.setBundleId(bundle.getBundleId());
+                    artifact.setChecksum(Util.loadChecksum(bundle, context));
+                    artifact.setListener(null);
+                    artifact.setPath(new File(path));
+                    setArtifact(new File(path), artifact);
+                    checksums.put(new File(path), artifact.getChecksum());
+                }
             }
         }
         scanner.initialize(checksums);
@@ -947,14 +960,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
                 URL transformed = artifact.getTransformedUrl();
                 String location = transformed.toString();
                 BufferedInputStream in = new BufferedInputStream(transformed.openStream());
-                try
-                {
-                    bundle = installOrUpdateBundle(location, in, artifact.getChecksum(), modified);
-                }
-                finally
-                {
-                    in.close();
-                }
+                bundle = installOrUpdateBundle(location, in, artifact.getChecksum(), modified);
                 artifact.setBundleId(bundle.getBundleId());
             }
             // if the listener is an artifact transformer
@@ -968,14 +974,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
                 File transformed = artifact.getTransformed();
                 String location = path.toURI().normalize().toString();
                 BufferedInputStream in = new BufferedInputStream(new FileInputStream(transformed != null ? transformed : path));
-                try
-                {
-                    bundle = installOrUpdateBundle(location, in, artifact.getChecksum(), modified);
-                }
-                finally
-                {
-                    in.close();
-                }
+                bundle = installOrUpdateBundle(location, in, artifact.getChecksum(), modified);
                 artifact.setBundleId(bundle.getBundleId());
             }
             installationFailures.remove(path);
@@ -997,58 +996,62 @@ public class DirectoryWatcher extends Thread implements BundleListener
         String bundleLocation, BufferedInputStream is, long checksum, AtomicBoolean modified)
         throws IOException, BundleException
     {
-        is.mark(256 * 1024);
-        JarInputStream jar = new JarInputStream(is);
-        Manifest m = jar.getManifest();
-        if( m == null ) {
-            throw new BundleException(
-                "The bundle " + bundleLocation + " does not have a META-INF/MANIFEST.MF! "+
-                    "Make sure, META-INF and MANIFEST.MF are the first 2 entries in your JAR!");
-        }
-        String sn = m.getMainAttributes().getValue(Constants.BUNDLE_SYMBOLICNAME);
-        String vStr = m.getMainAttributes().getValue(Constants.BUNDLE_VERSION);
-        Version v = vStr == null ? Version.emptyVersion : Version.parseVersion(vStr);
-        Bundle[] bundles = context.getBundles();
-        for (Bundle b : bundles) {
-            if (b.getSymbolicName() != null && b.getSymbolicName().equals(sn)) {
-                vStr = b.getHeaders().get(Constants.BUNDLE_VERSION);
-                Version bv = vStr == null ? Version.emptyVersion : Version.parseVersion(vStr);
-                if (v.equals(bv)) {
-                    is.reset();
-                    if (Util.loadChecksum(b, context) != checksum) {
-                        log(Logger.LOG_WARNING,
-                                "A bundle with the same symbolic name ("
-                                        + sn + ") and version (" + vStr
-                                        + ") is already installed.  Updating this bundle instead.", null
-                        );
-                        stopTransient(b);
-                        Util.storeChecksum(b, checksum, context);
-                        b.update(is);
-                        modified.set(true);
+        JarInputStream jar = null;
+        try {
+            is.mark(256 * 1024);
+            jar = new JarInputStream(is);
+            Manifest m = jar.getManifest();
+            if( m == null ) {
+                throw new BundleException(
+                        "The bundle " + bundleLocation + " does not have a META-INF/MANIFEST.MF! " +
+                                "Make sure, META-INF and MANIFEST.MF are the first 2 entries in your JAR!");
+            }
+            String sn = m.getMainAttributes().getValue(Constants.BUNDLE_SYMBOLICNAME);
+            String vStr = m.getMainAttributes().getValue(Constants.BUNDLE_VERSION);
+            Version v = vStr == null ? Version.emptyVersion : Version.parseVersion(vStr);
+            Bundle[] bundles = context.getBundles();
+            for (Bundle b : bundles) {
+                if (b.getSymbolicName() != null && b.getSymbolicName().equals(sn)) {
+                    vStr = b.getHeaders().get(Constants.BUNDLE_VERSION);
+                    Version bv = vStr == null ? Version.emptyVersion : Version.parseVersion(vStr);
+                    if (v.equals(bv)) {
+                        is.reset();
+                        if (Util.loadChecksum(b, context) != checksum) {
+                            log(Logger.LOG_WARNING,
+                                    "A bundle with the same symbolic name ("
+                                            + sn + ") and version (" + vStr
+                                            + ") is already installed.  Updating this bundle instead.", null
+                            );
+                            stopTransient(b);
+                            Util.storeChecksum(b, checksum, context);
+                            b.update(is);
+                            modified.set(true);
+                        }
+                        return b;
                     }
-                    return b;
                 }
             }
+            is.reset();
+            Util.log(context, Logger.LOG_INFO, "Installing bundle " + sn
+                    + " / " + v, null);
+            Bundle b = context.installBundle(bundleLocation, is);
+            Util.storeChecksum(b, checksum, context);
+            modified.set(true);
+
+            // Set default start level at install time, the user can override it if he wants
+            if (startLevel != 0) {
+                b.adapt(BundleStartLevel.class).setStartLevel(startLevel);
+            }
+
+            return b;
         }
-        is.reset();
-        Util.log(context, Logger.LOG_INFO, "Installing bundle " + sn
-                + " / " + v, null);
-        Bundle b = context.installBundle(bundleLocation, is);
-
-               if (b.getState() == Bundle.UNINSTALLED) {
-                       return b;
-               }
-
-        Util.storeChecksum(b, checksum, context);
-        modified.set(true);
-
-        // Set default start level at install time, the user can override it if he wants
-        if (startLevel != 0)
+        finally
         {
-            b.adapt(BundleStartLevel.class).setStartLevel(startLevel);
+            if (jar != null)
+            {
+                jar.close();
+            }
         }
-        
-        return b;
     }
 
     /**
@@ -1202,7 +1205,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
     private void startAllBundles()
     {
         FrameworkStartLevel startLevelSvc = systemBundle.adapt(FrameworkStartLevel.class);
-        List<Bundle> bundles = new ArrayList<Bundle>();
+        Set<Bundle> bundles = new LinkedHashSet<>();
         for (Artifact artifact : getArtifacts()) {
             if (artifact.getBundleId() > 0) {
                 Bundle bundle = context.getBundle(artifact.getBundleId());
@@ -1221,13 +1224,13 @@ public class DirectoryWatcher extends Thread implements BundleListener
      /**
       * Starts a bundle and removes it from the Collection when successfully started.
       */
-    private void startBundles(Collection<Bundle> bundles)
+    private void startBundles(Set<Bundle> bundles)
     {
         // Check if this is the consistent set of bundles which failed previously.
-
+        boolean logFailures = !consistentlyFailingBundles.equals(bundles);
         for (Iterator<Bundle> b = bundles.iterator(); b.hasNext(); )
         {
-            if (startBundle(b.next(), true))
+            if (startBundle(b.next(), logFailures))
             {
                 b.remove();
             }
@@ -1241,7 +1244,6 @@ public class DirectoryWatcher extends Thread implements BundleListener
       */
     private boolean startBundle(Bundle bundle, boolean logFailures)
     {
-        FrameworkStartLevel startLevelSvc = systemBundle.adapt(FrameworkStartLevel.class);
         // Fragments can never be started.
         // Bundles can only be started transient when the start level of the framework is high
         // enough. Persistent (i.e. non-transient) starts will simply make the framework start the
@@ -1249,7 +1251,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
         if (startBundles
                 && bundle.getState() != Bundle.UNINSTALLED
                 && !isFragment(bundle)
-                && startLevelSvc.getStartLevel() >= bundle.adapt(BundleStartLevel.class).getStartLevel())
+                && frameworkStartLevel >= bundle.adapt(BundleStartLevel.class).getStartLevel())
         {
             try
             {
@@ -1264,7 +1266,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
                 // Don't log this as an error, instead we start the bundle repeatedly.
                 if (logFailures)
                 {
-                    log(Logger.LOG_ERROR, "Error while starting bundle: " + bundle.getLocation(), e);
+                    log(Logger.LOG_WARNING, "Error while starting bundle: " + bundle.getLocation(), e);
                 }
             }
         }
@@ -1494,4 +1496,3 @@ public class DirectoryWatcher extends Thread implements BundleListener
     }
 
 }
-/* @generated */

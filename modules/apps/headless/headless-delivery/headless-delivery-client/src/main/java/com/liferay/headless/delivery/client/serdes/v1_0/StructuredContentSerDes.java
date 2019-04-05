@@ -321,9 +321,14 @@ public class StructuredContentSerDes {
 
 		sb.append("\"viewableBy\": ");
 
-		sb.append("\"");
-		sb.append(structuredContent.getViewableBy());
-		sb.append("\"");
+		if (structuredContent.getViewableBy() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(structuredContent.getViewableBy());
+			sb.append("\"");
+		}
 
 		sb.append("}");
 

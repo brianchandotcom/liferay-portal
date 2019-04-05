@@ -14,8 +14,6 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.exception.AssetTagNameException;
-import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
@@ -25,7 +23,6 @@ import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,8 +33,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -95,59 +90,20 @@ public class KeywordResourceImpl
 	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
-		try {
-			return _toKeyword(
-				_assetTagService.addTag(
-					contentSpaceId, keyword.getName(),
-					new ServiceContext() {
-						{
-							setAddGroupPermissions(true);
-							setAddGuestPermissions(true);
-							setScopeGroupId(contentSpaceId);
-						}
-					}));
-		}
-		catch (AssetTagNameException atne) {
-			throw new ClientErrorException(
-				"Name contains invalid characters", 422, atne);
-		}
-		catch (DuplicateTagException dte) {
-			throw new ClientErrorException(
-				"A tag with the name " + keyword.getName() + " already exists",
-				422, dte);
-		}
-		catch (PrincipalException.MustHavePermission mh) {
-			throw new ForbiddenException(
-				"You do not have permissions to create a keyword", mh);
-		}
+		return _toKeyword(
+			_assetTagService.addTag(
+				contentSpaceId, keyword.getName(), new ServiceContext()));
 	}
 
 	@Override
 	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
-		try {
-			return _toKeyword(
-				_assetTagService.updateTag(keywordId, keyword.getName(), null));
-		}
-		catch (AssetTagNameException atne) {
-			throw new ClientErrorException(
-				"Name contains invalid characters", 422, atne);
-		}
-		catch (DuplicateTagException dte) {
-			throw new ClientErrorException(
-				"A tag with the name " + keyword.getName() + " already exists",
-				422, dte);
-		}
-		catch (PrincipalException.MustHavePermission mh) {
-			throw new ForbiddenException(
-				"You do not have permissions to update keyword: " +
-					keyword.getName(),
-				mh);
-		}
+		return _toKeyword(
+			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
-	private Keyword _toKeyword(AssetTag assetTag) throws Exception {
+	private Keyword _toKeyword(AssetTag assetTag) {
 		return new Keyword() {
 			{
 				contentSpaceId = assetTag.getGroupId();

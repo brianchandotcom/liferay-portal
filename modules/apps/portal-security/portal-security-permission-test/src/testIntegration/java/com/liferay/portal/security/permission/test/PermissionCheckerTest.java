@@ -127,7 +127,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setGroupUsers(
 			_group.getGroupId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		_deployRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
 
@@ -170,7 +171,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setGroupUsers(
 			_group.getGroupId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		_deployRemotePortlet(
 			_user.getCompanyId(), _NONSITE_PORTLET_RESOURCE_NAME);
@@ -229,7 +231,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		_resourceLocalService.addResources(
 			permissionChecker.getCompanyId(), _group.getGroupId(), 0,
@@ -245,7 +248,7 @@ public class PermissionCheckerTest {
 			_userLocalService.setGroupUsers(
 				_group.getGroupId(), new long[] {_user.getUserId()});
 
-			permissionChecker = _getPermissionChecker(_user);
+			permissionChecker = _permissionCheckerFactory.create(_user);
 
 			hasPermission = permissionChecker.hasPermission(
 				_group.getGroupId(), _ROOT_MODEL_RESOURCE_NAME,
@@ -297,7 +300,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		long resourceId = 12345;
 
@@ -355,7 +359,8 @@ public class PermissionCheckerTest {
 
 			_user = UserTestUtil.addCompanyAdminUser(_company);
 
-			PermissionChecker permissionChecker = _getPermissionChecker(_user);
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(_user);
 
 			boolean companyAdmin = permissionChecker.isCompanyAdmin(
 				_company.getCompanyId());
@@ -405,7 +410,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		long resourceId = 12345;
 
@@ -458,7 +464,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		long resourceId = 12345;
 
@@ -510,7 +517,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		long resourceId = 12345;
 
@@ -554,7 +562,7 @@ public class PermissionCheckerTest {
 	public void testHasPermissionWithMissingResourcePermissions()
 		throws Exception {
 
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		try {
@@ -584,7 +592,7 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsCompanyAdminWithCompanyAdmin() throws Exception {
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(permissionChecker.isCompanyAdmin());
@@ -594,14 +602,15 @@ public class PermissionCheckerTest {
 	public void testIsCompanyAdminWithRegularUser() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isCompanyAdmin());
 	}
 
 	@Test
 	public void testIsContentReviewerWithCompanyAdminUser() throws Exception {
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(
@@ -619,7 +628,8 @@ public class PermissionCheckerTest {
 		_userLocalService.setRoleUsers(
 			_role.getRoleId(), new long[] {_user.getUserId()});
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(
 			permissionChecker.isContentReviewer(
@@ -636,7 +646,8 @@ public class PermissionCheckerTest {
 		_user = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_CONTENT_REVIEWER);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(
 			permissionChecker.isContentReviewer(
@@ -660,7 +671,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addGroupUser(parentGroup, _role.getName());
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isGroupAdmin(subgroup.getGroupId()));
@@ -677,7 +689,7 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsGroupAdminWithCompanyAdmin() throws Exception {
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(permissionChecker.isGroupAdmin(_group.getGroupId()));
@@ -687,7 +699,8 @@ public class PermissionCheckerTest {
 	public void testIsGroupAdminWithGroupAdmin() throws Exception {
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(permissionChecker.isGroupAdmin(_group.getGroupId()));
 	}
@@ -696,7 +709,8 @@ public class PermissionCheckerTest {
 	public void testIsGroupAdminWithRegularUser() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isGroupAdmin(_group.getGroupId()));
 	}
@@ -707,7 +721,8 @@ public class PermissionCheckerTest {
 
 		_userLocalService.addGroupUser(_group.getGroupId(), _user.getUserId());
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(permissionChecker.isGroupMember(_group.getGroupId()));
 	}
@@ -716,7 +731,8 @@ public class PermissionCheckerTest {
 	public void testIsGroupMemberWithNongroupMember() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isGroupMember(_group.getGroupId()));
@@ -724,7 +740,7 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsGroupOwnerWithCompanyAdmin() throws Exception {
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(permissionChecker.isGroupOwner(_group.getGroupId()));
@@ -734,7 +750,8 @@ public class PermissionCheckerTest {
 	public void testIsGroupOwnerWithGroupAdmin() throws Exception {
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isGroupOwner(_group.getGroupId()));
 	}
@@ -743,7 +760,8 @@ public class PermissionCheckerTest {
 	public void testIsGroupOwnerWithOwnerUser() throws Exception {
 		_user = UserTestUtil.addGroupOwnerUser(_group);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(permissionChecker.isGroupOwner(_group.getGroupId()));
 	}
@@ -753,7 +771,8 @@ public class PermissionCheckerTest {
 		_user = UserTestUtil.addUser(
 			_group.getGroupId(), LocaleUtil.getDefault());
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isGroupOwner(_group.getGroupId()));
 	}
@@ -762,7 +781,8 @@ public class PermissionCheckerTest {
 	public void testIsOmniAdminWithAdministratorRoleUser() throws Exception {
 		_user = UserTestUtil.addOmniAdminUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(permissionChecker.isOmniadmin());
 	}
@@ -777,7 +797,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addCompanyAdminUser(_company);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isOmniadmin());
 
@@ -788,7 +809,8 @@ public class PermissionCheckerTest {
 	public void testIsOmniAdminWithGroupAdmin() throws Exception {
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}
@@ -797,7 +819,8 @@ public class PermissionCheckerTest {
 	public void testIsOmniAdminWithRegularUser() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}
@@ -806,7 +829,7 @@ public class PermissionCheckerTest {
 	public void testIsOrganizationAdminWithCompanyAdmin() throws Exception {
 		_organization = OrganizationTestUtil.addOrganization();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(
@@ -820,7 +843,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isOrganizationAdmin(
@@ -835,7 +859,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addOrganizationAdminUser(_organization);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(
 			permissionChecker.isOrganizationAdmin(
@@ -848,7 +873,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isOrganizationAdmin(
@@ -859,7 +885,7 @@ public class PermissionCheckerTest {
 	public void testIsOrganizationOwnerWithCompanyAdmin() throws Exception {
 		_organization = OrganizationTestUtil.addOrganization();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
 		Assert.assertTrue(
@@ -873,7 +899,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isOrganizationOwner(
@@ -888,7 +915,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addOrganizationAdminUser(_organization);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isOrganizationOwner(
@@ -901,7 +929,8 @@ public class PermissionCheckerTest {
 
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertFalse(
 			permissionChecker.isOrganizationOwner(
@@ -939,12 +968,6 @@ public class PermissionCheckerTest {
 			ResourceConstants.SCOPE_INDIVIDUAL, portletName);
 
 		_portletLocalService.destroyRemotePortlet(portlet);
-	}
-
-	private PermissionChecker _getPermissionChecker(User user)
-		throws Exception {
-
-		return _permissionCheckerFactory.create(user);
 	}
 
 	private static final String _ADD_SITE_TEST_1_ACTION = "ADD_SITE_TEST_1";

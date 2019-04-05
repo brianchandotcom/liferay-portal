@@ -60,6 +60,7 @@ class SegmentEdit extends Component {
 	};
 
 	state = {
+		changesUnsaved: false,
 		editing: false,
 		membersCount: this.props.initialMembersCount,
 		membersCountLoading: false
@@ -112,9 +113,14 @@ class SegmentEdit extends Component {
 	};
 
 	_handleQueryChange = () => {
-		this.setState({membersCountLoading: true});
+		this.setState(
+			{
+				changesUnsaved: true,
+				membersCountLoading: true
+			},
+			this._debouncedFetchMembersCount
+		);
 
-		this._debouncedFetchMembersCount();
 	};
 
 	_handleCriteriaEdit = () => {
@@ -236,11 +242,13 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {editing, membersCount, membersCountLoading} = this.state;
+		const {changesUnsaved, editing, membersCount, membersCountLoading} = this.state;
 
 		const {assetsPath} = this.context;
 
-		const disabled = !editing || this._isQueryEmpty();
+		const disabledCancel = !editing;
+		const disabledSave = !editing || this._isQueryEmpty();
+		const editingToggleDisabled = changesUnsaved;
 
 		return (
 			<div className="segment-edit-page-root">
@@ -314,6 +322,7 @@ class SegmentEdit extends Component {
 									<ClayToggle
 										checked={editing}
 										className="toggle-editing"
+										disabled={editingToggleDisabled}
 										iconOff="view"
 										iconOn="pencil"
 										onChange={this._handleCriteriaEdit}
@@ -324,7 +333,7 @@ class SegmentEdit extends Component {
 							<div className="btn-group">
 								<div className="btn-group-item">
 									<ClayButton
-										disabled={disabled}
+										disabled={disabledCancel}
 										href={redirect}
 										label={Liferay.Language.get('cancel')}
 										size="sm"
@@ -333,7 +342,7 @@ class SegmentEdit extends Component {
 
 								<div className="btn-group-item">
 									<ClayButton
-										disabled={disabled}
+										disabled={disabledSave}
 										label={Liferay.Language.get('save')}
 										onClick={this._handleValidate}
 										size="sm"

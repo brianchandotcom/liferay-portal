@@ -31,6 +31,7 @@ class ClayToggle extends Component {
 		const {
 			checked,
 			className,
+			disabled,
 			iconOff,
 			iconOn,
 			label,
@@ -53,6 +54,7 @@ class ClayToggle extends Component {
 				<input
 					checked={checked}
 					className="toggle-switch-check"
+					disabled={disabled}
 					name={name}
 					onChange={onChange}
 					type="checkbox"

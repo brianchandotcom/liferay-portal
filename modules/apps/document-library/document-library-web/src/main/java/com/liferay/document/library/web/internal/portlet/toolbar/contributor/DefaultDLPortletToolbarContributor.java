@@ -91,12 +91,12 @@ public class DefaultDLPortletToolbarContributor
 
 		_add(
 			menuItems,
-			_menuItemProvider.getAddFolderMenuItem(
+			_menuItemProvider.getAddMultipleFilesMenuItem(
 				folder, themeDisplay, portletRequest));
 
 		_add(
 			menuItems,
-			_menuItemProvider.getAddMultipleFilesMenuItem(
+			_menuItemProvider.getAddFolderMenuItem(
 				folder, themeDisplay, portletRequest));
 
 		_add(

@@ -117,7 +117,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		String name = project.getName();
 
-		if (portalRootDir.exists()) {
+		if ((portalRootDir != null) && portalRootDir.exists()) {
 			String gitWorkingBranchName = GradleUtil.getProperty(
 				project, "git.working.branch.name", (String)null);
 

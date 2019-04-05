@@ -106,7 +106,9 @@ public class ContentFieldSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < contentField.getNestedFields().length; i++) {
-				sb.append(contentField.getNestedFields()[i]);
+				sb.append(
+					ContentFieldSerDes.toJSON(
+						contentField.getNestedFields()[i]));
 
 				if ((i + 1) < contentField.getNestedFields().length) {
 					sb.append(", ");
@@ -131,12 +133,7 @@ public class ContentFieldSerDes {
 
 		sb.append("\"value\": ");
 
-		if (contentField.getValue() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(contentField.getValue());
-		}
+		sb.append(ValueSerDes.toJSON(contentField.getValue()));
 
 		sb.append("}");
 

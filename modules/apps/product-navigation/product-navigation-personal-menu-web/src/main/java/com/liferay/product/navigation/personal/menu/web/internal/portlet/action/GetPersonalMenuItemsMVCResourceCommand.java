@@ -97,6 +97,12 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			String portletId = ParamUtil.getString(portletRequest, "portletId");
+
+			jsonObject.put(
+				"active",
+				personalMenuEntry.isActive(portletRequest, portletId));
+
 			try {
 				jsonObject.put(
 					"href",
@@ -106,12 +112,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			catch (PortalException pe) {
 				_log.error(pe, pe);
 			}
-
-			String portletId = ParamUtil.getString(portletRequest, "portletId");
-
-			jsonObject.put(
-				"active",
-				personalMenuEntry.isActive(portletRequest, portletId));
 
 			jsonObject.put(
 				"label", personalMenuEntry.getLabel(themeDisplay.getLocale()));

@@ -532,6 +532,10 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
             required:
                 - name
             type: object

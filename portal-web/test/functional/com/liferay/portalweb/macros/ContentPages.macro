@@ -47,15 +47,15 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro gotoEditMode {
-		Click(locator1 = "ToggleSwitch#EDIT_MODE");
-
-		AssertLocation.assertPartialLocation(value1 = "mode=edit");
+	macro clickBack {
+		Click(
+			locator1 = "Icon#ANGLE_LEFT_BACK"
+		);
 	}
 
-	macro gotoViewMode {
-		Click(locator1 = "ToggleSwitch#EDIT_MODE");
-
-		AssertLocation.assertPartialLocation(value1 = "mode=view");
+	macro clickPencil {
+		Click(
+			locator1 = "Button#PENCIL"
+		);
 	}
 }

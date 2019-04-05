@@ -385,7 +385,7 @@
 </tr>
 <tr>
 	<td>PENCIL</td>
-	<td>//button//*[contains(@class,'pencil')]</td>
+	<td>//*[contains(@class,'btn')]//*[contains(@class,'pencil')]</td>
 	<td></td>
 </tr>
 <tr>

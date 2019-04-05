@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_MODE</td>
-	<td>//span[@class='toggle-switch-handle']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
 	<td>//label[contains(@for,'enableSocialBookmarks')]/input/../span/span</td>
 	<td></td>

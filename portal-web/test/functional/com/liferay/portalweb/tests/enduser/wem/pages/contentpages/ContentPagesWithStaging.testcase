@@ -193,8 +193,8 @@ definition {
 			);
 		}
 
-		task ("Navigate to the content page's 'Edit Mode' using the mode toggle") {
-			ContentPages.gotoEditMode();
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
 		}
 
 		task ("Add a Content fragment") {
@@ -216,8 +216,8 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page's 'View Mode' using the mode toggle") {
-			ContentPages.gotoViewMode();
+		task ("Navigate back to the content page") {
+			ContentPages.clickBack();
 		}
 
 		task ("Assert the Title fragment is present") {

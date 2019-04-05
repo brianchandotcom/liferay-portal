@@ -2,7 +2,7 @@ import { AppContext } from '../AppContext';
 import { getPercentage } from '../../shared/util/util';
 import Icon from '../../shared/components/Icon';
 import LoadingState from '../../shared/components/empty-state/LoadingState';
-import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import { openErrorToast } from '../../shared/util/toast';
 import Panel from '../../shared/components/Panel';
 import PANELS from './Panels';
 import React, { Fragment } from 'react';
@@ -39,7 +39,8 @@ class ProcessDashboard extends React.Component {
 				this.setState({
 					loading: false
 				});
-				openToast({ message: error.message });
+
+				openErrorToast(error);
 			});
 	}
 

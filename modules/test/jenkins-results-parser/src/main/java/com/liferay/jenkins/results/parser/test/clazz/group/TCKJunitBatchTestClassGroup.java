@@ -68,17 +68,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
-
-		File tckHomeDirectory = new File(workingDirectory, "tools/tck");
-
-		if (!tckHomeDirectory.exists()) {
-			tckHomeDirectory = new File(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "tck.home"));
-		}
-
-		_tckHomeDirectory = tckHomeDirectory;
+		_tckHomeDirectory = new File(
+			JenkinsResultsParserUtil.getProperty(jobProperties, "tck.home"));
 
 		excludesPathMatchers.addAll(
 			getPathMatchers(

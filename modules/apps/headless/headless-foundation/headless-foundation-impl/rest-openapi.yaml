@@ -1468,7 +1468,6 @@ paths:
             tags: ["UserAccount"]
         post:
             operationId: postUserAccount
-            operationId: postUserAccount
             parameters: []
             requestBody:
                 content:

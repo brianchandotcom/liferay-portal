@@ -62,7 +62,6 @@ class CriteriaBuilder extends Component {
 		 */
 		modelLabel: PropTypes.string,
 		onChange: PropTypes.func,
-		onEditToggle: PropTypes.func,
 		propertyKey: PropTypes.string.isRequired,
 		supportedConjunctions: PropTypes.arrayOf(
 			PropTypes.shape(

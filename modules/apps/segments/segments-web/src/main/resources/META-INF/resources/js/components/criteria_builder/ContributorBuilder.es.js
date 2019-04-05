@@ -262,7 +262,6 @@ class ContributorBuilder extends React.Component {
 													id={criteria.propertyKey}
 													modelLabel={criteria.modelLabel}
 													onChange={this._handleCriteriaChange}
-													onEditToggle={this._handleCriteriaEdit}
 													propertyKey={criteria.propertyKey}
 													supportedConjunctions={supportedConjunctions}
 													supportedOperators={supportedOperators}

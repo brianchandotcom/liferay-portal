@@ -16,24 +16,20 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentFolderDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -162,7 +158,7 @@ public class StructuredContentFolderResourceImpl
 	private StructuredContentFolder _addStructuredContentFolder(
 			Long contentSpaceId, Long parentFolderId,
 			StructuredContentFolder structuredContentFolder)
-		throws PortalException {
+		throws Exception {
 
 		return _toStructuredContentFolder(
 			_journalFolderService.addFolder(
@@ -207,44 +203,22 @@ public class StructuredContentFolderResourceImpl
 
 	private StructuredContentFolder _toStructuredContentFolder(
 			JournalFolder journalFolder)
-		throws PortalException {
+		throws Exception {
 
-		return new StructuredContentFolder() {
-			{
-				contentSpaceId = journalFolder.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUser(journalFolder.getUserId()));
-				dateCreated = journalFolder.getCreateDate();
-				dateModified = journalFolder.getModifiedDate();
-				description = journalFolder.getDescription();
-				id = journalFolder.getFolderId();
-				name = journalFolder.getName();
-				numberOfStructuredContentFolders =
-					_journalFolderService.getFoldersCount(
-						journalFolder.getGroupId(),
-						journalFolder.getFolderId());
-				numberOfStructuredContents =
-					_journalArticleService.getArticlesCount(
-						journalFolder.getGroupId(), journalFolder.getFolderId(),
-						WorkflowConstants.STATUS_APPROVED);
-			}
-		};
+		return _structuredContentFolderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				journalFolder.getFolderId()));
 	}
 
 	private static final EntityModel _entityModel =
 		new StructuredContentFolderEntityModel();
 
 	@Reference
-	private JournalArticleService _journalArticleService;
-
-	@Reference
 	private JournalFolderService _journalFolderService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private StructuredContentFolderDTOConverter
+		_structuredContentFolderDTOConverter;
 
 }

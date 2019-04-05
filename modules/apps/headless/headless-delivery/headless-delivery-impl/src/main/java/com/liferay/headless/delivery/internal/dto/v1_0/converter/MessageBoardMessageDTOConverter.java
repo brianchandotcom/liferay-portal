@@ -43,6 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return MessageBoardMessage.class.getSimpleName();
+	}
+
+	@Override
 	public MessageBoardMessage toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

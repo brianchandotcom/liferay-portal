@@ -60,6 +60,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DocumentDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return Document.class.getSimpleName();
+	}
+
+	@Override
 	public Document toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

@@ -36,6 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DocumentFolderDTOConverter implements DTOConverter {
 
 	@Override
+	public String getContentType() {
+		return DocumentFolder.class.getSimpleName();
+	}
+
+	@Override
 	public DocumentFolder toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

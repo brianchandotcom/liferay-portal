@@ -14,10 +14,13 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardMessageDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -32,12 +35,15 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.Collections;
 
@@ -66,6 +72,14 @@ public class MessageBoardMessageResourceImpl
 		_mbMessageService.deleteMessage(messageBoardMessageId);
 	}
 
+	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(messageBoardMessageId);
+	}
+
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
@@ -92,6 +106,15 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
+	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(messageBoardMessageId);
+	}
+
+	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				Long messageBoardThreadId, String search, Filter filter,
@@ -112,6 +135,17 @@ public class MessageBoardMessageResourceImpl
 
 		return _addMessageBoardThread(
 			messageBoardMessageId, messageBoardMessage);
+	}
+
+	@Override
+	public Rating postMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), messageBoardMessageId);
 	}
 
 	@Override
@@ -163,6 +197,17 @@ public class MessageBoardMessageResourceImpl
 		_updateAnswer(mbMessage, messageBoardMessage);
 
 		return _toMessageBoardMessage(mbMessage);
+	}
+
+	@Override
+	public Rating putMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), messageBoardMessageId);
 	}
 
 	private MessageBoardMessage _addMessageBoardThread(
@@ -228,6 +273,14 @@ public class MessageBoardMessageResourceImpl
 			sorts);
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			MBMessage.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
+	}
+
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
 		throws Exception {
 
@@ -261,7 +314,16 @@ public class MessageBoardMessageResourceImpl
 	@Reference
 	private MessageBoardMessageDTOConverter _messageBoardMessageDTOConverter;
 
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
 	@Context
 	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

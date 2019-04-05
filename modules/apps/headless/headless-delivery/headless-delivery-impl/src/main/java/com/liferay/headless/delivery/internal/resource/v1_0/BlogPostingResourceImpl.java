@@ -17,21 +17,27 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -39,12 +45,14 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.time.LocalDateTime;
 
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -67,10 +75,24 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception {
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(blogPostingId);
+	}
+
+	@Override
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _toBlogPosting(blogsEntry);
+	}
+
+	@Override
+	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception {
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(blogPostingId);
 	}
 
 	@Override
@@ -100,6 +122,16 @@ public class BlogPostingResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), blogPostingId);
 	}
 
 	@Override
@@ -177,6 +209,16 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), blogPostingId);
+	}
+
+	@Override
 	protected void preparePatch(
 		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
 
@@ -230,6 +272,14 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			BlogsEntry.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
+	}
+
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -248,5 +298,17 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Context
+	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

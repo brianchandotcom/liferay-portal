@@ -32,13 +32,16 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -69,12 +72,14 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -88,6 +93,7 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.time.LocalDateTime;
 
@@ -130,6 +136,15 @@ public class StructuredContentResourceImpl
 		_journalArticleService.deleteArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
+	}
+
+	@Override
+	public void deleteStructuredContentMyRating(Long structuredContentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(structuredContentId);
 	}
 
 	@Override
@@ -262,6 +277,15 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public Rating getStructuredContentMyRating(Long structuredContentId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(structuredContentId);
+	}
+
+	@Override
 	public String getStructuredContentRenderedContentTemplate(
 			Long structuredContentId, Long templateId)
 		throws Exception {
@@ -381,6 +405,17 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public Rating postStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), structuredContentId);
+	}
+
+	@Override
 	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
@@ -429,6 +464,17 @@ public class StructuredContentResourceImpl
 					structuredContent.getTaxonomyCategoryIds(),
 					journalArticle.getGroupId(),
 					structuredContent.getViewableByAsString())));
+	}
+
+	@Override
+	public Rating putStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), structuredContentId);
 	}
 
 	private StructuredContent _addStructuredContent(
@@ -581,6 +627,14 @@ public class StructuredContentResourceImpl
 		return transform(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> _getDDMFormField(ddmStructure, fieldName));
+	}
+
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			JournalArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -808,9 +862,18 @@ public class StructuredContentResourceImpl
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private StructuredContentDTOConverter _structuredContentDTOConverter;
 
 	@Context
 	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

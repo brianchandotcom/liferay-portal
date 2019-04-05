@@ -20,10 +20,13 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -37,8 +40,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -46,6 +51,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.Optional;
 
@@ -70,6 +76,13 @@ public class DocumentResourceImpl
 	@Override
 	public void deleteDocument(Long documentId) throws Exception {
 		_dlAppService.deleteFileEntry(documentId);
+	}
+
+	@Override
+	public void deleteDocumentMyRating(Long documentId) throws Exception {
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(documentId);
 	}
 
 	@Override
@@ -128,6 +141,12 @@ public class DocumentResourceImpl
 				}
 			},
 			search, filter, pagination, sorts);
+	}
+
+	public Rating getDocumentMyRating(Long documentId) throws Exception {
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(documentId);
 	}
 
 	@Override
@@ -217,6 +236,15 @@ public class DocumentResourceImpl
 			multipartBody);
 	}
 
+	public Rating postDocumentMyRating(Long documentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), documentId);
+	}
+
 	@Override
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
@@ -276,6 +304,16 @@ public class DocumentResourceImpl
 				)));
 
 		return _toDocument(fileEntry);
+	}
+
+	@Override
+	public Rating putDocumentMyRating(Long documentId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), documentId);
 	}
 
 	private Document _addDocument(
@@ -346,6 +384,14 @@ public class DocumentResourceImpl
 			sorts);
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			DLFileEntry.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
+	}
+
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
@@ -365,7 +411,16 @@ public class DocumentResourceImpl
 	@Reference
 	private DocumentDTOConverter _documentDTOConverter;
 
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
 	@Context
 	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

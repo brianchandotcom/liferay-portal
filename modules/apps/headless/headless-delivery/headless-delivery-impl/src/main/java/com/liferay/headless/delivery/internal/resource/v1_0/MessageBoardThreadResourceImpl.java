@@ -16,10 +16,13 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -56,6 +60,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Arrays;
@@ -85,6 +90,18 @@ public class MessageBoardThreadResourceImpl
 		throws Exception {
 
 		_mbThreadService.deleteThread(messageBoardThreadId);
+	}
+
+	@Override
+	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		MBThread mbThread = _mbThreadLocalService.getMBThread(
+			messageBoardThreadId);
+
+		spiRatingResource.deleteRating(mbThread.getRootMessageId());
 	}
 
 	@Override
@@ -152,6 +169,18 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	@Override
+	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		MBThread mbThread = _mbThreadLocalService.getMBThread(
+			messageBoardThreadId);
+
+		return spiRatingResource.getRating(mbThread.getRootMessageId());
+	}
+
+	@Override
 	public MessageBoardThread postContentSpaceMessageBoardThread(
 			Long contentSpaceId, MessageBoardThread messageBoardThread)
 		throws Exception {
@@ -169,6 +198,20 @@ public class MessageBoardThreadResourceImpl
 
 		return _addMessageBoardThread(
 			mbCategory.getGroupId(), messageBoardSectionId, messageBoardThread);
+	}
+
+	@Override
+	public Rating postMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		MBThread mbThread = _mbThreadLocalService.getThread(
+			messageBoardThreadId);
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), mbThread.getRootMessageId());
 	}
 
 	@Override
@@ -199,6 +242,20 @@ public class MessageBoardThreadResourceImpl
 					),
 					null, mbThread.getGroupId(),
 					messageBoardThread.getViewableByAsString())));
+	}
+
+	@Override
+	public Rating putMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		MBThread mbThread = _mbThreadLocalService.getThread(
+			messageBoardThreadId);
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), mbThread.getRootMessageId());
 	}
 
 	private MessageBoardThread _addMessageBoardThread(
@@ -241,6 +298,14 @@ public class MessageBoardThreadResourceImpl
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			MBMessage.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
 	}
 
 	private MessageBoardThread _toMessageBoardThread(MBMessage mbMessage)
@@ -383,10 +448,16 @@ public class MessageBoardThreadResourceImpl
 	private Portal _portal;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Context
 	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

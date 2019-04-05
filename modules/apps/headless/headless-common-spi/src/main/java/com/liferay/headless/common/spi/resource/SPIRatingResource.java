@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
@@ -30,57 +28,38 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 public class SPIRatingResource<T> {
 
 	public SPIRatingResource(
-		RatingsEntryLocalService ratingsEntryLocalService,
+		String className, RatingsEntryLocalService ratingsEntryLocalService,
 		UnsafeFunction<RatingsEntry, T, Exception> transformUnsafeFunction,
 		User user) {
 
+		_className = className;
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 		_transformUnsafeFunction = transformUnsafeFunction;
 		_user = user;
 	}
 
-	public void deleteRating(Long ratingId) throws Exception {
-		_checkPermission();
-
-		_ratingsEntryLocalService.deleteRatingsEntry(ratingId);
-	}
-
-	public T getRating(Long ratingId) throws Exception {
-		return _transformUnsafeFunction.apply(
-			_ratingsEntryLocalService.getRatingsEntry(ratingId));
-	}
-
-	public Page<T> getRatingsPage(String className, Long classPK)
-		throws Exception {
-
-		return Page.of(
-			TransformUtil.transform(
-				_ratingsEntryLocalService.getEntries(className, classPK),
-				_transformUnsafeFunction));
-	}
-
-	public T postRating(String className, Long classPK, Double ratingValue)
+	public T addOrUpdateRating(Number ratingValue, long classPK)
 		throws Exception {
 
 		_checkPermission();
 
 		return _transformUnsafeFunction.apply(
 			_ratingsEntryLocalService.updateEntry(
-				_user.getUserId(), className, classPK, ratingValue,
-				new ServiceContext()));
+				_user.getUserId(), _className, classPK,
+				GetterUtil.getDouble(ratingValue), new ServiceContext()));
 	}
 
-	public T putRating(Long ratingId, Double ratingValue) throws Exception {
+	public void deleteRating(Long classPK) throws Exception {
 		_checkPermission();
 
-		RatingsEntry ratingsEntry = _ratingsEntryLocalService.getRatingsEntry(
-			ratingId);
+		_ratingsEntryLocalService.deleteEntry(
+			_user.getUserId(), _className, classPK);
+	}
 
+	public T getRating(Long classPK) throws Exception {
 		return _transformUnsafeFunction.apply(
-			_ratingsEntryLocalService.updateEntry(
-				_user.getUserId(), ratingsEntry.getClassName(),
-				ratingsEntry.getClassPK(), GetterUtil.getDouble(ratingValue),
-				new ServiceContext()));
+			_ratingsEntryLocalService.getEntry(
+				_user.getUserId(), _className, classPK));
 	}
 
 	private void _checkPermission() throws Exception {
@@ -89,6 +68,7 @@ public class SPIRatingResource<T> {
 		}
 	}
 
+	private final String _className;
 	private final RatingsEntryLocalService _ratingsEntryLocalService;
 	private final UnsafeFunction<RatingsEntry, T, Exception>
 		_transformUnsafeFunction;

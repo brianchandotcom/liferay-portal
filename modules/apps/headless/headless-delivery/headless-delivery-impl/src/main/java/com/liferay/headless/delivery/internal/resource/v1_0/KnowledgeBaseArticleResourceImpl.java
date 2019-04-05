@@ -14,10 +14,13 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.KnowledgeBaseArticleDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.KnowledgeBaseArticleEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -26,6 +29,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,9 +46,11 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +73,15 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		_kbArticleService.deleteKBArticle(knowledgeBaseArticleId);
+	}
+
+	@Override
+	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(knowledgeBaseArticleId);
 	}
 
 	@Override
@@ -131,6 +147,15 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(knowledgeBaseArticleId);
+	}
+
+	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
@@ -187,6 +212,17 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	public Rating postKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), knowledgeBaseArticleId);
+	}
+
+	@Override
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
 			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
@@ -224,6 +260,17 @@ public class KnowledgeBaseArticleResourceImpl
 					),
 					knowledgeBaseArticle.getContentSpaceId(),
 					knowledgeBaseArticle.getViewableByAsString())));
+	}
+
+	@Override
+	public Rating putKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), knowledgeBaseArticleId);
 	}
 
 	private KnowledgeBaseArticle _getKnowledgeBaseArticle(
@@ -272,6 +319,14 @@ public class KnowledgeBaseArticleResourceImpl
 			sorts);
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			KBArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService),
+			_user);
+	}
+
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
 		throws Exception {
 
@@ -305,5 +360,14 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Context
+	private User _user;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

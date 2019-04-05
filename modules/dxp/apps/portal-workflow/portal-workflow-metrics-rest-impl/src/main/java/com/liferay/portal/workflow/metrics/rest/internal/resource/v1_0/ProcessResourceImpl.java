@@ -384,8 +384,8 @@ public class ProcessResourceImpl
 		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		termsAggregation.addChildrenAggregations(
-			dateRangeAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation);
+			cardinalityAggregation, dateRangeAggregation,
+			onTimeFilterAggregation, overdueFilterAggregation);
 
 		if ((fieldSort != null) &&
 			!_isOrderByInstanceCount(fieldSort.getField()) &&
@@ -440,6 +440,14 @@ public class ProcessResourceImpl
 
 	private void _populateProcessWithSLAMetrics(
 		Bucket bucket, Process process) {
+
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)bucket.getChildAggregationResult(
+				"instanceCount");
+
+		if (cardinalityAggregationResult.getValue() <= 1) {
+			return;
+		}
 
 		_setDueAfterInstanceCount(bucket, process);
 		_setDueInInstanceCount(bucket, process);

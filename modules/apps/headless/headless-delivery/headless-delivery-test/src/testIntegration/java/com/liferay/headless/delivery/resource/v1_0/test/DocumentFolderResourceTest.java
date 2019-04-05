@@ -140,7 +140,7 @@ public class DocumentFolderResourceTest
 
 	@Override
 	protected Long
-			testGetDocumentFolderDocumentFoldersPage_getDocumentFolderId()
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId()
 		throws Exception {
 
 		DocumentFolder documentFolder = invokePostContentSpaceDocumentFolder(

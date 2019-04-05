@@ -114,7 +114,7 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	protected Long
-			testGetStructuredContentFolderStructuredContentFoldersPage_getIrrelevantStructuredContentFolderId()
+			testGetStructuredContentFolderStructuredContentFoldersPage_getIrrelevantParentStructuredContentFolderId()
 		throws Exception {
 
 		JournalFolder journalFolder = JournalTestUtil.addFolder(
@@ -125,7 +125,7 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	protected Long
-			testGetStructuredContentFolderStructuredContentFoldersPage_getStructuredContentFolderId()
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId()
 		throws Exception {
 
 		JournalFolder journalFolder = JournalTestUtil.addFolder(

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalService;
@@ -28,7 +29,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -91,6 +95,8 @@ public class JournalContentAddPortletProvider
 
 		Layout layout = themeDisplay.getLayout();
 
+		_addAssetEntryUsage(layout, portletId, article);
+
 		_journalContentSearchLocal.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletId, article.getArticleId(), true);
@@ -105,10 +111,42 @@ public class JournalContentAddPortletProvider
 		return themeDisplay.getPlid();
 	}
 
+	private void _addAssetEntryUsage(
+			Layout layout, String portletId, JournalArticle article)
+		throws PortalException {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_portal.getClassNameId(JournalArticle.class),
+			article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
+			assetEntry.getEntryId(), portletId);
+
+		if (count > 0) {
+			return;
+		}
+
+		_assetEntryUsageLocalService.addAssetEntryUsage(
+			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
+			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+			layout.getPlid(), portletId,
+			ServiceContextThreadLocal.getServiceContext());
+	}
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+
+	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocal;
+
+	@Reference
+	private Portal _portal;
 
 }

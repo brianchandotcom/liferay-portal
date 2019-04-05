@@ -17,12 +17,14 @@ package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.io.StringWriter;
 import java.util.Map;
 
 import javax.servlet.Servlet;
@@ -66,8 +68,15 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 
-		PrintWriter printWriter = new PrintWriter(
-			response.getOutputStream(), true);
+		if (!_isLastServedContentStale()) {
+			_writeResponse(response, _lastServedContent.getValue());
+
+			return;
+		}
+
+		StringWriter stringWriter = new StringWriter();
+
+		PrintWriter printWriter = new PrintWriter(stringWriter);
 
 		printWriter.println("(function() {");
 		printWriter.println(
@@ -92,6 +101,33 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		printWriter.println("}());");
 
 		printWriter.close();
+
+		String content = stringWriter.toString();
+
+		_lastServedContent = new ObjectValuePair<>(
+			getLastModified(), content);
+
+		_writeResponse(response, content);
+	}
+
+	private void _writeResponse(HttpServletResponse response, String content)
+		throws IOException {
+
+		PrintWriter printWriter =
+			new PrintWriter(response.getOutputStream(), true);
+
+		printWriter.write(content);
+
+		printWriter.close();
+	}
+
+	private boolean _isLastServedContentStale() {
+		if (getLastModified() > _lastServedContent.getKey()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public long getLastModified() {
@@ -105,4 +141,6 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 	private volatile long _lastModified;
 
+	private volatile ObjectValuePair<Long, String> _lastServedContent =
+		new ObjectValuePair<>(0L, null);
 }

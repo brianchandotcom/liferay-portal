@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
@@ -48,8 +50,13 @@ public class LayoutDetailsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+
 		if (StringUtil.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			((layoutPageTemplateEntry != null) && layout.isSystem())) {
 
 			return false;
 		}
@@ -70,5 +77,9 @@ public class LayoutDetailsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/details.jsp";
 	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

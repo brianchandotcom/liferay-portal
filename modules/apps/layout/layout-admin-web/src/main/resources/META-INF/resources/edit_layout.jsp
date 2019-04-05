@@ -138,7 +138,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-			<c:if test="<%= StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+			<c:if test="<%= layoutsAdminDisplayContext.isLayoutPageTemplateEntry() %>">
 
 				<%
 				for (String languageId : group.getAvailableLanguageIds()) {

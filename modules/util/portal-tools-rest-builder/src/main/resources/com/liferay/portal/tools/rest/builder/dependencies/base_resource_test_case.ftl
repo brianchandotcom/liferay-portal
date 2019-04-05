@@ -798,7 +798,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#assign
 			invokeArguments = arguments?replace("filter", "filterString")?replace("sorts", "sortString")
-			invokeParameters = parameters?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")
+			invokeParameters = parameters?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")?replace("java.lang.String id", "Object id")
 		/>
 
 		protected ${javaMethodSignature.returnType} invoke${javaMethodSignature.methodName?cap_first}(${invokeParameters}) throws Exception {

@@ -89,6 +89,7 @@ public class JournalContentPortletToolbarContributor
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("portletResource", portletDisplay.getId());
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("refererPlid", String.valueOf(plid));
 
 		List<DDMStructure> ddmStructures =
 			_journalFolderService.getDDMStructures(

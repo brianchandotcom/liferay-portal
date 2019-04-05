@@ -10,14 +10,14 @@
 	{@param sharingEntryPermissionDisplayActionId: string}
 	{@param sharingEntryPermissionDisplays: list<?>}
 	{@param spritemap: string}
-	{@param? _userEmailAddresses: list<?>}
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
+	{@param? _handleDataChange: any}
 	{@param? _handleInputBlur: any}
 	{@param? _handleInputChange: any}
-	{@param? _handleDataChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _inputValue: string}
+	{@param? _userEmailAddresses: list<?>}
 	{@param? _validateEmails: any}
 	{@param? emailErrorMessage: string}
 	{@param? submitting: bool}
@@ -143,15 +143,15 @@
 		<div class="autofit-col sharing-autocomplete-sticker">
 			{if $data.data.portraitURL}
 				{call ClaySticker.render}
-					{param size: 'lg' /}
 					{param imageSrc: $data.data.portraitURL /}
 					{param shape: 'circle' /}
+					{param size: 'lg' /}
 				{/call}
 			{else}
 				{call ClaySticker.render}
-					{param size: 'lg' /}
 					{param icon: 'user' /}
 					{param shape: 'circle' /}
+					{param size: 'lg' /}
 					{param spritemap: $data.data.spritemap /}
 				{/call}
 			{/if}

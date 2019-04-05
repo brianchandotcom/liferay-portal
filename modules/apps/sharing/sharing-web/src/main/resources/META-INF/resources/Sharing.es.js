@@ -75,7 +75,7 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_handleInputBlur() {
-		this._validateRequiredEmail()
+		this._validateRequiredEmail();
 	}
 
 	/**

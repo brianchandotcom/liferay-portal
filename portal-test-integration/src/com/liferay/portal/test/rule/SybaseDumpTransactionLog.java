@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

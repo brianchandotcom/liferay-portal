@@ -106,12 +106,10 @@ test('Should display errors when input blur with invalid values', () => {
 		hours: '99:99'
 	});
 
-	instance.onDaysBlurred();
 	instance.onHoursBlurred();
 
 	const { errors } = instance.state;
 
-	expect(errors.days).toBe('Value must be an integer above 0.');
 	expect(errors.hours).toBe('Value must be an hour below 23:59.');
 	expect(component).toMatchSnapshot();
 });
@@ -129,9 +127,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 
 	const { errors } = instance.state;
 
-	expect(errors.duration).toBe(
-		'A duration time is required. Please enter at least one of the fields.'
-	);
+	expect(errors.duration).toBe('A duration time is required.');
 	expect(component).toMatchSnapshot();
 });
 

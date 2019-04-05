@@ -354,10 +354,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			elapsedTime, workflowMetricsSLAProcessResult.getElapsedTime());
 		Assert.assertEquals(
 			remainingTime, workflowMetricsSLAProcessResult.getRemainingTime());
-		Assert.assertEquals(workflowMetricsSLAProcessResult.isOnTime(), onTime);
 		Assert.assertEquals(
 			workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus(),
 			workfowMetricsSLAStatus);
+		Assert.assertEquals(workflowMetricsSLAProcessResult.isOnTime(), onTime);
 	}
 
 	private void _test(

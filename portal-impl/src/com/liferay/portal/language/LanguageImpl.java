@@ -1069,6 +1069,12 @@ public class LanguageImpl implements Language, Serializable {
 		return getLanguageId(request);
 	}
 
+	/**
+	 * Returns the last time in milliseconds when there was any change in the
+	 * languages list company or group
+	 *
+	 * @return the last moodified time in milliseconds
+	 */
 	@Override
 	public long getLastModified() {
 		return _lastModified;

@@ -161,7 +161,10 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+		WebContent.addCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title"
+		);
 
 		PortletEntry.publish();
 
@@ -200,7 +203,10 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com"
+		);
 
 		ClassicSearch.search(searchTerm = "WC Title");
 

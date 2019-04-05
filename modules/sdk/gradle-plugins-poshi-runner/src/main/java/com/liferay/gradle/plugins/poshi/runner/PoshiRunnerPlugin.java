@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.poshi.runner;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -30,6 +29,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.gradle.api.Action;
@@ -42,6 +42,8 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.reporting.DirectoryReport;
 import org.gradle.api.tasks.Copy;
@@ -497,11 +499,31 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				"test.name", CollectionUtils.join(",", testNames));
 		}
 
-		String testName = GradleUtil.getProperty(
-			project, "poshiTestName", (String)null);
+		ExtensionContainer extensionContainer = project.getExtensions();
 
-		if (Validator.isNotNull(testName)) {
-			systemProperties.put("test.name", testName);
+		ExtraPropertiesExtension extraPropertiesExtension =
+			extensionContainer.getExtraProperties();
+
+		Map<String, Object> properties =
+			extraPropertiesExtension.getProperties();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String propertyName = entry.getKey();
+
+			String[] array = propertyName.split("(?=\\p{Upper})");
+
+			if (Objects.equals(array[0], "poshi") && (array.length > 1)) {
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 1; i < array.length; i++) {
+					sb.append(array[i].toLowerCase());
+					sb.append('.');
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				systemProperties.put(sb.toString(), entry.getValue());
+			}
 		}
 	}
 

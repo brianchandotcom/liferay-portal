@@ -1,68 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<!-- https://issues.liferay.com/browse/LPS-92490 -->
-<entry key="V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs7"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-92492 -->
-<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters4"></entry>
+	<!-- https://issues.liferay.com/browse/LPS-92490 -->
 
-<!-- https://issues.liferay.com/browse/LPS-78581 -->
-<entry key="V2EnvironmentTests_PortletSession_ApiRender_isNew1"></entry>
+	<entry key="V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs7"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-92497 -->
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL3"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL5"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL18"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL19"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL2"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL20"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL3"></entry>
-<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL5"></entry>
-<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL3"></entry>
-<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL5"></entry>
-<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL3"></entry>
-<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL5"></entry>
+	<!-- https://issues.liferay.com/browse/LPS-92492 -->
 
-<!-- https://issues.liferay.com/browse/LPS-77746 -->
-<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionA2"></entry>
-<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2"></entry>
-<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1"></entry>
+	<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters4"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-92500 -->
-<entry key="V3PortletHubTests_SPEC_23_JSListener_onError1"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSListener_onError2"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSListener_onError3"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSListener_onStateChange4"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSListener_onStateChange5"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_Action1"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_Action2"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState1"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState2"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState3"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState4"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState0"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState1"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState2"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState3"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState4"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState5"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState6"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState7"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState8"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState9"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC"></entry>
-<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD"></entry>
+	<!-- https://issues.liferay.com/browse/LPS-78581 -->
+
+	<entry key="V2EnvironmentTests_PortletSession_ApiRender_isNew1"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-92497 -->
+
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL3"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL5"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL18"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL19"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL2"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL20"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL3"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL5"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL3"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL5"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL3"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL5"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-77746 -->
+
+	<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionA2"></entry>
+	<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2"></entry>
+	<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-92500 -->
+
+	<entry key="V3PortletHubTests_SPEC_23_JSListener_onError1"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSListener_onError2"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSListener_onError3"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSListener_onStateChange4"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSListener_onStateChange5"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_Action1"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_Action2"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState1"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState2"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState3"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSPRP_setRenderState4"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState0"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState1"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState2"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState3"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState4"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState5"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState6"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState7"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState8"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSRS_setRenderState9"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC"></entry>
+	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD"></entry>
 </properties>

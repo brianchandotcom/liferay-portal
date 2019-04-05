@@ -14,6 +14,8 @@
 
 package com.liferay.portal.aop;
 
+import java.util.Dictionary;
+
 /**
  * Declares implementations to be proxied and intercepted by advices. The
  * service is re-registered as interfaces it implements.
@@ -65,6 +67,10 @@ public interface AopService {
 	 * </ul>
 	 */
 	public default Class<?>[] getAopInterfaces() {
+		return null;
+	}
+
+	public default Dictionary<String, Object> getProperties() {
 		return null;
 	}
 

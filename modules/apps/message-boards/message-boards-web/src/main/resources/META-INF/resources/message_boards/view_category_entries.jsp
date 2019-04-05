@@ -67,7 +67,7 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 			%>
 
 			<span class="h6 text-default">
-				<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= (subcategoriesCount == 1) ? "x-subcategory" : "x-subcategories" %>' />
+				<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= (subcategoriesCount == 1) ? "x-category" : "x-categories" %>' />
 			</span>
 			<span class="h6 text-default">
 				<liferay-ui:message arguments="<%= threadsCount %>" key='<%= (threadsCount == 1) ? "x-thread" : "x-threads" %>' />

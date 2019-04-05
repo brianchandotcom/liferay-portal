@@ -46,6 +46,7 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 />
 
 <clay:management-toolbar
+	disabled="<%= !PropsValues.LIVE_USERS_ENABLED || !PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= orderByType %>"

@@ -17,7 +17,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<%@ page import="com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration" %><%@
+<%@ page import="com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration" %><%@
 page import="com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>

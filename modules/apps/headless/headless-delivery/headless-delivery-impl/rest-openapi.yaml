@@ -994,9 +994,24 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/blog-postings/{blogPostingId}/ratings":
+    "/blog-postings/{blogPostingId}/my-rating":
+        delete:
+            operationId: deleteBlogPostingMyRating
+            parameters:
+                - in: path
+                  name: blogPostingId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["BlogPosting"]
         get:
-            operationId: getBlogPostingRatingsPage
+            operationId: getBlogPostingMyRating
             parameters:
                 - in: path
                   name: blogPostingId
@@ -1009,13 +1024,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
+                                $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["BlogPosting"]
         post:
-            operationId: postBlogPostingRating
+            operationId: postBlogPostingMyRating
             parameters:
                 - in: path
                   name: blogPostingId
@@ -1035,7 +1048,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["BlogPosting"]
+        put:
+            operationId: putBlogPostingMyRating
+            parameters:
+                - in: path
+                  name: blogPostingId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["BlogPosting"]
     "/comments/{commentId}":
         delete:
             operationId: deleteComment
@@ -2417,9 +2452,24 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/documents/{documentId}/ratings":
+    "/documents/{documentId}/my-rating":
+        delete:
+            operationId: deleteDocumentMyRating
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Document"]
         get:
-            operationId: getDocumentRatingsPage
+            operationId: getDocumentMyRating
             parameters:
                 - in: path
                   name: documentId
@@ -2432,13 +2482,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
+                                $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["Document"]
         post:
-            operationId: postDocumentRating
+            operationId: postDocumentMyRating
             parameters:
                 - in: path
                   name: documentId
@@ -2458,7 +2506,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["Document"]
+        put:
+            operationId: putDocumentMyRating
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["Document"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
             operationId: deleteKnowledgeBaseArticle
@@ -2646,9 +2716,24 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
-    "/knowledge-base-articles/{knowledgeBaseArticleId}/ratings":
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating":
+        delete:
+            operationId: deleteKnowledgeBaseArticleMyRating
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
         get:
-            operationId: getKnowledgeBaseArticleRatingsPage
+            operationId: getKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2661,13 +2746,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
+                                $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["KnowledgeBaseArticle"]
         post:
-            operationId: postKnowledgeBaseArticleRating
+            operationId: postKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -2687,7 +2770,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["KnowledgeBaseArticle"]
+        put:
+            operationId: putKnowledgeBaseArticleMyRating
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-attachments/{knowledgeBaseAttachmentId}":
         delete:
             operationId: deleteKnowledgeBaseAttachment
@@ -3134,9 +3239,24 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
-    "/message-board-messages/{messageBoardMessageId}/ratings":
+    "/message-board-messages/{messageBoardMessageId}/my-rating":
+        delete:
+            operationId: deleteMessageBoardMessageMyRating
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardMessage"]
         get:
-            operationId: getMessageBoardMessageRatingsPage
+            operationId: getMessageBoardMessageMyRating
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3149,13 +3269,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
+                                $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["MessageBoardMessage"]
         post:
-            operationId: postMessageBoardMessageRating
+            operationId: postMessageBoardMessageMyRating
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -3175,7 +3293,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["MessageBoardMessage"]
+        put:
+            operationId: putMessageBoardMessageMyRating
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["MessageBoardMessage"]
     "/message-board-sections/{messageBoardSectionId}":
         delete:
             operationId: deleteMessageBoardSection
@@ -3564,54 +3704,12 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
-    "/message-board-threads/{messageBoardThreadId}/ratings":
-        get:
-            operationId: getMessageBoardThreadRatingsPage
-            parameters:
-                - in: path
-                  name: messageBoardThreadId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
-                    description: ""
-            tags: ["Rating"]
-        post:
-            operationId: postMessageBoardThreadRating
-            parameters:
-                - in: path
-                  name: messageBoardThreadId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Rating"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Rating"
-                    description: ""
-            tags: ["Rating"]
-    "/ratings/{ratingId}":
+    "/message-board-threads/{messageBoardThreadId}/my-rating":
         delete:
-            operationId: deleteRating
+            operationId: deleteMessageBoardThreadMyRating
             parameters:
                 - in: path
-                  name: ratingId
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3621,12 +3719,12 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["Rating"]
+            tags: ["MessageBoardThread"]
         get:
-            operationId: getRating
+            operationId: getMessageBoardThreadMyRating
             parameters:
                 - in: path
-                  name: ratingId
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3638,12 +3736,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
-        put:
-            operationId: putRating
+            tags: ["MessageBoardThread"]
+        post:
+            operationId: postMessageBoardThreadMyRating
             parameters:
                 - in: path
-                  name: ratingId
+                  name: messageBoardThreadId
                   required: true
                   schema:
                       format: int64
@@ -3660,7 +3758,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["MessageBoardThread"]
+        put:
+            operationId: putMessageBoardThreadMyRating
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["MessageBoardThread"]
     "/structured-content-folders/{structuredContentFolderId}":
         delete:
             operationId: deleteStructuredContentFolder
@@ -4020,9 +4140,24 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/structured-contents/{structuredContentId}/ratings":
+    "/structured-contents/{structuredContentId}/my-rating":
+        delete:
+            operationId: deleteStructuredContentMyRating
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContent"]
         get:
-            operationId: getStructuredContentRatingsPage
+            operationId: getStructuredContentMyRating
             parameters:
                 - in: path
                   name: structuredContentId
@@ -4035,13 +4170,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Rating"
-                                type: array
+                                $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["StructuredContent"]
         post:
-            operationId: postStructuredContentRating
+            operationId: postStructuredContentMyRating
             parameters:
                 - in: path
                   name: structuredContentId
@@ -4061,7 +4194,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
-            tags: ["Rating"]
+            tags: ["StructuredContent"]
+        put:
+            operationId: putStructuredContentMyRating
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
             operationId: getStructuredContentRenderedContentTemplate

@@ -18,15 +18,14 @@ import com.liferay.frontend.js.loader.modules.extender.internal.configuration.De
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.io.StringWriter;
+
 import java.util.Map;
 
 import javax.servlet.Servlet;
@@ -54,6 +53,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JSLoaderConfigServlet extends HttpServlet {
 
+	public long getLastModified() {
+		return _lastModified;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -69,7 +72,6 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		throws IOException {
 
 		if (!_isLastServedContentStale()) {
-
 			if (_log.isDebugEnabled()) {
 				_log.debug("Serving cached content for /js_loader_config");
 			}
@@ -113,10 +115,17 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 		String content = stringWriter.toString();
 
-		_lastServedContent = new ObjectValuePair<>(
-			getLastModified(), content);
+		_lastServedContent = new ObjectValuePair<>(getLastModified(), content);
 
 		_writeResponse(response, content);
+	}
+
+	private boolean _isLastServedContentStale() {
+		if (getLastModified() > _lastServedContent.getKey()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _writeResponse(HttpServletResponse response, String content)
@@ -124,37 +133,23 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 		response.setContentType(Details.CONTENT_TYPE);
 
-		PrintWriter printWriter =
-			new PrintWriter(response.getOutputStream(), true);
+		PrintWriter printWriter = new PrintWriter(
+			response.getOutputStream(), true);
 
 		printWriter.write(content);
 
 		printWriter.close();
 	}
 
-	private boolean _isLastServedContentStale() {
-		if (getLastModified() > _lastServedContent.getKey()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public long getLastModified() {
-		return _lastModified;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSLoaderConfigServlet.class);
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Details _details;
-
 	private volatile long _lastModified;
-
 	private volatile ObjectValuePair<Long, String> _lastServedContent =
 		new ObjectValuePair<>(0L, null);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSLoaderConfigServlet.class);
 }

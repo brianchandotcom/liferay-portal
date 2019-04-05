@@ -53,7 +53,9 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		String url =
 			"/js_loader_config?t=" + _jsLoaderConfigServlet.getLastModified();
 
-		url = absolutePortalURLBuilder.forWhiteboard(url).build();
+		url = absolutePortalURLBuilder.forWhiteboard(
+			url
+		).build();
 
 		printWriter.println(
 			"<script src=\"" + url + "\" type=\"text/javascript\"></script>");
@@ -70,4 +72,5 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private JSLoaderConfigServlet _jsLoaderConfigServlet;
+
 }

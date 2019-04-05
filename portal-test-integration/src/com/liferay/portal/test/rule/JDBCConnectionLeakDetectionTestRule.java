@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.pool.metrics.ConnectionPoolMetrics;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -31,13 +31,11 @@ import org.junit.runner.Description;
 /**
  * @author Tom Wang
  */
-public class JDBCConnectionLeakDetectionTestCallback
-	extends BaseTestCallback
-		<Collection<ServiceReference<ConnectionPoolMetrics>>,
-		 Collection<ServiceReference<ConnectionPoolMetrics>>> {
+public class JDBCConnectionLeakDetectionTestRule
+	extends ClassTestRule<Collection<ServiceReference<ConnectionPoolMetrics>>> {
 
-	public static final JDBCConnectionLeakDetectionTestCallback INSTANCE =
-		new JDBCConnectionLeakDetectionTestCallback();
+	public static final JDBCConnectionLeakDetectionTestRule INSTANCE =
+		new JDBCConnectionLeakDetectionTestRule();
 
 	@Override
 	public void afterClass(

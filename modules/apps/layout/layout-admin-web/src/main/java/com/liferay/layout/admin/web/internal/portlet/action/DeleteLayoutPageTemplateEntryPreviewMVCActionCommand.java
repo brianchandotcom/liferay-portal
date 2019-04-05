@@ -60,7 +60,7 @@ public class DeleteLayoutPageTemplateEntryPreviewMVCActionCommand
 				layoutPageTemplateEntry.getPreviewFileEntryId());
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, 0);
+				layoutPageTemplateEntryId, 0L);
 		}
 	}
 

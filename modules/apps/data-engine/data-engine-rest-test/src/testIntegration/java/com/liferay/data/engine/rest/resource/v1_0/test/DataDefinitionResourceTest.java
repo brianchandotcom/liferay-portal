@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -42,8 +43,6 @@ public class DataDefinitionResourceTest
 		throws Exception {
 
 		super.testPostContentSpaceDataDefinitionPermission();
-
-		_ddmStructure = DataEngineTestUtil.addDDMStructure(testGroup);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -63,12 +62,13 @@ public class DataDefinitionResourceTest
 
 		super.testPostDataDefinitionDataDefinitionPermission();
 
-		_ddmStructure = DataEngineTestUtil.addDDMStructure(testGroup);
+		DDMStructure ddmStructure = DataEngineTestUtil.addDDMStructure(
+			testGroup);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		invokePostDataDefinitionDataDefinitionPermission(
-			_ddmStructure.getStructureId(), _OPERATION_SAVE_PERMISSION,
+			ddmStructure.getStructureId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
 					view = true;
@@ -77,6 +77,7 @@ public class DataDefinitionResourceTest
 			});
 	}
 
+	@Override
 	protected void assertValid(DataDefinition dataDefinition) {
 		boolean valid = false;
 
@@ -96,16 +97,8 @@ public class DataDefinitionResourceTest
 	protected boolean equals(
 		DataDefinition dataDefinition1, DataDefinition dataDefinition2) {
 
-		LocalizedValue[] localizedValues1 = dataDefinition1.getName();
-		LocalizedValue[] localizedValues2 = dataDefinition2.getName();
-
-		if (Objects.equals(
-				localizedValues1[0].getKey(), localizedValues2[0].getKey())) {
-
-			return true;
-		}
-
-		return false;
+		return Arrays.equals(
+			dataDefinition1.getName(), dataDefinition2.getName());
 	}
 
 	@Override
@@ -176,7 +169,5 @@ public class DataDefinitionResourceTest
 	}
 
 	private static final String _OPERATION_SAVE_PERMISSION = "save";
-
-	private DDMStructure _ddmStructure;
 
 }

@@ -199,14 +199,14 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		}
 	)
 	@Path(
-		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders"
+		"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Page<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				@NotNull @PathParam("knowledgeBaseFolderId") Long
-					knowledgeBaseFolderId,
+				@NotNull @PathParam("parentKnowledgeBaseFolderId") Long
+					parentKnowledgeBaseFolderId,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -217,13 +217,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders"
+		"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			@NotNull @PathParam("knowledgeBaseFolderId") Long
-				knowledgeBaseFolderId,
+			@NotNull @PathParam("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 

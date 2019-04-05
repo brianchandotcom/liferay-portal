@@ -155,7 +155,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+			@GraphQLName("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
 			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -164,7 +165,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-					taxonomyCategoryId, taxonomyCategory));
+					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLField

@@ -338,7 +338,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postCommentComment(
-			@GraphQLName("commentId") Long commentId,
+			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
@@ -346,7 +346,7 @@ public class Mutation {
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> commentResource.postCommentComment(
-				commentId, comment));
+				parentCommentId, comment));
 	}
 
 	@GraphQLField
@@ -541,7 +541,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder postDocumentFolderDocumentFolder(
-			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
@@ -550,7 +550,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource ->
 				documentFolderResource.postDocumentFolderDocumentFolder(
-					documentFolderId, documentFolder));
+					parentDocumentFolderId, documentFolder));
 	}
 
 	@GraphQLField
@@ -616,7 +616,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
 			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
 		throws Exception {
@@ -627,7 +628,7 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
 					postKnowledgeBaseArticleKnowledgeBaseArticle(
-						knowledgeBaseArticleId, knowledgeBaseArticle));
+						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLInvokeDetached
@@ -786,7 +787,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
 			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
 		throws Exception {
@@ -797,7 +799,7 @@ public class Mutation {
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.
 					postKnowledgeBaseFolderKnowledgeBaseFolder(
-						knowledgeBaseFolderId, knowledgeBaseFolder));
+						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
 	@GraphQLInvokeDetached
@@ -898,7 +900,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
 			@GraphQLName("MessageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
 		throws Exception {
@@ -909,7 +912,7 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
 					postMessageBoardMessageMessageBoardMessage(
-						messageBoardMessageId, messageBoardMessage));
+						parentMessageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLInvokeDetached
@@ -1033,7 +1036,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
 			@GraphQLName("MessageBoardSection") MessageBoardSection
 				messageBoardSection)
 		throws Exception {
@@ -1044,7 +1048,7 @@ public class Mutation {
 			messageBoardSectionResource ->
 				messageBoardSectionResource.
 					postMessageBoardSectionMessageBoardSection(
-						messageBoardSectionId, messageBoardSection));
+						parentMessageBoardSectionId, messageBoardSection));
 	}
 
 	@GraphQLField
@@ -1351,8 +1355,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				@GraphQLName("structuredContentFolderId") Long
-					structuredContentFolderId,
+				@GraphQLName("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
 				@GraphQLName("StructuredContentFolder") StructuredContentFolder
 					structuredContentFolder)
 		throws Exception {
@@ -1363,7 +1367,8 @@ public class Mutation {
 			structuredContentFolderResource ->
 				structuredContentFolderResource.
 					postStructuredContentFolderStructuredContentFolder(
-						structuredContentFolderId, structuredContentFolder));
+						parentStructuredContentFolderId,
+						structuredContentFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

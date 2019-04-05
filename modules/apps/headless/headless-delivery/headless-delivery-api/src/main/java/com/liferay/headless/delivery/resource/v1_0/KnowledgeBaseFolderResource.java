@@ -57,11 +57,12 @@ public interface KnowledgeBaseFolderResource {
 
 	public Page<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception;
 
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+			Long parentKnowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

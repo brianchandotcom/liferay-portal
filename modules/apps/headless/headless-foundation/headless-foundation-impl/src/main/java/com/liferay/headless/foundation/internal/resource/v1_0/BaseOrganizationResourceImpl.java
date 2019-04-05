@@ -118,11 +118,12 @@ public abstract class BaseOrganizationResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/organizations/{organizationId}/organizations")
+	@Path("/organizations/{parentOrganizationId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
-			@NotNull @PathParam("organizationId") Long organizationId,
+			@NotNull @PathParam("parentOrganizationId") Long
+				parentOrganizationId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {

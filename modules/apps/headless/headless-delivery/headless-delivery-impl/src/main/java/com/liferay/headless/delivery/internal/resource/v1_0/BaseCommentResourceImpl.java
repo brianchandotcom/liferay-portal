@@ -138,11 +138,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/comments/{commentId}/comments")
+	@Path("/comments/{parentCommentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
-			@NotNull @PathParam("commentId") Long commentId,
+			@NotNull @PathParam("parentCommentId") Long parentCommentId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -153,11 +153,12 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/comments/{commentId}/comments")
+	@Path("/comments/{parentCommentId}/comments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
-			@NotNull @PathParam("commentId") Long commentId, Comment comment)
+			@NotNull @PathParam("parentCommentId") Long parentCommentId,
+			Comment comment)
 		throws Exception {
 
 		return new Comment();

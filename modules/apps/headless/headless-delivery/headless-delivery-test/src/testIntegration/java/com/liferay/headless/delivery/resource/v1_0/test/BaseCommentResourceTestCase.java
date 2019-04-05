@@ -701,16 +701,17 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testGetCommentCommentsPage() throws Exception {
-		Long commentId = testGetCommentCommentsPage_getCommentId();
-		Long irrelevantCommentId =
-			testGetCommentCommentsPage_getIrrelevantCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
+		Long irrelevantParentCommentId =
+			testGetCommentCommentsPage_getIrrelevantParentCommentId();
 
-		if ((irrelevantCommentId != null)) {
+		if ((irrelevantParentCommentId != null)) {
 			Comment irrelevantComment = testGetCommentCommentsPage_addComment(
-				irrelevantCommentId, randomIrrelevantComment());
+				irrelevantParentCommentId, randomIrrelevantComment());
 
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				irrelevantCommentId, null, null, Pagination.of(1, 2), null);
+				irrelevantParentCommentId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -721,13 +722,13 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		Comment comment2 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		Page<Comment> page = invokeGetCommentCommentsPage(
-			commentId, null, null, Pagination.of(1, 2), null);
+			parentCommentId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -747,7 +748,7 @@ public abstract class BaseCommentResourceTestCase {
 			return;
 		}
 
-		Long commentId = testGetCommentCommentsPage_getCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = randomComment();
 		Comment comment2 = randomComment();
@@ -758,15 +759,18 @@ public abstract class BaseCommentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		comment1 = testGetCommentCommentsPage_addComment(commentId, comment1);
+		comment1 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment1);
 
 		Thread.sleep(1000);
 
-		comment2 = testGetCommentCommentsPage_addComment(commentId, comment2);
+		comment2 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				commentId, null, getFilterString(entityField, "eq", comment1),
+				parentCommentId, null,
+				getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -786,18 +790,19 @@ public abstract class BaseCommentResourceTestCase {
 			return;
 		}
 
-		Long commentId = testGetCommentCommentsPage_getCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Comment comment2 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetCommentCommentsPage(
-				commentId, null, getFilterString(entityField, "eq", comment1),
+				parentCommentId, null,
+				getFilterString(entityField, "eq", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -808,26 +813,26 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testGetCommentCommentsPageWithPagination() throws Exception {
-		Long commentId = testGetCommentCommentsPage_getCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		Comment comment2 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		Comment comment3 = testGetCommentCommentsPage_addComment(
-			commentId, randomComment());
+			parentCommentId, randomComment());
 
 		Page<Comment> page1 = invokeGetCommentCommentsPage(
-			commentId, null, null, Pagination.of(1, 2), null);
+			parentCommentId, null, null, Pagination.of(1, 2), null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
 		Assert.assertEquals(comments1.toString(), 2, comments1.size());
 
 		Page<Comment> page2 = invokeGetCommentCommentsPage(
-			commentId, null, null, Pagination.of(2, 2), null);
+			parentCommentId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -854,7 +859,7 @@ public abstract class BaseCommentResourceTestCase {
 			return;
 		}
 
-		Long commentId = testGetCommentCommentsPage_getCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = randomComment();
 		Comment comment2 = randomComment();
@@ -865,15 +870,17 @@ public abstract class BaseCommentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		comment1 = testGetCommentCommentsPage_addComment(commentId, comment1);
+		comment1 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment1);
 
 		Thread.sleep(1000);
 
-		comment2 = testGetCommentCommentsPage_addComment(commentId, comment2);
+		comment2 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetCommentCommentsPage(
-				commentId, null, null, Pagination.of(1, 2),
+				parentCommentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -881,7 +888,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetCommentCommentsPage(
-				commentId, null, null, Pagination.of(1, 2),
+				parentCommentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -899,7 +906,7 @@ public abstract class BaseCommentResourceTestCase {
 			return;
 		}
 
-		Long commentId = testGetCommentCommentsPage_getCommentId();
+		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = randomComment();
 		Comment comment2 = randomComment();
@@ -909,13 +916,15 @@ public abstract class BaseCommentResourceTestCase {
 			BeanUtils.setProperty(comment2, entityField.getName(), "Bbb");
 		}
 
-		comment1 = testGetCommentCommentsPage_addComment(commentId, comment1);
+		comment1 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment1);
 
-		comment2 = testGetCommentCommentsPage_addComment(commentId, comment2);
+		comment2 = testGetCommentCommentsPage_addComment(
+			parentCommentId, comment2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Comment> ascPage = invokeGetCommentCommentsPage(
-				commentId, null, null, Pagination.of(1, 2),
+				parentCommentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -923,7 +932,7 @@ public abstract class BaseCommentResourceTestCase {
 				(List<Comment>)ascPage.getItems());
 
 			Page<Comment> descPage = invokeGetCommentCommentsPage(
-				commentId, null, null, Pagination.of(1, 2),
+				parentCommentId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -933,33 +942,37 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testGetCommentCommentsPage_addComment(
-			Long commentId, Comment comment)
+			Long parentCommentId, Comment comment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetCommentCommentsPage_getCommentId() throws Exception {
+	protected Long testGetCommentCommentsPage_getParentCommentId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetCommentCommentsPage_getIrrelevantCommentId()
+	protected Long testGetCommentCommentsPage_getIrrelevantParentCommentId()
 		throws Exception {
 
 		return null;
 	}
 
 	protected Page<Comment> invokeGetCommentCommentsPage(
-			Long commentId, String search, String filterString,
+			Long parentCommentId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
+			_resourceURL +
+				_toPath(
+					"/comments/{parentCommentId}/comments", parentCommentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -985,14 +998,16 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-			Long commentId, String search, String filterString,
+			Long parentCommentId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
+			_resourceURL +
+				_toPath(
+					"/comments/{parentCommentId}/comments", parentCommentId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1027,7 +1042,8 @@ public abstract class BaseCommentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Comment invokePostCommentComment(Long commentId, Comment comment)
+	protected Comment invokePostCommentComment(
+			Long parentCommentId, Comment comment)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1037,7 +1053,9 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
+			_resourceURL +
+				_toPath(
+					"/comments/{parentCommentId}/comments", parentCommentId);
 
 		options.setLocation(location);
 
@@ -1060,7 +1078,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Http.Response invokePostCommentCommentResponse(
-			Long commentId, Comment comment)
+			Long parentCommentId, Comment comment)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1070,7 +1088,9 @@ public abstract class BaseCommentResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL + _toPath("/comments/{commentId}/comments", commentId);
+			_resourceURL +
+				_toPath(
+					"/comments/{parentCommentId}/comments", parentCommentId);
 
 		options.setLocation(location);
 

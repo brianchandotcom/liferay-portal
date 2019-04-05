@@ -698,20 +698,20 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage()
 		throws Exception {
 
-		Long knowledgeBaseFolderId =
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getKnowledgeBaseFolderId();
-		Long irrelevantKnowledgeBaseFolderId =
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getIrrelevantKnowledgeBaseFolderId();
+		Long parentKnowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId();
+		Long irrelevantParentKnowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getIrrelevantParentKnowledgeBaseFolderId();
 
-		if ((irrelevantKnowledgeBaseFolderId != null)) {
+		if ((irrelevantParentKnowledgeBaseFolderId != null)) {
 			KnowledgeBaseFolder irrelevantKnowledgeBaseFolder =
 				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-					irrelevantKnowledgeBaseFolderId,
+					irrelevantParentKnowledgeBaseFolderId,
 					randomIrrelevantKnowledgeBaseFolder());
 
 			Page<KnowledgeBaseFolder> page =
 				invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					irrelevantKnowledgeBaseFolderId, Pagination.of(1, 2));
+					irrelevantParentKnowledgeBaseFolderId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -723,15 +723,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page =
 			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				knowledgeBaseFolderId, Pagination.of(1, 2));
+				parentKnowledgeBaseFolderId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -745,24 +745,24 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPageWithPagination()
 		throws Exception {
 
-		Long knowledgeBaseFolderId =
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getKnowledgeBaseFolderId();
+		Long parentKnowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId();
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		KnowledgeBaseFolder knowledgeBaseFolder3 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page1 =
 			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				knowledgeBaseFolderId, Pagination.of(1, 2));
+				parentKnowledgeBaseFolderId, Pagination.of(1, 2));
 
 		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
 			(List<KnowledgeBaseFolder>)page1.getItems();
@@ -772,7 +772,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Page<KnowledgeBaseFolder> page2 =
 			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				knowledgeBaseFolderId, Pagination.of(2, 2));
+				parentKnowledgeBaseFolderId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -796,7 +796,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected KnowledgeBaseFolder
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
-				Long knowledgeBaseFolderId,
+				Long parentKnowledgeBaseFolderId,
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -805,7 +805,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected Long
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getKnowledgeBaseFolderId()
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -813,7 +813,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected Long
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getIrrelevantKnowledgeBaseFolderId()
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getIrrelevantParentKnowledgeBaseFolderId()
 		throws Exception {
 
 		return null;
@@ -821,7 +821,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected Page<KnowledgeBaseFolder>
 			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -829,8 +829,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders",
-					knowledgeBaseFolderId);
+					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
+					parentKnowledgeBaseFolderId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -853,7 +853,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected Http.Response
 			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPageResponse(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -861,8 +861,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders",
-					knowledgeBaseFolderId);
+					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
+					parentKnowledgeBaseFolderId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -902,7 +902,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected KnowledgeBaseFolder
 			invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
-				Long knowledgeBaseFolderId,
+				Long parentKnowledgeBaseFolderId,
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -915,8 +915,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders",
-					knowledgeBaseFolderId);
+					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
+					parentKnowledgeBaseFolderId);
 
 		options.setLocation(location);
 
@@ -941,7 +941,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected Http.Response
 			invokePostKnowledgeBaseFolderKnowledgeBaseFolderResponse(
-				Long knowledgeBaseFolderId,
+				Long parentKnowledgeBaseFolderId,
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -954,8 +954,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-folders",
-					knowledgeBaseFolderId);
+					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
+					parentKnowledgeBaseFolderId);
 
 		options.setLocation(location);
 

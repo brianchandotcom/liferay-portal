@@ -918,20 +918,20 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage()
 		throws Exception {
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
-		Long irrelevantKnowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getIrrelevantKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
+		Long irrelevantParentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getIrrelevantParentKnowledgeBaseArticleId();
 
-		if ((irrelevantKnowledgeBaseArticleId != null)) {
+		if ((irrelevantParentKnowledgeBaseArticleId != null)) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
 				testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-					irrelevantKnowledgeBaseArticleId,
+					irrelevantParentKnowledgeBaseArticleId,
 					randomIrrelevantKnowledgeBaseArticle());
 
 			Page<KnowledgeBaseArticle> page =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					irrelevantKnowledgeBaseArticleId, null, null,
+					irrelevantParentKnowledgeBaseArticleId, null, null,
 					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -944,15 +944,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		Page<KnowledgeBaseArticle> page =
 			invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				knowledgeBaseArticleId, null, null, Pagination.of(1, 2), null);
+				parentKnowledgeBaseArticleId, null, null, Pagination.of(1, 2),
+				null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -973,8 +974,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return;
 		}
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
@@ -989,18 +990,18 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle1);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
 
 		Thread.sleep(1000);
 
 		knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle2);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
 
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null,
+					parentKnowledgeBaseArticleId, null,
 					getFilterString(entityField, "eq", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
@@ -1021,22 +1022,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return;
 		}
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null,
+					parentKnowledgeBaseArticleId, null,
 					getFilterString(entityField, "eq", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
@@ -1050,24 +1051,25 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPageWithPagination()
 		throws Exception {
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		KnowledgeBaseArticle knowledgeBaseArticle3 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
 		Page<KnowledgeBaseArticle> page1 =
 			invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				knowledgeBaseArticleId, null, null, Pagination.of(1, 2), null);
+				parentKnowledgeBaseArticleId, null, null, Pagination.of(1, 2),
+				null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
@@ -1078,7 +1080,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page2 =
 			invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				knowledgeBaseArticleId, null, null, Pagination.of(2, 2), null);
+				parentKnowledgeBaseArticleId, null, null, Pagination.of(2, 2),
+				null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1112,8 +1115,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return;
 		}
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
@@ -1128,19 +1131,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle1);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
 
 		Thread.sleep(1000);
 
 		knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle2);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
 
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+					parentKnowledgeBaseArticleId, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
@@ -1148,8 +1151,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			Page<KnowledgeBaseArticle> descPage =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+					parentKnowledgeBaseArticleId, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
@@ -1168,8 +1171,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return;
 		}
 
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId();
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
@@ -1185,17 +1188,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle1);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
 
 		knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle2);
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
 
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+					parentKnowledgeBaseArticleId, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
@@ -1203,8 +1206,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			Page<KnowledgeBaseArticle> descPage =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+					parentKnowledgeBaseArticleId, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
@@ -1214,7 +1217,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected KnowledgeBaseArticle
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				Long knowledgeBaseArticleId,
+				Long parentKnowledgeBaseArticleId,
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -1223,7 +1226,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected Long
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getKnowledgeBaseArticleId()
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1231,7 +1234,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected Long
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getIrrelevantKnowledgeBaseArticleId()
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getIrrelevantParentKnowledgeBaseArticleId()
 		throws Exception {
 
 		return null;
@@ -1239,8 +1242,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Page<KnowledgeBaseArticle>
 			invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentKnowledgeBaseArticleId, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1248,8 +1251,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
-					knowledgeBaseArticleId);
+					"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
+					parentKnowledgeBaseArticleId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1276,8 +1279,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Http.Response
 			invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPageResponse(
-				Long knowledgeBaseArticleId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentKnowledgeBaseArticleId, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1285,8 +1288,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
-					knowledgeBaseArticleId);
+					"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
+					parentKnowledgeBaseArticleId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -1330,7 +1333,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected KnowledgeBaseArticle
 			invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
-				Long knowledgeBaseArticleId,
+				Long parentKnowledgeBaseArticleId,
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -1343,8 +1346,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
-					knowledgeBaseArticleId);
+					"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
+					parentKnowledgeBaseArticleId);
 
 		options.setLocation(location);
 
@@ -1369,7 +1372,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Http.Response
 			invokePostKnowledgeBaseArticleKnowledgeBaseArticleResponse(
-				Long knowledgeBaseArticleId,
+				Long parentKnowledgeBaseArticleId,
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -1382,8 +1385,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles",
-					knowledgeBaseArticleId);
+					"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
+					parentKnowledgeBaseArticleId);
 
 		options.setLocation(location);
 

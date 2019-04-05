@@ -166,11 +166,12 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories")
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -181,11 +182,12 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories")
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 

@@ -615,18 +615,19 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
-		Long irrelevantOrganizationId =
-			testGetOrganizationOrganizationsPage_getIrrelevantOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
+		Long irrelevantParentOrganizationId =
+			testGetOrganizationOrganizationsPage_getIrrelevantParentOrganizationId();
 
-		if ((irrelevantOrganizationId != null)) {
+		if ((irrelevantParentOrganizationId != null)) {
 			Organization irrelevantOrganization =
 				testGetOrganizationOrganizationsPage_addOrganization(
-					irrelevantOrganizationId, randomIrrelevantOrganization());
+					irrelevantParentOrganizationId,
+					randomIrrelevantOrganization());
 
 			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-				irrelevantOrganizationId, null, null, Pagination.of(1, 2),
+				irrelevantParentOrganizationId, null, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -639,14 +640,14 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Organization organization1 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		Organization organization2 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-			organizationId, null, null, Pagination.of(1, 2), null);
+			parentOrganizationId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -667,8 +668,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
@@ -680,16 +681,16 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization1);
+			parentOrganizationId, organization1);
 
 		Thread.sleep(1000);
 
 		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization2);
+			parentOrganizationId, organization2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-				organizationId, null,
+				parentOrganizationId, null,
 				getFilterString(entityField, "eq", organization1),
 				Pagination.of(1, 2), null);
 
@@ -710,21 +711,21 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		for (EntityField entityField : entityFields) {
 			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
-				organizationId, null,
+				parentOrganizationId, null,
 				getFilterString(entityField, "eq", organization1),
 				Pagination.of(1, 2), null);
 
@@ -738,23 +739,23 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGetOrganizationOrganizationsPageWithPagination()
 		throws Exception {
 
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		Organization organization2 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		Organization organization3 =
 			testGetOrganizationOrganizationsPage_addOrganization(
-				organizationId, randomOrganization());
+				parentOrganizationId, randomOrganization());
 
 		Page<Organization> page1 = invokeGetOrganizationOrganizationsPage(
-			organizationId, null, null, Pagination.of(1, 2), null);
+			parentOrganizationId, null, null, Pagination.of(1, 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
@@ -763,7 +764,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			organizations1.toString(), 2, organizations1.size());
 
 		Page<Organization> page2 = invokeGetOrganizationOrganizationsPage(
-			organizationId, null, null, Pagination.of(2, 2), null);
+			parentOrganizationId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -794,8 +795,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
@@ -807,16 +808,16 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization1);
+			parentOrganizationId, organization1);
 
 		Thread.sleep(1000);
 
 		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization2);
+			parentOrganizationId, organization2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Organization> ascPage = invokeGetOrganizationOrganizationsPage(
-				organizationId, null, null, Pagination.of(1, 2),
+				parentOrganizationId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -825,7 +826,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			Page<Organization> descPage =
 				invokeGetOrganizationOrganizationsPage(
-					organizationId, null, null, Pagination.of(1, 2),
+					parentOrganizationId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -845,8 +846,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
-			testGetOrganizationOrganizationsPage_getOrganizationId();
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
@@ -857,14 +858,14 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization1);
+			parentOrganizationId, organization1);
 
 		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
-			organizationId, organization2);
+			parentOrganizationId, organization2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Organization> ascPage = invokeGetOrganizationOrganizationsPage(
-				organizationId, null, null, Pagination.of(1, 2),
+				parentOrganizationId, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -873,7 +874,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			Page<Organization> descPage =
 				invokeGetOrganizationOrganizationsPage(
-					organizationId, null, null, Pagination.of(1, 2),
+					parentOrganizationId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -883,14 +884,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Organization testGetOrganizationOrganizationsPage_addOrganization(
-			Long organizationId, Organization organization)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetOrganizationOrganizationsPage_getOrganizationId()
+			Long parentOrganizationId, Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -898,14 +892,22 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Long
-			testGetOrganizationOrganizationsPage_getIrrelevantOrganizationId()
+			testGetOrganizationOrganizationsPage_getParentOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetOrganizationOrganizationsPage_getIrrelevantParentOrganizationId()
 		throws Exception {
 
 		return null;
 	}
 
 	protected Page<Organization> invokeGetOrganizationOrganizationsPage(
-			Long organizationId, String search, String filterString,
+			Long parentOrganizationId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -914,8 +916,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organizationId}/organizations",
-					organizationId);
+					"/organizations/{parentOrganizationId}/organizations",
+					parentOrganizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -941,7 +943,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationOrganizationsPageResponse(
-			Long organizationId, String search, String filterString,
+			Long parentOrganizationId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception {
 
@@ -950,8 +952,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organizationId}/organizations",
-					organizationId);
+					"/organizations/{parentOrganizationId}/organizations",
+					parentOrganizationId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 

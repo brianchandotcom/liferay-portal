@@ -327,7 +327,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
-			@GraphQLName("commentId") Long commentId,
+			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -339,8 +339,8 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
-					commentId, search, filter, Pagination.of(pageSize, page),
-					sorts);
+					parentCommentId, search, filter,
+					Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -608,7 +608,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -621,7 +621,7 @@ public class Query {
 			documentFolderResource -> {
 				Page paginationPage =
 					documentFolderResource.getDocumentFolderDocumentFoldersPage(
-						documentFolderId, search, filter,
+						parentDocumentFolderId, search, filter,
 						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -673,8 +673,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@GraphQLName("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
+				@GraphQLName("parentKnowledgeBaseArticleId") Long
+					parentKnowledgeBaseArticleId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -689,7 +689,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							knowledgeBaseArticleId, search, filter,
+							parentKnowledgeBaseArticleId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -814,8 +814,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				@GraphQLName("knowledgeBaseFolderId") Long
-					knowledgeBaseFolderId,
+				@GraphQLName("parentKnowledgeBaseFolderId") Long
+					parentKnowledgeBaseFolderId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -827,7 +827,7 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
 						getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-							knowledgeBaseFolderId,
+							parentKnowledgeBaseFolderId,
 							Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -908,8 +908,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				@GraphQLName("messageBoardMessageId") Long
-					messageBoardMessageId,
+				@GraphQLName("parentMessageBoardMessageId") Long
+					parentMessageBoardMessageId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -924,7 +924,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardMessageResource.
 						getMessageBoardMessageMessageBoardMessagesPage(
-							messageBoardMessageId, search, filter,
+							parentMessageBoardMessageId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -1016,8 +1016,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				@GraphQLName("messageBoardSectionId") Long
-					messageBoardSectionId,
+				@GraphQLName("parentMessageBoardSectionId") Long
+					parentMessageBoardSectionId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -1032,7 +1032,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardSectionResource.
 						getMessageBoardSectionMessageBoardSectionsPage(
-							messageBoardSectionId, search, filter,
+							parentMessageBoardSectionId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -1320,8 +1320,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				@GraphQLName("structuredContentFolderId") Long
-					structuredContentFolderId,
+				@GraphQLName("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -1336,7 +1336,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentFolderResource.
 						getStructuredContentFolderStructuredContentFoldersPage(
-							structuredContentFolderId, search, filter,
+							parentStructuredContentFolderId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

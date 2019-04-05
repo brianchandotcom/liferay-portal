@@ -49,11 +49,11 @@ public interface CommentResource {
 	public Comment putComment(Long commentId, Comment comment) throws Exception;
 
 	public Page<Comment> getCommentCommentsPage(
-			Long commentId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long parentCommentId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Comment postCommentComment(Long commentId, Comment comment)
+	public Comment postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getDocumentCommentsPage(

@@ -63,12 +63,12 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, String search, Filter filter,
+				Long parentKnowledgeBaseArticleId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId,
+			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 

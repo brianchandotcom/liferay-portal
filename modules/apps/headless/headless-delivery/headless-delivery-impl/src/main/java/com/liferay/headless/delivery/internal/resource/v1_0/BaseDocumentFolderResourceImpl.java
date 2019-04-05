@@ -202,11 +202,12 @@ public abstract class BaseDocumentFolderResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/document-folders/{documentFolderId}/document-folders")
+	@Path("/document-folders/{parentDocumentFolderId}/document-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			@NotNull @PathParam("parentDocumentFolderId") Long
+				parentDocumentFolderId,
 			@QueryParam("search") String search, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -217,11 +218,12 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/document-folders/{documentFolderId}/document-folders")
+	@Path("/document-folders/{parentDocumentFolderId}/document-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public DocumentFolder postDocumentFolderDocumentFolder(
-			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			@NotNull @PathParam("parentDocumentFolderId") Long
+				parentDocumentFolderId,
 			DocumentFolder documentFolder)
 		throws Exception {
 

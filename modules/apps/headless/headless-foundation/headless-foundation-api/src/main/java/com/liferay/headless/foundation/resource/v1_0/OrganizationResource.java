@@ -45,7 +45,7 @@ public interface OrganizationResource {
 	public Organization getOrganization(Long organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long organizationId, String search, Filter filter,
+			Long parentOrganizationId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

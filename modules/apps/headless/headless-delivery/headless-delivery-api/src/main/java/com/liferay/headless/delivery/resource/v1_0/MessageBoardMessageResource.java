@@ -52,12 +52,13 @@ public interface MessageBoardMessageResource {
 
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				Long messageBoardMessageId, String search, Filter filter,
+				Long parentMessageBoardMessageId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+			Long parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)

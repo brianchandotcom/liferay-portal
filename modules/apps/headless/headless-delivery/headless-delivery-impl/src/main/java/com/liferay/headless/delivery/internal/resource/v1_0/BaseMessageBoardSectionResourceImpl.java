@@ -209,14 +209,14 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path(
-		"/message-board-sections/{messageBoardSectionId}/message-board-sections"
+		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				@NotNull @PathParam("messageBoardSectionId") Long
-					messageBoardSectionId,
+				@NotNull @PathParam("parentMessageBoardSectionId") Long
+					parentMessageBoardSectionId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -228,13 +228,13 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/message-board-sections/{messageBoardSectionId}/message-board-sections"
+		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
+			@NotNull @PathParam("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 

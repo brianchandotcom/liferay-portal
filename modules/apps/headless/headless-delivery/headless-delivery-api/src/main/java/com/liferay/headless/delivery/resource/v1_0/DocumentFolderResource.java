@@ -57,12 +57,12 @@ public interface DocumentFolderResource {
 		throws Exception;
 
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			Long documentFolderId, String search, Filter filter,
+			Long parentDocumentFolderId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DocumentFolder postDocumentFolderDocumentFolder(
-			Long documentFolderId, DocumentFolder documentFolder)
+			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

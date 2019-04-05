@@ -429,20 +429,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGetTaxonomyCategoryTaxonomyCategoriesPage()
 		throws Exception {
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
-		Long irrelevantTaxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getIrrelevantTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
+		Long irrelevantParentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getIrrelevantParentTaxonomyCategoryId();
 
-		if ((irrelevantTaxonomyCategoryId != null)) {
+		if ((irrelevantParentTaxonomyCategoryId != null)) {
 			TaxonomyCategory irrelevantTaxonomyCategory =
 				testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-					irrelevantTaxonomyCategoryId,
+					irrelevantParentTaxonomyCategoryId,
 					randomIrrelevantTaxonomyCategory());
 
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					irrelevantTaxonomyCategoryId, null, null,
+					irrelevantParentTaxonomyCategoryId, null, null,
 					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -455,15 +455,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		Page<TaxonomyCategory> page =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, null, Pagination.of(1, 2), null);
+				parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
+				null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -484,8 +485,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return;
 		}
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 = randomTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = randomTaxonomyCategory();
@@ -498,18 +499,18 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory1);
+				parentTaxonomyCategoryId, taxonomyCategory1);
 
 		Thread.sleep(1000);
 
 		taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory2);
+				parentTaxonomyCategoryId, taxonomyCategory2);
 
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null,
+					parentTaxonomyCategoryId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -530,22 +531,22 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return;
 		}
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null,
+					parentTaxonomyCategoryId, null,
 					getFilterString(entityField, "eq", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
@@ -559,24 +560,25 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGetTaxonomyCategoryTaxonomyCategoriesPageWithPagination()
 		throws Exception {
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory3 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, randomTaxonomyCategory());
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
 		Page<TaxonomyCategory> page1 =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, null, Pagination.of(1, 2), null);
+				parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
+				null);
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
@@ -586,7 +588,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page2 =
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				taxonomyCategoryId, null, null, Pagination.of(2, 2), null);
+				parentTaxonomyCategoryId, null, null, Pagination.of(2, 2),
+				null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -618,8 +621,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return;
 		}
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 = randomTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = randomTaxonomyCategory();
@@ -632,18 +635,18 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory1);
+				parentTaxonomyCategoryId, taxonomyCategory1);
 
 		Thread.sleep(1000);
 
 		taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory2);
+				parentTaxonomyCategoryId, taxonomyCategory2);
 
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, null, Pagination.of(1, 2),
+					parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -652,7 +655,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, null, Pagination.of(1, 2),
+					parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -672,8 +675,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return;
 		}
 
-		Long taxonomyCategoryId =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId();
+		Long parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 = randomTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = randomTaxonomyCategory();
@@ -687,16 +690,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory1);
+				parentTaxonomyCategoryId, taxonomyCategory1);
 
 		taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyCategoryId, taxonomyCategory2);
+				parentTaxonomyCategoryId, taxonomyCategory2);
 
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> ascPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, null, Pagination.of(1, 2),
+					parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -705,7 +708,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> descPage =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-					taxonomyCategoryId, null, null, Pagination.of(1, 2),
+					parentTaxonomyCategoryId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -716,7 +719,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected TaxonomyCategory
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+				Long parentTaxonomyCategoryId,
+				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -724,7 +728,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected Long
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getTaxonomyCategoryId()
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -732,7 +736,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected Long
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getIrrelevantTaxonomyCategoryId()
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getIrrelevantParentTaxonomyCategoryId()
 		throws Exception {
 
 		return null;
@@ -740,8 +744,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Page<TaxonomyCategory>
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
-				Long taxonomyCategoryId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentTaxonomyCategoryId, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -749,8 +753,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
-					taxonomyCategoryId);
+					"/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories",
+					parentTaxonomyCategoryId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -777,8 +781,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	protected Http.Response
 			invokeGetTaxonomyCategoryTaxonomyCategoriesPageResponse(
-				Long taxonomyCategoryId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentTaxonomyCategoryId, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -786,8 +790,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
-					taxonomyCategoryId);
+					"/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories",
+					parentTaxonomyCategoryId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
 
@@ -827,7 +831,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected TaxonomyCategory invokePostTaxonomyCategoryTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -839,8 +843,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
-					taxonomyCategoryId);
+					"/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories",
+					parentTaxonomyCategoryId);
 
 		options.setLocation(location);
 
@@ -864,7 +868,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected Http.Response invokePostTaxonomyCategoryTaxonomyCategoryResponse(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -876,8 +880,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}/taxonomy-categories",
-					taxonomyCategoryId);
+					"/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories",
+					parentTaxonomyCategoryId);
 
 		options.setLocation(location);
 

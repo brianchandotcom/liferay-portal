@@ -49,12 +49,12 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long taxonomyCategoryId, String search, Filter filter,
+			Long parentTaxonomyCategoryId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(

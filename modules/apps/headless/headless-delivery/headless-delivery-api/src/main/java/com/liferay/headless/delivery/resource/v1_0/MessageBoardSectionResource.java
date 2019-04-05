@@ -60,12 +60,13 @@ public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				Long messageBoardSectionId, String search, Filter filter,
+				Long parentMessageBoardSectionId, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+			Long parentMessageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

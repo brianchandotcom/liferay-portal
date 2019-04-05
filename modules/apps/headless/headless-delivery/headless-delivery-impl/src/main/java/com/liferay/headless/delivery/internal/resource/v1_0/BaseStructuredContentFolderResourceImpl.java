@@ -212,14 +212,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path(
-		"/structured-content-folders/{structuredContentFolderId}/structured-content-folders"
+		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				@NotNull @PathParam("structuredContentFolderId") Long
-					structuredContentFolderId,
+				@NotNull @PathParam("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -231,14 +231,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/structured-content-folders/{structuredContentFolderId}/structured-content-folders"
+		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				@NotNull @PathParam("structuredContentFolderId") Long
-					structuredContentFolderId,
+				@NotNull @PathParam("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 

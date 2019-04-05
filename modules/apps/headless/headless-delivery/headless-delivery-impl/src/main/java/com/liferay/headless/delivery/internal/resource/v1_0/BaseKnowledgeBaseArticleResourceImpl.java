@@ -240,14 +240,14 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path(
-		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles"
+		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
+				@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
+					parentKnowledgeBaseArticleId,
 				@QueryParam("search") String search, @Context Filter filter,
 				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -259,13 +259,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Consumes("application/json")
 	@POST
 	@Path(
-		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-articles"
+		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId,
+			@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 

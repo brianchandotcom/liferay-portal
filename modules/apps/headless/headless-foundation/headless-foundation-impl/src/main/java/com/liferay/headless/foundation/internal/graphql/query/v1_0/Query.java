@@ -295,7 +295,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
-			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -308,7 +308,7 @@ public class Query {
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getOrganizationOrganizationsPage(
-						organizationId, search, filter,
+						parentOrganizationId, search, filter,
 						Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
@@ -582,7 +582,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
-				@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+				@GraphQLName("parentTaxonomyCategoryId") Long
+					parentTaxonomyCategoryId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
@@ -597,7 +598,7 @@ public class Query {
 				Page paginationPage =
 					taxonomyCategoryResource.
 						getTaxonomyCategoryTaxonomyCategoriesPage(
-							taxonomyCategoryId, search, filter,
+							parentTaxonomyCategoryId, search, filter,
 							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();

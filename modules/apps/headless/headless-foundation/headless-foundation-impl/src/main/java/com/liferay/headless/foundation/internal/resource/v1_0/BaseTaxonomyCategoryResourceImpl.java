@@ -62,6 +62,44 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	implements TaxonomyCategoryResource {
 
 	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return new TaxonomyCategory();
+	}
+
+	@Override
 	@DELETE
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces("application/json")
@@ -150,44 +188,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory putTaxonomyCategory(
 			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
-			TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return new TaxonomyCategory();
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			@NotNull @PathParam("parentTaxonomyCategoryId") Long
-				parentTaxonomyCategoryId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@NotNull @PathParam("parentTaxonomyCategoryId") Long
-				parentTaxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 

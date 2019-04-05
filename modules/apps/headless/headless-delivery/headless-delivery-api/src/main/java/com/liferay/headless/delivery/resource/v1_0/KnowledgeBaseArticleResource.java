@@ -61,17 +61,6 @@ public interface KnowledgeBaseArticleResource {
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
-	public Page<KnowledgeBaseArticle>
-			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long parentKnowledgeBaseArticleId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long parentKnowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception;
-
 	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception;
 
@@ -84,6 +73,17 @@ public interface KnowledgeBaseArticleResource {
 
 	public Rating putKnowledgeBaseArticleMyRating(
 			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception;
+
+	public Page<KnowledgeBaseArticle>
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				Long parentKnowledgeBaseArticleId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			Long parentKnowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>

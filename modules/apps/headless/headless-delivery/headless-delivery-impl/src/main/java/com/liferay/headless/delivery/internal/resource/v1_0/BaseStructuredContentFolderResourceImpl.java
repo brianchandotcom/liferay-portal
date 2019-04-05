@@ -100,6 +100,50 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	}
 
 	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path(
+		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public Page<StructuredContentFolder>
+			getStructuredContentFolderStructuredContentFoldersPage(
+				@NotNull @PathParam("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				@NotNull @PathParam("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return new StructuredContentFolder();
+	}
+
+	@Override
 	@DELETE
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
@@ -196,50 +240,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			@NotNull @PathParam("structuredContentFolderId") Long
 				structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return new StructuredContentFolder();
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContentFolder")})
-	public Page<StructuredContentFolder>
-			getStructuredContentFolderStructuredContentFoldersPage(
-				@NotNull @PathParam("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContentFolder")})
-	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
-				@NotNull @PathParam("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
-				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return new StructuredContentFolder();

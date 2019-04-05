@@ -34,6 +34,15 @@ import javax.annotation.Generated;
 @Generated("")
 public interface TaxonomyCategoryResource {
 
+	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
+			Long parentTaxonomyCategoryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
 	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception;
 
@@ -46,15 +55,6 @@ public interface TaxonomyCategoryResource {
 
 	public TaxonomyCategory putTaxonomyCategory(
 			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long parentTaxonomyCategoryId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(

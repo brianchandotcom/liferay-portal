@@ -230,49 +230,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public Page<KnowledgeBaseArticle>
-			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
-					parentKnowledgeBaseArticleId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		return new KnowledgeBaseArticle();
-	}
-
-	@Override
 	@DELETE
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
 	@Produces("application/json")
@@ -324,6 +281,49 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new Rating();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path(
+		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Page<KnowledgeBaseArticle>
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
+					parentKnowledgeBaseArticleId,
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		return new KnowledgeBaseArticle();
 	}
 
 	@Override

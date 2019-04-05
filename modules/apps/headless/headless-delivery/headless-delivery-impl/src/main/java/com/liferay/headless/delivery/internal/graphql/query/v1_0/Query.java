@@ -671,6 +671,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating getKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.getKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("parentKnowledgeBaseArticleId") Long
@@ -694,20 +708,6 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Rating getKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.getKnowledgeBaseArticleMyRating(
-					knowledgeBaseArticleId));
 	}
 
 	@GraphQLField
@@ -906,6 +906,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating getMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.getMessageBoardMessageMyRating(
+					messageBoardMessageId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@GraphQLName("parentMessageBoardMessageId") Long
@@ -929,20 +943,6 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Rating getMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.getMessageBoardMessageMyRating(
-					messageBoardMessageId));
 	}
 
 	@GraphQLField
@@ -1303,21 +1303,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public StructuredContentFolder getStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.getStructuredContentFolder(
-					structuredContentFolderId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				@GraphQLName("parentStructuredContentFolderId") Long
@@ -1341,6 +1326,21 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder getStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.getStructuredContentFolder(
+					structuredContentFolderId));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

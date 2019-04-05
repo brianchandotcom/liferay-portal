@@ -112,320 +112,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteTaxonomyCategory() throws Exception {
-		TaxonomyCategory taxonomyCategory =
-			testDeleteTaxonomyCategory_addTaxonomyCategory();
-
-		assertResponseCode(
-			204,
-			invokeDeleteTaxonomyCategoryResponse(taxonomyCategory.getId()));
-
-		assertResponseCode(
-			404, invokeGetTaxonomyCategoryResponse(taxonomyCategory.getId()));
-	}
-
-	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void invokeDeleteTaxonomyCategory(Long taxonomyCategoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteTaxonomyCategoryResponse(
-			Long taxonomyCategoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testGetTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
-			postTaxonomyCategory.getId());
-
-		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-	}
-
-	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected TaxonomyCategory invokeGetTaxonomyCategory(
-			Long taxonomyCategoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, TaxonomyCategory.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetTaxonomyCategoryResponse(
-			Long taxonomyCategoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPatchTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory randomPatchTaxonomyCategory =
-			randomPatchTaxonomyCategory();
-
-		TaxonomyCategory patchTaxonomyCategory = invokePatchTaxonomyCategory(
-			postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
-
-		TaxonomyCategory expectedPatchTaxonomyCategory =
-			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
-
-		_beanUtilsBean.copyProperties(
-			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);
-
-		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
-			patchTaxonomyCategory.getId());
-
-		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-	}
-
-	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected TaxonomyCategory invokePatchTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyCategory),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, TaxonomyCategory.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePatchTaxonomyCategoryResponse(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyCategory),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testPutTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		TaxonomyCategory putTaxonomyCategory = invokePutTaxonomyCategory(
-			postTaxonomyCategory.getId(), randomTaxonomyCategory);
-
-		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
-		assertValid(putTaxonomyCategory);
-
-		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
-			putTaxonomyCategory.getId());
-
-		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-	}
-
-	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected TaxonomyCategory invokePutTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyCategory),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, TaxonomyCategory.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutTaxonomyCategoryResponse(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyCategory),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/taxonomy-categories/{taxonomyCategoryId}",
-					taxonomyCategoryId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetTaxonomyCategoryTaxonomyCategoriesPage()
 		throws Exception {
 
@@ -886,6 +572,320 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		options.setLocation(location);
 
 		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteTaxonomyCategory() throws Exception {
+		TaxonomyCategory taxonomyCategory =
+			testDeleteTaxonomyCategory_addTaxonomyCategory();
+
+		assertResponseCode(
+			204,
+			invokeDeleteTaxonomyCategoryResponse(taxonomyCategory.getId()));
+
+		assertResponseCode(
+			404, invokeGetTaxonomyCategoryResponse(taxonomyCategory.getId()));
+	}
+
+	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteTaxonomyCategory(Long taxonomyCategoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteTaxonomyCategoryResponse(
+			Long taxonomyCategoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testGetTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			postTaxonomyCategory.getId());
+
+		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory invokeGetTaxonomyCategory(
+			Long taxonomyCategoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, TaxonomyCategory.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetTaxonomyCategoryResponse(
+			Long taxonomyCategoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPatchTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPatchTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory randomPatchTaxonomyCategory =
+			randomPatchTaxonomyCategory();
+
+		TaxonomyCategory patchTaxonomyCategory = invokePatchTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
+
+		TaxonomyCategory expectedPatchTaxonomyCategory =
+			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			patchTaxonomyCategory.getId());
+
+		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory invokePatchTaxonomyCategory(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, TaxonomyCategory.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePatchTaxonomyCategoryResponse(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPutTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory putTaxonomyCategory = invokePutTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomTaxonomyCategory);
+
+		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			putTaxonomyCategory.getId());
+
+		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory invokePutTaxonomyCategory(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, TaxonomyCategory.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutTaxonomyCategoryResponse(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomyCategoryId}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
 
 		HttpUtil.URLtoByteArray(options);
 

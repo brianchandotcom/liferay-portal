@@ -613,24 +613,6 @@ public class Mutation {
 					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@GraphQLName("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postKnowledgeBaseArticleKnowledgeBaseArticle(
-						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
-	}
-
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
@@ -671,6 +653,24 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			@GraphQLName("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseArticleKnowledgeBaseArticle(
+						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
@@ -897,24 +897,6 @@ public class Mutation {
 					messageBoardMessageId, messageBoardMessage));
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			@GraphQLName("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
-			@GraphQLName("MessageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardMessageMessageBoardMessage(
-						parentMessageBoardMessageId, messageBoardMessage));
-	}
-
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
@@ -955,6 +937,24 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessageMyRating(
 					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			@GraphQLName("MessageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardMessageMessageBoardMessage(
+						parentMessageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLField
@@ -1305,6 +1305,26 @@ public class Mutation {
 						contentSpaceId, structuredContentFolder));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				@GraphQLName("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
+				@GraphQLName("StructuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						parentStructuredContentFolderId,
+						structuredContentFolder));
+	}
+
 	@GraphQLInvokeDetached
 	public void deleteStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
@@ -1349,26 +1369,6 @@ public class Mutation {
 			structuredContentFolderResource ->
 				structuredContentFolderResource.putStructuredContentFolder(
 					structuredContentFolderId, structuredContentFolder));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
-				@GraphQLName("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
-				@GraphQLName("StructuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postStructuredContentFolderStructuredContentFolder(
-						parentStructuredContentFolderId,
-						structuredContentFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

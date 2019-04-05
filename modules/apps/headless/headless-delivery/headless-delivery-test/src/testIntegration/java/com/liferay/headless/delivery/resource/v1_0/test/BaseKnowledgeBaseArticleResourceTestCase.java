@@ -915,6 +915,244 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKnowledgeBaseArticleMyRating() throws Exception {
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
+
+		assertResponseCode(
+			204,
+			invokeDeleteKnowledgeBaseArticleMyRatingResponse(
+				knowledgeBaseArticle.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetKnowledgeBaseArticleMyRatingResponse(
+				knowledgeBaseArticle.getId()));
+	}
+
+	protected KnowledgeBaseArticle
+			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteKnowledgeBaseArticleMyRatingResponse(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetKnowledgeBaseArticleMyRatingResponse(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostKnowledgeBaseArticleMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostKnowledgeBaseArticleMyRatingResponse(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutKnowledgeBaseArticleMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutKnowledgeBaseArticleMyRatingResponse(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage()
 		throws Exception {
 
@@ -1391,244 +1629,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		options.setLocation(location);
 
 		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteKnowledgeBaseArticleMyRating() throws Exception {
-		KnowledgeBaseArticle knowledgeBaseArticle =
-			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
-
-		assertResponseCode(
-			204,
-			invokeDeleteKnowledgeBaseArticleMyRatingResponse(
-				knowledgeBaseArticle.getId()));
-
-		assertResponseCode(
-			404,
-			invokeGetKnowledgeBaseArticleMyRatingResponse(
-				knowledgeBaseArticle.getId()));
-	}
-
-	protected KnowledgeBaseArticle
-			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void invokeDeleteKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteKnowledgeBaseArticleMyRatingResponse(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetKnowledgeBaseArticleMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Rating invokeGetKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetKnowledgeBaseArticleMyRatingResponse(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostKnowledgeBaseArticleMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Rating invokePostKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostKnowledgeBaseArticleMyRatingResponse(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutKnowledgeBaseArticleMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Rating invokePutKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutKnowledgeBaseArticleMyRatingResponse(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
 
 		HttpUtil.URLtoByteArray(options);
 

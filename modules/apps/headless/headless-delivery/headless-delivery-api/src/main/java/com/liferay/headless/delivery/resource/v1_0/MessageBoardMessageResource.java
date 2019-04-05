@@ -50,17 +50,6 @@ public interface MessageBoardMessageResource {
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
-	public Page<MessageBoardMessage>
-			getMessageBoardMessageMessageBoardMessagesPage(
-				Long parentMessageBoardMessageId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long parentMessageBoardMessageId,
-			MessageBoardMessage messageBoardMessage)
-		throws Exception;
-
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception;
 
@@ -73,6 +62,17 @@ public interface MessageBoardMessageResource {
 
 	public Rating putMessageBoardMessageMyRating(
 			Long messageBoardMessageId, Rating rating)
+		throws Exception;
+
+	public Page<MessageBoardMessage>
+			getMessageBoardMessageMessageBoardMessagesPage(
+				Long parentMessageBoardMessageId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			Long parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
 	public Page<MessageBoardMessage>

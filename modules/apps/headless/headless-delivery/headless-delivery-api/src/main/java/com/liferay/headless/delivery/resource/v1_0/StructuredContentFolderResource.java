@@ -45,6 +45,18 @@ public interface StructuredContentFolderResource {
 			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
+	public Page<StructuredContentFolder>
+			getStructuredContentFolderStructuredContentFoldersPage(
+				Long parentStructuredContentFolderId, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				Long parentStructuredContentFolderId,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
 	public void deleteStructuredContentFolder(Long structuredContentFolderId)
 		throws Exception;
 
@@ -60,18 +72,6 @@ public interface StructuredContentFolderResource {
 	public StructuredContentFolder putStructuredContentFolder(
 			Long structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public Page<StructuredContentFolder>
-			getStructuredContentFolderStructuredContentFoldersPage(
-				Long parentStructuredContentFolderId, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
-				Long parentStructuredContentFolderId,
-				StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

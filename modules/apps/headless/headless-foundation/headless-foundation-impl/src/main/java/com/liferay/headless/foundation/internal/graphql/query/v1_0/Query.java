@@ -566,20 +566,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public TaxonomyCategory getTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.getTaxonomyCategory(
-					taxonomyCategoryId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
 				@GraphQLName("parentTaxonomyCategoryId") Long
@@ -603,6 +589,20 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyCategory getTaxonomyCategory(
+			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.getTaxonomyCategory(
+					taxonomyCategoryId));
 	}
 
 	@GraphQLField

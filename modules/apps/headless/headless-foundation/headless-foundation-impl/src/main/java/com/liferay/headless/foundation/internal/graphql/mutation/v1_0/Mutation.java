@@ -111,6 +111,22 @@ public class Mutation {
 			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			@GraphQLName("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
+			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+					parentTaxonomyCategoryId, taxonomyCategory));
+	}
+
 	@GraphQLInvokeDetached
 	public void deleteTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
@@ -150,22 +166,6 @@ public class Mutation {
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.putTaxonomyCategory(
 					taxonomyCategoryId, taxonomyCategory));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") Long
-				parentTaxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLField

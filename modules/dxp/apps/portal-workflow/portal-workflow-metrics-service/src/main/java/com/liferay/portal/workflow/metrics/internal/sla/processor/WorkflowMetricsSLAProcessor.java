@@ -463,7 +463,7 @@ public class WorkflowMetricsSLAProcessor {
 		for (String timeMarker : timeMarkers) {
 			List<String> parts = StringUtil.split(timeMarker, CharPool.COLON);
 
-			long nodeId = Long.valueOf(parts.get(0));
+			long nodeId = GetterUtil.getLong(parts.get(0));
 
 			if (parts.size() == 1) {
 				map.put(nodeId, StringPool.BLANK);

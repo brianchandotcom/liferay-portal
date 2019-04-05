@@ -20,6 +20,8 @@ package com.liferay.headless.delivery.dto.v1_0.converter;
  */
 public interface DTOConverter {
 
+	public String getContentType();
+
 	public Object toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception;
 

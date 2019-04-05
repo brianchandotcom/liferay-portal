@@ -16,6 +16,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -67,9 +69,18 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		throws IOException {
 
 		if (!_isLastServedContentStale()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Serving cached content for /js_loader_config");
+			}
+
 			_writeResponse(response, _lastServedContent.getValue());
 
 			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Generating content for /js_loader_config");
 		}
 
 		StringWriter stringWriter = new StringWriter();
@@ -143,4 +154,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 	private volatile ObjectValuePair<Long, String> _lastServedContent =
 		new ObjectValuePair<>(0L, null);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSLoaderConfigServlet.class);
 }

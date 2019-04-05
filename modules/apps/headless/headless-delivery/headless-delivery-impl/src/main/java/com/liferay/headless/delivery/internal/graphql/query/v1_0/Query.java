@@ -45,7 +45,6 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
-import com.liferay.headless.delivery.resource.v1_0.RatingResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -187,14 +186,6 @@ public class Query {
 			messageBoardThreadResourceComponentServiceObjects;
 	}
 
-	public static void setRatingResourceComponentServiceObjects(
-		ComponentServiceObjects<RatingResource>
-			ratingResourceComponentServiceObjects) {
-
-		_ratingResourceComponentServiceObjects =
-			ratingResourceComponentServiceObjects;
-	}
-
 	public static void setStructuredContentResourceComponentServiceObjects(
 		ComponentServiceObjects<StructuredContentResource>
 			structuredContentResourceComponentServiceObjects) {
@@ -222,6 +213,19 @@ public class Query {
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.getBlogPosting(
+				blogPostingId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating getBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.getBlogPostingMyRating(
 				blogPostingId));
 	}
 
@@ -553,6 +557,19 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating getDocumentMyRating(
+			@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.getDocumentMyRating(
+				documentId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<DocumentFolder> getContentSpaceDocumentFoldersPage(
 			@GraphQLName("contentSpaceId") Long contentSpaceId,
 			@GraphQLName("flatten") Boolean flatten,
@@ -677,6 +694,20 @@ public class Query {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating getKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.getKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId));
 	}
 
 	@GraphQLField
@@ -902,6 +933,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Rating getMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.getMessageBoardMessageMyRating(
+					messageBoardMessageId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
@@ -1064,119 +1109,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Rating> getBlogPostingRatingsPage(
-			@GraphQLName("blogPostingId") Long blogPostingId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage = ratingResource.getBlogPostingRatingsPage(
-					blogPostingId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getDocumentRatingsPage(
-			@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage = ratingResource.getDocumentRatingsPage(
-					documentId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getKnowledgeBaseArticleRatingsPage(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage =
-					ratingResource.getKnowledgeBaseArticleRatingsPage(
-						knowledgeBaseArticleId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getMessageBoardMessageRatingsPage(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage =
-					ratingResource.getMessageBoardMessageRatingsPage(
-						messageBoardMessageId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getMessageBoardThreadRatingsPage(
+	public Rating getMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage =
-					ratingResource.getMessageBoardThreadRatingsPage(
-						messageBoardThreadId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Rating getRating(@GraphQLName("ratingId") Long ratingId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> ratingResource.getRating(ratingId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Rating> getStructuredContentRatingsPage(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ratingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ratingResource -> {
-				Page paginationPage =
-					ratingResource.getStructuredContentRatingsPage(
-						structuredContentId);
-
-				return paginationPage.getItems();
-			});
+			messageBoardThreadResource ->
+				messageBoardThreadResource.getMessageBoardThreadMyRating(
+					messageBoardThreadId));
 	}
 
 	@GraphQLField
@@ -1299,6 +1241,20 @@ public class Query {
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.getStructuredContent(
+					structuredContentId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Rating getStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.getStructuredContentMyRating(
 					structuredContentId));
 	}
 
@@ -1530,14 +1486,6 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(RatingResource ratingResource)
-		throws Exception {
-
-		ratingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
 	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
@@ -1584,8 +1532,6 @@ public class Query {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
-	private static ComponentServiceObjects<RatingResource>
-		_ratingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>

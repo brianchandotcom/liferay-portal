@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -321,6 +322,56 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return new StructuredContent();
+	}
+
+	@Override
+	@DELETE
+	@Path("/structured-contents/{structuredContentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public void deleteStructuredContentMyRating(
+			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+		throws Exception {
+	}
+
+	@Override
+	@GET
+	@Path("/structured-contents/{structuredContentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Rating getStructuredContentMyRating(
+			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/structured-contents/{structuredContentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Rating postStructuredContentMyRating(
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/structured-contents/{structuredContentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Rating putStructuredContentMyRating(
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

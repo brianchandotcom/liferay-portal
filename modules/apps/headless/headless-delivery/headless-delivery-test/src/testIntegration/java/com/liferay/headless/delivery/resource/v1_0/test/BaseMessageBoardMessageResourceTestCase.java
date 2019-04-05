@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -901,6 +902,244 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		options.setLocation(location);
 
 		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteMessageBoardMessageMyRating() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
+
+		assertResponseCode(
+			204,
+			invokeDeleteMessageBoardMessageMyRatingResponse(
+				messageBoardMessage.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetMessageBoardMessageMyRatingResponse(
+				messageBoardMessage.getId()));
+	}
+
+	protected MessageBoardMessage
+			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteMessageBoardMessageMyRating(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteMessageBoardMessageMyRatingResponse(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetMessageBoardMessageMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetMessageBoardMessageMyRating(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetMessageBoardMessageMyRatingResponse(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostMessageBoardMessageMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostMessageBoardMessageMyRatingResponse(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutMessageBoardMessageMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutMessageBoardMessageMyRatingResponse(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-messages/{messageBoardMessageId}/my-rating",
+					messageBoardMessageId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
 
 		HttpUtil.URLtoByteArray(options);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
@@ -78,6 +79,20 @@ public interface StructuredContentResource {
 
 	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
+
+	public void deleteStructuredContentMyRating(Long structuredContentId)
+		throws Exception;
+
+	public Rating getStructuredContentMyRating(Long structuredContentId)
+		throws Exception;
+
+	public Rating postStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
+		throws Exception;
+
+	public Rating putStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(

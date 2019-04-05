@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
@@ -1872,6 +1873,244 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/structured-contents/{structuredContentId}",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteStructuredContentMyRating() throws Exception {
+		StructuredContent structuredContent =
+			testDeleteStructuredContentMyRating_addStructuredContent();
+
+		assertResponseCode(
+			204,
+			invokeDeleteStructuredContentMyRatingResponse(
+				structuredContent.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetStructuredContentMyRatingResponse(
+				structuredContent.getId()));
+	}
+
+	protected StructuredContent
+			testDeleteStructuredContentMyRating_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteStructuredContentMyRating(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteStructuredContentMyRatingResponse(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetStructuredContentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetStructuredContentMyRating(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetStructuredContentMyRatingResponse(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostStructuredContentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostStructuredContentMyRatingResponse(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutStructuredContentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
+					structuredContentId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutStructuredContentMyRatingResponse(
+			Long structuredContentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structuredContentId}/my-rating",
 					structuredContentId);
 
 		options.setLocation(location);

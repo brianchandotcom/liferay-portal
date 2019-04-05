@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -65,6 +66,20 @@ public interface MessageBoardThreadResource {
 
 	public MessageBoardThread putMessageBoardThread(
 			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception;
+
+	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception;
+
+	public Rating postMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception;
+
+	public Rating putMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -176,6 +177,56 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return new BlogPosting();
+	}
+
+	@Override
+	@DELETE
+	@Path("/blog-postings/{blogPostingId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public void deleteBlogPostingMyRating(
+			@NotNull @PathParam("blogPostingId") Long blogPostingId)
+		throws Exception {
+	}
+
+	@Override
+	@GET
+	@Path("/blog-postings/{blogPostingId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Rating getBlogPostingMyRating(
+			@NotNull @PathParam("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/blog-postings/{blogPostingId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Rating postBlogPostingMyRating(
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/blog-postings/{blogPostingId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Rating putBlogPostingMyRating(
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

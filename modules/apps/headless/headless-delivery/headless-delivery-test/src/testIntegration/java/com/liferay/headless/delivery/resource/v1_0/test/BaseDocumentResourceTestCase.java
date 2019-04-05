@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -1133,6 +1134,217 @@ public abstract class BaseDocumentResourceTestCase {
 
 		String location =
 			_resourceURL + _toPath("/documents/{documentId}", documentId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteDocumentMyRating() throws Exception {
+		Document document = testDeleteDocumentMyRating_addDocument();
+
+		assertResponseCode(
+			204, invokeDeleteDocumentMyRatingResponse(document.getId()));
+
+		assertResponseCode(
+			404, invokeGetDocumentMyRatingResponse(document.getId()));
+	}
+
+	protected Document testDeleteDocumentMyRating_addDocument()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteDocumentMyRating(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteDocumentMyRatingResponse(
+			Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetDocumentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetDocumentMyRating(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetDocumentMyRatingResponse(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostDocumentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostDocumentMyRating(Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostDocumentMyRatingResponse(
+			Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutDocumentMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutDocumentMyRating(Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutDocumentMyRatingResponse(
+			Long documentId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/documents/{documentId}/my-rating", documentId);
 
 		options.setLocation(location);
 

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -269,6 +270,60 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
+	}
+
+	@Override
+	@DELETE
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void deleteKnowledgeBaseArticleMyRating(
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+	}
+
+	@Override
+	@GET
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Rating getKnowledgeBaseArticleMyRating(
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Rating postKnowledgeBaseArticleMyRating(
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
+				knowledgeBaseArticleId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Rating putKnowledgeBaseArticleMyRating(
+			@NotNull @PathParam("knowledgeBaseArticleId") Long
+				knowledgeBaseArticleId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

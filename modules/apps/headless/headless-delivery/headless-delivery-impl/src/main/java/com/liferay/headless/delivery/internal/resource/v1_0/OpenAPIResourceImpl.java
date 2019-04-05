@@ -104,8 +104,6 @@ public class OpenAPIResourceImpl {
 
 			add(MessageBoardThreadResourceImpl.class);
 
-			add(RatingResourceImpl.class);
-
 			add(StructuredContentResourceImpl.class);
 
 			add(StructuredContentFolderResourceImpl.class);

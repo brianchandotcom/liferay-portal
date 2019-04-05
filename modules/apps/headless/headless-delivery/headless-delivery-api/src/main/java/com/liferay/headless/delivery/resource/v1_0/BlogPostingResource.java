@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -44,6 +45,16 @@ public interface BlogPostingResource {
 
 	public BlogPosting putBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception;
+
+	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception;
+
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
+		throws Exception;
+
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(

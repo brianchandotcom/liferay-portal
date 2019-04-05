@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -69,6 +70,20 @@ public interface KnowledgeBaseArticleResource {
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public Rating postKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception;
+
+	public Rating putKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>

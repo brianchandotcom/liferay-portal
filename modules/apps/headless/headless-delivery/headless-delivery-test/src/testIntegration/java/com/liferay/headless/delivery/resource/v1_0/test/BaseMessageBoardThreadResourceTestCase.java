@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1353,6 +1354,244 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/message-board-threads/{messageBoardThreadId}",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteMessageBoardThreadMyRating() throws Exception {
+		MessageBoardThread messageBoardThread =
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
+
+		assertResponseCode(
+			204,
+			invokeDeleteMessageBoardThreadMyRatingResponse(
+				messageBoardThread.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetMessageBoardThreadMyRatingResponse(
+				messageBoardThread.getId()));
+	}
+
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteMessageBoardThreadMyRating(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteMessageBoardThreadMyRatingResponse(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetMessageBoardThreadMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetMessageBoardThreadMyRating(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetMessageBoardThreadMyRatingResponse(
+			Long messageBoardThreadId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostMessageBoardThreadMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostMessageBoardThreadMyRatingResponse(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutMessageBoardThreadMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
+					messageBoardThreadId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutMessageBoardThreadMyRatingResponse(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/message-board-threads/{messageBoardThreadId}/my-rating",
 					messageBoardThreadId);
 
 		options.setLocation(location);

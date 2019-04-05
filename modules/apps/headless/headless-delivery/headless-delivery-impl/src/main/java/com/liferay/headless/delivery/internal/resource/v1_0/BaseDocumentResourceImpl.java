@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -182,6 +183,54 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		throws Exception {
 
 		return new Document();
+	}
+
+	@Override
+	@DELETE
+	@Path("/documents/{documentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
+	public void deleteDocumentMyRating(
+			@NotNull @PathParam("documentId") Long documentId)
+		throws Exception {
+	}
+
+	@Override
+	@GET
+	@Path("/documents/{documentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
+	public Rating getDocumentMyRating(
+			@NotNull @PathParam("documentId") Long documentId)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/documents/{documentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
+	public Rating postDocumentMyRating(
+			@NotNull @PathParam("documentId") Long documentId, Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/documents/{documentId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
+	public Rating putDocumentMyRating(
+			@NotNull @PathParam("documentId") Long documentId, Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	public void setContextCompany(Company contextCompany) {

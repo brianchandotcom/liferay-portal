@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -57,6 +58,20 @@ public interface MessageBoardMessageResource {
 
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
+		throws Exception;
+
+	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
+		throws Exception;
+
+	public Rating postMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception;
+
+	public Rating putMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
 	public Page<MessageBoardMessage>

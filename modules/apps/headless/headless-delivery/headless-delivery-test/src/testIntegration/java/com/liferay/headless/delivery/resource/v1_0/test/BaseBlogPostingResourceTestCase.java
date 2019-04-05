@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -383,6 +384,229 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/blog-postings/{blogPostingId}", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteBlogPostingMyRating() throws Exception {
+		BlogPosting blogPosting =
+			testDeleteBlogPostingMyRating_addBlogPosting();
+
+		assertResponseCode(
+			204, invokeDeleteBlogPostingMyRatingResponse(blogPosting.getId()));
+
+		assertResponseCode(
+			404, invokeGetBlogPostingMyRatingResponse(blogPosting.getId()));
+	}
+
+	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteBlogPostingMyRating(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteBlogPostingMyRatingResponse(
+			Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetBlogPostingMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokeGetBlogPostingMyRating(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetBlogPostingMyRatingResponse(
+			Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostBlogPostingMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePostBlogPostingMyRating(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostBlogPostingMyRatingResponse(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutBlogPostingMyRating() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Rating invokePutBlogPostingMyRating(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Rating.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutBlogPostingMyRatingResponse(
+			Long blogPostingId, Rating rating)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blogPostingId}/my-rating", blogPostingId);
 
 		options.setLocation(location);
 

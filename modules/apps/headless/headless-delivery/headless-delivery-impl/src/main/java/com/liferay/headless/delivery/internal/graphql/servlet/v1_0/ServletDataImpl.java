@@ -30,7 +30,6 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
-import com.liferay.headless.delivery.resource.v1_0.RatingResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -78,8 +77,6 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardSectionResourceComponentServiceObjects);
 		Mutation.setMessageBoardThreadResourceComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects);
-		Mutation.setRatingResourceComponentServiceObjects(
-			_ratingResourceComponentServiceObjects);
 		Mutation.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
 		Mutation.setStructuredContentFolderResourceComponentServiceObjects(
@@ -113,8 +110,6 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardSectionResourceComponentServiceObjects);
 		Query.setMessageBoardThreadResourceComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects);
-		Query.setRatingResourceComponentServiceObjects(
-			_ratingResourceComponentServiceObjects);
 		Query.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
 		Query.setStructuredContentFolderResourceComponentServiceObjects(
@@ -183,10 +178,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<RatingResource>
-		_ratingResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentResource>

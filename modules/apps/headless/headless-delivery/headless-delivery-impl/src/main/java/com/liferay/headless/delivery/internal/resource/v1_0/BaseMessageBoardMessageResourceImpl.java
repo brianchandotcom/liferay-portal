@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -222,6 +223,60 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		throws Exception {
 
 		return new MessageBoardMessage();
+	}
+
+	@Override
+	@DELETE
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public void deleteMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
+		throws Exception {
+	}
+
+	@Override
+	@GET
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating getMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating postMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating putMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
+			Rating rating)
+		throws Exception {
+
+		return new Rating();
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
-const mapToPair = (map) => Array.from(map, pair => pair.join(',') + ',');
+const mapToPair = (map) => Array.from(map, pair => pair.join(','));
 
 /**
  * Handles actions to delete or change permissions of the

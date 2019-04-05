@@ -2994,16 +2994,10 @@ ${tomcat-gc-log}
 									</tstamp>
 
 									<local name="lpkg.dir" />
-									<local name="lpkg.impl.dir" />
-									<local name="war.dir" />
 
 									<property name="lpkg.dir" value="${tstamp.value}/lpkg-dir" />
-									<property name="lpkg.impl.dir" value="${tstamp.value}/lpkg-impl-dir" />
-									<property name="war.dir" value="${tstamp.value}/war-dir" />
 
 									<mkdir dir="${lpkg.dir}" />
-									<mkdir dir="${lpkg.impl.dir}" />
-									<mkdir dir="${war.dir}" />
 
 									<local name="lpkg.impl.include.name" />
 
@@ -3030,6 +3024,12 @@ ${tomcat-gc-log}
 										</path>
 									</pathconvert>
 
+									<local name="lpkg.impl.dir" />
+
+									<property name="lpkg.impl.dir" value="${tstamp.value}/lpkg-impl-dir" />
+
+									<mkdir dir="${lpkg.impl.dir}" />
+
 									<local name="war.include.name" />
 
 									<property name="war.include.name" value="documentum-hook-*.war" />
@@ -3054,6 +3054,12 @@ ${tomcat-gc-log}
 											</fileset>
 										</path>
 									</pathconvert>
+
+									<local name="war.dir" />
+
+									<property name="war.dir" value="${tstamp.value}/war-dir" />
+
+									<mkdir dir="${war.dir}" />
 
 									<unzip
 										dest="${war.dir}"

@@ -73,4 +73,8 @@
 	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB"></entry>
 	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC"></entry>
 	<entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-93469 -->
+
+	<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters"></entry>
 </properties>

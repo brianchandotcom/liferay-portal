@@ -30,6 +30,8 @@ class ProcessDashboard extends React.Component {
 	componentWillMount() {
 		this.requestData()
 			.then(data => {
+				this.context.setTitle(data.title);
+
 				this.setState({
 					loading: false,
 					process: data

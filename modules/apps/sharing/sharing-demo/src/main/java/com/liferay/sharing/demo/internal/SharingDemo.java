@@ -87,6 +87,7 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 	protected void deactivate() throws PortalException {
 		_basicUserDemoDataCreator.delete();
 		_fileEntryDemoDataCreator.delete();
+		_rootFolderDemoDataCreator.delete();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

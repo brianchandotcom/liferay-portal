@@ -126,7 +126,7 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (!this.submitting && this._validateEmails()) {
+		if (!this.submitting && this._validateRequiredEmail()) {
 			this.submitting = true;
 
 			this.fetch(
@@ -209,6 +209,25 @@ class Sharing extends PortletBase {
 		const emailRegex = /.+@.+\..+/i;
 
 		return emailRegex.test(email);
+	}
+
+	/**
+	 * Check if the userEmailAddresses is filled
+	 * @private
+	 * @review
+	 * @return {Boolean} is valid or not
+	 */
+	_validateRequiredEmail() {
+		const valid = !!this._userEmailAddresses.length;
+
+		if (valid) {
+			this.emailErrorMessage = '';
+		}
+		else {
+			this.emailErrorMessage = Liferay.Language.get('this-field-is-required');
+		}
+
+		return valid;
 	}
 
 	/**

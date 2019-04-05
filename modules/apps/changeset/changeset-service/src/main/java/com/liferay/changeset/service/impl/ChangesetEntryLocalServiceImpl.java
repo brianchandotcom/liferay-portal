@@ -18,6 +18,7 @@ import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.base.ChangesetEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -28,9 +29,15 @@ import com.liferay.portal.kernel.util.SetUtil;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.changeset.model.ChangesetEntry",
+	service = AopService.class
+)
 public class ChangesetEntryLocalServiceImpl
 	extends ChangesetEntryLocalServiceBaseImpl {
 

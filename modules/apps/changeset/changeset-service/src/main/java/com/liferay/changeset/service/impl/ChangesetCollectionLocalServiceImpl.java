@@ -18,13 +18,20 @@ import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.base.ChangesetCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.changeset.model.ChangesetCollection",
+	service = AopService.class
+)
 public class ChangesetCollectionLocalServiceImpl
 	extends ChangesetCollectionLocalServiceBaseImpl {
 

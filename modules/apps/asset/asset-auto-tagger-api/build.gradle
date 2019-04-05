@@ -3,4 +3,5 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 }

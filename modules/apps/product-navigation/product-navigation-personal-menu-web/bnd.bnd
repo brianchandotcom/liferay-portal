@@ -1,3 +1,11 @@
 Bundle-Name: Liferay Product Navigation Personal Menu Web
 Bundle-SymbolicName: com.liferay.product.navigation.personal.menu.web
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		bundle.symbolic.name=com.liferay.product.navigation.personal.menu.web;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.product.navigation.personal.menu.web), (bundle.symbolic.name=com.liferay.product.navigation.personal.menu.api)";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1";\
+		servlet.context.name=product-navigation-personal-menu-web
+Web-ContextPath: /product-navigation-personal-menu-web

@@ -20,7 +20,7 @@ import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,19 +38,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the changeset entry local service.
@@ -66,7 +65,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class ChangesetEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ChangesetEntryLocalService, IdentifiableOSGiService {
+	implements ChangesetEntryLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -331,227 +330,17 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		return changesetEntryPersistence.update(changesetEntry);
 	}
 
-	/**
-	 * Returns the changeset collection local service.
-	 *
-	 * @return the changeset collection local service
-	 */
-	public com.liferay.changeset.service.ChangesetCollectionLocalService
-		getChangesetCollectionLocalService() {
-
-		return changesetCollectionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			ChangesetEntryLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the changeset collection local service.
-	 *
-	 * @param changesetCollectionLocalService the changeset collection local service
-	 */
-	public void setChangesetCollectionLocalService(
-		com.liferay.changeset.service.ChangesetCollectionLocalService
-			changesetCollectionLocalService) {
-
-		this.changesetCollectionLocalService = changesetCollectionLocalService;
-	}
-
-	/**
-	 * Returns the changeset collection persistence.
-	 *
-	 * @return the changeset collection persistence
-	 */
-	public ChangesetCollectionPersistence getChangesetCollectionPersistence() {
-		return changesetCollectionPersistence;
-	}
-
-	/**
-	 * Sets the changeset collection persistence.
-	 *
-	 * @param changesetCollectionPersistence the changeset collection persistence
-	 */
-	public void setChangesetCollectionPersistence(
-		ChangesetCollectionPersistence changesetCollectionPersistence) {
-
-		this.changesetCollectionPersistence = changesetCollectionPersistence;
-	}
-
-	/**
-	 * Returns the changeset entry local service.
-	 *
-	 * @return the changeset entry local service
-	 */
-	public ChangesetEntryLocalService getChangesetEntryLocalService() {
-		return changesetEntryLocalService;
-	}
-
-	/**
-	 * Sets the changeset entry local service.
-	 *
-	 * @param changesetEntryLocalService the changeset entry local service
-	 */
-	public void setChangesetEntryLocalService(
-		ChangesetEntryLocalService changesetEntryLocalService) {
-
-		this.changesetEntryLocalService = changesetEntryLocalService;
-	}
-
-	/**
-	 * Returns the changeset entry persistence.
-	 *
-	 * @return the changeset entry persistence
-	 */
-	public ChangesetEntryPersistence getChangesetEntryPersistence() {
-		return changesetEntryPersistence;
-	}
-
-	/**
-	 * Sets the changeset entry persistence.
-	 *
-	 * @param changesetEntryPersistence the changeset entry persistence
-	 */
-	public void setChangesetEntryPersistence(
-		ChangesetEntryPersistence changesetEntryPersistence) {
-
-		this.changesetEntryPersistence = changesetEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.changeset.model.ChangesetEntry",
-			changesetEntryLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.changeset.model.ChangesetEntry");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		changesetEntryLocalService = (ChangesetEntryLocalService)aopProxy;
 	}
 
 	/**
@@ -596,53 +385,28 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.changeset.service.ChangesetCollectionLocalService.class
-	)
-	protected com.liferay.changeset.service.ChangesetCollectionLocalService
-		changesetCollectionLocalService;
-
-	@BeanReference(type = ChangesetCollectionPersistence.class)
+	@Reference
 	protected ChangesetCollectionPersistence changesetCollectionPersistence;
 
-	@BeanReference(type = ChangesetEntryLocalService.class)
 	protected ChangesetEntryLocalService changesetEntryLocalService;
 
-	@BeanReference(type = ChangesetEntryPersistence.class)
+	@Reference
 	protected ChangesetEntryPersistence changesetEntryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

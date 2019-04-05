@@ -103,7 +103,9 @@ public class StructuredContentSerDes {
 			for (int i = 0; i < structuredContent.getContentFields().length;
 				 i++) {
 
-				sb.append(structuredContent.getContentFields()[i]);
+				sb.append(
+					ContentFieldSerDes.toJSON(
+						structuredContent.getContentFields()[i]));
 
 				if ((i + 1) < structuredContent.getContentFields().length) {
 					sb.append(", ");
@@ -122,7 +124,7 @@ public class StructuredContentSerDes {
 
 		sb.append("\"creator\": ");
 
-		sb.append(structuredContent.getCreator());
+		sb.append(CreatorSerDes.toJSON(structuredContent.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -238,7 +240,9 @@ public class StructuredContentSerDes {
 			for (int i = 0; i < structuredContent.getRenderedContents().length;
 				 i++) {
 
-				sb.append(structuredContent.getRenderedContents()[i]);
+				sb.append(
+					RenderedContentSerDes.toJSON(
+						structuredContent.getRenderedContents()[i]));
 
 				if ((i + 1) < structuredContent.getRenderedContents().length) {
 					sb.append(", ");

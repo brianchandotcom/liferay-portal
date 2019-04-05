@@ -18,18 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.InputStream;
 
 import java.util.Objects;
 
@@ -49,7 +43,8 @@ public class DataDefinitionResourceTest
 
 		super.testPostDataDefinitionDataDefinitionPermission();
 
-		_ddmStructure = _addDDMStructure(testGroup);
+		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(
+			testGroup);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -172,31 +167,7 @@ public class DataDefinitionResourceTest
 			testGroup.getGroupId(), randomDataDefinition());
 	}
 
-	private DDMStructure _addDDMStructure(Group group) throws Exception {
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(_RESOURCE_NAME), group);
-
-		return ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(_RESOURCE_NAME),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_read("test-structured-content-structure.json"),
-			StorageType.JSON.getValue());
-	}
-
-	private String _read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
-	}
-
 	private static final String _OPERATION_SAVE_PERMISSION = "save";
-
-	private static final String _RESOURCE_NAME =
-		"com.liferay.data.engine.rest.internal.model.InternalDataDefinition";
 
 	private DDMStructure _ddmStructure;
 

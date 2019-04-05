@@ -25,6 +25,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
 		<finder name="U_C" return-type="SharepointOAuth2TokenEntry" unique="true">
 			<finder-column name="userId" />
 			<finder-column name="configurationPid" />

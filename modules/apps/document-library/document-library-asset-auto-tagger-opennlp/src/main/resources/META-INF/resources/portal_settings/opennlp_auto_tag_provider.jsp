@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration openNPLDocumentAssetAutoTagProviderCompanyConfiguration = (OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration)request.getAttribute(OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class.getName());
+OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration openNLPDocumentAssetAutoTagProviderCompanyConfiguration = (OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration)request.getAttribute(OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/document_library_asset_auto_tagger_opennlp" />
 
-<aui:input label="enable-opennlp-image-auto-tagging-on-this-instance" name='<%= PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= openNPLDocumentAssetAutoTagProviderCompanyConfiguration.enabled() %>" />
+<aui:input label="enable-opennlp-image-auto-tagging-on-this-instance" name='<%= PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= openNLPDocumentAssetAutoTagProviderCompanyConfiguration.enabled() %>" />
 
-<aui:input label="confidence-threshold" name='<%= PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "confidenceThreshold" %>' value="<%= openNPLDocumentAssetAutoTagProviderCompanyConfiguration.confidenceThreshold() %>" />
+<aui:input label="confidence-threshold" name='<%= PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "confidenceThreshold" %>' value="<%= openNLPDocumentAssetAutoTagProviderCompanyConfiguration.confidenceThreshold() %>" />

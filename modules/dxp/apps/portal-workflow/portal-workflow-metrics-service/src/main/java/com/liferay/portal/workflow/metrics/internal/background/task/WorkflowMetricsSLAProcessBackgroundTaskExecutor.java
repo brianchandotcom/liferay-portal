@@ -142,9 +142,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		String formatPattern = PropsUtil.get(
-			PropsKeys.INDEX_DATE_FORMAT_PATTERN);
-
 		return Stream.of(
 			searchHits.getSearchHits()
 		).flatMap(
@@ -156,7 +153,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				document -> document.getLong("instanceId"),
 				document -> LocalDateTime.parse(
 					document.getString("createDate"),
-					DateTimeFormatter.ofPattern(formatPattern)))
+					DateTimeFormatter.ofPattern(
+						_INDEX_DATE_FORMAT_PATTERN)))
 		);
 	}
 
@@ -197,6 +195,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			0L
 		);
 	}
+
+	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
+		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

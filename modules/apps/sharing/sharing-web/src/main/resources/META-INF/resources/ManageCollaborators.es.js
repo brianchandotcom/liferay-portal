@@ -120,14 +120,16 @@ class ManageCollaborators extends PortletBase {
 		let sharingEntryExpirationDate = event.target.value;
 		let sharingEntryId = event.target.dataset.sharingentryId;
 
+		let collaborator = this._getCollaborator(collaboratorId);
 		let dateError = !this._checkExpirationDate(sharingEntryExpirationDate);
 
+		collaborator.sharingEntryExpirationDateError = dateError;
+
 		if (!dateError) {
+			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
+
 			this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
 		}
-
-		let collaborator = this._getCollaborator(collaboratorId);
-		collaborator.sharingEntryExpirationDateError = dateError;
 
 		this.collaborators = this.collaborators;
 
@@ -202,6 +204,7 @@ class ManageCollaborators extends PortletBase {
 			}
 
 			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
 
 			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
 

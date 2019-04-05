@@ -158,10 +158,10 @@
 					{let $untilMsg kind="text"}
 						{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
 					{/let}
-					{let $tooltipMessage: $untilMsg /}
+
 					{call ClayIcon.render}
 						{param data: [
-							'title': $tooltipMessage
+							'title': $untilMsg
 						] /}
 						{param spritemap: $spritemap /}
 						{param symbol: 'time' /}

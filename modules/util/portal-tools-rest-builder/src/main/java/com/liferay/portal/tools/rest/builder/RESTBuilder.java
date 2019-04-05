@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Peter Shin
@@ -804,6 +805,86 @@ public class RESTBuilder {
 					}
 				}
 			}
+
+			List<String> pathSegments = new ArrayList<>();
+
+			for (String pathSegment : path.split("/")) {
+				if (Validator.isNotNull(pathSegment)) {
+					pathSegments.add(pathSegment);
+				}
+			}
+
+			if ((pathSegments.size() != 3) ||
+				Objects.equals(pathSegments.get(1), "{id}") ||
+				!StringUtil.startsWith(pathSegments.get(1), "{") ||
+				!StringUtil.endsWith(pathSegments.get(1), "Id}")) {
+
+				continue;
+			}
+
+			String selParameterName = pathSegments.get(1);
+
+			selParameterName = selParameterName.substring(
+				1, selParameterName.length() - 1);
+
+			String s = CamelCaseUtil.fromCamelCase(selParameterName);
+
+			s = TextFormatter.formatPlural(s.substring(0, s.length() - 3));
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append('/');
+			sb.append(s);
+			sb.append('/');
+			sb.append(pathSegments.get(1));
+			sb.append('/');
+			sb.append(s);
+
+			if (!path.equals(sb.toString()) &&
+				!path.equals(sb.toString() + "/")) {
+
+				continue;
+			}
+
+			String newParameterName =
+				"parent" + StringUtil.upperCaseFirstLetter(selParameterName);
+
+			for (Operation operation : _getOperations(entry.getValue())) {
+				int y = content.indexOf(
+					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
+
+				for (Parameter parameter : operation.getParameters()) {
+					String in = parameter.getIn();
+					String parameterName = parameter.getName();
+
+					if (in.equals("path") &&
+						parameterName.equals(selParameterName)) {
+
+						int z = content.indexOf(" " + parameterName + "\n", y);
+
+						sb.setLength(0);
+
+						sb.append(content.substring(0, z + 1));
+						sb.append(newParameterName);
+						sb.append("\n");
+						sb.append(
+							content.substring(z + parameterName.length() + 2));
+
+						content = sb.toString();
+
+						String newPathLine = pathLine.replace(
+							"{" + parameterName + "}",
+							"{" + newParameterName + "}");
+
+						content = content.replace(pathLine, newPathLine);
+					}
+				}
+			}
+
+			String newPathLine = pathLine.replace(
+				"{" + selParameterName + "}", "{" + newParameterName + "}");
+
+			content = content.replace(pathLine, newPathLine);
 		}
 
 		return content;

@@ -131,10 +131,7 @@ class ManageCollaborators extends PortletBase {
 
 		this.collaborators = this.collaborators;
 
-		setTimeout(
-			() => this._findExpirationDateError(),
-			dateError ? 250 : 0
-		);
+		setTimeout(() => this._findExpirationDateError(), 0);
 	}
 
 	/**

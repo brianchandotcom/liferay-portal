@@ -59,10 +59,18 @@ class FragmentEntryLinkListRow extends Component {
 			FRAGMENTS_EDITOR_ITEM_TYPES.row
 		);
 
+		const row = structure.find(
+			row => row.rowId === rowId
+		);
+
 		const rowIsDropTarget = (dropTargetItemId === rowId &&
 			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row);
 
-		return (rowInDropTargetPath && !rowIsDropTarget);
+		return (
+			row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow &&
+			rowInDropTargetPath &&
+			!rowIsDropTarget
+		);
 	}
 
 	/**

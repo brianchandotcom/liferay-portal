@@ -101,7 +101,7 @@ public class JournalArticleInfoDisplayContributor
 
 	@Override
 	public String getInfoURLSeparator() {
-		return "/wc/";
+		return "/w/";
 	}
 
 	@Override

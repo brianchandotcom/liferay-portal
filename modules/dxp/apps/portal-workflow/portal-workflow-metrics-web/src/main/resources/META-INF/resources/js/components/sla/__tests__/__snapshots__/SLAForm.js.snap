@@ -217,7 +217,7 @@ exports[`Should display error on alert when receive a server error after submit 
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -238,7 +238,6 @@ exports[`Should display error on alert when receive a server error after submit 
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -248,7 +247,6 @@ exports[`Should display error on alert when receive a server error after submit 
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -717,7 +715,7 @@ exports[`Should display error on field when receive a server error after submit 
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -738,7 +736,6 @@ exports[`Should display error on field when receive a server error after submit 
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -748,7 +745,6 @@ exports[`Should display error on field when receive a server error after submit 
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -1208,7 +1204,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -1229,7 +1225,6 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -1239,7 +1234,6 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -1699,7 +1693,7 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -1720,7 +1714,6 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -1730,7 +1723,6 @@ exports[`Should display error when submitting the form with invalid hours 1`] = 
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -2190,7 +2182,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -2211,7 +2203,6 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -2221,7 +2212,6 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -2681,7 +2671,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -2702,7 +2692,6 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -2712,7 +2701,6 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -3172,7 +3160,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -3193,7 +3181,6 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -3203,7 +3190,6 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -3757,7 +3743,7 @@ exports[`Should redirect to SLA list 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -3778,7 +3764,6 @@ exports[`Should redirect to SLA list 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -3788,7 +3773,6 @@ exports[`Should redirect to SLA list 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -4117,7 +4101,7 @@ exports[`Should render component 1`] = `
         Define a duration time to be met. Enter at least one of the following fields.
       </div>
       <div
-        className="row "
+        className="row"
       >
         <div
           className="form-group col col-sm-5 "
@@ -4133,7 +4117,6 @@ exports[`Should render component 1`] = `
             mask={[Function]}
             maxLength={4}
             name="days"
-            onBlur={[Function]}
             onChange={[Function]}
             type="text"
             value={null}
@@ -4637,7 +4620,7 @@ exports[`Should submit a new SLA with valid values 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -4658,7 +4641,6 @@ exports[`Should submit a new SLA with valid values 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -4668,7 +4650,6 @@ exports[`Should submit a new SLA with valid values 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}
@@ -5158,7 +5139,7 @@ exports[`Should update state after input changes 1`] = `
                 Define a duration time to be met. Enter at least one of the following fields.
               </div>
               <div
-                className="row "
+                className="row"
               >
                 <div
                   className="form-group col col-sm-5 "
@@ -5179,7 +5160,6 @@ exports[`Should update state after input changes 1`] = `
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onBlur={[Function]}
                     onChange={[Function]}
                     value={null}
                   >
@@ -5189,7 +5169,6 @@ exports[`Should update state after input changes 1`] = `
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onBlur={[Function]}
                       onChange={[Function]}
                       type="text"
                       value={null}

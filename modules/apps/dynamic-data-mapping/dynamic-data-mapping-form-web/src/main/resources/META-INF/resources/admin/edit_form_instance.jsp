@@ -186,7 +186,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
 							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
 							fieldSetDefinitionURL: '<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
-							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSets() %>,
+							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
 							formInstanceId: '<%= formInstanceId %>',
 							functionsMetadata: <%= functionsMetadata %>,

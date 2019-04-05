@@ -66,11 +66,12 @@ public class DDMFormBuilderSettingsRetrieverImpl
 				getSerializedDDMExpressionFunctionsMetadata(locale));
 
 		ddmFormBuilderSettings.setFieldSets(
-			_ddmFormBuilderSettingsRetrieverHelper.getFieldSetsMetadata(
-				ddmFormBuilderSettingsRequest.getCompanyId(),
-				ddmFormBuilderSettingsRequest.getScopeGroupId(),
-				ddmFormBuilderSettingsRequest.getFieldSetClassNameId(),
-				locale));
+			_ddmFormBuilderSettingsRetrieverHelper.
+				getFieldSetsMetadataJSONArray(
+					ddmFormBuilderSettingsRequest.getCompanyId(),
+					ddmFormBuilderSettingsRequest.getScopeGroupId(),
+					ddmFormBuilderSettingsRequest.getFieldSetClassNameId(),
+					locale));
 
 		DDMForm ddmForm = ddmFormBuilderSettingsRequest.getDDMForm();
 

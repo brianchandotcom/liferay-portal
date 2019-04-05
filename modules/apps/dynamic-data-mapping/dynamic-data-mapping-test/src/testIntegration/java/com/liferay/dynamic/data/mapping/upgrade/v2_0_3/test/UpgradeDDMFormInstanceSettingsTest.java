@@ -73,7 +73,8 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValues = getFieldValues(formInstance.getSettings());
+		JSONArray fieldValues = getFieldValuesJSONArray(
+			formInstance.getSettings());
 
 		Assert.assertFalse(containsField(fieldValues, "requireAuthentication"));
 
@@ -81,7 +82,7 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		formInstance = getRecordSet(formInstance);
 
-		fieldValues = getFieldValues(formInstance.getSettings());
+		fieldValues = getFieldValuesJSONArray(formInstance.getSettings());
 
 		Assert.assertTrue(containsField(fieldValues, "requireAuthentication"));
 	}
@@ -92,7 +93,8 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValues = getFieldValues(formInstance.getSettings());
+		JSONArray fieldValues = getFieldValuesJSONArray(
+			formInstance.getSettings());
 
 		Assert.assertFalse(containsField(fieldValues, "autosaveEnabled"));
 
@@ -100,7 +102,7 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		formInstance = getRecordSet(formInstance);
 
-		fieldValues = getFieldValues(formInstance.getSettings());
+		fieldValues = getFieldValuesJSONArray(formInstance.getSettings());
 
 		Assert.assertTrue(containsField(fieldValues, "autosaveEnabled"));
 	}
@@ -122,20 +124,22 @@ public class UpgradeDDMFormInstanceSettingsTest {
 	protected JSONArray createFieldValues(boolean hasSetting) {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		jsonArray.put(getFieldValue("requireCaptcha", "false"));
-		jsonArray.put(getFieldValue("redirectURL", ""));
-		jsonArray.put(getFieldValue("storageType", "json"));
-		jsonArray.put(getFieldValue("workflowDefinition", ""));
-		jsonArray.put(getFieldValue("sendEmailNotification", "false"));
-		jsonArray.put(getFieldValue("emailFromName", ""));
-		jsonArray.put(getFieldValue("emailFromAddress", ""));
-		jsonArray.put(getFieldValue("emailToAddress", ""));
-		jsonArray.put(getFieldValue("emailSubject", ""));
-		jsonArray.put(getFieldValue("published", "false"));
+		jsonArray.put(getFieldValueJSONObject("requireCaptcha", "false"));
+		jsonArray.put(getFieldValueJSONObject("redirectURL", ""));
+		jsonArray.put(getFieldValueJSONObject("storageType", "json"));
+		jsonArray.put(getFieldValueJSONObject("workflowDefinition", ""));
+		jsonArray.put(
+			getFieldValueJSONObject("sendEmailNotification", "false"));
+		jsonArray.put(getFieldValueJSONObject("emailFromName", ""));
+		jsonArray.put(getFieldValueJSONObject("emailFromAddress", ""));
+		jsonArray.put(getFieldValueJSONObject("emailToAddress", ""));
+		jsonArray.put(getFieldValueJSONObject("emailSubject", ""));
+		jsonArray.put(getFieldValueJSONObject("published", "false"));
 
 		if (hasSetting) {
-			jsonArray.put(getFieldValue("autosaveEnabled", "false"));
-			jsonArray.put(getFieldValue("requireAuthentication", "false"));
+			jsonArray.put(getFieldValueJSONObject("autosaveEnabled", "false"));
+			jsonArray.put(
+				getFieldValueJSONObject("requireAuthentication", "false"));
 		}
 
 		return jsonArray;
@@ -184,7 +188,7 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		return array;
 	}
 
-	protected JSONObject getFieldValue(String name, String value) {
+	protected JSONObject getFieldValueJSONObject(String name, String value) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("instanceId", RandomTestUtil.randomString());
@@ -194,7 +198,9 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		return jsonObject;
 	}
 
-	protected JSONArray getFieldValues(String settings) throws JSONException {
+	protected JSONArray getFieldValuesJSONArray(String settings)
+		throws JSONException {
+
 		JSONObject settingsJSONObject = _jsonFactory.createJSONObject(settings);
 
 		return settingsJSONObject.getJSONArray("fieldValues");

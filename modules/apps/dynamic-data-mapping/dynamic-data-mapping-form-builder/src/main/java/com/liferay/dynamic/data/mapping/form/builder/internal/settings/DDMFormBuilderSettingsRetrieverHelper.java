@@ -100,7 +100,7 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 			"/dynamic-data-mapping-form-builder-functions/");
 	}
 
-	public JSONArray getFieldSetsMetadata(
+	public JSONArray getFieldSetsMetadataJSONArray(
 		long companyId, long scopeGroupId, long fieldSetClassNameId,
 		Locale locale) {
 

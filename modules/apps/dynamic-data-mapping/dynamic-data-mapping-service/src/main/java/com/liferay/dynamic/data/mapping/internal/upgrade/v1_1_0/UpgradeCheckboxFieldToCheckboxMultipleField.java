@@ -163,7 +163,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		return optionsJSONArray;
 	}
 
-	protected JSONObject getPredefinedValue(
+	protected JSONObject getPredefinedValueJSONObject(
 		JSONObject checkboxFieldJSONObject) {
 
 		JSONObject oldPredefinedValueJSONObject =
@@ -212,7 +212,8 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		checkboxFieldJSONObject.put(
 			"options", getOptionsJSONArray(checkboxFieldJSONObject));
 		checkboxFieldJSONObject.put(
-			"predefinedValue", getPredefinedValue(checkboxFieldJSONObject));
+			"predefinedValue",
+			getPredefinedValueJSONObject(checkboxFieldJSONObject));
 		checkboxFieldJSONObject.put("type", "checkbox_multiple");
 	}
 

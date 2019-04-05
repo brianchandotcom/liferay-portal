@@ -113,7 +113,7 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 		}
 	}
 
-	protected JSONObject getFieldValue(
+	protected JSONObject getFieldValueJSONObject(
 		String fieldName, JSONArray fieldValues) {
 
 		for (int i = 0; i < fieldValues.length(); i++) {
@@ -131,9 +131,10 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 		JSONArray fieldValues = settingsJSONObject.getJSONArray("fieldValues");
 
 		convertToJSONArrayValue(
-			getFieldValue("storageType", fieldValues), "json");
+			getFieldValueJSONObject("storageType", fieldValues), "json");
 		convertToJSONArrayValue(
-			getFieldValue("workflowDefinition", fieldValues), "no-workflow");
+			getFieldValueJSONObject("workflowDefinition", fieldValues),
+			"no-workflow");
 	}
 
 	private final JSONFactory _jsonFactory;

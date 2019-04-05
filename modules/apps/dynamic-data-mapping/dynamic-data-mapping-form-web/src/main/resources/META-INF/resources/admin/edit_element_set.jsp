@@ -156,7 +156,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
 							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
 							fieldSetDefinitionURL: '<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
-							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSets() %>,
+							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
 							groupId: <%= groupId %>,
 							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,

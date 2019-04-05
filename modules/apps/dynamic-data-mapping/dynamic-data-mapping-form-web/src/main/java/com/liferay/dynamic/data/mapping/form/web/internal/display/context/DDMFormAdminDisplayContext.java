@@ -447,7 +447,7 @@ public class DDMFormAdminDisplayContext {
 		return ddmFormBuilderSettingsResponse.getFieldSetDefinitionURL();
 	}
 
-	public JSONArray getFieldSets() throws PortalException {
+	public JSONArray getFieldSetsJSONArray() throws PortalException {
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
 			getDDMFormBuilderSettingsResponse();
 

@@ -15,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

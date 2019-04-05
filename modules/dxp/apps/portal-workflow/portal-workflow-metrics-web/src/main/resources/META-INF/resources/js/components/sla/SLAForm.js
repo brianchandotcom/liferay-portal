@@ -254,6 +254,7 @@ class SLAForm extends React.Component {
 									autoFocus
 									className="form-control"
 									id="sla_name"
+									maxLength={75}
 									name="name"
 									onChange={onChangeHandler(this.onNameChanged)}
 									type="text"
@@ -311,6 +312,7 @@ class SLAForm extends React.Component {
 									className="form-control"
 									id="sla_duration_days"
 									mask={daysMask}
+									maxLength={4}
 									name={DAYS}
 									onBlur={this.onDaysBlurred}
 									onChange={onChangeHandler(this.onDurationChanged)}

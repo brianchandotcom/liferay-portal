@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderConte
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
@@ -28,14 +29,19 @@ import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
@@ -56,6 +62,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -83,31 +90,34 @@ public class DDMFormAdminFieldSetDisplayContext
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
-		DDMFormWebConfiguration ddmFormWebConfiguration,
-		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypesSerializerTracker ddmFormFieldTypesSerializerTracker,
+		DDMFormInstanceLocalService ddmFormInstanceLocalService,
+		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		DDMFormInstanceRecordWriterTracker ddmFormInstanceRecordWriterTracker,
-		DDMFormInstanceService formInstanceService,
-		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
-		DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
-		DDMFormFieldTypesSerializerTracker formFieldTypesSerializerTracker,
-		DDMFormRenderer formRenderer,
-		DDMFormTemplateContextFactory formTemplateContextFactory,
-		DDMFormValuesFactory formValuesFactory,
-		DDMFormValuesMerger formValuesMerger,
-		DDMStructureLocalService structureLocalService,
-		DDMStructureService structureService, JSONFactory jsonFactory,
-		NPMResolver npmResolver) {
+		DDMFormInstanceService ddmFormInstanceService,
+		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService,
+		DDMFormRenderer ddmFormRenderer,
+		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
+		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMFormValuesMerger ddmFormValuesMerger,
+		DDMFormWebConfiguration ddmFormWebConfiguration,
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		NPMResolver npmResolver, Portal portal) {
 
 		super(
 			renderRequest, renderResponse,
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 			ddmFormBuilderContextFactory, ddmFormBuilderSettingsRetriever,
-			ddmFormWebConfiguration, formInstanceRecordLocalService,
-			ddmFormInstanceRecordWriterTracker, formInstanceService,
-			formInstanceVersionLocalService, formFieldTypeServicesTracker,
-			formFieldTypesSerializerTracker, formRenderer,
-			formTemplateContextFactory, formValuesFactory, formValuesMerger,
-			structureLocalService, structureService, jsonFactory, npmResolver);
+			ddmFormFieldTypeServicesTracker, ddmFormFieldTypesSerializerTracker,
+			ddmFormInstanceLocalService, ddmFormInstanceRecordLocalService,
+			ddmFormInstanceRecordWriterTracker, ddmFormInstanceService,
+			ddmFormInstanceVersionLocalService, ddmFormRenderer,
+			ddmFormTemplateContextFactory, ddmFormValuesFactory,
+			ddmFormValuesMerger, ddmFormWebConfiguration,
+			ddmStructureLocalService, ddmStructureService, jsonFactory,
+			npmResolver, portal);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			formAdminRequestHelper);
@@ -357,6 +367,28 @@ public class DDMFormAdminFieldSetDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "structure";
+	}
+
+	@Override
+	public String serializeSettingsForm() throws PortalException {
+		RenderRequest renderRequest = getRenderRequest();
+		RenderResponse renderResponse = getRenderResponse();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMForm ddmForm = createSettingsDDMForm(0L, themeDisplay);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext(renderRequest, renderResponse);
+
+		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
+			DDMFormInstanceSettings.class);
+
+		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
+
+		return ddmFormRenderer.render(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	protected OrderByComparator<DDMStructure> getDDMStructureOrderByComparator(

@@ -15,15 +15,197 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import org.junit.Ignore;
+import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class MessageBoardThreadResourceTest
 	extends BaseMessageBoardThreadResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		User user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(testGroup.getGroupId());
+
+		_mbCategory = MBCategoryLocalServiceUtil.addCategory(
+			user.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
+	@Override
+	protected void assertValid(MessageBoardThread messageBoardThread) {
+		boolean valid = false;
+
+		if (Objects.equals(
+				messageBoardThread.getContentSpaceId(),
+				testGroup.getGroupId()) &&
+			(messageBoardThread.getDateCreated() != null) &&
+			(messageBoardThread.getDateModified() != null) &&
+			(messageBoardThread.getHeadline() != null) &&
+			(messageBoardThread.getId() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected boolean equals(
+		MessageBoardThread messageBoardThread1,
+		MessageBoardThread messageBoardThread2) {
+
+		if (Objects.equals(
+				messageBoardThread1.getContentSpaceId(),
+				messageBoardThread2.getContentSpaceId()) &&
+			Objects.equals(
+				messageBoardThread1.getHeadline(),
+				messageBoardThread2.getHeadline()) &&
+			Objects.equals(
+				messageBoardThread1.getArticleBody(),
+				messageBoardThread2.getArticleBody())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected MessageBoardThread randomMessageBoardThread() {
+		MessageBoardThread messageBoardThread =
+			super.randomMessageBoardThread();
+
+		messageBoardThread.setContentSpaceId(testGroup.getGroupId());
+		messageBoardThread.setThreadType("Urgent");
+
+		return messageBoardThread;
+	}
+
+	@Override
+	protected MessageBoardThread randomPatchMessageBoardThread() {
+		MessageBoardThread messageBoardThread =
+			super.randomPatchMessageBoardThread();
+
+		messageBoardThread.setContentSpaceId(testGroup.getGroupId());
+
+		return messageBoardThread;
+	}
+
+	@Override
+	protected MessageBoardThread
+			testDeleteMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Override
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Override
+	protected MessageBoardThread
+			testGetContentSpaceMessageBoardThreadsPage_addMessageBoardThread(
+				Long contentSpaceId, MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			contentSpaceId, messageBoardThread);
+	}
+
+	@Override
+	protected MessageBoardThread
+			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+				Long messageBoardSectionId,
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return invokePostMessageBoardSectionMessageBoardThread(
+			messageBoardSectionId, messageBoardThread);
+	}
+
+	@Override
+	protected Long
+			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId()
+		throws Exception {
+
+		return _mbCategory.getCategoryId();
+	}
+
+	@Override
+	protected MessageBoardThread
+			testGetMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Override
+	protected MessageBoardThread
+			testPatchMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Override
+	protected MessageBoardThread
+			testPostContentSpaceMessageBoardThread_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), messageBoardThread);
+	}
+
+	@Override
+	protected MessageBoardThread
+			testPostMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), messageBoardThread);
+	}
+
+	@Override
+	protected MessageBoardThread
+			testPutMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return invokePostContentSpaceMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	private MBCategory _mbCategory;
+
 }

@@ -36,7 +36,7 @@ import org.junit.runner.Description;
 /**
  * @author Preston Crary
  */
-public class InjectTestCallbackTest {
+public class InjectTestRuleTest {
 
 	@Before
 	public void setUp() {

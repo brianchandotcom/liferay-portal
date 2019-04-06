@@ -163,6 +163,15 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
+			testDeleteStructuredContentMyRating_addStructuredContent()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Override
+	protected StructuredContent
 			testGetContentSpaceStructuredContentByKey_addStructuredContent()
 		throws Exception {
 

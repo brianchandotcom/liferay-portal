@@ -84,6 +84,10 @@ public class MultipartBody {
 		return _values.get(key);
 	}
 
+	public Map<String, String> getValues() {
+		return _values;
+	}
+
 	public interface ObjectMapperProvider {
 
 		public ObjectMapper provide(Class<?> clazz);

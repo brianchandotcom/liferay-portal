@@ -801,7 +801,10 @@ app.server.type=@{app.server.type}]]></echo>
 			<antcall inheritAll="false" target="compile" />
 
 			<if>
-				<equals arg1="@{app.server.type}" arg2="websphere" />
+				<or>
+					<equals arg1="@{app.server.type}" arg2="weblogic" />
+					<equals arg1="@{app.server.type}" arg2="websphere" />
+				</or>
 				<then>
 					<antcall inheritAll="false" target="prepare-test-build-custom">
 						<param name="app.server.type" value="@{app.server.type}" />

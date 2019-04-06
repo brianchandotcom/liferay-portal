@@ -2178,6 +2178,54 @@ tell application "Safari" to quit
 							<include name="**/*.sh" />
 						</fileset>
 					</chmod>
+
+					<local name="weblogic.fix.sh" />
+
+					<property name="weblogic.fix.sh" value="weblogic_fix.sh" />
+
+					<echo file="${weblogic.fix.sh}">
+						<![CDATA[
+							#!/bin/bash
+
+							DEFAULT_LIFERAY_HOME=/opt/dev/projects/github/liferay-portal/bundles
+
+							APP_SERVER_DIR=${app.server.weblogic.dir}
+							LIFERAY_HOME=${liferay.home}
+
+							for file in $(find ${APP_SERVER_DIR} | grep "\.cmd$\|\.domains$\|\.properties$\|\.py$\|\.sh$\|\.txt$\|\.xml$")
+							do
+								if [[ -f $file ]]
+								then
+									if [[ -n $(cat $file | grep "${DEFAULT_LIFERAY_HOME}") ]]
+									then
+										echo $file
+
+										sed -i "s|${DEFAULT_LIFERAY_HOME}|${LIFERAY_HOME}|g" $file
+									fi
+								fi
+							done
+						]]>
+					</echo>
+
+					<chmod
+						perm="a+x"
+					>
+						<fileset
+							dir="."
+						>
+							<include name="${weblogic.fix.sh}" />
+						</fileset>
+					</chmod>
+
+					<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+						<arg value="${weblogic.fix.sh}" />
+					</exec>
+
+					<exec executable="cmd.exe" os="${os.windows}">
+						<arg value="${weblogic.fix.sh}" />
+					</exec>
+
+					<delete file="${weblogic.fix.sh}" />
 				</then>
 				<elseif>
 					<equals arg1="${app.server.type}" arg2="websphere" />

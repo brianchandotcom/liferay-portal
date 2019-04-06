@@ -34,12 +34,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -880,6 +882,16 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.addPart(
+			"userAccount",
+			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+		options.addFilePart(
+			"file", binaryFile.getFileName(),
+			FileUtil.getBytes(binaryFile.getInputStream()), contentType,
+			"UTF-8");
 
 		String location = _resourceURL + _toPath("/user-accounts");
 
@@ -1762,7 +1774,37 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	protected Group irrelevantGroup;
 	protected Group testGroup;
+	protected String contentType = "application/json";
 	protected String userNameAndPassword = "test@liferay.com:test";
+
+	protected final static ObjectMapper _outputObjectMapper =
+		new ObjectMapper() {
+			{
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+			}
+		};
+
+	protected final static ObjectMapper _inputObjectMapper =
+		new ObjectMapper() {
+			{
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
 
 	protected static class Page<T> {
 
@@ -1814,7 +1856,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		options.addHeader(
 			"Authorization", "Basic " + encodedUserNameAndPassword);
 
-		options.addHeader("Content-Type", "application/json");
+		options.addHeader("Content-Type", contentType);
 
 		return options;
 	}
@@ -1848,31 +1890,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	};
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-		}
-	};
 
 	@Inject
 	private UserAccountResource _userAccountResource;

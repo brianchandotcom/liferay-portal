@@ -1465,8 +1465,8 @@ public class HttpImpl implements Http {
 	}
 
 	protected void processPostMethod(
-		RequestBuilder requestBuilder, List<Http.FilePart> fileParts,
-		Map<String, String> parts) {
+		RequestBuilder requestBuilder, Map<String, String> headers,
+		List<Http.FilePart> fileParts, Map<String, String> parts) {
 
 		if ((fileParts == null) || fileParts.isEmpty()) {
 			if (parts != null) {
@@ -1482,6 +1482,18 @@ public class HttpImpl implements Http {
 		else {
 			MultipartEntityBuilder multipartEntityBuilder =
 				MultipartEntityBuilder.create();
+
+			if (headers.containsKey(HttpHeaders.CONTENT_TYPE)) {
+				String header = headers.get(HttpHeaders.CONTENT_TYPE);
+
+				ContentType contentType = ContentType.parse(header);
+
+				String boundary = contentType.getParameter("boundary");
+
+				if (boundary != null) {
+					multipartEntityBuilder.setBoundary(boundary);
+				}
+			}
 
 			if (parts != null) {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {
@@ -1799,7 +1811,8 @@ public class HttpImpl implements Http {
 							targetHttpHost, connectionConfigBuilder.build());
 					}
 
-					processPostMethod(requestBuilder, fileParts, parts);
+					processPostMethod(
+						requestBuilder, headers, fileParts, parts);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {

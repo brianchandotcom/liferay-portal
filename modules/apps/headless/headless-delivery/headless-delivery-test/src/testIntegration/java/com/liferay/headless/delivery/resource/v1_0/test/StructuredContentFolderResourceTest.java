@@ -58,18 +58,28 @@ public class StructuredContentFolderResourceTest
 
 		if (Objects.equals(
 				structuredContentFolder1.getContentSpaceId(),
-				structuredContentFolder1.getContentSpaceId()) &&
+				structuredContentFolder2.getContentSpaceId()) &&
 			Objects.equals(
 				structuredContentFolder1.getDescription(),
-				structuredContentFolder1.getDescription()) &&
+				structuredContentFolder2.getDescription()) &&
 			Objects.equals(
 				structuredContentFolder1.getName(),
-				structuredContentFolder1.getName())) {
+				structuredContentFolder2.getName())) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	protected StructuredContentFolder randomStructuredContentFolder() {
+		StructuredContentFolder structuredContentFolder =
+			super.randomStructuredContentFolder();
+
+		structuredContentFolder.setContentSpaceId(testGroup.getGroupId());
+
+		return structuredContentFolder;
 	}
 
 	@Override

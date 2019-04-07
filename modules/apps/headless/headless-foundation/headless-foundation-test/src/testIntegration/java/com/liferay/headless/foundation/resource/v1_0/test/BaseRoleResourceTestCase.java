@@ -116,7 +116,7 @@ public abstract class BaseRoleResourceTestCase {
 				irrelevantUserAccountId, randomIrrelevantRole());
 
 			Page<Role> page = invokeGetMyUserAccountRolesPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -131,53 +131,13 @@ public abstract class BaseRoleResourceTestCase {
 		Role role2 = testGetMyUserAccountRolesPage_addRole(
 			userAccountId, randomRole());
 
-		Page<Role> page = invokeGetMyUserAccountRolesPage(
-			userAccountId, Pagination.of(1, 2));
+		Page<Role> page = invokeGetMyUserAccountRolesPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(role1, role2), (List<Role>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetMyUserAccountRolesPageWithPagination() throws Exception {
-		Long userAccountId = testGetMyUserAccountRolesPage_getUserAccountId();
-
-		Role role1 = testGetMyUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Role role2 = testGetMyUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Role role3 = testGetMyUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Page<Role> page1 = invokeGetMyUserAccountRolesPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<Role> roles1 = (List<Role>)page1.getItems();
-
-		Assert.assertEquals(roles1.toString(), 2, roles1.size());
-
-		Page<Role> page2 = invokeGetMyUserAccountRolesPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Role> roles2 = (List<Role>)page2.getItems();
-
-		Assert.assertEquals(roles2.toString(), 1, roles2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2, role3),
-			new ArrayList<Role>() {
-				{
-					addAll(roles1);
-					addAll(roles2);
-				}
-			});
 	}
 
 	protected Role testGetMyUserAccountRolesPage_addRole(
@@ -201,8 +161,7 @@ public abstract class BaseRoleResourceTestCase {
 		return null;
 	}
 
-	protected Page<Role> invokeGetMyUserAccountRolesPage(
-			Long userAccountId, Pagination pagination)
+	protected Page<Role> invokeGetMyUserAccountRolesPage(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -211,11 +170,6 @@ public abstract class BaseRoleResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/my-user-accounts/{userAccountId}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -232,7 +186,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Http.Response invokeGetMyUserAccountRolesPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -241,11 +195,6 @@ public abstract class BaseRoleResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/my-user-accounts/{userAccountId}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -367,7 +316,7 @@ public abstract class BaseRoleResourceTestCase {
 				irrelevantUserAccountId, randomIrrelevantRole());
 
 			Page<Role> page = invokeGetUserAccountRolesPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -382,53 +331,13 @@ public abstract class BaseRoleResourceTestCase {
 		Role role2 = testGetUserAccountRolesPage_addRole(
 			userAccountId, randomRole());
 
-		Page<Role> page = invokeGetUserAccountRolesPage(
-			userAccountId, Pagination.of(1, 2));
+		Page<Role> page = invokeGetUserAccountRolesPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(role1, role2), (List<Role>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetUserAccountRolesPageWithPagination() throws Exception {
-		Long userAccountId = testGetUserAccountRolesPage_getUserAccountId();
-
-		Role role1 = testGetUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Role role2 = testGetUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Role role3 = testGetUserAccountRolesPage_addRole(
-			userAccountId, randomRole());
-
-		Page<Role> page1 = invokeGetUserAccountRolesPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<Role> roles1 = (List<Role>)page1.getItems();
-
-		Assert.assertEquals(roles1.toString(), 2, roles1.size());
-
-		Page<Role> page2 = invokeGetUserAccountRolesPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Role> roles2 = (List<Role>)page2.getItems();
-
-		Assert.assertEquals(roles2.toString(), 1, roles2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2, role3),
-			new ArrayList<Role>() {
-				{
-					addAll(roles1);
-					addAll(roles2);
-				}
-			});
 	}
 
 	protected Role testGetUserAccountRolesPage_addRole(
@@ -452,8 +361,7 @@ public abstract class BaseRoleResourceTestCase {
 		return null;
 	}
 
-	protected Page<Role> invokeGetUserAccountRolesPage(
-			Long userAccountId, Pagination pagination)
+	protected Page<Role> invokeGetUserAccountRolesPage(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -461,11 +369,6 @@ public abstract class BaseRoleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/user-accounts/{userAccountId}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -482,7 +385,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Http.Response invokeGetUserAccountRolesPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -490,11 +393,6 @@ public abstract class BaseRoleResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/user-accounts/{userAccountId}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

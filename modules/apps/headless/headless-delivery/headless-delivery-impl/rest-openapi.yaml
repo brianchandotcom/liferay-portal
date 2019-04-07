@@ -502,6 +502,9 @@ components:
         KnowledgeBaseFolder:
             description: https://www.schema.org/KnowledgeBaseFolder
             properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
                 creator:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:

@@ -15,14 +15,114 @@
 package com.liferay.headless.foundation.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.foundation.dto.v1_0.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import org.junit.Ignore;
+import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class RoleResourceTest extends BaseRoleResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@Override
+	protected void assertValid(Role role) {
+		boolean valid = false;
+
+		if ((role.getId() != null) && (role.getName() != null)) {
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected boolean equals(Role role1, Role role2) {
+		if (Objects.equals(role1.getName(), role2.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	protected Role testGetMyUserAccountRolesPage_addRole(
+			Long userAccountId, Role role)
+		throws Exception {
+
+		return _addRole(role);
+	}
+
+	@Override
+	protected Long testGetMyUserAccountRolesPage_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
+	}
+
+	@Override
+	protected Role testGetRole_addRole() throws Exception {
+		return _addRole(randomRole());
+	}
+
+	@Override
+	protected Role testGetUserAccountRolesPage_addRole(
+			Long userAccountId, Role role)
+		throws Exception {
+
+		return _addRole(role);
+	}
+
+	@Override
+	protected Long testGetUserAccountRolesPage_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
+	}
+
+	private Role _addRole(Role role) throws Exception {
+		com.liferay.portal.kernel.model.Role newRole =
+			RoleLocalServiceUtil.addRole(
+				_user.getUserId(), null, 0, role.getName(), null, null, 0, null,
+				new ServiceContext());
+
+		RoleLocalServiceUtil.deleteUserRole(
+			_user.getUserId(),
+			RoleLocalServiceUtil.getRole(
+				testGroup.getCompanyId(), RoleConstants.USER));
+
+		RoleLocalServiceUtil.addUserRole(_user.getUserId(), newRole);
+
+		return _toRole(newRole);
+	}
+
+	private Role _toRole(com.liferay.portal.kernel.model.Role role) {
+		return new Role() {
+			{
+				description = role.getDescription();
+				id = role.getRoleId();
+				name = role.getName();
+			}
+		};
+	}
+
+	private User _user;
+
 }

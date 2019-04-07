@@ -81,6 +81,33 @@ public class KnowledgeBaseFolder {
 
 	}
 
+	public Long getContentSpaceId() {
+		return contentSpaceId;
+	}
+
+	public void setContentSpaceId(Long contentSpaceId) {
+		this.contentSpaceId = contentSpaceId;
+	}
+
+	@JsonIgnore
+	public void setContentSpaceId(
+		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
+
+		try {
+			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long contentSpaceId;
+
 	public Creator getCreator() {
 		return creator;
 	}
@@ -426,6 +453,11 @@ public class KnowledgeBaseFolder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"contentSpaceId\": ");
+
+		sb.append(contentSpaceId);
+		sb.append(", ");
 
 		sb.append("\"creator\": ");
 

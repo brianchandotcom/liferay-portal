@@ -59,6 +59,27 @@ public class KnowledgeBaseFolder {
 
 	}
 
+	public Long getContentSpaceId() {
+		return contentSpaceId;
+	}
+
+	public void setContentSpaceId(Long contentSpaceId) {
+		this.contentSpaceId = contentSpaceId;
+	}
+
+	public void setContentSpaceId(
+		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
+
+		try {
+			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long contentSpaceId;
+
 	public Creator getCreator() {
 		return creator;
 	}

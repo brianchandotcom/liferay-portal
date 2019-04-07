@@ -1105,6 +1105,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("contentSpaceId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1176,6 +1181,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	protected KnowledgeBaseFolder randomKnowledgeBaseFolder() {
 		return new KnowledgeBaseFolder() {
 			{
+				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();

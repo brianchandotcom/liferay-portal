@@ -53,6 +53,11 @@ public class KnowledgeBaseFolderSerDes {
 
 		sb.append("{");
 
+		sb.append("\"contentSpaceId\": ");
+
+		sb.append(knowledgeBaseFolder.getContentSpaceId());
+		sb.append(", ");
+
 		sb.append("\"creator\": ");
 
 		sb.append(knowledgeBaseFolder.getCreator());
@@ -161,7 +166,13 @@ public class KnowledgeBaseFolderSerDes {
 			KnowledgeBaseFolder knowledgeBaseFolder, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "contentSpaceId")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setContentSpaceId(
+						(Long)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

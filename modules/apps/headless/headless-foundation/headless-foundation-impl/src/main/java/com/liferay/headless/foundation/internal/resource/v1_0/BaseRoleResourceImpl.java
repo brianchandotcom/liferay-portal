@@ -54,18 +54,11 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/my-user-accounts/{userAccountId}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getMyUserAccountRolesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -101,18 +94,11 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{userAccountId}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getUserAccountRolesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

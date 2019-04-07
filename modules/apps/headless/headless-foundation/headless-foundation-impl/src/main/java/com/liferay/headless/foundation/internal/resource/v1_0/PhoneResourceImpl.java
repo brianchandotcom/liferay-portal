@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,8 +39,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Override
-	public Page<Phone> getOrganizationPhonesPage(
-			Long organizationId, Pagination pagination)
+	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
 		throws Exception {
 
 		Organization organization = _organizationService.getOrganization(
@@ -61,8 +59,7 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 	}
 
 	@Override
-	public Page<Phone> getUserAccountPhonesPage(
-			Long userAccountId, Pagination pagination)
+	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);

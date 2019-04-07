@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.ws.rs.core.Context;
 
@@ -47,7 +46,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Organization organization = _organizationService.getOrganization(
@@ -74,7 +73,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);

@@ -15,15 +15,161 @@
 package com.liferay.headless.foundation.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import org.junit.Ignore;
+import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class TaxonomyCategoryResourceTest
 	extends BaseTaxonomyCategoryResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		User user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			user.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), new ServiceContext());
+	}
+
+	protected void assertValid(TaxonomyCategory taxonomyCategory) {
+		boolean valid = false;
+
+		if ((taxonomyCategory.getDateCreated() != null) &&
+			(taxonomyCategory.getDateModified() != null) &&
+			(taxonomyCategory.getId() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected boolean equals(
+		TaxonomyCategory taxonomyCategory1,
+		TaxonomyCategory taxonomyCategory2) {
+
+		if (Objects.equals(
+				taxonomyCategory1.getDescription(),
+				taxonomyCategory2.getDescription()) &&
+			Objects.equals(
+				taxonomyCategory1.getName(), taxonomyCategory2.getName())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
+	@Override
+	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
+				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return invokePostTaxonomyCategoryTaxonomyCategory(
+			taxonomyCategoryId, taxonomyCategory);
+	}
+
+	@Override
+	protected Long
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory =
+			invokePostTaxonomyVocabularyTaxonomyCategory(
+				_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+
+		return taxonomyCategory.getId();
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
+				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			taxonomyVocabularyId, taxonomyCategory);
+	}
+
+	@Override
+	protected Long
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId()
+		throws Exception {
+
+		return _assetVocabulary.getVocabularyId();
+	}
+
+	@Override
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), taxonomyCategory);
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), taxonomyCategory);
+	}
+
+	@Override
+	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
+	private AssetVocabulary _assetVocabulary;
+
 }

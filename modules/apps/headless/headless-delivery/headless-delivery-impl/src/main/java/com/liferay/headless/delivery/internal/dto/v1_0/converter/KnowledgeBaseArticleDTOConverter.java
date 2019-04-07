@@ -76,6 +76,7 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 				articleBody = kbArticle.getContent();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbArticle.getUserId()));
+				contentSpaceId = kbArticle.getGroupId();
 				dateCreated = kbArticle.getCreateDate();
 				dateModified = kbArticle.getModifiedDate();
 				description = kbArticle.getDescription();

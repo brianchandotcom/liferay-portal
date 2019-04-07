@@ -158,6 +158,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
+				contentSpaceId = kbFolder.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				dateCreated = kbFolder.getCreateDate();

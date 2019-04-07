@@ -15,15 +15,170 @@
 package com.liferay.headless.foundation.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import org.junit.Ignore;
+import java.util.List;
+import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class PostalAddressResourceTest
 	extends BasePostalAddressResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_organization = OrganizationTestUtil.addOrganization();
+		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@Override
+	protected void assertValid(PostalAddress postalAddress) {
+		boolean valid = false;
+
+		if ((postalAddress.getId() != null) &&
+			(postalAddress.getStreetAddressLine1() != null) &&
+			(postalAddress.getPrimary() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected boolean equals(
+		PostalAddress postalAddress1, PostalAddress postalAddress2) {
+
+		if (Objects.equals(
+				postalAddress1.getPostalCode(),
+				postalAddress2.getPostalCode()) &&
+			Objects.equals(
+				postalAddress1.getStreetAddressLine1(),
+				postalAddress2.getStreetAddressLine1())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	protected PostalAddress randomPostalAddress() {
+		return new PostalAddress() {
+			{
+				addressLocality = RandomTestUtil.randomString();
+				postalCode = RandomTestUtil.randomString();
+				primary = false;
+				streetAddressLine1 = RandomTestUtil.randomString();
+			}
+		};
+	}
+
+	@Override
+	protected PostalAddress
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				Long organizationId, PostalAddress postalAddress)
+		throws Exception {
+
+		return _addPostalAddress(
+			postalAddress, _organization.getModelClassName(),
+			_organization.getOrganizationId(),
+			ListTypeConstants.ORGANIZATION_ADDRESS);
+	}
+
+	@Override
+	protected Long testGetOrganizationPostalAddressesPage_getOrganizationId()
+		throws Exception {
+
+		return _organization.getOrganizationId();
+	}
+
+	@Override
+	protected PostalAddress testGetPostalAddress_addPostalAddress()
+		throws Exception {
+
+		PostalAddress postalAddress = randomPostalAddress();
+
+		return _addPostalAddress(
+			postalAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+	}
+
+	@Override
+	protected PostalAddress
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				Long userAccountId, PostalAddress postalAddress)
+		throws Exception {
+
+		return _addPostalAddress(
+			postalAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+	}
+
+	@Override
+	protected Long testGetUserAccountPostalAddressesPage_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
+	}
+
+	private PostalAddress _addPostalAddress(
+			PostalAddress postalAddress, String className, long classPK,
+			String listTypeId)
+		throws Exception {
+
+		return _toPostalAddress(
+			AddressLocalServiceUtil.addAddress(
+				_user.getUserId(), className, classPK,
+				postalAddress.getStreetAddressLine1(),
+				postalAddress.getStreetAddressLine2(),
+				postalAddress.getStreetAddressLine3(),
+				postalAddress.getAddressLocality(),
+				postalAddress.getPostalCode(), 0, 0, _getListTypeId(listTypeId),
+				false, postalAddress.getPrimary(), new ServiceContext()));
+	}
+
+	private long _getListTypeId(String listTypeId) {
+		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(listTypeId);
+
+		ListType listType = listTypes.get(0);
+
+		return listType.getListTypeId();
+	}
+
+	private PostalAddress _toPostalAddress(Address address) {
+		return new PostalAddress() {
+			{
+				addressLocality = address.getCity();
+				id = address.getAddressId();
+				postalCode = address.getZip();
+				streetAddressLine1 = address.getStreet1();
+			}
+		};
+	}
+
+	private Organization _organization;
+	private User _user;
+
 }

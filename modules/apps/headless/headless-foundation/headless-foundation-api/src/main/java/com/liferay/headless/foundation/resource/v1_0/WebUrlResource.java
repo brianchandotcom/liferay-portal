@@ -17,7 +17,6 @@ package com.liferay.headless.foundation.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -32,12 +31,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface WebUrlResource {
 
-	public Page<WebUrl> getOrganizationWebUrlsPage(
-			Long organizationId, Pagination pagination)
+	public Page<WebUrl> getOrganizationWebUrlsPage(Long organizationId)
 		throws Exception;
 
-	public Page<WebUrl> getUserAccountWebUrlsPage(
-			Long userAccountId, Pagination pagination)
+	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)
 		throws Exception;
 
 	public WebUrl getWebUrl(Long webUrlId) throws Exception;

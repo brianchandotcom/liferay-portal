@@ -39,7 +39,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -117,7 +116,7 @@ public abstract class BaseWebUrlResourceTestCase {
 				irrelevantOrganizationId, randomIrrelevantWebUrl());
 
 			Page<WebUrl> page = invokeGetOrganizationWebUrlsPage(
-				irrelevantOrganizationId, Pagination.of(1, 2));
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -132,56 +131,13 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl2 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
 
-		Page<WebUrl> page = invokeGetOrganizationWebUrlsPage(
-			organizationId, Pagination.of(1, 2));
+		Page<WebUrl> page = invokeGetOrganizationWebUrlsPage(organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetOrganizationWebUrlsPageWithPagination()
-		throws Exception {
-
-		Long organizationId =
-			testGetOrganizationWebUrlsPage_getOrganizationId();
-
-		WebUrl webUrl1 = testGetOrganizationWebUrlsPage_addWebUrl(
-			organizationId, randomWebUrl());
-
-		WebUrl webUrl2 = testGetOrganizationWebUrlsPage_addWebUrl(
-			organizationId, randomWebUrl());
-
-		WebUrl webUrl3 = testGetOrganizationWebUrlsPage_addWebUrl(
-			organizationId, randomWebUrl());
-
-		Page<WebUrl> page1 = invokeGetOrganizationWebUrlsPage(
-			organizationId, Pagination.of(1, 2));
-
-		List<WebUrl> webUrls1 = (List<WebUrl>)page1.getItems();
-
-		Assert.assertEquals(webUrls1.toString(), 2, webUrls1.size());
-
-		Page<WebUrl> page2 = invokeGetOrganizationWebUrlsPage(
-			organizationId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<WebUrl> webUrls2 = (List<WebUrl>)page2.getItems();
-
-		Assert.assertEquals(webUrls2.toString(), 1, webUrls2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(webUrl1, webUrl2, webUrl3),
-			new ArrayList<WebUrl>() {
-				{
-					addAll(webUrls1);
-					addAll(webUrls2);
-				}
-			});
 	}
 
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
@@ -205,8 +161,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		return null;
 	}
 
-	protected Page<WebUrl> invokeGetOrganizationWebUrlsPage(
-			Long organizationId, Pagination pagination)
+	protected Page<WebUrl> invokeGetOrganizationWebUrlsPage(Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -215,11 +170,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organizationId}/web-urls", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -236,7 +186,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationWebUrlsPageResponse(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -245,11 +195,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organizationId}/web-urls", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -269,7 +214,7 @@ public abstract class BaseWebUrlResourceTestCase {
 				irrelevantUserAccountId, randomIrrelevantWebUrl());
 
 			Page<WebUrl> page = invokeGetUserAccountWebUrlsPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -284,53 +229,13 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl2 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
 
-		Page<WebUrl> page = invokeGetUserAccountWebUrlsPage(
-			userAccountId, Pagination.of(1, 2));
+		Page<WebUrl> page = invokeGetUserAccountWebUrlsPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetUserAccountWebUrlsPageWithPagination() throws Exception {
-		Long userAccountId = testGetUserAccountWebUrlsPage_getUserAccountId();
-
-		WebUrl webUrl1 = testGetUserAccountWebUrlsPage_addWebUrl(
-			userAccountId, randomWebUrl());
-
-		WebUrl webUrl2 = testGetUserAccountWebUrlsPage_addWebUrl(
-			userAccountId, randomWebUrl());
-
-		WebUrl webUrl3 = testGetUserAccountWebUrlsPage_addWebUrl(
-			userAccountId, randomWebUrl());
-
-		Page<WebUrl> page1 = invokeGetUserAccountWebUrlsPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<WebUrl> webUrls1 = (List<WebUrl>)page1.getItems();
-
-		Assert.assertEquals(webUrls1.toString(), 2, webUrls1.size());
-
-		Page<WebUrl> page2 = invokeGetUserAccountWebUrlsPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<WebUrl> webUrls2 = (List<WebUrl>)page2.getItems();
-
-		Assert.assertEquals(webUrls2.toString(), 1, webUrls2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(webUrl1, webUrl2, webUrl3),
-			new ArrayList<WebUrl>() {
-				{
-					addAll(webUrls1);
-					addAll(webUrls2);
-				}
-			});
 	}
 
 	protected WebUrl testGetUserAccountWebUrlsPage_addWebUrl(
@@ -354,8 +259,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		return null;
 	}
 
-	protected Page<WebUrl> invokeGetUserAccountWebUrlsPage(
-			Long userAccountId, Pagination pagination)
+	protected Page<WebUrl> invokeGetUserAccountWebUrlsPage(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -364,11 +268,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/user-accounts/{userAccountId}/web-urls", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -385,7 +284,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected Http.Response invokeGetUserAccountWebUrlsPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -394,11 +293,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/user-accounts/{userAccountId}/web-urls", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

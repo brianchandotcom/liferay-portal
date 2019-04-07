@@ -39,7 +39,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -116,7 +115,7 @@ public abstract class BasePhoneResourceTestCase {
 				irrelevantOrganizationId, randomIrrelevantPhone());
 
 			Page<Phone> page = invokeGetOrganizationPhonesPage(
-				irrelevantOrganizationId, Pagination.of(1, 2));
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -131,53 +130,13 @@ public abstract class BasePhoneResourceTestCase {
 		Phone phone2 = testGetOrganizationPhonesPage_addPhone(
 			organizationId, randomPhone());
 
-		Page<Phone> page = invokeGetOrganizationPhonesPage(
-			organizationId, Pagination.of(1, 2));
+		Page<Phone> page = invokeGetOrganizationPhonesPage(organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetOrganizationPhonesPageWithPagination() throws Exception {
-		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
-
-		Phone phone1 = testGetOrganizationPhonesPage_addPhone(
-			organizationId, randomPhone());
-
-		Phone phone2 = testGetOrganizationPhonesPage_addPhone(
-			organizationId, randomPhone());
-
-		Phone phone3 = testGetOrganizationPhonesPage_addPhone(
-			organizationId, randomPhone());
-
-		Page<Phone> page1 = invokeGetOrganizationPhonesPage(
-			organizationId, Pagination.of(1, 2));
-
-		List<Phone> phones1 = (List<Phone>)page1.getItems();
-
-		Assert.assertEquals(phones1.toString(), 2, phones1.size());
-
-		Page<Phone> page2 = invokeGetOrganizationPhonesPage(
-			organizationId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Phone> phones2 = (List<Phone>)page2.getItems();
-
-		Assert.assertEquals(phones2.toString(), 1, phones2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(phone1, phone2, phone3),
-			new ArrayList<Phone>() {
-				{
-					addAll(phones1);
-					addAll(phones2);
-				}
-			});
 	}
 
 	protected Phone testGetOrganizationPhonesPage_addPhone(
@@ -201,8 +160,7 @@ public abstract class BasePhoneResourceTestCase {
 		return null;
 	}
 
-	protected Page<Phone> invokeGetOrganizationPhonesPage(
-			Long organizationId, Pagination pagination)
+	protected Page<Phone> invokeGetOrganizationPhonesPage(Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -211,11 +169,6 @@ public abstract class BasePhoneResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organizationId}/phones", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -232,7 +185,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationPhonesPageResponse(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -241,11 +194,6 @@ public abstract class BasePhoneResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/organizations/{organizationId}/phones", organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -317,7 +265,7 @@ public abstract class BasePhoneResourceTestCase {
 				irrelevantUserAccountId, randomIrrelevantPhone());
 
 			Page<Phone> page = invokeGetUserAccountPhonesPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -332,53 +280,13 @@ public abstract class BasePhoneResourceTestCase {
 		Phone phone2 = testGetUserAccountPhonesPage_addPhone(
 			userAccountId, randomPhone());
 
-		Page<Phone> page = invokeGetUserAccountPhonesPage(
-			userAccountId, Pagination.of(1, 2));
+		Page<Phone> page = invokeGetUserAccountPhonesPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetUserAccountPhonesPageWithPagination() throws Exception {
-		Long userAccountId = testGetUserAccountPhonesPage_getUserAccountId();
-
-		Phone phone1 = testGetUserAccountPhonesPage_addPhone(
-			userAccountId, randomPhone());
-
-		Phone phone2 = testGetUserAccountPhonesPage_addPhone(
-			userAccountId, randomPhone());
-
-		Phone phone3 = testGetUserAccountPhonesPage_addPhone(
-			userAccountId, randomPhone());
-
-		Page<Phone> page1 = invokeGetUserAccountPhonesPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<Phone> phones1 = (List<Phone>)page1.getItems();
-
-		Assert.assertEquals(phones1.toString(), 2, phones1.size());
-
-		Page<Phone> page2 = invokeGetUserAccountPhonesPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Phone> phones2 = (List<Phone>)page2.getItems();
-
-		Assert.assertEquals(phones2.toString(), 1, phones2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(phone1, phone2, phone3),
-			new ArrayList<Phone>() {
-				{
-					addAll(phones1);
-					addAll(phones2);
-				}
-			});
 	}
 
 	protected Phone testGetUserAccountPhonesPage_addPhone(
@@ -402,8 +310,7 @@ public abstract class BasePhoneResourceTestCase {
 		return null;
 	}
 
-	protected Page<Phone> invokeGetUserAccountPhonesPage(
-			Long userAccountId, Pagination pagination)
+	protected Page<Phone> invokeGetUserAccountPhonesPage(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -411,11 +318,6 @@ public abstract class BasePhoneResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/user-accounts/{userAccountId}/phones", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -432,7 +334,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected Http.Response invokeGetUserAccountPhonesPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -440,11 +342,6 @@ public abstract class BasePhoneResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/user-accounts/{userAccountId}/phones", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

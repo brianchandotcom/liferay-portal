@@ -39,7 +39,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -118,7 +117,7 @@ public abstract class BasePostalAddressResourceTestCase {
 					irrelevantOrganizationId, randomIrrelevantPostalAddress());
 
 			Page<PostalAddress> page = invokeGetOrganizationPostalAddressesPage(
-				irrelevantOrganizationId, Pagination.of(1, 2));
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -137,7 +136,7 @@ public abstract class BasePostalAddressResourceTestCase {
 				organizationId, randomPostalAddress());
 
 		Page<PostalAddress> page = invokeGetOrganizationPostalAddressesPage(
-			organizationId, Pagination.of(1, 2));
+			organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -145,55 +144,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetOrganizationPostalAddressesPageWithPagination()
-		throws Exception {
-
-		Long organizationId =
-			testGetOrganizationPostalAddressesPage_getOrganizationId();
-
-		PostalAddress postalAddress1 =
-			testGetOrganizationPostalAddressesPage_addPostalAddress(
-				organizationId, randomPostalAddress());
-
-		PostalAddress postalAddress2 =
-			testGetOrganizationPostalAddressesPage_addPostalAddress(
-				organizationId, randomPostalAddress());
-
-		PostalAddress postalAddress3 =
-			testGetOrganizationPostalAddressesPage_addPostalAddress(
-				organizationId, randomPostalAddress());
-
-		Page<PostalAddress> page1 = invokeGetOrganizationPostalAddressesPage(
-			organizationId, Pagination.of(1, 2));
-
-		List<PostalAddress> postalAddresses1 =
-			(List<PostalAddress>)page1.getItems();
-
-		Assert.assertEquals(
-			postalAddresses1.toString(), 2, postalAddresses1.size());
-
-		Page<PostalAddress> page2 = invokeGetOrganizationPostalAddressesPage(
-			organizationId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<PostalAddress> postalAddresses2 =
-			(List<PostalAddress>)page2.getItems();
-
-		Assert.assertEquals(
-			postalAddresses2.toString(), 1, postalAddresses2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(postalAddress1, postalAddress2, postalAddress3),
-			new ArrayList<PostalAddress>() {
-				{
-					addAll(postalAddresses1);
-					addAll(postalAddresses2);
-				}
-			});
 	}
 
 	protected PostalAddress
@@ -220,7 +170,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected Page<PostalAddress> invokeGetOrganizationPostalAddressesPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -230,11 +180,6 @@ public abstract class BasePostalAddressResourceTestCase {
 				_toPath(
 					"/organizations/{organizationId}/postal-addresses",
 					organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -251,7 +196,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected Http.Response invokeGetOrganizationPostalAddressesPageResponse(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -261,11 +206,6 @@ public abstract class BasePostalAddressResourceTestCase {
 				_toPath(
 					"/organizations/{organizationId}/postal-addresses",
 					organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -349,7 +289,7 @@ public abstract class BasePostalAddressResourceTestCase {
 					irrelevantUserAccountId, randomIrrelevantPostalAddress());
 
 			Page<PostalAddress> page = invokeGetUserAccountPostalAddressesPage(
-				irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -368,7 +308,7 @@ public abstract class BasePostalAddressResourceTestCase {
 				userAccountId, randomPostalAddress());
 
 		Page<PostalAddress> page = invokeGetUserAccountPostalAddressesPage(
-			userAccountId, Pagination.of(1, 2));
+			userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -376,55 +316,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetUserAccountPostalAddressesPageWithPagination()
-		throws Exception {
-
-		Long userAccountId =
-			testGetUserAccountPostalAddressesPage_getUserAccountId();
-
-		PostalAddress postalAddress1 =
-			testGetUserAccountPostalAddressesPage_addPostalAddress(
-				userAccountId, randomPostalAddress());
-
-		PostalAddress postalAddress2 =
-			testGetUserAccountPostalAddressesPage_addPostalAddress(
-				userAccountId, randomPostalAddress());
-
-		PostalAddress postalAddress3 =
-			testGetUserAccountPostalAddressesPage_addPostalAddress(
-				userAccountId, randomPostalAddress());
-
-		Page<PostalAddress> page1 = invokeGetUserAccountPostalAddressesPage(
-			userAccountId, Pagination.of(1, 2));
-
-		List<PostalAddress> postalAddresses1 =
-			(List<PostalAddress>)page1.getItems();
-
-		Assert.assertEquals(
-			postalAddresses1.toString(), 2, postalAddresses1.size());
-
-		Page<PostalAddress> page2 = invokeGetUserAccountPostalAddressesPage(
-			userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<PostalAddress> postalAddresses2 =
-			(List<PostalAddress>)page2.getItems();
-
-		Assert.assertEquals(
-			postalAddresses2.toString(), 1, postalAddresses2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(postalAddress1, postalAddress2, postalAddress3),
-			new ArrayList<PostalAddress>() {
-				{
-					addAll(postalAddresses1);
-					addAll(postalAddresses2);
-				}
-			});
 	}
 
 	protected PostalAddress
@@ -451,7 +342,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected Page<PostalAddress> invokeGetUserAccountPostalAddressesPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -461,11 +352,6 @@ public abstract class BasePostalAddressResourceTestCase {
 				_toPath(
 					"/user-accounts/{userAccountId}/postal-addresses",
 					userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -482,7 +368,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected Http.Response invokeGetUserAccountPostalAddressesPageResponse(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -492,11 +378,6 @@ public abstract class BasePostalAddressResourceTestCase {
 				_toPath(
 					"/user-accounts/{userAccountId}/postal-addresses",
 					userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

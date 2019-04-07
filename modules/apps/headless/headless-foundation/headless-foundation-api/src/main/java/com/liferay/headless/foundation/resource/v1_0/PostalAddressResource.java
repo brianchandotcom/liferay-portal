@@ -17,7 +17,6 @@ package com.liferay.headless.foundation.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -33,14 +32,14 @@ import javax.annotation.Generated;
 public interface PostalAddressResource {
 
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId)
 		throws Exception;
 
 	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception;
 
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -20,12 +20,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -54,18 +50,11 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/organizations/{organizationId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getOrganizationWebUrlsPage(
-			@NotNull @PathParam("organizationId") Long organizationId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -73,18 +62,11 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{userAccountId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

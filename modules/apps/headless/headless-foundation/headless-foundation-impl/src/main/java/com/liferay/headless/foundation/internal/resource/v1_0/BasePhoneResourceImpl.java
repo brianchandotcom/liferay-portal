@@ -20,12 +20,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -54,18 +50,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/organizations/{organizationId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
-			@NotNull @PathParam("organizationId") Long organizationId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -84,18 +73,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{userAccountId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -17,7 +17,6 @@ package com.liferay.headless.foundation.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -32,14 +31,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface PhoneResource {
 
-	public Page<Phone> getOrganizationPhonesPage(
-			Long organizationId, Pagination pagination)
+	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
 		throws Exception;
 
 	public Phone getPhone(Long phoneId) throws Exception;
 
-	public Page<Phone> getUserAccountPhonesPage(
-			Long userAccountId, Pagination pagination)
+	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -338,9 +338,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getOrganizationPhonesPage(
-			@GraphQLName("organizationId") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -348,7 +346,7 @@ public class Query {
 			this::_populateResourceContext,
 			phoneResource -> {
 				Page paginationPage = phoneResource.getOrganizationPhonesPage(
-					organizationId, Pagination.of(pageSize, page));
+					organizationId);
 
 				return paginationPage.getItems();
 			});
@@ -368,9 +366,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getUserAccountPhonesPage(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -378,7 +374,7 @@ public class Query {
 			this::_populateResourceContext,
 			phoneResource -> {
 				Page paginationPage = phoneResource.getUserAccountPhonesPage(
-					userAccountId, Pagination.of(pageSize, page));
+					userAccountId);
 
 				return paginationPage.getItems();
 			});
@@ -387,9 +383,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getOrganizationPostalAddressesPage(
-			@GraphQLName("organizationId") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -398,7 +392,7 @@ public class Query {
 			postalAddressResource -> {
 				Page paginationPage =
 					postalAddressResource.getOrganizationPostalAddressesPage(
-						organizationId, Pagination.of(pageSize, page));
+						organizationId);
 
 				return paginationPage.getItems();
 			});
@@ -420,9 +414,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getUserAccountPostalAddressesPage(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -431,7 +423,7 @@ public class Query {
 			postalAddressResource -> {
 				Page paginationPage =
 					postalAddressResource.getUserAccountPostalAddressesPage(
-						userAccountId, Pagination.of(pageSize, page));
+						userAccountId);
 
 				return paginationPage.getItems();
 			});
@@ -766,9 +758,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getOrganizationWebUrlsPage(
-			@GraphQLName("organizationId") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -776,7 +766,7 @@ public class Query {
 			this::_populateResourceContext,
 			webUrlResource -> {
 				Page paginationPage = webUrlResource.getOrganizationWebUrlsPage(
-					organizationId, Pagination.of(pageSize, page));
+					organizationId);
 
 				return paginationPage.getItems();
 			});
@@ -785,9 +775,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getUserAccountWebUrlsPage(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -795,7 +783,7 @@ public class Query {
 			this::_populateResourceContext,
 			webUrlResource -> {
 				Page paginationPage = webUrlResource.getUserAccountWebUrlsPage(
-					userAccountId, Pagination.of(pageSize, page));
+					userAccountId);
 
 				return paginationPage.getItems();
 			});

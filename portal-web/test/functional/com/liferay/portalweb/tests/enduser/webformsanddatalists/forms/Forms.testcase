@@ -3212,7 +3212,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
 
-		Form.editFieldLabelMetal(fieldName = "Paragraph", fieldValue = "New Paragraph");
+		Form.editFieldLabelMetal(fieldValue = "New Paragraph");
 
 		FormFields.editParagraphBody(fieldValue = "New Paragraph body text.");
 
@@ -3220,13 +3220,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text");
 
-		Form.editFieldLabelMetal(fieldName = "Text", fieldValue = "New Text");
+		Form.editFieldLabelMetal(fieldValue = "New Text");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Select");
 
-		Form.editFieldLabelMetal(fieldName = "Select", fieldValue = "New Select");
+		Form.editFieldLabelMetal(fieldValue = "New Select");
 
 		FormFields.editOptionsRow(optionValue = "New Select 1");
 
@@ -3236,7 +3236,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Radio");
 
-		Form.editFieldLabelMetal(fieldName = "Radio", fieldValue = "New Radio");
+		Form.editFieldLabelMetal(fieldValue = "New Radio");
 
 		FormFields.editOptionsRow(optionValue = "New Option 1");
 
@@ -3246,13 +3246,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Date");
 
-		Form.editFieldLabelMetal(fieldName = "Date", fieldValue = "New Date");
+		Form.editFieldLabelMetal(fieldValue = "New Date");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Checkbox");
 
-		Form.editFieldLabelMetal(fieldName = "Checkbox", fieldValue = "New Checkbox");
+		Form.editFieldLabelMetal(fieldValue = "New Checkbox");
 
 		Form.closeSidebar();
 

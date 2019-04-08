@@ -9,30 +9,38 @@ import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.meta.Documentation;
 
+/**
+ * @author Igor Beslic
+ */
 @Checkable("checkInputDataStore")
 @DataStore("InputDataStore")
+@Documentation("Aggregator data store for authentication stores")
 @GridLayout(
 	{
-		@GridLayout.Row({ "authenticationMethod" }),
-		@GridLayout.Row({ "basicDataStore"}),
-		@GridLayout.Row({ "oAuthDataStore"})
-	})
-@Documentation("Aggregator data store for authentication stores")
+		@GridLayout.Row({"authenticationMethod"}),
+		@GridLayout.Row({"basicDataStore"}), @GridLayout.Row({"oAuthDataStore"})
+	}
+)
 public class InputDataStore {
 
 	public AuthenticationMethod getAuthenticationMethod() {
 		return authenticationMethod;
 	}
 
+	public BasicDataStore getBasicDataStore() {
+		return basicDataStore;
+	}
+
+	public OAuthDataStore getoAuthDataStore() {
+		return oAuthDataStore;
+	}
+
 	public InputDataStore setAuthenticationMethod(
 		AuthenticationMethod authenticationMethod) {
+
 		this.authenticationMethod = authenticationMethod;
 
 		return this;
-	}
-
-	public BasicDataStore getBasicDataStore() {
-		return basicDataStore;
 	}
 
 	public InputDataStore setBasicDataStore(BasicDataStore dataStore) {
@@ -41,20 +49,16 @@ public class InputDataStore {
 		return this;
 	}
 
-	public OAuthDataStore getoAuthDataStore() {
-		return oAuthDataStore;
-	}
-
 	public InputDataStore setoAuthDataStore(OAuthDataStore oAuthDataStore) {
 		this.oAuthDataStore = oAuthDataStore;
 
 		return this;
 	}
 
-	@Required
 	@DefaultValue("BASIC")
 	@Documentation("Authentication Method")
 	@Option
+	@Required
 	private AuthenticationMethod authenticationMethod;
 
 	@ActiveIf(target = "authenticationMethod", value = "BASIC")

@@ -14,64 +14,67 @@
 
 package com.liferay.talend.datastore;
 
+import java.io.Serializable;
+
 import org.talend.sdk.component.api.configuration.Option;
-import org.talend.sdk.component.api.configuration.action.Checkable;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.meta.Documentation;
 
-import java.io.Serializable;
-
+/**
+ * @author Igor Beslic
+ */
 @DataStore("OAuthDataStore")
-@GridLayout(
-    names = GridLayout.FormType.MAIN,
-    value =
-    {
-    @GridLayout.Row({ "serverURL" }),
-    @GridLayout.Row({ "consumerKey", "consumerSecret"}),
-})
 @Documentation("TODO fill the documentation for this configuration")
+@GridLayout(
+	names = GridLayout.FormType.MAIN,
+	value = {
+		@GridLayout.Row({"serverURL"}),
+		@GridLayout.Row({"consumerKey", "consumerSecret"})
+	}
+)
 public class OAuthDataStore implements Serializable {
 
-    public java.net.URL getServerURL() {
-        return serverURL;
-    }
+	public String getConsumerKey() {
+		return consumerKey;
+	}
 
-    public OAuthDataStore setServerURL(java.net.URL serverURL) {
-        this.serverURL = serverURL;
-        return this;
-    }
+	public String getConsumerSecret() {
+		return consumerSecret;
+	}
 
-    public String getConsumerKey() {
-        return consumerKey;
-    }
+	public java.net.URL getServerURL() {
+		return serverURL;
+	}
 
-    public OAuthDataStore setConsumerKey(String consumerKey) {
-        this.consumerKey = consumerKey;
+	public OAuthDataStore setConsumerKey(String consumerKey) {
+		this.consumerKey = consumerKey;
 
-        return this;
-    }
+		return this;
+	}
 
-    public String getConsumerSecret() {
-        return consumerSecret;
-    }
+	public OAuthDataStore setConsumerSecret(String consumerSecret) {
+		this.consumerSecret = consumerSecret;
 
-    public OAuthDataStore setConsumerSecret(String consumerSecret) {
-        this.consumerSecret = consumerSecret;
+		return this;
+	}
 
-        return this;
-    }
+	public OAuthDataStore setServerURL(java.net.URL serverURL) {
+		this.serverURL = serverURL;
 
-	@Option
+		return this;
+	}
+
 	@Documentation("TODO fill the documentation for this parameter")
-	private java.net.URL serverURL;
-
 	@Option
-	@Documentation("TODO fill the documentation for this parameter")
 	private String consumerKey;
 
-	@Option
 	@Documentation("TODO fill the documentation for this parameter")
+	@Option
 	private String consumerSecret;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private java.net.URL serverURL;
 
 }

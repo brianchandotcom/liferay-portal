@@ -22,68 +22,75 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 import org.talend.sdk.component.api.meta.Documentation;
 
+/**
+ * @author Igor Beslic
+ */
 @DataStore("BasicDataStore")
-@GridLayout(
-    names = GridLayout.FormType.MAIN,
-    value =
-    {
-    @GridLayout.Row({ "serverURL", "anonymous" }),
-    @GridLayout.Row({ "user", "password"}),
-})
 @Documentation("TODO fill the documentation for this configuration")
+@GridLayout(
+	names = GridLayout.FormType.MAIN,
+	value = {
+		@GridLayout.Row({"serverURL", "anonymous"}),
+		@GridLayout.Row({"user", "password"})
+	}
+)
 public class BasicDataStore implements Serializable {
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private java.net.URL serverURL;
+	public boolean getAnonymous() {
+		return anonymous;
+	}
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private boolean anonymous;
+	public String getPassword() {
+		return password;
+	}
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private String user;
+	public java.net.URL getServerURL() {
+		return serverURL;
+	}
 
-    @Credential
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private String password;
+	public String getUser() {
+		return user;
+	}
 
-    public java.net.URL getServerURL() {
-        return serverURL;
-    }
+	public BasicDataStore setAnonymous(boolean anonymous) {
+		this.anonymous = anonymous;
 
-    public BasicDataStore setServerURL(java.net.URL serverURL) {
-        this.serverURL = serverURL;
-        return this;
-    }
+		return this;
+	}
 
-    public boolean getAnonymous() {
-        return anonymous;
-    }
+	public BasicDataStore setPassword(String password) {
+		this.password = password;
 
-    public BasicDataStore setAnonymous(boolean anonymous) {
-        this.anonymous = anonymous;
-        return this;
-    }
+		return this;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public BasicDataStore setServerURL(java.net.URL serverURL) {
+		this.serverURL = serverURL;
 
-    public BasicDataStore setUser(String user) {
-        this.user = user;
-        return this;
-    }
+		return this;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public BasicDataStore setUser(String user) {
+		this.user = user;
 
-    public BasicDataStore setPassword(String password) {
-        this.password = password;
-        return this;
-    }
+		return this;
+	}
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private boolean anonymous;
+
+	@Credential
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private String password;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private java.net.URL serverURL;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private String user;
 
 }

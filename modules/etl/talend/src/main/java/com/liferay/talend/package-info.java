@@ -1,5 +1,5 @@
-@Components(family = "LiferayFamily", categories = "Misc")
-@Icon(value = Icon.IconType.CUSTOM, custom = "LiferayFamily")
+@Components(categories = "Misc", family = "LiferayFamily")
+@Icon(custom = "LiferayFamily", value = Icon.IconType.CUSTOM)
 package com.liferay.talend;
 
 import org.talend.sdk.component.api.component.Components;

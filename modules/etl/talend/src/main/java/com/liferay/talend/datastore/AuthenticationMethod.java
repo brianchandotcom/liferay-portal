@@ -18,5 +18,7 @@ package com.liferay.talend.datastore;
  * @author Igor Beslic
  */
 public enum AuthenticationMethod {
+
 	BASIC, OAUTH2
+
 }

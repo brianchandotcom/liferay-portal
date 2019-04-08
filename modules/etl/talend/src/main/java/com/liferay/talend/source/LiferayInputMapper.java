@@ -16,10 +16,13 @@ package com.liferay.talend.source;
 
 import static java.util.Collections.singletonList;
 
+import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
+import com.liferay.talend.service.TalendService;
+
 import java.io.Serializable;
+
 import java.util.List;
 
-import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
 import org.talend.sdk.component.api.component.Icon;
 import org.talend.sdk.component.api.component.Version;
 import org.talend.sdk.component.api.configuration.Option;
@@ -31,44 +34,44 @@ import org.talend.sdk.component.api.input.Split;
 import org.talend.sdk.component.api.meta.Documentation;
 import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
-import com.liferay.talend.service.TalendService;
-
 /**
  * @author Zoltán Takács
  */
-@Version(1)
+@Documentation("TODO fill the documentation for this mapper")
 @Icon(Icon.IconType.STAR)
 @PartitionMapper(name = "tLiferayInput")
-@Documentation("TODO fill the documentation for this mapper")
+@Version(1)
 public class LiferayInputMapper implements Serializable {
-    private final LiferayInputMapperConfiguration configuration;
-    private final TalendService service;
-    private final RecordBuilderFactory recordBuilderFactory;
 
-    public LiferayInputMapper(
-		@Option("configuration")
-		final LiferayInputMapperConfiguration configuration,
-        final TalendService service,
+	public LiferayInputMapper(
+		@Option("configuration") final
+			LiferayInputMapperConfiguration configuration,
+		final TalendService service,
 		final RecordBuilderFactory recordBuilderFactory) {
 
-    	this.configuration = configuration;
-        this.service = service;
-        this.recordBuilderFactory = recordBuilderFactory;
-    }
+		this.configuration = configuration;
+		this.service = service;
+		this.recordBuilderFactory = recordBuilderFactory;
+	}
 
-    @Assessor
-    public long estimateSize() {
-        return 1L;
-    }
-
-    @Split
-    public List<LiferayInputMapper> split(@PartitionSize final long bundles) {
-        return singletonList(this);
-    }
-
-    @Emitter
-    public LiferayInputEmitter createWorker() {
-        return new LiferayInputEmitter(
+	@Emitter
+	public LiferayInputEmitter createWorker() {
+		return new LiferayInputEmitter(
 			configuration, service, recordBuilderFactory);
-    }
+	}
+
+	@Assessor
+	public long estimateSize() {
+		return 1L;
+	}
+
+	@Split
+	public List<LiferayInputMapper> split(@PartitionSize final long bundles) {
+		return singletonList(this);
+	}
+
+	private final LiferayInputMapperConfiguration configuration;
+	private final RecordBuilderFactory recordBuilderFactory;
+	private final TalendService service;
+
 }

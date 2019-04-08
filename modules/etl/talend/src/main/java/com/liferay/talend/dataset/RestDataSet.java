@@ -14,9 +14,10 @@
 
 package com.liferay.talend.dataset;
 
+import com.liferay.talend.datastore.InputDataStore;
+
 import java.io.Serializable;
 
-import com.liferay.talend.datastore.InputDataStore;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
@@ -29,16 +30,26 @@ import org.talend.sdk.component.api.meta.Documentation;
  * @author Igor Beslic
  */
 @DataSet("RestDataSet")
-@GridLayout({
-	@GridLayout.Row({ "inputDataStore" }),
-    @GridLayout.Row({ "endpoint" })
-})
 @Documentation("TODO fill the documentation for this configuration")
+@GridLayout(
+	{@GridLayout.Row({"inputDataStore"}), @GridLayout.Row({"endpoint"})}
+)
 public class RestDataSet implements Serializable {
 
-	@Option
-	private InputDataStore inputDataStore;
+	public InputDataStore getInputDataStore() {
+		return inputDataStore;
+	}
 
+	public RestDataSet setInputDataStore(InputDataStore inputDataStore) {
+		this.inputDataStore = inputDataStore;
+
+		return this;
+	}
+
+    /**
+     * DataStore parameter now is not needed, just an example how we can use it
+     * in UIActionService if needed.
+     */
     @Option
     @Required
     @Suggestable(value = "fetchEndpoints", parameters = { "inputDataStore" })
@@ -49,13 +60,7 @@ public class RestDataSet implements Serializable {
      */
     private String endpoint;
 
-    public InputDataStore getInputDataStore() {
-        return inputDataStore;
-    }
-
-    public RestDataSet setInputDataStore(InputDataStore inputDataStore) {
-        this.inputDataStore = inputDataStore;
-        return this;
-    }
+	@Option
+	private InputDataStore inputDataStore;
 
 }

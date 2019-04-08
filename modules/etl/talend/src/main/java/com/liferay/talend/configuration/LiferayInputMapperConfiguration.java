@@ -14,9 +14,9 @@
 
 package com.liferay.talend.configuration;
 
-import java.io.Serializable;
-
 import com.liferay.talend.dataset.RestDataSet;
+
+import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
@@ -25,57 +25,59 @@ import org.talend.sdk.component.api.meta.Documentation;
 /**
  * @author Zoltán Takács
  */
-@GridLayout({
-    @GridLayout.Row({ "restDataSet" }),
-    @GridLayout.Row({ "timeout" }),
-    @GridLayout.Row({ "maxItemsPerRequest" })
-})
 @Documentation("TODO fill the documentation for this configuration")
+@GridLayout(
+	{
+		@GridLayout.Row({"restDataSet"}), @GridLayout.Row({"timeout"}),
+		@GridLayout.Row({"maxItemsPerRequest"})
+	}
+)
 public class LiferayInputMapperConfiguration implements Serializable {
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private RestDataSet restDataSet;
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private int timeout;
+	public int getMaxItemsPerRequest() {
+		return maxItemsPerRequest;
+	}
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private int maxItemsPerRequest;
+	public RestDataSet getRestDataSet() {
+		return restDataSet;
+	}
 
-    public RestDataSet getRestDataSet() {
-        return restDataSet;
-    }
+	public int getTimeout() {
+		return timeout;
+	}
 
-    public LiferayInputMapperConfiguration setRestDataSet(
-		RestDataSet restDataSet) {
-
-		this.restDataSet = restDataSet;
-
-		return this;
-    }
-
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public LiferayInputMapperConfiguration setTimeout(int timeout) {
-        this.timeout = timeout;
-
-        return this;
-    }
-
-    public int getMaxItemsPerRequest() {
-        return maxItemsPerRequest;
-    }
-
-    public LiferayInputMapperConfiguration setMaxItemsPerRequest(
+	public LiferayInputMapperConfiguration setMaxItemsPerRequest(
 		int maxItemsPerRequest) {
 
 		this.maxItemsPerRequest = maxItemsPerRequest;
 
 		return this;
-    }
+	}
+
+	public LiferayInputMapperConfiguration setRestDataSet(
+		RestDataSet restDataSet) {
+
+		this.restDataSet = restDataSet;
+
+		return this;
+	}
+
+	public LiferayInputMapperConfiguration setTimeout(int timeout) {
+		this.timeout = timeout;
+
+		return this;
+	}
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private int maxItemsPerRequest;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private RestDataSet restDataSet;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private int timeout;
 
 }

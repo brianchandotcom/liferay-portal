@@ -19,6 +19,7 @@ import com.liferay.talend.datastore.AuthenticationMethod;
 import com.liferay.talend.datastore.BasicDataStore;
 import com.liferay.talend.datastore.InputDataStore;
 import com.liferay.talend.datastore.OAuthDataStore;
+
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -30,6 +31,17 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.parser.OpenAPIV3Parser;
+
+import java.net.URL;
+
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.json.JsonObject;
+
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
 import org.talend.sdk.component.api.service.completion.SuggestionValues;
@@ -38,53 +50,12 @@ import org.talend.sdk.component.api.service.healthcheck.HealthCheck;
 import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
 import org.talend.sdk.component.api.service.http.Response;
 
-import javax.json.JsonObject;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * @author Igor Beslic
  * @author Zoltán Takács
  */
 @Service
 public class UIActionService {
-
-	@HealthCheck("checkInputDataStore")
-	public HealthCheckStatus checkInputDataStore(
-		@Option InputDataStore inputDataStore,
-		final BasicAuthenticationClient basicAuthenticationClient) {
-
-		if (AuthenticationMethod.BASIC ==
-			inputDataStore.getAuthenticationMethod()) {
-
-			return _checkBasicDataStore(
-				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
-		}
-
-		return _checkOAuthDataStore(inputDataStore.getoAuthDataStore());
-	}
-
-	@Suggestions("fetchEndpoints")
-	public SuggestionValues fetchEndpoints(
-		@Option("inputDataStore") final InputDataStore inputDataStore) {
-
-		List<SuggestionValues.Item> items = new ArrayList<>();
-
-		Map<String, String> endpoints = _getEndpointsMap(
-			"com/liferay/talend/resource/rest-openapi.yaml");
-
-		endpoints.forEach(
-			(path, returnSchemaType) -> {
-				items.add(new SuggestionValues.Item(path, returnSchemaType));
-			}
-		);
-
-		return new SuggestionValues(true, items);
-	}
 
 	public HealthCheckStatus _checkBasicDataStore(
 		@Option BasicDataStore basicDataStore,
@@ -102,8 +73,7 @@ public class UIActionService {
 
 		if ((serverURL == null) || _isNull(serverURL.toString())) {
 			return new HealthCheckStatus(
-				HealthCheckStatus.Status.KO,
-				"Server URL is required");
+				HealthCheckStatus.Status.KO, "Server URL is required");
 		}
 
 		basicAuthenticationClient.base(serverURL.toString());
@@ -152,8 +122,7 @@ public class UIActionService {
 
 		if (oAuthDataStore.getServerURL() == null) {
 			return new HealthCheckStatus(
-				HealthCheckStatus.Status.KO,
-				"Server URL is required");
+				HealthCheckStatus.Status.KO, "Server URL is required");
 		}
 
 		// TODO perform connection check
@@ -162,15 +131,49 @@ public class UIActionService {
 			HealthCheckStatus.Status.OK, "Connection success");
 	}
 
+	@HealthCheck("checkInputDataStore")
+	public HealthCheckStatus checkInputDataStore(
+		@Option InputDataStore inputDataStore,
+		final BasicAuthenticationClient basicAuthenticationClient) {
+
+		if (AuthenticationMethod.BASIC ==
+				inputDataStore.getAuthenticationMethod()) {
+
+			return _checkBasicDataStore(
+				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
+		}
+
+		return _checkOAuthDataStore(inputDataStore.getoAuthDataStore());
+	}
+
+	@Suggestions("fetchEndpoints")
+	public SuggestionValues fetchEndpoints(
+		@Option("inputDataStore") final InputDataStore inputDataStore) {
+
+		List<SuggestionValues.Item> items = new ArrayList<>();
+
+		Map<String, String> endpoints = _getEndpointsMap(
+			"com/liferay/talend/resource/rest-openapi.yaml");
+
+		endpoints.forEach(
+			(path, returnSchemaType) -> {
+				items.add(new SuggestionValues.Item(path, returnSchemaType));
+			});
+
+		return new SuggestionValues(true, items);
+	}
+
 	private Map<String, String> _getEndpointsMap(String location) {
 		OpenAPI openAPI = new OpenAPIV3Parser().read(location);
+
 		Paths paths = openAPI.getPaths();
 
-		return paths.entrySet().stream()
-			.filter(this::_isArrayTypePredicate)
-			.collect(
-				Collectors.toMap(
-					Map.Entry::getKey, this::_mapToArrayItemReferences)
+		return paths.entrySet(
+		).stream(
+		).filter(
+			this::_isArrayTypePredicate
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, this::_mapToArrayItemReferences)
 		);
 	}
 
@@ -221,7 +224,8 @@ public class UIActionService {
 
 		Schema schema = _getSchema(stringPathItemEntry);
 
-		return ((ArraySchema) schema).getItems().get$ref();
+		return ((ArraySchema)schema).getItems(
+		).get$ref();
 	}
 
 }

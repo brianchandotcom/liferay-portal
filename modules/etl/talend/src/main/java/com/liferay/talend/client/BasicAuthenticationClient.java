@@ -14,19 +14,19 @@
 
 package com.liferay.talend.client;
 
+import javax.json.JsonObject;
+
 import org.talend.sdk.component.api.service.http.Header;
 import org.talend.sdk.component.api.service.http.HttpClient;
 import org.talend.sdk.component.api.service.http.Request;
 import org.talend.sdk.component.api.service.http.Response;
-
-import javax.json.JsonObject;
 
 /**
  * @author Igor Beslic
  */
 public interface BasicAuthenticationClient extends HttpClient {
 
-	@Request(path = "/c/portal/login", method = "POST")
+	@Request(method = "POST", path = "/c/portal/login")
 	public Response<JsonObject> checkRequest(
 		@Header("Authorization") String auth,
 		@Header("Content-Type") String contentType);

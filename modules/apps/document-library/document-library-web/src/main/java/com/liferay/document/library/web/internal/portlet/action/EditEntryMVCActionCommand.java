@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,6 +58,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -166,7 +169,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		BulkSelection<Folder> folderBulkSelection =
 			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
 
-		folderBulkSelection.forEach(
+		Stream<Folder> folderStream = folderBulkSelection.stream();
+
+		folderStream.forEach(
 			folder -> _deleteFolder(folder, moveToTrash, trashedModels));
 
 		// Delete file shortcuts before file entries. See LPS-21348.
@@ -175,7 +180,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			_fileShortcutBulkSelectionFactory.create(
 				actionRequest.getParameterMap());
 
-		fileShortcutBulkSelection.forEach(
+		Stream<FileShortcut> fileShortcutStream =
+			fileShortcutBulkSelection.stream();
+
+		fileShortcutStream.forEach(
 			fileShortcut -> _deleteFileShortcut(
 				fileShortcut, moveToTrash, trashedModels));
 
@@ -183,7 +191,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			_fileEntryBulkSelectionFactory.create(
 				actionRequest.getParameterMap());
 
-		fileEntryBulkSelection.forEach(
+		Stream<FileEntry> fileEntryStream = fileEntryBulkSelection.stream();
+
+		fileEntryStream.forEach(
 			fileEntry -> _deleteFileEntry(
 				fileEntry, moveToTrash, trashedModels));
 
@@ -284,26 +294,36 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		BulkSelection<Folder> folderBulkSelection =
 			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
 
-		folderBulkSelection.forEach(
-			folder -> _dlAppService.moveFolder(
-				folder.getFolderId(), newFolderId, serviceContext));
+		Stream<Folder> folderStream = folderBulkSelection.stream();
+
+		folderStream.forEach(
+			_toSafeConsumer(
+				folder -> _dlAppService.moveFolder(
+					folder.getFolderId(), newFolderId, serviceContext)));
 
 		BulkSelection<FileEntry> fileEntryBulkSelection =
 			_fileEntryBulkSelectionFactory.create(
 				actionRequest.getParameterMap());
 
-		fileEntryBulkSelection.forEach(
-			fileEntry -> _dlAppService.moveFileEntry(
-				fileEntry.getFileEntryId(), newFolderId, serviceContext));
+		Stream<FileEntry> fileEntryStream = fileEntryBulkSelection.stream();
+
+		fileEntryStream.forEach(
+			_toSafeConsumer(
+				fileEntry -> _dlAppService.moveFileEntry(
+					fileEntry.getFileEntryId(), newFolderId, serviceContext)));
 
 		BulkSelection<FileShortcut> fileShortcutBulkSelection =
 			_fileShortcutBulkSelectionFactory.create(
 				actionRequest.getParameterMap());
 
-		fileShortcutBulkSelection.forEach(
-			fileShortcut -> _dlAppService.updateFileShortcut(
-				fileShortcut.getFileShortcutId(), newFolderId,
-				fileShortcut.getToFileEntryId(), serviceContext));
+		Stream<FileShortcut> fileShortcutStream =
+			fileShortcutBulkSelection.stream();
+
+		fileShortcutStream.forEach(
+			_toSafeConsumer(
+				fileShortcut -> _dlAppService.updateFileShortcut(
+					fileShortcut.getFileShortcutId(), newFolderId,
+					fileShortcut.getToFileEntryId(), serviceContext)));
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -315,6 +335,19 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
 			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	private static <E, T extends Throwable> Consumer<E> _toSafeConsumer(
+		UnsafeConsumer<E, T> unsafeConsumer) {
+
+		return (E e) -> {
+			try {
+				unsafeConsumer.accept(e);
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
+		};
 	}
 
 	private void _deleteFileEntry(

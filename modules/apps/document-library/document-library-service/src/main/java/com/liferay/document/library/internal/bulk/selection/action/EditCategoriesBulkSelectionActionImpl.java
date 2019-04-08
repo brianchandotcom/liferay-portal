@@ -35,6 +35,7 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,7 +68,9 @@ public class EditCategoriesBulkSelectionActionImpl
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		bulkSelection.forEach(
+		Stream<AssetEntry> stream = bulkSelection.stream();
+
+		stream.forEach(
 			assetEntry -> {
 				try {
 					if (!BaseModelPermissionCheckerUtil.

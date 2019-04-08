@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,11 +45,13 @@ public class TestBulkSelectionAction implements BulkSelectionAction<Integer> {
 
 		Integer integer = MapUtil.getInteger(inputMap, "integer");
 
-		AtomicInteger result = new AtomicInteger();
+		Stream<Integer> stream = bulkSelection.stream();
 
-		bulkSelection.forEach(n -> result.addAndGet(n * integer));
-
-		_lastResult = result.get();
+		_lastResult = stream.map(
+			n -> n * integer
+		).mapToInt(
+			Integer::intValue
+		).sum();
 	}
 
 	private static Integer _lastResult;

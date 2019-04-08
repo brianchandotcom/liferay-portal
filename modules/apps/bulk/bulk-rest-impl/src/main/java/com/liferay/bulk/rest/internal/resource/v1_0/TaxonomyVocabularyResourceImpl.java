@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +81,24 @@ public class TaxonomyVocabularyResourceImpl
 					entry.getValue(), entry.getKey())));
 	}
 
+	private Function<AssetEntry, Set<AssetCategory>>
+		_getAssetCategoriesFunction(PermissionChecker permissionChecker) {
+
+		return assetEntry -> {
+			if (!BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					permissionChecker, assetEntry.getGroupId(),
+					assetEntry.getClassName(), assetEntry.getClassPK(),
+					ActionKeys.UPDATE)) {
+
+				return Collections.emptySet();
+			}
+
+			return new HashSet<>(
+				_assetCategoryLocalService.getCategories(
+					assetEntry.getClassName(), assetEntry.getClassPK()));
+		};
+	}
+
 	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
 			Long contentSpaceId, DocumentBulkSelection documentBulkSelection)
 		throws Exception {
@@ -106,27 +126,21 @@ public class TaxonomyVocabularyResourceImpl
 			PermissionChecker permissionChecker)
 		throws Exception {
 
-		Set<AssetCategory> assetCategories = new HashSet<>();
-
 		BulkSelection<?> bulkSelection = _documentBulkSelectionFactory.create(
 			documentBulkSelection);
 
 		BulkSelection<AssetEntry> assetEntryBulkSelection =
 			bulkSelection.toAssetEntryBulkSelection();
 
-		assetEntryBulkSelection.forEach(
-			assetEntry -> {
-				if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-						permissionChecker, assetEntry.getGroupId(),
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						ActionKeys.UPDATE)) {
+		Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
-					assetCategories.addAll(
-						_assetCategoryLocalService.getCategories(
-							assetEntry.getClassName(),
-							assetEntry.getClassPK()));
-				}
-			});
+		Set<AssetCategory> assetCategories = stream.map(
+			_getAssetCategoriesFunction(permissionChecker)
+		).reduce(
+			SetUtil::intersect
+		).orElse(
+			Collections.emptySet()
+		);
 
 		return assetCategories.stream();
 	}

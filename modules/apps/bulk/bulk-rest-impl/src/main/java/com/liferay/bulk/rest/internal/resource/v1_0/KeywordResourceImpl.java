@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.Serializable;
@@ -39,6 +40,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -96,30 +99,39 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			PermissionChecker permissionChecker)
 		throws Exception {
 
-		Set<String> assetTagNames = new HashSet<>();
-
 		BulkSelection<?> bulkSelection = _documentBulkSelectionFactory.create(
 			documentSelection);
 
 		BulkSelection<AssetEntry> assetEntryBulkSelection =
 			bulkSelection.toAssetEntryBulkSelection();
 
-		assetEntryBulkSelection.forEach(
-			assetEntry -> {
-				if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-						permissionChecker, assetEntry.getGroupId(),
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						ActionKeys.UPDATE)) {
+		Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
-					Collections.addAll(
-						assetTagNames,
-						_assetTagLocalService.getTagNames(
-							assetEntry.getClassName(),
-							assetEntry.getClassPK()));
-				}
-			});
+		return stream.map(
+			_getAssetTagNamesFunction(permissionChecker)
+		).reduce(
+			SetUtil::intersect
+		).orElse(
+			new HashSet<>()
+		);
+	}
 
-		return assetTagNames;
+	private Function<AssetEntry, Set<String>> _getAssetTagNamesFunction(
+		PermissionChecker permissionChecker) {
+
+		return assetEntry -> {
+			if (!BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					permissionChecker, assetEntry.getGroupId(),
+					assetEntry.getClassName(), assetEntry.getClassPK(),
+					ActionKeys.UPDATE)) {
+
+				return Collections.emptySet();
+			}
+
+			return SetUtil.fromArray(
+				_assetTagLocalService.getTagNames(
+					assetEntry.getClassName(), assetEntry.getClassPK()));
+		};
 	}
 
 	private Keyword _toTag(String assetTagName) {

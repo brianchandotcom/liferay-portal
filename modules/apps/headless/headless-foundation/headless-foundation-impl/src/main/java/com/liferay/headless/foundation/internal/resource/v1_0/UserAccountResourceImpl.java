@@ -63,8 +63,10 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
@@ -194,7 +196,10 @@ public class UserAccountResourceImpl
 			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
 		long suffixId = _getListTypeId(
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
-		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
+
+		LocalDateTime localDateTime =
+			LocalDateTimeUtil.toLocalDateTime(userAccount.getBirthDate());
+
 		ContactInformation contactInformation =
 			userAccount.getContactInformation();
 
@@ -207,9 +212,8 @@ public class UserAccountResourceImpl
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
 				user.getComments(), userAccount.getGivenName(),
 				user.getMiddleName(), userAccount.getFamilyName(), prefixId,
-				suffixId, true, birthDateCalendar.get(Calendar.MONTH),
-				birthDateCalendar.get(Calendar.DATE),
-				birthDateCalendar.get(Calendar.YEAR),
+				suffixId, true, localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				_getOrElse(contactInformation, ContactInformation::getSms),
 				_getOrElse(contactInformation, ContactInformation::getFacebook),
 				_getOrElse(contactInformation, ContactInformation::getJabber),
@@ -226,7 +230,9 @@ public class UserAccountResourceImpl
 			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
 		long suffixId = _getListTypeId(
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
-		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
+
+		LocalDateTime localDateTime =
+			LocalDateTimeUtil.toLocalDateTime(userAccount.getBirthDate());
 
 		return _userService.addUser(
 			contextCompany.getCompanyId(), true,
@@ -235,23 +241,10 @@ public class UserAccountResourceImpl
 			StringPool.BLANK, LocaleUtil.getDefault(),
 			userAccount.getGivenName(), StringPool.BLANK,
 			userAccount.getFamilyName(), prefixId, suffixId, true,
-			birthDateCalendar.get(Calendar.MONTH),
-			birthDateCalendar.get(Calendar.DATE),
-			birthDateCalendar.get(Calendar.YEAR), userAccount.getJobTitle(),
+			localDateTime.getMonthValue() - 1,
+			localDateTime.getDayOfMonth(),
+			localDateTime.getYear(), userAccount.getJobTitle(),
 			null, null, null, null, false, new ServiceContext());
-	}
-
-	private Calendar _getBirthDateCalendar(UserAccount userAccount) {
-		Calendar calendar = Calendar.getInstance();
-
-		if (userAccount.getBirthDate() == null) {
-			calendar.setTime(new Date(0));
-		}
-		else {
-			calendar.setTime(userAccount.getBirthDate());
-		}
-
-		return calendar;
 	}
 
 	private long _getListTypeId(String name, String type) {

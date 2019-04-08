@@ -27,6 +27,7 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -125,7 +126,8 @@ public class JournalContentAddPortletProvider
 
 		AssetEntryUsage assetEntryUsage =
 			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), layout.getPlid(), portletId);
+				assetEntry.getEntryId(), layout.getPlid(),
+				_portal.getClassNameId(Portlet.class), portletId);
 
 		if (assetEntryUsage != null) {
 			return;
@@ -133,7 +135,8 @@ public class JournalContentAddPortletProvider
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
 			layout.getGroupId(), assetEntry.getEntryId(), layout.getPlid(),
-			portletId, ServiceContextThreadLocal.getServiceContext());
+			_portal.getClassNameId(Portlet.class), portletId,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Reference

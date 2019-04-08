@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.asset.util;
 
+import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,8 +65,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
 		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
 
-		if (assetEntryUsage.getClassNameId() != _portal.getClassNameId(
-				Layout.class)) {
+		if (assetEntryUsage.getType() !=
+				AssetEntryUsagesTypeConstants.TYPE_LAYOUT) {
 
 			return Collections.emptyList();
 		}
@@ -96,9 +96,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getURL(
-									approvedArticle,
-									assetEntryUsage.getClassPK(),
-									assetEntryUsage.getPortletId(), request));
+									approvedArticle, assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -121,9 +119,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(
-									article, assetEntryUsage.getClassPK(),
-									assetEntryUsage.getPortletId(), request));
+								_getURL(article, assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "preview-draft-in-page"));
@@ -135,9 +131,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(
-									article, assetEntryUsage.getClassPK(),
-									assetEntryUsage.getPortletId(), request));
+								_getURL(article, assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "preview-pending-in-page"));
@@ -149,9 +143,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(
-									article, assetEntryUsage.getClassPK(),
-									assetEntryUsage.getPortletId(), request));
+								_getURL(article, assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle,
@@ -164,18 +156,20 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-		JournalArticle article, long plid, String portletId,
+		JournalArticle article, AssetEntryUsage assetEntryUsage,
 		HttpServletRequest request) {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portletId, plid, PortletRequest.RENDER_PHASE);
+			request, assetEntryUsage.getContainerKey(),
+			assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
 		if (!article.isApproved()) {
 			portletURL.setParameter(
 				"previewArticleId", String.valueOf(article.getId()));
 		}
 
-		return portletURL.toString() + "#portlet_" + portletId;
+		return portletURL.toString() + "#portlet_" +
+			assetEntryUsage.getContainerKey();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
@@ -102,7 +103,7 @@ public class AssetPublisherPortletLayoutListener
 				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 
-			_removeAssetEntryUsages(plid, portletId);
+			_removeAssetEntryUsages(layout, portletId);
 
 			_removeAssetListEntryUsage(plid, portletId);
 		}
@@ -135,7 +136,7 @@ public class AssetPublisherPortletLayoutListener
 			_addAssetListEntryUsage(assetListEntryId, plid, portletId);
 		}
 		else if (Objects.equals(selectionStyle, "manual")) {
-			_removeAssetEntryUsages(plid, portletId);
+			_removeAssetEntryUsages(layout, portletId);
 
 			_addAssetEntryUsages(plid, portletId, portletPreferences);
 		}
@@ -144,7 +145,7 @@ public class AssetPublisherPortletLayoutListener
 		}
 
 		if (!Objects.equals(selectionStyle, "manual")) {
-			_removeAssetEntryUsages(plid, portletId);
+			_removeAssetEntryUsages(layout, portletId);
 		}
 	}
 
@@ -190,7 +191,8 @@ public class AssetPublisherPortletLayoutListener
 			for (AssetEntry assetEntry : assetEntries) {
 				_assetEntryUsageLocalService.addAssetEntryUsage(
 					themeDisplay.getScopeGroupId(), assetEntry.getEntryId(),
-					plid, portletId, serviceContext);
+					plid, _portal.getClassNameId(Portlet.class), portletId,
+					serviceContext);
 			}
 		}
 		catch (Exception e) {
@@ -228,8 +230,9 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
-	private void _removeAssetEntryUsages(long plid, String portletId) {
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(plid, portletId);
+	private void _removeAssetEntryUsages(Layout layout, String portletId) {
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+			layout.getPlid(), _portal.getClassNameId(Portlet.class), portletId);
 	}
 
 	private void _removeAssetListEntryUsage(long plid, String portletId) {

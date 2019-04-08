@@ -30,6 +30,7 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -116,6 +117,7 @@ public class JournalArticleAssetEntryUsageRecorder
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
 					assetEntry.getEntryId(), layout.getPlid(),
+					_portal.getClassNameId(Portlet.class),
 					contentSearch.getPortletId());
 
 			if (assetEntryUsage != null) {
@@ -124,7 +126,8 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				contentSearch.getGroupId(), assetEntry.getEntryId(),
-				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
+				layout.getPlid(), _portal.getClassNameId(Portlet.class),
+				contentSearch.getPortletId(), serviceContext);
 		}
 	}
 
@@ -169,6 +172,7 @@ public class JournalArticleAssetEntryUsageRecorder
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
 					assetEntry.getEntryId(), portletPreferences.getPlid(),
+					_portal.getClassNameId(Portlet.class),
 					portletPreferences.getPortletId());
 
 			if (assetEntryUsage != null) {
@@ -177,8 +181,9 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				assetEntry.getGroupId(), assetEntry.getEntryId(),
-				portletPreferences.getPlid(), portletPreferences.getPortletId(),
-				serviceContext);
+				portletPreferences.getPlid(),
+				_portal.getClassNameId(Portlet.class),
+				portletPreferences.getPortletId(), serviceContext);
 		}
 	}
 

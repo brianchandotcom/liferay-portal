@@ -284,12 +284,23 @@ exports[`Should remove a item 1`] = `
           </div>
         </nav>
         <div
-          className="container-fluid-1280"
+          className="lfr-search-container-wrapper container-fluid-1280"
         >
-          <span
-            aria-hidden="true"
-            className="loading-animation"
-          />
+          <ListView
+            emptyMessageText="SLA allows to define and measure process performance."
+            emptyTitleText="No SLAs Yet"
+            isFetching={false}
+            isLoading={true}
+          >
+            <div>
+              <LoadingState>
+                <span
+                  aria-hidden="true"
+                  className="loading-animation"
+                />
+              </LoadingState>
+            </div>
+          </ListView>
         </div>
       </SLAListCard>
     </Router>
@@ -331,12 +342,14 @@ Array [
     </div>
   </nav>,
   <div
-    className="container-fluid-1280"
+    className="lfr-search-container-wrapper container-fluid-1280"
   >
-    <span
-      aria-hidden="true"
-      className="loading-animation"
-    />
+    <div>
+      <span
+        aria-hidden="true"
+        className="loading-animation"
+      />
+    </div>
   </div>,
 ]
 `;
@@ -375,12 +388,14 @@ Array [
     </div>
   </nav>,
   <div
-    className="container-fluid-1280"
+    className="lfr-search-container-wrapper container-fluid-1280"
   >
-    <span
-      aria-hidden="true"
-      className="loading-animation"
-    />
+    <div>
+      <span
+        aria-hidden="true"
+        className="loading-animation"
+      />
+    </div>
   </div>,
 ]
 `;
@@ -669,12 +684,23 @@ exports[`Should render toast with SLA saved message 1`] = `
           </div>
         </nav>
         <div
-          className="container-fluid-1280"
+          className="lfr-search-container-wrapper container-fluid-1280"
         >
-          <span
-            aria-hidden="true"
-            className="loading-animation"
-          />
+          <ListView
+            emptyMessageText="SLA allows to define and measure process performance."
+            emptyTitleText="No SLAs Yet"
+            isFetching={false}
+            isLoading={true}
+          >
+            <div>
+              <LoadingState>
+                <span
+                  aria-hidden="true"
+                  className="loading-animation"
+                />
+              </LoadingState>
+            </div>
+          </ListView>
         </div>
       </SLAListCard>
     </Router>
@@ -966,12 +992,23 @@ exports[`Should render toast with SLA updated message 1`] = `
           </div>
         </nav>
         <div
-          className="container-fluid-1280"
+          className="lfr-search-container-wrapper container-fluid-1280"
         >
-          <span
-            aria-hidden="true"
-            className="loading-animation"
-          />
+          <ListView
+            emptyMessageText="SLA allows to define and measure process performance."
+            emptyTitleText="No SLAs Yet"
+            isFetching={false}
+            isLoading={true}
+          >
+            <div>
+              <LoadingState>
+                <span
+                  aria-hidden="true"
+                  className="loading-animation"
+                />
+              </LoadingState>
+            </div>
+          </ListView>
         </div>
       </SLAListCard>
     </Router>

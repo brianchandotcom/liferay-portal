@@ -3481,22 +3481,16 @@ exports[`Should edit the SLA with valid values 1`] = `
     <Router
       history={
         Object {
-          "action": "POP",
+          "action": "REPLACE",
           "block": [Function],
           "canGo": [Function],
           "createHref": [Function],
           "entries": Array [
             Object {
               "hash": "",
-              "match": Object {
-                "params": Object {
-                  "page": 1,
-                  "search": undefined,
-                  "sort": undefined,
-                },
-              },
-              "pathname": "/processes/1/10/title%3Aasc",
-              "search": "?backPath=%2F",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
             },
             Object {
               "hash": "",
@@ -3517,15 +3511,9 @@ exports[`Should edit the SLA with valid values 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "match": Object {
-              "params": Object {
-                "page": 1,
-                "search": undefined,
-                "sort": undefined,
-              },
-            },
-            "pathname": "/processes/1/10/title%3Aasc",
-            "search": "?backPath=%2F",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
           },
           "push": [Function],
           "replace": [Function],
@@ -4443,22 +4431,16 @@ exports[`Should submit a new SLA with valid values 1`] = `
     <Router
       history={
         Object {
-          "action": "POP",
+          "action": "REPLACE",
           "block": [Function],
           "canGo": [Function],
           "createHref": [Function],
           "entries": Array [
             Object {
               "hash": "",
-              "match": Object {
-                "params": Object {
-                  "page": 1,
-                  "search": undefined,
-                  "sort": undefined,
-                },
-              },
-              "pathname": "/processes/1/10/title%3Aasc",
-              "search": "?backPath=%2F",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
             },
             Object {
               "hash": "",
@@ -4479,15 +4461,9 @@ exports[`Should submit a new SLA with valid values 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "match": Object {
-              "params": Object {
-                "page": 1,
-                "search": undefined,
-                "sort": undefined,
-              },
-            },
-            "pathname": "/processes/1/10/title%3Aasc",
-            "search": "?backPath=%2F",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
           },
           "push": [Function],
           "replace": [Function],
@@ -4743,22 +4719,16 @@ exports[`Should submit a new SLA with valid values 1`] = `
                         className="btn btn-secondary"
                         history={
                           Object {
-                            "action": "POP",
+                            "action": "REPLACE",
                             "block": [Function],
                             "canGo": [Function],
                             "createHref": [Function],
                             "entries": Array [
                               Object {
                                 "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
+                                "pathname": "/",
+                                "search": "",
+                                "state": undefined,
                               },
                               Object {
                                 "hash": "",
@@ -4779,15 +4749,9 @@ exports[`Should submit a new SLA with valid values 1`] = `
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
+                              "pathname": "/",
+                              "search": "",
+                              "state": undefined,
                             },
                             "push": [Function],
                             "replace": [Function],
@@ -4822,22 +4786,16 @@ exports[`Should submit a new SLA with valid values 1`] = `
                           currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                           history={
                             Object {
-                              "action": "POP",
+                              "action": "REPLACE",
                               "block": [Function],
                               "canGo": [Function],
                               "createHref": [Function],
                               "entries": Array [
                                 Object {
                                   "hash": "",
-                                  "match": Object {
-                                    "params": Object {
-                                      "page": 1,
-                                      "search": undefined,
-                                      "sort": undefined,
-                                    },
-                                  },
-                                  "pathname": "/processes/1/10/title%3Aasc",
-                                  "search": "?backPath=%2F",
+                                  "pathname": "/",
+                                  "search": "",
+                                  "state": undefined,
                                 },
                                 Object {
                                   "hash": "",
@@ -4858,15 +4816,9 @@ exports[`Should submit a new SLA with valid values 1`] = `
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
+                                "pathname": "/",
+                                "search": "",
+                                "state": undefined,
                               },
                               "push": [Function],
                               "replace": [Function],

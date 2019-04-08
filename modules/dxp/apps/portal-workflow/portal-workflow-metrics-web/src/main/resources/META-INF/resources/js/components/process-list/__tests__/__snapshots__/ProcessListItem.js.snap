@@ -53,7 +53,7 @@ exports[`Should render component with 1 instance count 1`] = `
         <li>
           <a
             className="dropdown-item"
-            href="/slas/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            href="/slas/36401/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             Set Up SLAs
@@ -118,7 +118,7 @@ exports[`Should render component with one list item 1`] = `
         <li>
           <a
             className="dropdown-item"
-            href="/slas/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            href="/slas/36401/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             Set Up SLAs

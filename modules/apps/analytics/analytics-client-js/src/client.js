@@ -64,10 +64,9 @@ class Client {
 	 */
 	_getRequestBody(analytics, userId, context) {
 		const events = this._getContextEvents(analytics, context);
-		const {analyticsKey, dataSourceId} = analytics.config;
+		const {dataSourceId} = analytics.config;
 
 		return {
-			analyticsKey,
 			context,
 			dataSourceId,
 			events,

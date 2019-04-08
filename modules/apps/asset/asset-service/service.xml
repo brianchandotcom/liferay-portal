@@ -23,6 +23,7 @@
 		<column name="assetEntryId" type="long" />
 		<column name="plid" type="long" />
 		<column name="portletId" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

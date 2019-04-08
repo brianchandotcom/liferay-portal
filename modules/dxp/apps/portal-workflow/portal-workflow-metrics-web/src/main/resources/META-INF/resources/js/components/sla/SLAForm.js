@@ -315,7 +315,7 @@ class SLAForm extends React.Component {
 
 							<div
 								className={`form-group col col-sm-3 ${
-									(errors[DURATION] || errors[HOURS]) ? 'has-error' : ''
+									errors[DURATION] || errors[HOURS] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel

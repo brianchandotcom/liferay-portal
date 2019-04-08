@@ -27,10 +27,9 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * @author Eduardo García
@@ -72,17 +71,9 @@ public class FriendlyURLResolverRegistryUtil {
 	}
 
 	public static String[] getURLSeparators() {
-		Collection<FriendlyURLResolver> friendlyURLResolvers =
-			getFriendlyURLResolversAsCollection();
+		Set<String> urlSeparators = _serviceTrackerMap.keySet();
 
-		Stream<FriendlyURLResolver> stream = friendlyURLResolvers.stream();
-
-		return stream.flatMap(
-			friendlyURLResolver -> Arrays.stream(
-				friendlyURLResolver.getURLSeparators())
-		).toArray(
-			String[]::new
-		);
+		return urlSeparators.toArray(new String[urlSeparators.size()]);
 	}
 
 	public static void register(FriendlyURLResolver friendlyURLResolver) {
@@ -122,11 +113,7 @@ public class FriendlyURLResolverRegistryUtil {
 					FriendlyURLResolver friendlyURLResolver =
 						registry.getService(serviceReference);
 
-					for (String urlSeparator :
-							friendlyURLResolver.getURLSeparators()) {
-
-						emitter.emit(urlSeparator);
-					}
+					emitter.emit(friendlyURLResolver.getURLSeparator());
 
 					registry.ungetService(serviceReference);
 				}

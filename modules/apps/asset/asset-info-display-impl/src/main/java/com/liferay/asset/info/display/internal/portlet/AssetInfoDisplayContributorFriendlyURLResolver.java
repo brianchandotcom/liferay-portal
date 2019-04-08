@@ -121,22 +121,6 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 		return "/a/";
 	}
 
-	@Override
-	public String[] getURLSeparators() {
-		Set<String> urlSeparators = new HashSet<>();
-
-		List<InfoDisplayContributor> infoDisplayContributors =
-			_infoDisplayContributorTracker.getInfoDisplayContributors();
-
-		for (InfoDisplayContributor infoDisplayContributor :
-				infoDisplayContributors) {
-
-			urlSeparators.add(infoDisplayContributor.getInfoURLSeparator());
-		}
-
-		return ArrayUtil.toStringArray(urlSeparators);
-	}
-
 	private AssetEntry _getAssetEntry(
 			InfoDisplayContributor infoDisplayContributor, long groupId,
 			String friendlyURL)

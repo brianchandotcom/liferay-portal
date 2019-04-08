@@ -87,6 +87,15 @@ public class AssetEntryUsageLocalServiceImpl
 
 	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, int type, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		return assetEntryUsagePersistence.findByA_T(
+			assetEntryId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(
 		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
@@ -97,6 +106,11 @@ public class AssetEntryUsageLocalServiceImpl
 	@Override
 	public int getAssetEntryUsagesCount(long assetEntryId) {
 		return assetEntryUsagePersistence.countByAssetEntryId(assetEntryId);
+	}
+
+	@Override
+	public int getAssetEntryUsagesCount(long assetEntryId, int type) {
+		return assetEntryUsagePersistence.countByA_T(assetEntryId, type);
 	}
 
 	@Override

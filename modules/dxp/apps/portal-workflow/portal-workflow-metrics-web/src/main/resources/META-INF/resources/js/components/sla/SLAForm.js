@@ -141,7 +141,7 @@ class SLAForm extends React.Component {
 
 				const formattedHours = formatHours(hours, minutes);
 
-				this.context.setTitle(Liferay.Language.get(name));
+				this.context.setTitle(name);
 
 				this.setState({
 					days,

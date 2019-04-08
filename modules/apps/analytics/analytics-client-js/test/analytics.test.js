@@ -235,6 +235,49 @@ describe('Analytics Client', () => {
 				events.should.have.lengthOf(7);
 			});
 		});
+
+		it('should preserve the user id whenever the set identity is called after a anonymous navigation', () => {
+			fetchMock.mock(/ac-server/ig, () => Promise.resolve(200));
+			fetchMock.mock(/identity$/, () => Promise.resolve(200));
+
+			sendDummyEvents(Analytics, 1);
+
+			Analytics.flush();
+
+			const userId = localStorage.getItem(STORAGE_KEY_USER_ID);
+
+			return Analytics.setIdentity({
+				email: 'john@liferay.com',
+				name: 'John'
+			}).then(() => {
+				expect(localStorage.getItem(STORAGE_KEY_USER_ID)).to.equal(userId);
+			});
+		});
+
+		it('should regenerate the user id on logouts or session expirations ', () => {
+			fetchMock.mock(/ac-server/ig, () => Promise.resolve(200));
+			fetchMock.mock(/identity$/, () => Promise.resolve(200));
+
+			sendDummyEvents(Analytics, 1);
+
+			Analytics.flush();
+
+			const userId = localStorage.getItem(STORAGE_KEY_USER_ID);
+
+			Analytics.setIdentity({
+				email: 'john@liferay.com',
+				name: 'John'
+			});
+
+			Analytics.reset();
+			Analytics.dispose();
+			
+			sendDummyEvents(Analytics, 1);
+
+			Analytics.flush().then(() => {
+				expect(localStorage.getItem(STORAGE_KEY_USER_ID)).not.to.equal(userId);
+			});
+		});
 	});
 
 	describe('.send', () => {

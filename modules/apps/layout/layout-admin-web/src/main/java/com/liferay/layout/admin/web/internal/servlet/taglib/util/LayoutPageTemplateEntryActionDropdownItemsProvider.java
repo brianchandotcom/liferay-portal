@@ -93,6 +93,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 					add(
 						_getRenameLayoutPageTemplateEntryActionUnsafeConsumer());
+
+					add(
+						_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer());
 				}
 
 				if (LayoutPageTemplateEntryPermission.contains(
@@ -111,6 +114,20 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 						_getDeleteLayoutPageTemplateEntryActionUnsafeConsumer());
 				}
 			}
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/layout/edit_layout", "redirect",
+				_themeDisplay.getURLCurrent(), "backURL",
+				_themeDisplay.getURLCurrent(), "selPlid",
+				_layoutPageTemplateEntry.getPlid());
+			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
 		};
 	}
 

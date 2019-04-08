@@ -16,7 +16,6 @@ package com.liferay.asset.list.internal.exportimport.staged.model.repository;
 
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
-import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
@@ -25,8 +24,12 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,6 +51,15 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
+		Map<Long, Long> segmentsEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				SegmentsEntry.class);
+
+		long segmentsEntryId = MapUtil.getLong(
+			segmentsEntryIds,
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			assetListEntrySegmentsEntryRel);
 
@@ -59,7 +71,7 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			addAssetListEntrySegmentsEntryRel(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
-				assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+				segmentsEntryId,
 				assetListEntrySegmentsEntryRel.getTypeSettings(),
 				serviceContext);
 	}
@@ -150,6 +162,10 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
+		if (assetListEntrySegmentsEntryRel.getTypeSettings() == null) {
+			return assetListEntrySegmentsEntryRel;
+		}
+
 		return _assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(
 				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
@@ -162,9 +178,9 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference
-	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
-	private StagingAssetEntryHelper _stagingAssetEntryHelper;
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 }

@@ -14,18 +14,20 @@
 
 package com.liferay.asset.list.internal.exportimport.data.handler;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
-import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Map;
 
@@ -74,6 +76,18 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 
 		Element entryElement = portletDataContext.getExportDataElement(
 			assetListEntrySegmentsEntryRel);
+
+		if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() !=
+				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT) {
+
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(
+					assetListEntrySegmentsEntryRel.getSegmentsEntryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, assetListEntrySegmentsEntryRel,
+				segmentsEntry, PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
 
 		portletDataContext.addClassedModel(
 			entryElement,
@@ -162,7 +176,7 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 	}
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel)",
@@ -170,8 +184,5 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 	)
 	private StagedModelRepository<AssetListEntrySegmentsEntryRel>
 		_stagedModelRepository;
-
-	@Reference
-	private StagingAssetEntryHelper _stagingAssetEntryHelper;
 
 }

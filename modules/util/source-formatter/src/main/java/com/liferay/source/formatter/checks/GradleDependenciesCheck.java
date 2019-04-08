@@ -28,7 +28,9 @@ import java.io.Serializable;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,7 +154,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				dependency = sb.toString();
 			}
 
-			uniqueDependencies.add(dependency);
+			uniqueDependencies.add(_sortDependencyAttributes(dependency));
 		}
 
 		boolean patchedOSGiCore = _hasPatchedOSGiCore(uniqueDependencies);
@@ -197,6 +199,39 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return StringUtil.replace(content, dependencies, sb.toString());
 	}
 
+	private String _sortDependencyAttributes(String dependency) {
+		Matcher matcher = _dependencyPattern.matcher(dependency);
+
+		if (!matcher.find()) {
+			return dependency;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(matcher.group(1));
+		sb.append(StringPool.SPACE);
+
+		Map<String, String> attributesMap = new TreeMap<>();
+
+		matcher = _dependencyAttributesPattern.matcher(dependency);
+
+		while (matcher.find()) {
+			attributesMap.put(matcher.group(1), matcher.group(2));
+		}
+
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(": \"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private static final String _ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1 =
 		"compileOnly group: \"com.liferay\", name: \"org.eclipse.osgi\", " +
 			"version: \"3.13.0.LIFERAY-PATCHED-1\"";
@@ -209,6 +244,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"compileOnly group: \"org.osgi\", name: \"osgi.core\", version: " +
 			"\"6.0.0\"";
 
+	private static final Pattern _dependencyAttributesPattern = Pattern.compile(
+		"(\\w+): \"([\\w.-]+)\"");
+	private static final Pattern _dependencyPattern = Pattern.compile(
+		"^(\\w+) (\\w+: \"[\\w.-]+\"(, )?)+$");
 	private static final Pattern _incorrectGroupNameVersionPattern =
 		Pattern.compile(
 			"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",

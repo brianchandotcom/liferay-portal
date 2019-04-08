@@ -49,7 +49,7 @@ public class DEDataRecordCollectionSearchExecutor {
 			deDataRecordCollectionSearchRequest.getCompanyId(),
 			deDataRecordCollectionSearchRequest.getGroupId(),
 			deDataRecordCollectionSearchRequest.getKeywords(),
-			DDLRecordSetConstants.SCOPE_ANY,
+			DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 			deDataRecordCollectionSearchRequest.getStart(),
 			deDataRecordCollectionSearchRequest.getEnd(), null);
 

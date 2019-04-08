@@ -16,9 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<h4><liferay-ui:message key="time-zone" /></h4>
-
 <aui:fieldset>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<%
 	User defaultUser = company.getDefaultUser();

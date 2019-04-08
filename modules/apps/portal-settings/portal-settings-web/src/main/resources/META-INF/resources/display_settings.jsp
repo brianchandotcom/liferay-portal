@@ -23,6 +23,4 @@
 
 <h3><liferay-ui:message key="display-settings" /></h3>
 
-<%@ include file="/display.settings/time_zone.jsp" %>
-
 <%@ include file="/display.settings/look_and_feel.jsp" %>

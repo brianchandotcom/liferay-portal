@@ -26,12 +26,26 @@ public class MissingParenthesesCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return _CONDITIONAL_OPERATOR_TOKEN_TYPES;
+		return ArrayUtil.append(
+			_CONDITIONAL_OPERATOR_TOKEN_TYPES, TokenTypes.QUESTION);
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if (detailAST.getType() == TokenTypes.QUESTION) {
+			if (ArrayUtil.contains(
+					_RELATIONAL_OPERATOR_TOKEN_TYPES,
+					firstChildDetailAST.getType())) {
+
+				log(
+					firstChildDetailAST.getFirstChild(),
+					_MSG_MISSING_PARENTHESES_2, "left", detailAST.getText());
+			}
+
+			return;
+		}
 
 		if ((firstChildDetailAST.getType() != detailAST.getType()) &&
 			ArrayUtil.contains(

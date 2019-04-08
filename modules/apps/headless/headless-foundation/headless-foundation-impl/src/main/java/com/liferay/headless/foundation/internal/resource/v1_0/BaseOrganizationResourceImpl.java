@@ -58,18 +58,11 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/my-user-accounts/{userAccountId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -133,18 +126,11 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{userAccountId}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getUserAccountOrganizationsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

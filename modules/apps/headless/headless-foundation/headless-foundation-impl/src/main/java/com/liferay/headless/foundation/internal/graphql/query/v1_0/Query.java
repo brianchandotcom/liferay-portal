@@ -242,9 +242,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getMyUserAccountOrganizationsPage(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -253,7 +251,7 @@ public class Query {
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getMyUserAccountOrganizationsPage(
-						userAccountId, Pagination.of(pageSize, page));
+						userAccountId);
 
 				return paginationPage.getItems();
 			});
@@ -318,9 +316,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getUserAccountOrganizationsPage(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -329,7 +325,7 @@ public class Query {
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getUserAccountOrganizationsPage(
-						userAccountId, Pagination.of(pageSize, page));
+						userAccountId);
 
 				return paginationPage.getItems();
 			});

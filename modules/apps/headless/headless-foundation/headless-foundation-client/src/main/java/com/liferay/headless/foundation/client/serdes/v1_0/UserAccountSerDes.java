@@ -89,6 +89,20 @@ public class UserAccountSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"dateCreated\": ");
+
+		sb.append("\"");
+		sb.append(userAccount.getDateCreated());
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		sb.append("\"");
+		sb.append(userAccount.getDateModified());
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"email\": ");
 
 		sb.append("\"");
@@ -383,6 +397,16 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dashboardURL")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setDashboardURL((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setDateCreated((Date)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setDateModified((Date)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "email")) {

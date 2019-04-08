@@ -819,6 +819,10 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Http.Options options = _createHttpOptions();
 
+		options.setBody(
+			inputObjectMapper.writeValueAsString(userAccount),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
 		String location = _resourceURL + _toPath("/user-accounts");
 
 		options.setLocation(location);
@@ -1628,6 +1632,18 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("dateCreated")) {
+			sb.append(_dateFormat.format(userAccount.getDateCreated()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			sb.append(_dateFormat.format(userAccount.getDateModified()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("email")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getEmail()));
@@ -1751,6 +1767,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				alternateName = RandomTestUtil.randomString();
 				birthDate = RandomTestUtil.nextDate();
 				dashboardURL = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				email = RandomTestUtil.randomString();
 				familyName = RandomTestUtil.randomString();
 				givenName = RandomTestUtil.randomString();

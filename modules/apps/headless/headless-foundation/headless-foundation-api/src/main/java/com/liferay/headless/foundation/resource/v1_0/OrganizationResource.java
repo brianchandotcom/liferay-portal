@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 public interface OrganizationResource {
 
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception;
 
 	public Page<Organization> getOrganizationsPage(
@@ -50,7 +50,7 @@ public interface OrganizationResource {
 		throws Exception;
 
 	public Page<Organization> getUserAccountOrganizationsPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

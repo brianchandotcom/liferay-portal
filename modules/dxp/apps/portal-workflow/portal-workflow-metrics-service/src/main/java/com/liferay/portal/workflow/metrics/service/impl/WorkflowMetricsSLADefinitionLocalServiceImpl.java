@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
+import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
@@ -77,6 +80,21 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		return workflowMetricsSLADefinition;
 	}
 
+	@Override
+	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		_workflowMetricsPortalExecutor.execute(
+			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+
+		return workflowMetricsSLADefinitionPersistence.remove(
+			workflowMetricsSLADefinition);
+	}
+
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId) {
 
@@ -128,6 +146,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setStopNodeNames(
 			StringUtil.merge(stopNodeNames));
 
+		_workflowMetricsPortalExecutor.execute(
+			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+
 		return workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
 	}
@@ -158,5 +183,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			throw new WorkflowMetricsSLADefinitionDuplicateNameException();
 		}
 	}
+
+	@ServiceReference(type = SLAProcessResultWorkflowMetricsIndexer.class)
+	private SLAProcessResultWorkflowMetricsIndexer
+		_slaProcessResultWorkflowMetricsIndexer;
+
+	@ServiceReference(type = WorkflowMetricsPortalExecutor.class)
+	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

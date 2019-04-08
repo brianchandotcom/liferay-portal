@@ -36,6 +36,14 @@ public class InstanceWorkflowMetricsIndexer
 	extends BaseWorkflowMetricsIndexer<KaleoInstance> {
 
 	@Override
+	public void deleteDocument(KaleoInstance kaleoInstance) {
+		super.deleteDocument(kaleoInstance);
+
+		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+			kaleoInstance.getCompanyId(), kaleoInstance.getKaleoInstanceId());
+	}
+
+	@Override
 	protected Document createDocument(KaleoInstance kaleoInstance) {
 		Document document = new DocumentImpl();
 
@@ -105,5 +113,9 @@ public class InstanceWorkflowMetricsIndexer
 
 	@Reference
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Reference
+	private SLAProcessResultWorkflowMetricsIndexer
+		_slaProcessResultWorkflowMetricsIndexer;
 
 }

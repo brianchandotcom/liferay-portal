@@ -113,7 +113,7 @@ public class SegmentsPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "segments")) {
 			return getExportDataRootElementString(rootElement);
 		}
 
@@ -138,7 +138,7 @@ public class SegmentsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "segments")) {
 			return null;
 		}
 

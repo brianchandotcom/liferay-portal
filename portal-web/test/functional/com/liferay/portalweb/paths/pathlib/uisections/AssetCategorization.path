@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//span[@id='item-tag'][contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(@id,'assetTagsSelector')]//span[@id='item-tag'][contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

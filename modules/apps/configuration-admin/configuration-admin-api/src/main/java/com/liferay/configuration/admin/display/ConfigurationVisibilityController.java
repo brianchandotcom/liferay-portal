@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author Drew Brokke
  */
-public interface ConfigurationAvailabilityController {
+public interface ConfigurationVisibilityController {
 
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK);

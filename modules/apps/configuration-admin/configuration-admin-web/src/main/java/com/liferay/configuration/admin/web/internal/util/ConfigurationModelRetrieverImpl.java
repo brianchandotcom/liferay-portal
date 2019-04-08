@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
-import com.liferay.configuration.admin.display.ConfigurationAvailabilityController;
+import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -214,7 +214,7 @@ public class ConfigurationModelRetrieverImpl
 
 		_configurationAvailabilityControllerServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, ConfigurationAvailabilityController.class,
+				_bundleContext, ConfigurationVisibilityController.class,
 				"configuration.pid");
 	}
 
@@ -311,13 +311,12 @@ public class ConfigurationModelRetrieverImpl
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
 			StringPool.QUESTION, factory);
 
-		ConfigurationAvailabilityController
-			configurationAvailabilityController =
-				_configurationAvailabilityControllerServiceTrackerMap.
-					getService(pid);
+		ConfigurationVisibilityController configurationVisibilityController =
+			_configurationAvailabilityControllerServiceTrackerMap.getService(
+				pid);
 
-		if ((configurationAvailabilityController != null) &&
-			!configurationAvailabilityController.isVisible(scope, scopePK)) {
+		if ((configurationVisibilityController != null) &&
+			!configurationVisibilityController.isVisible(scope, scopePK)) {
 
 			return null;
 		}
@@ -409,7 +408,7 @@ public class ConfigurationModelRetrieverImpl
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	private ServiceTrackerMap<String, ConfigurationAvailabilityController>
+	private ServiceTrackerMap<String, ConfigurationVisibilityController>
 		_configurationAvailabilityControllerServiceTrackerMap;
 
 	@Reference

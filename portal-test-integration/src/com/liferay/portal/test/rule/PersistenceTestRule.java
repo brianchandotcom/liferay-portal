@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.test.rule.ArquillianUtil;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.tools.DBUpgrader;
@@ -32,10 +32,10 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
+public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 
-	public static final PersistenceTestCallback INSTANCE =
-		new PersistenceTestCallback();
+	public static final PersistenceTestRule INSTANCE =
+		new PersistenceTestRule();
 
 	@Override
 	public void afterMethod(
@@ -92,7 +92,11 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 		return modelListeners;
 	}
 
-	private PersistenceTestCallback() {
+	@Override
+	protected void afterClass(Description description, Object object) {
+	}
+
+	private PersistenceTestRule() {
 	}
 
 	private static boolean _initialized;

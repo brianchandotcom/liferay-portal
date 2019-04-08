@@ -17,7 +17,6 @@ package com.liferay.portal.settings.web.internal.configuration.admin.display;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
@@ -39,20 +38,17 @@ public class LegacyPortalSettingsConfigurationScreen
 
 	@Override
 	public String getCategoryKey() {
-		return "portal-settings";
+		return "instance-configuration";
 	}
 
 	@Override
 	public String getKey() {
-		return "portal-settings";
+		return "general";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(
-				locale, LegacyPortalSettingsConfigurationScreen.class),
-			"category.portal-settings");
+		return LanguageUtil.get(locale, "general");
 	}
 
 	@Override

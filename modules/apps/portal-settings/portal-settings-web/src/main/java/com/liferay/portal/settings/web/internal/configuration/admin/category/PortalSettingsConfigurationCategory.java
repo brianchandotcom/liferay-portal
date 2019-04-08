@@ -32,7 +32,7 @@ public class PortalSettingsConfigurationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "portal-settings";
+		return "instance-configuration";
 	}
 
 	@Override

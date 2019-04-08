@@ -17,13 +17,14 @@ package com.liferay.frontend.editor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -121,7 +122,7 @@ public class EditorConfigContributorTest {
 				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -171,7 +172,7 @@ public class EditorConfigContributorTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -216,7 +217,7 @@ public class EditorConfigContributorTest {
 				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -264,7 +265,7 @@ public class EditorConfigContributorTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -275,7 +276,7 @@ public class EditorConfigContributorTest {
 			configJSONObject.getString("className"));
 
 		editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME_2,
 				new HashMap<String, Object>(), null, null);
 
@@ -317,7 +318,7 @@ public class EditorConfigContributorTest {
 				videoEditorVideoConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -369,7 +370,7 @@ public class EditorConfigContributorTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -421,7 +422,7 @@ public class EditorConfigContributorTest {
 				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -472,7 +473,7 @@ public class EditorConfigContributorTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -522,7 +523,7 @@ public class EditorConfigContributorTest {
 				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -552,10 +553,16 @@ public class EditorConfigContributorTest {
 	private static BundleContext _bundleContext;
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
+	@Inject
+	private static JSONFactory _jsonFactory;
+
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration2;
+
+	@Inject
+	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	private static class EmoticonsEditorConfigContributor
 		implements EditorConfigContributor {
@@ -574,7 +581,7 @@ public class EditorConfigContributorTest {
 				"toolbars");
 
 			if (toolbarsJSONObject == null) {
-				toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				toolbarsJSONObject = _jsonFactory.createJSONObject();
 
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}
@@ -597,7 +604,7 @@ public class EditorConfigContributorTest {
 			jsonObject.put(
 				"className", ImageEditorConfigContributor.class.getName());
 
-			JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject toolbarsJSONObject = _jsonFactory.createJSONObject();
 
 			toolbarsJSONObject.put("button1", "image");
 			toolbarsJSONObject.put("button2", "gif");
@@ -624,7 +631,7 @@ public class EditorConfigContributorTest {
 				"toolbars");
 
 			if (toolbarsJSONObject == null) {
-				toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				toolbarsJSONObject = _jsonFactory.createJSONObject();
 
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}
@@ -651,7 +658,7 @@ public class EditorConfigContributorTest {
 				"toolbars");
 
 			if (toolbarsJSONObject == null) {
-				toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				toolbarsJSONObject = _jsonFactory.createJSONObject();
 
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}
@@ -678,7 +685,7 @@ public class EditorConfigContributorTest {
 				"toolbars");
 
 			if (toolbarsJSONObject == null) {
-				toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				toolbarsJSONObject = _jsonFactory.createJSONObject();
 
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}

@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -133,7 +134,7 @@ public class EditorConfigTransformerTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -171,7 +172,7 @@ public class EditorConfigTransformerTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -221,7 +222,7 @@ public class EditorConfigTransformerTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -279,7 +280,7 @@ public class EditorConfigTransformerTest {
 				properties);
 
 		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
+			_editorConfigurationFactory.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
 				new HashMap<String, Object>(), null, null);
 
@@ -309,6 +310,10 @@ public class EditorConfigTransformerTest {
 		_editorConfigContributorServiceRegistration;
 	private ServiceRegistration<EditorConfigTransformer>
 		_editorConfigTransfomerServiceRegistration;
+
+	@Inject
+	private EditorConfigurationFactory _editorConfigurationFactory;
+
 	private ServiceRegistration<EditorOptionsContributor>
 		_editorOptionsContributorServiceRegistration1;
 	private ServiceRegistration<EditorOptionsContributor>

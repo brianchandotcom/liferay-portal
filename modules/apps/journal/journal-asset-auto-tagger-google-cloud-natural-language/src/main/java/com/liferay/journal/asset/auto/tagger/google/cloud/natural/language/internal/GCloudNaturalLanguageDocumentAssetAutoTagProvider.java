@@ -23,16 +23,13 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.journal.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -99,18 +96,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			ddmStructure, ddmFormValues, locale);
 	}
 
-	private GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			_getConfiguration(JournalArticle journalArticle)
-		throws ConfigurationException {
-
-		return _configurationProvider.getConfiguration(
-			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				journalArticle.getCompanyId(),
-				GCloudNaturalLanguageAssetAutoTagProviderConstants.
-					SERVICE_NAME));
-	}
-
 	private Collection<String> _getTagNames(JournalArticle journalArticle)
 		throws Exception {
 
@@ -118,7 +103,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			journalArticle.getDefaultLanguageId());
 
 		return _gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
-			_getConfiguration(journalArticle),
+			_configurationProvider.getCompanyConfiguration(
+				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					class,
+				journalArticle.getCompanyId()),
 			extractDDMContent(journalArticle, locale), locale,
 			ContentTypes.TEXT_PLAIN);
 	}

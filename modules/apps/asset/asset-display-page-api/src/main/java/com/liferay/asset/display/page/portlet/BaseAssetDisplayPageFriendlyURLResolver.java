@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -114,9 +113,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	@Reference
 	protected AssetDisplayPageEntryLocalService
 		assetDisplayPageEntryLocalService;
-
-	@Reference
-	protected AssetEntryService assetEntryService;
 
 	@Reference
 	protected AssetHelper assetHelper;

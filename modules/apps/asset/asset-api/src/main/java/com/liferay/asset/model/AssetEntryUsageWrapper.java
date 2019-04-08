@@ -51,9 +51,10 @@ public class AssetEntryUsageWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("portletId", getPortletId());
+		attributes.put("plid", getPlid());
+		attributes.put("containerType", getContainerType());
+		attributes.put("containerKey", getContainerKey());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -97,22 +98,28 @@ public class AssetEntryUsageWrapper
 			setAssetEntryId(assetEntryId);
 		}
 
-		Long classNameId = (Long)attributes.get("classNameId");
+		Long plid = (Long)attributes.get("plid");
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
+		if (plid != null) {
+			setPlid(plid);
 		}
 
-		Long classPK = (Long)attributes.get("classPK");
+		Long containerType = (Long)attributes.get("containerType");
 
-		if (classPK != null) {
-			setClassPK(classPK);
+		if (containerType != null) {
+			setContainerType(containerType);
 		}
 
-		String portletId = (String)attributes.get("portletId");
+		String containerKey = (String)attributes.get("containerKey");
 
-		if (portletId != null) {
-			setPortletId(portletId);
+		if (containerKey != null) {
+			setContainerKey(containerKey);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -143,33 +150,23 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this asset entry usage.
+	 * Returns the container key of this asset entry usage.
 	 *
-	 * @return the fully qualified class name of this asset entry usage
+	 * @return the container key of this asset entry usage
 	 */
 	@Override
-	public String getClassName() {
-		return model.getClassName();
+	public String getContainerKey() {
+		return model.getContainerKey();
 	}
 
 	/**
-	 * Returns the class name ID of this asset entry usage.
+	 * Returns the container type of this asset entry usage.
 	 *
-	 * @return the class name ID of this asset entry usage
+	 * @return the container type of this asset entry usage
 	 */
 	@Override
-	public long getClassNameId() {
-		return model.getClassNameId();
-	}
-
-	/**
-	 * Returns the class pk of this asset entry usage.
-	 *
-	 * @return the class pk of this asset entry usage
-	 */
-	@Override
-	public long getClassPK() {
-		return model.getClassPK();
+	public long getContainerType() {
+		return model.getContainerType();
 	}
 
 	/**
@@ -213,13 +210,13 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Returns the portlet ID of this asset entry usage.
+	 * Returns the plid of this asset entry usage.
 	 *
-	 * @return the portlet ID of this asset entry usage
+	 * @return the plid of this asset entry usage
 	 */
 	@Override
-	public String getPortletId() {
-		return model.getPortletId();
+	public long getPlid() {
+		return model.getPlid();
 	}
 
 	/**
@@ -230,6 +227,16 @@ public class AssetEntryUsageWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this asset entry usage.
+	 *
+	 * @return the type of this asset entry usage
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
 	}
 
 	/**
@@ -267,29 +274,24 @@ public class AssetEntryUsageWrapper
 		model.setAssetEntryUsageId(assetEntryUsageId);
 	}
 
+	/**
+	 * Sets the container key of this asset entry usage.
+	 *
+	 * @param containerKey the container key of this asset entry usage
+	 */
 	@Override
-	public void setClassName(String className) {
-		model.setClassName(className);
+	public void setContainerKey(String containerKey) {
+		model.setContainerKey(containerKey);
 	}
 
 	/**
-	 * Sets the class name ID of this asset entry usage.
+	 * Sets the container type of this asset entry usage.
 	 *
-	 * @param classNameId the class name ID of this asset entry usage
+	 * @param containerType the container type of this asset entry usage
 	 */
 	@Override
-	public void setClassNameId(long classNameId) {
-		model.setClassNameId(classNameId);
-	}
-
-	/**
-	 * Sets the class pk of this asset entry usage.
-	 *
-	 * @param classPK the class pk of this asset entry usage
-	 */
-	@Override
-	public void setClassPK(long classPK) {
-		model.setClassPK(classPK);
+	public void setContainerType(long containerType) {
+		model.setContainerType(containerType);
 	}
 
 	/**
@@ -333,13 +335,13 @@ public class AssetEntryUsageWrapper
 	}
 
 	/**
-	 * Sets the portlet ID of this asset entry usage.
+	 * Sets the plid of this asset entry usage.
 	 *
-	 * @param portletId the portlet ID of this asset entry usage
+	 * @param plid the plid of this asset entry usage
 	 */
 	@Override
-	public void setPortletId(String portletId) {
-		model.setPortletId(portletId);
+	public void setPlid(long plid) {
+		model.setPlid(plid);
 	}
 
 	/**
@@ -350,6 +352,16 @@ public class AssetEntryUsageWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this asset entry usage.
+	 *
+	 * @param type the type of this asset entry usage
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

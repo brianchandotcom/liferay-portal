@@ -72,8 +72,11 @@ public interface AssetEntryUsageLocalService
 	public AssetEntryUsage addAssetEntryUsage(AssetEntryUsage assetEntryUsage);
 
 	public AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long classNameId, long classPK,
-		String portletId, ServiceContext serviceContext);
+		long groupId, long assetEntryId, long plid, long containerType,
+		String containerKey, ServiceContext serviceContext);
+
+	public AssetEntryUsage addDefaultAssetEntryUsage(
+		long groupId, long assetEntryId, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new asset entry usage with the primary key. Does not add the asset entry usage to the database.
@@ -106,7 +109,7 @@ public interface AssetEntryUsageLocalService
 		throws PortalException;
 
 	public void deleteAssetEntryUsages(
-		long classNameId, long classPK, String portletId);
+		long plid, long containerType, String containerKey);
 
 	/**
 	 * @throws PortalException
@@ -186,7 +189,7 @@ public interface AssetEntryUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long classNameId, long classPK, String portletId);
+		long assetEntryId, long plid, long containerType, String containerKey);
 
 	/**
 	 * Returns the asset entry usage matching the UUID and group.
@@ -245,21 +248,13 @@ public interface AssetEntryUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, int type, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryUsage> getAssetEntryUsages(
 		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long classNameId, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long classNameId, long classPK, String portletId);
 
 	/**
 	 * Returns the number of asset entry usages.
@@ -273,10 +268,7 @@ public interface AssetEntryUsageLocalService
 	public int getAssetEntryUsagesCount(long assetEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetEntryUsagesCount(long assetEntryId, long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetEntryUsagesCount(long assetEntryId, String portletId);
+	public int getAssetEntryUsagesCount(long assetEntryId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -292,6 +284,9 @@ public interface AssetEntryUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDefaultAssetEntryUsage(long assetEntryId);
 
 	/**
 	 * Updates the asset entry usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

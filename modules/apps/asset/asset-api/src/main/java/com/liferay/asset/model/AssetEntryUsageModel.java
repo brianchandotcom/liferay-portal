@@ -17,7 +17,6 @@ package com.liferay.asset.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Date;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AssetEntryUsageModel
-	extends AttachedModel, BaseModel<AssetEntryUsage> {
+public interface AssetEntryUsageModel extends BaseModel<AssetEntryUsage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -143,61 +141,61 @@ public interface AssetEntryUsageModel
 	public void setAssetEntryId(long assetEntryId);
 
 	/**
-	 * Returns the fully qualified class name of this asset entry usage.
+	 * Returns the plid of this asset entry usage.
 	 *
-	 * @return the fully qualified class name of this asset entry usage
+	 * @return the plid of this asset entry usage
 	 */
-	@Override
-	public String getClassName();
-
-	public void setClassName(String className);
+	public long getPlid();
 
 	/**
-	 * Returns the class name ID of this asset entry usage.
+	 * Sets the plid of this asset entry usage.
 	 *
-	 * @return the class name ID of this asset entry usage
+	 * @param plid the plid of this asset entry usage
 	 */
-	@Override
-	public long getClassNameId();
+	public void setPlid(long plid);
 
 	/**
-	 * Sets the class name ID of this asset entry usage.
+	 * Returns the container type of this asset entry usage.
 	 *
-	 * @param classNameId the class name ID of this asset entry usage
+	 * @return the container type of this asset entry usage
 	 */
-	@Override
-	public void setClassNameId(long classNameId);
+	public long getContainerType();
 
 	/**
-	 * Returns the class pk of this asset entry usage.
+	 * Sets the container type of this asset entry usage.
 	 *
-	 * @return the class pk of this asset entry usage
+	 * @param containerType the container type of this asset entry usage
 	 */
-	@Override
-	public long getClassPK();
+	public void setContainerType(long containerType);
 
 	/**
-	 * Sets the class pk of this asset entry usage.
+	 * Returns the container key of this asset entry usage.
 	 *
-	 * @param classPK the class pk of this asset entry usage
-	 */
-	@Override
-	public void setClassPK(long classPK);
-
-	/**
-	 * Returns the portlet ID of this asset entry usage.
-	 *
-	 * @return the portlet ID of this asset entry usage
+	 * @return the container key of this asset entry usage
 	 */
 	@AutoEscape
-	public String getPortletId();
+	public String getContainerKey();
 
 	/**
-	 * Sets the portlet ID of this asset entry usage.
+	 * Sets the container key of this asset entry usage.
 	 *
-	 * @param portletId the portlet ID of this asset entry usage
+	 * @param containerKey the container key of this asset entry usage
 	 */
-	public void setPortletId(String portletId);
+	public void setContainerKey(String containerKey);
+
+	/**
+	 * Returns the type of this asset entry usage.
+	 *
+	 * @return the type of this asset entry usage
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this asset entry usage.
+	 *
+	 * @param type the type of this asset entry usage
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the last publish date of this asset entry usage.

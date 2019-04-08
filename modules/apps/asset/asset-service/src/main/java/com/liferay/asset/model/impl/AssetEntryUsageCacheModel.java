@@ -65,7 +65,7 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -79,12 +79,14 @@ public class AssetEntryUsageCacheModel
 		sb.append(modifiedDate);
 		sb.append(", assetEntryId=");
 		sb.append(assetEntryId);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
-		sb.append(", portletId=");
-		sb.append(portletId);
+		sb.append(", plid=");
+		sb.append(plid);
+		sb.append(", containerType=");
+		sb.append(containerType);
+		sb.append(", containerKey=");
+		sb.append(containerKey);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -121,15 +123,17 @@ public class AssetEntryUsageCacheModel
 		}
 
 		assetEntryUsageImpl.setAssetEntryId(assetEntryId);
-		assetEntryUsageImpl.setClassNameId(classNameId);
-		assetEntryUsageImpl.setClassPK(classPK);
+		assetEntryUsageImpl.setPlid(plid);
+		assetEntryUsageImpl.setContainerType(containerType);
 
-		if (portletId == null) {
-			assetEntryUsageImpl.setPortletId("");
+		if (containerKey == null) {
+			assetEntryUsageImpl.setContainerKey("");
 		}
 		else {
-			assetEntryUsageImpl.setPortletId(portletId);
+			assetEntryUsageImpl.setContainerKey(containerKey);
 		}
+
+		assetEntryUsageImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			assetEntryUsageImpl.setLastPublishDate(null);
@@ -155,10 +159,12 @@ public class AssetEntryUsageCacheModel
 
 		assetEntryId = objectInput.readLong();
 
-		classNameId = objectInput.readLong();
+		plid = objectInput.readLong();
 
-		classPK = objectInput.readLong();
-		portletId = objectInput.readUTF();
+		containerType = objectInput.readLong();
+		containerKey = objectInput.readUTF();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -179,17 +185,18 @@ public class AssetEntryUsageCacheModel
 
 		objectOutput.writeLong(assetEntryId);
 
-		objectOutput.writeLong(classNameId);
+		objectOutput.writeLong(plid);
 
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(containerType);
 
-		if (portletId == null) {
+		if (containerKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(portletId);
+			objectOutput.writeUTF(containerKey);
 		}
 
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -199,9 +206,10 @@ public class AssetEntryUsageCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long assetEntryId;
-	public long classNameId;
-	public long classPK;
-	public String portletId;
+	public long plid;
+	public long containerType;
+	public String containerKey;
+	public int type;
 	public long lastPublishDate;
 
 }

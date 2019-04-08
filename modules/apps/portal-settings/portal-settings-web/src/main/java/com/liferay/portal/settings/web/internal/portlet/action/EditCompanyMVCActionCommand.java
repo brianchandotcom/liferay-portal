@@ -116,12 +116,12 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			String mvcPath = "/edit_company.jsp";
-
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/error.jsp";
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+
+				return;
 			}
 			else if (e instanceof AccountNameException ||
 					 e instanceof AddressCityException ||
@@ -155,7 +155,13 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 				throw e;
 			}
 
-			actionResponse.setRenderParameter("mvcPath", mvcPath);
+			SessionErrors.add(actionRequest, e.getClass(), e);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 	}
 

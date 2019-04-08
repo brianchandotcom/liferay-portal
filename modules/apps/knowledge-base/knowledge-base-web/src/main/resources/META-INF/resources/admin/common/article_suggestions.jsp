@@ -126,21 +126,23 @@ if (ratingsType == null) {
 
 	<c:choose>
 		<c:when test="<%= showAdminSuggestionView %>">
+			<c:if test="<%= kbCommentsCount > 0 %>">
 
-			<%
-			KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, kbArticle);
+				<%
+				KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, kbArticle);
 
-			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
+				request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 
-			SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
+				SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-			kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
+				kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
 
-			request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
-			request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
-			%>
+				request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
+				request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+				%>
 
-			<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= kbCommentsCount > 0 %>">

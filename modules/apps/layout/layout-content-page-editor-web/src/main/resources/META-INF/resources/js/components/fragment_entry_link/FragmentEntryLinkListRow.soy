@@ -195,6 +195,7 @@
 						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
+						{param fragmentsEditorRowTypes: $_fragmentsEditorRowTypes /}
 						{param dropTargetBorder: $dropTargetBorder /}
 						{param dropTargetItemId: $dropTargetItemId /}
 						{param dropTargetItemType: $dropTargetItemType /}
@@ -223,6 +224,7 @@
 	{@param defaultEditorConfigurations: ?}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
+	{@param fragmentsEditorRowTypes: ?}
 	{@param key: string}
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
@@ -256,10 +258,13 @@
 	{let $columnClasses kind="text"}
 		col
 		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--fragment
-		{sp}fragments-editor__drop-target--sidebar-fragment
 		{sp}fragments-editor__drop-target--sidebar-widget
 		{sp}fragment-entry-link-list__col
+
+		{if $rowType == $fragmentsEditorRowTypes.componentRow}
+			{sp}fragments-editor__drop-target--fragment
+			{sp}fragments-editor__drop-target--sidebar-fragment
+		{/if}
 
 		{if $dropTargetItemId == $columnId and $dropTargetItemType == $dropTargetItemTypes.column}
 			{sp}{$dropTargetBorder}

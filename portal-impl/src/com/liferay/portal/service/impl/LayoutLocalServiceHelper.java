@@ -383,7 +383,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			FriendlyURLResolverRegistryUtil.getURLSeparators();
 
 		for (String urlSeparator : urlSeparators) {
-			if (friendlyURL.contains(urlSeparator)) {
+			if (urlSeparator.contains(friendlyURL)) {
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(
 						LayoutFriendlyURLException.KEYWORD_CONFLICT);

@@ -31,40 +31,40 @@ import org.talend.sdk.component.api.meta.Documentation;
 @Documentation("Aggregator data store for authentication stores")
 @GridLayout(
 	{
-		@GridLayout.Row("authenticationMethod"),
-		@GridLayout.Row("basicDataStore"), @GridLayout.Row("oAuthDataStore")
+		@GridLayout.Row("_authenticationMethod"),
+		@GridLayout.Row("_basicDataStore"), @GridLayout.Row("_oAuthDataStore")
 	}
 )
 public class InputDataStore {
 
 	public AuthenticationMethod getAuthenticationMethod() {
-		return authenticationMethod;
+		return _authenticationMethod;
 	}
 
 	public BasicDataStore getBasicDataStore() {
-		return basicDataStore;
+		return _basicDataStore;
 	}
 
 	public OAuthDataStore getoAuthDataStore() {
-		return oAuthDataStore;
+		return _oAuthDataStore;
 	}
 
 	public InputDataStore setAuthenticationMethod(
 		AuthenticationMethod authenticationMethod) {
 
-		this.authenticationMethod = authenticationMethod;
+		_authenticationMethod = authenticationMethod;
 
 		return this;
 	}
 
 	public InputDataStore setBasicDataStore(BasicDataStore dataStore) {
-		this.basicDataStore = dataStore;
+		_basicDataStore = dataStore;
 
 		return this;
 	}
 
 	public InputDataStore setoAuthDataStore(OAuthDataStore oAuthDataStore) {
-		this.oAuthDataStore = oAuthDataStore;
+		_oAuthDataStore = oAuthDataStore;
 
 		return this;
 	}
@@ -73,16 +73,16 @@ public class InputDataStore {
 	@Documentation("Authentication Method")
 	@Option
 	@Required
-	private AuthenticationMethod authenticationMethod;
+	private AuthenticationMethod _authenticationMethod;
 
-	@ActiveIf(target = "authenticationMethod", value = "BASIC")
+	@ActiveIf(target = "_authenticationMethod", value = "BASIC")
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private BasicDataStore basicDataStore;
+	private BasicDataStore _basicDataStore;
 
-	@ActiveIf(target = "authenticationMethod", value = "OAUTH2")
+	@ActiveIf(target = "_authenticationMethod", value = "OAUTH2")
 	@Documentation("OAuth2 Data Store")
 	@Option
-	private OAuthDataStore oAuthDataStore;
+	private OAuthDataStore _oAuthDataStore;
 
 }

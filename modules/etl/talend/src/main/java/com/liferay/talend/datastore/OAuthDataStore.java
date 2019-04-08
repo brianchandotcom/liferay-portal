@@ -31,52 +31,52 @@ import org.talend.sdk.component.api.meta.Documentation;
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
-		@GridLayout.Row("serverURL"),
-		@GridLayout.Row({"consumerKey", "consumerSecret"})
+		@GridLayout.Row("_serverURL"),
+		@GridLayout.Row({"_consumerKey", "_consumerSecret"})
 	}
 )
 public class OAuthDataStore implements Serializable {
 
 	public String getConsumerKey() {
-		return consumerKey;
+		return _consumerKey;
 	}
 
 	public String getConsumerSecret() {
-		return consumerSecret;
+		return _consumerSecret;
 	}
 
 	public URL getServerURL() {
-		return serverURL;
+		return _serverURL;
 	}
 
 	public OAuthDataStore setConsumerKey(String consumerKey) {
-		this.consumerKey = consumerKey;
+		_consumerKey = consumerKey;
 
 		return this;
 	}
 
 	public OAuthDataStore setConsumerSecret(String consumerSecret) {
-		this.consumerSecret = consumerSecret;
+		_consumerSecret = consumerSecret;
 
 		return this;
 	}
 
 	public OAuthDataStore setServerURL(URL serverURL) {
-		this.serverURL = serverURL;
+		_serverURL = serverURL;
 
 		return this;
 	}
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private String consumerKey;
+	private String _consumerKey;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private String consumerSecret;
+	private String _consumerSecret;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private URL serverURL;
+	private URL _serverURL;
 
 }

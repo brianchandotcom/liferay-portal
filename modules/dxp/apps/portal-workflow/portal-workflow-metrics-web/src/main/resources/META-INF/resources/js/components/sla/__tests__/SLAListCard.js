@@ -4,34 +4,6 @@ import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import SLAListCard from '../SLAListCard';
 
-test('Should change page', () => {
-	const data = { items: [], totalCount: 0 };
-
-	const component = mount(
-		<Router client={fetch(data)}>
-			<SLAListCard />
-		</Router>
-	);
-	const instance = component.find(SLAListCard).instance();
-
-	instance.setPage(2).then(() => expect(component.state('page')).toBe(2));
-});
-
-test('Should change page size', () => {
-	const data = { items: [], totalCount: 0 };
-
-	const component = mount(
-		<Router client={fetch(data)}>
-			<SLAListCard />
-		</Router>
-	);
-	const instance = component.find(SLAListCard).instance();
-
-	instance
-		.setPageSize(20)
-		.then(() => expect(component.state('pageSize')).toBe(20));
-});
-
 test('Should render component', () => {
 	const data = {
 		items: [

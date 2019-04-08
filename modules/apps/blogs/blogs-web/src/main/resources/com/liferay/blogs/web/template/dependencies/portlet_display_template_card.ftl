@@ -170,7 +170,7 @@
 										</#if>
 
 										<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="${viewCommentsPortletURL.toString()}">
-											<span class="inline-item inline-item-before">
+											<span class="inline-item inline-item-before" title="${language.get(locale, "comments")}">
 												<@clay["icon"] symbol="comments" />
 											</span> ${commentManager.getCommentsCount("com.liferay.blogs.model.BlogsEntry", curBlogEntry.getEntryId())}
 										</a>

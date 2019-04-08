@@ -23,6 +23,7 @@ import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPer
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -66,6 +67,7 @@ public class BlogsPortletDisplayTemplateHandler
 		contextObjects.put("blogsEntryPermission", _blogsEntryPermission);
 		contextObjects.put("blogsEntryUtil", _blogsEntryUtil);
 		contextObjects.put("commentManager", _commentManager);
+		contextObjects.put("language", _language);
 		contextObjects.put("permissionsURLTag", new PermissionsURLTag());
 		contextObjects.put("trashHelper", _trashHelper);
 
@@ -147,6 +149,9 @@ public class BlogsPortletDisplayTemplateHandler
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

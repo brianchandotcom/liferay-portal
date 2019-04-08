@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -41,8 +43,10 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -230,6 +234,24 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
+	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
+		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
+			return;
+		}
+
+		TaskOutputs taskOutputs = executeNpmTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
+	}
+
 	private void _configureTasksDownloadNode(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -278,6 +300,14 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					_configureTaskExecuteNpm(
 						executeNpmTask, ciRegistry, restoreHotfixVersionTask,
 						updateHotfixVersionTask);
+
+					String taskName = executeNpmTask.getName();
+
+					if (Objects.equals(
+							taskName, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+
+						_configureTaskNpmRunBuild(executeNpmTask);
+					}
 				}
 
 			});

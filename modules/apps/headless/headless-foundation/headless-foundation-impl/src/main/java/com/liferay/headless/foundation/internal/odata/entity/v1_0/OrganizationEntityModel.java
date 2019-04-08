@@ -39,10 +39,6 @@ public class OrganizationEntityModel implements EntityModel {
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
 			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),

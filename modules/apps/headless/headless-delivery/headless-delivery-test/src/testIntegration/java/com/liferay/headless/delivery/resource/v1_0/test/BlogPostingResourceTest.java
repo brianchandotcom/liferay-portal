@@ -15,14 +15,112 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 
-import org.junit.Ignore;
+import java.util.Objects;
+
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
+
+	@Override
+	protected void assertValid(BlogPosting blogPosting) {
+		boolean valid = false;
+
+		if ((blogPosting.getDateCreated() != null) &&
+			(blogPosting.getDateModified() != null) &&
+			(blogPosting.getHeadline() != null) &&
+			(blogPosting.getId() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected boolean equals(
+		BlogPosting blogPosting1, BlogPosting blogPosting2) {
+
+		if (Objects.equals(
+				blogPosting1.getContentSpaceId(),
+				blogPosting2.getContentSpaceId()) &&
+			Objects.equals(
+				blogPosting1.getDescription(), blogPosting2.getDescription()) &&
+			Objects.equals(
+				blogPosting1.getHeadline(), blogPosting2.getHeadline())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	protected BlogPosting randomBlogPosting() {
+		BlogPosting blogPosting = super.randomBlogPosting();
+
+		blogPosting.setContentSpaceId(testGroup.getGroupId());
+
+		return blogPosting;
+	}
+
+	@Override
+	protected BlogPosting testDeleteBlogPosting_addBlogPosting()
+		throws Exception {
+
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Override
+	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
+		throws Exception {
+
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Override
+	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Override
+	protected BlogPosting testGetContentSpaceBlogPostingsPage_addBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
+
+		return invokePostContentSpaceBlogPosting(contentSpaceId, blogPosting);
+	}
+
+	@Override
+	protected BlogPosting testPatchBlogPosting_addBlogPosting()
+		throws Exception {
+
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Override
+	protected BlogPosting testPostContentSpaceBlogPosting_addBlogPosting(
+			BlogPosting blogPosting)
+		throws Exception {
+
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), blogPosting);
+	}
+
+	@Override
+	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
+		return invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
 }

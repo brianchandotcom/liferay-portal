@@ -55,7 +55,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
-					results[i] = values[i] == true ? 1 : 0;
+					results[i] = (values[i] == true) ? 1 : 0;
 				}
 
 				return results;

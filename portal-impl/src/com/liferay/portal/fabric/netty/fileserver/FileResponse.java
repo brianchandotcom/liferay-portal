@@ -117,7 +117,7 @@ public class FileResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(_size > 0 ? 11 : 10);
+		StringBundler sb = new StringBundler((_size > 0) ? 11 : 10);
 
 		sb.append("{folder=");
 		sb.append(_folder);

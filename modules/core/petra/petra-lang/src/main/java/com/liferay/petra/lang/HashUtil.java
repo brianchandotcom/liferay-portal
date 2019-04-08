@@ -32,7 +32,7 @@ public class HashUtil {
 	}
 
 	public static int hash(int seed, Object value) {
-		return seed * 11 + (value == null ? 0 : value.hashCode());
+		return seed * 11 + ((value == null) ? 0 : value.hashCode());
 	}
 
 }

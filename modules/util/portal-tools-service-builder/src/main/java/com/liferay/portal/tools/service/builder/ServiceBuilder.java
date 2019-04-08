@@ -3202,7 +3202,7 @@ public class ServiceBuilder {
 		JavaClass javaClass = _getJavaClass(
 			StringBundler.concat(
 				_outputPath, "/service/impl/", entity.getName(),
-				sessionType != _SESSION_TYPE_REMOTE ? "Local" : "",
+				(sessionType != _SESSION_TYPE_REMOTE) ? "Local" : "",
 				"ServiceImpl.java"));
 
 		List<JavaMethod> methods = _getMethods(javaClass);

@@ -198,12 +198,12 @@ public class Base64 {
 
 		int slack = lastIndex - offset - 1;
 
-		int end = slack < 2 ? slack : 2;
+		int end = (slack < 2) ? slack : 2;
 
 		for (int i = 0; i <= end; i++) {
 			byte b = raw[offset + i];
 
-			int neuter = b >= 0 ? ((int)b) : b + 256;
+			int neuter = (b >= 0) ? ((int)b) : b + 256;
 
 			block += neuter << 8 * (2 - i);
 		}

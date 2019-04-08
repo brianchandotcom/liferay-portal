@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.info.display.internal.portlet;
+package com.liferay.asset.display.page.portlet;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = FriendlyURLResolver.class)
-public class AssetInfoDisplayContributorFriendlyURLResolver
+public class BaseAssetDisplayPageFriendlyURLResolver
 	implements FriendlyURLResolver {
 
 	@Override

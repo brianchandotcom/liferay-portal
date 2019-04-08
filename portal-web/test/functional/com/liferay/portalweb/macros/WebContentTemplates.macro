@@ -309,6 +309,8 @@ definition {
 
 	@summary = "Assert that certain template attributes are present for the template '${templateName}'"
 	macro viewCP {
+		var key_ddlStructureName = "${structureName}";
+		var key_ddlTemplateDescription = "${templateDescription}";
 		var key_ddlTemplateName = "${templateName}";
 
 		AssertTextEquals(

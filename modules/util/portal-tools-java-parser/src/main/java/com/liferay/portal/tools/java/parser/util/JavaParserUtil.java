@@ -922,9 +922,18 @@ public class JavaParserUtil {
 			definitionDetailAST.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE);
 
 		if (implementsClauseDetailAST != null) {
-			javaClassDefinition.setImplementedClassJavaTypes(
+			List<JavaType> implementedClassJavaTypes =
 				_parseExtendedOrImplementedClassJavaTypes(
-					implementsClauseDetailAST));
+					implementsClauseDetailAST);
+
+			if ((implementedClassJavaTypes.size() > 1) &&
+				(definitionDetailAST.getParent() == null)) {
+
+				Collections.sort(implementedClassJavaTypes);
+			}
+
+			javaClassDefinition.setImplementedClassJavaTypes(
+				implementedClassJavaTypes);
 		}
 
 		return javaClassDefinition;

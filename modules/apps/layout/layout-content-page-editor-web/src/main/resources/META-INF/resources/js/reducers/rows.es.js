@@ -2,6 +2,7 @@ import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS, UPDATE_ROW_COLUMNS_NU
 import {MAX_COLUMNS} from '../utils/rowConstants';
 import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 
 /**
  * @param {!object} state
@@ -145,7 +146,15 @@ function removeRowReducer(state, actionType, payload) {
 					row
 				);
 
-				fragmentEntryLinkIds.forEach(
+				const fragmentsToRemove = fragmentEntryLinkIds.filter(
+					id => !containsFragmentEntryLinkId(
+						nextState.layoutDataList,
+						id,
+						nextState.segmentsExperienceId
+					)
+				);
+
+				fragmentsToRemove.forEach(
 					fragmentEntryLinkId => {
 						nextState = updateWidgets(nextState, fragmentEntryLinkId);
 					}
@@ -156,7 +165,7 @@ function removeRowReducer(state, actionType, payload) {
 						classNameId: nextState.classNameId,
 						classPK: nextState.classPK,
 						data: nextData,
-						fragmentEntryLinkIds: fragmentEntryLinkIds,
+						fragmentEntryLinkIds: fragmentsToRemove,
 						portletNamespace: nextState.portletNamespace,
 						segmentsExperienceId: nextState.segmentsExperienceId,
 						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL

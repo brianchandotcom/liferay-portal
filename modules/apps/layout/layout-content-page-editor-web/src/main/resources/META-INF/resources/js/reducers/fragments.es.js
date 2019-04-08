@@ -3,6 +3,7 @@ import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} f
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropRowPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -108,7 +109,8 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 					payload.fragmentName,
 					nextState.classNameId,
 					nextState.classPK,
-					nextState.portletNamespace
+					nextState.portletNamespace,
+					nextState.segmentsExperienceId
 				)
 					.then(
 						response => {
@@ -391,36 +393,61 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					fragmentEntryLinkType
 				);
 
-				_removeFragmentEntryLink(
-					nextState.deleteFragmentEntryLinkURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
+				const _shouldNotRemove = containsFragmentEntryLinkId(
+					nextState.layoutDataList,
 					fragmentEntryLinkId,
-					nextData
-				)
-					.then(
-						() => {
-							nextState = setIn(nextState, ['layoutData'], nextData);
-							nextState = updateWidgets(nextState, payload.fragmentEntryLinkId);
+					nextState.segmentsExperienceId
+				);
 
-							nextState.setIn(
-								nextState,
-								['fragmentEntryLinks'],
-								nextState.fragmentEntryLinks.filter(
-									_fragmentEntryLink => _fragmentEntryLink.fragmentEntryLinkId !==
-										payload.fragmentEntryLinkId
-								)
-							);
-
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
+				if (_shouldNotRemove) {
+					updateLayoutData(
+						{
+							classNameId: nextState.classNameId,
+							classPK: nextState.classPK,
+							data: nextData,
+							portletNamespace: nextState.portletNamespace,
+							segmentsExperienceId: nextState.segmentsExperienceId,
+							updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
 						}
 					);
+					nextState = setIn(nextState, ['layoutData'], nextData);
+					resolve(nextState);
+				}
+				else {
+					_removeFragmentEntryLink(
+						nextState.deleteFragmentEntryLinkURL,
+						nextState.portletNamespace,
+						nextState.classNameId,
+						nextState.classPK,
+						fragmentEntryLinkId,
+						nextData,
+						nextState.segmentsExperienceId
+					)
+						.then(
+							() => {
+								nextState = setIn(nextState, ['layoutData'], nextData);
+								nextState = updateWidgets(nextState, payload.fragmentEntryLinkId);
+
+								nextState.setIn(
+									nextState,
+									['fragmentEntryLinks'],
+									nextState.fragmentEntryLinks.filter(
+										_fragmentEntryLink => {
+											return _fragmentEntryLink.fragmentEntryLinkId !==
+											payload.fragmentEntryLinkId;
+										}
+									)
+								);
+
+								resolve(nextState);
+							}
+						)
+						.catch(
+							() => {
+								resolve(nextState);
+							}
+						);
+				}
 			}
 			else {
 				resolve(nextState);
@@ -626,13 +653,15 @@ function _addFragmentEntryLink(
 	fragmentName,
 	classNameId,
 	classPK,
-	portletNamespace
+	portletNamespace,
+	segmentsExperienceId
 ) {
 	const formData = new FormData();
 
 	formData.append(`${portletNamespace}fragmentKey`, fragmentEntryKey);
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
+	formData.append(`${portletNamespace}segmentsExperienceId`, segmentsExperienceId);
 
 	return fetch(
 		addFragmentEntryLinkURL,
@@ -875,13 +904,15 @@ function _removeFragmentEntryLink(
 	classNameId,
 	classPK,
 	fragmentEntryLinkId,
-	layoutData
+	layoutData,
+	segmentsExperienceId
 ) {
 	const formData = new FormData();
 
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
 	formData.append(`${portletNamespace}data`, JSON.stringify(layoutData));
+	formData.append(`${portletNamespace}segmentsExperienceId`, segmentsExperienceId);
 
 	formData.append(
 		`${portletNamespace}fragmentEntryLinkId`,

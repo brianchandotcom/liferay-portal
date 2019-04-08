@@ -74,11 +74,9 @@ public class JournalArticleAssetEntryUsageRecorder
 				article.getResourcePrimKey());
 		}
 
-		AssetEntryUsage assetEntryUsage =
-			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), 0, StringPool.BLANK);
+		if (_assetEntryUsageLocalService.hasDefaultAssetEntryUsage(
+				assetEntry.getEntryId())) {
 
-		if (assetEntryUsage != null) {
 			return;
 		}
 
@@ -86,9 +84,9 @@ public class JournalArticleAssetEntryUsageRecorder
 		_recordPortletPreferences(assetEntry, true);
 		_recordPortletPreferences(assetEntry, false);
 
-		_assetEntryUsageLocalService.addAssetEntryUsage(
-			assetEntry.getGroupId(), assetEntry.getEntryId(), 0,
-			StringPool.BLANK, ServiceContextThreadLocal.getServiceContext());
+		_assetEntryUsageLocalService.addDefaultAssetEntryUsage(
+			assetEntry.getGroupId(), assetEntry.getEntryId(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _recordJournalContentSearches(AssetEntry assetEntry)

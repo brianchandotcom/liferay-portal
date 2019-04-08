@@ -16,7 +16,9 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -253,6 +256,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
@@ -305,11 +312,22 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());
 
+			Map<Locale, String> nameMap = _targetLayout.getNameMap();
+			Map<Locale, String> titleMap = _targetLayout.getTitleMap();
+
+			LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(_sourceLayout.getPlid());
+
+			if (sourceLayoutPageTemplateEntry == null) {
+				nameMap = _sourceLayout.getNameMap();
+				titleMap = _sourceLayout.getTitleMap();
+			}
+
 			return _layoutLocalService.updateLayout(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _targetLayout.getParentLayoutId(),
-				_sourceLayout.getNameMap(), _sourceLayout.getTitleMap(),
-				_sourceLayout.getDescriptionMap(),
+				nameMap, titleMap, _sourceLayout.getDescriptionMap(),
 				_sourceLayout.getKeywordsMap(), _sourceLayout.getRobotsMap(),
 				_targetLayout.getType(), _targetLayout.isHidden(),
 				_targetLayout.getFriendlyURLMap(), iconImage, imageBytes,

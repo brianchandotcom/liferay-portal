@@ -14,7 +14,6 @@
 
 package com.liferay.asset.list.service.impl;
 
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -71,14 +70,6 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
-			AssetListEntry assetListEntry)
-		throws PortalException {
-
-		return assetListEntrySegmentsEntryRelPersistence.remove(assetListEntry);
-	}
-
-	@Override
 	public void deleteAssetListEntrySegmentsEntryRel(
 			long assetListEntryId, long segmentsEntryId)
 		throws PortalException {

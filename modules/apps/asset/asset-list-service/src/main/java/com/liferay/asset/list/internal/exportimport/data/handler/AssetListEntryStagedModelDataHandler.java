@@ -160,6 +160,10 @@ public class AssetListEntryStagedModelDataHandler
 			_assetListEntryAssetEntryRelLocalService.
 				deleteAssetListEntryAssetEntryRelByAssetListEntryId(
 					existingAssetListEntry.getAssetListEntryId());
+
+			_assetListEntrySegmentsEntryRelLocalService.
+				deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
+					existingAssetListEntry.getAssetListEntryId());
 		}
 
 		_importAssetObjects(portletDataContext);

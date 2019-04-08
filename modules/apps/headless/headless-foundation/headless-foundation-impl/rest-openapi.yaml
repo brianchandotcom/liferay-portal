@@ -405,6 +405,12 @@ components:
                     type: object
                 dashboardURL:
                     type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
                 email:
                     type: string
                 familyName:
@@ -771,14 +777,6 @@ paths:
                   required: true
                   schema:
                       format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
                       type: integer
             responses:
                 200:
@@ -1547,14 +1545,6 @@ paths:
                   required: true
                   schema:
                       format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
                       type: integer
             responses:
                 200:

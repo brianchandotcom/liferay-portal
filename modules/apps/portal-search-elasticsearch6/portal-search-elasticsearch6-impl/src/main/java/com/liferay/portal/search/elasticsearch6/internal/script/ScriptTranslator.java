@@ -15,8 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.script;
 
 import com.liferay.portal.search.script.Script;
-
-import org.elasticsearch.script.ScriptType;
+import com.liferay.portal.search.script.ScriptType;
 
 /**
  * @author Michael C. Han
@@ -24,23 +23,26 @@ import org.elasticsearch.script.ScriptType;
 public class ScriptTranslator {
 
 	public org.elasticsearch.script.Script translate(Script script) {
-		Script.ScriptType scriptType = script.getScriptType();
+		ScriptType scriptType = script.getScriptType();
 
-		org.elasticsearch.script.Script elasticsearchScript = null;
+		if (scriptType == null) {
+			return new org.elasticsearch.script.Script(script.getIdOrCode());
+		}
 
-		if (scriptType == Script.ScriptType.INLINE) {
-			elasticsearchScript = new org.elasticsearch.script.Script(
-				ScriptType.valueOf(scriptType.name()), script.getLanguage(),
-				script.getIdOrCode(), script.getOptions(),
+		if (scriptType == ScriptType.INLINE) {
+			return new org.elasticsearch.script.Script(
+				org.elasticsearch.script.ScriptType.INLINE,
+				script.getLanguage(), script.getIdOrCode(), script.getOptions(),
 				script.getParameters());
 		}
-		else {
-			//STORED
-			elasticsearchScript = new org.elasticsearch.script.Script(
-				script.getIdOrCode());
+
+		if (scriptType == ScriptType.STORED) {
+			return new org.elasticsearch.script.Script(
+				org.elasticsearch.script.ScriptType.STORED, null,
+				script.getIdOrCode(), null, script.getParameters());
 		}
 
-		return elasticsearchScript;
+		throw new IllegalArgumentException();
 	}
 
 }

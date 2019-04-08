@@ -807,9 +807,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			Http.Options options = _createHttpOptions();
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put") && invokeArguments?ends_with(",${schemaVarName}")>
-				options.setBody(_inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+				options.setBody(inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put") && invokeArguments?ends_with("multipartBody")>
-				options.addPart("${schemaVarName}", _inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+				options.addPart("${schemaVarName}", inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 				BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -865,7 +865,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				try {
-					return _outputObjectMapper.readValue(string, Boolean.class);
+					return outputObjectMapper.readValue(string, Boolean.class);
 				}
 				catch (Exception e) {
 					_log.error("Unable to process HTTP response: " + string, e);
@@ -873,12 +873,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 					throw e;
 				}
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
-				return _outputObjectMapper.readValue(string, new TypeReference<Page<${schemaName}>>() {});
+				return outputObjectMapper.readValue(string, new TypeReference<Page<${schemaName}>>() {});
 			<#elseif javaMethodSignature.returnType?ends_with("String")>
 				return string;
 			<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 				try {
-					return _outputObjectMapper.readValue(string, ${javaMethodSignature.returnType}.class);
+					return outputObjectMapper.readValue(string, ${javaMethodSignature.returnType}.class);
 				}
 				catch (Exception e) {
 					_log.error("Unable to process HTTP response: " + string, e);
@@ -892,7 +892,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			Http.Options options = _createHttpOptions();
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put") && invokeArguments?ends_with(",${schemaVarName}")>
-				options.setBody(_inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+				options.setBody(inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			</#if>
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>

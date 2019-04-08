@@ -280,6 +280,7 @@ class FragmentEntryLinkList extends Component {
 				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;
 				moveItemPayload = {
 					fragmentEntryLinkId: itemData.itemId,
+					fragmentEntryLinkType: itemData.fragmentEntryLinkType,
 					targetBorder: this.dropTargetBorder,
 					targetItemId: this.dropTargetItemId,
 					targetItemType: this.dropTargetItemType

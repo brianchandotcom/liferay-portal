@@ -292,7 +292,8 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 
 				nextData = _removeFragment(
 					nextState.layoutData,
-					payload.fragmentEntryLinkId
+					payload.fragmentEntryLinkId,
+					payload.fragmentEntryLinkType
 				);
 
 				nextData = addFragment(
@@ -300,7 +301,8 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 					payload.targetBorder,
 					payload.targetItemId,
 					payload.targetItemType,
-					nextData
+					nextData,
+					payload.fragmentEntryLinkType
 				);
 
 				_moveFragmentEntryLink(

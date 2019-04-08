@@ -35,6 +35,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.ModuleDependency;
@@ -100,6 +101,15 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			task.setEnabled(false);
 			task.setFinalizedBy(Collections.emptySet());
 		}
+	}
+
+	public static Configuration fetchConfiguration(
+		Project project, String name) {
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		return configurationContainer.findByName(name);
 	}
 
 	public static String getArchivesBaseName(Project project) {

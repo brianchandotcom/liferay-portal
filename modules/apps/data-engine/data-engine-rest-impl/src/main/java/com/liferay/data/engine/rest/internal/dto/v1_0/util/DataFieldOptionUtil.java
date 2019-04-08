@@ -17,8 +17,10 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,10 @@ public class DataFieldOptionUtil {
 
 	public static List<DataFieldOption> getOptions(
 		List<DataFieldOption> dataFieldOptions, String languageId) {
+
+		if (ListUtil.isEmpty(dataFieldOptions)) {
+			return Collections.emptyList();
+		}
 
 		Stream<DataFieldOption> stream = dataFieldOptions.stream();
 
@@ -48,6 +54,10 @@ public class DataFieldOptionUtil {
 		JSONObject jsonObject) {
 
 		List<DataFieldOption> dataFieldOptions = new ArrayList<>();
+
+		if (jsonObject == null) {
+			return dataFieldOptions;
+		}
 
 		Iterator<String> keys = jsonObject.keys();
 
@@ -72,6 +82,10 @@ public class DataFieldOptionUtil {
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (ListUtil.isEmpty(dataFieldOptions)) {
+			return jsonObject;
+		}
 
 		for (DataFieldOption dataFieldOption : dataFieldOptions) {
 			Map<String, String> labels = dataFieldOption.getLabels();

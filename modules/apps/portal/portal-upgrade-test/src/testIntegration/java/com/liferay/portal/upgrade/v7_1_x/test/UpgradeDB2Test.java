@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.test.BaseUpgradeDBColumnSizeTestCase;
 import com.liferay.portal.upgrade.v7_1_x.UpgradeDB2;
 
 import org.junit.Assume;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -38,13 +38,13 @@ public class UpgradeDB2Test extends BaseUpgradeDBColumnSizeTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
-	@BeforeClass
-	public static void setUpClass() {
+	public static void assume() {
 		DB db = DBManagerUtil.getDB();
 
-		Assume.assumeTrue(DBType.DB2.equals(db.getDBType()));
+		Assume.assumeTrue(db.getDBType() == DBType.DB2);
 	}
 
 	@Override

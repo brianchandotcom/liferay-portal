@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
@@ -36,7 +37,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,22 +51,17 @@ public class UpgradeOracleTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
-	@BeforeClass
-	public static void setUpClass() {
-		_db = DBManagerUtil.getDB();
+	public static void assume() {
+		DB db = DBManagerUtil.getDB();
 
-		if (_db.getDBType() != DBType.ORACLE) {
-			return;
-		}
+		Assume.assumeTrue(db.getDBType() == DBType.ORACLE);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeTrue(
-			"Database is not set to Oracle", _db.getDBType() == DBType.ORACLE);
-
 		_upgradeOracle = new UpgradeOracle();
 
 		_db.runSQL(
@@ -77,10 +72,6 @@ public class UpgradeOracleTest {
 
 	@After
 	public void tearDown() throws Exception {
-		if (_db.getDBType() != DBType.ORACLE) {
-			return;
-		}
-
 		_db.runSQL(
 			StringBundler.concat(
 				"alter table ", _TABLE_NAME, " modify ", _FIELD_NAME,

@@ -88,7 +88,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = updateComment(namespacedRequest);
 
-				boolean ajax = ParamUtil.getBoolean(request, "ajax", true);
+				boolean ajax = ParamUtil.getBoolean(
+					namespacedRequest, "ajax", true);
 
 				if (ajax) {
 					String randomNamespace = ParamUtil.getString(

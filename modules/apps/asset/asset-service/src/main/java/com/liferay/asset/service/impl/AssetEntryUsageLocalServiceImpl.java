@@ -14,6 +14,7 @@
 
 package com.liferay.asset.service.impl;
 
+import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
@@ -52,6 +53,7 @@ public class AssetEntryUsageLocalServiceImpl
 		assetEntryUsage.setModifiedDate(new Date());
 		assetEntryUsage.setAssetEntryId(assetEntryId);
 		assetEntryUsage.setPlid(plid);
+		assetEntryUsage.setType(AssetEntryUsagesTypeConstants.TYPE_LAYOUT);
 		assetEntryUsage.setPortletId(portletId);
 
 		return assetEntryUsagePersistence.update(assetEntryUsage);
@@ -93,36 +95,8 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long plid) {
-
-		return assetEntryUsagePersistence.findByA_P(assetEntryId, plid);
-	}
-
-	@Override
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long plid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
-
-		return assetEntryUsagePersistence.findByA_P(
-			assetEntryId, plid, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<AssetEntryUsage> getAssetEntryUsages(
-		long plid, String portletId) {
-
-		return assetEntryUsagePersistence.findByP_P(plid, portletId);
-	}
-
-	@Override
 	public int getAssetEntryUsagesCount(long assetEntryId) {
 		return assetEntryUsagePersistence.countByAssetEntryId(assetEntryId);
-	}
-
-	@Override
-	public int getAssetEntryUsagesCount(long assetEntryId, long plid) {
-		return assetEntryUsagePersistence.countByA_P(assetEntryId, plid);
 	}
 
 	@Override

@@ -3935,6 +3935,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			validateLanguageIds(defaultLanguageId, newLanguageIds);
 
+			_updateGroupLocaleDependentFields(group, defaultLanguageId);
+
 			if (!Objects.equals(oldLanguageIds, newLanguageIds)) {
 				LanguageUtil.resetAvailableGroupLocales(groupId);
 			}
@@ -5303,6 +5305,34 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected File publicLARFile;
+
+	private void _updateGroupLocaleDependentFields(
+		Group group, String defaultLanguageId) {
+
+		if (StringUtil.equals(
+				group.getDefaultLanguageId(), defaultLanguageId)) {
+
+			return;
+		}
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		Map<Locale, String> oldNameMap = group.getNameMap();
+
+		group.setNameMap(oldNameMap, defaultLocale);
+
+		Map<Locale, String> oldDecriptionMap = group.getDescriptionMap();
+
+		group.setDescriptionMap(oldDecriptionMap, defaultLocale);
+
+		Map<Locale, String> nameMap = group.getNameMap();
+
+		if ((nameMap != null) &&
+			Validator.isNotNull(nameMap.get(defaultLocale))) {
+
+			group.setGroupKey(nameMap.get(defaultLocale));
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);

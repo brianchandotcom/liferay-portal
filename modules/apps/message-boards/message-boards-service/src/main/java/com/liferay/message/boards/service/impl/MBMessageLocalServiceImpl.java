@@ -41,6 +41,7 @@ import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
+import com.liferay.message.boards.settings.MBDiscussionGroupServiceSettings;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
@@ -99,7 +100,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -111,7 +111,6 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.LayoutURLUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -2126,6 +2125,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBDiscussion mbDiscussion =
 			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
+		MBDiscussionGroupServiceSettings mbDiscussionGroupServiceSettings =
+			MBDiscussionGroupServiceSettings.getInstance(message.getGroupId());
+
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
 		contentURL = http.addParameter(
@@ -2142,20 +2144,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getUserId(), StringPool.BLANK);
 		}
 
-		String fromName = PrefsPropsUtil.getString(
-			message.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		String fromAddress = PrefsPropsUtil.getString(
-			message.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-
-		String subject = PrefsPropsUtil.getContent(
-			message.getCompanyId(), PropsKeys.DISCUSSION_EMAIL_SUBJECT);
-		String body = PrefsPropsUtil.getContent(
-			message.getCompanyId(), PropsKeys.DISCUSSION_EMAIL_BODY);
+		String fromName =
+			mbDiscussionGroupServiceSettings.getAdminEmailFromName();
+		String fromAddress =
+			mbDiscussionGroupServiceSettings.getAdminEmailFromAddress();
 
 		SubscriptionSender subscriptionSender =
 			new MBDiscussionSubcriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setClassName(MBDiscussion.class.getName());
 		subscriptionSender.setClassPK(mbDiscussion.getDiscussionId());
@@ -2170,6 +2166,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+
+		LocalizedValuesMap subjectLocalizedValuesMap =
+			mbDiscussionGroupServiceSettings.getDiscussionEmailSubject();
+
+		LocalizedValuesMap bodyLocalizedValuesMap =
+			mbDiscussionGroupServiceSettings.getDiscussionEmailBody();
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedBodyMap(
+				LocalizationUtil.getMap(bodyLocalizedValuesMap));
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(
+				LocalizationUtil.getMap(subjectLocalizedValuesMap));
+		}
 
 		Date modifiedDate = message.getModifiedDate();
 
@@ -2194,7 +2206,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUniqueMailId(false);
 
 		String className = (String)serviceContext.getAttribute("className");

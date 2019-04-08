@@ -399,6 +399,9 @@
 	</source-processor>
 	<source-processor name="PoshiSourceProcessor">
 		<check name="PoshiIndentationCheck" />
+		<check name="PoshiParametersOrderCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PoshiStylingCheck" />
 		<check name="PoshiWhitespaceCheck" />
 	</source-processor>

@@ -72,31 +72,37 @@ class FragmentEntryLinkList extends Component {
 	 * @static
 	 */
 	static _getItemData(itemDataset) {
-		let itemId = null;
-		let itemType = null;
+		let itemData = {};
 
 		if (itemDataset) {
 			if ('columnId' in itemDataset) {
-				itemId = itemDataset.columnId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.column;
+				itemData = {
+					itemId: itemDataset.columnId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.column
+				};
 			}
 			else if ('fragmentEntryLinkId' in itemDataset) {
-				itemId = itemDataset.fragmentEntryLinkId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+				itemData = {
+					fragmentEntryLinkType: itemDataset.fragmentEntryLinkType,
+					itemId: itemDataset.fragmentEntryLinkId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				};
 			}
 			else if ('layoutRowId' in itemDataset) {
-				itemId = itemDataset.layoutRowId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.row;
+				itemData = {
+					itemId: itemDataset.layoutRowId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row
+				};
+
 			}
 			else if ('fragmentEmptyList' in itemDataset) {
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList;
+				itemData = {
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList
+				};
 			}
 		}
 
-		return {
-			itemId,
-			itemType
-		};
+		return itemData;
 	}
 
 	/**

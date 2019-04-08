@@ -65,11 +65,11 @@ public class ButtonTag extends BaseClayTag {
 		putValue("size", size);
 	}
 
-	public void setStyle(String style) {
+	public void setStyle(Boolean style) {
 		putValue("style", style);
 	}
 
-	public void setStyle(Boolean style) {
+	public void setStyle(String style) {
 		putValue("style", style);
 	}
 

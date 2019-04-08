@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -40,6 +42,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		UserLocalServiceUtil.deleteUser(_user);
+		super.tearDown();
 	}
 
 	@Override

@@ -49,8 +49,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		OrganizationLocalServiceUtil.clearGroupOrganizations(
 			testGroup.getGroupId());
 		OrganizationLocalServiceUtil.clearUserOrganizations(_user.getUserId());
@@ -59,10 +57,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		for (com.liferay.portal.kernel.model.Organization parentOrganization :
 				_parentOrganizations) {
 
-			_clearOrganizations(parentOrganization.getOrganizationId());
+			_deleteOrganizations(parentOrganization.getOrganizationId());
 		}
 
-		_clearOrganizations(0);
+		_deleteOrganizations(0);
+
+		super.tearDown();
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return organization;
 	}
 
-	private void _clearOrganizations(long parentOrganizationId)
+	private void _deleteOrganizations(long parentOrganizationId)
 		throws PortalException {
 
 		List<com.liferay.portal.kernel.model.Organization> organizations =
@@ -186,8 +186,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		for (com.liferay.portal.kernel.model.Organization organization :
 				organizations) {
 
-			OrganizationLocalServiceUtil.deleteOrganization(
-				organization.getOrganizationId());
+			OrganizationLocalServiceUtil.deleteOrganization(organization);
 		}
 	}
 

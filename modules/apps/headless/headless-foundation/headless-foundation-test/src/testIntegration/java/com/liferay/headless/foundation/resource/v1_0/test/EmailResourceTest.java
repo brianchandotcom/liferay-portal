@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -49,6 +52,14 @@ public class EmailResourceTest extends BaseEmailResourceTestCase {
 
 		_organization = OrganizationTestUtil.addOrganization();
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+		UserLocalServiceUtil.deleteUser(_user);
+		super.tearDown();
 	}
 
 	@Override

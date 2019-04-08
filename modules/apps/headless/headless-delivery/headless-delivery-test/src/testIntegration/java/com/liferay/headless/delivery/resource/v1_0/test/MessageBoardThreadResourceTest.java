@@ -18,10 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 
 import java.util.Objects;
 
@@ -41,16 +40,14 @@ public class MessageBoardThreadResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User user = UserTestUtil.addGroupAdminUser(testGroup);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		_mbCategory = MBCategoryLocalServiceUtil.addCategory(
-			user.getUserId(), testGroup.getGroupId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

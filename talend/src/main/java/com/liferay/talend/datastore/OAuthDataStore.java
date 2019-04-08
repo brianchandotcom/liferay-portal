@@ -33,18 +33,6 @@ import java.io.Serializable;
 @Documentation("TODO fill the documentation for this configuration")
 public class OAuthDataStore implements Serializable {
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private java.net.URL serverURL;
-
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private String consumerKey;
-
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private String consumerSecret;
-
     public java.net.URL getServerURL() {
         return serverURL;
     }
@@ -73,5 +61,17 @@ public class OAuthDataStore implements Serializable {
 
         return this;
     }
+
+	@Option
+	@Documentation("TODO fill the documentation for this parameter")
+	private java.net.URL serverURL;
+
+	@Option
+	@Documentation("TODO fill the documentation for this parameter")
+	private String consumerKey;
+
+	@Option
+	@Documentation("TODO fill the documentation for this parameter")
+	private String consumerSecret;
 
 }

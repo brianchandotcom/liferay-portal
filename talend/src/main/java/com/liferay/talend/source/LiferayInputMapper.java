@@ -45,10 +45,13 @@ public class LiferayInputMapper implements Serializable {
     private final TalendService service;
     private final RecordBuilderFactory recordBuilderFactory;
 
-    public LiferayInputMapper(@Option("configuration") final LiferayInputMapperConfiguration configuration,
-                              final TalendService service,
-                              final RecordBuilderFactory recordBuilderFactory) {
-        this.configuration = configuration;
+    public LiferayInputMapper(
+		@Option("configuration")
+		final LiferayInputMapperConfiguration configuration,
+        final TalendService service,
+		final RecordBuilderFactory recordBuilderFactory) {
+
+    	this.configuration = configuration;
         this.service = service;
         this.recordBuilderFactory = recordBuilderFactory;
     }
@@ -65,6 +68,7 @@ public class LiferayInputMapper implements Serializable {
 
     @Emitter
     public LiferayInputEmitter createWorker() {
-        return new LiferayInputEmitter(configuration, service, recordBuilderFactory);
+        return new LiferayInputEmitter(
+			configuration, service, recordBuilderFactory);
     }
 }

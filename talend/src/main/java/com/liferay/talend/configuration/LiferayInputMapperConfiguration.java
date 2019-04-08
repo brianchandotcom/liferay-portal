@@ -26,8 +26,6 @@ import org.talend.sdk.component.api.meta.Documentation;
  * @author Zoltán Takács
  */
 @GridLayout({
-    // the generated layout put one configuration entry per line,
-    // customize it as much as needed
     @GridLayout.Row({ "restDataSet" }),
     @GridLayout.Row({ "timeout" }),
     @GridLayout.Row({ "maxItemsPerRequest" })
@@ -50,9 +48,12 @@ public class LiferayInputMapperConfiguration implements Serializable {
         return restDataSet;
     }
 
-    public LiferayInputMapperConfiguration setRestDataSet(RestDataSet restDataSet) {
-        this.restDataSet = restDataSet;
-        return this;
+    public LiferayInputMapperConfiguration setRestDataSet(
+		RestDataSet restDataSet) {
+
+		this.restDataSet = restDataSet;
+
+		return this;
     }
 
     public int getTimeout() {
@@ -61,6 +62,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 
     public LiferayInputMapperConfiguration setTimeout(int timeout) {
         this.timeout = timeout;
+
         return this;
     }
 
@@ -68,8 +70,12 @@ public class LiferayInputMapperConfiguration implements Serializable {
         return maxItemsPerRequest;
     }
 
-    public LiferayInputMapperConfiguration setMaxItemsPerRequest(int maxItemsPerRequest) {
-        this.maxItemsPerRequest = maxItemsPerRequest;
-        return this;
+    public LiferayInputMapperConfiguration setMaxItemsPerRequest(
+		int maxItemsPerRequest) {
+
+		this.maxItemsPerRequest = maxItemsPerRequest;
+
+		return this;
     }
+
 }

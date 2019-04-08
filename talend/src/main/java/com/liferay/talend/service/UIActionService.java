@@ -20,10 +20,15 @@ import com.liferay.talend.datastore.BasicDataStore;
 import com.liferay.talend.datastore.InputDataStore;
 import com.liferay.talend.datastore.OAuthDataStore;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.ArraySchema;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
@@ -61,6 +66,24 @@ public class UIActionService {
 		}
 
 		return _checkOAuthDataStore(inputDataStore.getoAuthDataStore());
+	}
+
+	@Suggestions("fetchEndpoints")
+	public SuggestionValues fetchEndpoints(
+		@Option("inputDataStore") final InputDataStore inputDataStore) {
+
+		List<SuggestionValues.Item> items = new ArrayList<>();
+
+		Map<String, String> endpoints = _getEndpointsMap(
+			"com/liferay/talend/resource/rest-openapi.yaml");
+
+		endpoints.forEach(
+			(path, returnSchemaType) -> {
+				items.add(new SuggestionValues.Item(path, returnSchemaType));
+			}
+		);
+
+		return new SuggestionValues(true, items);
 	}
 
 	public HealthCheckStatus _checkBasicDataStore(
@@ -139,6 +162,46 @@ public class UIActionService {
 			HealthCheckStatus.Status.OK, "Connection success");
 	}
 
+	private Map<String, String> _getEndpointsMap(String location) {
+		OpenAPI openAPI = new OpenAPIV3Parser().read(location);
+		Paths paths = openAPI.getPaths();
+
+		return paths.entrySet().stream()
+			.filter(this::_isArrayTypePredicate)
+			.collect(
+				Collectors.toMap(
+					Map.Entry::getKey, this::_mapToArrayItemReferences)
+		);
+	}
+
+	private Schema _getSchema(Map.Entry<String, PathItem> pathItemEntry) {
+		PathItem pathItem = pathItemEntry.getValue();
+
+		Operation getOperation = pathItem.getGet();
+
+		ApiResponses apiResponses = getOperation.getResponses();
+
+		ApiResponse apiResponse200Ok = apiResponses.get("200");
+
+		Content content200OK = apiResponse200Ok.getContent();
+
+		MediaType mediaType = content200OK.get("application/json");
+
+		return mediaType.getSchema();
+	}
+
+	private boolean _isArrayTypePredicate(
+		Map.Entry<String, PathItem> pathItemEntry) {
+
+		Schema schema = _getSchema(pathItemEntry);
+
+		if ("array".equals(schema.getType())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isNull(String value) {
 		if ((value == null) || value.isEmpty()) {
 			return true;
@@ -153,44 +216,10 @@ public class UIActionService {
 		return false;
 	}
 
-	@Suggestions("fetchEndpoints")
-	public SuggestionValues fetchEndpoints(@Option("dataStore") final InputDataStore inputDataStore) {
+	private String _mapToArrayItemReferences(
+		Map.Entry<String, PathItem> stringPathItemEntry) {
 
-		List<SuggestionValues.Item> items = new ArrayList<>();
-
-		Map<String, String> endpoints = _getEndpointsMap("com/liferay/talend/resource/rest-openapi.yaml");
-
-		endpoints.forEach(
-			(path, returnSchemaType) -> items.add(new SuggestionValues.Item(path, returnSchemaType))
-		);
-
-		return new SuggestionValues(true, items);
-	}
-
-	private Map<String, String> _getEndpointsMap(String location) {
-		OpenAPI openAPI = new OpenAPIV3Parser().read(location);
-		Paths paths = openAPI.getPaths();
-
-		return paths.entrySet().stream()
-			.filter(this::_arrayTypePredicate)
-			.collect(Collectors.toMap(Map.Entry::getKey, this::_mapToArrayItemReferences)
-		);
-	}
-
-	private boolean _arrayTypePredicate(Map.Entry<String, PathItem> pathItemEntry) {
-		String type = pathItemEntry.getValue().getGet().getResponses().get("200").getContent().
-			get("application/json").getSchema().getType();
-
-		if (type != null && type.equals("array")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private String _mapToArrayItemReferences(Map.Entry<String, PathItem> stringPathItemEntry) {
-		Schema schema = stringPathItemEntry.getValue().getGet().getResponses().get("200").getContent().
-			get("application/json").getSchema();
+		Schema schema = _getSchema(stringPathItemEntry);
 
 		return ((ArraySchema) schema).getItems().get$ref();
 	}

@@ -70,24 +70,30 @@ jar {
 
 jarManifest {
 	doLast {
+		String serviceComponent = _getServiceComponent(jar.archivePath)
+
 		ant.jar(destfile: jar.archivePath, update: true) {
-			Jar jar = new Jar(jar.archivePath)
-
-			Resource resource = jar.getResource("META-INF/MANIFEST.MF")
-
-			Manifest manifest = new Manifest(resource.openInputStream())
-
-			List<String> serviceComponents = []
-
-			manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
-				if (!it.startsWith("OSGI-INF/graphql.")) {
-					serviceComponents.add(it)
-				}
-			}
-
 			delegate.manifest {
-				attribute(name: Constants.SERVICE_COMPONENT, value: serviceComponents.join(","))
+				attribute(name: Constants.SERVICE_COMPONENT, value: serviceComponent)
 			}
 		}
 	}
+}
+
+private String _getServiceComponent(File jarFile) {
+	Jar jar = new Jar(jarFile)
+
+	Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+	Manifest manifest = new Manifest(resource.openInputStream())
+
+	List<String> serviceComponents = []
+
+	manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
+		if (!it.startsWith("OSGI-INF/graphql.")) {
+			serviceComponents.add(it)
+		}
+	}
+
+	return serviceComponents.join(",")
 }

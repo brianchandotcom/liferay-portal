@@ -42,12 +42,6 @@ public class CustomPropertyUtil {
 	}
 
 	public static Boolean getBoolean(
-		CustomProperty[] customProperties, String key) {
-
-		return getBoolean(customProperties, key, false);
-	}
-
-	public static Boolean getBoolean(
 		CustomProperty[] customProperties, String key, boolean defaultValue) {
 
 		for (CustomProperty customProperty : customProperties) {

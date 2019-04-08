@@ -39,8 +39,8 @@ public class AssetEntryUsageLocalServiceImpl
 
 	@Override
 	public AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long plid, String portletId,
-		ServiceContext serviceContext) {
+		long groupId, long assetEntryId, long plid, long containerType,
+		String containerKey, ServiceContext serviceContext) {
 
 		long assetEntryUsageId = counterLocalService.increment();
 
@@ -54,7 +54,8 @@ public class AssetEntryUsageLocalServiceImpl
 		assetEntryUsage.setAssetEntryId(assetEntryId);
 		assetEntryUsage.setPlid(plid);
 		assetEntryUsage.setType(AssetEntryUsagesTypeConstants.TYPE_LAYOUT);
-		assetEntryUsage.setPortletId(portletId);
+		assetEntryUsage.setContainerType(containerType);
+		assetEntryUsage.setContainerKey(containerKey);
 
 		return assetEntryUsagePersistence.update(assetEntryUsage);
 	}
@@ -64,20 +65,23 @@ public class AssetEntryUsageLocalServiceImpl
 		long groupId, long assetEntryId, ServiceContext serviceContext) {
 
 		return addAssetEntryUsage(
-			groupId, assetEntryId, 0, StringPool.BLANK, serviceContext);
+			groupId, assetEntryId, 0, 0, StringPool.BLANK, serviceContext);
 	}
 
 	@Override
-	public void deleteAssetEntryUsages(long plid, String portletId) {
-		assetEntryUsagePersistence.removeByP_P(plid, portletId);
+	public void deleteAssetEntryUsages(
+		long plid, long containerType, String containerKey) {
+
+		assetEntryUsagePersistence.removeByP_C_C(
+			plid, containerType, containerKey);
 	}
 
 	@Override
 	public AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long plid, String portletId) {
+		long assetEntryId, long plid, long containerType, String containerKey) {
 
-		return assetEntryUsagePersistence.fetchByA_P_P(
-			assetEntryId, plid, portletId);
+		return assetEntryUsagePersistence.fetchByA_P_C_C(
+			assetEntryId, plid, containerType, containerKey);
 	}
 
 	@Override
@@ -117,7 +121,7 @@ public class AssetEntryUsageLocalServiceImpl
 	public boolean hasDefaultAssetEntryUsage(long assetEntryId) {
 		AssetEntryUsage assetEntryUsage =
 			assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntryId, 0, StringPool.BLANK);
+				assetEntryId, 0, 0, StringPool.BLANK);
 
 		if (assetEntryUsage != null) {
 			return true;

@@ -72,6 +72,13 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 			List<String> columnNames = _getColumnNames(
 				fileName, absolutePath, entityName);
 
+			ServiceColumnElementComparator serviceColumnElementComparator =
+				new ServiceColumnElementComparator(columnNames);
+
+			checkElementOrder(
+				fileName, entityElement, "column", entityName,
+				serviceColumnElementComparator);
+
 			ServiceFinderColumnElementComparator
 				serviceFinderColumnElementComparator =
 					new ServiceFinderColumnElementComparator(columnNames);
@@ -199,6 +206,31 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		"service.finder.column.sort.excludes";
 
 	private String _portalTablesContent;
+
+	private class ServiceColumnElementComparator extends ElementComparator {
+
+		public ServiceColumnElementComparator(List<String> columnNames) {
+			_columnNames = columnNames;
+		}
+
+		@Override
+		public int compare(Element columnElement1, Element columnElement2) {
+			String columnName1 = getElementName(columnElement1);
+			String columnName2 = getElementName(columnElement2);
+
+			int index1 = _columnNames.indexOf(columnName1);
+			int index2 = _columnNames.indexOf(columnName2);
+
+			if ((index1 == -1) || (index2 == -1)) {
+				return 0;
+			}
+
+			return index1 - index2;
+		}
+
+		private final List<String> _columnNames;
+
+	}
 
 	private class ServiceExceptionElementComparator extends ElementComparator {
 

@@ -1,3 +1,4 @@
+import { AppContext } from '../AppContext';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
 import Icon from '../../shared/components/Icon';
 import React from 'react';
@@ -6,8 +7,9 @@ import React from 'react';
  * @class
  * @memberof processes-list
  */
-export default class ProcessListItem extends React.Component {
+class ProcessListItem extends React.Component {
 	render() {
+		const { defaultDelta } = this.context;
 		const {
 			id,
 			instanceCount = '-',
@@ -48,7 +50,10 @@ export default class ProcessListItem extends React.Component {
 							className="dropdown-menu dropdown-menu-right"
 						>
 							<li>
-								<ChildLink className="dropdown-item" to={`/slas/${id}`}>
+								<ChildLink
+									className="dropdown-item"
+									to={`/slas/${id}/${defaultDelta}/1`}
+								>
 									{Liferay.Language.get('set-up-slas')}
 								</ChildLink>
 							</li>
@@ -59,3 +64,6 @@ export default class ProcessListItem extends React.Component {
 		);
 	}
 }
+
+ProcessListItem.contextType = AppContext;
+export default ProcessListItem;

@@ -1,33 +1,23 @@
 import { AppContext, AppStatus } from '../AppContext';
 import { openErrorToast, openSuccessToast } from '../../shared/util/toast';
-import autobind from 'autobind-decorator';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
-import DisplayResult from '../../shared/components/pagination/DisplayResult';
-import EmptyContent from '../../shared/components/EmptyContent';
 import Icon from '../../shared/components/Icon';
-import PageSizeEntries from '../../shared/components/pagination/PageSizeEntries';
-import Pagination from '../../shared/components/pagination/Pagination';
+import ListView from '../../shared/components/list/ListView';
+import PaginationBar from '../../shared/components/pagination/PaginationBar';
 import React from 'react';
+import { REQUEST_ORIGIN_TYPE_FETCH } from './Constants';
 import SLAConfirmDialog from './SLAConfirmDialog';
 import SLAListCardContext from './SLAListCardContext';
 import SLAListTable from './SLAListTable';
-
-const REQUEST_ORIGIN_TYPE_FETCH = 'REQUEST_ORIGIN_TYPE_FETCH';
-const REQUEST_ORIGIN_TYPE_SEARCH = 'REQUEST_ORIGIN_TYPE_SEARCH';
 
 class SLAListCard extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { page = 1, pageSize = 20, processId } = this.props;
-
+		this.requestOriginType = null;
 		this.state = {
 			items: [],
 			itemToRemove: null,
-			page,
-			pageSize,
-			processId,
-			requestOriginType: null,
 			showConfirmDialog: false,
 			showSLAsUpdatingAlert: false,
 			totalCount: 0
@@ -41,20 +31,17 @@ class SLAListCard extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		this.loadData();
-	}
-
 	componentWillMount() {
 		this.context.setTitle(Liferay.Language.get('slas'));
-	}
-
-	componentWillUpdate() {
 		this.showStatusMessage();
 	}
 
-	loadData() {
-		const { page, pageSize, processId } = this.state;
+	componentWillReceiveProps(nextProps) {
+		this.loadData(nextProps);
+	}
+
+	loadData(props = this.props) {
+		const { page, pageSize, processId } = props;
 
 		this.requestData({
 			page,
@@ -116,118 +103,39 @@ class SLAListCard extends React.Component {
 	 * @param {number} configuration.page
 	 * @param {number} configuration.pageSize
 	 * @param {number} configuration.processId
-	 * @param {string} configuration.title
 	 */
-	requestData({ page, pageSize, processId, title }) {
+	requestData({ page, pageSize, processId }) {
 		const { client } = this.context;
-
-		this.state.requestOriginType =
-			typeof title === 'string'
-				? REQUEST_ORIGIN_TYPE_SEARCH
-				: REQUEST_ORIGIN_TYPE_FETCH;
 
 		return client
 			.get(`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`)
-			.then(({ data }) => data)
+			.then(({ data }) => {
+				this.requestOriginType = REQUEST_ORIGIN_TYPE_FETCH;
+
+				return data;
+			})
 			.catch(openErrorToast);
 	}
 
-	@autobind
-	setPage({ page, pageSize }) {
-		const { processId } = this.props;
-
-		return this.requestData({ page, pageSize, processId }).then(
-			({ items, totalCount }) => this.setState({ items, page, totalCount })
-		);
-	}
-
-	@autobind
-	setPageSize(pageSize) {
-		const { processId } = this.props;
-		const page = 1;
-
-		return this.requestData({ page, pageSize, processId }).then(
-			({ items, totalCount }) =>
-				this.setState({ items, page, pageSize, totalCount })
-		);
-	}
-
 	render() {
+		const { requestOriginType } = this;
 		const {
 			itemToRemove,
 			items,
-			page,
-			pageSize,
-			requestOriginType,
 			showConfirmDialog,
 			showSLAsUpdatingAlert,
 			totalCount
 		} = this.state;
-		const pageSizes = [5, 10, 20, 30, 50, 75];
-		const { processId } = this.props;
+		const { page, pageSize, processId } = this.props;
 
-		const emptySearchRender = secondaryRender =>
-			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0 ? (
-				<EmptyContent
-					message={Liferay.Language.get('no-results-were-found')}
-					type="not-found"
-				/>
-			) : (
-				secondaryRender
-			);
-
-		const emptyContentRender = secondaryRender =>
-			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0 ? (
-				<EmptyContent
-					message={Liferay.Language.get(
-						'once-there-are-active-processes-metrics-will-appear-here'
-					)}
-					title={Liferay.Language.get('no-current-slas')}
-				/>
-			) : (
-				secondaryRender
-			);
-
-		const listRender = secondaryRender =>
-			totalCount > 0 ? (
-				<div>
-					{showConfirmDialog && (
-						<SLAConfirmDialog itemToRemove={itemToRemove} />
-					)}
-
-					<SLAListTable sla={items} />
-
-					{totalCount > pageSizes[0] && (
-						<div className="pagination-bar">
-							<PageSizeEntries
-								onSelectPageSize={this.setPageSize}
-								pageSizeEntries={pageSizes}
-								selectedPageSize={pageSize}
-							/>
-
-							<DisplayResult
-								page={page}
-								pageCount={items.length}
-								pageSize={pageSize}
-								totalCount={totalCount}
-							/>
-
-							<Pagination
-								onSelectPage={this.setPage}
-								page={page}
-								pageSize={pageSize}
-								totalCount={totalCount}
-							/>
-						</div>
-					)}
-				</div>
-			) : (
-				secondaryRender
-			);
-
-		const loadingRender = () => (
-			<span aria-hidden="true" className="loading-animation" />
+		const emptyMessageText = Liferay.Language.get(
+			'sla-allows-to-define-and-measure-process-performance'
 		);
+		const emptyTitleText = Liferay.Language.get('no-slas-yet');
+
+		const isFetching =
+			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
+		const isLoading = !requestOriginType && totalCount === 0;
 
 		return (
 			<SLAListCardContext.Provider value={this.slaContextState}>
@@ -246,7 +154,9 @@ class SLAListCard extends React.Component {
 					</div>
 				</nav>
 
-				<div className="container-fluid-1280">
+				{showConfirmDialog && <SLAConfirmDialog itemToRemove={itemToRemove} />}
+
+				<div className="lfr-search-container-wrapper container-fluid-1280">
 					{showSLAsUpdatingAlert && (
 						<div className="alert alert-dismissible alert-info" role="alert">
 							<span className="alert-indicator">
@@ -256,10 +166,11 @@ class SLAListCard extends React.Component {
 							<strong className="lead">{Liferay.Language.get('info')}</strong>
 
 							<span>
-								{Liferay.Language.get('one-or-more-slas-are-being-updated')}{' '}
-								{Liferay.Language.get(
+								{`${Liferay.Language.get(
+									'one-or-more-slas-are-being-updated'
+								)} ${Liferay.Language.get(
 									'there-may-be-a-delay-before-sla-changes-are-fully-propagated'
-								)}
+								)}`}
 							</span>
 
 							<button
@@ -273,7 +184,21 @@ class SLAListCard extends React.Component {
 						</div>
 					)}
 
-					{emptySearchRender(emptyContentRender(listRender(loadingRender())))}
+					<ListView
+						emptyMessageText={emptyMessageText}
+						emptyTitleText={emptyTitleText}
+						isFetching={isFetching}
+						isLoading={isLoading}
+					>
+						<SLAListTable items={items} />
+
+						<PaginationBar
+							page={page}
+							pageCount={items.length}
+							pageSize={pageSize}
+							totalCount={totalCount}
+						/>
+					</ListView>
 				</div>
 			</SLAListCardContext.Provider>
 		);

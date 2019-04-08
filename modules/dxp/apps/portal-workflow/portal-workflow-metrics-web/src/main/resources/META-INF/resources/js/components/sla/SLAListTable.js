@@ -3,7 +3,7 @@ import SLAListItem from './SLAListItem';
 
 export default class SLAListTable extends React.Component {
 	render() {
-		const { sla } = this.props;
+		const { items } = this.props;
 
 		return (
 			<div className="table-responsive">
@@ -36,7 +36,7 @@ export default class SLAListTable extends React.Component {
 					</thead>
 
 					<tbody>
-						{sla.map((sla, index) => (
+						{items.map((sla, index) => (
 							<SLAListItem {...sla} key={index} />
 						))}
 					</tbody>

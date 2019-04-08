@@ -80,7 +80,7 @@ export default class AppComponent extends React.Component {
 
 							<Route
 								exact
-								path="/slas/:processId/:pageSize?/:page?"
+								path="/slas/:processId/:pageSize/:page"
 								render={withParams(SLAListCard)}
 							/>
 

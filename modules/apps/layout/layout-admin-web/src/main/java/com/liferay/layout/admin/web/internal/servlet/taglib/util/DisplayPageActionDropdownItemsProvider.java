@@ -111,12 +111,17 @@ public class DisplayPageActionDropdownItemsProvider {
 		_getConfigureDisplayPageActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class),
+				_layoutPageTemplateEntry.getPlid());
+
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/layout/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "selPlid",
-				_layoutPageTemplateEntry.getPlid());
+				draftLayout.getPlid());
+
 			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
 		};
 	}

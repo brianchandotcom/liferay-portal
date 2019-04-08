@@ -31,10 +31,12 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
@@ -121,12 +123,17 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class),
+				_layoutPageTemplateEntry.getPlid());
+
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/layout/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "selPlid",
-				_layoutPageTemplateEntry.getPlid());
+				draftLayout.getPlid());
+
 			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
 		};
 	}

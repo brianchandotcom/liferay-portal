@@ -43,7 +43,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, ResourceBundle resourceBundle,
-		DLURLHelper dlurlHelper) {
+		DLURLHelper dlURLHelper) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
@@ -51,7 +51,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 		_imageEditorDLDisplayContextHelper =
 			new ImageEditorDLDisplayContextHelper(
-				fileVersion, request, dlurlHelper);
+				fileVersion, request, dlURLHelper);
 	}
 
 	@Override

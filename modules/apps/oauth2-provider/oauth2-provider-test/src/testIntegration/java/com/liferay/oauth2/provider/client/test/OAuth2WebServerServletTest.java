@@ -126,10 +126,10 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 						bundleContext.ungetService(dlUrlHelperServiceReference);
 					});
 
-				DLURLHelper dlurlHelper = bundleContext.getService(
+				DLURLHelper dlURLHelper = bundleContext.getService(
 					dlUrlHelperServiceReference);
 
-				previewURL = dlurlHelper.getPreviewURL(
+				previewURL = dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 			}

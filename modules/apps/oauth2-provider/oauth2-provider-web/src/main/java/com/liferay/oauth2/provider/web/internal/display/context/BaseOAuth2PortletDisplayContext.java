@@ -73,7 +73,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			oAuth2Application.getIconFileEntryId());
 
-		return dlurlHelper.getThumbnailSrc(fileEntry, themeDisplay);
+		return dlURLHelper.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	public boolean hasAddApplicationPermission() {
@@ -143,7 +143,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		}
 	}
 
-	protected DLURLHelper dlurlHelper;
+	protected DLURLHelper dlURLHelper;
 	protected OAuth2Application oAuth2Application;
 	protected OAuth2ApplicationService oAuth2ApplicationService;
 	protected PortletRequest portletRequest;

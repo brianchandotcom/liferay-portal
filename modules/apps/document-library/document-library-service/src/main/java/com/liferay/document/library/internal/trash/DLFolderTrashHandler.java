@@ -130,7 +130,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
-		return _dlurlHelper.getFolderControlPanelLink(
+		return _dlURLHelper.getFolderControlPanelLink(
 			portletRequest, dlFolder.getFolderId());
 	}
 
@@ -141,7 +141,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
-		return _dlurlHelper.getFolderControlPanelLink(
+		return _dlURLHelper.getFolderControlPanelLink(
 			portletRequest, dlFolder.getParentFolderId());
 	}
 
@@ -389,7 +389,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	private ModelResourcePermission<DLFolder> _dlFolderModelResourcePermission;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

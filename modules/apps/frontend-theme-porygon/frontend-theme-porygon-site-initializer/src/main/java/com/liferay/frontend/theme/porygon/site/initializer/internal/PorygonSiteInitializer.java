@@ -791,7 +791,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		Map<String, String> fileEntriesMap = new HashMap<>();
 
 		for (FileEntry fileEntry : fileEntries) {
-			String fileEntryURL = _dlurlHelper.getPreviewURL(
+			String fileEntryURL = _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false);
 
@@ -955,7 +955,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

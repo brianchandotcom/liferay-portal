@@ -82,7 +82,7 @@ public class ImageEditorDLDisplayContextFactory
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				ImageEditorDLDisplayContextFactory.class),
-			_dlurlHelper);
+			_dlURLHelper);
 	}
 
 	@Reference(unbind = "-")
@@ -93,6 +93,6 @@ public class ImageEditorDLDisplayContextFactory
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 }

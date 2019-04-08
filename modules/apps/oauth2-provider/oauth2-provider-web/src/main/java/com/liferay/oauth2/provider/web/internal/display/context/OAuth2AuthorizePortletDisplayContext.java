@@ -30,10 +30,10 @@ public class OAuth2AuthorizePortletDisplayContext
 	extends BaseOAuth2PortletDisplayContext {
 
 	public OAuth2AuthorizePortletDisplayContext(
-		ThemeDisplay themeDisplay, DLURLHelper dlurlHelper) {
+		ThemeDisplay themeDisplay, DLURLHelper dlURLHelper) {
 
 		super.themeDisplay = themeDisplay;
-		super.dlurlHelper = dlurlHelper;
+		super.dlURLHelper = dlURLHelper;
 	}
 
 	public AssignableScopes getAssignableScopes() {

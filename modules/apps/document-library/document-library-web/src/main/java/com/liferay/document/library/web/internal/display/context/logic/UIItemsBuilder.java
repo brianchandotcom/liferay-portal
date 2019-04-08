@@ -94,22 +94,22 @@ public class UIItemsBuilder {
 	public UIItemsBuilder(
 			HttpServletRequest request, FileShortcut fileShortcut,
 			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-			VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper)
+			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil, versioningStrategy, dlurlHelper);
+			resourceBundle, dlTrashUtil, versioningStrategy, dlURLHelper);
 	}
 
 	public UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
 		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-		VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper) {
+		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
 			request, fileVersion, null, resourceBundle, dlTrashUtil,
-			versioningStrategy, dlurlHelper);
+			versioningStrategy, dlURLHelper);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -468,7 +468,7 @@ public class UIItemsBuilder {
 			appendVersion = true;
 		}
 
-		String url = _dlurlHelper.getDownloadURL(
+		String url = _dlURLHelper.getDownloadURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
 			appendVersion, true);
 
@@ -500,7 +500,7 @@ public class UIItemsBuilder {
 			StringBundler.concat(
 				LanguageUtil.get(_resourceBundle, "download"), " (", label,
 				")"),
-			_dlurlHelper.getDownloadURL(
+			_dlURLHelper.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
 
@@ -619,7 +619,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		String webDavURL = _dlurlHelper.getWebDavURL(
+		String webDavURL = _dlURLHelper.getWebDavURL(
 			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
 			PropsValues.
 				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
@@ -666,7 +666,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		String webDavURL = _dlurlHelper.getWebDavURL(
+		String webDavURL = _dlURLHelper.getWebDavURL(
 			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
 			PropsValues.
 				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
@@ -1037,7 +1037,7 @@ public class UIItemsBuilder {
 		HttpServletRequest request, FileVersion fileVersion,
 		FileShortcut fileShortcut, ResourceBundle resourceBundle,
 		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
-		DLURLHelper dlurlHelper) {
+		DLURLHelper dlURLHelper) {
 
 		try {
 			_request = request;
@@ -1046,7 +1046,7 @@ public class UIItemsBuilder {
 			_resourceBundle = resourceBundle;
 			_dlTrashUtil = dlTrashUtil;
 			_versioningStrategy = versioningStrategy;
-			_dlurlHelper = dlurlHelper;
+			_dlURLHelper = dlURLHelper;
 
 			FileEntry fileEntry = null;
 
@@ -1309,7 +1309,7 @@ public class UIItemsBuilder {
 
 	private String _currentURL;
 	private final DLTrashUtil _dlTrashUtil;
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private FileShortcut _fileShortcut;

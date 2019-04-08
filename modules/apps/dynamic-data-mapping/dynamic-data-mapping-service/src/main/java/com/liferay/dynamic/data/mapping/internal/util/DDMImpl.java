@@ -345,7 +345,7 @@ public class DDMImpl implements DDM {
 			FileEntry fileEntry =
 				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
-			fieldValue = _dlurlHelper.getPreviewURL(
+			fieldValue = _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, true);
 		}
@@ -1366,7 +1366,7 @@ public class DDMImpl implements DDM {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 

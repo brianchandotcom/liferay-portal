@@ -530,7 +530,7 @@ public class DLReferencesExportImportContentProcessor
 					continue;
 				}
 
-				String url = _dlurlHelper.getPreviewURL(
+				String url = _dlURLHelper.getPreviewURL(
 					importedFileEntry, importedFileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 
@@ -724,7 +724,7 @@ public class DLReferencesExportImportContentProcessor
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -53,12 +53,12 @@ public class KBArticleImporter {
 	public KBArticleImporter(
 		KBArchiveFactory kbArchiveFactory,
 		KBArticleLocalService kbArticleLocalService, Portal portal,
-		DLURLHelper dlurlHelper) {
+		DLURLHelper dlURLHelper) {
 
 		_kbArchiveFactory = kbArchiveFactory;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 	}
 
 	public int processZipFile(
@@ -100,7 +100,7 @@ public class KBArticleImporter {
 
 		KBArticleMarkdownConverter kbArticleMarkdownConverter =
 			new KBArticleMarkdownConverter(
-				markdown, fileEntryName, metadata, _dlurlHelper);
+				markdown, fileEntryName, metadata, _dlURLHelper);
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
@@ -339,7 +339,7 @@ public class KBArticleImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final KBArchiveFactory _kbArchiveFactory;
 	private final KBArticleLocalService _kbArticleLocalService;
 	private final Portal _portal;

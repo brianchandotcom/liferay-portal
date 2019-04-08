@@ -85,7 +85,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 		OAuth2AdminPortletDisplayContext oAuth2AdminPortletDisplayContext =
 			new OAuth2AdminPortletDisplayContext(
 				_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
-				request, null, _dlurlHelper);
+				request, null, _dlURLHelper);
 
 		String[] oAuth2Features =
 			oAuth2AdminPortletDisplayContext.getOAuth2Features(
@@ -231,7 +231,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

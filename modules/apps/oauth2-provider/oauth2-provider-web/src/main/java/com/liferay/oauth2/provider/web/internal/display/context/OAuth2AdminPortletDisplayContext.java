@@ -47,14 +47,14 @@ public class OAuth2AdminPortletDisplayContext
 		OAuth2ApplicationService oAuth2ApplicationService,
 		OAuth2ProviderConfiguration oAuth2ProviderConfiguration,
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		DLURLHelper dlurlHelper) {
+		DLURLHelper dlURLHelper) {
 
 		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
 
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
 		super.portletRequest = portletRequest;
 		super.themeDisplay = themeDisplay;
-		super.dlurlHelper = dlurlHelper;
+		super.dlURLHelper = dlURLHelper;
 	}
 
 	public List<GrantType> getGrantTypes(

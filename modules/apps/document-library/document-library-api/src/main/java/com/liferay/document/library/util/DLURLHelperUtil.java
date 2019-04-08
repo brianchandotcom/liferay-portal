@@ -31,11 +31,11 @@ import javax.portlet.PortletRequest;
 public class DLURLHelperUtil {
 
 	public static DLURLHelper getDLURLHelper() {
-		if (_dlurlHelper == null) {
+		if (_dlURLHelper == null) {
 			throw new NullPointerException("DL URL helper is null");
 		}
 
-		return _dlurlHelper;
+		return _dlURLHelper;
 	}
 
 	public static String getDownloadURL(
@@ -157,14 +157,14 @@ public class DLURLHelperUtil {
 			officeExtensionRequired);
 	}
 
-	public static void setDLURLHelper(DLURLHelper dlurlHelper) {
-		if (_dlurlHelper != null) {
+	public static void setDLURLHelper(DLURLHelper dlURLHelper) {
+		if (_dlURLHelper != null) {
 			return;
 		}
 
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 	}
 
-	private static DLURLHelper _dlurlHelper;
+	private static DLURLHelper _dlURLHelper;
 
 }

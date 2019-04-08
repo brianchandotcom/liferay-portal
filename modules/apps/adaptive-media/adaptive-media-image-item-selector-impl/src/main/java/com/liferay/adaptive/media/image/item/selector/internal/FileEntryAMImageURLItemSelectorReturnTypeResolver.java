@@ -66,7 +66,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 		String previewURL = null;
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			previewURL = _dlurlHelper.getImagePreviewURL(
+			previewURL = _dlURLHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
@@ -115,7 +115,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;

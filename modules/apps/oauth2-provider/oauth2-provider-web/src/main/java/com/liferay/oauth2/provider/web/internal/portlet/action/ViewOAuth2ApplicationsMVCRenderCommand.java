@@ -59,7 +59,7 @@ public class ViewOAuth2ApplicationsMVCRenderCommand
 		OAuth2AdminPortletDisplayContext oAuth2AdminPortletDisplayContext =
 			new OAuth2AdminPortletDisplayContext(
 				_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
-				renderRequest, getThemeDisplay(renderRequest), _dlurlHelper);
+				renderRequest, getThemeDisplay(renderRequest), _dlURLHelper);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.OAUTH2_ADMIN_PORTLET_DISPLAY_CONTEXT,
@@ -79,7 +79,7 @@ public class ViewOAuth2ApplicationsMVCRenderCommand
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

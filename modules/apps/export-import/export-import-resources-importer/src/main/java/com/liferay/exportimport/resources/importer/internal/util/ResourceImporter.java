@@ -89,7 +89,7 @@ public class ResourceImporter extends FileSystemImporter {
 		PortletPreferencesTranslator portletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
-		ThemeLocalService themeLocalService, DLURLHelper dlurlHelper) {
+		ThemeLocalService themeLocalService, DLURLHelper dlURLHelper) {
 
 		super(
 			assetTagLocalService, ddmFormJSONDeserializer,
@@ -102,7 +102,7 @@ public class ResourceImporter extends FileSystemImporter {
 			layoutSetPrototypeLocalService, mimeTypes, portal,
 			portletPreferencesFactory, portletPreferencesLocalService,
 			portletPreferencesTranslator, portletPreferencesTranslators,
-			repositoryLocalService, saxReader, themeLocalService, dlurlHelper);
+			repositoryLocalService, saxReader, themeLocalService, dlURLHelper);
 	}
 
 	@Override

@@ -91,7 +91,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			OAuth2ConnectedApplicationsPortletDisplayContext
 				oAuth2ConnectedApplicationsPortletDisplayContext =
 					new OAuth2ConnectedApplicationsPortletDisplayContext(
-						renderRequest, _dlurlHelper);
+						renderRequest, _dlURLHelper);
 
 			renderRequest.setAttribute(
 				OAuth2ProviderWebKeys.
@@ -141,7 +141,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			oAuth2ConnectedApplicationsPortletDisplayContext =
 				new OAuth2ConnectedApplicationsPortletDisplayContext(
 					assignableScopes, renderRequest, _oAuth2ApplicationService,
-					oAuth2Authorization, _dlurlHelper);
+					oAuth2Authorization, _dlURLHelper);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.
@@ -158,7 +158,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 	private ApplicationDescriptorLocator _applicationDescriptorLocator;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private OAuth2ApplicationScopeAliasesLocalService

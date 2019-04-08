@@ -98,13 +98,13 @@ public class DLFileEntryAssetRenderer
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion,
 		DLFileEntryLocalService dlFileEntryLocalService,
-		TrashHelper trashHelper, DLURLHelper dlurlHelper) {
+		TrashHelper trashHelper, DLURLHelper dlURLHelper) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_trashHelper = trashHelper;
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 	}
 
 	@Override
@@ -229,7 +229,7 @@ public class DLFileEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String thumbnailSrc = _dlurlHelper.getThumbnailSrc(
+		String thumbnailSrc = _dlURLHelper.getThumbnailSrc(
 			_fileEntry, themeDisplay);
 
 		if (Validator.isNotNull(thumbnailSrc)) {
@@ -264,7 +264,7 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getURLDownload(ThemeDisplay themeDisplay) {
-		return _dlurlHelper.getDownloadURL(
+		return _dlURLHelper.getDownloadURL(
 			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
@@ -324,7 +324,7 @@ public class DLFileEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _dlurlHelper.getImagePreviewURL(
+		return _dlURLHelper.getImagePreviewURL(
 			_fileEntry, _fileVersion, themeDisplay);
 	}
 
@@ -504,7 +504,7 @@ public class DLFileEntryAssetRenderer
 		DLFileEntryAssetRenderer.class);
 
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final TrashHelper _trashHelper;

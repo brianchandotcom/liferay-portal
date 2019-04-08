@@ -152,7 +152,7 @@ public class FileSystemImporter extends BaseImporter {
 		PortletPreferencesTranslator portletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
-		ThemeLocalService themeLocalService, DLURLHelper dlurlHelper) {
+		ThemeLocalService themeLocalService, DLURLHelper dlURLHelper) {
 
 		this.assetTagLocalService = assetTagLocalService;
 		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
@@ -181,7 +181,7 @@ public class FileSystemImporter extends BaseImporter {
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 	}
 
 	@Override
@@ -950,7 +950,7 @@ public class FileSystemImporter extends BaseImporter {
 				FileEntry fileEntry = _fileEntries.get(smallImageFileName);
 
 				if (fileEntry != null) {
-					smallImageURL = _dlurlHelper.getPreviewURL(
+					smallImageURL = _dlURLHelper.getPreviewURL(
 						fileEntry, fileEntry.getFileVersion(), null,
 						StringPool.BLANK);
 				}
@@ -1751,7 +1751,7 @@ public class FileSystemImporter extends BaseImporter {
 			String fileEntryURL = StringPool.BLANK;
 
 			if (fileEntry != null) {
-				fileEntryURL = _dlurlHelper.getPreviewURL(
+				fileEntryURL = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK);
 			}
@@ -2086,7 +2086,7 @@ public class FileSystemImporter extends BaseImporter {
 	private final Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
 	private final Set<String> _ddmStructureKeys = new HashSet<>();
 	private String _defaultLayoutTemplateId;
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final Map<String, FileEntry> _fileEntries = new HashMap<>();
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;

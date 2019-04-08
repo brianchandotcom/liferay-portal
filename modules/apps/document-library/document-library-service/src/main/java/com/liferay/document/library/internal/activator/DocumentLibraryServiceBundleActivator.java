@@ -36,12 +36,12 @@ public class DocumentLibraryServiceBundleActivator implements BundleActivator {
 			public DLURLHelper addingService(
 				ServiceReference<DLURLHelper> serviceReference) {
 
-				DLURLHelper dlurlHelper = bundleContext.getService(
+				DLURLHelper dlURLHelper = bundleContext.getService(
 					serviceReference);
 
-				DLURLHelperUtil.setDLURLHelper(dlurlHelper);
+				DLURLHelperUtil.setDLURLHelper(dlURLHelper);
 
-				return dlurlHelper;
+				return dlURLHelper;
 			}
 
 		};

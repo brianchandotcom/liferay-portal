@@ -60,11 +60,11 @@ public class AssignScopesDisplayContext
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
 		ApplicationDescriptorLocator applicationDescriptorLocator,
 		ScopeDescriptorLocator scopeDescriptorLocator,
-		ScopeLocator scopeLocator, DLURLHelper dlurlHelper) {
+		ScopeLocator scopeLocator, DLURLHelper dlURLHelper) {
 
 		super(
 			oAuth2ApplicationService, oAuth2ProviderConfiguration,
-			portletRequest, themeDisplay, dlurlHelper);
+			portletRequest, themeDisplay, dlURLHelper);
 
 		_applicationDescriptorLocator = applicationDescriptorLocator;
 		_locale = themeDisplay.getLocale();

@@ -80,14 +80,14 @@ public class DefaultDLViewFileVersionDisplayContext
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
 			DLTrashUtil dlTrashUtil,
 			DLPreviewRendererProvider dlPreviewRendererProvider,
-			VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper)
+			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
 			dlTrashUtil, dlPreviewRendererProvider, versioningStrategy,
-			dlurlHelper);
+			dlURLHelper);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
@@ -97,12 +97,12 @@ public class DefaultDLViewFileVersionDisplayContext
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashUtil dlTrashUtil,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
-		VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper) {
+		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
 			request, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine, dlTrashUtil,
-			dlPreviewRendererProvider, versioningStrategy, dlurlHelper);
+			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
 
 	@Override
@@ -323,7 +323,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashUtil dlTrashUtil,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
-		VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper) {
+		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -347,12 +347,12 @@ public class DefaultDLViewFileVersionDisplayContext
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
 					request, fileVersion, _resourceBundle, dlTrashUtil,
-					versioningStrategy, dlurlHelper);
+					versioningStrategy, dlURLHelper);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
 					request, fileShortcut, _resourceBundle, dlTrashUtil,
-					versioningStrategy, dlurlHelper);
+					versioningStrategy, dlURLHelper);
 			}
 		}
 		catch (PortalException pe) {

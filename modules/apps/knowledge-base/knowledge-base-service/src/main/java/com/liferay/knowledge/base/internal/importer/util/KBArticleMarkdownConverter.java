@@ -45,7 +45,7 @@ public class KBArticleMarkdownConverter {
 
 	public KBArticleMarkdownConverter(
 			String markdown, String fileEntryName, Map<String, String> metadata,
-			DLURLHelper dlurlHelper)
+			DLURLHelper dlURLHelper)
 		throws KBArticleImportException {
 
 		MarkdownConverter markdownConverter =
@@ -95,7 +95,7 @@ public class KBArticleMarkdownConverter {
 
 		_sourceURL = buildSourceURL(baseSourceURL, fileEntryName);
 
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 	}
 
 	public String getSourceURL() {
@@ -182,7 +182,7 @@ public class KBArticleMarkdownConverter {
 				String imageSrc = StringPool.BLANK;
 
 				try {
-					imageSrc = _dlurlHelper.getPreviewURL(
+					imageSrc = _dlURLHelper.getPreviewURL(
 						imageFileEntry, imageFileEntry.getFileVersion(), null,
 						StringPool.BLANK);
 				}
@@ -375,7 +375,7 @@ public class KBArticleMarkdownConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleMarkdownConverter.class);
 
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final String _html;
 	private final String _sourceURL;
 	private final String _title;

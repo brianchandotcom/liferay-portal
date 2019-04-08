@@ -87,7 +87,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata, _dlurlHelper);
+			markdown, fileEntryName, metadata, _dlURLHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/unix/file", _method.invoke(object));
@@ -105,7 +105,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata, _dlurlHelper);
+			markdown, fileEntryName, metadata, _dlURLHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/windows/file", _method.invoke(object));
@@ -120,7 +120,7 @@ public class KBArticleMarkdownConverterTest {
 		Map<String, String> metadata = new HashMap<>();
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata, _dlurlHelper);
+			markdown, fileEntryName, metadata, _dlURLHelper);
 
 		Assert.assertNull(_method.invoke(object));
 	}
@@ -135,7 +135,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL/");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata, _dlurlHelper);
+			markdown, fileEntryName, metadata, _dlURLHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/unix/file", _method.invoke(object));
@@ -145,6 +145,6 @@ public class KBArticleMarkdownConverterTest {
 	private static Method _method;
 
 	@Inject
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 }

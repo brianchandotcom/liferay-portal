@@ -317,7 +317,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			WorkflowThreadLocal.setEnabled(false);
 
 			KBArticleImporter kbArticleImporter = new KBArticleImporter(
-				kbArchiveFactory, this, portal, dlurlHelper);
+				kbArchiveFactory, this, portal, dlURLHelper);
 
 			return kbArticleImporter.processZipFile(
 				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
@@ -2078,7 +2078,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	protected ConfigurationProvider configurationProvider;
 
 	@ServiceReference(type = DLURLHelper.class)
-	protected DLURLHelper dlurlHelper;
+	protected DLURLHelper dlURLHelper;
 
 	@ServiceReference(type = IndexerRegistry.class)
 	protected IndexerRegistry indexerRegistry;

@@ -54,7 +54,7 @@ public class DLFileEntryPreviewImageInfoDisplayContributorField
 	@Override
 	public String getValue(FileEntry fileEntry, Locale locale) {
 		try {
-			return _dlurlHelper.getImagePreviewURL(fileEntry, null);
+			return _dlURLHelper.getImagePreviewURL(fileEntry, null);
 		}
 		catch (Exception pe) {
 			return null;
@@ -62,6 +62,6 @@ public class DLFileEntryPreviewImageInfoDisplayContributorField
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 }

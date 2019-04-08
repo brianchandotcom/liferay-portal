@@ -45,19 +45,19 @@ public class DefaultIGViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut, ResourceBundle resourceBundle,
 			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
-			DLURLHelper dlurlHelper)
+			DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil, versioningStrategy, dlurlHelper);
+			resourceBundle, dlTrashUtil, versioningStrategy, dlURLHelper);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, FileShortcut fileShortcut,
 			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-			VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper)
+			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -68,12 +68,12 @@ public class DefaultIGViewFileVersionDisplayContext
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, fileVersion, resourceBundle, dlTrashUtil,
-				versioningStrategy, dlurlHelper);
+				versioningStrategy, dlURLHelper);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, fileShortcut, resourceBundle, dlTrashUtil,
-				versioningStrategy, dlurlHelper);
+				versioningStrategy, dlURLHelper);
 		}
 	}
 
@@ -81,12 +81,12 @@ public class DefaultIGViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, ResourceBundle resourceBundle,
 			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
-			DLURLHelper dlurlHelper)
+			DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			request, response, fileVersion, null, resourceBundle, dlTrashUtil,
-			versioningStrategy, dlurlHelper);
+			versioningStrategy, dlURLHelper);
 	}
 
 	@Override

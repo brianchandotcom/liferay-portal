@@ -43,8 +43,8 @@ import java.util.Locale;
  */
 public class DDLDisplayTemplateHelper {
 
-	public DDLDisplayTemplateHelper(DLURLHelper dlurlHelper) {
-		_dlurlHelper = dlurlHelper;
+	public DDLDisplayTemplateHelper(DLURLHelper dlURLHelper) {
+		_dlURLHelper = dlURLHelper;
 	}
 
 	public String getDocumentLibraryPreviewURL(
@@ -67,7 +67,7 @@ public class DDLDisplayTemplateHelper {
 		FileEntry fileEntry =
 			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
 
-		return _dlurlHelper.getPreviewURL(
+		return _dlURLHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 			false, true);
 	}
@@ -134,6 +134,6 @@ public class DDLDisplayTemplateHelper {
 		return ddmFormFieldValueRenderer.render(recordFieldValue, locale);
 	}
 
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 
 }

@@ -217,7 +217,7 @@ public class ImporterFactory {
 			_portletPreferencesFactory, _portletPreferencesLocalService,
 			_portletPreferencesTranslator, _portletPreferencesTranslators,
 			_repositoryLocalService, _saxReader, _themeLocalService,
-			_dlurlHelper);
+			_dlURLHelper);
 	}
 
 	protected LARImporter getLARImporter() {
@@ -237,7 +237,7 @@ public class ImporterFactory {
 			_portletPreferencesFactory, _portletPreferencesLocalService,
 			_portletPreferencesTranslator, _portletPreferencesTranslators,
 			_repositoryLocalService, _saxReader, _themeLocalService,
-			_dlurlHelper);
+			_dlURLHelper);
 	}
 
 	@Reference(
@@ -313,7 +313,7 @@ public class ImporterFactory {
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

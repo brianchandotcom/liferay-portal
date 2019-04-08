@@ -7310,7 +7310,7 @@ public class JournalArticleLocalServiceImpl
 						newArticle.getGroupId(), folder.getFolderId(),
 						fileName);
 
-				String previewURL = _dlurlHelper.getPreviewURL(
+				String previewURL = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, true);
 
@@ -9033,7 +9033,7 @@ public class JournalArticleLocalServiceImpl
 	private CommentManager _commentManager;
 
 	@ServiceReference(type = DLURLHelper.class)
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@ServiceReference(type = JournalDefaultTemplateProvider.class)
 	private JournalDefaultTemplateProvider _journalDefaultTemplateProvider;

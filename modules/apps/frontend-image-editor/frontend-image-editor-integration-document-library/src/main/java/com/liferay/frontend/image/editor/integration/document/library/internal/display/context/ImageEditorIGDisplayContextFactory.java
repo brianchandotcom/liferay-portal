@@ -65,7 +65,7 @@ public class ImageEditorIGDisplayContextFactory
 				ResourceBundleUtil.getBundle(
 					themeDisplay.getLocale(),
 					ImageEditorIGDisplayContextFactory.class),
-				_dlurlHelper);
+				_dlURLHelper);
 		}
 
 		return parentIGViewFileVersionDisplayContext;
@@ -79,6 +79,6 @@ public class ImageEditorIGDisplayContextFactory
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 }

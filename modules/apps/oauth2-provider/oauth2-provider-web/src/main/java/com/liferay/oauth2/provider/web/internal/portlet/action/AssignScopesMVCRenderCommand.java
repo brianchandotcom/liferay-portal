@@ -63,7 +63,7 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 				_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
 				renderRequest, getThemeDisplay(renderRequest),
 				_applicationDescriptorLocator, _scopeDescriptorLocator,
-				_scopeLocator, _dlurlHelper);
+				_scopeLocator, _dlURLHelper);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.OAUTH2_ADMIN_PORTLET_DISPLAY_CONTEXT,
@@ -86,7 +86,7 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 	private ApplicationDescriptorLocator _applicationDescriptorLocator;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

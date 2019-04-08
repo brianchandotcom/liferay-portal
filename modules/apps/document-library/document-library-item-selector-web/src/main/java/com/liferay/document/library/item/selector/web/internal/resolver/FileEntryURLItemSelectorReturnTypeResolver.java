@@ -51,7 +51,7 @@ public class FileEntryURLItemSelectorReturnTypeResolver
 		throws Exception {
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			return _dlurlHelper.getPreviewURL(
+			return _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
@@ -61,6 +61,6 @@ public class FileEntryURLItemSelectorReturnTypeResolver
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 }

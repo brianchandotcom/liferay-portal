@@ -50,10 +50,10 @@ public class VideoDLPreviewRendererProvider
 
 	public VideoDLPreviewRendererProvider(
 		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
-		DLURLHelper dlurlHelper, ServletContext servletContext) {
+		DLURLHelper dlURLHelper, ServletContext servletContext) {
 
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 		_servletContext = servletContext;
 	}
 
@@ -144,7 +144,7 @@ public class VideoDLPreviewRendererProvider
 								0) {
 
 						previewFileURLs.add(
-							_dlurlHelper.getPreviewURL(
+							_dlURLHelper.getPreviewURL(
 								fileVersion.getFileEntry(), fileVersion,
 								themeDisplay,
 								previewQueryString + "&type=" +
@@ -172,14 +172,14 @@ public class VideoDLPreviewRendererProvider
 			FileVersion fileVersion, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return _dlurlHelper.getPreviewURL(
+		return _dlURLHelper.getPreviewURL(
 			fileVersion.getFileEntry(), fileVersion, themeDisplay,
 			"&videoThumbnail=1");
 	}
 
 	private final DLFileVersionPreviewLocalService
 		_dlFileVersionPreviewLocalService;
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final ServletContext _servletContext;
 
 }

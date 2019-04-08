@@ -117,7 +117,7 @@ public class DLFileEntryAssetRendererFactory
 		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =
 			new DLFileEntryAssetRenderer(
 				fileEntry, fileVersion, _dlFileEntryLocalService, _trashHelper,
-				_dlurlHelper);
+				_dlURLHelper);
 
 		dlFileEntryAssetRenderer.setAssetRendererType(type);
 
@@ -270,7 +270,7 @@ public class DLFileEntryAssetRendererFactory
 		_dlFileEntryTypeModelResourcePermission;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

@@ -101,7 +101,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return _dlurlHelper.getFileEntryControlPanelLink(
+		return _dlURLHelper.getFileEntryControlPanelLink(
 			portletRequest, dlFileShortcut.getToFileEntryId());
 	}
 
@@ -112,7 +112,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return _dlurlHelper.getFolderControlPanelLink(
+		return _dlURLHelper.getFolderControlPanelLink(
 			portletRequest, dlFileShortcut.getFolderId());
 	}
 
@@ -300,7 +300,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"

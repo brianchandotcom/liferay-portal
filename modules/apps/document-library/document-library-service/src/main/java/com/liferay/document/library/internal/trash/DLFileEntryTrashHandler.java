@@ -155,7 +155,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return _dlurlHelper.getFileEntryControlPanelLink(
+		return _dlURLHelper.getFileEntryControlPanelLink(
 			portletRequest, dlFileEntry.getFileEntryId());
 	}
 
@@ -166,7 +166,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return _dlurlHelper.getFolderControlPanelLink(
+		return _dlURLHelper.getFolderControlPanelLink(
 			portletRequest, dlFileEntry.getFolderId());
 	}
 
@@ -471,7 +471,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private DLTrashLocalService _dlTrashLocalService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private DLValidator _dlValidator;

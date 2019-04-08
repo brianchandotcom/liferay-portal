@@ -79,7 +79,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 		long fileEntryId = jsonObject.getLong("fileEntryId");
 
 		Assert.assertEquals(
-			_dlurlHelper.getImagePreviewURL(
+			_dlURLHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			url);
@@ -107,7 +107,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

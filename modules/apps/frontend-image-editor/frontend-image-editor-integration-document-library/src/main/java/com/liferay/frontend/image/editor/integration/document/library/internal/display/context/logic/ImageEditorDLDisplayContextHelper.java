@@ -65,11 +65,11 @@ public class ImageEditorDLDisplayContextHelper {
 
 	public ImageEditorDLDisplayContextHelper(
 		FileVersion fileVersion, HttpServletRequest request,
-		DLURLHelper dlurlHelper) {
+		DLURLHelper dlURLHelper) {
 
 		_fileVersion = fileVersion;
 		_request = request;
-		_dlurlHelper = dlurlHelper;
+		_dlURLHelper = dlURLHelper;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -232,7 +232,7 @@ public class ImageEditorDLDisplayContextHelper {
 		editURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		String fileEntryPreviewURL = _dlurlHelper.getPreviewURL(
+		String fileEntryPreviewURL = _dlURLHelper.getPreviewURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
 
 		StringBundler sb = new StringBundler(12);
@@ -253,7 +253,7 @@ public class ImageEditorDLDisplayContextHelper {
 		return sb.toString();
 	}
 
-	private final DLURLHelper _dlurlHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _request;

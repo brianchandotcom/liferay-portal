@@ -72,7 +72,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 
 		contextObjects.put(
 			"ddlDisplayTemplateHelper",
-			new DDLDisplayTemplateHelper(_dlurlHelper));
+			new DDLDisplayTemplateHelper(_dlURLHelper));
 
 		return contextObjects;
 	}
@@ -197,7 +197,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private Portal _portal;

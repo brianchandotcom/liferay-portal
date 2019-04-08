@@ -93,7 +93,7 @@ public class AMImageContentTransformerTest {
 		String rawHTML = String.format(
 			"<img data-fileentryid=\"%s\" src=\"%s\" />",
 			fileEntry.getFileEntryId(),
-			_dlurlHelper.getPreviewURL(
+			_dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false));
 
@@ -134,7 +134,7 @@ public class AMImageContentTransformerTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

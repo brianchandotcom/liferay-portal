@@ -418,7 +418,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			String fileEntryURL = StringPool.BLANK;
 
 			if (fileEntry != null) {
-				fileEntryURL = _dlurlHelper.getPreviewURL(
+				fileEntryURL = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 			}
@@ -433,7 +433,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		"\\[resources:(.+?)\\]");
 
 	@ServiceReference(type = DLURLHelper.class)
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

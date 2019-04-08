@@ -69,7 +69,7 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 				(ThemeDisplay)uploadPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			return _dlurlHelper.getPreviewURL(
+			return _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 				StringPool.BLANK);
 		}
@@ -89,7 +89,7 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 		DLUploadResponseHandler.class);
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler

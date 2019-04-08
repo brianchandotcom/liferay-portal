@@ -16,8 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.junit.test.item;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 
 import java.io.IOException;
 
@@ -39,48 +38,46 @@ public class ClassRuleTestItem {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			false,
-			new BaseTestRule<>(
-				new BaseTestCallback<Object, Object>() {
+			new ClassTestRule<Object>() {
 
-					@Override
-					public void afterClass(Description description, Object c)
-						throws IOException {
+				@Override
+				public void afterClass(Description description, Object c)
+					throws IOException {
 
-						_testItemHelper.write(c.toString());
-						_testItemHelper.write("doAfterClass1");
-					}
+					_testItemHelper.write(c.toString());
+					_testItemHelper.write("doAfterClass1");
+				}
 
-					@Override
-					public Object beforeClass(Description description)
-						throws IOException {
+				@Override
+				public Object beforeClass(Description description)
+					throws IOException {
 
-						_testItemHelper.write("doBeforeClass1");
+					_testItemHelper.write("doBeforeClass1");
 
-						return "ClassRule1";
-					}
+					return "ClassRule1";
+				}
 
-				}),
-			new BaseTestRule<>(
-				new BaseTestCallback<Object, Object>() {
+			},
+			new ClassTestRule<Object>() {
 
-					@Override
-					public void afterClass(Description description, Object c)
-						throws IOException {
+				@Override
+				public void afterClass(Description description, Object c)
+					throws IOException {
 
-						_testItemHelper.write(c.toString());
-						_testItemHelper.write("doAfterClass2");
-					}
+					_testItemHelper.write(c.toString());
+					_testItemHelper.write("doAfterClass2");
+				}
 
-					@Override
-					public Object beforeClass(Description description)
-						throws IOException {
+				@Override
+				public Object beforeClass(Description description)
+					throws IOException {
 
-						_testItemHelper.write("doBeforeClass2");
+					_testItemHelper.write("doBeforeClass2");
 
-						return "ClassRule2";
-					}
+					return "ClassRule2";
+				}
 
-				}));
+			});
 
 	public static void assertAndTearDown() throws IOException {
 		List<String> lines = _testItemHelper.read();

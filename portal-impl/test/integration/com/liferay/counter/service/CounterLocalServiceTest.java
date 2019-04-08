@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,53 +64,52 @@ public class CounterLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			false, new LiferayIntegrationTestRule(),
-			new BaseTestRule<>(
-				new BaseTestCallback<Void, Void>() {
+			new ClassTestRule<Void>() {
 
-					@Override
-					public void afterClass(Description description, Void v) {
-						CounterLocalServiceUtil.reset(_COUNTER_NAME);
+				@Override
+				public void afterClass(Description description, Void v) {
+					CounterLocalServiceUtil.reset(_COUNTER_NAME);
+				}
+
+				@Override
+				public Void beforeClass(Description description)
+					throws Exception {
+
+					CounterLocalServiceUtil.reset(_COUNTER_NAME);
+
+					CounterLocalServiceUtil.reset(_COUNTER_NAME, 0);
+
+					MBeanServer mBeanServer =
+						ManagementFactory.getPlatformMBeanServer();
+
+					// HikariCP
+
+					for (ObjectName objectName :
+							mBeanServer.queryNames(
+								null,
+								new ObjectName(
+									"com.zaxxer.hikari:type=Pool (*"))) {
+
+						mBeanServer.invoke(
+							objectName, "softEvictConnections", null, null);
 					}
 
-					@Override
-					public Void beforeClass(Description description)
-						throws Exception {
+					// Tomcat
 
-						CounterLocalServiceUtil.reset(_COUNTER_NAME);
+					for (ObjectName objectName :
+							mBeanServer.queryNames(
+								null,
+								new ObjectName(
+									"TomcatJDBCPool:type=ConnectionPool," +
+										"name=*"))) {
 
-						CounterLocalServiceUtil.reset(_COUNTER_NAME, 0);
-
-						MBeanServer mBeanServer =
-							ManagementFactory.getPlatformMBeanServer();
-
-						// HikariCP
-
-						for (ObjectName objectName :
-								mBeanServer.queryNames(
-									null,
-									new ObjectName(
-										"com.zaxxer.hikari:type=Pool (*"))) {
-
-							mBeanServer.invoke(
-								objectName, "softEvictConnections", null, null);
-						}
-
-						// Tomcat
-
-						for (ObjectName objectName :
-								mBeanServer.queryNames(
-									null,
-									new ObjectName(
-										"TomcatJDBCPool:type=ConnectionPool," +
-											"name=*"))) {
-
-							mBeanServer.invoke(objectName, "purge", null, null);
-						}
-
-						return null;
+						mBeanServer.invoke(objectName, "purge", null, null);
 					}
 
-				}),
+					return null;
+				}
+
+			},
 			HypersonicServerTestRule.INSTANCE);
 
 	@Test

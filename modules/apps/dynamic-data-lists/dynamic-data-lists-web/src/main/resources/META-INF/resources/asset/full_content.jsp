@@ -32,6 +32,7 @@ DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
 	classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 	classPK="<%= ddmStructure.getPrimaryKey() %>"
 	ddmFormValues="<%= ddmFormValues %>"
+	groupId="<%= ddmStructure.getGroupId() %>"
 	readOnly="<%= true %>"
 	requestedLocale="<%= locale %>"
 />

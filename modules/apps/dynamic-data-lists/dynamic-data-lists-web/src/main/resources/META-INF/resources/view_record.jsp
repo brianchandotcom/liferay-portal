@@ -82,6 +82,7 @@ else {
 			classNameId="<%= classNameId %>"
 			classPK="<%= classPK %>"
 			ddmFormValues="<%= ddmFormValues %>"
+			groupId="<%= record.getGroupId() %>"
 			readOnly="<%= true %>"
 			requestedLocale="<%= locale %>"
 		/>

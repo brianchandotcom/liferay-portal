@@ -185,6 +185,7 @@ else {
 							classNameId="<%= classNameId %>"
 							classPK="<%= classPK %>"
 							ddmFormValues="<%= ddmFormValues %>"
+							groupId="<%= recordSet.getGroupId() %>"
 							repeatable="<%= translating ? false : true %>"
 							requestedLocale="<%= locale %>"
 						/>
@@ -196,6 +197,7 @@ else {
 									classNameId="<%= classNameId %>"
 									classPK="<%= classPK %>"
 									ddmFormValues="<%= ddmFormValues %>"
+									groupId="<%= recordSet.getGroupId() %>"
 									repeatable="<%= translating ? false : true %>"
 									requestedLocale="<%= locale %>"
 								/>

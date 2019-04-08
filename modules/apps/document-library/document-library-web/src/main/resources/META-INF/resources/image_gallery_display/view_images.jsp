@@ -103,6 +103,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								<liferay-frontend:icon-vertical-card
 									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
 									actionJspServletContext="<%= application %>"
+									cardCssClass="card-interactive card-interactive-secondary"
 									cssClass="entry-display-style"
 									icon="documents-and-media"
 									resultRow="<%= row %>"
@@ -113,6 +114,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								<liferay-frontend:vertical-card
 									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
 									actionJspServletContext="<%= application %>"
+									cardCssClass="card-interactive card-interactive-secondary"
 									cssClass="entry-display-style"
 									imageUrl="<%= imagePreviewURL %>"
 									resultRow="<%= row %>"

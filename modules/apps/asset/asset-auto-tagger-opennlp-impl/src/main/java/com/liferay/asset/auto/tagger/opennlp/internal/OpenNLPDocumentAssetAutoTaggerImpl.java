@@ -133,6 +133,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		Arrays.asList(
 			"application/epub+zip", "application/vnd.apple.pages.13",
 			"application/vnd.google-apps.document",
+			"application/vnd.oasis.opendocument.text",
 			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
 				"document",
 			ContentTypes.APPLICATION_MSWORD, ContentTypes.APPLICATION_PDF,

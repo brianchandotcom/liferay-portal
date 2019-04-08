@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.portlet.extender;
 
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.portlet.extender.internal.portlet.JSPortlet;
 import com.liferay.frontend.js.portlet.extender.internal.portlet.action.PortletExtenderConfigurationAction;
@@ -180,7 +181,7 @@ public class JSPortletExtender {
 		try {
 			ConfigurationAction configurationAction =
 				new PortletExtenderConfigurationAction(
-					_ddm, portletPreferencesJSONObject);
+					_ddm, _ddmFormRenderer, portletPreferencesJSONObject);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -282,6 +283,9 @@ public class JSPortletExtender {
 
 	@Reference
 	private DDM _ddm;
+
+	@Reference
+	private DDMFormRenderer _ddmFormRenderer;
 
 	@Reference
 	private JSONFactory _jsonFactory;

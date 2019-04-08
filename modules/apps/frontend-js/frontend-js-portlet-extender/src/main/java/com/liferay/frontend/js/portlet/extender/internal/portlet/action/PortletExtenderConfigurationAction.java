@@ -14,11 +14,12 @@
 
 package com.liferay.frontend.js.portlet.extender.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -43,6 +45,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,8 +67,11 @@ public class PortletExtenderConfigurationAction
 	extends DefaultConfigurationAction {
 
 	public PortletExtenderConfigurationAction(
-			DDM ddm, JSONObject preferencesJSONObject)
+			DDM ddm, DDMFormRenderer ddmFormRenderer,
+			JSONObject preferencesJSONObject)
 		throws PortalException {
+
+		_ddmFormRenderer = ddmFormRenderer;
 
 		_ddmForm = ddm.getDDMForm(preferencesJSONObject.toJSONString());
 		_preferencesJSONObject = preferencesJSONObject;
@@ -104,10 +110,9 @@ public class PortletExtenderConfigurationAction
 					_getActionURL(request, portletDisplay), Constants.CMD,
 					Constants.UPDATE,
 					String.valueOf(System.currentTimeMillis()),
-					DDMFormRendererUtil.render(
+					_ddmFormRenderer.render(
 						_ddmForm,
-						_getDDMFormFieldRenderingContext(
-							request, response, themeDisplay, portletDisplay)),
+						_createDDMFormRenderingContext(request, response)),
 					fieldsJSONArray.toString(), portletDisplay.getNamespace(),
 					LanguageUtil.get(themeDisplay.getLocale(), "save")
 				}));
@@ -152,6 +157,38 @@ public class PortletExtenderConfigurationAction
 		return StringPool.BLANK;
 	}
 
+	private DDMFormRenderingContext _createDDMFormRenderingContext(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
+
+		Set<Locale> availableLocales = _ddmForm.getAvailableLocales();
+
+		Locale locale = _ddmForm.getDefaultLocale();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (availableLocales.contains(themeDisplay.getLocale())) {
+			locale = themeDisplay.getLocale();
+		}
+
+		ddmFormRenderingContext.setLocale(locale);
+
+		ddmFormRenderingContext.setPortletNamespace(
+			PortalUtil.getPortletNamespace(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
+		ddmFormRenderingContext.setReadOnly(false);
+
+		return ddmFormRenderingContext;
+	}
+
 	private String _getActionURL(
 			HttpServletRequest request, PortletDisplay portletDisplay)
 		throws Exception {
@@ -173,26 +210,6 @@ public class PortletExtenderConfigurationAction
 		actionURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return actionURL.toString();
-	}
-
-	private DDMFormFieldRenderingContext _getDDMFormFieldRenderingContext(
-		HttpServletRequest request, HttpServletResponse response,
-		ThemeDisplay themeDisplay, PortletDisplay portletDisplay) {
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(request);
-		ddmFormFieldRenderingContext.setHttpServletResponse(response);
-		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
-		ddmFormFieldRenderingContext.setMode("edit");
-		ddmFormFieldRenderingContext.setPortletNamespace(
-			portletDisplay.getNamespace());
-		ddmFormFieldRenderingContext.setReadOnly(false);
-		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
-		ddmFormFieldRenderingContext.setViewMode(true);
-
-		return ddmFormFieldRenderingContext;
 	}
 
 	private void _populateFieldNames() {
@@ -260,6 +277,7 @@ public class PortletExtenderConfigurationAction
 	}
 
 	private final DDMForm _ddmForm;
+	private final DDMFormRenderer _ddmFormRenderer;
 	private final Set<String> _fieldNames = new HashSet<>();
 	private final JSONObject _preferencesJSONObject;
 

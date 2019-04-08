@@ -23,12 +23,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +39,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Sergio González
@@ -61,6 +65,11 @@ public class EditorConfigContributorTest {
 				TablesEditorConfigContributor.class,
 				TextFormatEditorConfigContributor.class,
 				VideoEditorConfigContributor.class));
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			EditorConfigContributorTest.class);
+
+		_bundleContext = bundle.getBundleContext();
 	}
 
 	@AfterClass
@@ -83,9 +92,7 @@ public class EditorConfigContributorTest {
 	public void testEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorNameEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("editor.name", _EDITOR_NAME);
@@ -94,11 +101,12 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, emoticonsEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, emoticonsEditorConfigContributor,
+				properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("javax.portlet.name", _PORTLET_NAME);
@@ -107,9 +115,10 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -135,9 +144,7 @@ public class EditorConfigContributorTest {
 	public void testEditorConfigKeyOverridesPortletNameEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("service.ranking", 1000);
@@ -145,11 +152,12 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, emoticonsEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, emoticonsEditorConfigContributor,
+				properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
@@ -157,9 +165,10 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor tablesEditorConfigContributor =
 			new TablesEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, tablesEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, tablesEditorConfigContributor,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -181,30 +190,30 @@ public class EditorConfigContributorTest {
 
 	@Test
 	public void testEditorNameOverridesEmptySelectorConfig() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor tablesEditorConfigContributor =
 			new TablesEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, tablesEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, tablesEditorConfigContributor,
+				properties);
 
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -228,9 +237,7 @@ public class EditorConfigContributorTest {
 
 	@Test
 	public void testGetEditorConfigurationByEditorName() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
@@ -238,11 +245,12 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME_2);
 		properties.put("service.ranking", 1000);
@@ -250,9 +258,10 @@ public class EditorConfigContributorTest {
 		EditorConfigContributor imageEditorConfigContributor =
 			new ImageEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, imageEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, imageEditorConfigContributor,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -281,31 +290,31 @@ public class EditorConfigContributorTest {
 	public void testGetEditorConfigurationByEditorNameAndServiceRanking()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfigContributor videoEditorVideoConfigContributor =
 			new VideoEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 2000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, videoEditorVideoConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				videoEditorVideoConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -330,34 +339,34 @@ public class EditorConfigContributorTest {
 	public void testPortletNameAndEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorConfigKeyEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, emoticonsEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, emoticonsEditorConfigContributor,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -383,33 +392,33 @@ public class EditorConfigContributorTest {
 	public void testPortletNameAndEditorConfigKeyOverridesEditorConfigKeyAndEditorNameEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, emoticonsEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, emoticonsEditorConfigContributor,
+				properties);
 
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -435,32 +444,32 @@ public class EditorConfigContributorTest {
 	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, emoticonsEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, emoticonsEditorConfigContributor,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -486,31 +495,31 @@ public class EditorConfigContributorTest {
 	public void testPortletNameOverridesEditorNameEditorConfig()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		EditorConfigContributor tablesEditorConfigContributor =
 			new TablesEditorConfigContributor();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("javax.portlet.name", _PORTLET_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration1 = registry.registerService(
-			EditorConfigContributor.class, tablesEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration1 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, tablesEditorConfigContributor,
+				properties);
 
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
 
-		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, textFormatEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration2 =
+			_bundleContext.registerService(
+				EditorConfigContributor.class,
+				textFormatEditorConfigContributor, properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -540,6 +549,7 @@ public class EditorConfigContributorTest {
 
 	private static final String _PORTLET_NAME = "testPortletName";
 
+	private static BundleContext _bundleContext;
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
 	private ServiceRegistration<EditorConfigContributor>

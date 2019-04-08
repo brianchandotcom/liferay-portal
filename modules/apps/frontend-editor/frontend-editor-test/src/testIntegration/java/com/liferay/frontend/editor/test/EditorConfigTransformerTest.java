@@ -26,13 +26,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +43,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Sergio González
@@ -60,6 +64,11 @@ public class EditorConfigTransformerTest {
 	public static void setUpClass() throws Exception {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
 			Arrays.<Class<?>>asList(BasicHTMLEditorConfigContributor.class));
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			EditorConfigTransformerTest.class);
+
+		_bundleContext = bundle.getBundleContext();
 	}
 
 	@AfterClass
@@ -90,9 +99,7 @@ public class EditorConfigTransformerTest {
 	public void testEditorConfigNotTransformedWhenEditorConfigTransformerIsRegisteredToOtherEditorName()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
@@ -100,28 +107,30 @@ public class EditorConfigTransformerTest {
 		EditorConfigContributor basicHTMLEditorConfigContributor =
 			new BasicHTMLEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration = registry.registerService(
-			EditorConfigContributor.class, basicHTMLEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, basicHTMLEditorConfigContributor,
+				properties);
 
 		EditorOptionsContributor textEditorOptionsContributor =
 			new TextEditorOptionsContributor();
 
 		_editorOptionsContributorServiceRegistration1 =
-			registry.registerService(
+			_bundleContext.registerService(
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _UNUSED_EDITOR_NAME);
 
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
-		_editorConfigTransfomerServiceRegistration = registry.registerService(
-			EditorConfigTransformer.class, testEditorConfigTransformer,
-			properties);
+		_editorConfigTransfomerServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigTransformer.class, testEditorConfigTransformer,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -140,9 +149,7 @@ public class EditorConfigTransformerTest {
 	public void testEditorConfigNotTransformedWhenNoEditorConfigTransformerIsRegistered()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
@@ -150,15 +157,16 @@ public class EditorConfigTransformerTest {
 		EditorConfigContributor basicHTMLEditorConfigContributor =
 			new BasicHTMLEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration = registry.registerService(
-			EditorConfigContributor.class, basicHTMLEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, basicHTMLEditorConfigContributor,
+				properties);
 
 		EditorOptionsContributor textEditorOptionsContributor =
 			new TextEditorOptionsContributor();
 
 		_editorOptionsContributorServiceRegistration1 =
-			registry.registerService(
+			_bundleContext.registerService(
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
@@ -179,9 +187,7 @@ public class EditorConfigTransformerTest {
 	public void testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
@@ -189,28 +195,30 @@ public class EditorConfigTransformerTest {
 		EditorConfigContributor basicHTMLEditorConfigContributor =
 			new BasicHTMLEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration = registry.registerService(
-			EditorConfigContributor.class, basicHTMLEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, basicHTMLEditorConfigContributor,
+				properties);
 
 		EditorOptionsContributor textEditorOptionsContributor =
 			new TextEditorOptionsContributor();
 
 		_editorOptionsContributorServiceRegistration1 =
-			registry.registerService(
+			_bundleContext.registerService(
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
-		_editorConfigTransfomerServiceRegistration = registry.registerService(
-			EditorConfigTransformer.class, testEditorConfigTransformer,
-			properties);
+		_editorConfigTransfomerServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigTransformer.class, testEditorConfigTransformer,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -229,9 +237,7 @@ public class EditorConfigTransformerTest {
 	public void testEditorConfigTransformedWithMultipleEditorOptionsContributors()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 		properties.put("service.ranking", 1000);
@@ -239,15 +245,16 @@ public class EditorConfigTransformerTest {
 		EditorConfigContributor basicHTMLEditorConfigContributor =
 			new BasicHTMLEditorConfigContributor();
 
-		_editorConfigContributorServiceRegistration = registry.registerService(
-			EditorConfigContributor.class, basicHTMLEditorConfigContributor,
-			properties);
+		_editorConfigContributorServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigContributor.class, basicHTMLEditorConfigContributor,
+				properties);
 
 		EditorOptionsContributor textEditorOptionsContributor =
 			new TextEditorOptionsContributor();
 
 		_editorOptionsContributorServiceRegistration1 =
-			registry.registerService(
+			_bundleContext.registerService(
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
@@ -255,20 +262,21 @@ public class EditorConfigTransformerTest {
 			new UploadImagesEditorOptionsContributor();
 
 		_editorOptionsContributorServiceRegistration2 =
-			registry.registerService(
+			_bundleContext.registerService(
 				EditorOptionsContributor.class,
 				uploadImagesEditorOptionsContributor, properties);
 
-		properties = new HashMap<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
 
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
-		_editorConfigTransfomerServiceRegistration = registry.registerService(
-			EditorConfigTransformer.class, testEditorConfigTransformer,
-			properties);
+		_editorConfigTransfomerServiceRegistration =
+			_bundleContext.registerService(
+				EditorConfigTransformer.class, testEditorConfigTransformer,
+				properties);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -294,6 +302,7 @@ public class EditorConfigTransformerTest {
 
 	private static final String _UNUSED_EDITOR_NAME = "testUnusedEditorName";
 
+	private static BundleContext _bundleContext;
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
 	private ServiceRegistration<EditorConfigContributor>

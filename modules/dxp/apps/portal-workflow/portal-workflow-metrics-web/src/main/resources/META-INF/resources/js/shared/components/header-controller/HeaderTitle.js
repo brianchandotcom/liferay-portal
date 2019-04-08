@@ -13,11 +13,13 @@ export default class HeaderTitle extends React.Component {
 	render() {
 		const { container, title } = this.props;
 
-		const titleChanged = title !== this.prevTitle;
+		if (title != this.prevTitle) {
+			this.setDocumentTitle();
+		}
 
 		return (
 			<PortalComponent container={container} replace>
-				{titleChanged && (this.setDocumentTitle(), title)}
+				{title}
 			</PortalComponent>
 		);
 	}

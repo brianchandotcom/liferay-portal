@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
+long groupId = BeanParamUtil.getLong(fileEntry, request, "groupId");
+
 long repositoryId = BeanParamUtil.getLong(fileEntry, request, "repositoryId");
 
 if (repositoryId <= 0) {
@@ -180,6 +182,10 @@ else {
 								}
 								catch (Exception e) {
 								}
+
+								if (groupId <= 0) {
+									groupId = ddmStructure.getGroupId();
+								}
 					%>
 
 								<aui:input name="ddmFormFieldNamespace" type="hidden" value="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>" />
@@ -190,6 +196,7 @@ else {
 										classPK="<%= ddmStructure.getPrimaryKey() %>"
 										ddmFormValues="<%= ddmFormValues %>"
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+										groupId="<%= groupId %>"
 										localizable="<%= false %>"
 										requestedLocale="<%= locale %>"
 										synchronousFormSubmission="<%= false %>"

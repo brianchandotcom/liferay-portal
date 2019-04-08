@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.dto.v1_0.util;
+package com.liferay.data.engine.rest.internal.field.type.v1_0.util;
 
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

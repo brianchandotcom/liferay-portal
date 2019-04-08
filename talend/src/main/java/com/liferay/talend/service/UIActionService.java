@@ -14,7 +14,11 @@
 
 package com.liferay.talend.service;
 
+import com.liferay.talend.client.BasicAuthenticationClient;
+import com.liferay.talend.datastore.AuthenticationMethod;
 import com.liferay.talend.datastore.BasicDataStore;
+import com.liferay.talend.datastore.InputDataStore;
+import com.liferay.talend.datastore.OAuthDataStore;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
@@ -25,8 +29,14 @@ import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
 import org.talend.sdk.component.api.service.completion.SuggestionValues;
 import org.talend.sdk.component.api.service.completion.Suggestions;
+import org.talend.sdk.component.api.service.healthcheck.HealthCheck;
+import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
+import org.talend.sdk.component.api.service.http.Response;
 
+import javax.json.JsonObject;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,8 +48,113 @@ import java.util.stream.Collectors;
 @Service
 public class UIActionService {
 
+	@HealthCheck("checkInputDataStore")
+	public HealthCheckStatus checkInputDataStore(
+		@Option InputDataStore inputDataStore,
+		final BasicAuthenticationClient basicAuthenticationClient) {
+
+		if (AuthenticationMethod.BASIC ==
+			inputDataStore.getAuthenticationMethod()) {
+
+			return _checkBasicDataStore(
+				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
+		}
+
+		return _checkOAuthDataStore(inputDataStore.getoAuthDataStore());
+	}
+
+	public HealthCheckStatus _checkBasicDataStore(
+		@Option BasicDataStore basicDataStore,
+		BasicAuthenticationClient basicAuthenticationClient) {
+
+		if (_isNull(basicDataStore.getUser()) ||
+			_isNull(basicDataStore.getPassword())) {
+
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO,
+				"Username and Password are required");
+		}
+
+		URL serverURL = basicDataStore.getServerURL();
+
+		if ((serverURL == null) || _isNull(serverURL.toString())) {
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO,
+				"Server URL is required");
+		}
+
+		basicAuthenticationClient.base(serverURL.toString());
+
+		Base64.Encoder base64Encoder = Base64.getEncoder();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(basicDataStore.getUser());
+		sb.append(":");
+		sb.append(basicDataStore.getPassword());
+
+		String base64Seed = sb.toString();
+
+		byte[] encode = base64Encoder.encode(base64Seed.getBytes());
+
+		sb.setLength(0);
+
+		sb.append("Basic ");
+		sb.append(base64Encoder.encodeToString(encode));
+
+		Response<JsonObject> jsonObjectResponse =
+			basicAuthenticationClient.checkRequest(sb.toString(), "*/*");
+
+		if (jsonObjectResponse.status() != 200) {
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO,
+				"Connection failed, received http response status " +
+					jsonObjectResponse.status());
+		}
+
+		return new HealthCheckStatus(
+			HealthCheckStatus.Status.OK, "Connection success");
+	}
+
+	public HealthCheckStatus _checkOAuthDataStore(
+		@Option OAuthDataStore oAuthDataStore) {
+
+		if (_isNull(oAuthDataStore.getConsumerKey()) ||
+			_isNull(oAuthDataStore.getConsumerSecret())) {
+
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO,
+				"Consumer key and secret are required");
+		}
+
+		if (oAuthDataStore.getServerURL() == null) {
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO,
+				"Server URL is required");
+		}
+
+		// TODO perform connection check
+
+		return new HealthCheckStatus(
+			HealthCheckStatus.Status.OK, "Connection success");
+	}
+
+	private boolean _isNull(String value) {
+		if ((value == null) || value.isEmpty()) {
+			return true;
+		}
+
+		value = value.trim();
+
+		if (value.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Suggestions("fetchEndpoints")
-	public SuggestionValues fetchEndpoints(@Option("dataStore") final BasicDataStore dataStore) {
+	public SuggestionValues fetchEndpoints(@Option("dataStore") final InputDataStore inputDataStore) {
 
 		List<SuggestionValues.Item> items = new ArrayList<>();
 
@@ -79,4 +194,5 @@ public class UIActionService {
 
 		return ((ArraySchema) schema).getItems().get$ref();
 	}
+
 }

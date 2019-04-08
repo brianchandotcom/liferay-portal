@@ -364,17 +364,17 @@ definition {
 		}
 	}
 
-	macro toggleShowInPagesHierarchyMenu {
+	macro toggleHiddenFromNavigationMenuWidget {
 		if ("${toggleValue}" == "enable") {
 			Check.checkToggleSwitch(
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Pages Hierarchy Menu"
+				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget"
 			);
 		}
 		else if ("${toggleValue}" == "disable") {
 			Uncheck.uncheckToggleSwitch(
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Pages Hierarchy Menu"
+				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget"
 			);
 		}
 		else {

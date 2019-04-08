@@ -6,4 +6,5 @@ Provide-Capability:\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.login.authentication.google.web), (bundle.symbolic.name=com.liferay.portal.settings.lang)";\
 		resource.bundle.base.name="content.Language"
 Web-ContextPath: /portal-settings-web
+-dsannotations-options: inherit
 -includeresource: META-INF/resources/users_admin/css=@com.liferay.users.admin.web-[0-9]*.jar!/META-INF/resources/css

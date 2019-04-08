@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule.callback;
+package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,8 +29,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -51,13 +50,14 @@ import java.util.concurrent.CountDownLatch;
 import org.junit.runner.Description;
 
 /**
+ * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class SynchronousDestinationTestCallback
-	implements TestCallback<SyncHandler, SyncHandler> {
+public class SynchronousDestinationTestRule
+	extends AbstractTestRule<SyncHandler, SyncHandler> {
 
-	public static final SynchronousDestinationTestCallback INSTANCE =
-		new SynchronousDestinationTestCallback();
+	public static final SynchronousDestinationTestRule INSTANCE =
+		new SynchronousDestinationTestRule();
 
 	@Override
 	public void afterClass(Description description, SyncHandler syncHandler)
@@ -340,7 +340,7 @@ public class SynchronousDestinationTestCallback
 
 	}
 
-	protected SynchronousDestinationTestCallback() {
+	protected SynchronousDestinationTestRule() {
 	}
 
 	private SyncHandler _createSyncHandler(Sync sync) {

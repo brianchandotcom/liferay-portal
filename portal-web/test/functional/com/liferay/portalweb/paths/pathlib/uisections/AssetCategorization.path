@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CATEGORY</td>
-	<td>//div[contains(@id,'form-control-tag-group')]//span[normalize-space(text())='${key_categoryName}']</td>
+	<td>//div[contains(@id,'assetCategoriesSelector')]//span[@id='item-tag'][contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

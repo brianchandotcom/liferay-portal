@@ -68,17 +68,18 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomProperty[] customProperties;
 
-	public Object getDefaultValue() {
+	public LocalizedValue[] getDefaultValue() {
 		return defaultValue;
 	}
 
-	public void setDefaultValue(Object defaultValue) {
+	public void setDefaultValue(LocalizedValue[] defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
 	@JsonIgnore
 	public void setDefaultValue(
-		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
+		UnsafeSupplier<LocalizedValue[], Exception>
+			defaultValueUnsafeSupplier) {
 
 		try {
 			defaultValue = defaultValueUnsafeSupplier.get();
@@ -93,7 +94,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object defaultValue;
+	protected LocalizedValue[] defaultValue;
 
 	public String getFieldType() {
 		return fieldType;
@@ -357,7 +358,23 @@ public class DataDefinitionField {
 
 		sb.append("\"defaultValue\": ");
 
-		sb.append(defaultValue);
+		if (defaultValue == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < defaultValue.length; i++) {
+				sb.append(defaultValue[i]);
+
+				if ((i + 1) < defaultValue.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"fieldType\": ");

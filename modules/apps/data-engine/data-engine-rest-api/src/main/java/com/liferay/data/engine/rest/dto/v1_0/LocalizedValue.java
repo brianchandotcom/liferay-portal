@@ -65,17 +65,17 @@ public class LocalizedValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	@JsonIgnore
 	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 		try {
 			value = valueUnsafeSupplier.get();
@@ -90,7 +90,7 @@ public class LocalizedValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
+	protected Object value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -128,9 +128,7 @@ public class LocalizedValue {
 
 		sb.append("\"value\": ");
 
-		sb.append("\"");
 		sb.append(value);
-		sb.append("\"");
 
 		sb.append("}");
 

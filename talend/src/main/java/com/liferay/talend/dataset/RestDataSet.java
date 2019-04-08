@@ -16,8 +16,7 @@ package com.liferay.talend.dataset;
 
 import java.io.Serializable;
 
-import com.liferay.talend.datastore.BasicDataStore;
-
+import com.liferay.talend.datastore.InputDataStore;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
@@ -27,22 +26,22 @@ import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 @DataSet("RestDataSet")
 @GridLayout({
-    @GridLayout.Row({ "dataStore" }),
+	@GridLayout.Row({ "inputDataStore" }),
     @GridLayout.Row({ "endpoint" })
 })
 @Documentation("TODO fill the documentation for this configuration")
 public class RestDataSet implements Serializable {
 
-    @Option
-    @Documentation("TODO fill the documentation for this parameter")
-    private BasicDataStore dataStore;
+	@Option
+	private InputDataStore inputDataStore;
 
     @Option
     @Required
-    @Suggestable(value = "fetchEndpoints", parameters = { "dataStore" })
+    @Suggestable(value = "fetchEndpoints", parameters = { "inputDataStore" })
     @Documentation("Endpoint")
     /**
      * DataStore parameter now is not needed, just an example how we can use it
@@ -50,12 +49,13 @@ public class RestDataSet implements Serializable {
      */
     private String endpoint;
 
-    public BasicDataStore getDataStore() {
-        return dataStore;
+    public InputDataStore getInputDataStore() {
+        return inputDataStore;
     }
 
-    public RestDataSet setDataStore(BasicDataStore dataStore) {
-        this.dataStore = dataStore;
+    public RestDataSet setInputDataStore(InputDataStore inputDataStore) {
+        this.inputDataStore = inputDataStore;
         return this;
     }
+
 }

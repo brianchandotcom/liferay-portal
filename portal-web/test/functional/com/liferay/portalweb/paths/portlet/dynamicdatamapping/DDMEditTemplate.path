@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_FIELD</td>
-	<td>//div[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(.,'${key_fieldName}')]</td>
+	<td>//fieldset[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_SELECT_STRUCTURE</td>
-	<td>//a[contains(@href,'openDDMStructureSelector')]/span</td>
+	<td>//button[contains(@id,'selectDDMStructure')]/span</td>
 	<td></td>
 </tr>
 <tr>

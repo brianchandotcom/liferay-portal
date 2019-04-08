@@ -25,6 +25,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoViewContent {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro openAssetListsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet"

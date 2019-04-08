@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param fragmentEntryLinkId: string}
+	{@param? _fragmentEntryLinkType: string}
 	{@param? _fragmentsEditorItemTypes: ?}
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
@@ -63,6 +64,7 @@
 		class="{$wrapperClasses}"
 		data-drag-source-label="{$name ?: ''}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
+		data-fragment-entry-link-type="{$_fragmentEntryLinkType}"
 		data-fragments-editor-item-id="{$fragmentEntryLinkId}"
 		data-fragments-editor-item-type="fragments-editor-fragment"
 		data-onkeyup="{$_handleFragmentKeyUp}"

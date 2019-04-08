@@ -83,17 +83,19 @@ jarManifest {
 private String _getServiceComponent(File jarFile) {
 	Jar jar = new Jar(jarFile)
 
-	Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+	jar.withCloseable {
+		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
 
-	Manifest manifest = new Manifest(resource.openInputStream())
+		Manifest manifest = new Manifest(resource.openInputStream())
 
-	List<String> serviceComponents = []
+		List<String> serviceComponents = []
 
-	manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
-		if (!it.startsWith("OSGI-INF/graphql.")) {
-			serviceComponents.add(it)
+		manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
+			if (!it.startsWith("OSGI-INF/graphql.")) {
+				serviceComponents.add(it)
+			}
 		}
-	}
 
-	return serviceComponents.join(",")
+		return serviceComponents.join(",")
+	}
 }

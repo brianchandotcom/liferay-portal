@@ -16,16 +16,17 @@ package com.liferay.portal.search.elasticsearch6.internal.query;
 
 import com.liferay.portal.search.elasticsearch6.internal.query.function.score.ElasticsearchScoreFunctionTranslator;
 import com.liferay.portal.search.query.FunctionScoreQuery;
+import com.liferay.portal.search.query.FunctionScoreQuery.FilterQueryScoreFunctionHolder;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.query.function.score.ScoreFunction;
 import com.liferay.portal.search.query.function.score.ScoreFunctionTranslator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,48 +46,23 @@ public class FunctionScoreQueryTranslatorImpl
 		QueryBuilder queryBuilder = queryTranslator.translate(
 			functionScoreQuery.getQuery());
 
-		List<FunctionScoreQuery.FilterQueryScoreFunctionHolder>
-			filterQueryScoreFunctionHolders =
-				functionScoreQuery.getFilterQueryScoreFunctionHolders();
+		List<FilterQueryScoreFunctionHolder> filterQueryScoreFunctionHolders =
+			functionScoreQuery.getFilterQueryScoreFunctionHolders();
 
-		List<FunctionScoreQueryBuilder.FilterFunctionBuilder>
-			filterFunctionBuilders = new ArrayList<>(
-				filterQueryScoreFunctionHolders.size());
-
-		filterQueryScoreFunctionHolders.forEach(
-			filterQueryScoreFunctionHolder -> {
-				ScoreFunction scoreFunction =
-					filterQueryScoreFunctionHolder.getScoreFunction();
-
-				ScoreFunctionBuilder<?> scoreFunctionBuilder =
-					scoreFunction.accept(_scoreFunctionTranslator);
-
-				FunctionScoreQueryBuilder.FilterFunctionBuilder
-					filterFunctionBuilder = null;
-
-				if (filterQueryScoreFunctionHolder.getFilterQuery() == null) {
-					filterFunctionBuilder =
-						new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-							scoreFunctionBuilder);
-				}
-				else {
-					QueryBuilder filterQueryBuilder = queryTranslator.translate(
-						filterQueryScoreFunctionHolder.getFilterQuery());
-
-					filterFunctionBuilder =
-						new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-							filterQueryBuilder, scoreFunctionBuilder);
-				}
-
-				filterFunctionBuilders.add(filterFunctionBuilder);
-			});
+		FilterFunctionBuilder[] filterFunctionBuilders =
+			filterQueryScoreFunctionHolders.stream(
+			).map(
+				filterQueryScoreFunctionHolder -> translateFilterFunction(
+					filterQueryScoreFunctionHolder, queryTranslator,
+					translateScoreFunction(
+						filterQueryScoreFunctionHolder.getScoreFunction()))
+			).toArray(
+				FilterFunctionBuilder[]::new
+			);
 
 		FunctionScoreQueryBuilder functionScoreQueryBuilder =
 			QueryBuilders.functionScoreQuery(
-				queryBuilder,
-				filterFunctionBuilders.toArray(
-					new FunctionScoreQueryBuilder.FilterFunctionBuilder
-						[filterFunctionBuilders.size()]));
+				queryBuilder, filterFunctionBuilders);
 
 		if (functionScoreQuery.getMinScore() != null) {
 			functionScoreQueryBuilder.setMinScore(
@@ -149,6 +125,34 @@ public class FunctionScoreQueryTranslatorImpl
 			throw new IllegalArgumentException(
 				"Invalid FunctionScoreQuery.ScoreMode: " + scoreMode);
 		}
+	}
+
+	protected FilterFunctionBuilder translateFilterFunction(
+		FilterQueryScoreFunctionHolder filterQueryScoreFunctionHolder,
+		QueryTranslator<QueryBuilder> queryTranslator,
+		ScoreFunctionBuilder<?> scoreFunctionBuilder) {
+
+		if (filterQueryScoreFunctionHolder.getFilterQuery() == null) {
+			return new FilterFunctionBuilder(scoreFunctionBuilder);
+		}
+
+		return new FilterFunctionBuilder(
+			queryTranslator.translate(
+				filterQueryScoreFunctionHolder.getFilterQuery()),
+			scoreFunctionBuilder);
+	}
+
+	protected ScoreFunctionBuilder<?> translateScoreFunction(
+		ScoreFunction scoreFunction) {
+
+		ScoreFunctionBuilder<?> scoreFunctionBuilder = scoreFunction.accept(
+			_scoreFunctionTranslator);
+
+		if (scoreFunction.getWeight() != null) {
+			scoreFunctionBuilder.setWeight(scoreFunction.getWeight());
+		}
+
+		return scoreFunctionBuilder;
 	}
 
 	private final CombineFunctionTranslator _combineFunctionTranslator =

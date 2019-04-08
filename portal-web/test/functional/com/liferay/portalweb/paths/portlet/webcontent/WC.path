@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT</td>
+	<td>//div[@class='button-holder']//span[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_GARBAGE_DATA</td>
 	<td>//pre[contains(.,'data')]</td>
 	<td></td>

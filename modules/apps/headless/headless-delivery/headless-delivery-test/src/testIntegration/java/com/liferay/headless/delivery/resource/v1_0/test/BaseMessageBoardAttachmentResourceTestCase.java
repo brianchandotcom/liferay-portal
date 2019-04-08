@@ -216,7 +216,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {
@@ -338,7 +338,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardAttachment>>() {
 			});
@@ -389,7 +389,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 		options.addPart(
 			"messageBoardAttachment",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -415,7 +415,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {
@@ -540,7 +540,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardAttachment>>() {
 			});
@@ -591,7 +591,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 		options.addPart(
 			"messageBoardAttachment",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -617,7 +617,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardAttachment.class);
 		}
 		catch (Exception e) {

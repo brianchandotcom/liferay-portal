@@ -194,7 +194,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, FormDocument.class);
+			return outputObjectMapper.readValue(string, FormDocument.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

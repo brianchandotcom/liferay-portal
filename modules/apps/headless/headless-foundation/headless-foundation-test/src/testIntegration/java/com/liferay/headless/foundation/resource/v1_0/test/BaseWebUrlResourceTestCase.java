@@ -179,7 +179,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<WebUrl>>() {
 			});
@@ -277,7 +277,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<WebUrl>>() {
 			});
@@ -331,7 +331,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WebUrl.class);
+			return outputObjectMapper.readValue(string, WebUrl.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

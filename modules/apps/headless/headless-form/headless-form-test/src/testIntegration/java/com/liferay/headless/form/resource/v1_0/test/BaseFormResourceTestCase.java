@@ -229,7 +229,7 @@ public abstract class BaseFormResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Form>>() {
 			});
@@ -287,7 +287,7 @@ public abstract class BaseFormResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Form.class);
+			return outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -333,7 +333,7 @@ public abstract class BaseFormResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
+			inputObjectMapper.writeValueAsString(form),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -350,7 +350,7 @@ public abstract class BaseFormResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Form.class);
+			return outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -366,7 +366,7 @@ public abstract class BaseFormResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
+			inputObjectMapper.writeValueAsString(form),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -394,7 +394,7 @@ public abstract class BaseFormResourceTestCase {
 
 		options.addPart(
 			"form",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -417,7 +417,7 @@ public abstract class BaseFormResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, FormDocument.class);
+			return outputObjectMapper.readValue(string, FormDocument.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

@@ -234,7 +234,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<SegmentUser>>() {
 			});

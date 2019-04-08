@@ -116,7 +116,7 @@ public abstract class BaseFormRecordFormResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecordForm),
+			inputObjectMapper.writeValueAsString(formRecordForm),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -134,7 +134,7 @@ public abstract class BaseFormRecordFormResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, FormRecord.class);
+			return outputObjectMapper.readValue(string, FormRecord.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -150,7 +150,7 @@ public abstract class BaseFormRecordFormResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecordForm),
+			inputObjectMapper.writeValueAsString(formRecordForm),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

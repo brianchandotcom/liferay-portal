@@ -416,7 +416,7 @@ public abstract class BaseKeywordResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Keyword>>() {
 			});
@@ -476,7 +476,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
+			inputObjectMapper.writeValueAsString(keyword),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -496,7 +496,7 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Keyword.class);
+			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -512,7 +512,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
+			inputObjectMapper.writeValueAsString(keyword),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -608,7 +608,7 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Keyword.class);
+			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -661,7 +661,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
+			inputObjectMapper.writeValueAsString(keyword),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -678,7 +678,7 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Keyword.class);
+			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -694,7 +694,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
+			inputObjectMapper.writeValueAsString(keyword),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

@@ -189,7 +189,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<PostalAddress>>() {
 			});
@@ -251,7 +251,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, PostalAddress.class);
+			return outputObjectMapper.readValue(string, PostalAddress.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -361,7 +361,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<PostalAddress>>() {
 			});

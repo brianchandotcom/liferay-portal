@@ -200,7 +200,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseAttachment>>() {
 			});
@@ -251,7 +251,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 		options.addPart(
 			"knowledgeBaseAttachment",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -277,7 +277,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseAttachment.class);
 		}
 		catch (Exception e) {
@@ -419,7 +419,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseAttachment.class);
 		}
 		catch (Exception e) {

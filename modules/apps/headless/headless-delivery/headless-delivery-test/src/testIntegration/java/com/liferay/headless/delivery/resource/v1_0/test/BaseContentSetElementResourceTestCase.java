@@ -250,7 +250,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<ContentSetElement>>() {
 			});
@@ -451,7 +451,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<ContentSetElement>>() {
 			});
@@ -653,7 +653,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<ContentSetElement>>() {
 			});

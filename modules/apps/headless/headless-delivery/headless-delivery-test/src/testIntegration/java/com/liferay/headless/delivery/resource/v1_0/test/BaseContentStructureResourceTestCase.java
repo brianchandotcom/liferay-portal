@@ -448,7 +448,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<ContentStructure>>() {
 			});
@@ -523,8 +523,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
-				string, ContentStructure.class);
+			return outputObjectMapper.readValue(string, ContentStructure.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

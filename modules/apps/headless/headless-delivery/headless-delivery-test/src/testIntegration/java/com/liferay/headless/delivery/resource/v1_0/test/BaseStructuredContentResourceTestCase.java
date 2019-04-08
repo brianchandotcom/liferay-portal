@@ -452,7 +452,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<StructuredContent>>() {
 			});
@@ -515,7 +515,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -535,7 +535,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -552,7 +552,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -613,7 +613,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -685,7 +685,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -1059,7 +1059,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<StructuredContent>>() {
 			});
@@ -1443,7 +1443,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<StructuredContent>>() {
 			});
@@ -1511,7 +1511,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1531,7 +1531,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -1550,7 +1550,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1672,7 +1672,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -1740,7 +1740,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1760,7 +1760,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -1777,7 +1777,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1829,7 +1829,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1849,7 +1849,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
@@ -1866,7 +1866,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
+			inputObjectMapper.writeValueAsString(structuredContent),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1978,7 +1978,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -2034,7 +2034,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -2092,7 +2092,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

@@ -202,7 +202,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, BlogPosting.class);
+			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -263,7 +263,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -281,7 +281,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, BlogPosting.class);
+			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -297,7 +297,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -344,7 +344,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -362,7 +362,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, BlogPosting.class);
+			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -378,7 +378,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -478,7 +478,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -532,7 +532,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -588,7 +588,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -931,7 +931,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<BlogPosting>>() {
 			});
@@ -992,7 +992,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1012,7 +1012,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, BlogPosting.class);
+			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1028,7 +1028,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
+			inputObjectMapper.writeValueAsString(blogPosting),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

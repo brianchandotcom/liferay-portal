@@ -231,7 +231,7 @@ public abstract class BaseSegmentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Segment>>() {
 			});
@@ -418,7 +418,7 @@ public abstract class BaseSegmentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Segment>>() {
 			});

@@ -150,7 +150,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, UserAccount.class);
+			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -490,7 +490,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<UserAccount>>() {
 			});
@@ -764,7 +764,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<UserAccount>>() {
 			});
@@ -832,7 +832,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, UserAccount.class);
+			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -885,7 +885,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		options.addPart(
 			"userAccount",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -907,7 +907,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, UserAccount.class);
+			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1023,7 +1023,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, UserAccount.class);
+			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1079,7 +1079,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(userAccount),
+			inputObjectMapper.writeValueAsString(userAccount),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1097,7 +1097,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, UserAccount.class);
+			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1113,7 +1113,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(userAccount),
+			inputObjectMapper.writeValueAsString(userAccount),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1434,7 +1434,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<UserAccount>>() {
 			});

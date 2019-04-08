@@ -445,7 +445,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<DocumentFolder>>() {
 			});
@@ -508,7 +508,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -528,7 +528,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, DocumentFolder.class);
+			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -544,7 +544,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -660,7 +660,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, DocumentFolder.class);
+			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -724,7 +724,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -743,7 +743,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, DocumentFolder.class);
+			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -759,7 +759,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -810,7 +810,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -829,7 +829,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, DocumentFolder.class);
+			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -845,7 +845,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1199,7 +1199,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<DocumentFolder>>() {
 			});
@@ -1262,7 +1262,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1282,7 +1282,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, DocumentFolder.class);
+			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1298,7 +1298,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(documentFolder),
+			inputObjectMapper.writeValueAsString(documentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

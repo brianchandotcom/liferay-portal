@@ -452,7 +452,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<TaxonomyVocabulary>>() {
 			});
@@ -517,7 +517,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -537,7 +537,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
@@ -554,7 +554,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -678,7 +678,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
@@ -747,7 +747,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -767,7 +767,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
@@ -784,7 +784,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -838,7 +838,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -858,7 +858,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
@@ -875,7 +875,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

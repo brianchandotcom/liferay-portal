@@ -453,7 +453,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardThread>>() {
 			});
@@ -518,7 +518,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -538,7 +538,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
@@ -555,7 +555,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -918,7 +918,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardThread>>() {
 			});
@@ -987,7 +987,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1007,7 +1007,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
@@ -1026,7 +1026,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1150,7 +1150,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
@@ -1219,7 +1219,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1239,7 +1239,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
@@ -1256,7 +1256,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1310,7 +1310,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1330,7 +1330,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
@@ -1347,7 +1347,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardThread),
+			inputObjectMapper.writeValueAsString(messageBoardThread),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1459,7 +1459,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1515,7 +1515,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1573,7 +1573,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

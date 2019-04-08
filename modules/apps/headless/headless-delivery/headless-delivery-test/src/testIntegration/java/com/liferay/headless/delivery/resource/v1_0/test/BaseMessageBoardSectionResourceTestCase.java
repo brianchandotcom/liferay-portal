@@ -453,7 +453,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardSection>>() {
 			});
@@ -518,7 +518,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -538,7 +538,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
@@ -555,7 +555,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -680,7 +680,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
@@ -750,7 +750,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -770,7 +770,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
@@ -787,7 +787,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -842,7 +842,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -862,7 +862,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
@@ -879,7 +879,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1246,7 +1246,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<MessageBoardSection>>() {
 			});
@@ -1315,7 +1315,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1335,7 +1335,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
@@ -1354,7 +1354,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(messageBoardSection),
+			inputObjectMapper.writeValueAsString(messageBoardSection),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

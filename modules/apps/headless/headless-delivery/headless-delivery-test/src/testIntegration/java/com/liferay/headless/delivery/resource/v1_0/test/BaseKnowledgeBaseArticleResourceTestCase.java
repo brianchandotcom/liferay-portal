@@ -464,7 +464,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseArticle>>() {
 			});
@@ -529,7 +529,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -549,7 +549,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -566,7 +566,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -692,7 +692,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -764,7 +764,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -784,7 +784,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -802,7 +802,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -858,7 +858,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -878,7 +878,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -896,7 +896,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1008,7 +1008,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1064,7 +1064,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1122,7 +1122,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1509,7 +1509,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseArticle>>() {
 			});
@@ -1578,7 +1578,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1598,7 +1598,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -1617,7 +1617,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1992,7 +1992,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseArticle>>() {
 			});
@@ -2061,7 +2061,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -2081,7 +2081,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
@@ -2100,7 +2100,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

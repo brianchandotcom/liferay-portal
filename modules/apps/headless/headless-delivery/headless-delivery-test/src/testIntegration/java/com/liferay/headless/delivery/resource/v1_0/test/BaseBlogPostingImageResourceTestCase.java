@@ -215,8 +215,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
-				string, BlogPostingImage.class);
+			return outputObjectMapper.readValue(string, BlogPostingImage.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -583,7 +582,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<BlogPostingImage>>() {
 			});
@@ -640,7 +639,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		options.addPart(
 			"blogPostingImage",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -666,8 +665,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
-				string, BlogPostingImage.class);
+			return outputObjectMapper.readValue(string, BlogPostingImage.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

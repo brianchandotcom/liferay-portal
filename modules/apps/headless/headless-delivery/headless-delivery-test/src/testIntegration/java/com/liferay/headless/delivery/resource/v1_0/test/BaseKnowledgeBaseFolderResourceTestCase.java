@@ -255,7 +255,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseFolder>>() {
 			});
@@ -315,7 +315,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -335,7 +335,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseFolder.class);
 		}
 		catch (Exception e) {
@@ -352,7 +352,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -477,7 +477,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseFolder.class);
 		}
 		catch (Exception e) {
@@ -547,7 +547,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -567,7 +567,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseFolder.class);
 		}
 		catch (Exception e) {
@@ -584,7 +584,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -639,7 +639,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -659,7 +659,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseFolder.class);
 		}
 		catch (Exception e) {
@@ -676,7 +676,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -845,7 +845,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<KnowledgeBaseFolder>>() {
 			});
@@ -909,7 +909,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -929,7 +929,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, KnowledgeBaseFolder.class);
 		}
 		catch (Exception e) {
@@ -948,7 +948,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
+			inputObjectMapper.writeValueAsString(knowledgeBaseFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

@@ -178,7 +178,7 @@ public class MessageBoardAttachmentResourceTest
 				new ByteArrayInputStream(randomString.getBytes()), 0));
 
 		return MultipartBody.of(
-			binaryFileMap, __ -> _inputObjectMapper,
+			binaryFileMap, __ -> inputObjectMapper,
 			inputObjectMapper.convertValue(
 				messageBoardAttachment, HashMap.class));
 	}

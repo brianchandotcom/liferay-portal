@@ -420,7 +420,7 @@ public abstract class BaseDocumentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Document>>() {
 			});
@@ -476,7 +476,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.addPart(
 			"document",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -502,7 +502,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Document.class);
+			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -840,7 +840,7 @@ public abstract class BaseDocumentResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Document>>() {
 			});
@@ -896,7 +896,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.addPart(
 			"document",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -922,7 +922,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Document.class);
+			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1030,7 +1030,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Document.class);
+			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1072,7 +1072,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.addPart(
 			"document",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -1095,7 +1095,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Document.class);
+			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1140,7 +1140,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.addPart(
 			"document",
-			_inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -1163,7 +1163,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Document.class);
+			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1270,7 +1270,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1320,7 +1320,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -1373,7 +1373,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Rating.class);
+			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

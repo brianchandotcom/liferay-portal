@@ -242,7 +242,7 @@ public abstract class BaseFormStructureResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<FormStructure>>() {
 			});
@@ -309,7 +309,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, FormStructure.class);
+			return outputObjectMapper.readValue(string, FormStructure.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

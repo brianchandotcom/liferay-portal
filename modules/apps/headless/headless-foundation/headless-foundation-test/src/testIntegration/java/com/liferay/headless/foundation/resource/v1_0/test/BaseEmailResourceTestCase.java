@@ -133,7 +133,7 @@ public abstract class BaseEmailResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Email.class);
+			return outputObjectMapper.readValue(string, Email.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -230,7 +230,7 @@ public abstract class BaseEmailResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Email>>() {
 			});
@@ -327,7 +327,7 @@ public abstract class BaseEmailResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Email>>() {
 			});

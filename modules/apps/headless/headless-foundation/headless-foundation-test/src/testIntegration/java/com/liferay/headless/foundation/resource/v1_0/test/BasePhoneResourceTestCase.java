@@ -178,7 +178,7 @@ public abstract class BasePhoneResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Phone>>() {
 			});
@@ -231,7 +231,7 @@ public abstract class BasePhoneResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Phone.class);
+			return outputObjectMapper.readValue(string, Phone.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -327,7 +327,7 @@ public abstract class BasePhoneResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Phone>>() {
 			});

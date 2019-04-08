@@ -236,7 +236,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<WorkflowTask>>() {
 			});
@@ -290,7 +290,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<WorkflowTask>>() {
 			});
@@ -344,7 +344,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<WorkflowTask>>() {
 			});
@@ -407,7 +407,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WorkflowTask.class);
+			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -474,7 +474,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WorkflowTask.class);
+			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -548,7 +548,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WorkflowTask.class);
+			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -622,7 +622,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WorkflowTask.class);
+			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -695,7 +695,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, WorkflowTask.class);
+			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);

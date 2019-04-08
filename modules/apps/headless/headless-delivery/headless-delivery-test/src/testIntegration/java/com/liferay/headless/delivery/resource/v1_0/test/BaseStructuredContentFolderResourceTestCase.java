@@ -470,7 +470,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<StructuredContentFolder>>() {
 			});
@@ -538,7 +538,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -558,7 +558,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContentFolder.class);
 		}
 		catch (Exception e) {
@@ -577,7 +577,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -965,7 +965,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<StructuredContentFolder>>() {
 			});
@@ -1035,7 +1035,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1055,7 +1055,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContentFolder.class);
 		}
 		catch (Exception e) {
@@ -1074,7 +1074,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1202,7 +1202,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContentFolder.class);
 		}
 		catch (Exception e) {
@@ -1277,7 +1277,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1297,7 +1297,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContentFolder.class);
 		}
 		catch (Exception e) {
@@ -1315,7 +1315,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1373,7 +1373,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -1393,7 +1393,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(
+			return outputObjectMapper.readValue(
 				string, StructuredContentFolder.class);
 		}
 		catch (Exception e) {
@@ -1411,7 +1411,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContentFolder),
+			inputObjectMapper.writeValueAsString(structuredContentFolder),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =

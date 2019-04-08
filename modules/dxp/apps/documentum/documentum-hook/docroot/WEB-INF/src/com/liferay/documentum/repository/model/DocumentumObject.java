@@ -35,7 +35,7 @@ import java.util.Set;
  * @author Iván Zaera
  */
 public abstract class DocumentumObject
-	implements ExtRepositoryObject, ExtRepositoryModel {
+	implements ExtRepositoryModel, ExtRepositoryObject {
 
 	public DocumentumObject(IDfSysObject idfSysObject) {
 		_idfSysObject = idfSysObject;

@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class SamlProviderConfigurationHelperImpl
-	implements SamlProviderConfigurationHelper, ManagedServiceFactory {
+	implements ManagedServiceFactory, SamlProviderConfigurationHelper {
 
 	@Override
 	public void deleted(String pid) {

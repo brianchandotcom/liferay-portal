@@ -40,7 +40,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Carlos Sierra Andrés
  */
 public class ServicesDropDownMetaTypeProvider
-	implements MetaTypeProvider, Closeable {
+	implements Closeable, MetaTypeProvider {
 
 	public ServicesDropDownMetaTypeProvider(
 		BundleContext bundleContext, String className, String metatypePID,

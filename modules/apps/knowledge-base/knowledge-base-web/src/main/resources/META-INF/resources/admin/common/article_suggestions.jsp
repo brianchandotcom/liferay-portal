@@ -124,9 +124,9 @@ if (ratingsType == null) {
 	boolean expanded = ParamUtil.getBoolean(request, "expanded");
 	%>
 
-	<c:choose>
-		<c:when test="<%= showAdminSuggestionView %>">
-			<c:if test="<%= kbCommentsCount > 0 %>">
+	<c:if test="<%= kbCommentsCount > 0 %>">
+		<c:choose>
+			<c:when test="<%= showAdminSuggestionView %>">
 
 				<%
 				KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, kbArticle);
@@ -142,10 +142,8 @@ if (ratingsType == null) {
 				%>
 
 				<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<c:if test="<%= kbCommentsCount > 0 %>">
+			</c:when>
+			<c:otherwise>
 				<liferay-portlet:renderURL varImpl="iteratorURL">
 					<portlet:param name="expanded" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:renderURL>
@@ -193,7 +191,7 @@ if (ratingsType == null) {
 						markupView="lexicon"
 					/>
 				</liferay-ui:search-container>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 </c:if>

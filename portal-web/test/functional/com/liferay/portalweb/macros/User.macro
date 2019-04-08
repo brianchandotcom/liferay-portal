@@ -1415,7 +1415,7 @@ definition {
 			Navigator.openURL();
 		}
 
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.logoutPG();
 
 			User.loginPG(userEmailAddress = "${userEmailAddress}");

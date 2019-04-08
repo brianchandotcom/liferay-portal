@@ -70,7 +70,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				CharPool.COMMA));
 
 		for (long siteNavigationMenuId : siteNavigationMenuIds) {
-			_addSiteNavigationMenuItem(siteNavigationMenuId, layout);
+			if (siteNavigationMenuId > 0) {
+				_addSiteNavigationMenuItem(siteNavigationMenuId, layout);
+			}
 		}
 	}
 

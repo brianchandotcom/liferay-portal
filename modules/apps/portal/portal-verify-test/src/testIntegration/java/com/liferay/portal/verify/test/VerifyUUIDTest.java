@@ -59,12 +59,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerifyModel() {
-		ReflectionTestUtil.invoke(
-			_verifyUUID, "doVerify",
-			new Class<?>[] {VerifiableUUIDModel[].class},
-			new Object[] {
-				new VerifiableUUIDModel[] {new AssetTagVerifiableModel()}
-			});
+		_testDoVerify(new AssetTagVerifiableModel());
 	}
 
 	@ExpectedLogs(
@@ -194,10 +189,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		}
 
 		try {
-			ReflectionTestUtil.invoke(
-				_verifyUUID, "doVerify",
-				new Class<?>[] {VerifiableUUIDModel[].class},
-				new Object[] {verifiableUUIDModels});
+			_testDoVerify(verifiableUUIDModels);
 		}
 		catch (Exception e) {
 			_verifyException(
@@ -246,25 +238,19 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	@Test
 	public void testVerifyUnknownModelWithUnknownPKColumnName() {
 		try {
-			ReflectionTestUtil.invoke(
-				_verifyUUID, "doVerify",
-				new Class<?>[] {VerifiableUUIDModel[].class},
-				new Object[] {
-					new VerifiableUUIDModel[] {
-						new VerifiableUUIDModel() {
+			_testDoVerify(
+				new VerifiableUUIDModel() {
 
-							@Override
-							public String getPrimaryKeyColumnName() {
-								return _UNKNOWN;
-							}
-
-							@Override
-							public String getTableName() {
-								return _UNKNOWN;
-							}
-
-						}
+					@Override
+					public String getPrimaryKeyColumnName() {
+						return _UNKNOWN;
 					}
+
+					@Override
+					public String getTableName() {
+						return _UNKNOWN;
+					}
+
 				});
 		}
 		catch (Exception e) {
@@ -332,6 +318,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 					"Unknown ExpectedType" + expectedLog.expectedType(), e);
 			}
 		}
+	}
+
+	private void _testDoVerify(VerifiableUUIDModel... verifiableUUIDModels) {
+		ReflectionTestUtil.invoke(
+			_verifyUUID, "doVerify",
+			new Class<?>[] {VerifiableUUIDModel[].class},
+			new Object[] {verifiableUUIDModels});
 	}
 
 	private static final String _UNKNOWN = "Unknown";

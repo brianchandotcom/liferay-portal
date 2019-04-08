@@ -111,7 +111,23 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testPostContentSpaceDataDefinitionPermission()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataDefinition postDataDefinition =
+			testPostContentSpaceDataDefinitionPermission_addDataDefinition(
+				randomDataDefinition);
+
+		assertEquals(randomDataDefinition, postDataDefinition);
+		assertValid(postDataDefinition);
+	}
+
+	protected DataDefinition
+			testPostContentSpaceDataDefinitionPermission_addDataDefinition(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void invokePostContentSpaceDataDefinitionPermission(
@@ -124,8 +140,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definition-permissions",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/data-definition-permissions");
 
 		options.setLocation(location);
 
@@ -149,8 +164,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definition-permissions",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/data-definition-permissions");
 
 		options.setLocation(location);
 
@@ -163,38 +177,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceDataDefinitionsPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getIrrelevantContentSpaceId();
-
-		if ((irrelevantContentSpaceId != null)) {
-			DataDefinition irrelevantDataDefinition =
-				testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-					irrelevantContentSpaceId, randomIrrelevantDataDefinition());
-
-			Page<DataDefinition> page =
-				invokeGetContentSpaceDataDefinitionsPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantDataDefinition),
-				(List<DataDefinition>)page.getItems());
-			assertValid(page);
-		}
-
 		DataDefinition dataDefinition1 =
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+				randomDataDefinition());
 
 		DataDefinition dataDefinition2 =
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+				randomDataDefinition());
 
 		Page<DataDefinition> page = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+			null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -208,23 +200,20 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testGetContentSpaceDataDefinitionsPageWithPagination()
 		throws Exception {
 
-		Long contentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getContentSpaceId();
-
 		DataDefinition dataDefinition1 =
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+				randomDataDefinition());
 
 		DataDefinition dataDefinition2 =
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+				randomDataDefinition());
 
 		DataDefinition dataDefinition3 =
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+				randomDataDefinition());
 
 		Page<DataDefinition> page1 = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+			null, null, Pagination.of(1, 2));
 
 		List<DataDefinition> dataDefinitions1 =
 			(List<DataDefinition>)page1.getItems();
@@ -233,7 +222,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			dataDefinitions1.toString(), 2, dataDefinitions1.size());
 
 		Page<DataDefinition> page2 = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(2, 2));
+			null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -255,24 +244,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	protected DataDefinition
 			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				Long contentSpaceId, DataDefinition dataDefinition)
+				DataDefinition dataDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceDataDefinitionsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Long
-			testGetContentSpaceDataDefinitionsPage_getIrrelevantContentSpaceId()
-		throws Exception {
-
-		return irrelevantGroup.getGroupId();
 	}
 
 	protected Page<DataDefinition> invokeGetContentSpaceDataDefinitionsPage(
@@ -283,9 +259,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-definitions");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -314,9 +288,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-definitions");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -363,9 +335,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-definitions");
 
 		options.setLocation(location);
 
@@ -399,9 +369,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-definitions");
 
 		options.setLocation(location);
 
@@ -439,9 +407,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -461,9 +427,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -477,8 +441,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition postDataDefinition =
 			testGetDataDefinition_addDataDefinition();
 
-		DataDefinition getDataDefinition = invokeGetDataDefinition(
-			postDataDefinition.getId());
+		DataDefinition getDataDefinition = invokeGetDataDefinition();
 
 		assertEquals(postDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
@@ -497,9 +460,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -526,9 +487,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -575,9 +534,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -610,9 +567,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}", dataDefinitionId);
+			_resourceURL + _toPath("/data-definitions/{dataDefinitionId}");
 
 		options.setLocation(location);
 
@@ -627,7 +582,23 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testPostDataDefinitionDataDefinitionPermission()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataDefinition postDataDefinition =
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition(
+				randomDataDefinition);
+
+		assertEquals(randomDataDefinition, postDataDefinition);
+		assertValid(postDataDefinition);
+	}
+
+	protected DataDefinition
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void invokePostDataDefinitionDataDefinitionPermission(
@@ -640,8 +611,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{dataDefinitionId}/data-definition-permissions",
-					dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}/data-definition-permissions");
 
 		options.setLocation(location);
 
@@ -665,8 +635,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{dataDefinitionId}/data-definition-permissions",
-					dataDefinitionId);
+					"/data-definitions/{dataDefinitionId}/data-definition-permissions");
 
 		options.setLocation(location);
 
@@ -889,7 +858,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	protected Group irrelevantGroup;
 	protected Group testGroup;
-	protected String userNameAndPassword = "test@liferay.com:test";
 
 	protected static class Page<T> {
 
@@ -934,6 +902,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+
+		String userNameAndPassword = "test@liferay.com:test";
 
 		String encodedUserNameAndPassword = Base64.encode(
 			userNameAndPassword.getBytes());

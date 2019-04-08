@@ -40,6 +40,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataRecordCollectionPermission")
 public class DataRecordCollectionPermission {
 
+	public Boolean getAddDataRecord() {
+		return addDataRecord;
+	}
+
+	public void setAddDataRecord(Boolean addDataRecord) {
+		this.addDataRecord = addDataRecord;
+	}
+
+	@JsonIgnore
+	public void setAddDataRecord(
+		UnsafeSupplier<Boolean, Exception> addDataRecordUnsafeSupplier) {
+
+		try {
+			addDataRecord = addDataRecordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean addDataRecord;
+
 	public Boolean getAddDataRecordCollection() {
 		return addDataRecordCollection;
 	}
@@ -123,6 +150,60 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	public Boolean getDeleteDataRecord() {
+		return deleteDataRecord;
+	}
+
+	public void setDeleteDataRecord(Boolean deleteDataRecord) {
+		this.deleteDataRecord = deleteDataRecord;
+	}
+
+	@JsonIgnore
+	public void setDeleteDataRecord(
+		UnsafeSupplier<Boolean, Exception> deleteDataRecordUnsafeSupplier) {
+
+		try {
+			deleteDataRecord = deleteDataRecordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean deleteDataRecord;
+
+	public Boolean getExportDataRecord() {
+		return exportDataRecord;
+	}
+
+	public void setExportDataRecord(Boolean exportDataRecord) {
+		this.exportDataRecord = exportDataRecord;
+	}
+
+	@JsonIgnore
+	public void setExportDataRecord(
+		UnsafeSupplier<Boolean, Exception> exportDataRecordUnsafeSupplier) {
+
+		try {
+			exportDataRecord = exportDataRecordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean exportDataRecord;
+
 	public String[] getRoleNames() {
 		return roleNames;
 	}
@@ -177,6 +258,33 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	public Boolean getUpdateDataRecord() {
+		return updateDataRecord;
+	}
+
+	public void setUpdateDataRecord(Boolean updateDataRecord) {
+		this.updateDataRecord = updateDataRecord;
+	}
+
+	@JsonIgnore
+	public void setUpdateDataRecord(
+		UnsafeSupplier<Boolean, Exception> updateDataRecordUnsafeSupplier) {
+
+		try {
+			updateDataRecord = updateDataRecordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean updateDataRecord;
+
 	public Boolean getView() {
 		return view;
 	}
@@ -201,6 +309,33 @@ public class DataRecordCollectionPermission {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean view;
+
+	public Boolean getViewDataRecord() {
+		return viewDataRecord;
+	}
+
+	public void setViewDataRecord(Boolean viewDataRecord) {
+		this.viewDataRecord = viewDataRecord;
+	}
+
+	@JsonIgnore
+	public void setViewDataRecord(
+		UnsafeSupplier<Boolean, Exception> viewDataRecordUnsafeSupplier) {
+
+		try {
+			viewDataRecord = viewDataRecordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean viewDataRecord;
 
 	@Override
 	public boolean equals(Object object) {
@@ -231,6 +366,11 @@ public class DataRecordCollectionPermission {
 
 		sb.append("{");
 
+		sb.append("\"addDataRecord\": ");
+
+		sb.append(addDataRecord);
+		sb.append(", ");
+
 		sb.append("\"addDataRecordCollection\": ");
 
 		sb.append(addDataRecordCollection);
@@ -244,6 +384,16 @@ public class DataRecordCollectionPermission {
 		sb.append("\"delete\": ");
 
 		sb.append(delete);
+		sb.append(", ");
+
+		sb.append("\"deleteDataRecord\": ");
+
+		sb.append(deleteDataRecord);
+		sb.append(", ");
+
+		sb.append("\"exportDataRecord\": ");
+
+		sb.append(exportDataRecord);
 		sb.append(", ");
 
 		sb.append("\"roleNames\": ");
@@ -274,9 +424,19 @@ public class DataRecordCollectionPermission {
 		sb.append(update);
 		sb.append(", ");
 
+		sb.append("\"updateDataRecord\": ");
+
+		sb.append(updateDataRecord);
+		sb.append(", ");
+
 		sb.append("\"view\": ");
 
 		sb.append(view);
+		sb.append(", ");
+
+		sb.append("\"viewDataRecord\": ");
+
+		sb.append(viewDataRecord);
 
 		sb.append("}");
 

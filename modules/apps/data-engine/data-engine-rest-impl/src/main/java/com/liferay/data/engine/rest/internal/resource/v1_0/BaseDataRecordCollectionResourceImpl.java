@@ -186,9 +186,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(
-		DataRecordCollection dataRecordCollection,
-		DataRecordCollection existingDataRecordCollection) {
+	protected void preparePatch(DataRecordCollection dataRecordCollection) {
 	}
 
 	protected <T, R> List<R> transform(

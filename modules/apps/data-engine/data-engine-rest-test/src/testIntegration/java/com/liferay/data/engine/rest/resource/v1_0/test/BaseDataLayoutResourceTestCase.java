@@ -109,37 +109,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceDataLayoutPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceDataLayoutPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId();
-
-		if ((irrelevantContentSpaceId != null)) {
-			DataLayout irrelevantDataLayout =
-				testGetContentSpaceDataLayoutPage_addDataLayout(
-					irrelevantContentSpaceId, randomIrrelevantDataLayout());
-
-			Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
-				irrelevantContentSpaceId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantDataLayout),
-				(List<DataLayout>)page.getItems());
-			assertValid(page);
-		}
-
 		DataLayout dataLayout1 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+			testGetContentSpaceDataLayoutPage_addDataLayout(randomDataLayout());
 
 		DataLayout dataLayout2 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+			testGetContentSpaceDataLayoutPage_addDataLayout(randomDataLayout());
 
 		Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(1, 2));
+			null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -153,30 +130,24 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGetContentSpaceDataLayoutPageWithPagination()
 		throws Exception {
 
-		Long contentSpaceId =
-			testGetContentSpaceDataLayoutPage_getContentSpaceId();
-
 		DataLayout dataLayout1 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+			testGetContentSpaceDataLayoutPage_addDataLayout(randomDataLayout());
 
 		DataLayout dataLayout2 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+			testGetContentSpaceDataLayoutPage_addDataLayout(randomDataLayout());
 
 		DataLayout dataLayout3 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+			testGetContentSpaceDataLayoutPage_addDataLayout(randomDataLayout());
 
 		Page<DataLayout> page1 = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(1, 2));
+			null, Pagination.of(1, 2));
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
 		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
 
 		Page<DataLayout> page2 = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(2, 2));
+			null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -195,24 +166,11 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout testGetContentSpaceDataLayoutPage_addDataLayout(
-			Long contentSpaceId, DataLayout dataLayout)
+			DataLayout dataLayout)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceDataLayoutPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Long
-			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId()
-		throws Exception {
-
-		return irrelevantGroup.getGroupId();
 	}
 
 	protected Page<DataLayout> invokeGetContentSpaceDataLayoutPage(
@@ -223,9 +181,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-layout");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -254,9 +210,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout",
-					contentSpaceId);
+				_toPath("/content-spaces/{contentSpaceId}/data-layout");
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -272,7 +226,22 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testPostContentSpaceDataLayoutPermission() throws Exception {
-		Assert.assertTrue(true);
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout postDataLayout =
+			testPostContentSpaceDataLayoutPermission_addDataLayout(
+				randomDataLayout);
+
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
+	}
+
+	protected DataLayout testPostContentSpaceDataLayoutPermission_addDataLayout(
+			DataLayout dataLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void invokePostContentSpaceDataLayoutPermission(
@@ -285,8 +254,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout-permissions",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/data-layout-permissions");
 
 		options.setLocation(location);
 
@@ -309,8 +277,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout-permissions",
-					contentSpaceId);
+					"/content-spaces/{contentSpaceId}/data-layout-permissions");
 
 		options.setLocation(location);
 
@@ -352,9 +319,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}/data-layouts",
-					dataDefinitionId);
+				_toPath("/data-definitions/{dataDefinitionId}/data-layouts");
 
 		options.setLocation(location);
 
@@ -388,9 +353,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/data-definitions/{dataDefinitionId}/data-layouts",
-					dataDefinitionId);
+				_toPath("/data-definitions/{dataDefinitionId}/data-layouts");
 
 		options.setLocation(location);
 
@@ -403,7 +366,22 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		Assert.assertTrue(true);
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout postDataLayout =
+			testPostDataLayoutDataLayoutPermission_addDataLayout(
+				randomDataLayout);
+
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
+	}
+
+	protected DataLayout testPostDataLayoutDataLayoutPermission_addDataLayout(
+			DataLayout dataLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void invokePostDataLayoutDataLayoutPermission(
@@ -415,9 +393,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/data-layout/{dataLayoutId}/data-layout-permissions",
-					dataLayoutId);
+				_toPath("/data-layout/{dataLayoutId}/data-layout-permissions");
 
 		options.setLocation(location);
 
@@ -439,9 +415,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/data-layout/{dataLayoutId}/data-layout-permissions",
-					dataLayoutId);
+				_toPath("/data-layout/{dataLayoutId}/data-layout-permissions");
 
 		options.setLocation(location);
 
@@ -474,8 +448,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -494,8 +467,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		options.setDelete(true);
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -508,7 +480,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGetDataLayout() throws Exception {
 		DataLayout postDataLayout = testGetDataLayout_addDataLayout();
 
-		DataLayout getDataLayout = invokeGetDataLayout(postDataLayout.getId());
+		DataLayout getDataLayout = invokeGetDataLayout();
 
 		assertEquals(postDataLayout, getDataLayout);
 		assertValid(getDataLayout);
@@ -525,8 +497,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -552,8 +523,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -596,8 +566,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -630,8 +599,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath("/data-layouts/{dataLayoutId}", dataLayoutId);
+			_resourceURL + _toPath("/data-layouts/{dataLayoutId}");
 
 		options.setLocation(location);
 
@@ -852,7 +820,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	protected Group irrelevantGroup;
 	protected Group testGroup;
-	protected String userNameAndPassword = "test@liferay.com:test";
 
 	protected static class Page<T> {
 
@@ -897,6 +864,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+
+		String userNameAndPassword = "test@liferay.com:test";
 
 		String encodedUserNameAndPassword = Base64.encode(
 			userNameAndPassword.getBytes());

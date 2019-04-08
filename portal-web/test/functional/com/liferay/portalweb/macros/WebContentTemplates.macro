@@ -313,6 +313,8 @@ definition {
 		var key_ddlTemplateDescription = "${templateDescription}";
 		var key_ddlTemplateName = "${templateName}";
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		AssertTextEquals(
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME",
 			value1 = "${templateName}"

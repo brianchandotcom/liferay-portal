@@ -66,6 +66,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Raymond Augé
@@ -379,6 +381,17 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			throw lfurle;
 		}
 
+		Matcher matcher = _urlSeparatorPattern.matcher(friendlyURL);
+
+		if (matcher.matches()) {
+			LayoutFriendlyURLException lfurle = new LayoutFriendlyURLException(
+				LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+			lfurle.setKeywordConflict(friendlyURL);
+
+			throw lfurle;
+		}
+
 		String[] urlSeparators =
 			FriendlyURLResolverRegistryUtil.getURLSeparators();
 
@@ -631,5 +644,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceHelper.class);
+
+	private static final Pattern _urlSeparatorPattern = Pattern.compile(
+		"/[A-Za-z]");
 
 }

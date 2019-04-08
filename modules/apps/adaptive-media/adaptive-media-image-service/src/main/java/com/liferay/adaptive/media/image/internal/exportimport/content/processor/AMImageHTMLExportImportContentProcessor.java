@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -182,16 +182,15 @@ public class AMImageHTMLExportImportContentProcessor
 			"[" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID + "]";
 
 		for (Element element : document.select(elementSelector)) {
-			String fileEntryIdValue = element.attr(
-				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
-
-			if (!Validator.isNumber(fileEntryIdValue)) {
-				continue;
-			}
-
-			long fileEntryId = Long.valueOf(fileEntryIdValue);
-
 			try {
+				long fileEntryId = GetterUtil.getLong(
+					element.attr(
+						AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID));
+
+				if (fileEntryId == 0) {
+					continue;
+				}
+
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 					fileEntryId);
 

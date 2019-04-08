@@ -74,10 +74,11 @@ public class JournalArticleAssetEntryUsageRecorder
 				article.getResourcePrimKey());
 		}
 
-		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
-			assetEntry.getEntryId(), StringPool.BLANK);
+		AssetEntryUsage assetEntryUsage =
+			_assetEntryUsageLocalService.fetchAssetEntryUsage(
+				assetEntry.getEntryId(), 0, StringPool.BLANK);
 
-		if (count > 0) {
+		if (assetEntryUsage != null) {
 			return;
 		}
 
@@ -86,7 +87,7 @@ public class JournalArticleAssetEntryUsageRecorder
 		_recordPortletPreferences(assetEntry, false);
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			assetEntry.getGroupId(), assetEntry.getEntryId(), 0, 0,
+			assetEntry.getGroupId(), assetEntry.getEntryId(), 0,
 			StringPool.BLANK, ServiceContextThreadLocal.getServiceContext());
 	}
 
@@ -116,8 +117,7 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					assetEntry.getEntryId(), layout.getPlid(),
 					contentSearch.getPortletId());
 
 			if (assetEntryUsage != null) {
@@ -126,8 +126,7 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				contentSearch.getGroupId(), assetEntry.getEntryId(),
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				contentSearch.getPortletId(), serviceContext);
+				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
 		}
 	}
 
@@ -171,9 +170,7 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(Layout.class),
-					portletPreferences.getPlid(),
+					assetEntry.getEntryId(), portletPreferences.getPlid(),
 					portletPreferences.getPortletId());
 
 			if (assetEntryUsage != null) {
@@ -182,7 +179,6 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				assetEntry.getGroupId(), assetEntry.getEntryId(),
-				_portal.getClassNameId(Layout.class),
 				portletPreferences.getPlid(), portletPreferences.getPortletId(),
 				serviceContext);
 		}

@@ -163,7 +163,7 @@ public class DataRecordCollectionResourceImpl
 		List<String> actionIds = new ArrayList<>();
 
 		if (dataRecordCollectionPermission.getAddDataRecordCollection()) {
-			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+			actionIds.add(DataActionKeys.ADD_DATA_RECORD_COLLECTION);
 		}
 
 		if (dataRecordCollectionPermission.getDefinePermissions()) {
@@ -227,16 +227,36 @@ public class DataRecordCollectionResourceImpl
 
 		List<String> actionIds = new ArrayList<>();
 
+		if (dataRecordCollectionPermission.getAddDataRecord()) {
+			actionIds.add(DataActionKeys.ADD_DATA_RECORD);
+		}
+
 		if (dataRecordCollectionPermission.getDelete()) {
 			actionIds.add(ActionKeys.DELETE);
+		}
+
+		if (dataRecordCollectionPermission.getDeleteDataRecord()) {
+			actionIds.add(DataActionKeys.DELETE_DATA_RECORD);
+		}
+
+		if (dataRecordCollectionPermission.getExportDataRecord()) {
+			actionIds.add(DataActionKeys.EXPORT_DATA_RECORDS);
 		}
 
 		if (dataRecordCollectionPermission.getUpdate()) {
 			actionIds.add(ActionKeys.UPDATE);
 		}
 
+		if (dataRecordCollectionPermission.getUpdateDataRecord()) {
+			actionIds.add(DataActionKeys.UPDATE_DATA_RECORD);
+		}
+
 		if (dataRecordCollectionPermission.getView()) {
 			actionIds.add(ActionKeys.VIEW);
+		}
+
+		if (dataRecordCollectionPermission.getViewDataRecord()) {
+			actionIds.add(DataActionKeys.VIEW_DATA_RECORD);
 		}
 
 		if (actionIds.isEmpty()) {

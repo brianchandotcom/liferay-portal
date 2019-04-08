@@ -17,9 +17,22 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 
 import java.sql.Timestamp;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,6 +44,40 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SLAProcessResultWorkflowMetricsIndexer
 	extends BaseWorkflowMetricsIndexer<WorkflowMetricsSLAProcessResult> {
+
+	public void deleteDocuments(long companyId, long instanceId) {
+		_deleteDocuments(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm("companyId", companyId);
+								addRequiredTerm("instanceId", instanceId);
+							}
+						});
+				}
+			});
+	}
+
+	public void deleteDocuments(
+		long companyId, long processId, long slaDefinitionId) {
+
+		_deleteDocuments(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm("companyId", companyId);
+								addRequiredTerm("processId", processId);
+								addRequiredTerm(
+									"slaDefinitionId", slaDefinitionId);
+							}
+						});
+				}
+			});
+	}
 
 	@Override
 	protected Document createDocument(
@@ -90,6 +137,49 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 	@Override
 	protected void populateIndex() throws PortalException {
+	}
+
+	private void _deleteDocuments(Query query) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName());
+		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setSelectedFieldNames(Field.UID);
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).forEach(
+			document -> {
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new UpdateDocumentRequest(
+						getIndexName(), document.getString(Field.UID),
+						new DocumentImpl() {
+							{
+								addKeyword("deleted", true);
+								addKeyword(
+									Field.UID, document.getString(Field.UID));
+							}
+						}) {
+
+						{
+							setType(getIndexType());
+						}
+					});
+			}
+		);
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 }

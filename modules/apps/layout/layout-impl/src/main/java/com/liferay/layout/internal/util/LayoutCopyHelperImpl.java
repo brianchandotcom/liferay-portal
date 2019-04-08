@@ -298,6 +298,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				serviceContext = new ServiceContext();
 			}
 
+			serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+
 			_layoutLocalService.updateLayout(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());

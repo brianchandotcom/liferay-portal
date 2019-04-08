@@ -91,6 +91,26 @@ class Analytics {
 			.forEach(disposer => disposer());
 	}
 
+	_isNewUserIdRequired() {
+		const storedUserId = storage.get(STORAGE_KEY_USER_ID);
+
+		if (!storedUserId) {
+			return true;
+		}
+
+		const identityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
+
+		// During logout or session expiration, identiy object becomes undefined
+		// because the client object is being instatiated on every page navigation,
+		// in such cases, we force a new user ID token.
+
+		if (identityHash && !this.config.identity) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Persists the event queue to the LocalStorage
 	 * @protected
@@ -141,11 +161,19 @@ class Analytics {
 	}
 
 	/**
-	 * Returns an unique identifier for an user
+	 * Returns an unique identifier for an user, additionaly it stores
+	 * the generated token to the local storage cache and clears
+	 * previously stored identiy hash.
 	 * @return {string} The generated id
 	 */
 	_generateUserId() {
-		return uuidv1();
+		const userId = uuidv1();
+
+		this._persist(STORAGE_KEY_USER_ID, userId);
+
+		storage.remove(STORAGE_KEY_IDENTITY_HASH);
+
+		return userId;
 	}
 
 	_getContext() {
@@ -159,22 +187,19 @@ class Analytics {
 
 	/**
 	 * Gets the userId for the existing analytics user. Previously generated ids
-	 * are stored and retrieved before generating a new one and attempting to update
-	 * the Identity Service.
+	 * are stored and retrieved before generating a new one. If a anonymous
+	 * navigation is started after a identified navigation, the user ID token
+	 * is regenerated.
 	 * @return {Promise} A promise resolved with the stored or generated userId
 	 */
 	_getUserId() {
-		let userId = storage.get(STORAGE_KEY_USER_ID);
+		const newUserIdRequired = this._isNewUserIdRequired();
 
-		if (userId) {
-			return Promise.resolve(userId);
-		}
+		if (newUserIdRequired) {
+			return Promise.resolve(this._generateUserId());
+		} 
 		else {
-			userId = this._generateUserId();
-
-			this._persist(STORAGE_KEY_USER_ID, userId);
-
-			return Promise.resolve(userId);
+			return Promise.resolve(storage.get(STORAGE_KEY_USER_ID));
 		}
 	}
 

@@ -1,4 +1,4 @@
-create unique index IX_9245F31A on AssetEntryUsage (assetEntryId, classNameId, classPK, portletId[$COLUMN_LENGTH:200$]);
-create index IX_E291A80F on AssetEntryUsage (assetEntryId, portletId[$COLUMN_LENGTH:200$]);
-create index IX_186CA30B on AssetEntryUsage (classNameId, classPK, portletId[$COLUMN_LENGTH:200$]);
+create unique index IX_71A0231C on AssetEntryUsage (assetEntryId, plid, containerType, containerKey[$COLUMN_LENGTH:75$]);
+create index IX_2816A7BF on AssetEntryUsage (assetEntryId, type_);
+create index IX_8DA9ACD on AssetEntryUsage (plid, containerType, containerKey[$COLUMN_LENGTH:75$]);
 create unique index IX_D0F18ABB on AssetEntryUsage (uuid_[$COLUMN_LENGTH:75$], groupId);

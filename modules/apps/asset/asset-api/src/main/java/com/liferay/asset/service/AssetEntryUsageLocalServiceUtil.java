@@ -54,13 +54,22 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.model.AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long classNameId, long classPK,
-		String portletId,
+		long groupId, long assetEntryId, long plid, long containerType,
+		String containerKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addAssetEntryUsage(
-			groupId, assetEntryId, classNameId, classPK, portletId,
+			groupId, assetEntryId, plid, containerType, containerKey,
 			serviceContext);
+	}
+
+	public static com.liferay.asset.model.AssetEntryUsage
+		addDefaultAssetEntryUsage(
+			long groupId, long assetEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().addDefaultAssetEntryUsage(
+			groupId, assetEntryId, serviceContext);
 	}
 
 	/**
@@ -102,9 +111,9 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static void deleteAssetEntryUsages(
-		long classNameId, long classPK, String portletId) {
+		long plid, long containerType, String containerKey) {
 
-		getService().deleteAssetEntryUsages(classNameId, classPK, portletId);
+		getService().deleteAssetEntryUsages(plid, containerType, containerKey);
 	}
 
 	/**
@@ -210,10 +219,10 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long classNameId, long classPK, String portletId) {
+		long assetEntryId, long plid, long containerType, String containerKey) {
 
 		return getService().fetchAssetEntryUsage(
-			assetEntryId, classNameId, classPK, portletId);
+			assetEntryId, plid, containerType, containerKey);
 	}
 
 	/**
@@ -289,35 +298,22 @@ public class AssetEntryUsageLocalServiceUtil {
 
 	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
 		getAssetEntryUsages(
+			long assetEntryId, int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
+
+		return getService().getAssetEntryUsages(
+			assetEntryId, type, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
+		getAssetEntryUsages(
 			long assetEntryId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
 
 		return getService().getAssetEntryUsages(
 			assetEntryId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
-		getAssetEntryUsages(long assetEntryId, long classNameId) {
-
-		return getService().getAssetEntryUsages(assetEntryId, classNameId);
-	}
-
-	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
-		getAssetEntryUsages(
-			long assetEntryId, long classNameId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
-
-		return getService().getAssetEntryUsages(
-			assetEntryId, classNameId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
-		getAssetEntryUsages(long classNameId, long classPK, String portletId) {
-
-		return getService().getAssetEntryUsages(
-			classNameId, classPK, portletId);
 	}
 
 	/**
@@ -333,16 +329,8 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().getAssetEntryUsagesCount(assetEntryId);
 	}
 
-	public static int getAssetEntryUsagesCount(
-		long assetEntryId, long classNameId) {
-
-		return getService().getAssetEntryUsagesCount(assetEntryId, classNameId);
-	}
-
-	public static int getAssetEntryUsagesCount(
-		long assetEntryId, String portletId) {
-
-		return getService().getAssetEntryUsagesCount(assetEntryId, portletId);
+	public static int getAssetEntryUsagesCount(long assetEntryId, int type) {
+		return getService().getAssetEntryUsagesCount(assetEntryId, type);
 	}
 
 	public static
@@ -366,6 +354,10 @@ public class AssetEntryUsageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean hasDefaultAssetEntryUsage(long assetEntryId) {
+		return getService().hasDefaultAssetEntryUsage(assetEntryId);
 	}
 
 	/**

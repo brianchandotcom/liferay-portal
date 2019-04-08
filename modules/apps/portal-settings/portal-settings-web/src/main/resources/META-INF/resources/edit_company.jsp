@@ -36,7 +36,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 <h2 class="hide-accessible">Portal Settings</h2>
 
-<aui:form action="<%= editCompanyURL %>" cssClass="container-fluid-1280" data-senna-off="true" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
+<aui:form action="<%= editCompanyURL %>" cssClass="container-fluid-1280" data-senna-off="true" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -60,33 +60,3 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
 </aui:form>
-
-<script>
-	function <portlet:namespace />saveCompany() {
-		<portlet:namespace />saveLocales();
-
-		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.UPDATE %>'
-				}
-			}
-		);
-	}
-
-	function <portlet:namespace />saveLocales() {
-		var form = document.<portlet:namespace />fm;
-
-		var currentLanguageIdsElement = Liferay.Util.getFormElement(form, 'currentLanguageIds');
-
-		if (currentLanguageIdsElement) {
-			Liferay.Util.setFormValues(
-				form,
-				{
-					'<%= PropsKeys.LOCALES %>': Liferay.Util.listSelect(currentLanguageIdsElement)
-				}
-			);
-		}
-	}
-</script>

@@ -16,13 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="displaySettings"
-/>
+<h4><liferay-ui:message key="time-zone" /></h4>
 
-<h3><liferay-ui:message key="display-settings" /></h3>
+<aui:fieldset>
 
-<%@ include file="/display.settings/time_zone.jsp" %>
+	<%
+	User defaultUser = company.getDefaultUser();
 
-<%@ include file="/display.settings/look_and_feel.jsp" %>
+	String timeZoneId = ParamUtil.getString(request, "timeZoneId", defaultUser.getTimeZoneId());
+	%>
+
+	<aui:input label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
+</aui:fieldset>

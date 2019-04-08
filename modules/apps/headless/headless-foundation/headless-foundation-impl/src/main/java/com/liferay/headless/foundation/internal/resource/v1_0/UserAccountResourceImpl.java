@@ -29,6 +29,7 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ListTypeModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,10 +66,12 @@ import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -173,8 +174,10 @@ public class UserAccountResourceImpl
 
 		User user = _addUser(userAccount);
 
-		_userLocalService.updatePortrait(
-			user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
+		if (multipartBody.getBinaryFile("file") != null) {
+			_userService.updatePortrait(
+				user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
+		}
 
 		return _toUserAccount(user);
 	}
@@ -197,8 +200,8 @@ public class UserAccountResourceImpl
 		long suffixId = _getListTypeId(
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
 
-		LocalDateTime localDateTime =
-			LocalDateTimeUtil.toLocalDateTime(userAccount.getBirthDate());
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			userAccount.getBirthDate());
 
 		ContactInformation contactInformation =
 			userAccount.getContactInformation();
@@ -231,20 +234,19 @@ public class UserAccountResourceImpl
 		long suffixId = _getListTypeId(
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
 
-		LocalDateTime localDateTime =
-			LocalDateTimeUtil.toLocalDateTime(userAccount.getBirthDate());
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			userAccount.getBirthDate());
 
 		return _userService.addUser(
-			contextCompany.getCompanyId(), true,
-			null, null, Validator.isNull(userAccount.getAlternateName()),
+			contextCompany.getCompanyId(), true, null, null,
+			Validator.isNull(userAccount.getAlternateName()),
 			userAccount.getAlternateName(), userAccount.getEmail(), 0,
 			StringPool.BLANK, LocaleUtil.getDefault(),
 			userAccount.getGivenName(), StringPool.BLANK,
 			userAccount.getFamilyName(), prefixId, suffixId, true,
-			localDateTime.getMonthValue() - 1,
-			localDateTime.getDayOfMonth(),
-			localDateTime.getYear(), userAccount.getJobTitle(),
-			null, null, null, null, false, new ServiceContext());
+			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
+			localDateTime.getYear(), userAccount.getJobTitle(), null, null,
+			null, null, false, new ServiceContext());
 	}
 
 	private long _getListTypeId(String name, String type) {
@@ -257,7 +259,10 @@ public class UserAccountResourceImpl
 		).map(
 			ListTypeModel::getListTypeId
 		).orElseThrow(
-			() -> new BadRequestException("Unable to get list type: " + name)
+			() -> new BadRequestException(
+				StringBundler.concat(
+					"Unable to get list type: ", name,
+					", the available options are: ", _getListTypeNames(type)))
 		);
 	}
 
@@ -270,6 +275,20 @@ public class UserAccountResourceImpl
 
 		return LanguageUtil.get(
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
+	}
+
+	private String _getListTypeNames(String type) {
+		List<ListType> listTypes = _listTypeService.getListTypes(type);
+
+		Stream<ListType> stream = listTypes.stream();
+
+		return stream.map(
+			ListTypeModel::getName
+		).filter(
+			Validator::isNotNull
+		).collect(
+			Collectors.joining(", ")
+		);
 	}
 
 	private String _getOrElse(
@@ -354,6 +373,7 @@ public class UserAccountResourceImpl
 						User.class.getName(), user.getUserId()),
 					AssetTag.NAME_ACCESSOR);
 				name = user.getFullName();
+
 				setDashboardURL(
 					() -> {
 						Group group = user.getGroup();

@@ -43,27 +43,12 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 		String name = StringPool.BLANK;
 		String previewURL = StringPool.BLANK;
 
-		long classNameId = assetEntryUsage.getClassNameId();
+		Layout curLayout = LayoutLocalServiceUtil.fetchLayout(assetEntryUsage.getPlid());
 
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			Layout curLayout = LayoutLocalServiceUtil.fetchLayout(assetEntryUsage.getClassPK());
+		if (curLayout != null) {
+			name = curLayout.getName(locale);
 
-			if (curLayout != null) {
-				name = curLayout.getName(locale);
-
-				previewURL = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
-			}
-		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntry(assetEntryUsage.getClassPK());
-
-			if (layoutPageTemplateEntry != null) {
-				name = layoutPageTemplateEntry.getName();
-
-				Layout curLayout = LayoutLocalServiceUtil.fetchLayout(layoutPageTemplateEntry.getPlid());
-
-				previewURL = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
-			}
+			previewURL = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
 		}
 		%>
 
@@ -76,10 +61,10 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 			<div class="text-secondary">
 				<c:choose>
-					<c:when test="<%= assetEntryUsage.getClassNameId() == PortalUtil.getClassNameId(AssetDisplayPageEntry.class) %>">
+					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
 						<liferay-ui:message key="display-page-template" />
 					</c:when>
-					<c:when test="<%= assetEntryUsage.getClassNameId() == PortalUtil.getClassNameId(Layout.class) %>">
+					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE %>">
 						<liferay-ui:message key="page" />
 					</c:when>
 					<c:otherwise>
@@ -92,7 +77,7 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
-			<c:if test="<%= assetEntryUsage.getClassNameId() != PortalUtil.getClassNameId(AssetDisplayPageEntry.class) %>">
+			<c:if test="<%= assetEntryUsage.getType() != AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
 
 				<%
 				Map<String, String> data = new HashMap<>();

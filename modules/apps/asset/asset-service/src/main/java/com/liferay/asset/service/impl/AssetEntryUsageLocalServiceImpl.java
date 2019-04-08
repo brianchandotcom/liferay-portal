@@ -16,6 +16,7 @@ package com.liferay.asset.service.impl;
 
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -54,6 +55,14 @@ public class AssetEntryUsageLocalServiceImpl
 		assetEntryUsage.setPortletId(portletId);
 
 		return assetEntryUsagePersistence.update(assetEntryUsage);
+	}
+
+	@Override
+	public AssetEntryUsage addDefaultAssetEntryUsage(
+		long groupId, long assetEntryId, ServiceContext serviceContext) {
+
+		return addAssetEntryUsage(
+			groupId, assetEntryId, 0, StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -114,6 +123,19 @@ public class AssetEntryUsageLocalServiceImpl
 	@Override
 	public int getAssetEntryUsagesCount(long assetEntryId, long plid) {
 		return assetEntryUsagePersistence.countByA_P(assetEntryId, plid);
+	}
+
+	@Override
+	public boolean hasDefaultAssetEntryUsage(long assetEntryId) {
+		AssetEntryUsage assetEntryUsage =
+			assetEntryUsageLocalService.fetchAssetEntryUsage(
+				assetEntryId, 0, StringPool.BLANK);
+
+		if (assetEntryUsage != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

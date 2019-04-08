@@ -1,12 +1,12 @@
-import Alert from 'frontend-js-web/liferay/compat/alert/Alert.es';
+import {CancellablePromise} from 'metal-promise';
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {RequestScreen, utils} from 'senna';
+import {toRegex} from 'metal-path-parser';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Router from 'metal-router';
 import State from 'metal-state';
 import Uri from 'metal-uri';
-import {CancellablePromise} from 'metal-promise';
-import {RequestScreen, utils} from 'senna';
-import {toRegex} from 'metal-path-parser';
 
 /**
  * Specific Router implementation on top of metal-router to target the specific
@@ -489,23 +489,15 @@ class SoyPortletRouter extends State {
 	 * @param {string} type The type of alert (should be danger, warning or
 	 * success)
 	 */
-	maybeShowAlert_(message, type = 'danger') {
+	maybeShowAlert_(message, type = 'danger', title = Liferay.Language.get('error')) {
 		if (message) {
-			const alert = Component.render(
-				Alert,
+			openToast(
 				{
-					body: message,
-					dismissible: true,
-					elementClasses: 'alert-' + type,
-					hideDelay: 30000,
-					visible: true
-				},
-				this.portletWrapper,
+					message,
+					title,
+					type: type
+				}
 			);
-
-			this.portletWrapper.parentNode.insertBefore(alert.element, this.portletWrapper);
-
-			Router.router().once('startNavigate', () => alert.dispose());
 		}
 	}
 
@@ -531,7 +523,7 @@ class SoyPortletRouter extends State {
 
 				if (sessionMessages) {
 					Object.keys(sessionMessages).forEach(
-						key => this.maybeShowAlert_(sessionMessages[key], 'success')
+						key => this.maybeShowAlert_(sessionMessages[key], 'success', Liferay.Language.get('success'))
 					);
 				}
 

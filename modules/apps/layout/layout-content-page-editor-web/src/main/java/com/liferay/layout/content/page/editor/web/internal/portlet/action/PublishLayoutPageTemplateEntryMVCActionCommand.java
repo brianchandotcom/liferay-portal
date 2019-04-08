@@ -112,7 +112,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+			_layoutPageTemplateEntryService.updateStatus(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				WorkflowConstants.STATUS_APPROVED);
 

@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTransactionalTestRuleTest;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -47,19 +46,23 @@ public class TransactionalTestRuleArquillianTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			false,
-			new BaseTestRule<>(
-				new BaseTestCallback<Object, Object>() {
+			new ClassTestRule<Object>() {
 
-					@Override
-					public void afterClass(Description description, Object c) {
-						TransactionInvokerUtil transactionInvokerUtil =
-							new TransactionInvokerUtil();
+				@Override
+				public void afterClass(Description description, Object c) {
+					TransactionInvokerUtil transactionInvokerUtil =
+						new TransactionInvokerUtil();
 
-						transactionInvokerUtil.setTransactionInvoker(
-							_transactionInvoker);
-					}
+					transactionInvokerUtil.setTransactionInvoker(
+						_transactionInvoker);
+				}
 
-				}),
+				@Override
+				public Void beforeClass(Description description) {
+					return null;
+				}
+
+			},
 			TransactionalTestRule.INSTANCE);
 
 	private static final TransactionInvoker _transactionInvoker;

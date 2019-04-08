@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.MethodTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 
@@ -26,11 +26,10 @@ import org.junit.runner.Description;
 /**
  * @author Tom Wang
  */
-public class PermissionCheckerTestCallback
-	extends BaseTestCallback<Void, Void> {
+public class PermissionCheckerTestRule extends MethodTestRule<Void> {
 
-	public static final PermissionCheckerTestCallback INSTANCE =
-		new PermissionCheckerTestCallback();
+	public static final PermissionCheckerTestRule INSTANCE =
+		new PermissionCheckerTestRule();
 
 	@Override
 	public void afterMethod(Description description, Void c, Object target)
@@ -78,7 +77,7 @@ public class PermissionCheckerTestCallback
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
-	private PermissionCheckerTestCallback() {
+	private PermissionCheckerTestRule() {
 	}
 
 	private String _originalName;

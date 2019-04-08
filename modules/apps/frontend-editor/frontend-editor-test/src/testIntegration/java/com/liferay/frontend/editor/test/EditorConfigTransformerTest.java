@@ -64,7 +64,7 @@ public class EditorConfigTransformerTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
-			Arrays.<Class<?>>asList(BasicHTMLEditorConfigContributor.class));
+			Arrays.asList(BasicHTMLEditorConfigContributor.class));
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			EditorConfigTransformerTest.class);
@@ -133,8 +133,8 @@ public class EditorConfigTransformerTest {
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
-				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-				new HashMap<String, Object>(), null, null);
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
+				null);
 
 		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
@@ -169,8 +169,8 @@ public class EditorConfigTransformerTest {
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
-				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-				new HashMap<String, Object>(), null, null);
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
+				null);
 
 		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
@@ -217,8 +217,8 @@ public class EditorConfigTransformerTest {
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
-				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-				new HashMap<String, Object>(), null, null);
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
+				null);
 
 		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
@@ -273,8 +273,8 @@ public class EditorConfigTransformerTest {
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
-				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-				new HashMap<String, Object>(), null, null);
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
+				null);
 
 		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 

@@ -10,7 +10,7 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
 import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
 import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getFragmentColumn, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
@@ -55,10 +55,20 @@ class FragmentEntryLinkList extends Component {
 			);
 		}
 		else if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			dropValid = (
-				(targetItemData.itemType) &&
-				(sourceItemData.itemId !== targetItemData.itemId)
-			);
+			if (sourceItemData.fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+				dropValid = (
+					(targetItemData.itemType) &&
+					(sourceItemData.itemId !== targetItemData.itemId) &&
+					(targetItemData.itemType !== FRAGMENTS_EDITOR_ITEM_TYPES.column) &&
+					(targetItemData.itemType !== FRAGMENTS_EDITOR_ITEM_TYPES.fragment)
+				);
+			}
+			else {
+				dropValid = (
+					(targetItemData.itemType) &&
+					(sourceItemData.itemId !== targetItemData.itemId)
+				);
+			}
 		}
 
 		return dropValid;

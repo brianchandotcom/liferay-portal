@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<h4><liferay-ui:message key="logo" /></h4>
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+
+<h3 class="sheet-subtitle"><liferay-ui:message key="logo" /></h3>
 
 <aui:fieldset>
 	<aui:input label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>' type="checkbox" value="<%= company.isSiteLogo() %>" />
@@ -30,7 +32,7 @@
 	/>
 </aui:fieldset>
 
-<h4><liferay-ui:message key="look-and-feel" /></h4>
+<h3 class="sheet-subtitle"><liferay-ui:message key="look-and-feel" /></h3>
 
 <aui:fieldset>
 	<aui:select label="default-theme" name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>

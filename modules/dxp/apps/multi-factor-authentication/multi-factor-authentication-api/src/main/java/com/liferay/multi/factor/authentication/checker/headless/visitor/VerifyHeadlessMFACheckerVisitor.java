@@ -64,7 +64,7 @@ public class VerifyHeadlessMFACheckerVisitor
 				return false;
 			}
 
-			if (mfaChecker.accept(_supportsSetupMFACHeckerVisitor)) {
+			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor)) {
 				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
 					return false;
 				}
@@ -110,7 +110,7 @@ public class VerifyHeadlessMFACheckerVisitor
 				continue;
 			}
 
-			if (mfaChecker.accept(_supportsSetupMFACHeckerVisitor)) {
+			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor)) {
 				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
 					continue;
 				}
@@ -132,7 +132,7 @@ public class VerifyHeadlessMFACheckerVisitor
 		_supportsHeadlessMFACheckerVisitor =
 			new SupportsHeadlessMFACheckerVisitor();
 	private static final SupportsSetupMFACheckerVisitor
-		_supportsSetupMFACHeckerVisitor = new SupportsSetupMFACheckerVisitor();
+		_supportsSetupMFACheckerVisitor = new SupportsSetupMFACheckerVisitor();
 
 	private final HttpServletRequest _httpServletRequest;
 	private final IsHeadlessVerifiedMFACheckerVisitor

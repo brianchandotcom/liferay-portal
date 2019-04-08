@@ -18,6 +18,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -302,7 +303,31 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public boolean isShowViewInContextLink() {
-		return _showViewInContextLink;
+		if (!_showViewInContextLink) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(_classNameId);
+
+		try {
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				PortalUtil.getClassName(_classNameId), _classPK);
+
+			if (!AssetDisplayPageHelper.hasAssetDisplayPage(
+					themeDisplay.getScopeGroupId(), assetEntry)) {
+
+				return false;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return true;
 	}
 
 	public boolean isURLViewInContext() throws Exception {

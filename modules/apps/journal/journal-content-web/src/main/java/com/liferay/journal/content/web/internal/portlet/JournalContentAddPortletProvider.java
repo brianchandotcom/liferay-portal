@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -122,17 +123,17 @@ public class JournalContentAddPortletProvider
 			return;
 		}
 
-		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
-			assetEntry.getEntryId(), portletId);
+		AssetEntryUsage assetEntryUsage =
+			_assetEntryUsageLocalService.fetchAssetEntryUsage(
+				assetEntry.getEntryId(), layout.getPlid(), portletId);
 
-		if (count > 0) {
+		if (assetEntryUsage != null) {
 			return;
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(),
-			_portal.getClassNameId(Layout.class), layout.getPlid(), portletId,
-			ServiceContextThreadLocal.getServiceContext());
+			layout.getGroupId(), assetEntry.getEntryId(), layout.getPlid(),
+			portletId, ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Reference

@@ -368,7 +368,6 @@ public class AssetPublisherConfigurationAction
 			actionRequest, "assetEntryType");
 
 		long groupId = portal.getScopeGroupId(actionRequest);
-		long classNameId = portal.getClassNameId(Layout.class);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -380,7 +379,7 @@ public class AssetPublisherConfigurationAction
 				preferences, assetEntryId, assetEntryOrder, assetEntryType);
 
 			assetEntryUsageLocalService.addAssetEntryUsage(
-				groupId, assetEntryId, classNameId, themeDisplay.getPlid(),
+				groupId, assetEntryId, themeDisplay.getPlid(),
 				portletDisplay.getPortletResource(), serviceContext);
 		}
 	}
@@ -604,8 +603,7 @@ public class AssetPublisherConfigurationAction
 			WebKeys.THEME_DISPLAY);
 
 		assetEntryUsageLocalService.deleteAssetEntryUsages(
-			portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			portal.getPortletId(actionRequest));
+			themeDisplay.getPlid(), portal.getPortletId(actionRequest));
 	}
 
 	protected void setScopes(

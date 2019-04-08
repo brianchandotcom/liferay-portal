@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
@@ -103,16 +104,17 @@ public class AssetPublisherAddPortletProvider
 	private void _addAssetEntryUsage(
 		AssetEntry assetEntry, Layout layout, String portletId) {
 
-		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
-			assetEntry.getEntryId(), portletId);
+		AssetEntryUsage assetEntryUsage =
+			_assetEntryUsageLocalService.fetchAssetEntryUsage(
+				assetEntry.getEntryId(), layout.getPlid(), portletId);
 
-		if (count > 0) {
+		if (assetEntryUsage != null) {
 			return;
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
 			layout.getGroupId(), assetEntry.getEntryId(),
-			_portal.getClassNameId(Layout.class), layout.getPlid(), portletId,
+			layout.getPlid(), portletId,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

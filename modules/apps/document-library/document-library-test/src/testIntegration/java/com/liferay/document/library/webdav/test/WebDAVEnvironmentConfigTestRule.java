@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.webdav.test;
 
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
 
@@ -24,13 +24,13 @@ import org.junit.Assert;
 import org.junit.runner.Description;
 
 /**
+ * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class WebDAVEnvironmentConfigTestCallback
-	extends BaseTestCallback<Object, Object> {
+public class WebDAVEnvironmentConfigTestRule extends ClassTestRule<Object> {
 
-	public static final WebDAVEnvironmentConfigTestCallback INSTANCE =
-		new WebDAVEnvironmentConfigTestCallback();
+	public static final WebDAVEnvironmentConfigTestRule INSTANCE =
+		new WebDAVEnvironmentConfigTestRule();
 
 	@Override
 	public void afterClass(Description description, Object object) {
@@ -56,7 +56,7 @@ public class WebDAVEnvironmentConfigTestCallback
 		return null;
 	}
 
-	private WebDAVEnvironmentConfigTestCallback() {
+	private WebDAVEnvironmentConfigTestRule() {
 	}
 
 	private static final BaseWebDAVTestCase _baseWebDAVTestCase =

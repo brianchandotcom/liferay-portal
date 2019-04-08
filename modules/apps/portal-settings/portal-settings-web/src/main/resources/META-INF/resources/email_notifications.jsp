@@ -31,21 +31,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 />
 
 <liferay-ui:tabs
-	names="sender,account-created-notification,email-verification-notification,password-changed-notification,password-reset-notification"
+	names="account-created-notification,email-verification-notification,password-changed-notification,password-reset-notification"
 	refresh="<%= false %>"
 >
-	<liferay-ui:section>
-		<aui:fieldset>
-			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-
-			<aui:input cssClass="lfr-input-text-container" label="name" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_FROM_NAME + "--" %>' type="text" value="<%= adminEmailFromName %>" />
-
-			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-
-			<aui:input cssClass="lfr-input-text-container" label="address" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' type="text" value="<%= adminEmailFromAddress %>" />
-		</aui:fieldset>
-	</liferay-ui:section>
-
 	<liferay-ui:section>
 		<aui:fieldset>
 			<aui:input label="enabled" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>" />

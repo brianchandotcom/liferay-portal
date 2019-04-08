@@ -56,7 +56,7 @@ public interface AMImageConfiguration {
 	 * 0 indicates that no adaptive media images will be generated.
 	 */
 	@Meta.AD(
-		deflt = "10485760", description = "max-image-size-key-description",
+		deflt = "104857600", description = "max-image-size-key-description",
 		name = "max-image-size", required = false
 	)
 	public int imageMaxSize();

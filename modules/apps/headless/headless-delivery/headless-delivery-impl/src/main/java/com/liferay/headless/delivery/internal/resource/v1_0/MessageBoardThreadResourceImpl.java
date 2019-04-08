@@ -328,8 +328,8 @@ public class MessageBoardThreadResourceImpl
 				contentSpaceId = mbThread.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userService.getUserById(mbThread.getUserId()));
-				dateCreated = mbThread.getCreateDate();
-				dateModified = mbThread.getModifiedDate();
+				dateCreated = mbMessage.getCreateDate();
+				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
 				headline = mbMessage.getSubject();
 				id = mbThread.getThreadId();

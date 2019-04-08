@@ -59,6 +59,7 @@ public class EditorConfigContributorTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
+			_editorConfigurationFactory,
 			Arrays.asList(
 				EmoticonsEditorConfigContributor.class,
 				ImageEditorConfigContributor.class,
@@ -548,15 +549,15 @@ public class EditorConfigContributorTest {
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
 	@Inject
+	private static EditorConfigurationFactory _editorConfigurationFactory;
+
+	@Inject
 	private static JSONFactory _jsonFactory;
 
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration2;
-
-	@Inject
-	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	private static class EmoticonsEditorConfigContributor
 		implements EditorConfigContributor {

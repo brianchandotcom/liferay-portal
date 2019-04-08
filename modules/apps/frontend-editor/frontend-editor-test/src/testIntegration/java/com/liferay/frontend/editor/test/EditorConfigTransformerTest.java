@@ -64,6 +64,7 @@ public class EditorConfigTransformerTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
+			_editorConfigurationFactory,
 			Arrays.asList(BasicHTMLEditorConfigContributor.class));
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -298,14 +299,13 @@ public class EditorConfigTransformerTest {
 	private static BundleContext _bundleContext;
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
+	@Inject
+	private static EditorConfigurationFactory _editorConfigurationFactory;
+
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration;
 	private ServiceRegistration<EditorConfigTransformer>
 		_editorConfigTransfomerServiceRegistration;
-
-	@Inject
-	private EditorConfigurationFactory _editorConfigurationFactory;
-
 	private ServiceRegistration<EditorOptionsContributor>
 		_editorOptionsContributorServiceRegistration1;
 	private ServiceRegistration<EditorOptionsContributor>

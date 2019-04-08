@@ -15,8 +15,8 @@
 package com.liferay.frontend.editor.test;
 
 import com.liferay.portal.editor.configuration.EditorConfigProvider;
-import com.liferay.portal.editor.configuration.EditorConfigurationFactoryImpl;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.Closeable;
@@ -29,12 +29,17 @@ import java.util.function.Consumer;
  */
 public class EditorConfigProviderSwapper implements Closeable {
 
-	public EditorConfigProviderSwapper(final List<Class<?>> classes) {
+	public EditorConfigProviderSwapper(
+		EditorConfigurationFactory editorConfigurationFactory,
+		final List<Class<?>> classes) {
+
+		_editorConfigurationFactory = editorConfigurationFactory;
+
 		_editorConfigProvider = ReflectionTestUtil.getFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider");
+			editorConfigurationFactory, "_editorConfigProvider");
 
 		ReflectionTestUtil.setFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
+			editorConfigurationFactory, "_editorConfigProvider",
 			new EditorConfigProvider() {
 
 				@Override
@@ -60,10 +65,11 @@ public class EditorConfigProviderSwapper implements Closeable {
 	@Override
 	public void close() {
 		ReflectionTestUtil.setFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
+			_editorConfigurationFactory, "_editorConfigProvider",
 			_editorConfigProvider);
 	}
 
 	private final EditorConfigProvider _editorConfigProvider;
+	private final EditorConfigurationFactory _editorConfigurationFactory;
 
 }

@@ -28,8 +28,8 @@ import org.talend.sdk.component.api.meta.Documentation;
 @Documentation("TODO fill the documentation for this configuration")
 @GridLayout(
 	{
-		@GridLayout.Row({"restDataSet"}), @GridLayout.Row({"timeout"}),
-		@GridLayout.Row({"maxItemsPerRequest"})
+		@GridLayout.Row("restDataSet"), @GridLayout.Row("timeout"),
+		@GridLayout.Row("maxItemsPerRequest")
 	}
 )
 public class LiferayInputMapperConfiguration implements Serializable {

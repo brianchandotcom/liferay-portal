@@ -29,7 +29,7 @@ import org.talend.sdk.component.api.meta.Documentation;
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
-		@GridLayout.Row({"serverURL"}),
+		@GridLayout.Row("serverURL"),
 		@GridLayout.Row({"consumerKey", "consumerSecret"})
 	}
 )

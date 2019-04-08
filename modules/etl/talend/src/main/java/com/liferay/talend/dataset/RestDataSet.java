@@ -31,9 +31,7 @@ import org.talend.sdk.component.api.meta.Documentation;
  */
 @DataSet("RestDataSet")
 @Documentation("TODO fill the documentation for this configuration")
-@GridLayout(
-	{@GridLayout.Row({"inputDataStore"}), @GridLayout.Row({"endpoint"})}
-)
+@GridLayout({@GridLayout.Row("inputDataStore"), @GridLayout.Row("endpoint")})
 public class RestDataSet implements Serializable {
 
 	public InputDataStore getInputDataStore() {
@@ -52,7 +50,7 @@ public class RestDataSet implements Serializable {
      */
     @Option
     @Required
-    @Suggestable(value = "fetchEndpoints", parameters = { "inputDataStore" })
+    @Suggestable(parameters = { "inputDataStore" }, value = "fetchEndpoints")
     @Documentation("Endpoint")
     /**
      * DataStore parameter now is not needed, just an example how we can use it

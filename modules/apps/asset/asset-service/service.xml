@@ -31,6 +31,10 @@
 		<finder name="AssetEntryId" return-type="Collection" where="portletId IS NOT NULL">
 			<finder-column name="assetEntryId" />
 		</finder>
+		<finder name="A_T" return-type="Collection">
+			<finder-column name="assetEntryId" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="P_P" return-type="Collection">
 			<finder-column name="plid" />
 			<finder-column name="portletId" />

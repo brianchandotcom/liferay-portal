@@ -233,11 +233,17 @@ components:
             type: object
         DataRecordCollectionPermission:
             properties:
+                addDataRecord:
+                    type: boolean
                 addDataRecordCollection:
                     type: boolean
                 definePermissions:
                     type: boolean
                 delete:
+                    type: boolean
+                deleteDataRecord:
+                    type: boolean
+                exportDataRecord:
                     type: boolean
                 roleNames:
                     items:
@@ -246,7 +252,11 @@ components:
                         array
                 update:
                     type: boolean
+                updateDataRecord:
+                    type: boolean
                 view:
+                    type: boolean
+                viewDataRecord:
                     type: boolean
             type: object
         DataRecordValue:

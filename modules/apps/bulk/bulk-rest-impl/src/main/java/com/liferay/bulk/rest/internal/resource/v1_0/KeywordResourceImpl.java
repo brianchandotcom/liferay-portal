@@ -35,10 +35,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -104,6 +106,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		BulkSelection<AssetEntry> assetEntryBulkSelection =
 			bulkSelection.toAssetEntryBulkSelection();
 
+		AtomicBoolean flag = new AtomicBoolean(true);
+
 		assetEntryBulkSelection.forEach(
 			assetEntry -> {
 				if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
@@ -111,11 +115,17 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 						assetEntry.getClassName(), assetEntry.getClassPK(),
 						ActionKeys.UPDATE)) {
 
-					Collections.addAll(
-						assetTagNames,
-						_assetTagLocalService.getTagNames(
-							assetEntry.getClassName(),
-							assetEntry.getClassPK()));
+					String[] tagNames = _assetTagLocalService.getTagNames(
+						assetEntry.getClassName(), assetEntry.getClassPK());
+
+					if (flag.get()) {
+						flag.set(false);
+
+						Collections.addAll(assetTagNames, tagNames);
+					}
+					else {
+						assetTagNames.retainAll(Arrays.asList(tagNames));
+					}
 				}
 			});
 

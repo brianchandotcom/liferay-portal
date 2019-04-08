@@ -25,8 +25,10 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -44,9 +46,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.util.test.PortletKeys;
 
+import java.awt.image.BufferedImage;
+
+import java.io.ByteArrayOutputStream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
@@ -140,6 +148,47 @@ public class LayoutCopyHelperTest {
 				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 					_group.getGroupId(), _portal.getClassNameId(Layout.class),
 					targetLayout.getPlid())));
+	}
+
+	@Test
+	public void testCopyLayoutIcon() throws Exception {
+		Layout sourceLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		BufferedImage bufferedImage = new BufferedImage(
+			1, 1, BufferedImage.TYPE_INT_RGB);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+		ImageIO.write(bufferedImage, "jpg", outputStream);
+
+		outputStream.flush();
+
+		sourceLayout = LayoutLocalServiceUtil.updateIconImage(
+			sourceLayout.getPlid(), outputStream.toByteArray());
+
+		Layout targetLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		Assert.assertTrue(sourceLayout.isIconImage());
+		Assert.assertFalse(targetLayout.isIconImage());
+
+		Assert.assertNotEquals(
+			sourceLayout.getIconImageId(), targetLayout.getIconImageId());
+
+		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+
+		Assert.assertTrue(sourceLayout.isIconImage());
+		Assert.assertTrue(targetLayout.isIconImage());
+
+		Image sourceImage = _imageLocalService.getImage(
+			sourceLayout.getIconImageId());
+
+		Image targetImage = _imageLocalService.getImage(
+			sourceLayout.getIconImageId());
+
+		Assert.assertNotEquals(
+			sourceImage.getTextObj(), targetImage.getTextObj());
 	}
 
 	@Test
@@ -342,6 +391,9 @@ public class LayoutCopyHelperTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ImageLocalService _imageLocalService;
 
 	@Inject
 	private LayoutCopyHelper _layoutCopyHelper;

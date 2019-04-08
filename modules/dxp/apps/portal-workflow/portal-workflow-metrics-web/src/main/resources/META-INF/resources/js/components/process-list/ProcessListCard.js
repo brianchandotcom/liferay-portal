@@ -12,7 +12,7 @@ import Search from '../../shared/components/pagination/Search';
 
 /**
  * @class
- * @memberof processes-list
+ * @memberof process-list
  */
 class ProcessListCard extends React.Component {
 	constructor(props) {

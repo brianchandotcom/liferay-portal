@@ -4,7 +4,7 @@ import React from 'react';
 
 /**
  * @class
- * @memberof processes-list
+ * @memberof process-list
  */
 export default class ProcessListTable extends React.Component {
 	render() {

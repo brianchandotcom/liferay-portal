@@ -6,7 +6,7 @@ import { sub } from '../../shared/util/lang';
 /**
  * Results bar component.
  * @class
- * @memberof processes-list
+ * @memberof process-list
  */
 class ResultsBar extends React.Component {
 	render() {

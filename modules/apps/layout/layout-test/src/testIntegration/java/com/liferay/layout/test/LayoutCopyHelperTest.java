@@ -254,6 +254,52 @@ public class LayoutCopyHelperTest {
 	}
 
 	@Test
+	public void testCopyLayoutSEOData() throws Exception {
+		Layout sourceLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		sourceLayout.setDescriptionMap(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), "source-description"));
+		sourceLayout.setKeywordsMap(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), "source-keywords"));
+		sourceLayout.setRobotsMap(
+			Collections.singletonMap(LocaleUtil.getDefault(), "source-robots"));
+
+		LayoutLocalServiceUtil.updateLayout(sourceLayout);
+
+		Layout targetLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		Assert.assertNotEquals(
+			sourceLayout.getDescription(LocaleUtil.getDefault()),
+			targetLayout.getDescription(LocaleUtil.getDefault()));
+
+		Assert.assertNotEquals(
+			sourceLayout.getKeywords(LocaleUtil.getDefault()),
+			targetLayout.getKeywords(LocaleUtil.getDefault()));
+
+		Assert.assertNotEquals(
+			sourceLayout.getRobots(LocaleUtil.getDefault()),
+			targetLayout.getRobots(LocaleUtil.getDefault()));
+
+		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+
+		Assert.assertEquals(
+			sourceLayout.getDescription(LocaleUtil.getDefault()),
+			targetLayout.getDescription(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			sourceLayout.getKeywords(LocaleUtil.getDefault()),
+			targetLayout.getKeywords(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			sourceLayout.getRobots(LocaleUtil.getDefault()),
+			targetLayout.getRobots(LocaleUtil.getDefault()));
+	}
+
+	@Test
 	public void testCopyTypeSettings() throws Exception {
 		UnicodeProperties sourceProperties = new UnicodeProperties();
 
@@ -304,7 +350,8 @@ public class LayoutCopyHelperTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	LayoutPageTemplateEntryLocalService _layoutPageTemplateEntryLocalService;
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

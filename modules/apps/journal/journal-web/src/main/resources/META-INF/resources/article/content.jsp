@@ -100,6 +100,7 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 			ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
 			defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultLanguageId()) %>"
 			documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
+			groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"
 			ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
 			imageSelectorURL="<%= String.valueOf(journalItemSelectorHelper.getImageSelectorURL()) %>"
 			requestedLocale="<%= locale %>"

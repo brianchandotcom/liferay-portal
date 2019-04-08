@@ -619,20 +619,6 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, int status)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			getPermissionChecker(), layoutPageTemplateEntryId,
-			ActionKeys.UPDATE);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				getUserId(), layoutPageTemplateEntryId, status);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long previewFileEntryId)
 		throws PortalException {
 
@@ -701,6 +687,19 @@ public class LayoutPageTemplateEntryServiceImpl
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, name, fragmentEntryIds,
 				StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateStatus(
+			long layoutPageTemplateEntryId, int status)
+		throws PortalException {
+
+		_layoutPageTemplateEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutPageTemplateEntryId,
+			ActionKeys.UPDATE);
+
+		return layoutPageTemplateEntryLocalService.updateStatus(
+			getUserId(), layoutPageTemplateEntryId, status);
 	}
 
 	private static volatile ModelResourcePermission<LayoutPageTemplateEntry>

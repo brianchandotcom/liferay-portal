@@ -223,24 +223,16 @@ public class BlogPostingResourceImpl
 		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
 
 		Image image = blogPosting.getImage();
-		Image existingImage = existingBlogPosting.getImage();
 
-		existingBlogPosting.setImage(
-			new Image() {
-				{
-					caption = Optional.ofNullable(
-						image.getCaption()
-					).orElse(
-						existingImage.getCaption()
-					);
-
-					imageId = Optional.ofNullable(
-						image.getImageId()
-					).orElse(
-						existingImage.getImageId()
-					);
-				}
-			});
+		if (image != null) {
+			existingBlogPosting.setImage(
+				new Image() {
+					{
+						caption = image.getCaption();
+						imageId = image.getImageId();
+					}
+				});
+		}
 
 		TaxonomyCategory[] taxonomyCategories =
 			blogPosting.getTaxonomyCategories();

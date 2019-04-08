@@ -56,7 +56,7 @@ definition {
 	}
 
 	macro signOut {
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 			AssertVisible(

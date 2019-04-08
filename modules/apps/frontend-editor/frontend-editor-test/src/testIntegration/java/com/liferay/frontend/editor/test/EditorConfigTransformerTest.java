@@ -119,17 +119,17 @@ public class EditorConfigTransformerTest {
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
-		properties = new HashMapDictionary<>();
-
-		properties.put("editor.name", _UNUSED_EDITOR_NAME);
-
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
 		_editorConfigTransfomerServiceRegistration =
 			_bundleContext.registerService(
 				EditorConfigTransformer.class, testEditorConfigTransformer,
-				properties);
+				new HashMapDictionary<String, Object>() {
+					{
+						put("editor.name", _UNUSED_EDITOR_NAME);
+					}
+				});
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
@@ -203,17 +203,17 @@ public class EditorConfigTransformerTest {
 				EditorOptionsContributor.class, textEditorOptionsContributor,
 				properties);
 
-		properties = new HashMapDictionary<>();
-
-		properties.put("editor.name", _EDITOR_NAME);
-
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
 		_editorConfigTransfomerServiceRegistration =
 			_bundleContext.registerService(
 				EditorConfigTransformer.class, testEditorConfigTransformer,
-				properties);
+				new HashMapDictionary<String, Object>() {
+					{
+						put("editor.name", _EDITOR_NAME);
+					}
+				});
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
@@ -259,17 +259,17 @@ public class EditorConfigTransformerTest {
 				EditorOptionsContributor.class,
 				uploadImagesEditorOptionsContributor, properties);
 
-		properties = new HashMapDictionary<>();
-
-		properties.put("editor.name", _EDITOR_NAME);
-
 		EditorConfigTransformer testEditorConfigTransformer =
 			new TestEditorConfigTransformer();
 
 		_editorConfigTransfomerServiceRegistration =
 			_bundleContext.registerService(
 				EditorConfigTransformer.class, testEditorConfigTransformer,
-				properties);
+				new HashMapDictionary<String, Object>() {
+					{
+						put("editor.name", _EDITOR_NAME);
+					}
+				});
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(

@@ -93,9 +93,7 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -201,7 +199,7 @@ public class UserAccountResourceImpl
 			userAccount.getContactInformation();
 
 		return _toUserAccount(
-			_userLocalService.updateUser(
+			_userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null, false,
 				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
 				userAccount.getAlternateName(), userAccount.getEmail(),
@@ -219,7 +217,8 @@ public class UserAccountResourceImpl
 				_getOrElse(contactInformation, ContactInformation::getTwitter),
 				userAccount.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(), null,
-				user.getUserGroupIds(), new ServiceContext()));
+				user.getUserGroupIds(), null, null, null, null, null,
+				new ServiceContext()));
 	}
 
 	private User _addUser(UserAccount userAccount) throws Exception {
@@ -229,8 +228,8 @@ public class UserAccountResourceImpl
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
 		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
 
-		return _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, contextCompany.getCompanyId(), true,
+		return _userService.addUser(
+			contextCompany.getCompanyId(), true,
 			null, null, Validator.isNull(userAccount.getAlternateName()),
 			userAccount.getAlternateName(), userAccount.getEmail(), 0,
 			StringPool.BLANK, LocaleUtil.getDefault(),
@@ -404,9 +403,6 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

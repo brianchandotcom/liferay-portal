@@ -40,9 +40,9 @@ public class LiferayInputEmitter implements Serializable {
 		final TalendService service,
 		final RecordBuilderFactory builderFactory) {
 
-		this.configuration = configuration;
-		this.service = service;
-		this.builderFactory = builderFactory;
+		_liferayInputMapperConfiguration = configuration;
+		_talendService = service;
+		_builderFactory = builderFactory;
 	}
 
 	@PostConstruct
@@ -75,8 +75,9 @@ public class LiferayInputEmitter implements Serializable {
 
 	}
 
-	private final RecordBuilderFactory builderFactory;
-	private final LiferayInputMapperConfiguration configuration;
-	private final TalendService service;
+	private final RecordBuilderFactory _builderFactory;
+	private final LiferayInputMapperConfiguration
+		_liferayInputMapperConfiguration;
+	private final TalendService _talendService;
 
 }

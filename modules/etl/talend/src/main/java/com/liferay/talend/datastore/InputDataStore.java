@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.talend.datastore;
 
 import org.talend.sdk.component.api.configuration.Option;
@@ -17,40 +31,40 @@ import org.talend.sdk.component.api.meta.Documentation;
 @Documentation("Aggregator data store for authentication stores")
 @GridLayout(
 	{
-		@GridLayout.Row({"authenticationMethod"}),
-		@GridLayout.Row({"basicDataStore"}), @GridLayout.Row({"oAuthDataStore"})
+		@GridLayout.Row("_authenticationMethod"),
+		@GridLayout.Row("_basicDataStore"), @GridLayout.Row("_oAuthDataStore")
 	}
 )
 public class InputDataStore {
 
 	public AuthenticationMethod getAuthenticationMethod() {
-		return authenticationMethod;
+		return _authenticationMethod;
 	}
 
 	public BasicDataStore getBasicDataStore() {
-		return basicDataStore;
+		return _basicDataStore;
 	}
 
 	public OAuthDataStore getoAuthDataStore() {
-		return oAuthDataStore;
+		return _oAuthDataStore;
 	}
 
 	public InputDataStore setAuthenticationMethod(
 		AuthenticationMethod authenticationMethod) {
 
-		this.authenticationMethod = authenticationMethod;
+		_authenticationMethod = authenticationMethod;
 
 		return this;
 	}
 
 	public InputDataStore setBasicDataStore(BasicDataStore dataStore) {
-		this.basicDataStore = dataStore;
+		_basicDataStore = dataStore;
 
 		return this;
 	}
 
 	public InputDataStore setoAuthDataStore(OAuthDataStore oAuthDataStore) {
-		this.oAuthDataStore = oAuthDataStore;
+		_oAuthDataStore = oAuthDataStore;
 
 		return this;
 	}
@@ -59,16 +73,16 @@ public class InputDataStore {
 	@Documentation("Authentication Method")
 	@Option
 	@Required
-	private AuthenticationMethod authenticationMethod;
+	private AuthenticationMethod _authenticationMethod;
 
-	@ActiveIf(target = "authenticationMethod", value = "BASIC")
+	@ActiveIf(target = "_authenticationMethod", value = "BASIC")
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private BasicDataStore basicDataStore;
+	private BasicDataStore _basicDataStore;
 
-	@ActiveIf(target = "authenticationMethod", value = "OAUTH2")
+	@ActiveIf(target = "_authenticationMethod", value = "OAUTH2")
 	@Documentation("OAuth2 Data Store")
 	@Option
-	private OAuthDataStore oAuthDataStore;
+	private OAuthDataStore _oAuthDataStore;
 
 }

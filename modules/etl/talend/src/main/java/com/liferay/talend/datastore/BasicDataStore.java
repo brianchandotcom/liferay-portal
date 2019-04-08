@@ -16,6 +16,8 @@ package com.liferay.talend.datastore;
 
 import java.io.Serializable;
 
+import java.net.URL;
+
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
@@ -30,67 +32,67 @@ import org.talend.sdk.component.api.meta.Documentation;
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
-		@GridLayout.Row({"serverURL", "anonymous"}),
-		@GridLayout.Row({"user", "password"})
+		@GridLayout.Row({"_serverURL", "_anonymous"}),
+		@GridLayout.Row({"_user", "_password"})
 	}
 )
 public class BasicDataStore implements Serializable {
 
 	public boolean getAnonymous() {
-		return anonymous;
+		return _anonymous;
 	}
 
 	public String getPassword() {
-		return password;
+		return _password;
 	}
 
-	public java.net.URL getServerURL() {
-		return serverURL;
+	public URL getServerURL() {
+		return _serverURL;
 	}
 
 	public String getUser() {
-		return user;
+		return _user;
 	}
 
 	public BasicDataStore setAnonymous(boolean anonymous) {
-		this.anonymous = anonymous;
+		_anonymous = anonymous;
 
 		return this;
 	}
 
 	public BasicDataStore setPassword(String password) {
-		this.password = password;
+		_password = password;
 
 		return this;
 	}
 
-	public BasicDataStore setServerURL(java.net.URL serverURL) {
-		this.serverURL = serverURL;
+	public BasicDataStore setServerURL(URL serverURL) {
+		_serverURL = serverURL;
 
 		return this;
 	}
 
 	public BasicDataStore setUser(String user) {
-		this.user = user;
+		_user = user;
 
 		return this;
 	}
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private boolean anonymous;
+	private boolean _anonymous;
 
 	@Credential
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private String password;
+	private String _password;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private java.net.URL serverURL;
+	private URL _serverURL;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private String user;
+	private String _user;
 
 }

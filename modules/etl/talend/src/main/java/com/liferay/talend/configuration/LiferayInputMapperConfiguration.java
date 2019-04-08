@@ -28,28 +28,28 @@ import org.talend.sdk.component.api.meta.Documentation;
 @Documentation("TODO fill the documentation for this configuration")
 @GridLayout(
 	{
-		@GridLayout.Row({"restDataSet"}), @GridLayout.Row({"timeout"}),
-		@GridLayout.Row({"maxItemsPerRequest"})
+		@GridLayout.Row("_restDataSet"), @GridLayout.Row("_timeout"),
+		@GridLayout.Row("_maxItemsPerRequest")
 	}
 )
 public class LiferayInputMapperConfiguration implements Serializable {
 
 	public int getMaxItemsPerRequest() {
-		return maxItemsPerRequest;
+		return _maxItemsPerRequest;
 	}
 
 	public RestDataSet getRestDataSet() {
-		return restDataSet;
+		return _restDataSet;
 	}
 
 	public int getTimeout() {
-		return timeout;
+		return _timeout;
 	}
 
 	public LiferayInputMapperConfiguration setMaxItemsPerRequest(
 		int maxItemsPerRequest) {
 
-		this.maxItemsPerRequest = maxItemsPerRequest;
+		_maxItemsPerRequest = maxItemsPerRequest;
 
 		return this;
 	}
@@ -57,27 +57,27 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	public LiferayInputMapperConfiguration setRestDataSet(
 		RestDataSet restDataSet) {
 
-		this.restDataSet = restDataSet;
+		_restDataSet = restDataSet;
 
 		return this;
 	}
 
 	public LiferayInputMapperConfiguration setTimeout(int timeout) {
-		this.timeout = timeout;
+		_timeout = timeout;
 
 		return this;
 	}
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private int maxItemsPerRequest;
+	private int _maxItemsPerRequest;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private RestDataSet restDataSet;
+	private RestDataSet _restDataSet;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private int timeout;
+	private int _timeout;
 
 }

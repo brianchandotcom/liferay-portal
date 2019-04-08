@@ -31,17 +31,15 @@ import org.talend.sdk.component.api.meta.Documentation;
  */
 @DataSet("RestDataSet")
 @Documentation("TODO fill the documentation for this configuration")
-@GridLayout(
-	{@GridLayout.Row({"inputDataStore"}), @GridLayout.Row({"endpoint"})}
-)
+@GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_endpoint")})
 public class RestDataSet implements Serializable {
 
 	public InputDataStore getInputDataStore() {
-		return inputDataStore;
+		return _inputDataStore;
 	}
 
 	public RestDataSet setInputDataStore(InputDataStore inputDataStore) {
-		this.inputDataStore = inputDataStore;
+		_inputDataStore = inputDataStore;
 
 		return this;
 	}
@@ -52,15 +50,15 @@ public class RestDataSet implements Serializable {
      */
     @Option
     @Required
-    @Suggestable(value = "fetchEndpoints", parameters = { "inputDataStore" })
+    @Suggestable(parameters = { "_inputDataStore" }, value = "fetchEndpoints")
     @Documentation("Endpoint")
     /**
      * DataStore parameter now is not needed, just an example how we can use it
      * in UIActionService if needed.
      */
-    private String endpoint;
+    private String _endpoint;
 
 	@Option
-	private InputDataStore inputDataStore;
+	private InputDataStore _inputDataStore;
 
 }

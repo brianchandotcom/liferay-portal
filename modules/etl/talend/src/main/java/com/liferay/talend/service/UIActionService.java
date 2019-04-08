@@ -57,7 +57,7 @@ import org.talend.sdk.component.api.service.http.Response;
 @Service
 public class UIActionService {
 
-	public HealthCheckStatus _checkBasicDataStore(
+	public HealthCheckStatus checkBasicDataStore(
 		@Option BasicDataStore basicDataStore,
 		BasicAuthenticationClient basicAuthenticationClient) {
 
@@ -109,7 +109,22 @@ public class UIActionService {
 			HealthCheckStatus.Status.OK, "Connection success");
 	}
 
-	public HealthCheckStatus _checkOAuthDataStore(
+	@HealthCheck("checkInputDataStore")
+	public HealthCheckStatus checkInputDataStore(
+		@Option InputDataStore inputDataStore,
+		final BasicAuthenticationClient basicAuthenticationClient) {
+
+		if (AuthenticationMethod.BASIC ==
+				inputDataStore.getAuthenticationMethod()) {
+
+			return checkBasicDataStore(
+				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
+		}
+
+		return checkOAuthDataStore(inputDataStore.getoAuthDataStore());
+	}
+
+	public HealthCheckStatus checkOAuthDataStore(
 		@Option OAuthDataStore oAuthDataStore) {
 
 		if (_isNull(oAuthDataStore.getConsumerKey()) ||
@@ -129,21 +144,6 @@ public class UIActionService {
 
 		return new HealthCheckStatus(
 			HealthCheckStatus.Status.OK, "Connection success");
-	}
-
-	@HealthCheck("checkInputDataStore")
-	public HealthCheckStatus checkInputDataStore(
-		@Option InputDataStore inputDataStore,
-		final BasicAuthenticationClient basicAuthenticationClient) {
-
-		if (AuthenticationMethod.BASIC ==
-				inputDataStore.getAuthenticationMethod()) {
-
-			return _checkBasicDataStore(
-				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
-		}
-
-		return _checkOAuthDataStore(inputDataStore.getoAuthDataStore());
 	}
 
 	@Suggestions("fetchEndpoints")
@@ -224,8 +224,9 @@ public class UIActionService {
 
 		Schema schema = _getSchema(stringPathItemEntry);
 
-		return ((ArraySchema)schema).getItems(
-		).get$ref();
+		Schema<?> items = ((ArraySchema)schema).getItems();
+
+		return items.get$ref();
 	}
 
 }

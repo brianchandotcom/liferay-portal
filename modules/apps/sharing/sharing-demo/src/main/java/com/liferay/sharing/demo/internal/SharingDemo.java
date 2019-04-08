@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -81,6 +82,19 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 				(i % 2 == 0) ? _getExpirationDate(i + 1) : null,
 				serviceContext);
 		}
+
+		User testUser = _userLocalService.fetchUserByEmailAddress(
+			company.getCompanyId(), "test@liferay.com");
+
+		if (testUser != null) {
+			_sharingEntryLocalService.addSharingEntry(
+				sharerUser.getUserId(), testUser.getUserId(),
+				_portal.getClassNameId(DLFileEntry.class),
+				fileEntry.getFileEntryId(), group.getGroupId(), true,
+				Arrays.asList(
+					SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
+				null, serviceContext);
+		}
 	}
 
 	@Deactivate
@@ -120,5 +134,8 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

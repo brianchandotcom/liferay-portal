@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -61,8 +62,8 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 	public void testUpgrade() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		long[] classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
-		long resourceClassNameId = PortalUtil.getClassNameId(
+		long[] classNameIds = _templateHandlerRegistry.getClassNameIds();
+		long resourceClassNameId = _portal.getClassNameId(
 			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
@@ -88,7 +89,7 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 
 		CacheRegistryUtil.clear();
 
-		_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
+		_layout = _layoutLocalService.getLayout(_layout.getPlid());
 
 		Assert.assertEquals(
 			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
@@ -122,5 +123,14 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private TemplateHandlerRegistry _templateHandlerRegistry;
 
 }

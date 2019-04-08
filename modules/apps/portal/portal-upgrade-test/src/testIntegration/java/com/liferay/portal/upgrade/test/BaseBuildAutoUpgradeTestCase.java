@@ -20,8 +20,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.ServiceComponentUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.test.model.impl.BuildAutoUpgradeTestEntityModelImpl;
 import com.liferay.portal.util.PropsValues;
@@ -117,11 +118,11 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		catch (SQLException sqle) {
 		}
 
-		Release release = ReleaseLocalServiceUtil.fetchRelease(
+		Release release = _releaseLocalService.fetchRelease(
 			BUNDLE_SYMBOLICNAME);
 
 		if (release != null) {
-			ReleaseLocalServiceUtil.deleteRelease(release);
+			_releaseLocalService.deleteRelease(release);
 		}
 
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
@@ -129,7 +130,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		TransactionInvokerUtil.invoke(
 			builder.build(),
 			() -> {
-				ServiceComponentUtil.removeByBuildNamespace(
+				_serviceComponentPersistence.removeByBuildNamespace(
 					"BuildAutoUpgradeTest");
 
 				return null;
@@ -512,5 +513,11 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 	private Bundle _bundle;
 	private boolean _previousSchemaModuleBuildAutoUpgrade;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
+
+	@Inject
+	private ServiceComponentPersistence _serviceComponentPersistence;
 
 }

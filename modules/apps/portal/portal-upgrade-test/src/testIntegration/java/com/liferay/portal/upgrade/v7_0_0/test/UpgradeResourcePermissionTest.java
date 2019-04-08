@@ -15,18 +15,19 @@
 package com.liferay.portal.upgrade.v7_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeResourcePermission;
 
@@ -61,7 +62,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	@After
 	public void tearDown() throws Exception {
 		for (long resourcePermissionId : _resourcePermissionIds) {
-			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+			_resourcePermissionLocalService.deleteResourcePermission(
 				resourcePermissionId);
 		}
 	}
@@ -85,7 +86,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		CacheRegistryUtil.clear();
 
 		ResourcePermission resourcePermission1 =
-			ResourcePermissionLocalServiceUtil.getResourcePermission(
+			_resourcePermissionLocalService.getResourcePermission(
 				resourcePermissionId1);
 
 		Assert.assertEquals(
@@ -94,7 +95,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			resourcePermission1.getPrimKeyId(), GetterUtil.getLong(primKey1));
 
 		ResourcePermission resourcePermission2 =
-			ResourcePermissionLocalServiceUtil.getResourcePermission(
+			_resourcePermissionLocalService.getResourcePermission(
 				resourcePermissionId2);
 
 		Assert.assertEquals(
@@ -105,7 +106,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	protected long addResourcePermission(String primKey, long actionIds) {
 		ResourcePermission resourcePermission = new ResourcePermissionImpl();
 
-		long resourcePermissionId = CounterLocalServiceUtil.increment(
+		long resourcePermissionId = _counterLocalService.increment(
 			ResourcePermission.class.getName());
 
 		resourcePermission.setResourcePermissionId(resourcePermissionId);
@@ -121,7 +122,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		resourcePermission.setViewActionId((actionIds % 2) != 1);
 
 		resourcePermission =
-			ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_resourcePermissionLocalService.addResourcePermission(
 				resourcePermission);
 
 		_resourcePermissionIds.add(
@@ -130,7 +131,13 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		return resourcePermission.getResourcePermissionId();
 	}
 
+	@Inject
+	private CounterLocalService _counterLocalService;
+
 	private final List<Long> _resourcePermissionIds = new ArrayList<>();
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

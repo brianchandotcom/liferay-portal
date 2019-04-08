@@ -16,13 +16,13 @@ package com.liferay.portal.upgrade.v7_1_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_1_x.UpgradePortalPreferences;
 
@@ -60,12 +61,12 @@ public class UpgradePortletPreferencesTest extends UpgradePortalPreferences {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_availableLocales = LanguageUtil.getAvailableLocales();
+		_availableLocales = _language.getAvailableLocales();
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			CompanyThreadLocal.getCompanyId());
 
-		_defaultLocale = LanguageUtil.getLocale(defaultLanguageId);
+		_defaultLocale = _language.getLocale(defaultLanguageId);
 
 		CompanyTestUtil.resetCompanyLocales(
 			CompanyThreadLocal.getCompanyId(), "en_US,es_ES", "en_US");
@@ -80,8 +81,8 @@ public class UpgradePortletPreferencesTest extends UpgradePortalPreferences {
 
 	@Before
 	public void setUp() throws Exception {
-		_organization = OrganizationLocalServiceUtil.addOrganization(
-			UserLocalServiceUtil.getDefaultUserId(
+		_organization = _organizationLocalService.addOrganization(
+			_userLocalService.getDefaultUserId(
 				CompanyThreadLocal.getCompanyId()),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
@@ -140,7 +141,7 @@ public class UpgradePortletPreferencesTest extends UpgradePortalPreferences {
 	private PortletPreferences _upgradePreferences(String preferences)
 		throws Exception {
 
-		PortalPreferencesLocalServiceUtil.addPortalPreferences(
+		_portalPreferencesLocalService.addPortalPreferences(
 			_organization.getOrganizationId(),
 			PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, preferences);
 
@@ -154,7 +155,19 @@ public class UpgradePortletPreferencesTest extends UpgradePortalPreferences {
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 
+	@Inject
+	private static Language _language;
+
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

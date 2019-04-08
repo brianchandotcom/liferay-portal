@@ -31,21 +31,22 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -79,14 +80,14 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
 		for (String portletId : _PORTLET_IDS) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				TestPropsValues.getCompanyId(), portletId);
 
 			_portlets.add(portlet);
 
-			ResourceActionsUtil.check(portletId);
+			_resourceActions.check(portletId);
 
-			PortletLocalServiceUtil.destroyPortlet(portlet);
+			_portletLocalService.destroyPortlet(portlet);
 		}
 	}
 
@@ -94,18 +95,18 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	public static void tearDownClass() throws Exception {
 		for (Portlet portlet : _portlets) {
 			List<ResourceAction> portletResourceActions =
-				ResourceActionLocalServiceUtil.getResourceActions(
+				_resourceActionLocalService.getResourceActions(
 					portlet.getPortletName());
 
 			for (ResourceAction portletResourceAction :
 					portletResourceActions) {
 
-				ResourceActionLocalServiceUtil.deleteResourceAction(
+				_resourceActionLocalService.deleteResourceAction(
 					portletResourceAction);
 			}
 
 			if (!portlet.isUndeployedPortlet()) {
-				PortletLocalServiceUtil.deployPortlet(portlet);
+				_portletLocalService.deployPortlet(portlet);
 			}
 		}
 
@@ -174,7 +175,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	protected void addPortletPreferences(Layout layout, String portletId)
 		throws Exception {
 
-		PortletPreferencesLocalServiceUtil.getPreferences(
+		_portletPreferencesLocalService.getPreferences(
 			TestPropsValues.getCompanyId(), 0,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
 			PortletConstants.DEFAULT_PREFERENCES);
@@ -188,7 +189,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
 		roleIdsToActionIds.put(
@@ -204,7 +205,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 			renamePortletIdsArray[i][0] = portletId;
 
-			portlet = PortletLocalServiceUtil.getPortletById(
+			portlet = _portletLocalService.getPortletById(
 				TestPropsValues.getCompanyId(), portletId);
 
 			layoutTypePortlet.addPortletId(
@@ -212,18 +213,18 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 			addPortletPreferences(layout, portletId);
 
-			String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
+			String portletPrimaryKey = _portletPermission.getPrimaryKey(
 				layout.getPlid(), portletId);
 
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_resourcePermissionLocalService.setResourcePermissions(
 				TestPropsValues.getCompanyId(), oldPortletId,
 				ResourceConstants.SCOPE_INDIVIDUAL, portletPrimaryKey,
 				roleIdsToActionIds);
 
-			PortletLocalServiceUtil.destroyPortlet(portlet);
+			_portletLocalService.destroyPortlet(portlet);
 		}
 
-		LayoutLocalServiceUtil.updateLayout(
+		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
@@ -231,7 +232,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 		CacheRegistryUtil.clear();
 
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
@@ -264,12 +265,12 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 			portlet.setPortletId(newPortletId);
 
 			List<String> portletActions =
-				ResourceActionsUtil.getPortletResourceActions(newRootPortletId);
+				_resourceActions.getPortletResourceActions(newRootPortletId);
 
-			ResourceActionLocalServiceUtil.checkResourceActions(
+			_resourceActionLocalService.checkResourceActions(
 				newRootPortletId, portletActions);
 
-			PortletLocalServiceUtil.checkPortlet(portlet);
+			_portletLocalService.checkPortlet(portlet);
 
 			List<String> portletIds = layoutTypePortlet.getPortletIds();
 
@@ -285,13 +286,13 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 					": ", StringUtil.merge(layoutTypePortlet.getPortletIds())),
 				portletIds.contains(newPortletId));
 
-			String oldPortletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
+			String oldPortletPrimaryKey = _portletPermission.getPrimaryKey(
 				layout.getPlid(), oldPortletId);
-			String newPortletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
+			String newPortletPrimaryKey = _portletPermission.getPrimaryKey(
 				layout.getPlid(), newPortletId);
 
 			ResourcePermission resourcePermission =
-				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+				_resourcePermissionLocalService.fetchResourcePermission(
 					TestPropsValues.getCompanyId(), oldPortletId,
 					ResourceConstants.SCOPE_INDIVIDUAL, oldPortletPrimaryKey,
 					role.getRoleId());
@@ -303,7 +304,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 				resourcePermission);
 
 			resourcePermission =
-				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+				_resourcePermissionLocalService.fetchResourcePermission(
 					TestPropsValues.getCompanyId(), newRootPortletId,
 					ResourceConstants.SCOPE_INDIVIDUAL, newPortletPrimaryKey,
 					role.getRoleId());
@@ -316,7 +317,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 				resourcePermission);
 
 			boolean hasViewPermission =
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				_resourcePermissionLocalService.hasResourcePermission(
 					TestPropsValues.getCompanyId(), newRootPortletId,
 					ResourceConstants.SCOPE_INDIVIDUAL, newPortletPrimaryKey,
 					role.getRoleId(), ActionKeys.VIEW);
@@ -324,7 +325,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 			Assert.assertFalse(hasViewPermission);
 
 			boolean hasConfigurationPermission =
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				_resourcePermissionLocalService.hasResourcePermission(
 					TestPropsValues.getCompanyId(), newRootPortletId,
 					ResourceConstants.SCOPE_INDIVIDUAL, newPortletPrimaryKey,
 					role.getRoleId(), ActionKeys.CONFIGURATION);
@@ -332,7 +333,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 			Assert.assertTrue(hasConfigurationPermission);
 		}
 
-		GroupLocalServiceUtil.deleteGroup(layout.getGroup());
+		_groupLocalService.deleteGroup(layout.getGroup());
 	}
 
 	protected String getNewPortletId(
@@ -384,7 +385,34 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		"47", com.liferay.portlet.util.test.PortletKeys.TEST
 	};
 
+	@Inject
+	private static PortletLocalService _portletLocalService;
+
 	private static final List<Portlet> _portlets = new ArrayList<>();
+
+	@Inject
+	private static ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private static ResourceActions _resourceActions;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private PortletPermission _portletPermission;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private boolean _testInstanceable = true;
 

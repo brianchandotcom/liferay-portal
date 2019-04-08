@@ -19,10 +19,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -62,7 +63,7 @@ public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
 
 		CacheRegistryUtil.clear();
 
-		_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
+		_layout = _layoutLocalService.getLayout(_layout.getPlid());
 
 		Assert.assertEquals(
 			StringPool.BLANK, getPortletDecoratorId("portlet1"));
@@ -93,5 +94,8 @@ public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 }

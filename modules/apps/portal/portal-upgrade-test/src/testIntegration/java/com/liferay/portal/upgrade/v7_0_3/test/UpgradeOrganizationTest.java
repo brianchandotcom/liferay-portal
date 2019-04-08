@@ -17,10 +17,11 @@ package com.liferay.portal.upgrade.v7_0_3.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOrganization;
 
@@ -49,14 +50,14 @@ public class UpgradeOrganizationTest extends UpgradeOrganization {
 
 		_organization.setType("regular-organization");
 
-		OrganizationLocalServiceUtil.updateOrganization(_organization);
+		_organizationLocalService.updateOrganization(_organization);
 
 		upgrade();
 
 		List<String> organizationTypes = getOrganizationTypes();
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(
+			_organizationLocalService.getOrganizations(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Organization organization : organizations) {
@@ -67,5 +68,8 @@ public class UpgradeOrganizationTest extends UpgradeOrganization {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 }

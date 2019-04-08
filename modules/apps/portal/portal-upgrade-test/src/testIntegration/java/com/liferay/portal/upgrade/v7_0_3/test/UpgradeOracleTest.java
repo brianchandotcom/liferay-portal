@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOracle;
 
@@ -85,11 +86,11 @@ public class UpgradeOracleTest {
 				"alter table ", _TABLE_NAME, " modify ", _FIELD_NAME,
 				" varchar2(75 CHAR)"));
 
-		Release release = ReleaseLocalServiceUtil.fetchRelease("portal");
+		Release release = _releaseLocalService.fetchRelease("portal");
 
 		release.setBuildNumber(ReleaseInfo.getBuildNumber());
 
-		ReleaseLocalServiceUtil.updateRelease(release);
+		_releaseLocalService.updateRelease(release);
 	}
 
 	@Test
@@ -122,6 +123,9 @@ public class UpgradeOracleTest {
 	private static final String _TABLE_NAME = "ACCOUNT_";
 
 	private static DB _db;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 	private UpgradeOracle _upgradeOracle;
 

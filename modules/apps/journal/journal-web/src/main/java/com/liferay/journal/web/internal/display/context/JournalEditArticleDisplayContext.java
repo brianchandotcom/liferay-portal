@@ -36,6 +36,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -123,10 +125,7 @@ public class JournalEditArticleDisplayContext {
 		strings.put(
 			"default", LanguageUtil.format(_request, "default", "content"));
 
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(
-					_themeDisplay.getScopeGroupId())) {
-
+		for (Locale availableLocale : getAvailableLocales()) {
 			String curLanguageId = LocaleUtil.toLanguageId(availableLocale);
 
 			strings.put(
@@ -322,12 +321,25 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getDefaultLanguageId() {
+		Locale siteDefaultLocale = null;
+
+		try {
+			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(getGroupId());
+		}
+		catch (PortalException pe) {
+			if (_log.isErrorEnabled()) {
+				_log.error(pe, pe);
+			}
+
+			siteDefaultLocale = LocaleUtil.getSiteDefault();
+		}
+
 		if (_article == null) {
-			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+			return LocaleUtil.toLanguageId(siteDefaultLocale);
 		}
 
 		return LocalizationUtil.getDefaultLanguageId(
-			_article.getContent(), LocaleUtil.getSiteDefault());
+			_article.getContent(), siteDefaultLocale);
 	}
 
 	public String getEditArticleURL() {
@@ -724,6 +736,9 @@ public class JournalEditArticleDisplayContext {
 			renderResponse.setTitle(_getTitle());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalEditArticleDisplayContext.class);
 
 	private JournalArticle _article;
 	private String _articleId;

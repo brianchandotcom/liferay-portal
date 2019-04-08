@@ -65,6 +65,9 @@ class FragmentEntryLinkListSection extends Component {
 		return (sectionInDropTargetPath && !sectionIsDropTarget);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	created() {
 		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);
 		this._handleBodyMouseMove = this._handleBodyMouseMove.bind(this);

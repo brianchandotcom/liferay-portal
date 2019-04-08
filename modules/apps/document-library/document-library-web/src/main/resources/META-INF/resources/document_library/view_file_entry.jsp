@@ -27,6 +27,8 @@ long fileEntryId = fileEntry.getFileEntryId();
 
 long folderId = fileEntry.getFolderId();
 
+long userId = PortalUtil.getValidUserId(fileEntry.getCompanyId(),fileEntry.getUserId());
+
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -250,7 +252,7 @@ if (portletTitleBasedNavigation) {
 						formName="fm2"
 						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"
-						userId="<%= fileEntry.getUserId() %>"
+						userId="<%= userId %>"
 					/>
 				</liferay-ui:panel>
 			</c:if>

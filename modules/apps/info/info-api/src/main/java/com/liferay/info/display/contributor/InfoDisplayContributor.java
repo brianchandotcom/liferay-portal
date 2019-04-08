@@ -14,6 +14,8 @@
 
 package com.liferay.info.display.contributor;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -25,6 +27,7 @@ import java.util.Set;
 /**
  * @author Jürgen Kappler
  */
+@ProviderType
 public interface InfoDisplayContributor<T> {
 
 	public String getClassName();

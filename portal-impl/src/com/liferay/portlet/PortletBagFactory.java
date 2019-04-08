@@ -117,7 +117,7 @@ public class PortletBagFactory {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("javax.portlet.name", portlet.getPortletId());
+		properties.put("javax.portlet.name", portlet.getPortletName());
 
 		Registry registry = RegistryUtil.getRegistry();
 

@@ -15974,10 +15974,10 @@ send@0.16.2:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
-senna@2.7.3, senna@^2.3.1, senna@^2.5.0, senna@^2.5.6:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/senna/-/senna-2.7.3.tgz#1ce80533a6ccfc2997348d70287a02196a042cc1"
-  integrity sha512-OIu/gdBRbfXA+W/xnt7yorL1y28vU5xeGJcafFKNkAd1PlHTAvLKdQ6H43+INDBqeZISllwKR59/PXWwoDzOQA==
+senna@2.7.5, senna@^2.3.1, senna@^2.5.0, senna@^2.5.6:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/senna/-/senna-2.7.5.tgz#c3afcfdc54fa99b3342051ed5597745384756c07"
+  integrity sha512-U0K2lP3/xMBrkzbAikSA5HqiLDOH0As7qWVgEXllZ6vMQU+0AwwK2AKqKfEwgkwJoKRv7uNhfxZPX8S082ObHg==
   dependencies:
     bootstrap "^3.3.6"
     metal "^2.16.5"

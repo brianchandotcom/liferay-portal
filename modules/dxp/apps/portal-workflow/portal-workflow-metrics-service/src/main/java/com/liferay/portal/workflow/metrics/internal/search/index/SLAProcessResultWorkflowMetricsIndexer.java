@@ -47,6 +47,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getSLADefinitionId()));
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
+		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
 		document.addKeyword(

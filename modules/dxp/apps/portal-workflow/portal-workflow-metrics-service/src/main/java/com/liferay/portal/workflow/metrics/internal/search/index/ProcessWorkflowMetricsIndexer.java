@@ -167,6 +167,7 @@ public class ProcessWorkflowMetricsIndexer
 				kaleoDefinition.getCompanyId(), 0,
 				kaleoDefinition.getKaleoDefinitionId(), 0));
 		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
+		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword(
 			"processId", kaleoDefinition.getKaleoDefinitionId());

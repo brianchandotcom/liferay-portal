@@ -196,6 +196,7 @@ public class ProcessResourceImpl
 					BooleanClauseOccur.MUST);
 
 				addRequiredTerm("companyId", contextCompany.getCompanyId());
+				addRequiredTerm("deleted", false);
 			}
 		};
 	}

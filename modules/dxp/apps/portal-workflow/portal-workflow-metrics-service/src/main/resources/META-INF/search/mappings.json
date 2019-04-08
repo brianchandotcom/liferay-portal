@@ -625,6 +625,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"deleted": {
+				"store": true,
+				"type": "boolean"
+			},
 			"elapsedTime": {
 				"store": true,
 				"type": "long"

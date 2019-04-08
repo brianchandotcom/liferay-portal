@@ -25,10 +25,12 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -180,6 +182,16 @@ public class HTMLTag extends BaseHTMLTag {
 		setNamespacedAttribute(
 			request, "ddmFormValuesInputName", getDDMFormValuesInputName());
 		setNamespacedAttribute(request, "fields", getFields());
+
+		if (getGroupId() <= 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			setNamespacedAttribute(
+				request, "groupId",
+				String.valueOf(themeDisplay.getSiteGroupId()));
+		}
+
 		setNamespacedAttribute(request, "mode", getMode());
 		setNamespacedAttribute(
 			request, "randomNamespace", getRandomNamespace());

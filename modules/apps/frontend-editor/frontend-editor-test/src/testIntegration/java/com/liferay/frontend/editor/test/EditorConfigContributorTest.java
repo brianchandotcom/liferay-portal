@@ -90,9 +90,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorNameEditorConfig()
-		throws Exception {
-
+	public void testEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorNameEditorConfig() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
@@ -142,9 +140,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testEditorConfigKeyOverridesPortletNameEditorConfig()
-		throws Exception {
-
+	public void testEditorConfigKeyOverridesPortletNameEditorConfig() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.config.key", _CONFIG_KEY);
@@ -190,7 +186,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testEditorNameOverridesEmptySelectorConfig() throws Exception {
+	public void testEditorNameOverridesEmptySelectorConfig() {
 		EditorConfigContributor tablesEditorConfigContributor =
 			new TablesEditorConfigContributor();
 
@@ -237,7 +233,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testGetEditorConfigurationByEditorName() throws Exception {
+	public void testGetEditorConfigurationByEditorName() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
@@ -288,9 +284,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testGetEditorConfigurationByEditorNameAndServiceRanking()
-		throws Exception {
-
+	public void testGetEditorConfigurationByEditorNameAndServiceRanking() {
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
@@ -337,9 +331,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorConfigKeyEditorConfig()
-		throws Exception {
-
+	public void testPortletNameAndEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorConfigKeyEditorConfig() {
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
@@ -390,9 +382,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorConfigKeyOverridesEditorConfigKeyAndEditorNameEditorConfig()
-		throws Exception {
-
+	public void testPortletNameAndEditorConfigKeyOverridesEditorConfigKeyAndEditorNameEditorConfig() {
 		EditorConfigContributor emoticonsEditorConfigContributor =
 			new EmoticonsEditorConfigContributor();
 
@@ -442,9 +432,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
-		throws Exception {
-
+	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig() {
 		EditorConfigContributor textFormatEditorConfigContributor =
 			new TextFormatEditorConfigContributor();
 
@@ -493,9 +481,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameOverridesEditorNameEditorConfig()
-		throws Exception {
-
+	public void testPortletNameOverridesEditorNameEditorConfig() {
 		EditorConfigContributor tablesEditorConfigContributor =
 			new TablesEditorConfigContributor();
 

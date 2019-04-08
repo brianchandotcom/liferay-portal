@@ -62,7 +62,7 @@ public class EditorConfigTransformerTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
 			Arrays.<Class<?>>asList(BasicHTMLEditorConfigContributor.class));
 
@@ -97,9 +97,7 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigNotTransformedWhenEditorConfigTransformerIsRegisteredToOtherEditorName()
-		throws Exception {
-
+	public void testEditorConfigNotTransformedWhenEditorConfigTransformerIsRegisteredToOtherEditorName() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
@@ -147,9 +145,7 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigNotTransformedWhenNoEditorConfigTransformerIsRegistered()
-		throws Exception {
-
+	public void testEditorConfigNotTransformedWhenNoEditorConfigTransformerIsRegistered() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
@@ -185,9 +181,7 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
-		throws Exception {
-
+	public void testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);
@@ -235,9 +229,7 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWithMultipleEditorOptionsContributors()
-		throws Exception {
-
+	public void testEditorConfigTransformedWithMultipleEditorOptionsContributors() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("editor.name", _EDITOR_NAME);

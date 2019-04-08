@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-87134. Assert we can navigate to a child page in the Navigation Menu widget using pages hierarchy menu."
+	@description = "This is a test for LPS-87134. Assert we can navigate to a child page in the Navigation Menu widget."
 	@priority = "5"
 	test AddChildPage {
 		task ("Add a page and child page to the site") {
@@ -50,7 +50,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-87134. Assert we can navigate to different pages in the Navigation Menu widget using pages hierarchy menu."
+	@description = "This is a test for LPS-87134. Assert we can navigate to different pages in the Navigation Menu widget."
 	@priority = "5"
 	test AddMultiplePages {
 		task ("Add three pages to the site") {
@@ -120,7 +120,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-87134. Assert we can hide pages in the Navigation Menu widget using pages hierarchy menu."
+	@description = "This is a test for LPS-87134. Assert we can hide pages in the Navigation Menu widget."
 	@priority = "4"
 	test HidePages {
 		task ("Add a page to the site") {
@@ -145,7 +145,7 @@ definition {
 				pageName = "Site Page Visible"
 			);
 
-			Page.toggleShowInPagesHierarchyMenu(toggleValue = "enable");
+			Page.toggleHiddenFromNavigationMenuWidget(toggleValue = "disable");
 
 			Button.clickSave();
 		}
@@ -158,7 +158,7 @@ definition {
 				pageName = "Site Page Hidden"
 			);
 
-			Page.toggleShowInPagesHierarchyMenu(toggleValue = "disable");
+			Page.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
 
 			Button.clickSave();
 		}

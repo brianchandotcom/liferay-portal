@@ -1,0 +1,10 @@
+
+{
+	"build": {
+		"dependencies": [
+			"clay-button",
+			"clay-icon",
+			"com.liferay.frontend.js.web"
+		]
+	}
+}

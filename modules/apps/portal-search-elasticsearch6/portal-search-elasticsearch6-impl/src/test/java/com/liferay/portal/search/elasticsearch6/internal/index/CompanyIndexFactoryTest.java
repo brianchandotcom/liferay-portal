@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch6.internal.index;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
@@ -51,16 +50,20 @@ public class CompanyIndexFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_companyIndexFactory = createCompanyIndexFactory();
-
 		_elasticsearchFixture = new ElasticsearchFixture(
 			CompanyIndexFactoryTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
 
+		_companyIndexFactoryFixture = new CompanyIndexFactoryFixture(
+			_elasticsearchFixture, testName.getMethodName());
+
+		_companyIndexFactory =
+			_companyIndexFactoryFixture.getCompanyIndexFactory();
+
 		_singleFieldFixture = new SingleFieldFixture(
 			_elasticsearchFixture.getClient(),
-			new IndexName(getTestIndexName()),
+			new IndexName(_companyIndexFactoryFixture.getIndexName()),
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 	}
 
@@ -325,12 +328,13 @@ public class CompanyIndexFactoryTest {
 
 		FieldMappingAssert.assertAnalyzer(
 			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			getTestIndexName(), _elasticsearchFixture.getIndicesAdminClient());
+			_companyIndexFactoryFixture.getIndexName(),
+			_elasticsearchFixture.getIndicesAdminClient());
 	}
 
 	protected void assertIndicesExist(String... indexNames) {
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
-			getTestIndexName());
+			_companyIndexFactoryFixture.getIndexName());
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
 			mappings = getIndexResponse.mappings();
@@ -352,16 +356,8 @@ public class CompanyIndexFactoryTest {
 	protected void assertType(String field, String type) throws Exception {
 		FieldMappingAssert.assertType(
 			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			getTestIndexName(), _elasticsearchFixture.getIndicesAdminClient());
-	}
-
-	protected CompanyIndexFactory createCompanyIndexFactory() {
-		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory();
-
-		companyIndexFactory.indexNameBuilder = new TestIndexNameBuilder();
-		companyIndexFactory.jsonFactory = new JSONFactoryImpl();
-
-		return companyIndexFactory;
+			_companyIndexFactoryFixture.getIndexName(),
+			_elasticsearchFixture.getIndicesAdminClient());
 	}
 
 	protected void createIndices() throws Exception {
@@ -372,7 +368,7 @@ public class CompanyIndexFactoryTest {
 	}
 
 	protected Settings getIndexSettings() {
-		String name = getTestIndexName();
+		String name = _companyIndexFactoryFixture.getIndexName();
 
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
 			name);
@@ -381,12 +377,6 @@ public class CompanyIndexFactoryTest {
 			getIndexResponse.getSettings();
 
 		return immutableOpenMap.get(name);
-	}
-
-	protected String getTestIndexName() {
-		IndexName indexName = new IndexName(testName.getMethodName());
-
-		return indexName.getName();
 	}
 
 	protected void indexOneDocument(String field) {
@@ -422,16 +412,8 @@ public class CompanyIndexFactoryTest {
 			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
-	protected class TestIndexNameBuilder implements IndexNameBuilder {
-
-		@Override
-		public String getIndexName(long companyId) {
-			return getTestIndexName();
-		}
-
-	}
-
 	private CompanyIndexFactory _companyIndexFactory;
+	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
 	private ElasticsearchFixture _elasticsearchFixture;
 	private SingleFieldFixture _singleFieldFixture;
 

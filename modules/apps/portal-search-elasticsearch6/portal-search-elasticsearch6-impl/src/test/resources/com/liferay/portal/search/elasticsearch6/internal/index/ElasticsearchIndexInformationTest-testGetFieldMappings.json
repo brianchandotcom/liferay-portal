@@ -1,0 +1,827 @@
+{
+	"testgetfieldmappings" : {
+		"mappings" : {
+			"LiferayDocumentType" : {
+				"_all" : {
+					"full_name" : "_all",
+					"mapping" : {
+					}
+				},
+				"_field_names" : {
+					"full_name" : "_field_names",
+					"mapping" : {
+					}
+				},
+				"_id" : {
+					"full_name" : "_id",
+					"mapping" : {
+					}
+				},
+				"_ignored" : {
+					"full_name" : "_ignored",
+					"mapping" : {
+					}
+				},
+				"_index" : {
+					"full_name" : "_index",
+					"mapping" : {
+					}
+				},
+				"_parent" : {
+					"full_name" : "_parent",
+					"mapping" : {
+					}
+				},
+				"_routing" : {
+					"full_name" : "_routing",
+					"mapping" : {
+					}
+				},
+				"_seq_no" : {
+					"full_name" : "_seq_no",
+					"mapping" : {
+					}
+				},
+				"_source" : {
+					"full_name" : "_source",
+					"mapping" : {
+					}
+				},
+				"_type" : {
+					"full_name" : "_type",
+					"mapping" : {
+					}
+				},
+				"_uid" : {
+					"full_name" : "_uid",
+					"mapping" : {
+					}
+				},
+				"_version" : {
+					"full_name" : "_version",
+					"mapping" : {
+					}
+				},
+				"ancestorOrganizationIds" : {
+					"full_name" : "ancestorOrganizationIds",
+					"mapping" : {
+						"ancestorOrganizationIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"articleId" : {
+					"full_name" : "articleId",
+					"mapping" : {
+						"articleId" : {
+							"analyzer" : "keyword_lowercase",
+							"store" : true,
+							"type" : "text"
+						}
+					}
+				},
+				"assetCategoryId" : {
+					"full_name" : "assetCategoryId",
+					"mapping" : {
+						"assetCategoryId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetCategoryIds" : {
+					"full_name" : "assetCategoryIds",
+					"mapping" : {
+						"assetCategoryIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetTagId" : {
+					"full_name" : "assetTagId",
+					"mapping" : {
+						"assetTagId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetTagIds" : {
+					"full_name" : "assetTagIds",
+					"mapping" : {
+						"assetTagIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetTagNames" : {
+					"full_name" : "assetTagNames",
+					"mapping" : {
+						"assetTagNames" : {
+							"fields" : {
+								"raw" : {
+									"type" : "keyword"
+								}
+							},
+							"store" : true,
+							"term_vector" : "with_positions_offsets",
+							"type" : "text"
+						}
+					}
+				},
+				"assetTagNames.raw" : {
+					"full_name" : "assetTagNames.raw",
+					"mapping" : {
+						"raw" : {
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetVocabularyId" : {
+					"full_name" : "assetVocabularyId",
+					"mapping" : {
+						"assetVocabularyId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"assetVocabularyIds" : {
+					"full_name" : "assetVocabularyIds",
+					"mapping" : {
+						"assetVocabularyIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"classTypeId" : {
+					"full_name" : "classTypeId",
+					"mapping" : {
+						"classTypeId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"companyId" : {
+					"full_name" : "companyId",
+					"mapping" : {
+						"companyId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"configurationModelAttributeName" : {
+					"full_name" : "configurationModelAttributeName",
+					"mapping" : {
+						"configurationModelAttributeName" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"configurationModelFactoryPid" : {
+					"full_name" : "configurationModelFactoryPid",
+					"mapping" : {
+						"configurationModelFactoryPid" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"configurationModelId" : {
+					"full_name" : "configurationModelId",
+					"mapping" : {
+						"configurationModelId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"content" : {
+					"full_name" : "content",
+					"mapping" : {
+						"content" : {
+							"store" : true,
+							"term_vector" : "with_positions_offsets",
+							"type" : "text"
+						}
+					}
+				},
+				"createDate" : {
+					"full_name" : "createDate",
+					"mapping" : {
+						"createDate" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"dataRepositoryId" : {
+					"full_name" : "dataRepositoryId",
+					"mapping" : {
+						"dataRepositoryId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"ddmContent" : {
+					"full_name" : "ddmContent",
+					"mapping" : {
+						"ddmContent" : {
+							"store" : true,
+							"term_vector" : "with_positions_offsets",
+							"type" : "text"
+						}
+					}
+				},
+				"ddmStructureKey" : {
+					"full_name" : "ddmStructureKey",
+					"mapping" : {
+						"ddmStructureKey" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"ddmTemplateKey" : {
+					"full_name" : "ddmTemplateKey",
+					"mapping" : {
+						"ddmTemplateKey" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"defaultLanguageId" : {
+					"full_name" : "defaultLanguageId",
+					"mapping" : {
+						"defaultLanguageId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"description" : {
+					"full_name" : "description",
+					"mapping" : {
+						"description" : {
+							"store" : true,
+							"term_vector" : "with_positions_offsets",
+							"type" : "text"
+						}
+					}
+				},
+				"discussion" : {
+					"full_name" : "discussion",
+					"mapping" : {
+						"discussion" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"displayDate" : {
+					"full_name" : "displayDate",
+					"mapping" : {
+						"displayDate" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"emailAddress" : {
+					"full_name" : "emailAddress",
+					"mapping" : {
+						"emailAddress" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"endTime" : {
+					"full_name" : "endTime",
+					"mapping" : {
+						"endTime" : {
+							"store" : true,
+							"type" : "long"
+						}
+					}
+				},
+				"entryClassName" : {
+					"full_name" : "entryClassName",
+					"mapping" : {
+						"entryClassName" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"entryClassPK" : {
+					"full_name" : "entryClassPK",
+					"mapping" : {
+						"entryClassPK" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"expirationDate" : {
+					"full_name" : "expirationDate",
+					"mapping" : {
+						"expirationDate" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"extension" : {
+					"full_name" : "extension",
+					"mapping" : {
+						"extension" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"fileEntryTypeId" : {
+					"full_name" : "fileEntryTypeId",
+					"mapping" : {
+						"fileEntryTypeId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"folderId" : {
+					"full_name" : "folderId",
+					"mapping" : {
+						"folderId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"geoLocation" : {
+					"full_name" : "geoLocation",
+					"mapping" : {
+						"geoLocation" : {
+							"fields" : {
+								"geopoint" : {
+									"store" : true,
+									"type" : "keyword"
+								}
+							},
+							"store" : true,
+							"type" : "geo_point"
+						}
+					}
+				},
+				"geoLocation.geopoint" : {
+					"full_name" : "geoLocation.geopoint",
+					"mapping" : {
+						"geopoint" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"groupId" : {
+					"full_name" : "groupId",
+					"mapping" : {
+						"groupId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"groupIds" : {
+					"full_name" : "groupIds",
+					"mapping" : {
+						"groupIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"groupRoleId" : {
+					"full_name" : "groupRoleId",
+					"mapping" : {
+						"groupRoleId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"head" : {
+					"full_name" : "head",
+					"mapping" : {
+						"head" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"hidden" : {
+					"full_name" : "hidden",
+					"mapping" : {
+						"hidden" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"id" : {
+					"full_name" : "id",
+					"mapping" : {
+						"id" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"languageId" : {
+					"full_name" : "languageId",
+					"mapping" : {
+						"languageId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"layoutUuid" : {
+					"full_name" : "layoutUuid",
+					"mapping" : {
+						"layoutUuid" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"leftOrganizationId" : {
+					"full_name" : "leftOrganizationId",
+					"mapping" : {
+						"leftOrganizationId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"mimeType" : {
+					"full_name" : "mimeType",
+					"mapping" : {
+						"mimeType" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"modified" : {
+					"full_name" : "modified",
+					"mapping" : {
+						"modified" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"nodeId" : {
+					"full_name" : "nodeId",
+					"mapping" : {
+						"nodeId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"organizationId" : {
+					"full_name" : "organizationId",
+					"mapping" : {
+						"organizationId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"organizationIds" : {
+					"full_name" : "organizationIds",
+					"mapping" : {
+						"organizationIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"parentCategoryId" : {
+					"full_name" : "parentCategoryId",
+					"mapping" : {
+						"parentCategoryId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"parentCategoryIds" : {
+					"full_name" : "parentCategoryIds",
+					"mapping" : {
+						"parentCategoryIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"parentOrganizationId" : {
+					"full_name" : "parentOrganizationId",
+					"mapping" : {
+						"parentOrganizationId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"path" : {
+					"full_name" : "path",
+					"mapping" : {
+						"path" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"priority" : {
+					"full_name" : "priority",
+					"mapping" : {
+						"priority" : {
+							"store" : true,
+							"type" : "double"
+						}
+					}
+				},
+				"properties" : {
+					"full_name" : "properties",
+					"mapping" : {
+						"properties" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"publishDate" : {
+					"full_name" : "publishDate",
+					"mapping" : {
+						"publishDate" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"readCount" : {
+					"full_name" : "readCount",
+					"mapping" : {
+						"readCount" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"recordSetId" : {
+					"full_name" : "recordSetId",
+					"mapping" : {
+						"recordSetId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"removedByUser" : {
+					"full_name" : "removedByUser",
+					"mapping" : {
+						"removedByUser" : {
+							"type" : "keyword"
+						}
+					}
+				},
+				"removedDate" : {
+					"full_name" : "removedDate",
+					"mapping" : {
+						"removedDate" : {
+							"format" : "yyyyMMddHHmmss",
+							"store" : true,
+							"type" : "date"
+						}
+					}
+				},
+				"rightOrganizationId" : {
+					"full_name" : "rightOrganizationId",
+					"mapping" : {
+						"rightOrganizationId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"roleId" : {
+					"full_name" : "roleId",
+					"mapping" : {
+						"roleId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"roleIds" : {
+					"full_name" : "roleIds",
+					"mapping" : {
+						"roleIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"rootEntryClassName" : {
+					"full_name" : "rootEntryClassName",
+					"mapping" : {
+						"rootEntryClassName" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"rootEntryClassPK" : {
+					"full_name" : "rootEntryClassPK",
+					"mapping" : {
+						"rootEntryClassPK" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"scopeGroupId" : {
+					"full_name" : "scopeGroupId",
+					"mapping" : {
+						"scopeGroupId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"screenName" : {
+					"full_name" : "screenName",
+					"mapping" : {
+						"screenName" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"size" : {
+					"full_name" : "size",
+					"mapping" : {
+						"size" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"status" : {
+					"full_name" : "status",
+					"mapping" : {
+						"status" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"subtitle" : {
+					"full_name" : "subtitle",
+					"mapping" : {
+						"subtitle" : {
+							"store" : true,
+							"type" : "text"
+						}
+					}
+				},
+				"teamIds" : {
+					"full_name" : "teamIds",
+					"mapping" : {
+						"teamIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"threadId" : {
+					"full_name" : "threadId",
+					"mapping" : {
+						"threadId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"title" : {
+					"full_name" : "title",
+					"mapping" : {
+						"title" : {
+							"store" : true,
+							"term_vector" : "with_positions_offsets",
+							"type" : "text"
+						}
+					}
+				},
+				"treePath" : {
+					"full_name" : "treePath",
+					"mapping" : {
+						"treePath" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"type" : {
+					"full_name" : "type",
+					"mapping" : {
+						"type" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"uid" : {
+					"full_name" : "uid",
+					"mapping" : {
+						"uid" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"userGroupId" : {
+					"full_name" : "userGroupId",
+					"mapping" : {
+						"userGroupId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"userGroupIds" : {
+					"full_name" : "userGroupIds",
+					"mapping" : {
+						"userGroupIds" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"userId" : {
+					"full_name" : "userId",
+					"mapping" : {
+						"userId" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"userName" : {
+					"full_name" : "userName",
+					"mapping" : {
+						"userName" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"version" : {
+					"full_name" : "version",
+					"mapping" : {
+						"version" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				},
+				"visible" : {
+					"full_name" : "visible",
+					"mapping" : {
+						"visible" : {
+							"store" : true,
+							"type" : "keyword"
+						}
+					}
+				}
+			}
+		}
+	}
+}

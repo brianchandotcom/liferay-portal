@@ -118,7 +118,6 @@ AUI.add(
 						var data = event.currentTarget.getData();
 						var form = instance.get(STR_FORM);
 
-						var cmd = data.cmd;
 						var redirect = instance.one('#redirect', form);
 
 						if (redirect) {

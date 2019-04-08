@@ -1,0 +1,102 @@
+{namespace com.liferay.portal.search.admin.web.FieldMappings}
+
+/**
+ * This renders the field mappings page.
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param indexList: list<[cssClass: string, name: string, url: string]>}
+	{@param selectedIndexName: string}
+	{@param? _selectText: any}
+	{@param? _switchTheme: any}
+	{@param? _increaseFontSize: any}
+	{@param? _decreaseFontSize: any}
+
+	<div class="container-fluid container-fluid-max-xl container-form-lg portal-search-admin-field-mappings">
+		<div class="row">
+			<div class="col-md-3">
+				<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+					<ul class="nav nav-nested">
+						<li class="nav-header">
+							{msg desc=""}index{/msg}
+						</li>
+
+						{foreach $indexName in $indexList}
+							<li class="nav-item">
+								<a class="{$indexName.cssClass} nav-link" href="{$indexName.url}">
+									{$indexName.name}
+								</a>
+							</li>
+						{/foreach}
+					</ul>
+				</nav>
+			</div>
+
+			<div class="col-md-9">
+				<div class="sheet">
+					<div class="sheet-header">
+						<h2 class="sheet-title">
+							{$selectedIndexName}
+						</h2>
+
+						<div class="sheet-text">
+							{msg desc=""}a-list-of-all-field-mappings-in-this-index{/msg}
+						</div>
+					</div>
+
+					<div class="sheet-section">
+						{call ClayButton.render}
+							{param events: [
+								'click': $_switchTheme
+							] /}
+							{param icon: 'moon' /}
+							{param monospaced: true /}
+							{param spritemap: $spritemap /}
+							{param style: 'secondary' /}
+						{/call}
+
+						<div class="btn-group btn-group-font-size" role="group">
+							{call ClayButton.render}
+								{param elementClasses: 'btn-plus' /}
+								{param events: [
+									'click': $_increaseFontSize
+								] /}
+								{param icon: 'plus' /}
+								{param monospaced: true /}
+								{param spritemap: $spritemap /}
+								{param style: 'secondary' /}
+							{/call}
+
+							{call ClayButton.render}
+								{param elementClasses: 'btn-hr' /}
+								{param events: [
+									'click': $_decreaseFontSize
+								] /}
+								{param icon: 'hr' /}
+								{param monospaced: true /}
+								{param spritemap: $spritemap /}
+								{param style: 'secondary' /}
+							{/call}
+						</div>
+
+						{call ClayButton.render}
+							{param elementClasses: 'btn-copy' /}
+							{param events: [
+								'click': $_selectText
+							] /}
+							{param icon: 'paste' /}
+							{param monospaced: true /}
+							{param spritemap: $spritemap /}
+							{param style: 'secondary' /}
+						{/call}
+					</div>
+
+					<div class="lfr-source-editor lfr-source-editor-content sheet-section" id="richEditor">
+						<div class="lfr-source-editor-code" ref="wrapper"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{/template}

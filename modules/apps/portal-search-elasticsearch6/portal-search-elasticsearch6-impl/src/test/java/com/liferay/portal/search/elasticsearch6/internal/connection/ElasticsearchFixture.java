@@ -91,6 +91,29 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 		deleteTmpDir();
 	}
 
+	public ElasticsearchConnectionManager geElasticsearchConnectionManager() {
+		return new ElasticsearchConnectionManager() {
+
+			@Override
+			public AdminClient getAdminClient() {
+				Client client = getClient();
+
+				return client.admin();
+			}
+
+			@Override
+			public Client getClient() {
+				return _embeddedElasticsearchConnection.getClient();
+			}
+
+			@Override
+			public ElasticsearchConnection getElasticsearchConnection() {
+				return _embeddedElasticsearchConnection;
+			}
+
+		};
+	}
+
 	public AdminClient getAdminClient() {
 		Client client = getClient();
 
@@ -123,10 +146,10 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 		clusterHealthRequest.waitForNoRelocatingShards(true);
 		clusterHealthRequest.waitForStatus(healthExpectations.getStatus());
 
-		ActionFuture<ClusterHealthResponse> health = clusterAdminClient.health(
-			clusterHealthRequest);
+		ActionFuture<ClusterHealthResponse> healthActionFuture =
+			clusterAdminClient.health(clusterHealthRequest);
 
-		return health.actionGet();
+		return healthActionFuture.actionGet();
 	}
 
 	public Map<String, Object> getElasticsearchConfigurationProperties() {

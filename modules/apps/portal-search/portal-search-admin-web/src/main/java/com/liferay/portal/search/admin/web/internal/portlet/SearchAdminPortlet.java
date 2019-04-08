@@ -15,10 +15,15 @@
 package com.liferay.portal.search.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
+import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.index.IndexInformation;
 
 import java.io.IOException;
 
@@ -67,17 +72,47 @@ public class SearchAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
-			new SearchAdminDisplayBuilder();
+		String tabs1 = ParamUtil.getString(
+			renderRequest, "tabs1", "index-actions");
 
-		searchAdminDisplayBuilder.setSearchEngineInformation(
-			searchEngineInformation);
+		if (tabs1.equals("index-actions")) {
+			SearchAdminDisplayBuilder searchAdminDisplayBuilder =
+				new SearchAdminDisplayBuilder();
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, searchAdminDisplayBuilder.build());
+			searchAdminDisplayBuilder.setSearchEngineInformation(
+				searchEngineInformation);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				searchAdminDisplayBuilder.build());
+		}
+		else {
+			FieldMappingsDisplayBuilder fieldMappingsDisplayBuilder =
+				new FieldMappingsDisplayBuilder(_http);
+
+			fieldMappingsDisplayBuilder.setCompanyId(
+				_portal.getCompanyId(renderRequest));
+			fieldMappingsDisplayBuilder.setCurrentURL(
+				_portal.getCurrentURL(renderRequest));
+			fieldMappingsDisplayBuilder.setIndexInformation(indexInformation);
+			fieldMappingsDisplayBuilder.setNamespace(
+				renderResponse.getNamespace());
+
+			String selectedIndexName = ParamUtil.getString(
+				renderRequest, "selectedIndexName");
+
+			fieldMappingsDisplayBuilder.setSelectedIndexName(selectedIndexName);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				fieldMappingsDisplayBuilder.build());
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	protected IndexInformation indexInformation;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -85,5 +120,11 @@ public class SearchAdminPortlet extends MVCPortlet {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected volatile SearchEngineInformation searchEngineInformation;
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private Portal _portal;
 
 }

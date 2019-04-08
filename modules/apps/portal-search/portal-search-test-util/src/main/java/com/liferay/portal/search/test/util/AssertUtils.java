@@ -14,8 +14,12 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +31,48 @@ import org.junit.Assert;
 public class AssertUtils {
 
 	public static void assertEquals(
+		String message, JSONObject expectedJSONObject,
+		JSONObject actualJSONObject) {
+
+		String actual = _toString(actualJSONObject);
+
+		Assert.assertEquals(message, _toString(expectedJSONObject), actual);
+	}
+
+	public static void assertEquals(
 		String message, Map<?, ?> expectedMap, Map<?, ?> actualMap) {
 
 		String actual = _toString(actualMap);
 
 		Assert.assertEquals(
 			message + "->" + actual, _toString(expectedMap), actual);
+	}
+
+	private static String _toString(JSONArray jsonArray) {
+		List<String> list = new ArrayList<>(jsonArray.length());
+
+		jsonArray.forEach(
+			value -> {
+				list.add(_toString(value));
+			});
+
+		Collections.sort(list);
+
+		return list.toString();
+	}
+
+	private static String _toString(JSONObject jsonObject) {
+		List<String> list = new ArrayList<>(jsonObject.length());
+		Iterator<String> keys = jsonObject.keys();
+
+		keys.forEachRemaining(
+			key -> {
+				list.add(key + ":" + _toString(jsonObject.get(key)));
+			});
+
+		Collections.sort(list);
+
+		return list.toString();
 	}
 
 	private static String _toString(Map<?, ?> map) {
@@ -45,6 +85,18 @@ public class AssertUtils {
 		Collections.sort(list);
 
 		return list.toString();
+	}
+
+	private static String _toString(Object object) {
+		if (object instanceof JSONObject) {
+			return _toString((JSONObject)object);
+		}
+		else if (object instanceof JSONArray) {
+			return _toString((JSONArray)object);
+		}
+		else {
+			return object.toString();
+		}
 	}
 
 }

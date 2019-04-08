@@ -22,27 +22,30 @@
 
 		<column name="assetEntryId" type="long" />
 		<column name="plid" type="long" />
-		<column name="portletId" type="String" />
+		<column name="containerType" type="long" />
+		<column name="containerKey" type="String" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
-		<finder name="AssetEntryId" return-type="Collection" where="portletId IS NOT NULL">
+		<finder name="AssetEntryId" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="assetEntryId" />
 		</finder>
-		<finder name="A_T" return-type="Collection">
+		<finder name="A_T" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="assetEntryId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="P_P" return-type="Collection">
+		<finder name="P_C_C" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="plid" />
-			<finder-column name="portletId" />
+			<finder-column name="containerType" />
+			<finder-column name="containerKey" />
 		</finder>
-		<finder name="A_P_P" return-type="AssetEntryUsage" unique="true">
+		<finder name="A_P_C_C" return-type="AssetEntryUsage" unique="true">
 			<finder-column name="assetEntryId" />
 			<finder-column name="plid" />
-			<finder-column name="portletId" />
+			<finder-column name="containerType" />
+			<finder-column name="containerKey" />
 		</finder>
 	</entity>
 </service-builder>

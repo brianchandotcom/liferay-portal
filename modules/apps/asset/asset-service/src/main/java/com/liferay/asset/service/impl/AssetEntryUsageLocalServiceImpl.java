@@ -37,8 +37,8 @@ public class AssetEntryUsageLocalServiceImpl
 
 	@Override
 	public AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long classNameId, long classPK,
-		String portletId, ServiceContext serviceContext) {
+		long groupId, long assetEntryId, long plid, String portletId,
+		ServiceContext serviceContext) {
 
 		long assetEntryUsageId = counterLocalService.increment();
 
@@ -50,27 +50,23 @@ public class AssetEntryUsageLocalServiceImpl
 		assetEntryUsage.setCreateDate(new Date());
 		assetEntryUsage.setModifiedDate(new Date());
 		assetEntryUsage.setAssetEntryId(assetEntryId);
-		assetEntryUsage.setClassNameId(classNameId);
-		assetEntryUsage.setClassPK(classPK);
+		assetEntryUsage.setPlid(plid);
 		assetEntryUsage.setPortletId(portletId);
 
 		return assetEntryUsagePersistence.update(assetEntryUsage);
 	}
 
 	@Override
-	public void deleteAssetEntryUsages(
-		long classNameId, long classPK, String portletId) {
-
-		assetEntryUsagePersistence.removeByC_C_P(
-			classNameId, classPK, portletId);
+	public void deleteAssetEntryUsages(long plid, String portletId) {
+		assetEntryUsagePersistence.removeByP_P(plid, portletId);
 	}
 
 	@Override
 	public AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long classNameId, long classPK, String portletId) {
+		long assetEntryId, long plid, String portletId) {
 
-		return assetEntryUsagePersistence.fetchByA_C_C_P(
-			assetEntryId, classNameId, classPK, portletId);
+		return assetEntryUsagePersistence.fetchByA_P_P(
+			assetEntryId, plid, portletId);
 	}
 
 	@Override
@@ -89,26 +85,25 @@ public class AssetEntryUsageLocalServiceImpl
 
 	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long classNameId) {
+		long assetEntryId, long plid) {
 
-		return assetEntryUsagePersistence.findByA_C(assetEntryId, classNameId);
+		return assetEntryUsagePersistence.findByA_P(assetEntryId, plid);
 	}
 
 	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(
-		long assetEntryId, long classNameId, int start, int end,
+		long assetEntryId, long plid, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
-		return assetEntryUsagePersistence.findByA_C(
-			assetEntryId, classNameId, start, end, orderByComparator);
+		return assetEntryUsagePersistence.findByA_P(
+			assetEntryId, plid, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(
-		long classNameId, long classPK, String portletId) {
+		long plid, String portletId) {
 
-		return assetEntryUsagePersistence.findByC_C_P(
-			classNameId, classPK, portletId);
+		return assetEntryUsagePersistence.findByP_P(plid, portletId);
 	}
 
 	@Override
@@ -117,13 +112,8 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
-	public int getAssetEntryUsagesCount(long assetEntryId, long classNameId) {
-		return assetEntryUsagePersistence.countByA_C(assetEntryId, classNameId);
-	}
-
-	@Override
-	public int getAssetEntryUsagesCount(long assetEntryId, String portletId) {
-		return assetEntryUsagePersistence.countByA_P(assetEntryId, portletId);
+	public int getAssetEntryUsagesCount(long assetEntryId, long plid) {
+		return assetEntryUsagePersistence.countByA_P(assetEntryId, plid);
 	}
 
 }

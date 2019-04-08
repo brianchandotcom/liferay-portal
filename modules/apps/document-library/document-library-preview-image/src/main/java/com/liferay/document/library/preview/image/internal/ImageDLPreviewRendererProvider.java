@@ -50,6 +50,13 @@ public class ImageDLPreviewRendererProvider
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
 		FileVersion fileVersion) {
 
+		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			return Optional.of(
+				(request, response) -> {
+					throw new DLPreviewSizeException();
+				});
+		}
+
 		if (!ImageProcessorUtil.isImageSupported(fileVersion)) {
 			return Optional.empty();
 		}
@@ -86,10 +93,6 @@ public class ImageDLPreviewRendererProvider
 		}
 
 		if (!ImageProcessorUtil.hasImages(fileVersion)) {
-			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-				throw new DLPreviewSizeException();
-			}
-
 			throw new DLPreviewGenerationInProcessException();
 		}
 	}

@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 
 import org.junit.runner.Description;
 
 /**
+ * @author Manuel de la Peña
+ * @author Roberto Díaz
  * @author Shuyang Zhou
  */
-public class SynchronousMailTestCallback
-	extends SynchronousDestinationTestCallback {
+public class SynchronousMailTestRule extends SynchronousDestinationTestRule {
 
-	public static final SynchronousMailTestCallback INSTANCE =
-		new SynchronousMailTestCallback();
+	public static final SynchronousMailTestRule INSTANCE =
+		new SynchronousMailTestRule();
 
 	@Override
 	public void afterClass(Description description, SyncHandler syncHandler)
@@ -49,7 +51,7 @@ public class SynchronousMailTestCallback
 		return null;
 	}
 
-	private SynchronousMailTestCallback() {
+	private SynchronousMailTestRule() {
 	}
 
 }

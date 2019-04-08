@@ -14,18 +14,20 @@
 
 package com.liferay.bulk.selection;
 
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -54,16 +56,6 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	}
 
 	@Override
-	public <E extends PortalException> void forEach(
-			UnsafeConsumer<T, E> unsafeConsumer)
-		throws PortalException {
-
-		for (long entryId : _entryIds) {
-			unsafeConsumer.accept(fetchEntry(entryId));
-		}
-	}
-
-	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
 	}
@@ -76,6 +68,17 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	@Override
 	public Serializable serialize() {
 		return StringUtil.merge(_entryIds, StringPool.COMMA);
+	}
+
+	@Override
+	public Stream<T> stream() {
+		LongStream longStream = Arrays.stream(_entryIds);
+
+		return longStream.mapToObj(
+			this::fetchEntry
+		).filter(
+			Objects::nonNull
+		);
 	}
 
 	protected abstract T fetchEntry(long entryId);

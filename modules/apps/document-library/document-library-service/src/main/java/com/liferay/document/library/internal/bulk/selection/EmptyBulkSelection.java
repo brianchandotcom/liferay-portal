@@ -17,14 +17,15 @@ package com.liferay.document.library.internal.bulk.selection;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -34,11 +35,6 @@ public class EmptyBulkSelection<T> implements BulkSelection<T> {
 	@Override
 	public String describe(Locale locale) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public <E extends PortalException> void forEach(
-		UnsafeConsumer<T, E> unsafeConsumer) {
 	}
 
 	@Override
@@ -61,6 +57,13 @@ public class EmptyBulkSelection<T> implements BulkSelection<T> {
 	@Override
 	public Serializable serialize() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public Stream<T> stream() {
+		List<T> list = Collections.emptyList();
+
+		return list.stream();
 	}
 
 	@Override

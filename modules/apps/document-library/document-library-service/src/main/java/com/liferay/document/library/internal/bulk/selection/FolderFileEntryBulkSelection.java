@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Adolfo Pérez
@@ -71,14 +71,13 @@ public class FolderFileEntryBulkSelection
 	}
 
 	@Override
-	protected <E extends PortalException> RepositoryModelOperation
-		getRepositoryModelOperation(
-			UnsafeConsumer<? super FileEntry, E> action) {
+	protected RepositoryModelOperation getRepositoryModelOperation(
+		Consumer<? super FileEntry> action) {
 
 		return new BaseRepositoryModelOperation() {
 
 			@Override
-			public void execute(FileEntry fileEntry) throws E {
+			public void execute(FileEntry fileEntry) {
 				action.accept(fileEntry);
 			}
 

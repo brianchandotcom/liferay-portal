@@ -16,7 +16,6 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
 /**
  * @author Shuyang Zhou
@@ -43,7 +42,7 @@ public class LogAssertionUncaughtExceptionHandler
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append(throwable);
 
-		LogAssertionTestCallback.caughtFailure(
+		LogAssertionTestRule.caughtFailure(
 			new AssertionError(sb.toString(), throwable));
 	}
 

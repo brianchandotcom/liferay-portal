@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.spring.hibernate.DialectDetector;
-import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -114,7 +113,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 						Log4JUtil.configureLog4J(
 							InitUtil.class.getClassLoader());
 
-						LogAssertionTestCallback.startAssert(
+						LogAssertionTestRule.startAssert(
 							Collections.<ExpectedLogs>emptyList());
 					}
 

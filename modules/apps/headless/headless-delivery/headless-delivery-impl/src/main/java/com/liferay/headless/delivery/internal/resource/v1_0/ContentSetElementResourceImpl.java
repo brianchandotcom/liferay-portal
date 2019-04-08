@@ -154,9 +154,7 @@ public class ContentSetElementResourceImpl
 			pagination, assetListEntry.getAssetEntriesCount(segmentsEntryIds));
 	}
 
-	private ContentSetElement _toContentSetElement(AssetEntry assetEntry)
-		throws Exception {
-
+	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {
 		DTOConverter dtoConverter = _dtoConverterRegistry.getDTOConverter(
 			assetEntry.getClassName());
 
@@ -180,7 +178,7 @@ public class ContentSetElementResourceImpl
 				setContentType(
 					() -> {
 						if (dtoConverter == null) {
-							return "Unknown";
+							return assetEntry.getClassName();
 						}
 
 						return dtoConverter.getContentType();

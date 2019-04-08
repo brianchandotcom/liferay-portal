@@ -47,30 +47,36 @@ class FragmentEntryLinkListRow extends Component {
 		rowId,
 		structure
 	) {
-		const dropTargetPath = getItemPath(
-			dropTargetItemId,
-			dropTargetItemType,
-			structure
-		);
+		let highlighted = false;
 
-		const rowInDropTargetPath = itemIsInPath(
-			dropTargetPath,
-			rowId,
-			FRAGMENTS_EDITOR_ITEM_TYPES.row
-		);
+		if (dropTargetItemId) {
+			const dropTargetPath = getItemPath(
+				dropTargetItemId,
+				dropTargetItemType,
+				structure
+			);
 
-		const row = structure.find(
-			row => row.rowId === rowId
-		);
+			const rowInDropTargetPath = itemIsInPath(
+				dropTargetPath,
+				rowId,
+				FRAGMENTS_EDITOR_ITEM_TYPES.row
+			);
 
-		const rowIsDropTarget = (dropTargetItemId === rowId &&
-			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row);
+			const row = structure.find(
+				row => row.rowId === rowId
+			);
 
-		return (
-			row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow &&
-			rowInDropTargetPath &&
-			!rowIsDropTarget
-		);
+			const rowIsDropTarget = (dropTargetItemId === rowId &&
+				dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row);
+
+			highlighted = (
+				row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow &&
+				rowInDropTargetPath &&
+				!rowIsDropTarget
+			);
+		}
+
+		return highlighted;
 	}
 
 	/**

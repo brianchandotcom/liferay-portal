@@ -119,10 +119,16 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (folder != null) %>">
+		<%
+		String title = fileVersion.getTitle();
+		if (versionSpecific){
+			title += " (" +LanguageUtil.get(resourceBundle, "version") + " "+ fileVersion.getVersion() + ")";
+		}
+		%>
 		<liferay-ui:header
 			backURL="<%= redirect %>"
 			localizeTitle="<%= false %>"
-			title="<%= fileVersion.getTitle() %>"
+			title="<%= title %>"
 		/>
 	</c:if>
 

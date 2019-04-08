@@ -26,6 +26,7 @@ import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
+import com.liferay.message.boards.internal.configuration.MBDiscussionGroupServiceConfiguration;
 import com.liferay.message.boards.internal.util.MBDiscussionSubcriptionSender;
 import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
@@ -41,7 +42,6 @@ import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
-import com.liferay.message.boards.settings.MBDiscussionGroupServiceSettings;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -83,6 +85,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -2125,8 +2128,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBDiscussion mbDiscussion =
 			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
-		MBDiscussionGroupServiceSettings mbDiscussionGroupServiceSettings =
-			MBDiscussionGroupServiceSettings.getInstance(message.getGroupId());
+		MBDiscussionGroupServiceConfiguration
+			mbDiscussionGroupServiceConfiguration =
+				_getMBDiscussionGroupServiceConfiguration(message.getGroupId());
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
@@ -2144,13 +2148,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getUserId(), StringPool.BLANK);
 		}
 
-		String fromName =
-			mbDiscussionGroupServiceSettings.getAdminEmailFromName();
-		String fromAddress =
-			mbDiscussionGroupServiceSettings.getAdminEmailFromAddress();
+		String emailFromName =
+			mbDiscussionGroupServiceConfiguration.emailFromName();
+		String emailFromAddress =
+			mbDiscussionGroupServiceConfiguration.emailFromAddress();
 
 		SubscriptionSender subscriptionSender =
-			new MBDiscussionSubcriptionSender();
+			new MBDiscussionSubcriptionSender(
+				mbDiscussionGroupServiceConfiguration);
 
 		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setClassName(MBDiscussion.class.getName());
@@ -2164,23 +2169,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
-		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setFrom(emailFromAddress, emailFromName);
 		subscriptionSender.setHtmlFormat(true);
 
-		LocalizedValuesMap subjectLocalizedValuesMap =
-			mbDiscussionGroupServiceSettings.getDiscussionEmailSubject();
+		Map<Locale, String> localizedBodyMap = LocalizationUtil.getMap(
+			mbDiscussionGroupServiceConfiguration.discussionEmailBody());
 
-		LocalizedValuesMap bodyLocalizedValuesMap =
-			mbDiscussionGroupServiceSettings.getDiscussionEmailBody();
+		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
+			mbDiscussionGroupServiceConfiguration.discussionEmailSubject());
 
-		if (bodyLocalizedValuesMap != null) {
-			subscriptionSender.setLocalizedBodyMap(
-				LocalizationUtil.getMap(bodyLocalizedValuesMap));
+		if (localizedBodyMap != null) {
+			subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		}
 
-		if (subjectLocalizedValuesMap != null) {
-			subscriptionSender.setLocalizedSubjectMap(
-				LocalizationUtil.getMap(subjectLocalizedValuesMap));
+		if (localizedSubjectMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		}
 
 		Date modifiedDate = message.getModifiedDate();
@@ -2603,6 +2606,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
+
 	@ServiceReference(type = Http.class)
 	protected Http http;
 
@@ -2645,6 +2651,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fileEntry.getFolderId());
 
 		return GetterUtil.getLong(folder.getName());
+	}
+
+	private MBDiscussionGroupServiceConfiguration
+			_getMBDiscussionGroupServiceConfiguration(long groupId)
+		throws ConfigurationException {
+
+		return configurationProvider.getConfiguration(
+			MBDiscussionGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 	}
 
 	private long _getRootDiscussionMessageId(String className, long classPK)

@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:petra:petra-mail")
@@ -27,6 +28,7 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:staging:staging-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-function")

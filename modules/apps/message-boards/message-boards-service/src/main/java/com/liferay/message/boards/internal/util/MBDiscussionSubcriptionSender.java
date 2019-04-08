@@ -14,9 +14,8 @@
 
 package com.liferay.message.boards.internal.util;
 
+import com.liferay.message.boards.internal.configuration.MBDiscussionGroupServiceConfiguration;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 
 /**
@@ -24,13 +23,27 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
  */
 public class MBDiscussionSubcriptionSender extends SubscriptionSender {
 
+	public MBDiscussionSubcriptionSender(
+		MBDiscussionGroupServiceConfiguration
+			mbDiscussionGroupServiceConfiguration) {
+
+		_mbDiscussionGroupServiceConfiguration =
+			mbDiscussionGroupServiceConfiguration;
+	}
+
 	@Override
 	protected void sendEmailNotification(User user) throws Exception {
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED)) {
+		if ((_mbDiscussionGroupServiceConfiguration == null) ||
+			!_mbDiscussionGroupServiceConfiguration.
+				discussionEmailCommentsAddedEnabled()) {
 
-			super.sendEmailNotification(user);
+			return;
 		}
+
+		super.sendEmailNotification(user);
 	}
+
+	private final MBDiscussionGroupServiceConfiguration
+		_mbDiscussionGroupServiceConfiguration;
 
 }

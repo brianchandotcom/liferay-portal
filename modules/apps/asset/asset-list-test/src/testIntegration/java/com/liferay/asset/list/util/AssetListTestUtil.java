@@ -86,7 +86,17 @@ public class AssetListTestUtil {
 	public static AssetListEntrySegmentsEntryRel
 			addAssetListEntrySegmentsEntryRel(
 				long groupId, AssetListEntry assetListEntry)
-		throws Exception {
+		throws PortalException {
+
+		return addAssetListEntrySegmentsEntryRel(
+			groupId, assetListEntry, RandomTestUtil.nextLong());
+	}
+
+	public static AssetListEntrySegmentsEntryRel
+			addAssetListEntrySegmentsEntryRel(
+				long groupId, AssetListEntry assetListEntry,
+				long segmentsEntryId)
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -94,7 +104,7 @@ public class AssetListTestUtil {
 		return AssetListEntrySegmentsEntryRelLocalServiceUtil.
 			addAssetListEntrySegmentsEntryRel(
 				TestPropsValues.getUserId(), groupId,
-				assetListEntry.getAssetListEntryId(), RandomTestUtil.nextLong(),
+				assetListEntry.getAssetListEntryId(), segmentsEntryId,
 				RandomTestUtil.randomString(), serviceContext);
 	}
 

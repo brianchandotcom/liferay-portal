@@ -344,7 +344,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		VerifyProperties verifyProperties = getVerifyProcess();
 
 		Properties portalProperties = ReflectionTestUtil.invoke(
-			verifyProperties, "loadPortalProperties", null, null);
+			verifyProperties, "loadPortalProperties", null);
 
 		Set<String> propertyNames = portalProperties.stringPropertyNames();
 

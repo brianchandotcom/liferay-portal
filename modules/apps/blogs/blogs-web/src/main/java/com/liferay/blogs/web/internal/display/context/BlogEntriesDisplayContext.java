@@ -267,6 +267,7 @@ public class BlogEntriesDisplayContext {
 
 			searchContext.setAttribute(Field.STATUS, _getStatus());
 			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setIncludeDiscussions(true);
 			searchContext.setKeywords(keywords);
 			searchContext.setStart(searchContainer.getStart());
 
@@ -310,8 +311,7 @@ public class BlogEntriesDisplayContext {
 			for (int i = 0; i < docs.length; i++) {
 				Document doc = hits.doc(i);
 
-				long entryId = GetterUtil.getLong(
-					doc.get(Field.ENTRY_CLASS_PK));
+				long entryId = GetterUtil.getLong(doc.get(Field.CLASS_PK));
 
 				BlogsEntry entry = null;
 

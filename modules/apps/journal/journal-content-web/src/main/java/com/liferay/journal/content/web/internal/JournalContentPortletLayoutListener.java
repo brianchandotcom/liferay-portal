@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
@@ -128,7 +129,7 @@ public class JournalContentPortletLayoutListener
 			}
 
 			_assetEntryUsageLocalService.deleteAssetEntryUsages(
-				plid, portletId);
+				plid, _portal.getClassNameId(Portlet.class), portletId);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -162,7 +163,7 @@ public class JournalContentPortletLayoutListener
 			Layout layout = _layoutLocalService.getLayout(plid);
 
 			_assetEntryUsageLocalService.deleteAssetEntryUsages(
-				plid, portletId);
+				plid, _portal.getClassNameId(Portlet.class), portletId);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -290,7 +291,8 @@ public class JournalContentPortletLayoutListener
 
 		AssetEntryUsage assetEntryUsage =
 			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), layout.getPlid(), portletId);
+				assetEntry.getEntryId(), layout.getPlid(),
+				_portal.getClassNameId(Portlet.class), portletId);
 
 		if (assetEntryUsage != null) {
 			return;
@@ -298,7 +300,8 @@ public class JournalContentPortletLayoutListener
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
 			layout.getGroupId(), assetEntry.getEntryId(), layout.getPlid(),
-			portletId, ServiceContextThreadLocal.getServiceContext());
+			_portal.getClassNameId(Portlet.class), portletId,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private JournalArticle _getArticle(Layout layout, String portletId) {

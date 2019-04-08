@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -367,8 +365,6 @@ public class AssetPublisherConfigurationAction
 		String assetEntryType = ParamUtil.getString(
 			actionRequest, "assetEntryType");
 
-		long groupId = portal.getScopeGroupId(actionRequest);
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -379,7 +375,8 @@ public class AssetPublisherConfigurationAction
 				preferences, assetEntryId, assetEntryOrder, assetEntryType);
 
 			assetEntryUsageLocalService.addAssetEntryUsage(
-				groupId, assetEntryId, themeDisplay.getPlid(),
+				themeDisplay.getScopeGroupId(), assetEntryId,
+				themeDisplay.getPlid(), portal.getClassNameId(Portlet.class),
 				portletDisplay.getPortletResource(), serviceContext);
 		}
 	}
@@ -603,7 +600,8 @@ public class AssetPublisherConfigurationAction
 			WebKeys.THEME_DISPLAY);
 
 		assetEntryUsageLocalService.deleteAssetEntryUsages(
-			themeDisplay.getPlid(), portal.getPortletId(actionRequest));
+			themeDisplay.getPlid(), portal.getClassNameId(Portlet.class),
+			portal.getPortletId(actionRequest));
 	}
 
 	protected void setScopes(

@@ -23,6 +23,7 @@ import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -106,15 +107,16 @@ public class AssetPublisherAddPortletProvider
 
 		AssetEntryUsage assetEntryUsage =
 			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), layout.getPlid(), portletId);
+				assetEntry.getEntryId(), layout.getPlid(),
+				_portal.getClassNameId(Portlet.class), portletId);
 
 		if (assetEntryUsage != null) {
 			return;
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(),
-			layout.getPlid(), portletId,
+			layout.getGroupId(), assetEntry.getEntryId(), layout.getPlid(),
+			_portal.getClassNameId(Portlet.class), portletId,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

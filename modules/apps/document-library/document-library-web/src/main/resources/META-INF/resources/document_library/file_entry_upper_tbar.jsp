@@ -57,6 +57,7 @@ boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry
 						id='<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>'
 						monospaced="true"
 						size="sm"
+						style="<%= false %>"
 					/>
 				</li>
 

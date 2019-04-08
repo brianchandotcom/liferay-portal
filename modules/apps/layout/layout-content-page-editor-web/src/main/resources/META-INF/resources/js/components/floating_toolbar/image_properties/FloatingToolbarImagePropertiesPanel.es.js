@@ -14,7 +14,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 
 	/**
 	 * Updates fragment configuration
-	 * @param {object} config Section configuration
+	 * @param {object} config Configuration
 	 * @private
 	 * @review
 	 */

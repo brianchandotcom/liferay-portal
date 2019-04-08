@@ -1,5 +1,5 @@
 import {CLEAR_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
-import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './sectionConstants';
+import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './rowConstants';
 import {FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
@@ -20,7 +20,7 @@ function add(array, element, position) {
 }
 
 /**
- * Returns a new layoutData with the given columns inserted as a new section
+ * Returns a new layoutData with the given columns inserted as a new row
  * at the given position
  *
  * @param {Array} layoutColumns
@@ -30,7 +30,7 @@ function add(array, element, position) {
  * @param {string} type
  * @return {object}
  */
-function addSection(
+function addRow(
 	layoutColumns,
 	layoutData,
 	position,
@@ -275,14 +275,14 @@ function updateLayoutData(
 }
 
 /**
- * Updates section
+ * Updates row
  * @param {!Object} store Store instance that dispatches the actions
  * @param {string} updateAction Update action name
- * @param {object} payload Section payload
+ * @param {object} payload Row payload
  * @private
  * @review
  */
-function updateSection(store, updateAction, payload) {
+function updateRow(store, updateAction, payload) {
 	store
 		.dispatchAction(
 			UPDATE_SAVING_CHANGES_STATUS,
@@ -344,13 +344,13 @@ function updateWidgets(state, fragmentEntryLinkId) {
 
 export {
 	add,
-	addSection,
+	addRow,
 	moveItem,
 	remove,
 	removeItem,
 	setIn,
 	updateIn,
 	updateLayoutData,
-	updateSection,
+	updateRow,
 	updateWidgets
 };

@@ -30,7 +30,7 @@ export const CONFIG_KEYS = {
 const DEFAULT_PADDING_SIZE = '3';
 
 /**
- * Max section columns
+ * Max row columns
  */
 export const MAX_COLUMNS = 12;
 

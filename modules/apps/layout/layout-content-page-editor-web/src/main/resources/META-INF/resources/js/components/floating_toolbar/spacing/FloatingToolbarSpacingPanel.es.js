@@ -3,10 +3,10 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {CONFIG_KEYS, CONTAINER_TYPES, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/sectionConstants';
-import {updateSection} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {CONFIG_KEYS, CONTAINER_TYPES, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/rowConstants';
+import {updateRow} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../../../actions/actions.es';
+import {UPDATE_ROW_COLUMNS_NUMBER, UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
@@ -19,7 +19,7 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * @param {Event} event
 	 */
 	_handleColumnSpacingOptionChange(event) {
-		this._updateSectionConfig(
+		this._updateRowConfig(
 			{
 				[CONFIG_KEYS.columnSpacing]: event.target.checked
 			}
@@ -43,7 +43,7 @@ class FloatingToolbarSpacingPanel extends Component {
 		const {paddingDirectionId} = delegateTarget.dataset;
 		const {value} = delegateTarget;
 
-		this._updateSectionConfig(
+		this._updateRowConfig(
 			{
 				[CONFIG_KEYS[`padding${paddingDirectionId}`]]: value
 			}
@@ -55,7 +55,7 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * @param {Event} event
 	 */
 	_handleContainerTypeOptionChange(event) {
-		this._updateSectionConfig(
+		this._updateRowConfig(
 			{
 				[CONFIG_KEYS.containerType]: event.delegateTarget.value
 			}
@@ -70,7 +70,7 @@ class FloatingToolbarSpacingPanel extends Component {
 		const newValue = event.delegateTarget.value;
 		const prevValue = this.item.columns.length;
 
-		let updateSectionColumns = true;
+		let updateRowColumns = true;
 
 		if (newValue < prevValue) {
 			let columnsToRemove = this.item.columns.slice(newValue - prevValue);
@@ -86,35 +86,35 @@ class FloatingToolbarSpacingPanel extends Component {
 			if (showConfirmation && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proceed'))) {
 				event.preventDefault();
 				event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
-				updateSectionColumns = false;
+				updateRowColumns = false;
 			}
 		}
 
-		if (updateSectionColumns) {
-			updateSection(
+		if (updateRowColumns) {
+			updateRow(
 				this.store,
-				UPDATE_SECTION_COLUMNS_NUMBER,
+				UPDATE_ROW_COLUMNS_NUMBER,
 				{
 					numberOfColumns: event.delegateTarget.value,
-					sectionId: this.itemId
+					rowId: this.itemId
 				}
 			);
 		}
 	}
 
 	/**
-	 * Updates section configuration
-	 * @param {object} config Section configuration
+	 * Updates row configuration
+	 * @param {object} config Row configuration
 	 * @private
 	 * @review
 	 */
-	_updateSectionConfig(config) {
-		updateSection(
+	_updateRowConfig(config) {
+		updateRow(
 			this.store,
-			UPDATE_SECTION_CONFIG,
+			UPDATE_ROW_CONFIG,
 			{
 				config,
-				sectionId: this.itemId
+				rowId: this.itemId
 			}
 		);
 	}

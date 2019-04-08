@@ -36,7 +36,7 @@ class FloatingToolbarLinkPanel extends Component {
 			href: hrefElement.value
 		};
 
-		this._updateSectionConfig(config);
+		this._updateRowConfig(config);
 	}
 
 	/**
@@ -51,12 +51,12 @@ class FloatingToolbarLinkPanel extends Component {
 	}
 
 	/**
-	 * Updates section configuration
-	 * @param {object} config Section configuration
+	 * Updates row configuration
+	 * @param {object} config Row configuration
 	 * @private
 	 * @review
 	 */
-	_updateSectionConfig(config) {
+	_updateRowConfig(config) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -102,7 +102,7 @@ class FloatingToolbarLinkPanel extends Component {
 			buttonType: buttonType.buttonTypeId
 		};
 
-		this._updateSectionConfig(config);
+		this._updateRowConfig(config);
 	}
 
 	/**
@@ -116,7 +116,7 @@ class FloatingToolbarLinkPanel extends Component {
 			target: targetElement.options[targetElement.selectedIndex].value
 		};
 
-		this._updateSectionConfig(config);
+		this._updateRowConfig(config);
 	}
 }
 

@@ -1,7 +1,7 @@
-{namespace com.liferay.layout.content.page.editor.web.FragmentEntryLinkListSection}
+{namespace com.liferay.layout.content.page.editor.web.FragmentEntryLinkListRow}
 
 /**
- * FragmentEntryLinkListSection
+ * FragmentEntryLinkListRow
  */
 {template .render}
 	{@param columns: list<[
@@ -18,8 +18,8 @@
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
-	{@param? _handleSectionKeyUp: any}
-	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? _handleRowKeyUp: any}
+	{@param? _handleRowRemoveButtonClick: any}
 	{@param? _highlighted: bool}
 	{@param? _resizeColumnIndex: number}
 	{@param? _resizeHighlightedColumn: number}
@@ -48,7 +48,7 @@
 	{@param? spritemap: string}
 	{@param? store: ?}
 
-	{let $sectionClasses kind="text"}
+	{let $rowClasses kind="text"}
 		container-fluid
 		{sp}fragments-editor__drag-source
 		{sp}fragments-editor__drag-source--layout
@@ -73,7 +73,7 @@
 			{sp}fragment-entry-link-list__container--empty
 		{/if}
 
-		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
+		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.row}
 			{sp}{$dropTargetBorder}
 		{/if}
 
@@ -81,7 +81,7 @@
 			{sp}fragments-editor__topper-wrapper--highlighted
 		{/if}
 
-		{if not $_resizing and $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
+		{if not $_resizing and $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.row}
 			{sp}fragment-entry-link-list__row-section--active
 
 			{if $row.type == $_fragmentsEditorRowTypes.componentRow}
@@ -89,7 +89,7 @@
 			{/if}
 		{/if}
 
-		{if not $_resizing and $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
+		{if not $_resizing and $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.row}
 			{sp}fragment-entry-link-list__container--hovered
 
 			{if $row.type == $_fragmentsEditorRowTypes.componentRow}
@@ -114,7 +114,7 @@
 		{/if}
 	{/let}
 
-	{let $sectionStyle kind="text"}
+	{let $rowStyle kind="text"}
 		{if $row.config and $row.config.backgroundImage}
 			background-image: url({$row.config.backgroundImage});
 			background-position: 50% 50%;
@@ -124,14 +124,14 @@
 	{/let}
 
 	<section
-		class="{$sectionClasses}"
+		class="{$rowClasses}"
 		data-drag-source-label="{msg desc=""}section{/msg}"
 		data-fragments-editor-item-id="{$rowId}"
-		data-fragments-editor-item-type="fragments-editor-section"
-		data-layout-section-id="{$rowId}"
-		data-onkeyup="{$_handleSectionKeyUp}"
+		data-fragments-editor-item-type="fragments-editor-row"
+		data-layout-row-id="{$rowId}"
+		data-onkeyup="{$_handleRowKeyUp}"
 		key="{$key}"
-		style="{$sectionStyle}"
+		style="{$rowStyle}"
 		tabindex="0"
 	>
 		<nav class="fragments-editor__topper tbar">
@@ -142,7 +142,7 @@
 				<li class="fragments-editor__topper__item tbar-item">
 					<button
 						class="btn btn-small btn-unstyled"
-						data-onclick="{$_handleSectionRemoveButtonClick}"
+						data-onclick="{$_handleRowRemoveButtonClick}"
 					>
 						<svg class="fragments-editor__topper__icon lexicon-icon">
 							<use xlink:href="{$spritemap}#times-circle"></use>
@@ -152,7 +152,7 @@
 			</ul>
 		</nav>
 
-		{let $rowWrapperClasses kind="text"}
+		{let $wrapperClasses kind="text"}
 			p-0
 
 			{if $row and $row.config and $row.config.containerType == 'fixed'}
@@ -162,7 +162,7 @@
 			{/if}
 		{/let}
 
-		{let $rowClasses kind="text"}
+		{let $wrapperRowClasses kind="text"}
 			fragment-entry-link-list__row
 			{sp}row
 
@@ -181,8 +181,8 @@
 			{/call}
 		{/if}
 
-		<div class="{$rowWrapperClasses}">
-			<div class="{$rowClasses}">
+		<div class="{$wrapperClasses}">
+			<div class="{$wrapperRowClasses}">
 				{foreach $column in $columns}
 					{call .column}
 						{param _columnResizerVisible: $_columnResizerVisible /}

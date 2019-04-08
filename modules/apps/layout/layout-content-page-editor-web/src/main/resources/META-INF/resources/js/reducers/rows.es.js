@@ -1,7 +1,7 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
-import {MAX_COLUMNS} from '../utils/sectionConstants';
-import {add, addSection, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
-import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS, UPDATE_ROW_COLUMNS_NUMBER, UPDATE_ROW_CONFIG} from '../actions/actions.es';
+import {MAX_COLUMNS} from '../utils/rowConstants';
+import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
  * @param {!object} state
@@ -11,19 +11,19 @@ import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex}
  * @return {object}
  * @review
  */
-function addSectionReducer(state, actionType, payload) {
+function addRowReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === ADD_SECTION) {
-				const position = getDropSectionPosition(
+			if (actionType === ADD_ROW) {
+				const position = getDropRowPosition(
 					nextState.layoutData.structure,
 					nextState.dropTargetItemId,
 					nextState.dropTargetBorder
 				);
 
-				const nextData = addSection(
+				const nextData = addRow(
 					payload.layoutColumns,
 					nextState.layoutData,
 					position
@@ -64,20 +64,20 @@ function addSectionReducer(state, actionType, payload) {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.sectionId
+ * @param {!string} payload.rowId
  * @param {!string} payload.targetBorder
  * @param {!string} payload.targetItemId
  * @return {object}
  * @review
  */
-function moveSectionReducer(state, actionType, payload) {
+function moveRowReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === MOVE_SECTION) {
-				const nextData = _moveSection(
-					payload.sectionId,
+			if (actionType === MOVE_ROW) {
+				const nextData = _moveRow(
+					payload.rowId,
 					nextState.layoutData,
 					payload.targetItemId,
 					payload.targetBorder
@@ -118,25 +118,25 @@ function moveSectionReducer(state, actionType, payload) {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!Array} payload.sectionId
+ * @param {!Array} payload.rowId
  * @return {object}
  * @review
  */
-function removeSectionReducer(state, actionType, payload) {
+function removeRowReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === REMOVE_SECTION) {
-				const nextData = _removeSection(
+			if (actionType === REMOVE_ROW) {
+				const nextData = _removeRow(
 					nextState.layoutData,
-					payload.sectionId
+					payload.rowId
 				);
 
-				const section = nextState.layoutData.structure[getSectionIndex(nextState.layoutData.structure, payload.sectionId)];
+				const row = nextState.layoutData.structure[getRowIndex(nextState.layoutData.structure, payload.rowId)];
 
-				const fragmentEntryLinkIds = getSectionFragmentEntryLinkIds(
-					section
+				const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
+					row
 				);
 
 				fragmentEntryLinkIds.forEach(
@@ -182,21 +182,21 @@ function removeSectionReducer(state, actionType, payload) {
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!Array} payload.columns
- * @param {!string} payload.sectionId
+ * @param {!string} payload.rowId
  * @return {object}
  * @review
  */
-const updateSectionColumnsReducer = (state, actionType, payload) => new Promise(
+const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 	resolve => {
 		let nextState = state;
 
-		if (actionType === UPDATE_SECTION_COLUMNS) {
-			const sectionIndex = getSectionIndex(
+		if (actionType === UPDATE_ROW_COLUMNS) {
+			const rowIndex = getRowIndex(
 				nextState.layoutData.structure,
-				payload.sectionId
+				payload.rowId
 			);
 
-			if (sectionIndex === -1) {
+			if (rowIndex === -1) {
 				resolve(nextState);
 			}
 			else {
@@ -205,7 +205,7 @@ const updateSectionColumnsReducer = (state, actionType, payload) => new Promise(
 					[
 						'layoutData',
 						'structure',
-						sectionIndex,
+						rowIndex,
 						'columns'
 					],
 					payload.columns
@@ -240,16 +240,16 @@ const updateSectionColumnsReducer = (state, actionType, payload) => new Promise(
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!Array} payload.sectionId
+ * @param {!Array} payload.rowId
  * @return {object}
  * @review
  */
-function updateSectionColumnsNumberReducer(state, actionType, payload) {
+function updateRowColumnsNumberReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === UPDATE_SECTION_COLUMNS_NUMBER) {
+			if (actionType === UPDATE_ROW_COLUMNS_NUMBER) {
 
 				let fragmentEntryLinkIdsToRemove = [];
 				let nextData;
@@ -257,15 +257,15 @@ function updateSectionColumnsNumberReducer(state, actionType, payload) {
 				const numberOfColumns = payload.numberOfColumns;
 
 				const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
-				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
+				const rowIndex = getRowIndex(nextState.layoutData.structure, payload.rowId);
 
-				let columns = nextState.layoutData.structure[sectionIndex].columns;
+				let columns = nextState.layoutData.structure[rowIndex].columns;
 
 				if (numberOfColumns > columns.length) {
-					nextData = _addColumns(nextState.layoutData, sectionIndex, numberOfColumns, columnsSize);
+					nextData = _addColumns(nextState.layoutData, rowIndex, numberOfColumns, columnsSize);
 				}
 				else {
-					let fragmentEntryLinkIdsToRemove = getSectionFragmentEntryLinkIds(
+					let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds(
 						{
 							columns: columns.slice(numberOfColumns - columns.length)
 						}
@@ -277,7 +277,7 @@ function updateSectionColumnsNumberReducer(state, actionType, payload) {
 						}
 					);
 
-					nextData = _removeColumns(nextState.layoutData, sectionIndex, numberOfColumns, columnsSize);
+					nextData = _removeColumns(nextState.layoutData, rowIndex, numberOfColumns, columnsSize);
 				}
 
 				updateLayoutData(
@@ -317,20 +317,20 @@ function updateSectionColumnsNumberReducer(state, actionType, payload) {
  * @param {string} actionType
  * @param {object} payload
  * @param {object} payload.config
- * @param {string} payload.sectionId
+ * @param {string} payload.rowId
  * @return {object}
  */
-const updateSectionConfigReducer = (state, actionType, payload) => new Promise(
+const updateRowConfigReducer = (state, actionType, payload) => new Promise(
 	resolve => {
 		let nextState = state;
 
-		if (actionType === UPDATE_SECTION_CONFIG) {
-			const sectionIndex = getSectionIndex(
+		if (actionType === UPDATE_ROW_CONFIG) {
+			const rowIndex = getRowIndex(
 				nextState.layoutData.structure,
-				payload.sectionId
+				payload.rowId
 			);
 
-			if (sectionIndex === -1) {
+			if (rowIndex === -1) {
 				resolve(nextState);
 			}
 			else {
@@ -341,7 +341,7 @@ const updateSectionConfigReducer = (state, actionType, payload) => new Promise(
 						const configPath = [
 							'layoutData',
 							'structure',
-							sectionIndex,
+							rowIndex,
 							'config',
 							key
 						];
@@ -381,21 +381,21 @@ const updateSectionConfigReducer = (state, actionType, payload) => new Promise(
 
 /**
  * Returns a new layoutData with the given columns inserted in the specified
- * section with the specified size and resizes the rest of columns to the
+ * row with the specified size and resizes the rest of columns to the
  * same size.
  *
  * @param {object} layoutData
- * @param {number} sectionIndex
+ * @param {number} rowIndex
  * @param {number} numberOfColumns
  * @param {number} columnsSize
  * @return {object}
  */
-function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
+function _addColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 	let nextColumnId = layoutData.nextColumnId || 0;
 
 	let nextData = updateIn(
 		layoutData,
-		['structure', sectionIndex, 'columns'],
+		['structure', rowIndex, 'columns'],
 		columns => {
 			columns.forEach(
 				(column, index) => {
@@ -450,18 +450,18 @@ function _getColumnSize(numberOfColumns, columnsSize, columnIndex) {
 
 /**
  * Returns a new layoutData without the columns out of range in the specified
- * section and resizes the rest of columns to the specified size.
+ * row and resizes the rest of columns to the specified size.
  *
  * @param {object} layoutData
- * @param {number} sectionIndex
+ * @param {number} rowIndex
  * @param {number} numberOfColumns
  * @param {number} columnsSize
  * @return {object}
  */
-function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
+function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 	let nextData = updateIn(
 		layoutData,
-		['structure', sectionIndex, 'columns'],
+		['structure', rowIndex, 'columns'],
 		columns => {
 			columns = columns.slice(0, numberOfColumns);
 
@@ -479,9 +479,9 @@ function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) 
 }
 
 /**
- * Returns a new layoutData with the given section moved to the position
+ * Returns a new layoutData with the given row moved to the position
  * calculated with targetItemId and targetItemBorder
- * @param {string} sectionId
+ * @param {string} rowId
  * @param {object} layoutData
  * @param {string} targetItemId
  * @param {string} targetItemBorder
@@ -489,48 +489,48 @@ function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) 
  * @return {object}
  * @review
  */
-function _moveSection(sectionId, layoutData, targetItemId, targetItemBorder) {
-	const index = getSectionIndex(layoutData.structure, sectionId);
-	const section = layoutData.structure[index];
+function _moveRow(rowId, layoutData, targetItemId, targetItemBorder) {
+	const index = getRowIndex(layoutData.structure, rowId);
+	const row = layoutData.structure[index];
 
 	let nextStructure = remove(layoutData.structure, index);
 
-	const position = getDropSectionPosition(
+	const position = getDropRowPosition(
 		nextStructure,
 		targetItemId,
 		targetItemBorder
 	);
 
-	nextStructure = add(nextStructure, section, position);
+	nextStructure = add(nextStructure, row, position);
 
 	return setIn(layoutData, ['structure'], nextStructure);
 }
 
 /**
- * Returns a new layoutData with the section with the given sectionId removed
+ * Returns a new layoutData with the row with the given rowId removed
  * @param {object} layoutData
- * @param {string} sectionId
+ * @param {string} rowId
  * @return {object}
  * @review
  */
-function _removeSection(layoutData, sectionId) {
-	const sectionIndex = getSectionIndex(layoutData.structure, sectionId);
+function _removeRow(layoutData, rowId) {
+	const rowIndex = getRowIndex(layoutData.structure, rowId);
 
 	return updateIn(
 		layoutData,
 		['structure'],
 		structure => remove(
 			structure,
-			sectionIndex
+			rowIndex
 		)
 	);
 }
 
 export {
-	addSectionReducer,
-	moveSectionReducer,
-	removeSectionReducer,
-	updateSectionColumnsReducer,
-	updateSectionColumnsNumberReducer,
-	updateSectionConfigReducer
+	addRowReducer,
+	moveRowReducer,
+	removeRowReducer,
+	updateRowColumnsReducer,
+	updateRowColumnsNumberReducer,
+	updateRowConfigReducer
 };

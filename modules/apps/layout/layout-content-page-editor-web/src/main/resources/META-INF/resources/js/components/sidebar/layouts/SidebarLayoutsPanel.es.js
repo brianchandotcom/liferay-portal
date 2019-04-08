@@ -3,7 +3,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import {
-	ADD_SECTION,
+	ADD_ROW,
 	CLEAR_DROP_TARGET,
 	UPDATE_DROP_TARGET
 } from '../../../actions/actions.es';
@@ -36,24 +36,24 @@ class SidebarLayoutsPanel extends Component {
 	/**
 	 * Handles dragLayout event and dispatches action to update drag target
 	 * @param {object} eventData
-	 * @param {string} eventData.hoveredSectionBorder
-	 * @param {string} eventData.hoveredSectionId
+	 * @param {string} eventData.hoveredRowBorder
+	 * @param {string} eventData.hoveredRowId
 	 */
 	_handleDragLayout(eventData) {
-		const {hoveredSectionBorder, hoveredSectionId} = eventData;
+		const {hoveredRowBorder, hoveredRowId} = eventData;
 
 		this.store.dispatchAction(
 			UPDATE_DROP_TARGET,
 			{
-				dropTargetBorder: hoveredSectionBorder,
-				dropTargetItemId: hoveredSectionId,
-				dropTargetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
+				dropTargetBorder: hoveredRowBorder,
+				dropTargetItemId: hoveredRowId,
+				dropTargetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.row
 			}
 		);
 	}
 
 	/**
-	 * Handles dropLayout event and dispatches action to add a section
+	 * Handles dropLayout event and dispatches action to add a row
 	 * @param {!object} eventData
 	 * @param {!number} eventData.layoutIndex
 	 * @private
@@ -63,7 +63,7 @@ class SidebarLayoutsPanel extends Component {
 		const layoutColumns = this._layouts[eventData.layoutIndex].columns;
 
 		this.store.dispatchAction(
-			ADD_SECTION,
+			ADD_ROW,
 			{
 				layoutColumns
 			}

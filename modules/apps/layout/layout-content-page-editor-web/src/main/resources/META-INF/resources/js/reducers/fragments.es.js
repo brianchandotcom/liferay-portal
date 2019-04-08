@@ -1,8 +1,8 @@
 import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
-import {add, addSection, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
-import {getColumn, getDropSectionPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {getColumn, getDropRowPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -58,8 +58,8 @@ function addFragment(
 			position
 		);
 	}
-	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
-		const position = getDropSectionPosition(
+	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
+		const position = getDropRowPosition(
 			layoutData.structure,
 			dropTargetItemId,
 			dropTargetBorder
@@ -671,20 +671,20 @@ function _addFragmentToColumn(
 	const {structure} = layoutData;
 
 	const column = getColumn(structure, targetColumnId);
-	const section = structure.find(
-		_section => _section.columns.find(
+	const row = structure.find(
+		_row => _row.columns.find(
 			_column => column === _column
 		)
 	);
 
-	const columnIndex = section.columns.indexOf(column);
-	const sectionIndex = structure.indexOf(section);
+	const columnIndex = row.columns.indexOf(column);
+	const rowIndex = structure.indexOf(row);
 
 	return updateIn(
 		layoutData,
 		[
 			'structure',
-			sectionIndex,
+			rowIndex,
 			'columns',
 			columnIndex,
 			'fragmentEntryLinkIds'
@@ -717,7 +717,7 @@ function _addSingleFragmentRow(
 		FRAGMENTS_EDITOR_ROW_TYPES.sectionRow :
 		FRAGMENTS_EDITOR_ROW_TYPES.componentRow;
 
-	return addSection(
+	return addRow(
 		['12'],
 		layoutData,
 		position,
@@ -804,17 +804,17 @@ function _removeFragment(
 	const {structure} = layoutData;
 
 	const column = getFragmentColumn(structure, fragmentEntryLinkId);
-	const section = structure.find(
-		_section => _section.columns.find(
+	const row = structure.find(
+		_row => _row.columns.find(
 			_column => column === _column
 		)
 	);
 
-	const columnIndex = section.columns.indexOf(column);
+	const columnIndex = row.columns.indexOf(column);
 	const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
 		fragmentEntryLinkId
 	);
-	const sectionIndex = structure.indexOf(section);
+	const rowIndex = structure.indexOf(row);
 
 	let nextData = null;
 
@@ -824,7 +824,7 @@ function _removeFragment(
 			['structure'],
 			structure => remove(
 				structure,
-				sectionIndex
+				rowIndex
 			)
 		);
 	}
@@ -833,7 +833,7 @@ function _removeFragment(
 			layoutData,
 			[
 				'structure',
-				sectionIndex,
+				rowIndex,
 				'columns',
 				columnIndex,
 				'fragmentEntryLinkIds'

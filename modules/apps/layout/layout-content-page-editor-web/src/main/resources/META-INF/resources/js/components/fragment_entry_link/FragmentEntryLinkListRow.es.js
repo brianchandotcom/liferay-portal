@@ -7,32 +7,32 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
-import {MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
+import {MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {getItemMoveDirection, getItemPath, getSectionIndex, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, removeItem, setIn, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {getItemMoveDirection, getItemPath, getRowIndex, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {moveItem, removeItem, setIn, updateRow} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import templates from './FragmentEntryLinkListSection.soy';
+import templates from './FragmentEntryLinkListRow.soy';
 
 /**
  * Defines the list of available panels.
  * @type {object[]}
  */
-const SECTION_FLOATING_TOOLBAR_BUTTONS = [
+const ROW_FLOATING_TOOLBAR_BUTTONS = [
 	FLOATING_TOOLBAR_BUTTONS.backgroundColor,
 	FLOATING_TOOLBAR_BUTTONS.backgroundImage,
 	FLOATING_TOOLBAR_BUTTONS.spacing
 ];
 
 /**
- * Creates a Fragment Entry Link List Section component.
+ * Creates a Fragment Entry Link List Row component.
  */
-class FragmentEntryLinkListSection extends Component {
+class FragmentEntryLinkListRow extends Component {
 
 	/**
-	 * Checks if the given section should be highlighted
+	 * Checks if the given row should be highlighted
 	 * @param {string} dropTargetItemId
 	 * @param {string} dropTargetItemType
 	 * @param {string} rowId
@@ -53,16 +53,16 @@ class FragmentEntryLinkListSection extends Component {
 			structure
 		);
 
-		const sectionInDropTargetPath = itemIsInPath(
+		const rowInDropTargetPath = itemIsInPath(
 			dropTargetPath,
 			rowId,
-			FRAGMENTS_EDITOR_ITEM_TYPES.section
+			FRAGMENTS_EDITOR_ITEM_TYPES.row
 		);
 
-		const sectionIsDropTarget = (dropTargetItemId === rowId &&
-			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section);
+		const rowIsDropTarget = (dropTargetItemId === rowId &&
+			dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row);
 
-		return (sectionInDropTargetPath && !sectionIsDropTarget);
+		return (rowInDropTargetPath && !rowIsDropTarget);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class FragmentEntryLinkListSection extends Component {
 		let nextState = state;
 
 		if (this.rowId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 
 			columnResizerVisible = true;
 		}
@@ -119,7 +119,7 @@ class FragmentEntryLinkListSection extends Component {
 		nextState = setIn(
 			nextState,
 			['_highlighted'],
-			FragmentEntryLinkListSection._isHighlighted(
+			FragmentEntryLinkListRow._isHighlighted(
 				state.dropTargetItemId,
 				state.dropTargetItemType,
 				state.rowId,
@@ -127,11 +127,11 @@ class FragmentEntryLinkListSection extends Component {
 			)
 		);
 
-		if (nextState._resizing && nextState._resizeSectionColumns) {
+		if (nextState._resizing && nextState._resizeRowColumns) {
 			nextState = setIn(
 				nextState,
 				['columns'],
-				state._resizeSectionColumns
+				state._resizeRowColumns
 			);
 		}
 
@@ -144,7 +144,7 @@ class FragmentEntryLinkListSection extends Component {
 	rendered() {
 		if (
 			(this.rowId === this.activeItemId) &&
-			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) &&
+			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) &&
 			!this._resizing &&
 			this.row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
 		) {
@@ -178,7 +178,7 @@ class FragmentEntryLinkListSection extends Component {
 		this._resizeColumnIndex = 0;
 		this._resizeHighlightedColumn = null;
 		this._resizeInitialPosition = 0;
-		this._resizeSectionColumns = null;
+		this._resizeRowColumns = null;
 		this._resizing = false;
 	}
 
@@ -189,10 +189,10 @@ class FragmentEntryLinkListSection extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
-			buttons: SECTION_FLOATING_TOOLBAR_BUTTONS,
+			buttons: ROW_FLOATING_TOOLBAR_BUTTONS,
 			item: this.row,
 			itemId: this.rowId,
-			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
 			portalElement: document.body,
 			store: this.store
 		};
@@ -218,7 +218,7 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
-	 * Callback executed when a section loses focus.
+	 * Callback executed when a row loses focus.
 	 * @private
 	 * @review
 	 */
@@ -229,7 +229,7 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
-	 * Callback executed when a section is clicked.
+	 * Callback executed when a row is clicked.
 	 * @param {Event} event
 	 * @private
 	 */
@@ -256,8 +256,8 @@ class FragmentEntryLinkListSection extends Component {
 		const minPosition = columnElement.getBoundingClientRect().x;
 		const position = Math.max(Math.min(event.clientX, maxPosition), minPosition);
 
-		const column = this._resizeSectionColumns[columnIndex];
-		const nextColumn = this._resizeSectionColumns[nextColumnIndex];
+		const column = this._resizeRowColumns[columnIndex];
+		const nextColumn = this._resizeRowColumns[nextColumnIndex];
 
 		const maxColumns = (parseInt(column.size, 10) || 1) + (parseInt(nextColumn.size, 10) || 1) - 1;
 
@@ -269,28 +269,28 @@ class FragmentEntryLinkListSection extends Component {
 			1
 		);
 
-		this._resizeSectionColumns = setIn(
-			this._resizeSectionColumns,
+		this._resizeRowColumns = setIn(
+			this._resizeRowColumns,
 			[columnIndex, 'size'],
 			columns.toString()
 		);
 
-		this._resizeSectionColumns = setIn(
-			this._resizeSectionColumns,
+		this._resizeRowColumns = setIn(
+			this._resizeRowColumns,
 			[nextColumnIndex, 'size'],
 			(maxColumns - columns + 1).toString()
 		);
 
 		if (languageDirection === 'rtl') {
 			this._resizeHighlightedColumn = maxColumns - (
-				this._resizeSectionColumns
+				this._resizeRowColumns
 					.slice(columnIndex)
 					.map(column => parseInt(column.size, 10) || 1)
 					.reduce((size, columnSize) => size + columnSize, 0)
 			);
 		}
 		else {
-			this._resizeHighlightedColumn = this._resizeSectionColumns
+			this._resizeHighlightedColumn = this._resizeRowColumns
 				.slice(0, nextColumnIndex)
 				.map(column => parseInt(column.size, 10) || 1)
 				.reduce((size, columnSize) => size + columnSize, 0) - 1;
@@ -298,13 +298,13 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
-	 * Callback executed when the mouse hovers over a section.
+	 * Callback executed when the mouse hovers over a row.
 	 * @param {Event} event
 	 * @private
 	 */
 	_handleBodyMouseUp() {
 		if (this._resizing) {
-			this._updateSectionColumns(this._resizeSectionColumns);
+			this._updateRowColumns(this._resizeRowColumns);
 
 			this._clearResizing();
 		}
@@ -319,72 +319,72 @@ class FragmentEntryLinkListSection extends Component {
 		);
 
 		this._resizeInitialPosition = event.clientX;
-		this._resizeSectionColumns = this.row.columns;
+		this._resizeRowColumns = this.row.columns;
 		this._resizing = true;
 
 		document.body.addEventListener('mousemove', this._handleBodyMouseMove);
 	}
 
 	/**
-	 * Callback executed when a key is pressed on the focused section.
+	 * Callback executed when a key is pressed on the focused row.
 	 * @private
 	 * @param {Event} event
 	 */
-	_handleSectionKeyUp(event) {
+	_handleRowKeyUp(event) {
 		if (this.activeItemId === this.rowId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 
 			const direction = getItemMoveDirection(event.which);
-			const sectionId = document.activeElement.dataset.layoutSectionId;
-			const sectionIndex = getSectionIndex(
+			const rowId = document.activeElement.dataset.layoutRowId;
+			const rowIndex = getRowIndex(
 				this.layoutData.structure,
-				sectionId
+				rowId
 			);
 			const targetItem = this.layoutData.structure[
-				sectionIndex + direction
+				rowIndex + direction
 			];
 
 			if (direction && targetItem) {
 				const moveItemPayload = {
-					sectionId,
+					rowId,
 					targetBorder: getTargetBorder(direction),
 					targetItemId: targetItem.rowId
 				};
 
-				moveItem(this.store, MOVE_SECTION, moveItemPayload);
+				moveItem(this.store, MOVE_ROW, moveItemPayload);
 			}
 		}
 	}
 
 	/**
-	 * Callback executed when the remove section button is clicked.
+	 * Callback executed when the remove row button is clicked.
 	 * @param {Event} event
 	 * @private
 	 */
-	_handleSectionRemoveButtonClick(event) {
+	_handleRowRemoveButtonClick(event) {
 		event.stopPropagation();
 
 		removeItem(
 			this.store,
-			REMOVE_SECTION,
+			REMOVE_ROW,
 			{
-				sectionId: this.hoveredItemId
+				rowId: this.hoveredItemId
 			}
 		);
 	}
 
 	/**
-	 * Updates section columns.
-	 * @param {array} columns The section columns to update.
+	 * Updates row columns.
+	 * @param {array} columns The row columns to update.
 	 * @private
 	 */
-	_updateSectionColumns(columns) {
-		updateSection(
+	_updateRowColumns(columns) {
+		updateRow(
 			this.store,
-			UPDATE_SECTION_COLUMNS,
+			UPDATE_ROW_COLUMNS,
 			{
 				columns,
-				sectionId: this.rowId
+				rowId: this.rowId
 			}
 		);
 	}
@@ -395,13 +395,13 @@ class FragmentEntryLinkListSection extends Component {
  * @static
  * @type {!Object}
  */
-FragmentEntryLinkListSection.STATE = {
+FragmentEntryLinkListRow.STATE = {
 
 	/**
 	 * Floating toolbar instance for internal use.
 	 * @default null
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 	 * @type {object|null}
 	 */
 	_floatingToolbar: Config.internal().value(null),
@@ -410,7 +410,7 @@ FragmentEntryLinkListSection.STATE = {
 	 * Index of the column being resized.
 	 * @default 0
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 	 * @private
 	 * @type {number}
 	 */
@@ -420,7 +420,7 @@ FragmentEntryLinkListSection.STATE = {
 	 * Index of the column that should be highlighted when resized.
 	 * @default null
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 	 * @private
 	 * @type {number}
 	 */
@@ -430,54 +430,54 @@ FragmentEntryLinkListSection.STATE = {
 	 * Mouse position when the resize is started.
 	 * @default 0
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 	 * @private
 	 * @type {number}
 	 */
 	_resizeInitialPosition: Config.internal().number().value(0),
 
 	/**
-	 * Copy of section columns for resizing.
+	 * Copy of row columns for resizing.
 	 * @default null
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 	 * @type {array}
 	 */
-	_resizeSectionColumns: Config.internal().array().value(null),
+	_resizeRowColumns: Config.internal().array().value(null),
 
 	/**
 	 * If <code>true</code>, the user is resizing a column.
 	 * @default false
 	 * @instance
-	 * @memberOf FragmentEntryLinkListSection
+	 * @memberOf FragmentEntryLinkListRow
 
 	 * @type {boolean}
 	 */
 	_resizing: Config.internal().bool().value(false),
 
 	/**
-	 * Section row.
+	 * Row.
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentEntryLinkListSection
+	 * @memberof FragmentEntryLinkListRow
 	 * @type {object}
 	 */
 	row: Config.object()
 		.required(),
 
 	/**
-	 * Section row ID.
+	 * Row ID.
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentEntryLinkListSection
+	 * @memberof FragmentEntryLinkListRow
 	 * @type {string}
 	 */
 	rowId: Config.string()
 		.required()
 };
 
-const ConnectedFragmentEntryLinkListSection = getConnectedComponent(
-	FragmentEntryLinkListSection,
+const ConnectedFragmentEntryLinkListRow = getConnectedComponent(
+	FragmentEntryLinkListRow,
 	[
 		'activeItemId',
 		'activeItemType',
@@ -492,7 +492,7 @@ const ConnectedFragmentEntryLinkListSection = getConnectedComponent(
 	]
 );
 
-Soy.register(ConnectedFragmentEntryLinkListSection, templates);
+Soy.register(ConnectedFragmentEntryLinkListRow, templates);
 
-export {ConnectedFragmentEntryLinkListSection, FragmentEntryLinkListSection};
-export default FragmentEntryLinkListSection;
+export {ConnectedFragmentEntryLinkListRow, FragmentEntryLinkListRow};
+export default FragmentEntryLinkListRow;

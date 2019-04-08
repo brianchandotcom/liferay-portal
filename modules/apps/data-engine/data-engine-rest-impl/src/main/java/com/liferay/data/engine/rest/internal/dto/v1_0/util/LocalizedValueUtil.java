@@ -28,17 +28,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author Jeyvison Nascimento
  */
 public class LocalizedValueUtil {
 
-	public static String getLocalizedValue(
+	public static Object getLocalizedValue(
 		Locale locale, LocalizedValue[] localizedValues) {
 
-		Map<Locale, String> localizedValue = toLocalizationMap(localizedValues);
+		for (LocalizedValue localizedValue : localizedValues) {
+			if (StringUtils.equals(
+					LocaleUtil.toLanguageId(locale), localizedValue.getKey())) {
 
-		return localizedValue.get(locale);
+				return localizedValue.getValue();
+			}
+		}
+
+		return null;
 	}
 
 	public static JSONObject toJSONObject(LocalizedValue[] localizedValues)
@@ -57,6 +65,20 @@ public class LocalizedValueUtil {
 		return jsonObject;
 	}
 
+	public static Map<String, String> toLocalizationMap(JSONObject jsonObject) {
+		Map<String, String> localizationMap = new HashMap<>();
+
+		Iterator<String> languageKeys = jsonObject.keys();
+
+		while (languageKeys.hasNext()) {
+			String languageId = languageKeys.next();
+
+			localizationMap.put(languageId, jsonObject.getString(languageId));
+		}
+
+		return localizationMap;
+	}
+
 	public static Map<Locale, String> toLocalizationMap(
 		LocalizedValue[] localizedValues) {
 
@@ -69,7 +91,7 @@ public class LocalizedValueUtil {
 		for (LocalizedValue localizedValue : localizedValues) {
 			localizationMap.put(
 				LocaleUtil.fromLanguageId(localizedValue.getKey()),
-				localizedValue.getValue());
+				(String)localizedValue.getValue());
 		}
 
 		return localizationMap;

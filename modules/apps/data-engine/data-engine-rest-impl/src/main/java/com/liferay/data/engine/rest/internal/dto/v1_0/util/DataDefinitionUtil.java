@@ -80,7 +80,8 @@ public class DataDefinitionUtil {
 
 		return new DataDefinitionField() {
 			{
-				defaultValue = jsonObject.getString("defaultValue");
+				defaultValue = LocalizedValueUtil.toLocalizedValues(
+					jsonObject.getJSONObject("predefinedValue"));
 
 				if (!jsonObject.has("type")) {
 					throw new Exception("Type is required");

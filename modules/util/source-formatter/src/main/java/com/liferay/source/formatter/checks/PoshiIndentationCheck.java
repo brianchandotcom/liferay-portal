@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 
 import java.io.IOException;
 
@@ -34,21 +35,66 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = content.replaceAll("([ \t]*.*''')(\\).*)", "$1\n$2");
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			int level = 0;
+			int lineNumber = 0;
 
 			String line = null;
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(_fixIndentation(line, level));
-				sb.append("\n");
+			boolean insideMultiLineString = false;
 
-				level += getLevel(
-					line, new String[] {"(", "{"}, new String[] {")", "}"});
+			int[] multiLineCommentsPositions =
+				PoshiSourceUtil.getMultiLineCommentsPositions(content);
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber = lineNumber + 1;
+
+				if (PoshiSourceUtil.isInsideMultiLineComments(
+						lineNumber, multiLineCommentsPositions)) {
+
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
+				}
+
+				String s = StringUtil.removeSubstrings(line, "\\", "'''");
+
+				if (!insideMultiLineString) {
+					sb.append(_fixIndentation(line, level));
+					sb.append("\n");
+
+					if (StringUtil.count(line, "'''") == 1) {
+						insideMultiLineString = true;
+						int x = line.indexOf("(");
+						int y = line.indexOf("'''");
+
+						if ((x != -1) && (x < y)) {
+							level += getLevel(
+								s, new String[] {"(", "{"},
+								new String[] {")", "}"});
+						}
+					}
+					else {
+						level += getLevel(
+							s, new String[] {"(", "{"},
+							new String[] {")", "}"});
+					}
+				}
+				else {
+					sb.append(line);
+					sb.append("\n");
+
+					if (StringUtil.count(line, "'''") == 1) {
+						insideMultiLineString = false;
+					}
+				}
 			}
 		}
 
@@ -56,7 +102,9 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		return sb.toString();
+		content = sb.toString();
+
+		return content.replaceAll("([ \t]*.*''')\n(?:[ \t]*)(\\).*)", "$1$2");
 	}
 
 	private String _fixIndentation(String line, int level) {

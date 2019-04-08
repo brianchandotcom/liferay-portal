@@ -221,6 +221,15 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				"The name of Class '" + className +
 					"' should be ending with 'DisplayContext'");
 		}
+
+		if (isModulesFile(absolutePath) &&
+			className.equals("ServletContextUtil") &&
+			!packageName.contains(".internal")) {
+
+			addMessage(
+				fileName,
+				"Class '" + className + "' should be in 'internal' package");
+		}
 	}
 
 	private static final Pattern _internalPackagePattern = Pattern.compile(

@@ -33,7 +33,7 @@ import java.lang.reflect.Type;
  * @author Carlos Sierra Andrés
  */
 public class ServiceTrackerMapModelAdapterBuilderLocator
-	implements ModelAdapterBuilderLocator, Closeable {
+	implements Closeable, ModelAdapterBuilderLocator {
 
 	@Override
 	public void close() {

@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class StatsRequestImpl implements StatsRequest, Serializable {
+public class StatsRequestImpl implements Serializable, StatsRequest {
 
 	public StatsRequestImpl(
 		boolean cardinality, boolean count, String field, boolean max,

@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Component;
 	}
 )
 public class GetValueFunction
-	implements DDMExpressionFunction.Function1<String, Object>,
-			   DDMExpressionFieldAccessorAware {
+	implements DDMExpressionFieldAccessorAware,
+			   DDMExpressionFunction.Function1<String, Object> {
 
 	@Override
 	public Object apply(String field) {

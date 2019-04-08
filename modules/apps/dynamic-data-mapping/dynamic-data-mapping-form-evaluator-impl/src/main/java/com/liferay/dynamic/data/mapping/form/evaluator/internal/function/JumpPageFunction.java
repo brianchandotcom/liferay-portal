@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Component;
 	}
 )
 public class JumpPageFunction
-	implements DDMExpressionFunction.Function2<Number, Number, Boolean>,
-			   DDMExpressionActionHandlerAware {
+	implements DDMExpressionActionHandlerAware,
+			   DDMExpressionFunction.Function2<Number, Number, Boolean> {
 
 	@Override
 	public Boolean apply(Number fromPage, Number toPage) {

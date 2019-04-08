@@ -59,8 +59,9 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class CallFunction
-	implements DDMExpressionFunction.Function3<String, String, String, Boolean>,
-			   DDMExpressionFieldAccessorAware, DDMExpressionObserverAware {
+	implements DDMExpressionFieldAccessorAware,
+			   DDMExpressionFunction.Function3<String, String, String, Boolean>,
+			   DDMExpressionObserverAware {
 
 	@Override
 	public Boolean apply(

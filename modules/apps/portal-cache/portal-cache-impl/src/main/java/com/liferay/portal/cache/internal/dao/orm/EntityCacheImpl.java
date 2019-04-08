@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = {CacheRegistryItem.class, EntityCache.class}
 )
 public class EntityCacheImpl
-	implements PortalCacheManagerListener, CacheRegistryItem, EntityCache {
+	implements CacheRegistryItem, EntityCache, PortalCacheManagerListener {
 
 	@Override
 	public void clearCache() {

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	rollbackFor = Exception.class
 )
 public class DefaultGraphWalker
-	extends BaseKaleoBean implements GraphWalker, AopService {
+	extends BaseKaleoBean implements AopService, GraphWalker {
 
 	@Override
 	public void follow(

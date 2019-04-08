@@ -89,8 +89,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
-	implements ApplicationDescriptor, PrefixHandlerFactory, ScopeMapper,
-			   ScopeFinder {
+	implements ApplicationDescriptor, PrefixHandlerFactory, ScopeFinder,
+			   ScopeMapper {
 
 	@Override
 	public PrefixHandler create(

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Michael C. Han
  */
 @ProviderType
-public class StatsResponseImpl implements StatsResponse, Serializable {
+public class StatsResponseImpl implements Serializable, StatsResponse {
 
 	public StatsResponseImpl(
 		long cardinality, long count, String field, double max, double mean,

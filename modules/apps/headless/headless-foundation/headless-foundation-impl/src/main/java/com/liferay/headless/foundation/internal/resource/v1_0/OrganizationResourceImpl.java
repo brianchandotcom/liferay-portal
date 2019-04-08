@@ -89,7 +89,7 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		return _getOrganizationsPage(userAccountId);
@@ -121,7 +121,7 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getUserAccountOrganizationsPage(
-			Long userAccountId, Pagination pagination)
+			Long userAccountId)
 		throws Exception {
 
 		return _getOrganizationsPage(userAccountId);

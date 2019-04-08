@@ -350,6 +350,8 @@ public class UserAccountResourceImpl
 							WebUrl.class);
 					}
 				};
+				dateCreated = user.getCreateDate();
+				dateModified = user.getModifiedDate();
 				email = user.getEmailAddress();
 				familyName = user.getLastName();
 				givenName = user.getFirstName();

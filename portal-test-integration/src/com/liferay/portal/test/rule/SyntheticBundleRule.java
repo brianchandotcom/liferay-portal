@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
@@ -20,7 +20,7 @@ import aQute.bnd.osgi.Jar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
 import java.io.File;
@@ -35,9 +35,9 @@ import org.junit.runner.Description;
 /**
  * @author Raymond Augé
  */
-public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
+public class SyntheticBundleRule extends ClassTestRule<Long> {
 
-	public SyntheticBundleTestCallback(String bundlePackageName) {
+	public SyntheticBundleRule(String bundlePackageName) {
 		_bundlePackageName = bundlePackageName;
 	}
 

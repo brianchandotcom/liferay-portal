@@ -24,6 +24,14 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 %>
 
 <style type="text/css">
+	#clay_dropdown_portal .dropdown-menu-personal-menu {
+		max-height: fit-content;
+	}
+
+	#clay_dropdown_portal .dropdown-menu-personal-menu .dropdown-item-indicator {
+		padding-right: 0.5rem;
+	}
+
 	div.personal-menu-dropdown .btn:focus {
 		box-shadow: none;
 	}
@@ -76,12 +84,21 @@ resourceURL.setResourceID("/get_personal_menu_items");
 											this.expanded = true;
 										}
 
-										var menu = this.refs.dropdown.refs.portal.refs.menu;
+										var dropdown = this;
 
-										menu.style.maxHeight = 'fit-content';
+										this.refs.dropdown.refs.portal.on(
+											'rendered',
+											function(event) {
+												if (dropdown.expanded) {
+													this.element.classList.add('dropdown-menu-personal-menu');
+													this.element.classList.remove('dropdown-menu-indicator-start');
+												}
+											}
+										);
 									}
 								},
 								items: personalMenuItems,
+								itemsIconAlignment: 'left',
 								label: toggle.innerHTML,
 								showToggleIcon: false,
 								spritemap: '<%= themeDisplay.getPathThemeImages().concat("/clay/icons.svg") %>'

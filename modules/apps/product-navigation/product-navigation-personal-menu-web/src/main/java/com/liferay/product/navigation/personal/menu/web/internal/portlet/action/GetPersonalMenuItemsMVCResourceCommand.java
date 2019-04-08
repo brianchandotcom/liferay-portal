@@ -99,6 +99,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				ParamUtil.getString(portletRequest, "currentURL"),
 				"doAsUserId"));
 
+		jsonObject1.put("icon", "change");
 		jsonObject1.put(
 			"label",
 			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again"));
@@ -151,6 +152,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					ParamUtil.getString(portletRequest, "currentURL"),
 					"doAsUserLanguageId", doAsUserLanguageId));
 
+			jsonObject2.put("icon", "globe");
 			jsonObject2.put("label", changeLanguageLabel);
 
 			jsonArray.put(jsonObject2);

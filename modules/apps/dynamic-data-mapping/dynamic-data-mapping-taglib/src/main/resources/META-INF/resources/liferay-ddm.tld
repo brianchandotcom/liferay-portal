@@ -49,6 +49,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>groupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

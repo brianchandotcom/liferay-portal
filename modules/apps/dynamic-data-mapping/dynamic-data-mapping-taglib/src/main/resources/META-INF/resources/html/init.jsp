@@ -26,6 +26,7 @@ com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = (com.life
 java.util.Locale defaultEditLocale = (java.util.Locale)request.getAttribute("liferay-ddm:html:defaultEditLocale");
 java.lang.String documentLibrarySelectorURL = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:documentLibrarySelectorURL"));
 java.lang.String fieldsNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:fieldsNamespace"));
+long groupId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-ddm:html:groupId")));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:ignoreRequestValue")));
 java.lang.String imageSelectorURL = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:imageSelectorURL"));
 boolean localizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:localizable")), true);

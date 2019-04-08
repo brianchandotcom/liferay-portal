@@ -85,10 +85,21 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
+<liferay-util:buffer
+	var="documentTitle"
+>
+	<%= fileVersion.getTitle() %>
+
+	<c:if test="<%= versionSpecific %>">
+		(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
+	</c:if>
+</liferay-util:buffer>
+
 <c:if test="<%= portletTitleBasedNavigation %>">
 
 	<%
 	request.setAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext", dlViewFileVersionDisplayContext);
+	request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", documentTitle);
 	request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", fileEntry);
 	request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", fileVersion);
 	request.setAttribute("file_entry_upper_tbar.jsp-versionSpecific", versionSpecific);
@@ -119,16 +130,10 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (folder != null) %>">
-		<%
-		String title = fileVersion.getTitle();
-		if (versionSpecific){
-			title += " (" +LanguageUtil.get(resourceBundle, "version") + " "+ fileVersion.getVersion() + ")";
-		}
-		%>
 		<liferay-ui:header
 			backURL="<%= redirect %>"
 			localizeTitle="<%= false %>"
-			title="<%= title %>"
+			title="<%= documentTitle %>"
 		/>
 	</c:if>
 

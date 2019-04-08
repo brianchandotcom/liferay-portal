@@ -17,21 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String documentTitle = GetterUtil.getString(request.getAttribute("file_entry_upper_tbar.jsp-documentLibrary"));
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVersionDisplayContext)request.getAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext");
 FileEntry fileEntry = (FileEntry)request.getAttribute("file_entry_upper_tbar.jsp-fileEntry");
 FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tbar.jsp-fileVersion");
-boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry_upper_tbar.jsp-versionSpecific"));
 %>
-
-<liferay-util:buffer
-	var="documentTitle"
->
-	<%= fileVersion.getTitle() %>
-
-	<c:if test="<%= versionSpecific %>">
-		(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
-	</c:if>
-</liferay-util:buffer>
 
 <div class="upper-tbar-container-fixed">
 	<div class="tbar upper-tbar">

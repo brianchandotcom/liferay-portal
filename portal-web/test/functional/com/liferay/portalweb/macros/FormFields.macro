@@ -508,14 +508,6 @@ definition {
 
 	macro viewFieldName {
 
-		AssertTextEquals(
-			locator1 = "FormFields#FIELD_NAME_EDIT",
-			value1 = "${fieldName}"
-		);
-	}
-
-	macro viewFieldNameMetal {
-
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(

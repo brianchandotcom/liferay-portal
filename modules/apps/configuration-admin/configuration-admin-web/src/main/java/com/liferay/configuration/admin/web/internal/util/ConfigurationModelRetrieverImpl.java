@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
-import com.liferay.configuration.admin.display.ConfigurationAvailabilityController;
+import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -212,9 +212,9 @@ public class ConfigurationModelRetrieverImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_configurationAvailabilityControllerServiceTrackerMap =
+		_configurationVisibilityControllerServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, ConfigurationAvailabilityController.class,
+				_bundleContext, ConfigurationVisibilityController.class,
 				"configuration.pid");
 	}
 
@@ -254,7 +254,7 @@ public class ConfigurationModelRetrieverImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationAvailabilityControllerServiceTrackerMap.close();
+		_configurationVisibilityControllerServiceTrackerMap.close();
 	}
 
 	protected String getAndFilterString(String... filterStrings) {
@@ -311,13 +311,11 @@ public class ConfigurationModelRetrieverImpl
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
 			StringPool.QUESTION, factory);
 
-		ConfigurationAvailabilityController
-			configurationAvailabilityController =
-				_configurationAvailabilityControllerServiceTrackerMap.
-					getService(pid);
+		ConfigurationVisibilityController configurationVisibilityController =
+			_configurationVisibilityControllerServiceTrackerMap.getService(pid);
 
-		if ((configurationAvailabilityController != null) &&
-			!configurationAvailabilityController.isVisible(scope, scopePK)) {
+		if ((configurationVisibilityController != null) &&
+			!configurationVisibilityController.isVisible(scope, scopePK)) {
 
 			return null;
 		}
@@ -409,8 +407,8 @@ public class ConfigurationModelRetrieverImpl
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	private ServiceTrackerMap<String, ConfigurationAvailabilityController>
-		_configurationAvailabilityControllerServiceTrackerMap;
+	private ServiceTrackerMap<String, ConfigurationVisibilityController>
+		_configurationVisibilityControllerServiceTrackerMap;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;

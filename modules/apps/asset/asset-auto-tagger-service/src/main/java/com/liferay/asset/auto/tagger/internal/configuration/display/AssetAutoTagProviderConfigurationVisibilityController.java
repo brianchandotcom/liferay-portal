@@ -16,7 +16,7 @@ package com.liferay.asset.auto.tagger.internal.configuration.display;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.configuration.admin.display.ConfigurationAvailabilityController;
+import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 		"configuration.pid=com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration",
 		"configuration.pid=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration"
 	},
-	service = ConfigurationAvailabilityController.class
+	service = ConfigurationVisibilityController.class
 )
-public class AssetAutoTagProviderConfigurationAvailabilityController
-	implements ConfigurationAvailabilityController {
+public class AssetAutoTagProviderConfigurationVisibilityController
+	implements ConfigurationVisibilityController {
 
 	@Override
 	public boolean isVisible(
@@ -86,7 +86,7 @@ public class AssetAutoTagProviderConfigurationAvailabilityController
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetAutoTagProviderConfigurationAvailabilityController.class);
+		AssetAutoTagProviderConfigurationVisibilityController.class);
 
 	@Reference
 	private AssetAutoTaggerConfigurationFactory

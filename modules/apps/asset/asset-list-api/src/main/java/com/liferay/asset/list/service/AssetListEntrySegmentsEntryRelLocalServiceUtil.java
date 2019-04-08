@@ -82,15 +82,6 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntrySegmentsEntryRelId);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
-			deleteAssetListEntrySegmentsEntryRel(
-				com.liferay.asset.list.model.AssetListEntry assetListEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteAssetListEntrySegmentsEntryRel(
-			assetListEntry);
-	}
-
 	/**
 	 * Deletes the asset list entry segments entry rel from the database. Also notifies the appropriate model listeners.
 	 *

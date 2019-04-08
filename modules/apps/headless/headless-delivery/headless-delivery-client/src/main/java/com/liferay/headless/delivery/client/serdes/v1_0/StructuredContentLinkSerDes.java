@@ -45,7 +45,7 @@ public class StructuredContentLinkSerDes {
 
 	public static String toJSON(StructuredContentLink structuredContentLink) {
 		if (structuredContentLink == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();

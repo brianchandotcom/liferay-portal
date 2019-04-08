@@ -1236,7 +1236,7 @@ definition {
 
 	@priority = "4"
 	test SearchUsingCustomFacet {
-		property portal.suite.search.engine = "disable";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

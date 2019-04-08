@@ -46,7 +46,7 @@ public class ContentFieldSerDes {
 
 	public static String toJSON(ContentField contentField) {
 		if (contentField == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -55,30 +55,50 @@ public class ContentFieldSerDes {
 
 		sb.append("\"dataType\": ");
 
-		sb.append("\"");
-		sb.append(contentField.getDataType());
-		sb.append("\"");
+		if (contentField.getDataType() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentField.getDataType());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"inputControl\": ");
 
-		sb.append("\"");
-		sb.append(contentField.getInputControl());
-		sb.append("\"");
+		if (contentField.getInputControl() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentField.getInputControl());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"label\": ");
 
-		sb.append("\"");
-		sb.append(contentField.getLabel());
-		sb.append("\"");
+		if (contentField.getLabel() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentField.getLabel());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"name\": ");
 
-		sb.append("\"");
-		sb.append(contentField.getName());
-		sb.append("\"");
+		if (contentField.getName() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentField.getName());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"nestedFields\": ");
@@ -90,7 +110,9 @@ public class ContentFieldSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < contentField.getNestedFields().length; i++) {
-				sb.append(contentField.getNestedFields()[i]);
+				sb.append(
+					ContentFieldSerDes.toJSON(
+						contentField.getNestedFields()[i]));
 
 				if ((i + 1) < contentField.getNestedFields().length) {
 					sb.append(", ");
@@ -109,7 +131,7 @@ public class ContentFieldSerDes {
 
 		sb.append("\"value\": ");
 
-		sb.append(contentField.getValue());
+		sb.append(ValueSerDes.toJSON(contentField.getValue()));
 
 		sb.append("}");
 

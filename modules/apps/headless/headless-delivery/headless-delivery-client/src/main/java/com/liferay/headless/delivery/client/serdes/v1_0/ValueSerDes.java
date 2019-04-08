@@ -43,7 +43,7 @@ public class ValueSerDes {
 
 	public static String toJSON(Value value) {
 		if (value == null) {
-			return "{}";
+			return "null";
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -52,9 +52,14 @@ public class ValueSerDes {
 
 		sb.append("\"data\": ");
 
-		sb.append("\"");
-		sb.append(value.getData());
-		sb.append("\"");
+		if (value.getData() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(value.getData());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"document\": ");
@@ -74,14 +79,20 @@ public class ValueSerDes {
 
 		sb.append("\"link\": ");
 
-		sb.append("\"");
-		sb.append(value.getLink());
-		sb.append("\"");
+		if (value.getLink() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(value.getLink());
+			sb.append("\"");
+		}
 		sb.append(", ");
 
 		sb.append("\"structuredContentLink\": ");
 
-		sb.append(value.getStructuredContentLink());
+		sb.append(StructuredContentLinkSerDes.toJSON(
+			value.getStructuredContentLink()));
 
 		sb.append("}");
 

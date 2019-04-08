@@ -25,8 +25,12 @@ export class MockRouter extends React.Component {
 		};
 	}
 
-	setStatus(status) {
+	setStatus(status, callback) {
 		this.contextState.status = status;
+
+		if (callback) {
+			callback();
+		}
 	}
 
 	setTitle(title) {

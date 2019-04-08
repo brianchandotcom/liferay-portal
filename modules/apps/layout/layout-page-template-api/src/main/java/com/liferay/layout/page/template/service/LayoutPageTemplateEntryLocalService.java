@@ -418,10 +418,6 @@ public interface LayoutPageTemplateEntryLocalService
 		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long userId, long layoutPageTemplateEntryId, int status)
-		throws PortalException;
-
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;
 
@@ -438,6 +434,10 @@ public interface LayoutPageTemplateEntryLocalService
 			long layoutPageTemplateEntryId, String name,
 			long[] fragmentEntryIds, String editableValues,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry updateStatus(
+			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException;
 
 }

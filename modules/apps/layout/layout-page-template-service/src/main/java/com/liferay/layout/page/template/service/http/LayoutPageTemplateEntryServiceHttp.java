@@ -1705,48 +1705,6 @@ public class LayoutPageTemplateEntryServiceHttp {
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			updateLayoutPageTemplateEntry(
 				HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
-				int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateEntryServiceUtil.class,
-				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes45);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutPageTemplateEntryId, status);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.layout.page.template.model.
-				LayoutPageTemplateEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			updateLayoutPageTemplateEntry(
-				HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
 				long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1754,7 +1712,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class,
 				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes46);
+				_updateLayoutPageTemplateEntryParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, previewFileEntryId);
@@ -1796,7 +1754,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class,
 				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes47);
+				_updateLayoutPageTemplateEntryParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, classNameId, classTypeId);
@@ -1839,7 +1797,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class,
 				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes48);
+				_updateLayoutPageTemplateEntryParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, fragmentEntryIds,
@@ -1882,7 +1840,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class,
 				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes49);
+				_updateLayoutPageTemplateEntryParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, name);
@@ -1925,11 +1883,52 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class,
 				"updateLayoutPageTemplateEntry",
-				_updateLayoutPageTemplateEntryParameterTypes50);
+				_updateLayoutPageTemplateEntryParameterTypes49);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, name, fragmentEntryIds,
 				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.layout.page.template.model.
+				LayoutPageTemplateEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			updateStatus(
+				HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutPageTemplateEntryServiceUtil.class, "updateStatus",
+				_updateStatusParameterTypes50);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, layoutPageTemplateEntryId, status);
 
 			Object returnObj = null;
 
@@ -2159,29 +2158,27 @@ public class LayoutPageTemplateEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutPageTemplateEntryParameterTypes45 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[]
-		_updateLayoutPageTemplateEntryParameterTypes46 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_updateLayoutPageTemplateEntryParameterTypes47 = new Class[] {
+		_updateLayoutPageTemplateEntryParameterTypes46 = new Class[] {
 			long.class, long.class, long.class
 		};
 	private static final Class<?>[]
-		_updateLayoutPageTemplateEntryParameterTypes48 = new Class[] {
+		_updateLayoutPageTemplateEntryParameterTypes47 = new Class[] {
 			long.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateLayoutPageTemplateEntryParameterTypes49 = new Class[] {
+		_updateLayoutPageTemplateEntryParameterTypes48 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_updateLayoutPageTemplateEntryParameterTypes50 = new Class[] {
+		_updateLayoutPageTemplateEntryParameterTypes49 = new Class[] {
 			long.class, String.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _updateStatusParameterTypes50 =
+		new Class[] {long.class, int.class};
 
 }

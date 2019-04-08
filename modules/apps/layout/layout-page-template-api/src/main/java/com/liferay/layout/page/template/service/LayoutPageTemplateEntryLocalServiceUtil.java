@@ -613,15 +613,6 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			updateLayoutPageTemplateEntry(
-				long userId, long layoutPageTemplateEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateLayoutPageTemplateEntry(
-			userId, layoutPageTemplateEntryId, status);
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			updateLayoutPageTemplateEntry(
 				long layoutPageTemplateEntryId, long classNameId,
 				long classTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -659,6 +650,15 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService().updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, name, fragmentEntryIds, editableValues,
 			serviceContext);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			updateStatus(
+				long userId, long layoutPageTemplateEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(
+			userId, layoutPageTemplateEntryId, status);
 	}
 
 	public static LayoutPageTemplateEntryLocalService getService() {

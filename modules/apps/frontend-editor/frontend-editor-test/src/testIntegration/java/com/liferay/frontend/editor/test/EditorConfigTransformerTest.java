@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.editor.configuration;
+package com.liferay.frontend.editor.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
@@ -42,10 +43,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 public class EditorConfigTransformerTest {
 
 	@ClassRule

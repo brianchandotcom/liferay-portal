@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.editor.configuration;
+package com.liferay.frontend.editor.test;
 
+import com.liferay.portal.editor.configuration.EditorConfigProvider;
+import com.liferay.portal.editor.configuration.EditorConfigurationFactoryImpl;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 

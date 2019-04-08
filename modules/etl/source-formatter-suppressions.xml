@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaComponentAnnotationsCheck" files="modules/etl/talend/talend-definition/src/main/java/org/talend/components/liferay/LiferayFamilyDefinition\.java" />
-	</source-check>
-</suppressions>

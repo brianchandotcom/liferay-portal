@@ -12,25 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.test.rule.callback;
+package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.test.rule.callback.TestCallback;
+import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.rule.ExpectedDBType;
-import com.liferay.portal.test.rule.ExpectedLog;
-import com.liferay.portal.test.rule.ExpectedLogs;
-import com.liferay.portal.test.rule.ExpectedMultipleLogs;
-import com.liferay.portal.test.rule.ExpectedType;
-import com.liferay.portal.test.rule.LogAssertionAppender;
-import com.liferay.portal.test.rule.LogAssertionHandler;
-import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,11 +40,11 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class LogAssertionTestCallback
-	implements TestCallback<List<CaptureAppender>, List<CaptureAppender>> {
+public class LogAssertionTestRule
+	extends AbstractTestRule<List<CaptureAppender>, List<CaptureAppender>> {
 
-	public static final LogAssertionTestCallback INSTANCE =
-		new LogAssertionTestCallback();
+	public static final LogAssertionTestRule INSTANCE =
+		new LogAssertionTestRule();
 
 	public static void caughtFailure(Error error) {
 		Thread currentThread = Thread.currentThread();
@@ -285,7 +277,7 @@ public class LogAssertionTestCallback
 		return false;
 	}
 
-	private LogAssertionTestCallback() {
+	private LogAssertionTestRule() {
 	}
 
 	private static final Map<Thread, Error> _concurrentFailures =

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -52,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -93,6 +95,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	@Before
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
+		locale = LocaleUtil.getDefault();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
@@ -575,6 +578,7 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	protected String contentType = "application/json";
 	protected Group irrelevantGroup;
+	protected Locale locale;
 	protected Group testGroup;
 	protected String userNameAndPassword = "test@liferay.com:test";
 
@@ -621,6 +625,9 @@ public abstract class BaseFormStructureResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+
+		options.addHeader(
+			"Accept-Language", LocaleUtil.toW3cLanguageId(locale));
 
 		String encodedUserNameAndPassword = Base64.encode(
 			userNameAndPassword.getBytes());

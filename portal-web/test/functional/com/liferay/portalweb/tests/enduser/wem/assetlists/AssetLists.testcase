@@ -127,13 +127,9 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			LexiconEntry.delete(
-				rowEntry = "Manual Asset List Test"
-			);
+			AssetListsAdmin.deleteEntry();
 
-			LexiconEntry.delete(
-				rowEntry = "Dynamic Asset List Test"
-			);
+			AssetListsAdmin.deleteEntry();
 		}
 
 		task ("Assert the taglib that displays when there are no entries displays") {

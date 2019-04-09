@@ -19,6 +19,7 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.info.display.contributor.AssetInfoDisplayObject;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -26,13 +27,23 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.Map;
 
@@ -82,6 +93,22 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		}
 
 		_infoDisplayContributor = infoDisplayContributor;
+	}
+
+	public AssetRendererFactory getAssetRendererFactory() {
+		AssetRendererFactory assetRendererFactory = null;
+
+		if (_infoDisplayObject != null) {
+			Object modelEntry = _infoDisplayObject.getModelEntry();
+
+			if (modelEntry instanceof AssetEntry) {
+				AssetEntry assetEntry = (AssetEntry)modelEntry;
+
+				assetRendererFactory = assetEntry.getAssetRendererFactory();
+			}
+		}
+
+		return assetRendererFactory;
 	}
 
 	public Map<String, Object> getInfoDisplayFieldsValues()
@@ -140,6 +167,44 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public long[] getSegmentExperienceIds() {
+		return GetterUtil.getLongValues(
+			_request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+	}
+
+	public JSONArray getStructureJSONArray() throws PortalException {
+		InfoDisplayObject infoDisplayObject = getInfoDisplayObject();
+
+		if (infoDisplayObject == null) {
+			return null;
+		}
+
+		long[] segmentsExperienceIds = getSegmentExperienceIds();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
+				getLayoutPageTemplateEntryId());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					infoDisplayObject.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid(), true);
+
+		String data = layoutPageTemplateStructure.getData(
+			segmentsExperienceIds);
+
+		if (Validator.isNull(data)) {
+			return null;
+		}
+
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+		return dataJSONObject.getJSONArray("structure");
 	}
 
 	private final InfoDisplayContributor _infoDisplayContributor;

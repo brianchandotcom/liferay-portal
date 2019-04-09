@@ -16,14 +16,21 @@ package com.liferay.headless.foundation.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -66,6 +73,30 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			indexer.reindex(
 				_testUser.getModelClassName(), _testUser.getUserId());
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetMyUserAccount() throws Exception {
+		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
+
+		UserAccount myUserAccount = new UserAccount() {
+			{
+				additionalName = user.getMiddleName();
+				alternateName = user.getScreenName();
+				birthDate = user.getBirthday();
+				email = user.getEmailAddress();
+				familyName = user.getFirstName();
+				givenName = user.getLastName();
+				id = user.getUserId();
+				jobTitle = user.getJobTitle();
+			}
+		};
+
+		UserAccount getUserAccount = invokeGetMyUserAccount();
+
+		assertEquals(myUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
 	@Override
@@ -175,13 +206,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected UserAccount testDeleteUserAccount_addUserAccount()
-		throws Exception {
-
-		return invokePostUserAccount(randomUserAccount());
-	}
-
-	@Override
 	protected UserAccount testGetMyUserAccount_addUserAccount()
 		throws Exception {
 
@@ -240,33 +264,28 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return testGroup.getGroupId();
 	}
 
-	@Override
-	protected UserAccount testPostFormDataUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		return _addUserAccount(userAccount);
-	}
-
-	@Override
-	protected UserAccount testPostUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		return _addUserAccount(userAccount);
-	}
-
-	@Override
-	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
-		return _addUserAccount(randomUserAccount());
-	}
-
 	private UserAccount _addUserAccount(UserAccount userAccount)
 		throws Exception {
 
-		userAccount = invokePostUserAccount(userAccount);
+		User user = UserLocalServiceUtil.addUser(
+			UserConstants.USER_ID_DEFAULT, PortalUtil.getDefaultCompanyId(),
+			true, null, null, Validator.isNull(userAccount.getAlternateName()),
+			userAccount.getAlternateName(), userAccount.getEmail(), 0,
+			StringPool.BLANK, LocaleUtil.getDefault(),
+			userAccount.getGivenName(), StringPool.BLANK,
+			userAccount.getFamilyName(), 0, 0, true, 1, 1, 1970,
+			userAccount.getJobTitle(), null, null, null, null, false,
+			new ServiceContext() {
+				{
+					setCreateDate(userAccount.getDateCreated());
+					setModifiedDate(userAccount.getDateModified());
+				}
+			});
 
-		_users.add(UserLocalServiceUtil.getUser(userAccount.getId()));
+		userAccount.setId(user.getUserId());
+		userAccount.setDateModified(user.getModifiedDate());
+
+		_users.add(UserLocalServiceUtil.getUser(user.getUserId()));
 
 		return userAccount;
 	}

@@ -14,6 +14,9 @@
 
 package com.liferay.registry.internal.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -34,18 +37,16 @@ import java.util.SortedMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Raymond Augé
@@ -54,16 +55,18 @@ import org.osgi.framework.BundleException;
 @RunWith(Arquillian.class)
 public class RegistryTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
-	public void setUp() throws BundleException {
-		_bundle.start();
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(RegistryTest.class);
+
+		_bundleContext = bundle.getBundleContext();
 
 		_registry = RegistryUtil.getRegistry();
-	}
-
-	@After
-	public void tearDown() throws BundleException {
-		_bundle.stop();
 	}
 
 	@Test
@@ -774,12 +777,7 @@ public class RegistryTest {
 		};
 	}
 
-	@ArquillianResource
-	private Bundle _bundle;
-
-	@ArquillianResource
 	private BundleContext _bundleContext;
-
 	private Registry _registry;
 
 	private class MockServiceTrackerCustomizer

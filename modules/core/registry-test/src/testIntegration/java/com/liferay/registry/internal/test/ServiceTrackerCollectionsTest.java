@@ -14,6 +14,9 @@
 
 package com.liferay.registry.internal.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -29,17 +32,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
 
 /**
  * @author Raymond Augé
@@ -48,16 +46,14 @@ import org.osgi.framework.BundleException;
 @RunWith(Arquillian.class)
 public class ServiceTrackerCollectionsTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
-	public void setUp() throws BundleException {
-		_bundle.start();
-
+	public void setUp() {
 		_registry = RegistryUtil.getRegistry();
-	}
-
-	@After
-	public void tearDown() throws BundleException {
-		_bundle.stop();
 	}
 
 	@Test
@@ -617,9 +613,6 @@ public class ServiceTrackerCollectionsTest {
 		return new InterfaceOne() {
 		};
 	}
-
-	@ArquillianResource
-	private Bundle _bundle;
 
 	private Registry _registry;
 

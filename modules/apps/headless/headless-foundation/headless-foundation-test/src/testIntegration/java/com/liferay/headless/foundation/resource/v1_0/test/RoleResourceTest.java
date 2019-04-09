@@ -64,38 +64,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
-	protected Role testGetMyUserAccountRolesPage_addRole(
-			Long userAccountId, Role role)
-		throws Exception {
-
-		return _addRole(role);
-	}
-
-	@Override
-	protected Long testGetMyUserAccountRolesPage_getUserAccountId()
-		throws Exception {
-
-		return _user.getUserId();
-	}
-
-	@Override
 	protected Role testGetRole_addRole() throws Exception {
 		return _addRole(randomRole());
-	}
-
-	@Override
-	protected Role testGetUserAccountRolesPage_addRole(
-			Long userAccountId, Role role)
-		throws Exception {
-
-		return _addRole(role);
-	}
-
-	@Override
-	protected Long testGetUserAccountRolesPage_getUserAccountId()
-		throws Exception {
-
-		return _user.getUserId();
 	}
 
 	private Role _addRole(Role role) throws Exception {

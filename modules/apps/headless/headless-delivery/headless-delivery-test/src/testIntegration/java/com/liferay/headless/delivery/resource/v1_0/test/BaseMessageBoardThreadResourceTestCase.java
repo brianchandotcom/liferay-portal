@@ -513,8 +513,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected MessageBoardThread
@@ -601,8 +601,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testDeleteMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected void invokeDeleteMessageBoardThread(Long messageBoardThreadId)
@@ -664,8 +664,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected MessageBoardThread invokeGetMessageBoardThread(
@@ -747,8 +747,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testPatchMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected MessageBoardThread invokePatchMessageBoardThread(
@@ -838,8 +838,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testPutMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected MessageBoardThread invokePutMessageBoardThread(
@@ -924,8 +924,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected void invokeDeleteMessageBoardThreadMyRating(
@@ -1519,8 +1519,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	protected MessageBoardThread invokePostSiteMessageBoardThread(

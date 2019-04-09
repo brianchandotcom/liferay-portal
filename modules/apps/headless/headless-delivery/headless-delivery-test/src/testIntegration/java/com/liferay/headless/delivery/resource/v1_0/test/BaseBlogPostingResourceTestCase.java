@@ -126,8 +126,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testDeleteBlogPosting_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected void invokeDeleteBlogPosting(Long blogPostingId)
@@ -180,8 +180,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected BlogPosting invokeGetBlogPosting(Long blogPostingId)
@@ -252,8 +252,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testPatchBlogPosting_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected BlogPosting invokePatchBlogPosting(
@@ -333,8 +333,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected BlogPosting invokePutBlogPosting(
@@ -409,8 +409,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected void invokeDeleteBlogPostingMyRating(Long blogPostingId)
@@ -950,8 +950,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 			BlogPosting blogPosting)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	protected BlogPosting invokePostSiteBlogPosting(

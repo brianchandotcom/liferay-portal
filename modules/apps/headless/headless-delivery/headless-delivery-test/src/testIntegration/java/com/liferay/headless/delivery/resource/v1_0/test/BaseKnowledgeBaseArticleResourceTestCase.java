@@ -132,8 +132,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected void invokeDeleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
@@ -195,8 +195,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle invokeGetKnowledgeBaseArticle(
@@ -280,8 +280,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle invokePatchKnowledgeBaseArticle(
@@ -374,8 +374,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle invokePutKnowledgeBaseArticle(
@@ -462,8 +462,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected void invokeDeleteKnowledgeBaseArticleMyRating(
@@ -1093,8 +1093,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle
@@ -1576,8 +1576,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle
@@ -2035,8 +2035,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	protected KnowledgeBaseArticle invokePostSiteKnowledgeBaseArticle(

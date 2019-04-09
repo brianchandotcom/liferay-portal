@@ -130,8 +130,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testDeleteMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected void invokeDeleteMessageBoardSection(Long messageBoardSectionId)
@@ -193,8 +193,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected MessageBoardSection invokeGetMessageBoardSection(
@@ -277,8 +277,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPatchMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected MessageBoardSection invokePatchMessageBoardSection(
@@ -369,8 +369,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPutMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected MessageBoardSection invokePutMessageBoardSection(
@@ -840,8 +840,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected MessageBoardSection
@@ -1288,8 +1288,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	protected MessageBoardSection invokePostSiteMessageBoardSection(

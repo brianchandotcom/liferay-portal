@@ -864,8 +864,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				StructuredContent structuredContent)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokePostSiteStructuredContent(
@@ -944,8 +944,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetSiteStructuredContentByKey_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokeGetSiteStructuredContentByKey(
@@ -1016,8 +1016,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetSiteStructuredContentByUuid_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokeGetSiteStructuredContentByUuid(
@@ -1473,8 +1473,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				StructuredContent structuredContent)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent
@@ -1560,8 +1560,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testDeleteStructuredContent_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected void invokeDeleteStructuredContent(Long structuredContentId)
@@ -1622,8 +1622,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected StructuredContent testGetStructuredContent_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokeGetStructuredContent(
@@ -1704,8 +1704,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testPatchStructuredContent_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokePatchStructuredContent(
@@ -1793,8 +1793,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected StructuredContent testPutStructuredContent_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected StructuredContent invokePutStructuredContent(
@@ -1879,8 +1879,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testDeleteStructuredContentMyRating_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected void invokeDeleteStructuredContentMyRating(

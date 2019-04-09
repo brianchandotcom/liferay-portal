@@ -1,6 +1,18 @@
 @import "bourbon";
 @import "mixins";
 
+[data-file-icon-color-2] .dropdown-item-indicator {
+	color: #50D2A0;
+}
+
+[data-file-icon-color-4] .dropdown-item-indicator {
+	color: #FFB46E;
+}
+
+[data-file-icon-color-6] .dropdown-item-indicator {
+	color: #4B9BFF;
+}
+
 .portlet-document-library, .portlet-document-library-display {
 	@import "document_library_preview";
 

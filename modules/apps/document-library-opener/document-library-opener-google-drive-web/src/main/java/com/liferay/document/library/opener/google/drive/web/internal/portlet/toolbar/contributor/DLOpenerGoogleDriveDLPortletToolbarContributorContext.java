@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -81,15 +82,15 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX, "6"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX, "4"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX, "2"));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -98,7 +99,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 	private URLMenuItem _createURLMenuItem(
 		PortletRequest portletRequest, Folder folder, String key,
-		String contentType) {
+		String contentType, String fileIconColorIndex) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
@@ -106,6 +107,12 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));
+		urlMenuItem.setData(
+			new HashMap<String, Object>() {
+				{
+					put("file-icon-color-" + fileIconColorIndex, true);
+				}
+			});
 
 		return urlMenuItem;
 	}

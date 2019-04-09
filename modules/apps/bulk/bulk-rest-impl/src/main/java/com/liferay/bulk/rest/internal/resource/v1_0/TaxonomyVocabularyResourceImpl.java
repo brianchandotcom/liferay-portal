@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -108,6 +109,8 @@ public class TaxonomyVocabularyResourceImpl
 
 		Set<AssetCategory> assetCategories = new HashSet<>();
 
+		AtomicBoolean flag = new AtomicBoolean(true);
+
 		BulkSelection<?> bulkSelection = _documentBulkSelectionFactory.create(
 			documentBulkSelection);
 
@@ -121,10 +124,18 @@ public class TaxonomyVocabularyResourceImpl
 						assetEntry.getClassName(), assetEntry.getClassPK(),
 						ActionKeys.UPDATE)) {
 
-					assetCategories.addAll(
+					List<AssetCategory> assetEntryAssetCategories =
 						_assetCategoryLocalService.getCategories(
-							assetEntry.getClassName(),
-							assetEntry.getClassPK()));
+							assetEntry.getClassName(), assetEntry.getClassPK());
+
+					if (flag.get()) {
+						flag.set(false);
+
+						assetCategories.addAll(assetEntryAssetCategories);
+					}
+					else {
+						assetCategories.retainAll(assetEntryAssetCategories);
+					}
 				}
 			});
 

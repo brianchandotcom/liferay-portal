@@ -65,6 +65,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"uid": {
+				"store": true,
+				"type": "keyword"
+			},
 			"userId": {
 				"store": true,
 				"type": "keyword"
@@ -129,6 +133,10 @@
 				"type": "boolean"
 			},
 			"type": {
+				"store": true,
+				"type": "keyword"
+			},
+			"uid": {
 				"store": true,
 				"type": "keyword"
 			},
@@ -596,6 +604,10 @@
 				"term_vector": "with_positions_offsets",
 				"type": "text"
 			},
+			"uid": {
+				"store": true,
+				"type": "keyword"
+			},
 			"userId": {
 				"store": true,
 				"type": "keyword"
@@ -664,6 +676,10 @@
 				"type": "keyword"
 			},
 			"status": {
+				"store": true,
+				"type": "keyword"
+			},
+			"uid": {
 				"store": true,
 				"type": "keyword"
 			}
@@ -740,6 +756,10 @@
 				"type": "keyword"
 			},
 			"tokenId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"uid": {
 				"store": true,
 				"type": "keyword"
 			},

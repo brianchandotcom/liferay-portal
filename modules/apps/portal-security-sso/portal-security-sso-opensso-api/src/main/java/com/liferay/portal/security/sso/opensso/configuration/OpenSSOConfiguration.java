@@ -31,9 +31,7 @@ import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKey
  *
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(
-	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "sso")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	localization = "content/Language", name = "opensso-configuration-name"

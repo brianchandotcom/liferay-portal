@@ -44,6 +44,10 @@
 		@include media-breakpoint-down(sm) {
 			width: 100%;
 		}
+
+		.input-group-item {
+			margin-left: 0;
+		}
 	}
 
 	.logo:hover {

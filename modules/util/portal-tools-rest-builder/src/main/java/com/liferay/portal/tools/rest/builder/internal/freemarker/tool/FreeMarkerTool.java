@@ -25,10 +25,12 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
+import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
+import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.Iterator;
@@ -222,30 +224,21 @@ public class FreeMarkerTool {
 			javaMethodSignature, httpMethods);
 	}
 
-	public boolean hasJavaMethodSignature(
-		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
-		String returnType, String... parameterNames) {
+	public boolean hasPostSiteJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			if (!Objects.equals(
-					returnType, javaMethodSignature.getReturnType())) {
-
-				continue;
-			}
-
 			Operation operation = javaMethodSignature.getOperation();
 
-			if (!Objects.equals(httpMethod, getHTTPMethod(operation))) {
+			if (!Objects.equals("post", getHTTPMethod(operation))) {
 				continue;
 			}
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(httpMethod);
-
-			for (String parameterName : parameterNames) {
-				sb.append(StringUtil.upperCaseFirstLetter(parameterName));
-			}
+			sb.append(getHTTPMethod(operation));
+			sb.append("Site");
+			sb.append(StringUtil.upperCaseFirstLetter(schemaName));
 
 			String methodName = javaMethodSignature.getMethodName();
 
@@ -256,18 +249,21 @@ public class FreeMarkerTool {
 			List<JavaMethodParameter> javaMethodParameters =
 				javaMethodSignature.getJavaMethodParameters();
 
-			if (javaMethodParameters.size() != parameterNames.length) {
+			if (javaMethodParameters.size() != 2) {
 				continue;
 			}
 
-			for (int i = 0; i < (javaMethodParameters.size() - 1); i++) {
-				JavaMethodParameter javaMethodParameter =
-					javaMethodParameters.get(i);
+			if (operation.getRequestBody() != null) {
+				RequestBody requestBody = operation.getRequestBody();
 
-				String parameterName = javaMethodParameter.getParameterName();
+				if (requestBody.getContent() != null) {
+					Map<String, Content> contents = requestBody.getContent();
 
-				if (!Objects.equals(parameterName, parameterNames[i])) {
-					continue;
+					Set<String> mediaTypes = contents.keySet();
+
+					if (mediaTypes.contains("multipart/form-data")) {
+						continue;
+					}
 				}
 			}
 

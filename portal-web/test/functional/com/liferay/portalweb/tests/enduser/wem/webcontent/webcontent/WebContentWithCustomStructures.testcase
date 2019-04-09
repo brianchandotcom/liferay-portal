@@ -1477,7 +1477,7 @@ definition {
 			fieldValue = "English (United States) Title"
 		);
 
-		ItemSelector.gotoItemSelectorViaSelectButton();
+		Click(locator1 = "WC#SELECT");
 
 		ItemSelector.uploadFile(
 			navTab = "Web Content Images",

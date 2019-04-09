@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -95,6 +98,9 @@ public class FriendlyURLResolverRegistryUtil {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLResolverRegistryUtil.class);
+
 	private static final ServiceRegistrationMap<FriendlyURLResolver>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 
@@ -113,9 +119,21 @@ public class FriendlyURLResolverRegistryUtil {
 					FriendlyURLResolver friendlyURLResolver =
 						registry.getService(serviceReference);
 
-					emitter.emit(friendlyURLResolver.getURLSeparator());
+					if (_serviceTrackerMap.containsKey(
+							friendlyURLResolver.getURLSeparator())) {
 
-					registry.ungetService(serviceReference);
+						_log.error(
+							StringBundler.concat(
+								"Unable to register friendly url resolver ",
+								"because a there is another friendly url ",
+								"resolver with the same url separator ",
+								friendlyURLResolver.getURLSeparator()));
+					}
+					else {
+						emitter.emit(friendlyURLResolver.getURLSeparator());
+
+						registry.ungetService(serviceReference);
+					}
 				}
 
 			});

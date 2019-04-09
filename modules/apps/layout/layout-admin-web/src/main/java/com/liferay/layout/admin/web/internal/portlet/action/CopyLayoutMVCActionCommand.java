@@ -121,11 +121,15 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getClassNameId(Layout.class), targetLayout.getPlid());
 
 			if (draftLayout != null) {
-				_layoutCopyHelper.copyLayout(sourceLayout, draftLayout);
+				targetLayout = draftLayout;
 			}
-			else {
-				_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
-			}
+
+			targetLayout = _layoutCopyHelper.copyLayout(
+				sourceLayout, targetLayout);
+
+			targetLayout.setNameMap(nameMap);
+
+			_layoutLocalService.updateLayout(targetLayout);
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(actionResponse);

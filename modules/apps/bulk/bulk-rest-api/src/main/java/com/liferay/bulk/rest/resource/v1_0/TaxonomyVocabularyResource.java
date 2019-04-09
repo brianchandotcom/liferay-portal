@@ -32,10 +32,8 @@ import javax.annotation.Generated;
 @Generated("")
 public interface TaxonomyVocabularyResource {
 
-	public Page<TaxonomyVocabulary>
-			postContentSpaceTaxonomyVocabulariesCommonPage(
-				Long contentSpaceId,
-				DocumentBulkSelection documentBulkSelection)
+	public Page<TaxonomyVocabulary> postSiteTaxonomyVocabulariesCommonPage(
+			Long siteId, DocumentBulkSelection documentBulkSelection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

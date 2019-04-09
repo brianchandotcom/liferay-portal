@@ -171,8 +171,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyVocabulary>
-			postContentSpaceTaxonomyVocabulariesCommonPage(
-				@GraphQLName("contentSpaceId") Long contentSpaceId,
+			postSiteTaxonomyVocabulariesCommonPage(
+				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("documentBulkSelection") DocumentBulkSelection
 					documentBulkSelection)
 		throws Exception {
@@ -183,8 +183,8 @@ public class Mutation {
 			taxonomyVocabularyResource -> {
 				Page paginationPage =
 					taxonomyVocabularyResource.
-						postContentSpaceTaxonomyVocabulariesCommonPage(
-							contentSpaceId, documentBulkSelection);
+						postSiteTaxonomyVocabulariesCommonPage(
+							siteId, documentBulkSelection);
 
 				return paginationPage.getItems();
 			});

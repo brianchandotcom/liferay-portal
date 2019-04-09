@@ -107,25 +107,20 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceTaxonomyVocabulariesCommonPage()
-		throws Exception {
-
+	public void testPostSiteTaxonomyVocabulariesCommonPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	protected Page<TaxonomyVocabulary>
-			invokePostContentSpaceTaxonomyVocabulariesCommonPage(
-				Long contentSpaceId,
-				DocumentBulkSelection documentBulkSelection)
+			invokePostSiteTaxonomyVocabulariesCommonPage(
+				Long siteId, DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/taxonomy-vocabularies/common", siteId);
 
 		options.setLocation(location);
 
@@ -144,18 +139,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostContentSpaceTaxonomyVocabulariesCommonPageResponse(
-				Long contentSpaceId,
-				DocumentBulkSelection documentBulkSelection)
+			invokePostSiteTaxonomyVocabulariesCommonPageResponse(
+				Long siteId, DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/taxonomy-vocabularies/common", siteId);
 
 		options.setLocation(location);
 

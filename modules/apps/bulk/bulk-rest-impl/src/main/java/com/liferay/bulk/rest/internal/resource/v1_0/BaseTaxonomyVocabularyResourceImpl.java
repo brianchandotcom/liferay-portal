@@ -54,13 +54,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common")
+	@Path("/sites/{siteId}/taxonomy-vocabularies/common")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public Page<TaxonomyVocabulary>
-			postContentSpaceTaxonomyVocabulariesCommonPage(
-				@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
-				DocumentBulkSelection documentBulkSelection)
+	public Page<TaxonomyVocabulary> postSiteTaxonomyVocabulariesCommonPage(
+			@NotNull @PathParam("siteId") Long siteId,
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

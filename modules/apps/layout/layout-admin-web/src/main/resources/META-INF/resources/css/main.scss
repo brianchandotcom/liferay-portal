@@ -39,4 +39,10 @@
 		margin-bottom: 0;
 		padding: 0;
 	}
+
+	.card-img-align-top img {
+		top: 0;
+		transform: translate(-50%, 0);
+		width: 100%;
+	}
 }

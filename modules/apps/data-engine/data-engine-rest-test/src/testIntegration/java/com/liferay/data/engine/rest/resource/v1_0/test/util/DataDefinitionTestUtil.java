@@ -27,7 +27,7 @@ import java.io.InputStream;
 /**
  * @author Gabriel Albuquerque
  */
-public class DataEngineTestUtil {
+public class DataDefinitionTestUtil {
 
 	public static DDMStructure addDDMStructure(Group group) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
@@ -42,7 +42,7 @@ public class DataEngineTestUtil {
 	}
 
 	private static String _read(String fileName) throws Exception {
-		Class<?> clazz = DataEngineTestUtil.class;
+		Class<?> clazz = DataDefinitionTestUtil.class;
 
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + fileName);

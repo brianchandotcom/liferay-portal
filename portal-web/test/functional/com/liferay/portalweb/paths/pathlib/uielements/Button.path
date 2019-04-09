@@ -595,7 +595,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIBE</td>
-	<td>//button[contains(.,'Subscribe')]</td>
+	<td>//button[contains(.,'Subscribe')] | //a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>

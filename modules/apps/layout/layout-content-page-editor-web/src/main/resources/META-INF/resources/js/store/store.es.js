@@ -123,7 +123,7 @@ class Store extends State {
 	 * @inheritDoc
 	 */
 	disposed() {
-		if (this._devTools) {
+		if ((process.env.NODE_ENV === 'development') && this._devTools) {
 			this._devTools.disconnect();
 		}
 	}
@@ -153,7 +153,7 @@ class Store extends State {
 
 						this.emit('change', this._state);
 
-						if (this._devTools) {
+						if ((process.env.NODE_ENV === 'development') && this._devTools) {
 							this._devTools.send(
 								{
 									payload,

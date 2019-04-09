@@ -26,6 +26,7 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.internal.RegistryWrapper;
 import com.liferay.registry.internal.TrackedOne;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -73,6 +74,12 @@ public class ListServiceTrackerMapTest {
 
 			_serviceTrackerMap = null;
 		}
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -82,15 +89,15 @@ public class ListServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
-			registerService(trackedOne1, 1);
+			_serviceRegistrations.add(registerService(trackedOne1, 1));
 
 			TrackedOne trackedOne3 = new TrackedOne();
 
-			registerService(trackedOne3, 3);
+			_serviceRegistrations.add(registerService(trackedOne3, 3));
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
-			registerService(trackedOne2, 2);
+			_serviceRegistrations.add(registerService(trackedOne2, 2));
 
 			List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
@@ -111,11 +118,11 @@ public class ListServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
-			registerService(trackedOne1, 1);
+			_serviceRegistrations.add(registerService(trackedOne1, 1));
 
 			TrackedOne trackedOne3 = new TrackedOne();
 
-			registerService(trackedOne3, 3);
+			_serviceRegistrations.add(registerService(trackedOne3, 3));
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
@@ -201,7 +208,7 @@ public class ListServiceTrackerMapTest {
 		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
-			registerService(new TrackedOne());
+			_serviceRegistrations.add(registerService(new TrackedOne()));
 
 			List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
@@ -214,8 +221,8 @@ public class ListServiceTrackerMapTest {
 		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
-			registerService(new TrackedOne());
-			registerService(new TrackedOne());
+			_serviceRegistrations.add(registerService(new TrackedOne()));
+			_serviceRegistrations.add(registerService(new TrackedOne()));
 
 			List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
@@ -316,6 +323,8 @@ public class ListServiceTrackerMapTest {
 	}
 
 	private BundleContext _bundleContext;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;
 
 }

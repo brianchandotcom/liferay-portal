@@ -243,9 +243,12 @@ public class ObjectServiceTrackerMapTest {
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
-			registerService(new TrackedOne(), "anotherTarget");
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(new TrackedOne(), "anotherTarget");
 
 			Assert.assertNull(serviceTrackerMap.getService("aTarget"));
+
+			serviceRegistration.unregister();
 		}
 	}
 

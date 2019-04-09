@@ -2,7 +2,7 @@
 
 exports[`RuleList should show message when rule list is empty 1`] = `
 <div class="form-builder-rule-builder-container">
-  <h1 class="form-builder-section-title text-default"></h1>
+  <h1 class="form-builder-section-title text-default">rule-builder</h1>
   <div class="liferay-ddm-form-rule-rules-list-container">
     <div class="ddm-rule-list-container form-builder-rule-list">
       <div class="main-content-body">

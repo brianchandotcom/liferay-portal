@@ -10,11 +10,11 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
         <div class="panel panel-default">
           <div class="flex-container panel-body">
             <div class="h4 panel-title">condition</div>
-            <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button" disabled=""><span class="dropdown-toggle-selected-value">or</span> <span class="caret"></span></button>
+            <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button" disabled=""><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>or</a></li>
+                <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
                 <li class="divider"></li>
-                <li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>and</a></li>
+                <li class="logic-operator text-uppercase" ref="globalAndOperator"><a data-value="and">and</a></li>
               </ul>
             </div>
             <div class="timeline-increment"><span class="timeline-icon"></span></div>
@@ -151,7 +151,7 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
 exports[`RuleBuilder should render the list of rules when mode is set to view 1`] = `
 <div class="container">
   <div class="form-builder-rule-builder-container">
-    <h1 class="form-builder-section-title text-default">rules</h1>
+    <h1 class="form-builder-section-title text-default">rule-builder</h1>
     <div class="liferay-ddm-form-rule-rules-list-container">
       <div class="ddm-rule-list-container form-builder-rule-list">
         <ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">

@@ -9,11 +9,11 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span> <span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>or</a></li>
+              <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>
-              <li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>and</a></li>
+              <li class="logic-operator text-uppercase" ref="globalAndOperator"><a data-value="and">and</a></li>
             </ul>
           </div>
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
@@ -193,11 +193,11 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span> <span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>or</a></li>
+              <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>
-              <li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>and</a></li>
+              <li class="logic-operator text-uppercase" ref="globalAndOperator"><a data-value="and">and</a></li>
             </ul>
           </div>
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
@@ -377,11 +377,11 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value"></span> <span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">and</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>or</a></li>
+              <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>
-              <li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>and</a></li>
+              <li class="logic-operator text-uppercase" ref="globalAndOperator"><a data-value="and">and</a></li>
             </ul>
           </div>
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
@@ -420,7 +420,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
         </div>
       </div>
       <div class="operator panel panel-default panel-inline">
-        <div class="panel-body text-uppercase">&lt;a&gt;and&lt;/a&gt;</div>
+        <div class="panel-body text-uppercase">and</div>
       </div>
       <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
@@ -448,7 +448,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
         </div>
       </div>
       <div class="operator panel panel-default panel-inline">
-        <div class="panel-body text-uppercase">&lt;a&gt;and&lt;/a&gt;</div>
+        <div class="panel-body text-uppercase">and</div>
       </div>
       <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>

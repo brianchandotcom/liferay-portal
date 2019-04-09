@@ -1653,65 +1653,6 @@ public class CalendarPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarBookingService(
-		CalendarBookingService calendarBookingService) {
-
-		_calendarBookingService = calendarBookingService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarNotificationTemplateService(
-		CalendarNotificationTemplateService
-			calendarNotificationTemplateService) {
-
-		_calendarNotificationTemplateService =
-			calendarNotificationTemplateService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarResourceService(
-		CalendarResourceService calendarResourceService) {
-
-		_calendarResourceService = calendarResourceService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarService(CalendarService calendarService) {
-		_calendarService = calendarService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarWebUpgrade(
-		CalendarWebUpgrade calendarWebUpgrade) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.calendar.web)(&(release.schema.version>=1.1.0)(!(release.schema.version>=1.2.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	protected void setRenderRequestAttributes(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -1724,11 +1665,6 @@ public class CalendarPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	protected CalendarBooking updateCalendarBooking(
@@ -1842,8 +1778,13 @@ public class CalendarPortlet extends MVCPortlet {
 	)
 	private BaseSearcher _baseSearcher;
 
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
 	private CalendarBookingService _calendarBookingService;
+
+	@Reference
 	private CalendarLocalService _calendarLocalService;
 
 	@Reference(
@@ -1851,18 +1792,26 @@ public class CalendarPortlet extends MVCPortlet {
 	)
 	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
 
+	@Reference
 	private CalendarNotificationTemplateService
 		_calendarNotificationTemplateService;
 
 	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalServiceService;
 
+	@Reference
 	private CalendarResourceService _calendarResourceService;
+
+	@Reference
 	private CalendarService _calendarService;
+
+	@Reference
+	private CalendarWebUpgrade _calendarWebUpgrade;
 
 	@Reference
 	private CustomSQL _customSQL;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -1871,6 +1820,12 @@ public class CalendarPortlet extends MVCPortlet {
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.calendar.web)(&(release.schema.version>=1.1.0)(!(release.schema.version>=1.2.0))))"
+	)
+	private Release _release;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

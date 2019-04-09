@@ -171,21 +171,7 @@ public class CalendarBookingAssetRendererFactory
 			permissionChecker, calendarBooking.getCalendarId(), actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.calendar.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Reference(
@@ -196,6 +182,7 @@ public class CalendarBookingAssetRendererFactory
 	@Reference
 	private Portal _portal;
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.calendar.web)")
 	private ServletContext _servletContext;
 
 }

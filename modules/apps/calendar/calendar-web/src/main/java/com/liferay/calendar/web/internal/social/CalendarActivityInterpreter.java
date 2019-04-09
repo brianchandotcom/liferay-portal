@@ -140,17 +140,11 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 			permissionChecker, calendarBooking.getCalendarId(), actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
 	private static final String[] _CLASS_NAMES = {
 		CalendarBooking.class.getName()
 	};
 
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Reference(

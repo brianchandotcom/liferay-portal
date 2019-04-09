@@ -197,13 +197,9 @@ definition {
 		}
 
 		if ("${pageAddTag}" == "true") {
-			WikiPage.addTagPGCmd(
-				tagName = "${tagName}",
-				tagNameList = "${tagNameList}",
-				wikiPageTitle = "${wikiPageTitle}"
-			);
+			WikiPage.addTagPGCmd(tagNameList = "${tagNameList}");
 
-			WikiPage.viewTagViaAddPG(tagName = "${tagName}");
+			WikiPage.viewTagViaAddPG(tagNameList = "${tagNameList}");
 		}
 
 		PortletEntry.publish();
@@ -333,13 +329,9 @@ definition {
 		}
 
 		if ("${pageAddTag}" == "true") {
-			WikiPage.addTagPGCmd(
-				tagName = "${tagName}",
-				tagNameList = "${tagNameList}",
-				wikiPageTitle = "${wikiPageTitle}"
-			);
+			WikiPage.addTagPGCmd(tagNameList = "${tagNameList}");
 
-			WikiPage.viewTagViaAddPG(tagName = "${tagName}");
+			WikiPage.viewTagViaAddPG(tagNameList = "${tagNameList}");
 		}
 
 		if (isSet(customFieldText)) {
@@ -356,21 +348,8 @@ definition {
 	macro addTagPGCmd {
 		Panel.expandPanel(panel = "Categorization");
 
-		if (isSet(tagNameList)) {
-			for (var tagName : list "${tagNameList}") {
-				Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
-
-				AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
-			}
-		}
-		else {
-			var key_tagName = "${tagName}";
-
-			Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
-
-			AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
-
-			AssertElementPresent(locator1 = "AssetCategorization#TAG");
+		for (var tagName : list "${tagNameList}") {
+			AssetCategorization.addTag(tagName = "${tagName}");
 		}
 	}
 
@@ -1517,10 +1496,14 @@ definition {
 	}
 
 	macro viewTagViaAddPG {
-		AssertElementPresent(
-			locator1 = "AssetCategorization#TAG",
-			key_tagName = StringUtil.lowerCase("${tagName}")
-		);
+		for (var tagName : list "${tagNameList}") {
+			var key_tagName = "${tagName}";
+
+			AssertElementPresent(
+				locator1 = "AssetCategorization#TAG",
+				key_tagName = StringUtil.lowerCase("${tagName}")
+			);
+		}
 	}
 
 	macro viewViewCount {

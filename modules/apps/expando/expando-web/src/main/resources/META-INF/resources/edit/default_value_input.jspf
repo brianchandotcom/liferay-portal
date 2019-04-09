@@ -15,7 +15,7 @@
 --%>
 
 <c:choose>
-	<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN %>">
+	<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_BOOLEAN) %>">
 
 		<%
 		boolean curValue = true;
@@ -30,9 +30,39 @@
 			<aui:option label="<%= false %>" selected="<%= !curValue %>" value="<%= false %>" />
 		</aui:select>
 	</c:when>
-	<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">
+	<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST) %>">
+		<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType(true)" value="<%= ExpandoColumnConstants.getDataType(type) %>">
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>" />
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>" />
+			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>" />
+		</aui:select>
+
+		<%
+		String values = StringPool.BLANK;
+
+		if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			values = StringUtil.merge((double[])defaultValue, StringPool.NEW_LINE);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+			values = StringUtil.merge((float[])defaultValue, StringPool.NEW_LINE);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+			values = StringUtil.merge((int[])defaultValue, StringPool.NEW_LINE);
+		}
+		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+			values = StringUtil.merge((long[])defaultValue, StringPool.NEW_LINE);
+		}
+		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+			values = StringUtil.merge((short[])defaultValue, StringPool.NEW_LINE);
+		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
+			values = StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE);
+		}
+		%>
+
+		<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= values %>" />
 	</c:when>
-	<c:when test="<%= type == ExpandoColumnConstants.DATE %>">
+	<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_DATE) %>">
 
 		<%
 		Calendar defaultValueDate = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -69,46 +99,14 @@
 			</div>
 		</aui:field-wrapper>
 	</c:when>
-	<c:when test="<%= type == ExpandoColumnConstants.DATE_ARRAY %>">
-	</c:when>
-	<c:when test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
-		<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType(true)" value="<%= ExpandoColumnConstants.getDataType(type) %>">
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>" />
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>" />
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>" />
-		</aui:select>
-
-		<%
-		String values = StringPool.BLANK;
-
-		if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
-			values = StringUtil.merge((double[])defaultValue, StringPool.NEW_LINE);
-		}
-		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
-			values = StringUtil.merge((float[])defaultValue, StringPool.NEW_LINE);
-		}
-		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
-			values = StringUtil.merge((int[])defaultValue, StringPool.NEW_LINE);
-		}
-		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
-			values = StringUtil.merge((long[])defaultValue, StringPool.NEW_LINE);
-		}
-		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
-			values = StringUtil.merge((short[])defaultValue, StringPool.NEW_LINE);
-		}
-		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-			values = StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE);
-		}
-		%>
-
-		<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= values %>" />
-	</c:when>
 	<c:otherwise>
-		<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType(false)" value="<%= ExpandoColumnConstants.getDataType(type) %>">
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>" />
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>" />
-			<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>" />
-		</aui:select>
+		<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) %>">
+			<aui:select disabled="<%= expandoColumn != null %>" label="data-type" name="dataType" onChange="setDataType(false)" value="<%= ExpandoColumnConstants.getDataType(type) %>">
+				<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>" />
+				<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>" />
+				<aui:option label="<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>" />
+			</aui:select>
+		</c:if>
 
 		<%
 		String xml = StringPool.BLANK;

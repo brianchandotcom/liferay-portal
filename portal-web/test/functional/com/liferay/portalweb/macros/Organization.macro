@@ -1,72 +1,6 @@
 definition {
 	var orgName = "Organization Name";
 
-	macro addAdditionalEmailAddressesCP {
-		Organization.gotoIdentificationCP(panel = "Additional Email Addresses");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD",
-			value1 = "${orgAdditionalEmailAddress}"
-		);
-
-		Click(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD"
-		);
-
-		PortletEntry.save();
-
-		Organization.gotoIdentificationCP(panel = "Additional Email Addresses");
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD",
-			value1 = "${orgAdditionalEmailAddress}"
-		);
-	}
-
-	macro addAddressCP {
-		Organization.gotoIdentificationCP();
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_STREET_FIELD_1",
-			value1 = "${orgAddressStreet}"
-		);
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_CITY_FIELD",
-			value1 = "${orgAddressCity}"
-		);
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_POSTAL_CODE_FIELD",
-			value1 = "${orgAddressPostal}"
-		);
-
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_COUNTRY_SELECT",
-			value1 = "${orgAddressCountry}"
-		);
-
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_REGION_SELECT",
-			value1 = "${orgAddressRegion}"
-		);
-
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_TYPE_SELECT",
-			value1 = "${orgAddressType}"
-		);
-
-		Check(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_MAILING_CHECKBOX"
-		);
-
-		Click(
-			locator1 = "UsersAndOrganizationsEditOrganization#ADDRESSES_PRIMARY_RADIO"
-		);
-
-		PortletEntry.save();
-	}
-
 	macro addCategorizationCP {
 		var key_tagName = "${tagName}";
 
@@ -252,28 +186,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addPhoneNumbersCP {
-		Organization.gotoIdentificationCP(panel = "Phone Numbers");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD",
-			value1 = "${orgPhoneNumber}"
-		);
-
-		Click(
-			locator1 = "UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_PRIMARY_RADIO"
-		);
-
-		PortletEntry.save();
-
-		Organization.gotoIdentificationCP(panel = "Phone Numbers");
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD",
-			value1 = "${orgPhoneNumber}"
-		);
-	}
-
 	macro addSecurityQuestionsCP {
 		MenuBar.gotoSecurityQuestions();
 
@@ -316,34 +228,6 @@ definition {
 		}
 	}
 
-	macro addServicesCP {
-		Organization.gotoIdentificationCP(panel = "Services");
-
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT",
-			value1 = "${orgServicesOpen}"
-		);
-
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT",
-			value1 = "${orgServicesClosed}"
-		);
-
-		PortletEntry.save();
-
-		Organization.gotoIdentificationCP(panel = "Services");
-
-		AssertSelectedLabel(
-			locator1 = "UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT",
-			value1 = "${orgServicesOpen}"
-		);
-
-		AssertSelectedLabel(
-			locator1 = "UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT",
-			value1 = "${orgServicesClosed}"
-		);
-	}
-
 	macro addSiteCP {
 		Organization.editOrganizationCP(orgName = "${orgName}");
 
@@ -373,26 +257,6 @@ definition {
 		}
 
 		PortletEntry.save();
-	}
-
-	macro addWebsitesCP {
-		Organization.gotoIdentificationCP(panel = "Websites");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD",
-			value1 = "${orgWebsite}"
-		);
-
-		Click(locator1 = "UsersAndOrganizationsEditOrganization#WEBSITES_PRIMARY_RADIO");
-
-		PortletEntry.save();
-
-		Organization.gotoIdentificationCP(panel = "Websites");
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD",
-			value1 = "${orgWebsite}"
-		);
 	}
 
 	macro addWithLocalizedCountryCP {
@@ -557,25 +421,6 @@ definition {
 		);
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "${orgName}");
-	}
-
-	macro gotoIdentificationCP {
-		Navigator.gotoNavTab(navTab = "Identification");
-
-		if (isSet(panel)) {
-			Panel.expandPanel(panel = "${panel}");
-		}
-	}
-
-	macro gotoMiscellaneousCP {
-		AssertClick(
-			locator1 = "UsersAndOrganizations#MISCELLANEOUS",
-			value1 = "Miscellaneous"
-		);
-
-		if (isSet(panel)) {
-			Panel.expandPanel(panel = "${panel}");
-		}
 	}
 
 	macro manageMembershipOptionsInSites {

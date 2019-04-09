@@ -20,11 +20,6 @@
 </tr>
 <!--EDIT_TABS-->
 <tr>
-	<td>MISCELLANEOUS</td>
-	<td>//li[contains(@class,'tab')]/a[contains(.,'Miscellaneous')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_INFORMATION</td>
 	<td>//li[contains(@class,'tab')]/a[contains(.,'Organization Information')]</td>
 	<td></td>

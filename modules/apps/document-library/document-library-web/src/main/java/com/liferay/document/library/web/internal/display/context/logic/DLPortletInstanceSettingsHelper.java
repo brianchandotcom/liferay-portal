@@ -211,10 +211,7 @@ public class DLPortletInstanceSettingsHelper {
 			return true;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.isShowTabs();
+		return false;
 	}
 
 	private String[] _getAllEntryColumns() {

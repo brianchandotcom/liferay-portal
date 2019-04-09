@@ -214,11 +214,14 @@ class EditCategories extends Component {
 	/**
 	 * Sends request to backend services
 	 * to update the categories.
+	 * @param {!Event} event
 	 *
 	 * @private
 	 * @review
 	 */
-	_handleSaveBtnClick() {
+	_handleFormSubmit(event) {
+		event.preventDefault();
+
 		if (!this._validateRequiredVocabularies()) {
 			return;
 		}

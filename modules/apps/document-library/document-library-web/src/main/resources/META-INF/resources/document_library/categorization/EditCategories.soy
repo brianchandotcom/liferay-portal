@@ -9,7 +9,7 @@
 	{@param spritemap: string}
 	{@param? _handleCategoriesChange: any}
 	{@param? _handleRadioChange: any}
-	{@param? _handleSaveBtnClick: any}
+	{@param? _handleFormSubmit: any}
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
@@ -17,50 +17,52 @@
 	{@param? vocabularies: list<?>}
 
 	{if $showModal}
-		{call liferay.frontend.Modal.render}
-			{param body kind="html"}
-				{if $loading}
-					{call .loading /}
-				{else}
-					{call .categories}
-						{param description: $description /}
-						{param groupIds: $groupIds /}
-						{param hiddenInput: $hiddenInput /}
-						{param multiple: $multiple /}
-						{param namespace: $namespace /}
-						{param selectAll: $selectAll /}
-						{param selectCategoriesUrl: $selectCategoriesUrl /}
-						{param spritemap: $spritemap /}
-						{param vocabularies: $vocabularies /}
-						{param _handleCategoriesChange: $_handleCategoriesChange /}
-						{param _handleRadioChange: $_handleRadioChange /}
-					{/call}
-				{/if}
-			{/param}
+		<form data-onsubmit="{$_handleFormSubmit}">
+			{call liferay.frontend.Modal.render}
+				{param body kind="html"}
+					{if $loading}
+						{call .loading /}
+					{else}
+						{call .categories}
+							{param description: $description /}
+							{param groupIds: $groupIds /}
+							{param hiddenInput: $hiddenInput /}
+							{param multiple: $multiple /}
+							{param namespace: $namespace /}
+							{param selectAll: $selectAll /}
+							{param selectCategoriesUrl: $selectCategoriesUrl /}
+							{param spritemap: $spritemap /}
+							{param vocabularies: $vocabularies /}
+							{param _handleCategoriesChange: $_handleCategoriesChange /}
+							{param _handleRadioChange: $_handleRadioChange /}
+						{/call}
+					{/if}
+				{/param}
 
-			{param dialogClasses kind="text"}
-				edit-tags modal-dialog-sm
+				{param dialogClasses kind="text"}
+					edit-tags modal-dialog-sm
 
-				{if $selectAll}
-					{sp}modal-dialog-expanded
-				{/if}
-			{/param}
+					{if $selectAll}
+						{sp}modal-dialog-expanded
+					{/if}
+				{/param}
 
-			{param header kind="html"}
-				{msg desc=""}edit-categories{/msg}
-			{/param}
+				{param header kind="html"}
+					{msg desc=""}edit-categories{/msg}
+				{/param}
 
-			{param footer kind="html"}
-				<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
-				<button class="btn btn-primary" data-onclick="{$_handleSaveBtnClick}" type="button">{msg desc=""}save{/msg}</button>
-			{/param}
+				{param footer kind="html"}
+					<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+					<button class="btn btn-primary" type="submit">{msg desc=""}save{/msg}</button>
+				{/param}
 
-			{param ref: 'modal' /}
+				{param ref: 'modal' /}
 
-			{param spritemap: $spritemap /}
+				{param spritemap: $spritemap /}
 
-			{param visible: true /}
-		{/call}
+				{param visible: true /}
+			{/call}
+		</form>
 	{/if}
 {/template}
 

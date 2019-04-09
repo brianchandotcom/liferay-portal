@@ -815,6 +815,12 @@ AUI.add(
 			validateFieldName: function(fieldName) {
 				var valid = true;
 
+				if ((/[-–—]/).test(fieldName)) {
+					valid = false;
+
+					return valid;
+				}
+
 				for (var i = 0; i < fieldName.length; i++) {
 					var item = fieldName[i];
 

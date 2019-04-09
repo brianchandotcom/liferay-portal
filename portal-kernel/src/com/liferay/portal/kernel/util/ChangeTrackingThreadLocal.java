@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.kernel.util;
+package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 

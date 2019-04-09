@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.change.tracking.kernel.util.ChangeTrackingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
+import com.liferay.portal.kernel.util.ChangeTrackingThreadLocal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 

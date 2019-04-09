@@ -15,9 +15,9 @@
 package com.liferay.change.tracking.change.lists.web.internal;
 
 import com.liferay.change.tracking.configuration.CTServiceConfiguration;
-import com.liferay.change.tracking.kernel.util.ChangeTrackingThreadLocal;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.ChangeTrackingThreadLocal;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

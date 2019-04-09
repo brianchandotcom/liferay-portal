@@ -224,7 +224,7 @@ public class FreeMarkerTool {
 
 	public boolean hasJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
-		String... arguments) {
+		String... parameterNames) {
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			Operation operation = javaMethodSignature.getOperation();
@@ -237,8 +237,8 @@ public class FreeMarkerTool {
 
 			sb.append(httpMethod);
 
-			for (String argument : arguments) {
-				sb.append(StringUtil.upperCaseFirstLetter(argument));
+			for (String parameterName : parameterNames) {
+				sb.append(StringUtil.upperCaseFirstLetter(parameterName));
 			}
 
 			String methodName = javaMethodSignature.getMethodName();
@@ -250,7 +250,7 @@ public class FreeMarkerTool {
 			List<JavaMethodParameter> javaMethodParameters =
 				javaMethodSignature.getJavaMethodParameters();
 
-			if (javaMethodParameters.size() != arguments.length) {
+			if (javaMethodParameters.size() != parameterNames.length) {
 				continue;
 			}
 
@@ -260,7 +260,7 @@ public class FreeMarkerTool {
 
 				String parameterName = javaMethodParameter.getParameterName();
 
-				if (!Objects.equals(parameterName, arguments[i])) {
+				if (!Objects.equals(parameterName, parameterNames[i])) {
 					continue;
 				}
 			}

@@ -52,8 +52,8 @@ const ConnectedFragmentsEditorToolbar = getConnectedComponent(
 	FragmentsEditorToolbar,
 	[
 		'classPK',
-		'discardDraftURL',
 		'discardDraftRedirectURL',
+		'discardDraftURL',
 		'fragmentsEditorSidebarVisible',
 		'lastSaveDate',
 		'portletNamespace',

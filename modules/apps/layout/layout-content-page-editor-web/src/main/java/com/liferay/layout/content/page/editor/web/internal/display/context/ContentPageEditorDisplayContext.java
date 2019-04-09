@@ -174,11 +174,11 @@ public class ContentPageEditorDisplayContext {
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 			soyContext.put(
+				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
+			).put(
 				"discardDraftURL",
 				getFragmentEntryActionURL(
 					"/content_layout/discard_draft_layout")
-			).put(
-				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 			);
 		}
 

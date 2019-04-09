@@ -82,15 +82,18 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX, "6"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX, "6",
+					"document-text"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX, "4"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX, "4",
+					"document-presentation"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX, "2"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX, "2",
+					"document-table"));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -99,11 +102,11 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 	private URLMenuItem _createURLMenuItem(
 		PortletRequest portletRequest, Folder folder, String key,
-		String contentType, String fileIconColorIndex) {
+		String contentType, String fileIconColorIndex, String icon) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("document");
+		urlMenuItem.setIcon(icon);
 		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));

@@ -16,7 +16,6 @@ package com.liferay.layout.type.controller.display.page.internal.product.navigat
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -103,20 +102,12 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		InfoDisplayObject infoDisplayObject =
-			(InfoDisplayObject)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
+		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
 
-		if (infoDisplayObject == null) {
+		if (assetEntry == null) {
 			return false;
 		}
-
-		Object modelEntry = infoDisplayObject.getModelEntry();
-
-		if (!(modelEntry instanceof AssetEntry)) {
-			return false;
-		}
-
-		AssetEntry assetEntry = (AssetEntry)modelEntry;
 
 		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 

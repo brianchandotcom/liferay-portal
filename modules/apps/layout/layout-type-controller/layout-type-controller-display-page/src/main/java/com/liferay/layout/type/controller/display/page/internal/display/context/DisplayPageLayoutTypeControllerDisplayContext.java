@@ -31,6 +31,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,7 +61,8 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		_request = request;
 
 		InfoDisplayObject infoDisplayObject =
-			(InfoDisplayObject)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
+			(InfoDisplayObject)request.getAttribute(
+				DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT);
 
 		if (infoDisplayObject == null) {
 			long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
@@ -71,6 +73,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			if (assetEntry != null) {
 				infoDisplayObject = new AssetInfoDisplayObject(assetEntry);
 
+				request.setAttribute(
+					DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT,
+					assetEntry);
 				request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 			}
 		}

@@ -58,7 +58,7 @@ public class ScoreFunctionsInstantiationTest {
 	}
 
 	@Test
-	public void testGaussianDecay() {
+	public void testGaussianDecay1() {
 		Assert.assertNotNull(
 			_scoreFunctions.gaussianDecay(
 				"field", "origin", "scale", "offset"));
@@ -72,7 +72,7 @@ public class ScoreFunctionsInstantiationTest {
 	}
 
 	@Test
-	public void testLinearDecay() {
+	public void testLinearDecay1() {
 		Assert.assertNotNull(
 			_scoreFunctions.linearDecay("field", "origin", "scale", "offset"));
 	}

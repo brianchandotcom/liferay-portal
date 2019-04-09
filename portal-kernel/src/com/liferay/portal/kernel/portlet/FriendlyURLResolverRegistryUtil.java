@@ -16,20 +16,24 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.collections.ServiceRegistrationMapImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eduardo García
@@ -41,7 +45,7 @@ public class FriendlyURLResolverRegistryUtil {
 	public static FriendlyURLResolver getFriendlyURLResolver(
 		String urlSeparator) {
 
-		return _serviceTrackerMap.getService(urlSeparator);
+		return _instance._getFriendlyURLResolver(urlSeparator);
 	}
 
 	/**
@@ -56,24 +60,11 @@ public class FriendlyURLResolverRegistryUtil {
 	public static Collection<FriendlyURLResolver>
 		getFriendlyURLResolversAsCollection() {
 
-		List<FriendlyURLResolver> friendlyURLResolvers = new ArrayList<>();
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			FriendlyURLResolver friendlyURLResolver =
-				_serviceTrackerMap.getService(key);
-
-			if (friendlyURLResolver != null) {
-				friendlyURLResolvers.add(friendlyURLResolver);
-			}
-		}
-
-		return friendlyURLResolvers;
+		return _instance._getFriendlyURLResolversAsCollection();
 	}
 
 	public static String[] getURLSeparators() {
-		Set<String> urlSeparators = _serviceTrackerMap.keySet();
-
-		return urlSeparators.toArray(new String[urlSeparators.size()]);
+		return _instance._getURLSeparators();
 	}
 
 	public static void register(FriendlyURLResolver friendlyURLResolver) {
@@ -95,29 +86,96 @@ public class FriendlyURLResolverRegistryUtil {
 		}
 	}
 
+	private FriendlyURLResolverRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			FriendlyURLResolver.class,
+			new FriendlyURLResolverServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private FriendlyURLResolver _getFriendlyURLResolver(String urlSeparator) {
+		return _friendlyURLResolvers.get(urlSeparator);
+	}
+
+	private Collection<FriendlyURLResolver>
+		_getFriendlyURLResolversAsCollection() {
+
+		return _friendlyURLResolvers.values();
+	}
+
+	private String[] _getURLSeparators() {
+		Set<String> urlSeparators = _friendlyURLResolvers.keySet();
+
+		return urlSeparators.toArray(new String[urlSeparators.size()]);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLResolverRegistryUtil.class);
+
+	private static final FriendlyURLResolverRegistryUtil _instance =
+		new FriendlyURLResolverRegistryUtil();
+
 	private static final ServiceRegistrationMap<FriendlyURLResolver>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 
-	private static final ServiceTrackerMap<String, FriendlyURLResolver>
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			FriendlyURLResolver.class, null,
-			new ServiceReferenceMapper<String, FriendlyURLResolver>() {
+	private final Map<String, FriendlyURLResolver> _friendlyURLResolvers =
+		new ConcurrentHashMap<>();
+	private final ServiceTracker<FriendlyURLResolver, FriendlyURLResolver>
+		_serviceTracker;
 
-				@Override
-				public void map(
-					ServiceReference<FriendlyURLResolver> serviceReference,
-					ServiceReferenceMapper.Emitter<String> emitter) {
+	private class FriendlyURLResolverServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<FriendlyURLResolver, FriendlyURLResolver> {
 
-					Registry registry = RegistryUtil.getRegistry();
+		@Override
+		public FriendlyURLResolver addingService(
+			ServiceReference<FriendlyURLResolver> serviceReference) {
 
-					FriendlyURLResolver friendlyURLResolver =
-						registry.getService(serviceReference);
+			Registry registry = RegistryUtil.getRegistry();
 
-					emitter.emit(friendlyURLResolver.getURLSeparator());
+			FriendlyURLResolver friendlyURLResolver = registry.getService(
+				serviceReference);
 
-					registry.ungetService(serviceReference);
-				}
+			if (_friendlyURLResolvers.containsKey(
+					friendlyURLResolver.getURLSeparator())) {
 
-			});
+				_log.error(
+					StringBundler.concat(
+						"Unable to register friendly url resolver because ",
+						"there is another friendly url resolver with the same ",
+						"url separator ",
+						friendlyURLResolver.getURLSeparator()));
+
+				return null;
+			}
+
+			_friendlyURLResolvers.put(
+				friendlyURLResolver.getURLSeparator(), friendlyURLResolver);
+
+			return friendlyURLResolver;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FriendlyURLResolver> serviceReference,
+			FriendlyURLResolver friendlyURLResolver) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FriendlyURLResolver> serviceReference,
+			FriendlyURLResolver friendlyURLResolver) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_friendlyURLResolvers.remove(friendlyURLResolver.getURLSeparator());
+		}
+
+	}
 
 }

@@ -124,11 +124,14 @@ class EditTags extends Component {
 	/**
 	 * Sends request to backend services
 	 * to update the tags.
+	 * @param {!Event} event
 	 *
 	 * @private
 	 * @review
 	 */
-	_handleSaveBtnClick() {
+	_handleFormSubmit(event) {
+		event.preventDefault();
+
 		let finalTags = this._commonTags.map(tag => tag.label);
 
 		let addedTags = [];

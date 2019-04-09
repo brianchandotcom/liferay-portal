@@ -111,48 +111,28 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")"
 	)
-	protected void setAssetTagsCloudPortlet(Portlet portlet) {
-	}
+	private Portlet _assetTagsCloudPortlet;
 
-	@Reference(
-		target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")",
-		unbind = "-"
-	)
-	protected void setBlogsPortlet(Portlet portlet) {
-	}
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	private Portlet _blogsPortlet;
 
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")",
-		unbind = "-"
-	)
-	protected void setRecentBloggersPortlet(Portlet portlet) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
+	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")"
+	)
+	private Portlet _recentBloggersPortlet;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -12,45 +12,46 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.internal.servlet.taglib.ui;
+package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
 
+import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
- * @author Philip Jones
+ * @author Drew Brokke
  */
-@Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=100",
-	service = FormNavigatorEntry.class
-)
-public class CompanySettingsRatingsFormNavigatorEntry
-	extends BaseCompanySettingsFormNavigatorEntry {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class RatingsPortalSettingsConfigurationScreenContributor
+	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
+		return "community-tools";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/ratings.jsp";
 	}
 
 	@Override
 	public String getKey() {
+		return "social-ratings";
+	}
+
+	@Override
+	public String getName(Locale locale) {
 		return "ratings";
 	}
 
 	@Override
-	public boolean isVisible(User user, Company company) {
+	public boolean isVisible() {
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
 				PortletRatingsDefinitionUtil.
@@ -61,20 +62,6 @@ public class CompanySettingsRatingsFormNavigatorEntry
 		}
 
 		return true;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/ratings.jsp";
 	}
 
 }

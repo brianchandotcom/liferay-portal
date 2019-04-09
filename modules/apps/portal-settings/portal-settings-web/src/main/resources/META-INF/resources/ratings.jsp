@@ -22,16 +22,10 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="ratings"
-/>
-
-<h3><liferay-ui:message key="ratings" /></h3>
-
 <p><liferay-ui:message key="select-the-default-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id='<%= renderResponse.getNamespace() + "ratingsSettingsContainer" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<%
 	Map<String, Map<String, RatingsType>> companyRatingsTypeMaps = companyPortletRatingsDefinitionDisplayContext.getCompanyRatingsTypeMaps();

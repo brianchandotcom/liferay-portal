@@ -837,7 +837,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		if (name.length() > maxLength) {
 			throw new AssetTagException(
-				"Tag name cannot exceed " + maxLength + " characters",
+				"Tag name has more than " + maxLength + " characters",
 				AssetTagException.MAX_LENGTH);
 		}
 	}

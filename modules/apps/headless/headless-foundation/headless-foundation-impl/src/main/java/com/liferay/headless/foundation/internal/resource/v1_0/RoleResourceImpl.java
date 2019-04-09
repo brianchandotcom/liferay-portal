@@ -39,13 +39,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
-	public Page<Role> getMyUserAccountRolesPage(Long userAccountId)
-		throws Exception {
-
-		return _getRolesPage(userAccountId);
-	}
-
-	@Override
 	public Role getRole(Long roleId) throws Exception {
 		return _toRole(_roleService.getRole(roleId));
 	}
@@ -67,18 +60,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			pagination,
 			_roleService.searchCount(
 				contextCompany.getCompanyId(), null, types, null));
-	}
-
-	@Override
-	public Page<Role> getUserAccountRolesPage(Long userAccountId)
-		throws Exception {
-
-		return _getRolesPage(userAccountId);
-	}
-
-	private Page<Role> _getRolesPage(Long userAccountId) throws Exception {
-		return Page.of(
-			transform(_roleService.getUserRoles(userAccountId), this::_toRole));
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)

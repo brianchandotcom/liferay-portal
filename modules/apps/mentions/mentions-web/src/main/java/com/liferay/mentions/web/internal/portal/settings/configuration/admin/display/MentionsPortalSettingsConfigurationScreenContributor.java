@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.mentions.web.internal.servlet.taglib.ui;
+package com.liferay.mentions.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.mentions.constants.MentionsWebKeys;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import javax.portlet.PortletPreferences;
 
@@ -34,29 +31,40 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Drew Brokke
  */
-@Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=90",
-	service = FormNavigatorEntry.class
-)
-public class MentionsCompanySettingsFormNavigatorEntry
-	extends BaseMentionsFormNavigatorEntry {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class MentionsPortalSettingsConfigurationScreenContributor
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
+		return "community-tools";
 	}
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS;
+	public String getJspPath() {
+		return "/portal_settings/mentions.jsp";
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
+	public String getKey() {
+		return "mentions";
+	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -69,22 +77,12 @@ public class MentionsCompanySettingsFormNavigatorEntry
 
 		request.setAttribute(
 			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
-
-		super.include(request, response);
 	}
 
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.mentions.web)",
 		unbind = "-"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/portal_settings/mentions.jsp";
-	}
+	private ServletContext _servletContext;
 
 }

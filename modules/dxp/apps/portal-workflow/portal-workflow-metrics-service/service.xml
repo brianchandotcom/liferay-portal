@@ -113,5 +113,7 @@
 		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
 		<exception>WorkflowMetricsSLADefinitionDuration</exception>
 		<exception>WorkflowMetricsSLADefinitionName</exception>
+		<exception>WorkflowMetricsSLADefinitionStartNodeKeys</exception>
+		<exception>WorkflowMetricsSLADefinitionStopNodeKeys</exception>
 	</exceptions>
 </service-builder>

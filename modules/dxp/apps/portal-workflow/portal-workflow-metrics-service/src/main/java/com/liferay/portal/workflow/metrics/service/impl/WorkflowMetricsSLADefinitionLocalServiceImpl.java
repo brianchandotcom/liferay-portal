@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +34,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
@@ -237,6 +240,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		if (duration <= 0) {
 			throw new WorkflowMetricsSLADefinitionDurationException();
+		}
+
+		if (ArrayUtil.isEmpty(startNodeKeys)) {
+			throw new WorkflowMetricsSLADefinitionStartNodeKeysException();
+		}
+
+		if (ArrayUtil.isEmpty(stopNodeKeys)) {
+			throw new WorkflowMetricsSLADefinitionStopNodeKeysException();
 		}
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =

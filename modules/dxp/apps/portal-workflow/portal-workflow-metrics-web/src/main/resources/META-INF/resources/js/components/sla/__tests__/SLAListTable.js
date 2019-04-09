@@ -24,7 +24,7 @@ test('Should render component', () => {
 
 	const component = renderer.create(
 		<Router>
-			<SLAListTable sla={data} />
+			<SLAListTable items={data} />
 		</Router>
 	);
 

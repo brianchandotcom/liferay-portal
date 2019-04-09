@@ -6,7 +6,7 @@ import './FloatingToolbarBackgroundImagePanelDelegateTemplate.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
 import templates from './FloatingToolbarBackgroundImagePanel.soy';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_ROW_CONFIG, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarBackgroundImagePanel
@@ -21,7 +21,7 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 	_handleSelectButtonClick() {
 		openImageSelector(
 			{
-				callback: url => this._updateSectionBackgroundImage(url),
+				callback: url => this._updateRowBackgroundImage(url),
 				imageSelectorURL: this.imageSelectorURL,
 				portletNamespace: this.portletNamespace
 			}
@@ -34,16 +34,16 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_handleClearButtonClick() {
-		this._updateSectionBackgroundImage('');
+		this._updateRowBackgroundImage('');
 	}
 
 	/**
-	 * Updates section image
-	 * @param {string} backgroundImage Section image
+	 * Updates row image
+	 * @param {string} backgroundImage Row image
 	 * @private
 	 * @review
 	 */
-	_updateSectionBackgroundImage(backgroundImage) {
+	_updateRowBackgroundImage(backgroundImage) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -52,12 +52,12 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 				}
 			)
 			.dispatchAction(
-				UPDATE_SECTION_CONFIG,
+				UPDATE_ROW_CONFIG,
 				{
 					config: {
 						backgroundImage
 					},
-					sectionId: this.itemId
+					rowId: this.itemId
 				}
 			)
 			.dispatchAction(

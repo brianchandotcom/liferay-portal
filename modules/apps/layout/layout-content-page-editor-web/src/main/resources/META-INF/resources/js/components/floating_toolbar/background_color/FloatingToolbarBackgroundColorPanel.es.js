@@ -4,10 +4,10 @@ import Soy from 'metal-soy';
 
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
-import {CONFIG_KEYS} from '../../../utils/sectionConstants';
+import {CONFIG_KEYS} from '../../../utils/rowConstants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_ROW_CONFIG, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarBackgroundColorPanel
@@ -20,7 +20,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 * @review
 	 */
 	_handleClearButtonClick() {
-		this._updateSectionConfig(
+		this._updateRowConfig(
 			{
 				[CONFIG_KEYS.backgroundColorCssClass]: ''
 			}
@@ -34,7 +34,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 * @review
 	 */
 	_handleBackgroundColorButtonClick(event) {
-		this._updateSectionConfig(
+		this._updateRowConfig(
 			{
 				[CONFIG_KEYS.backgroundColorCssClass]: event.color
 			}
@@ -42,12 +42,12 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	}
 
 	/**
-	 * Updates section configuration
-	 * @param {object} config Section configuration
+	 * Updates row configuration
+	 * @param {object} config Row configuration
 	 * @private
 	 * @review
 	 */
-	_updateSectionConfig(config) {
+	_updateRowConfig(config) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -56,10 +56,10 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 				}
 			)
 			.dispatchAction(
-				UPDATE_SECTION_CONFIG,
+				UPDATE_ROW_CONFIG,
 				{
 					config,
-					sectionId: this.itemId
+					rowId: this.itemId
 				}
 			)
 			.dispatchAction(

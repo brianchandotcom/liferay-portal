@@ -3,12 +3,12 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION} from '../../../actions/actions.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_ROW} from '../../../actions/actions.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/FragmentEntryLinkContent.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {getItemPath, getSectionFragmentEntryLinkIds} from '../../../utils/FragmentsEditorGetUtils.es';
+import {getItemPath, getRowFragmentEntryLinkIds} from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarStructurePanel.soy';
 
 /**
@@ -115,7 +115,7 @@ class SidebarStructurePanel extends Component {
 		let treeNode;
 
 		if (row.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
-			const [fragmentEntryLinkId] = getSectionFragmentEntryLinkIds(row);
+			const [fragmentEntryLinkId] = getRowFragmentEntryLinkIds(row);
 
 			const fragmentEntryLink = state.fragmentEntryLinks[
 				fragmentEntryLinkId
@@ -140,8 +140,8 @@ class SidebarStructurePanel extends Component {
 						)
 					),
 					elementId: row.rowId,
-					elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
-					key: `${FRAGMENTS_EDITOR_ITEM_TYPES.section}-${row.rowId}`,
+					elementType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
+					key: `${FRAGMENTS_EDITOR_ITEM_TYPES.row}-${row.rowId}`,
 					label: Liferay.Language.get('section'),
 					removable: true
 				}
@@ -257,11 +257,11 @@ class SidebarStructurePanel extends Component {
 		let removeItemAction = null;
 		let removeItemPayload = null;
 
-		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
-			removeItemAction = REMOVE_SECTION;
+		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
+			removeItemAction = REMOVE_ROW;
 
 			removeItemPayload = {
-				sectionId: itemId
+				rowId: itemId
 			};
 		}
 		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {

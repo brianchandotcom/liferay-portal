@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param fragmentEntryLinkId: string}
+	{@param? _fragmentEntryLinkType: string}
 	{@param? _fragmentsEditorItemTypes: ?}
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
@@ -35,12 +36,12 @@
 		fragments-editor__drag-source
 		{sp}fragments-editor__drag-source--fragment
 		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--fragment
 		{sp}fragments-editor__drop-target--sidebar-widget
 		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__topper-wrapper
 
 		{if $rowType == $_fragmentsEditorRowTypes.componentRow}
+			{sp}fragments-editor__drop-target--fragment
 			{sp}fragments-editor__drop-target--sidebar-fragment
 		{/if}
 
@@ -63,6 +64,7 @@
 		class="{$wrapperClasses}"
 		data-drag-source-label="{$name ?: ''}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
+		data-fragment-entry-link-type="{$_fragmentEntryLinkType}"
 		data-fragments-editor-item-id="{$fragmentEntryLinkId}"
 		data-fragments-editor-item-type="fragments-editor-fragment"
 		data-onkeyup="{$_handleFragmentKeyUp}"

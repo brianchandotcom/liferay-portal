@@ -5,12 +5,12 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 
 import '../floating_toolbar/FloatingToolbar.es';
-import './FragmentEntryLinkListSection.es';
+import './FragmentEntryLinkListRow.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
-import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, UPDATE_DROP_TARGET} from '../../actions/actions.es';
+import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
 import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getFragmentColumn, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
@@ -48,17 +48,27 @@ class FragmentEntryLinkList extends Component {
 
 		let dropValid = false;
 
-		if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+		if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 			dropValid = (
-				(targetItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) &&
+				(targetItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) &&
 				(sourceItemData.itemId !== targetItemData.itemId)
 			);
 		}
 		else if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			dropValid = (
-				(targetItemData.itemType) &&
-				(sourceItemData.itemId !== targetItemData.itemId)
-			);
+			if (sourceItemData.fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+				dropValid = (
+					(targetItemData.itemType) &&
+					(sourceItemData.itemId !== targetItemData.itemId) &&
+					(targetItemData.itemType !== FRAGMENTS_EDITOR_ITEM_TYPES.column) &&
+					(targetItemData.itemType !== FRAGMENTS_EDITOR_ITEM_TYPES.fragment)
+				);
+			}
+			else {
+				dropValid = (
+					(targetItemData.itemType) &&
+					(sourceItemData.itemId !== targetItemData.itemId)
+				);
+			}
 		}
 
 		return dropValid;
@@ -72,42 +82,48 @@ class FragmentEntryLinkList extends Component {
 	 * @static
 	 */
 	static _getItemData(itemDataset) {
-		let itemId = null;
-		let itemType = null;
+		let itemData = {};
 
 		if (itemDataset) {
 			if ('columnId' in itemDataset) {
-				itemId = itemDataset.columnId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.column;
+				itemData = {
+					itemId: itemDataset.columnId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.column
+				};
 			}
 			else if ('fragmentEntryLinkId' in itemDataset) {
-				itemId = itemDataset.fragmentEntryLinkId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+				itemData = {
+					fragmentEntryLinkType: itemDataset.fragmentEntryLinkType,
+					itemId: itemDataset.fragmentEntryLinkId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				};
 			}
-			else if ('layoutSectionId' in itemDataset) {
-				itemId = itemDataset.layoutSectionId;
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
+			else if ('layoutRowId' in itemDataset) {
+				itemData = {
+					itemId: itemDataset.layoutRowId,
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row
+				};
+
 			}
 			else if ('fragmentEmptyList' in itemDataset) {
-				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList;
+				itemData = {
+					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList
+				};
 			}
 		}
 
-		return {
-			itemId,
-			itemType
-		};
+		return itemData;
 	}
 
 	/**
-	 * Checks wether a section is empty or not, sets empty parameter
+	 * Checks wether a row is empty or not, sets empty parameter
 	 * and returns a new state
 	 * @param {Object} _state
 	 * @private
 	 * @return {Object}
 	 * @static
 	 */
-	static _setEmptySections(_state) {
+	static _setEmptyRows(_state) {
 		return setIn(
 			_state,
 			[
@@ -115,10 +131,10 @@ class FragmentEntryLinkList extends Component {
 				'structure'
 			],
 			_state.layoutData.structure.map(
-				section => setIn(
-					section,
+				row => setIn(
+					row,
 					['empty'],
-					section.columns.every(
+					row.columns.every(
 						column => column.fragmentEntryLinkIds.length === 0
 					)
 				)
@@ -153,7 +169,7 @@ class FragmentEntryLinkList extends Component {
 	prepareStateForRender(nextState) {
 		let _state = FragmentEntryLinkList._addDropTargetItemTypesToState(nextState);
 
-		_state = FragmentEntryLinkList._setEmptySections(_state);
+		_state = FragmentEntryLinkList._setEmptyRows(_state);
 
 		return _state;
 	}
@@ -262,10 +278,10 @@ class FragmentEntryLinkList extends Component {
 			let moveItemAction = null;
 			let moveItemPayload = null;
 
-			if (itemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
-				moveItemAction = MOVE_SECTION;
+			if (itemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
+				moveItemAction = MOVE_ROW;
 				moveItemPayload = {
-					sectionId: itemData.itemId,
+					rowId: itemData.itemId,
 					targetBorder: this.dropTargetBorder,
 					targetItemId: this.dropTargetItemId
 				};
@@ -274,6 +290,7 @@ class FragmentEntryLinkList extends Component {
 				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;
 				moveItemPayload = {
 					fragmentEntryLinkId: itemData.itemId,
+					fragmentEntryLinkType: itemData.fragmentEntryLinkType,
 					targetBorder: this.dropTargetBorder,
 					targetItemId: this.dropTargetItemId,
 					targetItemType: this.dropTargetItemType

@@ -178,7 +178,7 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	editable: 'fragments-editor-editable-field',
 	fragment: 'fragments-editor-fragment',
 	fragmentList: 'fragments-editor-fragment-list',
-	section: 'fragments-editor-section'
+	row: 'fragments-editor-row'
 };
 
 /**

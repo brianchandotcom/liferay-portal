@@ -64,9 +64,9 @@ class SidebarAvailableSections extends Component {
 
 		const data = targetItem ? targetItem.dataset : null;
 		const targetIsFragment = targetItem && ('fragmentEntryLinkId' in data);
-		const targetIsSection = targetItem && ('layoutSectionId' in data);
+		const targetIsRow = targetItem && ('layoutRowId' in data);
 
-		if (targetIsFragment || targetIsSection) {
+		if (targetIsFragment || targetIsRow) {
 			const mouseY = eventData.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
@@ -86,9 +86,9 @@ class SidebarAvailableSections extends Component {
 				dropTargetItemId = data.fragmentEntryLinkId;
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 			}
-			else if (targetIsSection) {
-				dropTargetItemId = data.layoutSectionId;
-				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
+			else if (targetIsRow) {
+				dropTargetItemId = data.layoutRowId;
+				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.row;
 			}
 
 			if (dropTargetItemId && dropTargetItemType) {

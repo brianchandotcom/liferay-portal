@@ -274,42 +274,46 @@ definition {
 		);
 	}
 
-	macro addReminderQueriesCP {
-		Organization.gotoMiscellaneousCP(panel = "Reminder Queries");
+	macro addSecurityQuestionsCP {
+		MenuBar.gotoSecurityQuestions();
 
 		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD",
-			value1 = "${orgReminderQueriesDefaultLanguage}"
+			locator1 = "TextArea#SECURITY_QUESTIONS",
+			value1 = "${securityQuestions}"
 		);
 
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT",
-			value1 = "${orgLocalizedLanguage}"
-		);
+		if (isSet(localizedLanguage)) {
+			PortletEntry.changeLocale(
+				fieldName = "Security Questions",
+				locale = "${localizedLanguage}"
+			);
 
-		Type(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_TEXT_FIELD",
-			value1 = "${orgReminderQuery}"
-		);
+			Type(
+				locator1 = "TextArea#SECURITY_QUESTIONS",
+				value1 = "${localizedSecurityQuestions}"
+			);
+		}
 
 		PortletEntry.save();
 
-		Organization.gotoMiscellaneousCP(panel = "Reminder Queries");
+		MenuBar.gotoSecurityQuestions();
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD",
-			value1 = "${orgReminderQueriesDefaultLanguage}"
+			locator1 = "TextArea#SECURITY_QUESTIONS",
+			value1 = "${securityQuestions}"
 		);
 
-		Select(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT",
-			value1 = "${orgLocalizedLanguage}"
-		);
+		if (isSet(localizedLanguage)) {
+			PortletEntry.changeLocale(
+				fieldName = "Security Questions",
+				locale = "${localizedLanguage}"
+			);
 
-		AssertSelectedLabel(
-			locator1 = "UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT",
-			value1 = "${orgLocalizedLanguage}"
-		);
+			AssertTextEquals(
+				locator1 = "TextArea#SECURITY_QUESTIONS",
+				value1 = "${securityQuestions}"
+			);
+		}
 	}
 
 	macro addServicesCP {

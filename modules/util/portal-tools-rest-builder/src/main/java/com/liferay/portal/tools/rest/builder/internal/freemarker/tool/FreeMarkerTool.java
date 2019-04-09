@@ -241,6 +241,19 @@ public class FreeMarkerTool {
 	public boolean hasPostSiteJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
 
+		JavaMethodSignature javaMethodSignature =
+			getPostSiteJavaMethodSignature(javaMethodSignatures, schemaName);
+
+		if (javaMethodSignature != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public JavaMethodSignature getPostSiteJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
+
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			Operation operation = javaMethodSignature.getOperation();
 
@@ -267,24 +280,36 @@ public class FreeMarkerTool {
 				continue;
 			}
 
-			if (operation.getRequestBody() != null) {
-				RequestBody requestBody = operation.getRequestBody();
-
-				if (requestBody.getContent() != null) {
-					Map<String, Content> contents = requestBody.getContent();
-
-					Set<String> mediaTypes = contents.keySet();
-
-					if (mediaTypes.contains("multipart/form-data")) {
-						continue;
-					}
-				}
-			}
-
-			return true;
+			return javaMethodSignature;
 		}
 
-		return false;
+		return null;
+	}
+
+	public boolean hasRequestBodyMediaType(
+		JavaMethodSignature javaMethodSignature, String mediaType) {
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		if (operation.getRequestBody() == null) {
+			return false;
+		}
+
+		RequestBody requestBody = operation.getRequestBody();
+
+		if (requestBody.getContent() == null) {
+			return false;
+		}
+
+		Map<String, Content> contents = requestBody.getContent();
+
+		Set<String> mediaTypes = contents.keySet();
+
+		if (!mediaTypes.contains(mediaType)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isDTOSchemaProperty(

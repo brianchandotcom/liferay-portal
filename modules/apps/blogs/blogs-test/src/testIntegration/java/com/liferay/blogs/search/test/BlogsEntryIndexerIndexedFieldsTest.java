@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -164,8 +165,25 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		_populateDates(blogsEntry, map);
 		_populateRoles(blogsEntry, map);
 		_populateTitle(blogsEntry, map);
+		_populateContent(blogsEntry, map);
 
 		return map;
+	}
+
+	private void _populateContent(
+		BlogsEntry blogsEntry, Map<String, String> map) {
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(blogsEntry.getGroupId())) {
+
+			String content = HtmlUtil.extractText(blogsEntry.getContent());
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String key = "content_" + languageId;
+
+			map.put(key, content);
+		}
 	}
 
 	private void _populateDates(
@@ -200,10 +218,11 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String key = "localized_title_" + languageId;
+			String key = "title_" + languageId;
 
 			map.put(key, title);
-			map.put(key.concat("_sortable"), title);
+			map.put("localized_" + key, title);
+			map.put("localized_" + key + "_sortable", title);
 		}
 	}
 

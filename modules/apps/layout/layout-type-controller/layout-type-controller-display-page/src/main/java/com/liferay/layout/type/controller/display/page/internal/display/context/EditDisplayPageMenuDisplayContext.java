@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.asset.display.internal.display.context;
+package com.liferay.layout.type.controller.display.page.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -45,12 +46,12 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class EditAssetDisplayMenuDisplayContext {
+public class EditDisplayPageMenuDisplayContext {
 
-	public EditAssetDisplayMenuDisplayContext(HttpServletRequest request) {
+	public EditDisplayPageMenuDisplayContext(HttpServletRequest request) {
 		_request = request;
 
-		_assetEntry = (AssetEntry)request.getAttribute(
+		_infoDisplayObject = (InfoDisplayObject)request.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -68,7 +69,7 @@ public class EditAssetDisplayMenuDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.format(
 									_request, "edit-x",
-									_assetEntry.getTitle(
+									_infoDisplayObject.getTitle(
 										_themeDisplay.getLocale())));
 						});
 				}
@@ -112,20 +113,28 @@ public class EditAssetDisplayMenuDisplayContext {
 	}
 
 	private String _getEditAssetEntryURL() throws Exception {
-		if (_assetEntry == null) {
+		Object modelEntry = _infoDisplayObject.getModelEntry();
+
+		if (!(modelEntry instanceof AssetEntry)) {
+			return StringPool.BLANK;
+		}
+
+		AssetEntry assetEntry = (AssetEntry)modelEntry;
+
+		if (assetEntry == null) {
 			return StringPool.BLANK;
 		}
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
+				assetEntry.getClassName());
 
 		if (assetRendererFactory == null) {
 			return StringPool.BLANK;
 		}
 
 		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_assetEntry.getClassPK());
+			assetEntry.getClassPK());
 
 		if (assetRenderer == null) {
 			return StringPool.BLANK;
@@ -150,7 +159,7 @@ public class EditAssetDisplayMenuDisplayContext {
 		return editAssetEntryURL.toString();
 	}
 
-	private final AssetEntry _assetEntry;
+	private final InfoDisplayObject _infoDisplayObject;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

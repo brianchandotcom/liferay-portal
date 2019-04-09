@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.asset.display.internal.product.navigation.control.menu;
+package com.liferay.layout.type.controller.display.page.internal.product.navigation.control.menu;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class EditAssetDisplayMenuProductNavigationControlMenuEntry
+public class EditDisplayPageMenuProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
@@ -102,12 +103,20 @@ public class EditAssetDisplayMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
+		InfoDisplayObject infoDisplayObject =
+			(InfoDisplayObject)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
 
-		if (assetEntry == null) {
+		if (infoDisplayObject == null) {
 			return false;
 		}
+
+		Object modelEntry = infoDisplayObject.getModelEntry();
+
+		if (!(modelEntry instanceof AssetEntry)) {
+			return false;
+		}
+
+		AssetEntry assetEntry = (AssetEntry)modelEntry;
 
 		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
@@ -126,7 +135,7 @@ public class EditAssetDisplayMenuProductNavigationControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.asset.display)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

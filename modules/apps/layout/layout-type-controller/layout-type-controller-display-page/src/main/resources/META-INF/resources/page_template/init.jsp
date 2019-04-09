@@ -14,14 +14,16 @@
  */
 --%>
 
-<%@ include file="/page_template/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%
-EditAssetDisplayMenuDisplayContext editAssetDisplayMenuDisplayContext = new EditAssetDisplayMenuDisplayContext(request);
-%>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<clay:dropdown-menu
-	dropdownItems="<%= editAssetDisplayMenuDisplayContext.getDropdownItems() %>"
-	icon="pencil"
-	triggerCssClasses="icon-monospaced"
-/>
+<%@ page import="com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext" %>
+
+<liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

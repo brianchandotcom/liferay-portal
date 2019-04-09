@@ -10,7 +10,9 @@
 		<field name="assetEntryId" type="long" />
 		<field name="plid" type="long" />
 		<field name="containerType" type="long" />
-		<field name="containerKey" type="String" />
+		<field name="containerKey" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

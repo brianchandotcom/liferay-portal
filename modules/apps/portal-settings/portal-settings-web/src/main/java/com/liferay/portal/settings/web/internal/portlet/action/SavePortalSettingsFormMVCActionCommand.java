@@ -14,6 +14,8 @@
 
 package com.liferay.portal.settings.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
@@ -49,23 +52,38 @@ public class SavePortalSettingsFormMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			portalSettingsFormContributor.validateForm(
+				actionRequest, actionResponse);
 
-		if (!hasPermissions(actionRequest, actionResponse, themeDisplay)) {
-			return;
+			if (!SessionErrors.isEmpty(actionRequest)) {
+				throw new PortalException();
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (!hasPermissions(actionRequest, actionResponse, themeDisplay)) {
+				return;
+			}
+
+			storeSettings(actionRequest, themeDisplay);
 		}
+		catch (PortalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass(), pe);
 
-		storeSettings(actionRequest, themeDisplay);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
+		}
 	}
 
 	@Override
 	protected void doValidateForm(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		portalSettingsFormContributor.validateForm(
-			actionRequest, actionResponse);
 	}
 
 	protected String getParameterNamespace() {

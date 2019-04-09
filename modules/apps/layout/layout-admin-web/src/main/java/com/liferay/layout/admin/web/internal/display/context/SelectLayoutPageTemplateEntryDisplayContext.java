@@ -91,7 +91,8 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return LayoutPageTemplateEntryServiceUtil.
 			getLayoutPageTemplateEntriesCount(
 				_themeDisplay.getScopeGroupId(),
-				getLayoutPageTemplateCollectionId());
+				getLayoutPageTemplateCollectionId(),
+				WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public List<String> getPrimaryTypes() {

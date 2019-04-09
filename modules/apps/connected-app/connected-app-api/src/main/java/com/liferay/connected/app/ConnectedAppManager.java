@@ -14,7 +14,6 @@
 
 package com.liferay.connected.app;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import java.util.List;
  */
 public interface ConnectedAppManager {
 
-	public List<ConnectedApp> getConnectedApps(User user)
-		throws PortalException;
+	public List<ConnectedApp> getConnectedApps(User user);
 
 }

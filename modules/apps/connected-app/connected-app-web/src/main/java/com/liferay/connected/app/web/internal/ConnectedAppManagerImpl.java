@@ -38,9 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class ConnectedAppManagerImpl implements ConnectedAppManager {
 
 	@Override
-	public List<ConnectedApp> getConnectedApps(User user)
-		throws PortalException {
-
+	public List<ConnectedApp> getConnectedApps(User user) {
 		List<ConnectedApp> connectedApps = new ArrayList<>();
 
 		for (ConnectedAppProvider connectedAppProvider : _serviceTrackerList) {

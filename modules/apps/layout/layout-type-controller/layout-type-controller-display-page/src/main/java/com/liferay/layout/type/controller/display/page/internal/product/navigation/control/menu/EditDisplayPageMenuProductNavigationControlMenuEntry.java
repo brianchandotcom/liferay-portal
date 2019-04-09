@@ -14,8 +14,11 @@
 
 package com.liferay.layout.type.controller.display.page.internal.product.navigation.control.menu;
 
-import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.display.contributor.InfoDisplayTemplate;
+import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -102,14 +105,21 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
+		InfoDisplayTemplate infoDisplayTemplate =
+			(InfoDisplayTemplate)request.getAttribute(
+				DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_TEMPLATE);
 
-		if (assetEntry == null) {
-			return false;
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					infoDisplayTemplate.getClassNameId());
+
+		AssetRenderer assetRenderer = null;
+
+		if (assetRendererFactory != null) {
+			assetRendererFactory.getAssetRenderer(
+				infoDisplayTemplate.getClassPK());
 		}
-
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
 		if (((assetRenderer == null) ||
 			 !assetRenderer.hasEditPermission(

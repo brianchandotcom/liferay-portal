@@ -16,8 +16,6 @@ package com.liferay.change.tracking.change.lists.web.internal;
 
 import com.liferay.change.tracking.configuration.CTServiceConfiguration;
 import com.liferay.change.tracking.kernel.util.ChangeTrackingThreadLocal;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
@@ -42,14 +40,8 @@ public class CTServiceConfigurationHelper {
 				ctServiceConfiguration.enableLayoutTracking());
 		}
 		catch (ConfigurationException ce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ce.getMessage(), ce);
-			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTServiceConfigurationHelper.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

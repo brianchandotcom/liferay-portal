@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
@@ -104,7 +104,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
 			_configurationProvider.getCompanyConfiguration(
-				OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class,
+				OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class,
 				journalArticle.getCompanyId()),
 			extractDDMContent(journalArticle, locale), locale,
 			ContentTypes.TEXT_PLAIN);

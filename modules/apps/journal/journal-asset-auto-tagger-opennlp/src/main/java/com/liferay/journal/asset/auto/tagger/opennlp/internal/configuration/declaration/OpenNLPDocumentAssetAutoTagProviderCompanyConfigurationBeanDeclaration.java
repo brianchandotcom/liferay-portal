@@ -14,7 +14,7 @@
 
 package com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.declaration;
 
-import com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +29,7 @@ public class
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class;
+		return OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class;
 	}
 
 }

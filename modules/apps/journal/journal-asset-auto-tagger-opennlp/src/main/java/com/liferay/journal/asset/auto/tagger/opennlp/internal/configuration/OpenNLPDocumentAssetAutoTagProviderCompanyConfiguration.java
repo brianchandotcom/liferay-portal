@@ -28,11 +28,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "opennlp-auto-tag-provider-configuration-description",
-	id = "com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration",
+	id = "com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "opennlp-auto-tag-provider-configuration-name"
 )
-public interface OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+public interface OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
 	extends OpenNLPDocumentAssetAutoTagCompanyConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)

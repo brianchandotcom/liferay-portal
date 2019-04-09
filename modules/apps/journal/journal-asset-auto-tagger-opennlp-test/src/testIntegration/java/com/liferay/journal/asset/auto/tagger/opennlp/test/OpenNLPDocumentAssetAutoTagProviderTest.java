@@ -169,7 +169,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 	private static final String _OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME =
 		"com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration." +
-			"OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration";
+			"OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration";
 
 	@Inject(
 		filter = "component.name=com.liferay.journal.asset.auto.tagger.opennlp.internal.OpenNLPDocumentAssetAutoTagProvider"

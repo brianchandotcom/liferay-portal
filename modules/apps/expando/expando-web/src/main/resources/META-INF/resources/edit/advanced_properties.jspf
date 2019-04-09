@@ -19,7 +19,12 @@
 	collapsible="<%= true %>"
 	label="advanced-properties"
 >
-	<div class="<%= ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.SHORT) || (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY)) ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">
+
+	<%
+	boolean numberInputType = ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.SHORT) || (type == ExpandoColumnConstants.SHORT_ARRAY));
+	%>
+
+	<div class="<%= numberInputType ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">
 		<aui:field-wrapper cssClass="custom-precision-type-field-wrapper">
 			<aui:select disabled="<%= true %>" id="precisionTypeSelect" label="precision" name="precisionType" value="<%= ExpandoColumnConstants.getPrecisionType(type) %>">
 				<aui:option label="<%= ExpandoColumnConstants.PRECISION_64_BIT %>" />
@@ -60,7 +65,7 @@
 	</c:if>
 
 	<%
-	boolean textInputTypeSearch = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
+	boolean textInputTypeSearch = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
 	%>
 
 	<aui:field-wrapper>
@@ -98,7 +103,7 @@
 	</aui:field-wrapper>
 
 	<%
-	boolean textInputType = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
+	boolean textInputType = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
 	%>
 
 	<c:if test="<%= textInputType %>">

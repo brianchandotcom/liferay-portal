@@ -38,13 +38,24 @@ import org.osgi.service.component.annotations.Component;
 public class ConnectedAppManagerImpl implements ConnectedAppManager {
 
 	@Override
+	public ConnectedApp getConnectedApp(User user, String key) {
+		for (ConnectedApp connectedApp : getConnectedApps(user)) {
+			if (key.equals(connectedApp.getKey())) {
+				return connectedApp;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<ConnectedApp> getConnectedApps(User user) {
 		List<ConnectedApp> connectedApps = new ArrayList<>();
 
 		for (ConnectedAppProvider connectedAppProvider : _serviceTrackerList) {
 			try {
-				ConnectedApp connectedApp = connectedAppProvider.getConnectedApp(
-					user);
+				ConnectedApp connectedApp =
+					connectedAppProvider.getConnectedApp(user);
 
 				if (connectedApp != null) {
 					connectedApps.add(connectedApp);

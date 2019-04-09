@@ -23,6 +23,8 @@ import java.util.List;
  */
 public interface ConnectedAppManager {
 
+	public ConnectedApp getConnectedApp(User user, String key);
+
 	public List<ConnectedApp> getConnectedApps(User user);
 
 }

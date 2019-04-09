@@ -51,10 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class RecentBloggersPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.recent.bloggers.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
-		unbind = "-"
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.recent.bloggers.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))"
 	)
-	protected void setRelease(Release release) {
-	}
+	private Release _release;
 
 }

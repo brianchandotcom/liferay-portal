@@ -353,7 +353,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "Knowledge Base Article"
 		);
 

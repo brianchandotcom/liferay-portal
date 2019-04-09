@@ -429,7 +429,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Usercustomfield",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "User",
 			searchable = "true"
 		);
@@ -1328,7 +1328,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Usercustomfield",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "User",
 			searchable = "true"
 		);

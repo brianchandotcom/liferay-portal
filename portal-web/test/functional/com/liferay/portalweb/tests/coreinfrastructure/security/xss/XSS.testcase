@@ -159,7 +159,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = '''<script>alert(123);</script>''',
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			localization = "true",
 			resourceName = "Documents Folder"
 		);

@@ -107,7 +107,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "Knowledge Base Article"
 		);
 
@@ -131,7 +131,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "Message Boards Category"
 		);
 
@@ -227,7 +227,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			localization = "true",
 			resourceName = "Web Content Article"
 		);
@@ -268,7 +268,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Nickname",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "User",
 			startingValue = "Nickname"
 		);
@@ -296,7 +296,7 @@ definition {
 
 		User.viewUserCustomFieldsCP(
 			customFieldName = "Nickname",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			startingValue = "Nickname"
 		);
 	}
@@ -316,7 +316,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "User"
 		);
 
@@ -328,7 +328,7 @@ definition {
 
 		CustomFields.editCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			startingValue = "Text Field",
 			resourceName = "User"
 		);
@@ -371,7 +371,7 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
-			customFieldType = "Text Field",
+			customFieldType = "Input Field",
 			resourceName = "Wiki Page"
 		);
 

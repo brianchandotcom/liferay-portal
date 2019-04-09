@@ -289,23 +289,6 @@ class Select extends Component {
 		};
 	}
 
-	syncMultiple(multiple) {
-		if (multiple === false) {
-			this.setState(
-				{
-					value: []
-				},
-				() => this.emit(
-					'fieldEdited',
-					{
-						fieldInstance: this,
-						value: []
-					}
-				)
-			);
-		}
-	}
-
 	_prepareOption(option, valueArray) {
 		const {multiple} = this;
 		const included = valueArray.includes(option.value);

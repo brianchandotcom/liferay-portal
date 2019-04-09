@@ -15,15 +15,125 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import org.junit.Ignore;
+import java.io.ByteArrayInputStream;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class KnowledgeBaseAttachmentResourceTest
 	extends BaseKnowledgeBaseAttachmentResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(testGroup.getGroupId());
+
+		_kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, serviceContext);
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"contentUrl", "encodingFormat", "title"};
+	}
+
+	@Override
+	protected KnowledgeBaseAttachment
+			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
+			_kbArticle.getResourcePrimKey(),
+			_getMultipartBody(randomKnowledgeBaseAttachment()));
+	}
+
+	@Override
+	protected KnowledgeBaseAttachment
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseAttachment knowledgeBaseAttachment)
+		throws Exception {
+
+		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
+			knowledgeBaseArticleId, _getMultipartBody(knowledgeBaseAttachment));
+	}
+
+	@Override
+	protected Long
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId()
+		throws Exception {
+
+		return _kbArticle.getResourcePrimKey();
+	}
+
+	@Override
+	protected KnowledgeBaseAttachment
+			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
+			_kbArticle.getResourcePrimKey(),
+			_getMultipartBody(randomKnowledgeBaseAttachment()));
+	}
+
+	@Override
+	protected KnowledgeBaseAttachment
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+				KnowledgeBaseAttachment knowledgeBaseAttachment)
+		throws Exception {
+
+		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
+			_kbArticle.getResourcePrimKey(),
+			_getMultipartBody(knowledgeBaseAttachment));
+	}
+
+	private MultipartBody _getMultipartBody(
+		KnowledgeBaseAttachment knowledgeBaseAttachment) {
+
+		contentType = "multipart/form-data;boundary=PART";
+
+		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
+
+		String randomString = RandomTestUtil.randomString();
+
+		binaryFileMap.put(
+			"file",
+			new BinaryFile(
+				contentType, RandomTestUtil.randomString(),
+				new ByteArrayInputStream(randomString.getBytes()), 0));
+
+		return MultipartBody.of(
+			binaryFileMap, __ -> inputObjectMapper,
+			inputObjectMapper.convertValue(
+				knowledgeBaseAttachment, HashMap.class));
+	}
+
+	private KBArticle _kbArticle;
+
 }

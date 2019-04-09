@@ -31,54 +31,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 />
 
 <liferay-ui:tabs
-	names="account-created-notification,email-verification-notification,password-changed-notification,password-reset-notification"
+	names="email-verification-notification,password-changed-notification,password-reset-notification"
 	refresh="<%= false %>"
 >
-	<liferay-ui:section>
-		<aui:fieldset>
-			<aui:input label="enabled" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>" />
-
-			<liferay-ui:error key="emailUserAddedSubject" message="please-enter-a-valid-subject" />
-
-			<aui:field-wrapper label="subject">
-				<liferay-ui:input-localized
-					fieldPrefix="settings"
-					fieldPrefixSeparator="--"
-					name="adminEmailUserAddedSubject"
-					xml='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedSubject", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT)) %>'
-				/>
-			</aui:field-wrapper>
-
-			<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
-
-			<liferay-frontend:email-notification-settings
-				bodyLabel="body-with-password"
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
-				emailParam="adminEmailUserAdded"
-				fieldPrefix="settings"
-				helpMessage="account-created-notification-body-with-password-help"
-				showEmailEnabled="<%= false %>"
-				showSubject="<%= false %>"
-			/>
-
-			<liferay-ui:error key="emailUserAddedNoPasswordBody" message="please-enter-a-valid-body" />
-
-			<liferay-frontend:email-notification-settings
-				bodyLabel="body-without-password"
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
-				emailParam="adminEmailUserAddedNoPassword"
-				fieldPrefix="settings"
-				helpMessage="account-created-notification-body-without-password-help"
-				showEmailEnabled="<%= false %>"
-				showSubject="<%= false %>"
-			/>
-
-			<aui:fieldset cssClass="definition-of-terms email-user-add terms" label="definition-of-terms">
-				<%@ include file="/definition_of_terms.jspf" %>
-			</aui:fieldset>
-		</aui:fieldset>
-	</liferay-ui:section>
-
 	<liferay-ui:section>
 		<liferay-ui:error key="emailVerificationSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />

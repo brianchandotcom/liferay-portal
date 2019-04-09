@@ -118,7 +118,7 @@ public class MessageBoardAttachment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
 	public Long getId() {

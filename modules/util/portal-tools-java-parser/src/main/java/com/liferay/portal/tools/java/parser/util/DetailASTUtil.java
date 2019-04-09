@@ -46,10 +46,16 @@ public class DetailASTUtil {
 			DetailAST slistDetailAST = detailAST.findFirstToken(
 				TokenTypes.SLIST);
 
-			DetailAST previousSiblingDetailAST =
-				slistDetailAST.getPreviousSibling();
+			if (slistDetailAST != null) {
+				DetailAST previousSiblingDetailAST =
+					slistDetailAST.getPreviousSibling();
 
-			return previousSiblingDetailAST.findFirstToken(TokenTypes.COLON);
+				return previousSiblingDetailAST.findFirstToken(TokenTypes.COLON);
+			}
+
+			DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+			return lastChildDetailAST.findFirstToken(TokenTypes.COLON);
 		}
 
 		if (detailAST.getType() == TokenTypes.DO_WHILE) {

@@ -15,6 +15,14 @@ definition {
 			C = "54545445",
 			D = "353535");
 
+		var character11 = '''(''';
+
+		var character12 = ''')''';
+
+		var character17 = '''{''';
+
+		var character18 = '''}''';
+
 		deee.oneParameter(DDDD = "353535");
 
 		User_a.editDetailsViaMyAccount_a(

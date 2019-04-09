@@ -108,14 +108,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDataDefinitionPermission()
-		throws Exception {
-
+	public void testPostSiteDataDefinitionPermission() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokePostContentSpaceDataDefinitionPermission(
-			Long contentSpaceId, String operation,
+	protected void invokePostSiteDataDefinitionPermission(
+			Long siteId, String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 
@@ -123,9 +121,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definition-permissions",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-definition-permissions", siteId);
 
 		options.setLocation(location);
 
@@ -138,19 +134,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		}
 	}
 
-	protected Http.Response
-			invokePostContentSpaceDataDefinitionPermissionResponse(
-				Long contentSpaceId, String operation,
-				DataDefinitionPermission dataDefinitionPermission)
+	protected Http.Response invokePostSiteDataDefinitionPermissionResponse(
+			Long siteId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definition-permissions",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-definition-permissions", siteId);
 
 		options.setLocation(location);
 
@@ -162,20 +155,18 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataDefinitionsPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getIrrelevantContentSpaceId();
+	public void testGetSiteDataDefinitionsPage() throws Exception {
+		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDataDefinitionsPage_getIrrelevantSiteId();
 
-		if ((irrelevantContentSpaceId != null)) {
+		if ((irrelevantSiteId != null)) {
 			DataDefinition irrelevantDataDefinition =
-				testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-					irrelevantContentSpaceId, randomIrrelevantDataDefinition());
+				testGetSiteDataDefinitionsPage_addDataDefinition(
+					irrelevantSiteId, randomIrrelevantDataDefinition());
 
-			Page<DataDefinition> page =
-				invokeGetContentSpaceDataDefinitionsPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2));
+			Page<DataDefinition> page = invokeGetSiteDataDefinitionsPage(
+				irrelevantSiteId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -186,15 +177,15 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		}
 
 		DataDefinition dataDefinition1 =
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+			testGetSiteDataDefinitionsPage_addDataDefinition(
+				siteId, randomDataDefinition());
 
 		DataDefinition dataDefinition2 =
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+			testGetSiteDataDefinitionsPage_addDataDefinition(
+				siteId, randomDataDefinition());
 
-		Page<DataDefinition> page = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+		Page<DataDefinition> page = invokeGetSiteDataDefinitionsPage(
+			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -205,26 +196,25 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataDefinitionsPageWithPagination()
+	public void testGetSiteDataDefinitionsPageWithPagination()
 		throws Exception {
 
-		Long contentSpaceId =
-			testGetContentSpaceDataDefinitionsPage_getContentSpaceId();
+		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
 
 		DataDefinition dataDefinition1 =
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+			testGetSiteDataDefinitionsPage_addDataDefinition(
+				siteId, randomDataDefinition());
 
 		DataDefinition dataDefinition2 =
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+			testGetSiteDataDefinitionsPage_addDataDefinition(
+				siteId, randomDataDefinition());
 
 		DataDefinition dataDefinition3 =
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				contentSpaceId, randomDataDefinition());
+			testGetSiteDataDefinitionsPage_addDataDefinition(
+				siteId, randomDataDefinition());
 
-		Page<DataDefinition> page1 = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+		Page<DataDefinition> page1 = invokeGetSiteDataDefinitionsPage(
+			siteId, null, Pagination.of(1, 2));
 
 		List<DataDefinition> dataDefinitions1 =
 			(List<DataDefinition>)page1.getItems();
@@ -232,8 +222,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertEquals(
 			dataDefinitions1.toString(), 2, dataDefinitions1.size());
 
-		Page<DataDefinition> page2 = invokeGetContentSpaceDataDefinitionsPage(
-			contentSpaceId, null, Pagination.of(2, 2));
+		Page<DataDefinition> page2 = invokeGetSiteDataDefinitionsPage(
+			siteId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -253,39 +243,32 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			});
 	}
 
-	protected DataDefinition
-			testGetContentSpaceDataDefinitionsPage_addDataDefinition(
-				Long contentSpaceId, DataDefinition dataDefinition)
+	protected DataDefinition testGetSiteDataDefinitionsPage_addDataDefinition(
+			Long siteId, DataDefinition dataDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceDataDefinitionsPage_getContentSpaceId()
-		throws Exception {
-
+	protected Long testGetSiteDataDefinitionsPage_getSiteId() throws Exception {
 		return testGroup.getGroupId();
 	}
 
-	protected Long
-			testGetContentSpaceDataDefinitionsPage_getIrrelevantContentSpaceId()
+	protected Long testGetSiteDataDefinitionsPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<DataDefinition> invokeGetContentSpaceDataDefinitionsPage(
-			Long contentSpaceId, String keywords, Pagination pagination)
+	protected Page<DataDefinition> invokeGetSiteDataDefinitionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-definitions", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -306,17 +289,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetContentSpaceDataDefinitionsPageResponse(
-			Long contentSpaceId, String keywords, Pagination pagination)
+	protected Http.Response invokeGetSiteDataDefinitionsPageResponse(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-definitions", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -331,28 +311,26 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDataDefinition() throws Exception {
+	public void testPostSiteDataDefinition() throws Exception {
 		DataDefinition randomDataDefinition = randomDataDefinition();
 
 		DataDefinition postDataDefinition =
-			testPostContentSpaceDataDefinition_addDataDefinition(
-				randomDataDefinition);
+			testPostSiteDataDefinition_addDataDefinition(randomDataDefinition);
 
 		assertEquals(randomDataDefinition, postDataDefinition);
 		assertValid(postDataDefinition);
 	}
 
-	protected DataDefinition
-			testPostContentSpaceDataDefinition_addDataDefinition(
-				DataDefinition dataDefinition)
+	protected DataDefinition testPostSiteDataDefinition_addDataDefinition(
+			DataDefinition dataDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected DataDefinition invokePostContentSpaceDataDefinition(
-			Long contentSpaceId, DataDefinition dataDefinition)
+	protected DataDefinition invokePostSiteDataDefinition(
+			Long siteId, DataDefinition dataDefinition)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -362,10 +340,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-definitions", siteId);
 
 		options.setLocation(location);
 
@@ -387,8 +362,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostContentSpaceDataDefinitionResponse(
-			Long contentSpaceId, DataDefinition dataDefinition)
+	protected Http.Response invokePostSiteDataDefinitionResponse(
+			Long siteId, DataDefinition dataDefinition)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -398,10 +373,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-definitions",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-definitions", siteId);
 
 		options.setLocation(location);
 
@@ -730,8 +702,87 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	protected void assertValid(DataDefinition dataDefinition) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (dataDefinition.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (dataDefinition.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (dataDefinition.getId() == null) {
+			valid = false;
+		}
+
+		if (!Objects.equals(
+				dataDefinition.getSiteId(), testGroup.getGroupId())) {
+
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dataDefinitionFields", additionalAssertFieldName)) {
+
+				if (dataDefinition.getDataDefinitionFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataDefinitionRules", additionalAssertFieldName)) {
+
+				if (dataDefinition.getDataDefinitionRules() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (dataDefinition.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (dataDefinition.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("storageType", additionalAssertFieldName)) {
+				if (dataDefinition.getStorageType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (dataDefinition.getUserId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<DataDefinition> page) {
@@ -751,6 +802,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(
 		DataDefinition dataDefinition1, DataDefinition dataDefinition2) {
 
@@ -758,7 +813,122 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			return true;
 		}
 
-		return false;
+		if (!Objects.equals(
+				dataDefinition1.getSiteId(), dataDefinition2.getSiteId())) {
+
+			return false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dataDefinitionFields", additionalAssertFieldName)) {
+
+				if (!Objects.equals(
+						dataDefinition1.getDataDefinitionFields(),
+						dataDefinition2.getDataDefinitionFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataDefinitionRules", additionalAssertFieldName)) {
+
+				if (!Objects.equals(
+						dataDefinition1.getDataDefinitionRules(),
+						dataDefinition2.getDataDefinitionRules())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getDateCreated(),
+						dataDefinition2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getDateModified(),
+						dataDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getDescription(),
+						dataDefinition2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getId(), dataDefinition2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getName(), dataDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("storageType", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getStorageType(),
+						dataDefinition2.getStorageType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataDefinition1.getUserId(),
+						dataDefinition2.getUserId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -807,11 +977,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("contentSpaceId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("dataDefinitionFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -849,6 +1014,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("storageType")) {
 			sb.append("'");
 			sb.append(String.valueOf(dataDefinition.getStorageType()));
@@ -869,10 +1039,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition randomDataDefinition() {
 		return new DataDefinition() {
 			{
-				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				siteId = testGroup.getGroupId();
 				storageType = RandomTestUtil.randomString();
 				userId = RandomTestUtil.randomLong();
 			}
@@ -880,7 +1050,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	protected DataDefinition randomIrrelevantDataDefinition() {
-		return randomDataDefinition();
+		DataDefinition randomIrrelevantDataDefinition = randomDataDefinition();
+
+		randomIrrelevantDataDefinition.setSiteId(irrelevantGroup.getGroupId());
+
+		return randomIrrelevantDataDefinition;
 	}
 
 	protected DataDefinition randomPatchDataDefinition() {

@@ -33,13 +33,13 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DataRecordCollectionResource {
 
-	public void postContentSpaceDataRecordCollectionPermission(
-			Long contentSpaceId, String operation,
+	public void postSiteDataRecordCollectionPermission(
+			Long siteId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception;
 
-	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
-			Long contentSpaceId, String keywords, Pagination pagination)
+	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
 	public Page<DataRecordCollection>

@@ -62,11 +62,11 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/data-record-collection-permissions")
+	@Path("/sites/{siteId}/data-record-collection-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void postContentSpaceDataRecordCollectionPermission(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataRecordCollectionPermission(
+			@NotNull @PathParam("siteId") Long siteId,
 			@NotNull @QueryParam("operation") String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
@@ -80,11 +80,11 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{contentSpaceId}/data-record-collections")
+	@Path("/sites/{siteId}/data-record-collections")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			@NotNull @PathParam("siteId") Long siteId,
 			@QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {

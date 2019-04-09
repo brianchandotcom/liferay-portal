@@ -79,8 +79,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public void postContentSpaceDataDefinitionPermission(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataDefinitionPermission(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataDefinitionPermission") DataDefinitionPermission
 				dataDefinitionPermission)
@@ -90,14 +90,14 @@ public class Mutation {
 			_dataDefinitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataDefinitionResource ->
-				dataDefinitionResource.postContentSpaceDataDefinitionPermission(
-					contentSpaceId, operation, dataDefinitionPermission));
+				dataDefinitionResource.postSiteDataDefinitionPermission(
+					siteId, operation, dataDefinitionPermission));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DataDefinition postContentSpaceDataDefinition(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public DataDefinition postSiteDataDefinition(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
 		throws Exception {
 
@@ -105,8 +105,8 @@ public class Mutation {
 			_dataDefinitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataDefinitionResource ->
-				dataDefinitionResource.postContentSpaceDataDefinition(
-					contentSpaceId, dataDefinition));
+				dataDefinitionResource.postSiteDataDefinition(
+					siteId, dataDefinition));
 	}
 
 	@GraphQLInvokeDetached
@@ -154,8 +154,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public void postContentSpaceDataLayoutPermission(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataLayoutPermission(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataLayoutPermission") DataLayoutPermission
 				dataLayoutPermission)
@@ -165,8 +165,8 @@ public class Mutation {
 			_dataLayoutResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataLayoutResource ->
-				dataLayoutResource.postContentSpaceDataLayoutPermission(
-					contentSpaceId, operation, dataLayoutPermission));
+				dataLayoutResource.postSiteDataLayoutPermission(
+					siteId, operation, dataLayoutPermission));
 	}
 
 	@GraphQLField
@@ -266,8 +266,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public void postContentSpaceDataRecordCollectionPermission(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataRecordCollectionPermission(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataRecordCollectionPermission")
 				DataRecordCollectionPermission dataRecordCollectionPermission)
@@ -278,9 +278,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataRecordCollectionResource ->
 				dataRecordCollectionResource.
-					postContentSpaceDataRecordCollectionPermission(
-						contentSpaceId, operation,
-						dataRecordCollectionPermission));
+					postSiteDataRecordCollectionPermission(
+						siteId, operation, dataRecordCollectionPermission));
 	}
 
 	@GraphQLField

@@ -108,14 +108,12 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDataRecordCollectionPermission()
-		throws Exception {
-
+	public void testPostSiteDataRecordCollectionPermission() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokePostContentSpaceDataRecordCollectionPermission(
-			Long contentSpaceId, String operation,
+	protected void invokePostSiteDataRecordCollectionPermission(
+			Long siteId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
 
@@ -124,8 +122,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-record-collection-permissions",
-					contentSpaceId);
+					"/sites/{siteId}/data-record-collection-permissions",
+					siteId);
 
 		options.setLocation(location);
 
@@ -139,8 +137,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostContentSpaceDataRecordCollectionPermissionResponse(
-				Long contentSpaceId, String operation,
+			invokePostSiteDataRecordCollectionPermissionResponse(
+				Long siteId, String operation,
 				DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
 
@@ -149,8 +147,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{contentSpaceId}/data-record-collection-permissions",
-					contentSpaceId);
+					"/sites/{siteId}/data-record-collection-permissions",
+					siteId);
 
 		options.setLocation(location);
 
@@ -162,23 +160,19 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataRecordCollectionsPage()
-		throws Exception {
+	public void testGetSiteDataRecordCollectionsPage() throws Exception {
+		Long siteId = testGetSiteDataRecordCollectionsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDataRecordCollectionsPage_getIrrelevantSiteId();
 
-		Long contentSpaceId =
-			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceDataRecordCollectionsPage_getIrrelevantContentSpaceId();
-
-		if ((irrelevantContentSpaceId != null)) {
+		if ((irrelevantSiteId != null)) {
 			DataRecordCollection irrelevantDataRecordCollection =
-				testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-					irrelevantContentSpaceId,
-					randomIrrelevantDataRecordCollection());
+				testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+					irrelevantSiteId, randomIrrelevantDataRecordCollection());
 
 			Page<DataRecordCollection> page =
-				invokeGetContentSpaceDataRecordCollectionsPage(
-					irrelevantContentSpaceId, null, Pagination.of(1, 2));
+				invokeGetSiteDataRecordCollectionsPage(
+					irrelevantSiteId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -189,16 +183,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		}
 
 		DataRecordCollection dataRecordCollection1 =
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				contentSpaceId, randomDataRecordCollection());
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				siteId, randomDataRecordCollection());
 
 		DataRecordCollection dataRecordCollection2 =
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				contentSpaceId, randomDataRecordCollection());
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				siteId, randomDataRecordCollection());
 
 		Page<DataRecordCollection> page =
-			invokeGetContentSpaceDataRecordCollectionsPage(
-				contentSpaceId, null, Pagination.of(1, 2));
+			invokeGetSiteDataRecordCollectionsPage(
+				siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -209,27 +203,26 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataRecordCollectionsPageWithPagination()
+	public void testGetSiteDataRecordCollectionsPageWithPagination()
 		throws Exception {
 
-		Long contentSpaceId =
-			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId();
+		Long siteId = testGetSiteDataRecordCollectionsPage_getSiteId();
 
 		DataRecordCollection dataRecordCollection1 =
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				contentSpaceId, randomDataRecordCollection());
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				siteId, randomDataRecordCollection());
 
 		DataRecordCollection dataRecordCollection2 =
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				contentSpaceId, randomDataRecordCollection());
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				siteId, randomDataRecordCollection());
 
 		DataRecordCollection dataRecordCollection3 =
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				contentSpaceId, randomDataRecordCollection());
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				siteId, randomDataRecordCollection());
 
 		Page<DataRecordCollection> page1 =
-			invokeGetContentSpaceDataRecordCollectionsPage(
-				contentSpaceId, null, Pagination.of(1, 2));
+			invokeGetSiteDataRecordCollectionsPage(
+				siteId, null, Pagination.of(1, 2));
 
 		List<DataRecordCollection> dataRecordCollections1 =
 			(List<DataRecordCollection>)page1.getItems();
@@ -239,8 +232,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			dataRecordCollections1.size());
 
 		Page<DataRecordCollection> page2 =
-			invokeGetContentSpaceDataRecordCollectionsPage(
-				contentSpaceId, null, Pagination.of(2, 2));
+			invokeGetSiteDataRecordCollectionsPage(
+				siteId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -264,40 +257,35 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected DataRecordCollection
-			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
-				Long contentSpaceId, DataRecordCollection dataRecordCollection)
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				Long siteId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId()
+	protected Long testGetSiteDataRecordCollectionsPage_getSiteId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
-	protected Long
-			testGetContentSpaceDataRecordCollectionsPage_getIrrelevantContentSpaceId()
+	protected Long testGetSiteDataRecordCollectionsPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<DataRecordCollection>
-			invokeGetContentSpaceDataRecordCollectionsPage(
-				Long contentSpaceId, String keywords, Pagination pagination)
+	protected Page<DataRecordCollection> invokeGetSiteDataRecordCollectionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-record-collections",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-record-collections", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -318,18 +306,15 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			});
 	}
 
-	protected Http.Response
-			invokeGetContentSpaceDataRecordCollectionsPageResponse(
-				Long contentSpaceId, String keywords, Pagination pagination)
+	protected Http.Response invokeGetSiteDataRecordCollectionsPageResponse(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-record-collections",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-record-collections", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -961,8 +946,45 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected void assertValid(DataRecordCollection dataRecordCollection) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (dataRecordCollection.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
+				if (dataRecordCollection.getDataDefinitionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (dataRecordCollection.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (dataRecordCollection.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<DataRecordCollection> page) {
@@ -983,6 +1005,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(
 		DataRecordCollection dataRecordCollection1,
 		DataRecordCollection dataRecordCollection2) {
@@ -991,7 +1017,59 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataRecordCollection1.getDataDefinitionId(),
+						dataRecordCollection2.getDataDefinitionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataRecordCollection1.getDescription(),
+						dataRecordCollection2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataRecordCollection1.getId(),
+						dataRecordCollection2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataRecordCollection1.getName(),
+						dataRecordCollection2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -1074,7 +1152,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected DataRecordCollection randomIrrelevantDataRecordCollection() {
-		return randomDataRecordCollection();
+		DataRecordCollection randomIrrelevantDataRecordCollection =
+			randomDataRecordCollection();
+
+		return randomIrrelevantDataRecordCollection;
 	}
 
 	protected DataRecordCollection randomPatchDataRecordCollection() {

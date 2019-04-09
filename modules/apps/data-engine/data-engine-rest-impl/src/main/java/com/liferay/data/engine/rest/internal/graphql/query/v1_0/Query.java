@@ -80,8 +80,8 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DataDefinition> getContentSpaceDataDefinitionsPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public Collection<DataDefinition> getSiteDataDefinitionsPage(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -92,9 +92,8 @@ public class Query {
 			this::_populateResourceContext,
 			dataDefinitionResource -> {
 				Page paginationPage =
-					dataDefinitionResource.getContentSpaceDataDefinitionsPage(
-						contentSpaceId, keywords,
-						Pagination.of(pageSize, page));
+					dataDefinitionResource.getSiteDataDefinitionsPage(
+						siteId, keywords, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -115,8 +114,8 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DataLayout> getContentSpaceDataLayoutPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public Collection<DataLayout> getSiteDataLayoutPage(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -125,9 +124,8 @@ public class Query {
 			_dataLayoutResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataLayoutResource -> {
-				Page paginationPage =
-					dataLayoutResource.getContentSpaceDataLayoutPage(
-						contentSpaceId, Pagination.of(pageSize, page));
+				Page paginationPage = dataLayoutResource.getSiteDataLayoutPage(
+					siteId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -195,12 +193,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DataRecordCollection>
-			getContentSpaceDataRecordCollectionsPage(
-				@GraphQLName("contentSpaceId") Long contentSpaceId,
-				@GraphQLName("keywords") String keywords,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public Collection<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -209,9 +206,8 @@ public class Query {
 			dataRecordCollectionResource -> {
 				Page paginationPage =
 					dataRecordCollectionResource.
-						getContentSpaceDataRecordCollectionsPage(
-							contentSpaceId, keywords,
-							Pagination.of(pageSize, page));
+						getSiteDataRecordCollectionsPage(
+							siteId, keywords, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

@@ -33,17 +33,17 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DataDefinitionResource {
 
-	public void postContentSpaceDataDefinitionPermission(
-			Long contentSpaceId, String operation,
+	public void postSiteDataDefinitionPermission(
+			Long siteId, String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
-	public Page<DataDefinition> getContentSpaceDataDefinitionsPage(
-			Long contentSpaceId, String keywords, Pagination pagination)
+	public Page<DataDefinition> getSiteDataDefinitionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
-	public DataDefinition postContentSpaceDataDefinition(
-			Long contentSpaceId, DataDefinition dataDefinition)
+	public DataDefinition postSiteDataDefinition(
+			Long siteId, DataDefinition dataDefinition)
 		throws Exception;
 
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;

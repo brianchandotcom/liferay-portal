@@ -108,19 +108,17 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataLayoutPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceDataLayoutPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId();
+	public void testGetSiteDataLayoutPage() throws Exception {
+		Long siteId = testGetSiteDataLayoutPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteDataLayoutPage_getIrrelevantSiteId();
 
-		if ((irrelevantContentSpaceId != null)) {
+		if ((irrelevantSiteId != null)) {
 			DataLayout irrelevantDataLayout =
-				testGetContentSpaceDataLayoutPage_addDataLayout(
-					irrelevantContentSpaceId, randomIrrelevantDataLayout());
+				testGetSiteDataLayoutPage_addDataLayout(
+					irrelevantSiteId, randomIrrelevantDataLayout());
 
-			Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
-				irrelevantContentSpaceId, Pagination.of(1, 2));
+			Page<DataLayout> page = invokeGetSiteDataLayoutPage(
+				irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -130,16 +128,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 			assertValid(page);
 		}
 
-		DataLayout dataLayout1 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+		DataLayout dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, randomDataLayout());
 
-		DataLayout dataLayout2 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+		DataLayout dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, randomDataLayout());
 
-		Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(1, 2));
+		Page<DataLayout> page = invokeGetSiteDataLayoutPage(
+			siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -150,33 +146,27 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDataLayoutPageWithPagination()
-		throws Exception {
+	public void testGetSiteDataLayoutPageWithPagination() throws Exception {
+		Long siteId = testGetSiteDataLayoutPage_getSiteId();
 
-		Long contentSpaceId =
-			testGetContentSpaceDataLayoutPage_getContentSpaceId();
+		DataLayout dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, randomDataLayout());
 
-		DataLayout dataLayout1 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+		DataLayout dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, randomDataLayout());
 
-		DataLayout dataLayout2 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
+		DataLayout dataLayout3 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, randomDataLayout());
 
-		DataLayout dataLayout3 =
-			testGetContentSpaceDataLayoutPage_addDataLayout(
-				contentSpaceId, randomDataLayout());
-
-		Page<DataLayout> page1 = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(1, 2));
+		Page<DataLayout> page1 = invokeGetSiteDataLayoutPage(
+			siteId, Pagination.of(1, 2));
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
 		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
 
-		Page<DataLayout> page2 = invokeGetContentSpaceDataLayoutPage(
-			contentSpaceId, Pagination.of(2, 2));
+		Page<DataLayout> page2 = invokeGetSiteDataLayoutPage(
+			siteId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -194,38 +184,32 @@ public abstract class BaseDataLayoutResourceTestCase {
 			});
 	}
 
-	protected DataLayout testGetContentSpaceDataLayoutPage_addDataLayout(
-			Long contentSpaceId, DataLayout dataLayout)
+	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(
+			Long siteId, DataLayout dataLayout)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceDataLayoutPage_getContentSpaceId()
-		throws Exception {
-
+	protected Long testGetSiteDataLayoutPage_getSiteId() throws Exception {
 		return testGroup.getGroupId();
 	}
 
-	protected Long
-			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId()
+	protected Long testGetSiteDataLayoutPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<DataLayout> invokeGetContentSpaceDataLayoutPage(
-			Long contentSpaceId, Pagination pagination)
+	protected Page<DataLayout> invokeGetSiteDataLayoutPage(
+			Long siteId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-layout", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -246,17 +230,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetContentSpaceDataLayoutPageResponse(
-			Long contentSpaceId, Pagination pagination)
+	protected Http.Response invokeGetSiteDataLayoutPageResponse(
+			Long siteId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout",
-					contentSpaceId);
+			_resourceURL + _toPath("/sites/{siteId}/data-layout", siteId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -271,12 +252,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDataLayoutPermission() throws Exception {
+	public void testPostSiteDataLayoutPermission() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokePostContentSpaceDataLayoutPermission(
-			Long contentSpaceId, String operation,
+	protected void invokePostSiteDataLayoutPermission(
+			Long siteId, String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception {
 
@@ -284,9 +265,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout-permissions",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-layout-permissions", siteId);
 
 		options.setLocation(location);
 
@@ -299,8 +278,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostContentSpaceDataLayoutPermissionResponse(
-			Long contentSpaceId, String operation,
+	protected Http.Response invokePostSiteDataLayoutPermissionResponse(
+			Long siteId, String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception {
 
@@ -308,9 +287,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/data-layout-permissions",
-					contentSpaceId);
+				_toPath("/sites/{siteId}/data-layout-permissions", siteId);
 
 		options.setLocation(location);
 
@@ -692,8 +669,87 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected void assertValid(DataLayout dataLayout) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (dataLayout.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (dataLayout.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (dataLayout.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
+				if (dataLayout.getDataDefinitionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataLayoutPages", additionalAssertFieldName)) {
+				if (dataLayout.getDataLayoutPages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (dataLayout.getDefaultLanguageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (dataLayout.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (dataLayout.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("paginationMode", additionalAssertFieldName)) {
+				if (dataLayout.getPaginationMode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (dataLayout.getUserId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<DataLayout> page) {
@@ -713,12 +769,131 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(DataLayout dataLayout1, DataLayout dataLayout2) {
 		if (dataLayout1 == dataLayout2) {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getDataDefinitionId(),
+						dataLayout2.getDataDefinitionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataLayoutPages", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getDataLayoutPages(),
+						dataLayout2.getDataLayoutPages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getDateCreated(),
+						dataLayout2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getDateModified(),
+						dataLayout2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (!Objects.equals(
+						dataLayout1.getDefaultLanguageId(),
+						dataLayout2.getDefaultLanguageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getDescription(),
+						dataLayout2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.equals(dataLayout1.getId(), dataLayout2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getName(), dataLayout2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("paginationMode", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getPaginationMode(),
+						dataLayout2.getPaginationMode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataLayout1.getUserId(), dataLayout2.getUserId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -843,7 +1018,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout randomIrrelevantDataLayout() {
-		return randomDataLayout();
+		DataLayout randomIrrelevantDataLayout = randomDataLayout();
+
+		return randomIrrelevantDataLayout;
 	}
 
 	protected DataLayout randomPatchDataLayout() {

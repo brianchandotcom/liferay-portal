@@ -644,8 +644,39 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	protected void assertValid(DataRecord dataRecord) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (dataRecord.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dataRecordCollectionId", additionalAssertFieldName)) {
+
+				if (dataRecord.getDataRecordCollectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataRecordValues", additionalAssertFieldName)) {
+				if (dataRecord.getDataRecordValues() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<DataRecord> page) {
@@ -665,12 +696,56 @@ public abstract class BaseDataRecordResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(DataRecord dataRecord1, DataRecord dataRecord2) {
 		if (dataRecord1 == dataRecord2) {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dataRecordCollectionId", additionalAssertFieldName)) {
+
+				if (!Objects.equals(
+						dataRecord1.getDataRecordCollectionId(),
+						dataRecord2.getDataRecordCollectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataRecordValues", additionalAssertFieldName)) {
+				if (!Objects.equals(
+						dataRecord1.getDataRecordValues(),
+						dataRecord2.getDataRecordValues())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.equals(dataRecord1.getId(), dataRecord2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -747,7 +822,9 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	protected DataRecord randomIrrelevantDataRecord() {
-		return randomDataRecord();
+		DataRecord randomIrrelevantDataRecord = randomDataRecord();
+
+		return randomIrrelevantDataRecord;
 	}
 
 	protected DataRecord randomPatchDataRecord() {

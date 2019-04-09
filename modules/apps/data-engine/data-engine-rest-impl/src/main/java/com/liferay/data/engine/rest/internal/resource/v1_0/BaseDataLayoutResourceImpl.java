@@ -66,11 +66,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{contentSpaceId}/data-layout")
+	@Path("/sites/{siteId}/data-layout")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public Page<DataLayout> getContentSpaceDataLayoutPage(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public Page<DataLayout> getSiteDataLayoutPage(
+			@NotNull @PathParam("siteId") Long siteId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -80,11 +80,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/data-layout-permissions")
+	@Path("/sites/{siteId}/data-layout-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postContentSpaceDataLayoutPermission(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataLayoutPermission(
+			@NotNull @PathParam("siteId") Long siteId,
 			@NotNull @QueryParam("operation") String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception {

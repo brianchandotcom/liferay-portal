@@ -62,11 +62,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/data-definition-permissions")
+	@Path("/sites/{siteId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void postContentSpaceDataDefinitionPermission(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public void postSiteDataDefinitionPermission(
+			@NotNull @PathParam("siteId") Long siteId,
 			@NotNull @QueryParam("operation") String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
@@ -80,11 +80,11 @@ public abstract class BaseDataDefinitionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{contentSpaceId}/data-definitions")
+	@Path("/sites/{siteId}/data-definitions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public Page<DataDefinition> getContentSpaceDataDefinitionsPage(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public Page<DataDefinition> getSiteDataDefinitionsPage(
+			@NotNull @PathParam("siteId") Long siteId,
 			@QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
@@ -95,11 +95,11 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{contentSpaceId}/data-definitions")
+	@Path("/sites/{siteId}/data-definitions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public DataDefinition postContentSpaceDataDefinition(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
+	public DataDefinition postSiteDataDefinition(
+			@NotNull @PathParam("siteId") Long siteId,
 			DataDefinition dataDefinition)
 		throws Exception {
 

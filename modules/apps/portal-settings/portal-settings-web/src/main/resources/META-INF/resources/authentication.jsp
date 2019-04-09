@@ -19,7 +19,7 @@
 <%
 Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
 
-String[] tabsNames = {"general"};
+String[] tabsNames = {};
 
 tabsNames = ArrayUtil.append(tabsNames, PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION);
 
@@ -37,9 +37,6 @@ tabsNames = ArrayUtil.append(tabsNames, (String)request.getAttribute(PortalSetti
 	names="<%= StringUtil.merge(tabsNames) %>"
 	refresh="<%= false %>"
 >
-	<liferay-ui:section>
-		<liferay-util:include page='<%= "/authentication/general.jsp" %>' servletContext="<%= application %>" />
-	</liferay-ui:section>
 
 	<%
 	for (String section : PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) {

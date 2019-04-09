@@ -114,6 +114,31 @@ public class JournalArticleInfoDisplayContributorTest {
 			infoDisplayFieldKeys.contains("ddmTemplate_TEST_TEMPLATE_KEY"));
 	}
 
+	@Test
+	public void testNestedDDMAssetDisplayContributorFields()
+		throws PortalException {
+
+		InfoDisplayContributor<JournalArticle> infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				JournalArticle.class.getName());
+
+		List<InfoDisplayField> infoDisplayFields =
+			infoDisplayContributor.getClassTypeInfoDisplayFields(
+				_ddmStructure.getStructureId(), LocaleUtil.ENGLISH);
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		List<String> infoDisplayFieldKeys = stream.map(
+			infoDisplayField -> infoDisplayField.getKey()
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertTrue(infoDisplayFieldKeys.contains("phone"));
+
+		Assert.assertTrue(infoDisplayFieldKeys.contains("ext"));
+	}
+
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializer ddmFormDeserializer =
 			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");

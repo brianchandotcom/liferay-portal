@@ -25,8 +25,7 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testDuplicatedParameters() throws Exception {
 		test(
 			"PoshiDuplicatedParameters.testmacro",
-			new String[] {"Duplicate parameter 'userScreenName'"},
-			new Integer[] {4});
+			"Duplicate parameter 'userScreenName'", 4);
 	}
 
 	@Test

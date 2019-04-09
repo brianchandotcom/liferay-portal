@@ -1519,38 +1519,63 @@ definition {
 
 		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
 
-		Organization.addAddressCP(
-			orgAddressCity = "Diamond Bar",
-			orgAddressCountry = "United States",
-			orgAddressPostal = "91765",
-			orgAddressRegion = "California",
-			orgAddressStreet = "1400 Montefino Ave",
-			orgAddressType = "Billing"
+		Organization.gotoContact();
+
+		Organization.addContactInformation(
+			contactType = "add-address-link",
+			city = "Diamond Bar",
+			country = "United States",
+			postalCode = "91765",
+			region = "California",
+			street1 = "1400 Montefino Ave",
+			addressType = "Billing"
 		);
 
-		Organization.addPhoneNumbersCP(orgPhoneNumber = "1-877-543-3729");
+		Navigator.gotoNavNested(navNested = "Contact Information");
 
-		Organization.addAdditionalEmailAddressesCP(
-			orgAdditionalEmailAddress = "testuser@liferay.com"
+		Organization.addContactInformation(
+			contactType = "add-phone-number-link",
+			number = "1-877-543-3729"
 		);
 
-		Organization.addWebsitesCP(orgWebsite = "http://www.liferay.com");
-
-		Organization.addServicesCP(
-			orgServicesClosed = "18:00",
-			orgServicesOpen = "08:00"
+		Organization.addContactInformation(
+			address = "testuser@liferay.com",
+			contactType = "add-email-address-link"
 		);
+
+		Organization.addContactInformation(
+			contactType = "add-website-link",
+			url = "http://www.liferay.com"
+		);
+
+		Navigator.gotoNavNested(navNested = "Opening Hours");
+
+		Organization.addContactInformation(
+			contactType = "add-opening-hours-link",
+			mondayClose = "18:00",
+			mondayOpen = "08:00"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.editOrganizationCP(orgName = "Organization Name");
 
 		Organization.addCommentCP(
 			orgComment = "This is a test organization.",
 			orgName = "Organization Name"
 		);
 
-		Organization.addReminderQueriesCP(
-			orgLocalizedLanguage = "Japanese (Japan)",
+		Navigator.gotoNavNested(navNested = "Security Questions");
+
+		Organization.addSecurityQuestionsCP(
+			localizedLanguage = "ja-JP",
+			localizedSecurityQuestions = "Nihongo",
 			orgName = "Organization Name",
-			orgReminderQueriesDefaultLanguage = "This is just a test",
-			orgReminderQuery = "Nihongo"
+			securityQuestions = "This is just a test"
 		);
 	}
 

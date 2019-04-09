@@ -537,6 +537,10 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = "${orgName}");
 	}
 
+	macro gotoContact {
+		Navigator.gotoNavTab(navTab = "Contact");
+	}
+
 	macro gotoCP {
 		Search.searchCP(searchTerm = "${searchToken}");
 

@@ -160,8 +160,8 @@ public class DataRecordCollectionResourceImpl
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_RECORD_COLLECTION,
-			ddmStructure.getGroupId(), _groupLocalService);
+			DataActionKeys.ADD_DATA_RECORD_COLLECTION, _groupLocalService,
+			ddmStructure.getGroupId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -194,7 +194,7 @@ public class DataRecordCollectionResourceImpl
 			dataRecordCollectionId);
 
 		DataEnginePermissionUtil.checkOperationPermission(
-			ddlRecordSet.getGroupId(), _groupLocalService, operation);
+			_groupLocalService, operation, ddlRecordSet.getGroupId());
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -235,11 +235,11 @@ public class DataRecordCollectionResourceImpl
 		}
 
 		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, ddlRecordSet.getGroupId(),
-			dataRecordCollectionId, operation,
+			actionIds, contextCompany, dataRecordCollectionId, operation,
 			DataRecordCollectionConstants.RESOURCE_NAME,
 			_resourcePermissionLocalService, _roleLocalService,
-			dataRecordCollectionPermission.getRoleNames());
+			dataRecordCollectionPermission.getRoleNames(),
+			ddlRecordSet.getGroupId());
 	}
 
 	@Override
@@ -249,7 +249,7 @@ public class DataRecordCollectionResourceImpl
 		throws Exception {
 
 		DataEnginePermissionUtil.checkOperationPermission(
-			siteId, _groupLocalService, operation);
+			_groupLocalService, operation, siteId);
 
 		List<String> actionIds = new ArrayList<>();
 

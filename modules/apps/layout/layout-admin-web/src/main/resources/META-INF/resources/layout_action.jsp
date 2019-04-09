@@ -97,30 +97,26 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<%
-String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
-%>
-
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 	var addLayoutPrototypeActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
 		function(event) {
-			modalCommands.openSimpleInputModal(
+			Liferay.Util.openWindow(
 				{
-					<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
-						checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
-						checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
-						checkboxFieldValue: true,
-					</c:if>
-
-					dialogTitle: '<liferay-ui:message key="copy-page" />',
-					formSubmitURL: '<%= layoutsAdminDisplayContext.getCopyLayoutURL(curLayout) %>',
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					dialog: {
+						destroyOnHide: true,
+						height: 480,
+						resizable: false,
+						width: 640
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: '<portlet:namespace />copyLayoutDialog',
+					title: '<liferay-ui:message key="copy-page" />',
+					uri: '<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(layout) %>'
 				}
 			);
 		}

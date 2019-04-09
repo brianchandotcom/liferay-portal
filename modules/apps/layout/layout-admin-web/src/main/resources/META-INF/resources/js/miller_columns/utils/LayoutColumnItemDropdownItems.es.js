@@ -1,5 +1,3 @@
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-
 const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 		label: Liferay.Language.get('view'),
@@ -49,26 +47,22 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 		handleClick: (event, layoutColumn) => {
 			event.preventDefault();
 
-			const config = {
-				dialogTitle: Liferay.Language.get('copy-page'),
-				formSubmitURL: event.data.item.href,
-				mainFieldLabel: Liferay.Language.get('name'),
-				mainFieldName: 'name',
-				namespace: layoutColumn.portletNamespace,
-				spritemap: `${layoutColumn.pathThemeImages}/lexicon/icons.svg`
-			};
-
-			if (layoutColumn.siteNavigationMenuNames !== '') {
-				config.checkboxFieldLabel = Liferay.Util.sub(
-					Liferay.Language.get('add-this-page-to-the-following-menus-x'),
-					layoutColumn.siteNavigationMenuNames
-				);
-
-				config.checkboxFieldName = 'TypeSettingsProperties--addToAutoMenus--';
-				config.checkboxFieldValue = true;
-			}
-
-			OpenSimpleInputModal(config);
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						destroyOnHide: true,
+						height: 480,
+						resizable: false,
+						width: 640
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: event.data.item.namespace + 'addLayoutDialog',
+					title: Liferay.Language.get('copy-page'),
+					uri: event.data.item.href
+				}
+			);
 		},
 		label: Liferay.Language.get('copy-page'),
 		name: 'copyLayoutURL'

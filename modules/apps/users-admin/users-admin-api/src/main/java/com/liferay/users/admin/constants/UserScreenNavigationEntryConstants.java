@@ -17,7 +17,7 @@ package com.liferay.users.admin.constants;
 /**
  * @author Pei-Jung Lan
  */
-public class UserFormConstants {
+public class UserScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_CONTACT = "contact";
 

@@ -336,7 +336,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("<strong>FAILURE</strong> - ");
+				sb.append("<strong style=\"color: red\">FAILURE</strong> - ");
 				sb.append(buildURLMatcher.group());
 
 				Matcher portalBranchSHAMatcher =

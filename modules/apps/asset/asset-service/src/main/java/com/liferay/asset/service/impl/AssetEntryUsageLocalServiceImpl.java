@@ -17,6 +17,9 @@ package com.liferay.asset.service.impl;
 import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -26,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -53,9 +57,9 @@ public class AssetEntryUsageLocalServiceImpl
 		assetEntryUsage.setModifiedDate(new Date());
 		assetEntryUsage.setAssetEntryId(assetEntryId);
 		assetEntryUsage.setPlid(plid);
-		assetEntryUsage.setType(AssetEntryUsagesTypeConstants.TYPE_LAYOUT);
 		assetEntryUsage.setContainerType(containerType);
 		assetEntryUsage.setContainerKey(containerKey);
+		assetEntryUsage.setType(_getType(plid));
 
 		return assetEntryUsagePersistence.update(assetEntryUsage);
 	}
@@ -129,5 +133,27 @@ public class AssetEntryUsageLocalServiceImpl
 
 		return false;
 	}
+
+	private int _getType(long plid) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry != null) {
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+				return AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
+			}
+
+			return AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE;
+		}
+
+		return AssetEntryUsagesTypeConstants.TYPE_LAYOUT;
+	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

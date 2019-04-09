@@ -39,7 +39,8 @@ public class PortalTestSuiteUpstreamControllerBuildData
 
 	public String getTestrayBuildName() {
 		return JenkinsResultsParserUtil.combine(
-			String.valueOf(getBuildNumber()), " - ",
+			getTestrayBuildType(), " - ", String.valueOf(getBuildNumber()),
+			" - ",
 			JenkinsResultsParserUtil.toDateString(
 				new Date(getStartTime()), "yyyy-MM-dd[HH:mm:ss]",
 				"America/Los_Angeles"));

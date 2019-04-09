@@ -98,26 +98,24 @@
 				'change': $_handleRadioChange,
 			] /}
 			{param label kind="text"} {msg desc=""}append{/msg} {/param}
+			{param labelContent kind="html"}
+				<div class="form-text">{msg desc=""}add-new-tags-to-the-existing-tags{/msg}</div>
+			{/param}
 			{param name: 'add-replace' /}
 			{param value: 'add' /}
 		{/call}
-
-		<p>
-			<small class="text-default">{msg desc=""}add-new-tags-to-the-existing-tags{/msg}</small>
-		</p>
 
 		{call ClayRadio.render}
 			{param events: [
 				'change': $_handleRadioChange,
 			] /}
 			{param label kind="text"} {msg desc=""}replace{/msg} {/param}
+			{param labelContent kind="html"}
+				<div class="form-text">{msg desc=""}new-tags-replace-all-existing-tags{/msg}</div>
+			{/param}
 			{param name: 'add-replace' /}
 			{param value: 'replace' /}
 		{/call}
-
-		<p>
-			<small class="text-default">{msg desc=""}new-tags-replace-all-existing-tags{/msg}</small>
-		</p>
 	{/if}
 
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}

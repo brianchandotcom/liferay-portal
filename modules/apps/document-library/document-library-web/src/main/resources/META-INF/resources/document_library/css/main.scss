@@ -16,6 +16,8 @@
 @include file-icon(4, #FFB46E);
 @include file-icon(6, #4B9BFF);
 
+@import "radio-secondary-text";
+
 .portlet-document-library, .portlet-document-library-display {
 	@import "document_library_preview";
 

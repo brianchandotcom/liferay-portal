@@ -79,10 +79,18 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 
 						<aui:input label="validity-days" name="certificateValidityDays" value="<%= certificateValidityDays %>" />
 
-						<aui:select label="key-algorithm" name="certificateKeyAlgorithm" required="<%= true %>">
-							<aui:option label="rsa" selected='<%= certificateKeyAlgorithm.equals("RSA") %>' value="RSA" />
-							<aui:option label="dsa" selected='<%= certificateKeyAlgorithm.equals("DSA") %>' value="DSA" />
-						</aui:select>
+						<c:choose>
+							<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.SIGNING %>">
+								<aui:select label="key-algorithm" name="certificateKeyAlgorithm" required="<%= true %>">
+									<aui:option label="rsa" selected='<%= certificateKeyAlgorithm.equals("RSA") %>' value="RSA" />
+									<aui:option label="dsa" selected='<%= certificateKeyAlgorithm.equals("DSA") %>' value="DSA" />
+								</aui:select>
+							</c:when>
+							<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
+								<aui:input disabled="<%= true %>" label="key-algorithm" name="certificateKeyAlgorithm" value="RSA" />
+								<aui:input label="key-algorithm" name="certificateKeyAlgorithm" type="hidden" value="RSA" />
+							</c:when>
+						</c:choose>
 
 						<aui:select label="key-length-bits" name="certificateKeyLength" required="<%= true %>">
 							<aui:option label="4096" selected='<%= certificateKeyLength.equals("4096") %>' value="4096" />

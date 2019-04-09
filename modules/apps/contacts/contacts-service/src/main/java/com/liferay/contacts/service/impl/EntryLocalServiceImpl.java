@@ -19,6 +19,7 @@ import com.liferay.contacts.exception.EntryEmailAddressException;
 import com.liferay.contacts.exception.RequiredEntryEmailAddressException;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.base.EntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -30,9 +31,15 @@ import com.liferay.portal.security.auth.FullNameValidatorFactory;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.contacts.model.Entry",
+	service = AopService.class
+)
 public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	@Override

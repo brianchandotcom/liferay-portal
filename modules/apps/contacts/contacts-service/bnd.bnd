@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.contacts.service
 Bundle-Version: 4.0.0
 Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

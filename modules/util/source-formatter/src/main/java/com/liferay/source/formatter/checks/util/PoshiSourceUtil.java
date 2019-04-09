@@ -26,71 +26,37 @@ import java.util.regex.Pattern;
  */
 public class PoshiSourceUtil {
 
-	public static int[] getMultiLineCommentsPositions(String content) {
-		List<Integer> multiLineCommentsPositions = new ArrayList<>();
+	public static int[] getMultiLinePositions(
+		String content, Pattern multiLinePattern) {
 
-		Matcher matcher = _multiLineCommentsPattern.matcher(content);
+		List<Integer> multiLinePositions = new ArrayList<>();
+
+		Matcher matcher = multiLinePattern.matcher(content);
 
 		while (matcher.find()) {
-			multiLineCommentsPositions.add(
+			multiLinePositions.add(
 				SourceUtil.getLineNumber(content, matcher.start()));
-			multiLineCommentsPositions.add(
+			multiLinePositions.add(
 				SourceUtil.getLineNumber(content, matcher.end() - 1));
 		}
 
-		return ArrayUtil.toIntArray(multiLineCommentsPositions);
+		return ArrayUtil.toIntArray(multiLinePositions);
 	}
 
-	public static int[] getMultiLineStringPositions(String content) {
-		List<Integer> multiLineStringPositions = new ArrayList<>();
+	public static boolean isInsideMultiLines(
+		int lineNumber, int[] multiLinePositions) {
 
-		Matcher matcher = _multiLineStringPattern.matcher(content);
-
-		while (matcher.find()) {
-			multiLineStringPositions.add(
-				SourceUtil.getLineNumber(content, matcher.start()));
-			multiLineStringPositions.add(
-				SourceUtil.getLineNumber(content, matcher.end() - 1));
-		}
-
-		return ArrayUtil.toIntArray(multiLineStringPositions);
-	}
-
-	public static boolean isInsideMultiLineComments(
-		int lineNumber, int[] multiLineCommentsPositions) {
-
-		for (int i = 0; i < multiLineCommentsPositions.length - 1; i += 2) {
-			if (lineNumber < multiLineCommentsPositions[i]) {
+		for (int i = 0; i < (multiLinePositions.length - 1); i += 2) {
+			if (lineNumber < multiLinePositions[i]) {
 				return false;
 			}
 
-			if (lineNumber <= multiLineCommentsPositions[i + 1]) {
+			if (lineNumber <= multiLinePositions[i + 1]) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-
-	public static boolean isInsideMultiLineString(
-		int lineNumber, int[] multiLineStringPositions) {
-
-		for (int i = 0; i < multiLineStringPositions.length - 1; i += 2) {
-			if (lineNumber < multiLineStringPositions[i]) {
-				return false;
-			}
-
-			if (lineNumber <= multiLineStringPositions[i + 1]) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
-		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
-	private static final Pattern _multiLineStringPattern = Pattern.compile(
-		"[ \t]*.+ = '''.*?'''", Pattern.DOTALL);
 
 }

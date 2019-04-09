@@ -27,6 +27,8 @@ AUI.add(
 			separator: ['indexType', 'localizable', 'predefinedValue', 'readOnly', 'required']
 		};
 
+		var REGEX_HYPHEN = /[-–—]/i;
+
 		var SETTINGS_TAB_INDEX = 1;
 
 		var STR_BLANK = '';
@@ -815,7 +817,7 @@ AUI.add(
 			validateFieldName: function(fieldName) {
 				var valid = true;
 
-				if ((/[-–—]/).test(fieldName)) {
+				if (REGEX_HYPHEN.test(fieldName)) {
 					valid = false;
 
 					return valid;

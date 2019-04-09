@@ -98,6 +98,7 @@ components:
                 encodingFormat:
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
@@ -141,6 +142,7 @@ components:
                 encodingFormat:
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
@@ -341,6 +343,7 @@ components:
                 encodingFormat:
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
@@ -490,6 +493,7 @@ components:
                 encodingFormat:
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
@@ -551,6 +555,7 @@ components:
                 encodingFormat:
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64

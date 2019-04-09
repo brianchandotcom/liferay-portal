@@ -184,7 +184,7 @@ public class HTMLTag extends BaseHTMLTag {
 		setNamespacedAttribute(request, "fields", getFields());
 
 		if (getGroupId() <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			setNamespacedAttribute(

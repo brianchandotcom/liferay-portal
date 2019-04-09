@@ -72,9 +72,9 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String indent = SourceUtil.getIndent(matcher1.group(1));
-
 			StringBundler sb = new StringBundler(parametersMap.size() * 7);
+
+			String indent = SourceUtil.getIndent(matcher1.group(1));
 
 			for (Map.Entry<String, String> entry : parametersMap.entrySet()) {
 				if (parametersMap.size() == 1) {

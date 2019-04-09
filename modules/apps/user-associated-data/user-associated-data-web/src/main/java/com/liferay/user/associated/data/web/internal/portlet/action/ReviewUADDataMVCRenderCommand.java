@@ -122,7 +122,13 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			UADHierarchyDisplay uadHierarchyDisplay =
 				_uadRegistry.getUADHierarchyDisplay(applicationKey);
 
-			if (uadHierarchyDisplay != null) {
+			if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+				viewUADEntitiesDisplay.setSearchContainer(
+					_uadSearchContainerBuilder.getSearchContainer(
+						renderRequest, liferayPortletResponse, currentURL,
+						uadApplicationSummaryDisplays));
+			}
+			else if (uadHierarchyDisplay != null) {
 				UADDisplay<?>[] uadDisplays =
 					uadHierarchyDisplay.getUADDisplays();
 
@@ -176,11 +182,12 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					new Class<?>[] {uadDisplay.getTypeClass()});
 
 				viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+
+				renderRequest.setAttribute(
+					UADWebKeys.APPLICATION_UAD_DISPLAYS,
+					_uadRegistry.getApplicationUADDisplays(applicationKey));
 			}
 
-			renderRequest.setAttribute(
-				UADWebKeys.APPLICATION_UAD_DISPLAYS,
-				_uadRegistry.getApplicationUADDisplays(applicationKey));
 			renderRequest.setAttribute(UADWebKeys.GROUP_IDS, groupIds);
 			renderRequest.setAttribute(
 				UADWebKeys.TOTAL_UAD_ENTITIES_COUNT,

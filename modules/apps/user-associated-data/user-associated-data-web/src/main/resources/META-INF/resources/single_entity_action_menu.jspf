@@ -36,14 +36,41 @@
 		/>
 	</c:if>
 
-	<portlet:actionURL name="/anonymize_uad_entities" var="autoAnonymizeURL">
-		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-	</portlet:actionURL>
+	<%
+	String applicationKey = StringPool.BLANK;
+
+	ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
+
+	if (viewUADEntitiesDisplay != null) {
+		applicationKey = viewUADEntitiesDisplay.getApplicationKey();
+	}
+
+	PortletURL autoAnonymizeURL = liferayPortletResponse.createActionURL();
+	PortletURL deleteURL = liferayPortletResponse.createActionURL();
+
+	if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_applications");
+		autoAnonymizeURL.setParameter("applicationKey", String.valueOf(uadEntity.getPrimaryKey()));
+
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_applications");
+		deleteURL.setParameter("applicationKey", String.valueOf(uadEntity.getPrimaryKey()));
+	}
+	else {
+		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_entities");
+		autoAnonymizeURL.setParameter("primaryKey__" + uadEntity.getTypeClass().getSimpleName(), String.valueOf(uadEntity.getPrimaryKey()));
+
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_entities");
+		deleteURL.setParameter("primaryKey__" + uadEntity.getTypeClass().getSimpleName(), String.valueOf(uadEntity.getPrimaryKey()));
+	}
+	%>
 
 	<%
 	String anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-this-entity";
 
-	if (!uadEntity.isUserOwned()) {
+	if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+		anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-the-entities-of-this-application";
+	}
+	else if (!uadEntity.isUserOwned()) {
 		anonymizeSingleMessage = "only-items-belonging-to-the-user-will-be-anonymized";
 	}
 	%>
@@ -54,14 +81,13 @@
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/delete_uad_entities" var="deleteURL">
-		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-	</portlet:actionURL>
-
 	<%
 	String deleteSingleMessage = "are-you-sure-you-want-to-delete-this-entity";
 
-	if (!uadEntity.isUserOwned()) {
+	if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+		deleteSingleMessage = "are-you-sure-you-want-to-delete-the-entities-of-this-application";
+	}
+	else if (!uadEntity.isUserOwned()) {
 		deleteSingleMessage = "only-items-belonging-to-the-user-will-be-deleted";
 	}
 	%>

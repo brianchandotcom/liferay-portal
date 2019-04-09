@@ -133,6 +133,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
 
+	protected String[] getApplicationKeys(ActionRequest actionRequest) {
+		String applicationKey = ParamUtil.getString(
+			actionRequest, "applicationKey");
+
+		if (Validator.isNotNull(applicationKey)) {
+			return new String[] {applicationKey};
+		}
+
+		String[] applicationKeys = ParamUtil.getStringValues(
+			actionRequest, "applicationKeys");
+
+		return applicationKeys;
+	}
+
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {
 		List<String> entityTypes = new ArrayList<>();
 

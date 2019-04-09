@@ -80,7 +80,8 @@ page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.TreeMap" %>
 
-<%@ page import="javax.portlet.PortletException" %><%@
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletException" %><%@
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 

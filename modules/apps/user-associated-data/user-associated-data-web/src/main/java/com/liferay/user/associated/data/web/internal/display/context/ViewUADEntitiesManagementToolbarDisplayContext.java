@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +26,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.user.associated.data.web.internal.display.UADEntity;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
+import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 
 import java.util.List;
 import java.util.Map;
@@ -47,11 +47,13 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request,
-		SearchContainer<UADEntity> searchContainer) {
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay) {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
-			searchContainer);
+			viewUADEntitiesDisplay.getSearchContainer());
+
+		_viewUADEntitiesDisplay = viewUADEntitiesDisplay;
 	}
 
 	@Override
@@ -103,6 +105,17 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowInfoButton() {
+		String applicationKey = _viewUADEntitiesDisplay.getApplicationKey();
+
+		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public Boolean isShowSearch() {
 		return true;
 	}
@@ -148,5 +161,7 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewUADEntitiesManagementToolbarDisplayContext.class);
+
+	private final ViewUADEntitiesDisplay _viewUADEntitiesDisplay;
 
 }

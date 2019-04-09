@@ -19,6 +19,8 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADConstants {
 
+	public static final String ALL_APPLICATIONS = "all-applications";
+
 	public static final String SCOPE_INSTANCE = "instance";
 
 	public static final String SCOPE_PERSONAL_SITE = "personal-site";

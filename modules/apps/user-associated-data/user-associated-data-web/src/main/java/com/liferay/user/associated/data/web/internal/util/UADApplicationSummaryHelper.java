@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -102,11 +103,13 @@ public class UADApplicationSummaryHelper {
 	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
 		long userId, long[] groupIds) {
 
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			new ArrayList<>();
+		List<UADApplicationSummaryDisplay>
+			generatedUADApplicationSummaryDisplays = new ArrayList<>();
 
 		Set<String> applicationUADDisplayKeySet =
 			_uadRegistry.getApplicationUADDisplaysKeySet();
+
+		int count = 0;
 
 		Iterator<String> iterator = applicationUADDisplayKeySet.iterator();
 
@@ -124,14 +127,19 @@ public class UADApplicationSummaryHelper {
 			);
 
 			if (!ListUtil.isEmpty(applicationUADDisplays)) {
-				uadApplicationSummaryDisplays.add(
+				UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 					getUADApplicationSummaryDisplay(
 						applicationKey, applicationUADDisplays, userId,
-						groupIds));
+						groupIds);
+
+				generatedUADApplicationSummaryDisplays.add(
+					uadApplicationSummaryDisplay);
+
+				count += uadApplicationSummaryDisplay.getCount();
 			}
 		}
 
-		uadApplicationSummaryDisplays.sort(
+		generatedUADApplicationSummaryDisplays.sort(
 			(uadApplicationSummaryDisplay, uadApplicationSummaryDisplay2) -> {
 				String applicationKey1 =
 					uadApplicationSummaryDisplay.getApplicationKey();
@@ -139,6 +147,23 @@ public class UADApplicationSummaryHelper {
 				return applicationKey1.compareTo(
 					uadApplicationSummaryDisplay2.getApplicationKey());
 			});
+
+		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
+			new ArrayList<>();
+
+		UADApplicationSummaryDisplay
+			allApplicationsUADApplicationSummaryDisplay =
+				new UADApplicationSummaryDisplay();
+
+		allApplicationsUADApplicationSummaryDisplay.setApplicationKey(
+			UADConstants.ALL_APPLICATIONS);
+		allApplicationsUADApplicationSummaryDisplay.setCount(count);
+
+		uadApplicationSummaryDisplays.add(
+			allApplicationsUADApplicationSummaryDisplay);
+
+		uadApplicationSummaryDisplays.addAll(
+			generatedUADApplicationSummaryDisplays);
 
 		return uadApplicationSummaryDisplays;
 	}

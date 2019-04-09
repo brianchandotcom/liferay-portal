@@ -19,9 +19,7 @@
 <%
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
-SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
-
-ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadEntitySearchContainer);
+ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewUADEntitiesDisplay);
 
 boolean topLevelView = true;
 
@@ -43,26 +41,30 @@ if (parentContainerId > 0) {
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-	<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
-	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 
-	<%
-	for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
-	%>
+	<c:choose>
+		<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
+			<aui:input name="applicationKeys" type="hidden" />
+		</c:when>
+		<c:otherwise>
+			<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
+			<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 
-		<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
-		<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+			<%
+			for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
+			%>
 
-	<%
-	}
-	%>
+				<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
+				<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+
+			<%
+			}
+			%>
+
+		</c:otherwise>
+	</c:choose>
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL">
-			<liferay-portlet:param name="hierarchyView" value="<%= String.valueOf(viewUADEntitiesDisplay.isHierarchy()) %>" />
-			<liferay-portlet:param name="topLevelView" value="<%= String.valueOf(topLevelView) %>" />
-		</liferay-portlet:resourceURL>
-
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb
 				showCurrentGroup="<%= false %>"
@@ -72,16 +74,23 @@ if (parentContainerId > 0) {
 			/>
 		</div>
 
-		<liferay-frontend:sidebar-panel
-			resourceURL="<%= entityTypeSidebarURL %>"
-			searchContainerId="UADEntities"
-		>
-			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:sidebar-panel>
+		<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL">
+				<liferay-portlet:param name="hierarchyView" value="<%= String.valueOf(viewUADEntitiesDisplay.isHierarchy()) %>" />
+				<liferay-portlet:param name="topLevelView" value="<%= String.valueOf(topLevelView) %>" />
+			</liferay-portlet:resourceURL>
+
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= entityTypeSidebarURL %>"
+				searchContainerId="UADEntities"
+			>
+				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
 		<div class="sidenav-content">
 			<liferay-ui:search-container
-				searchContainer="<%= uadEntitySearchContainer %>"
+				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADEntity"
@@ -112,9 +121,6 @@ if (parentContainerId > 0) {
 
 						if (columnEntry.equals(columnEntries.get(0))) {
 							cssClass = "table-cell-expand table-list-title";
-						}
-						else if (columnEntryKey.equals("count")) {
-							cssClass = "table-cell-expand-smallest";
 						}
 					%>
 
@@ -155,9 +161,24 @@ if (parentContainerId > 0) {
 </aui:form>
 
 <aui:script>
+
+	<%
+	PortletURL autoAnonymizeURL = renderResponse.createActionURL();
+	PortletURL deleteURL = renderResponse.createActionURL();
+
+	if (Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS)) {
+		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_applications");
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_applications");
+	}
+	else {
+		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_entities");
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_entities");
+	}
+	%>
+
 	function <portlet:namespace/>doAnonymizeMultiple() {
 		<portlet:namespace />doMultiple(
-			'<portlet:actionURL name="/anonymize_uad_entities" />',
+			'<%= autoAnonymizeURL.toString() %>',
 			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />',
 			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-anonymized" />'
 		);
@@ -165,7 +186,7 @@ if (parentContainerId > 0) {
 
 	function <portlet:namespace/>doDeleteMultiple() {
 		<portlet:namespace />doMultiple(
-			'<portlet:actionURL name="/delete_uad_entities" />',
+			'<%= deleteURL.toString() %>',
 			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-items" />',
 			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-deleted" />'
 		);
@@ -179,35 +200,49 @@ if (parentContainerId > 0) {
 		var form = document.getElementById('<portlet:namespace />viewUADEntitiesFm');
 
 		if (form) {
+			<c:choose>
+				<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
+					var applicationKeys = form.querySelector('#<portlet:namespace />applicationKeys');
 
-			<%
-			for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
-				String primaryKeysVar = "primaryKeys" + typeClass.getSimpleName();
-			%>
-
-				var <%= primaryKeysVar %> = form.querySelector('#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>');
-
-				if (<%= primaryKeysVar %>) {
-					var primaryKeys = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>');
-
-					<%= primaryKeysVar %>.setAttribute(
-						'value',
-						primaryKeys
-					);
-
-					var primaryKeyArray = primaryKeys.split(',');
-
-					for (var i = 0; i < primaryKeyArray.length; i++) {
-						if ((primaryKeyArray[i] != '') && !userOwnedPrimaryKeyArray.includes(primaryKeyArray[i])) {
-							message = hierarchyMessage;
-						}
+					if (applicationKeys) {
+						applicationKeys.setAttribute(
+							'value',
+							Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+						);
 					}
-				}
+				</c:when>
+				<c:otherwise>
 
-			<%
-			}
-			%>
+					<%
+					for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
+						String primaryKeysVar = "primaryKeys" + typeClass.getSimpleName();
+					%>
 
+						var <%= primaryKeysVar %> = form.querySelector('#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>');
+
+						if (<%= primaryKeysVar %>) {
+							var primaryKeys = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>');
+
+							<%= primaryKeysVar %>.setAttribute(
+								'value',
+								primaryKeys
+							);
+
+							var primaryKeyArray = primaryKeys.split(',');
+
+							for (var i = 0; i < primaryKeyArray.length; i++) {
+								if ((primaryKeyArray[i] != '') && !userOwnedPrimaryKeyArray.includes(primaryKeyArray[i])) {
+									message = hierarchyMessage;
+								}
+							}
+						}
+
+					<%
+					}
+					%>
+
+				</c:otherwise>
+			</c:choose>
 		}
 
 		<portlet:namespace />confirmAction('viewUADEntitiesFm', actionURL, message);

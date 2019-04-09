@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.user.associated.data.component.UADComponent;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,6 +33,10 @@ public class UADLanguageUtil {
 
 	public static String getApplicationName(
 		String applicationKey, Locale locale) {
+
+		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+			return LanguageUtil.get(locale, UADConstants.ALL_APPLICATIONS);
+		}
 
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.

@@ -15,11 +15,11 @@ AUI.add(
 		];
 
 		var TPL_ADD_BUTTON = '<button class="add-row btn btn-default btn-icon-only toolbar-first toolbar-item" title="" type="button">' +
-				'<span class="btn-icon icon icon-plus"></span>' +
+				Liferay.Util.getLexiconIconTpl('plus') +
 			'</button>';
 
 		var TPL_DELETE_BUTTON = '<button class="btn btn-default btn-icon-only delete-row toolbar-item toolbar-last" title="" type="button">' +
-				'<span class="btn-icon icon icon-minus"></span>' +
+				Liferay.Util.getLexiconIconTpl('hr') +
 			'</button>';
 
 		var TPL_AUTOROW_CONTROLS = '<span class="lfr-autorow-controls toolbar toolbar-horizontal">' +

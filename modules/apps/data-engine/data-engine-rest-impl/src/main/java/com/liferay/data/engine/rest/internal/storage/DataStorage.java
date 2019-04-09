@@ -65,14 +65,14 @@ public class DataStorage {
 			ddmContent.getData());
 	}
 
-	public long save(long groupId, DataRecord dataRecord) throws Exception {
+	public long save(long siteId, DataRecord dataRecord) throws Exception {
 		DataRecordCollection dataRecordCollection =
 			DataRecordCollectionUtil.toDataRecordCollection(
 				_ddlRecordSetLocalService.getRecordSet(
 					dataRecord.getDataRecordCollectionId()));
 
 		DDMContent ddmContent = _ddmContentLocalService.addContent(
-			PrincipalThreadLocal.getUserId(), groupId,
+			PrincipalThreadLocal.getUserId(), siteId,
 			DataRecord.class.getName(), null,
 			DataRecordValueUtil.toJSON(
 				DataDefinitionUtil.toDataDefinition(
@@ -81,7 +81,7 @@ public class DataStorage {
 				dataRecord.getDataRecordValues()),
 			new ServiceContext() {
 				{
-					setScopeGroupId(groupId);
+					setScopeGroupId(siteId);
 					setUserId(PrincipalThreadLocal.getUserId());
 				}
 			});

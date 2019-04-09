@@ -89,6 +89,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MONDAY_CLOSE</td>
+	<td>//select[contains(@id,'monClose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MONDAY_OPEN</td>
+	<td>//select[contains(@id,'monOpen')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PARENT</td>
 	<td>//div[label[contains(.,'New Parent')]]/select</td>
 	<td></td>

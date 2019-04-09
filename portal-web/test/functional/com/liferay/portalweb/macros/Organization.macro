@@ -100,6 +100,82 @@ definition {
 		AssertTextEquals(locator1 = "TextArea#COMMENTS", value1 = "${orgComment}");
 	}
 
+	macro addContactInformation {
+		if (isSet(contactType)) {
+			var key_contactType = "${contactType}";
+
+			Click.mouseDownMouseUp(
+				locator1 = "UsersAndOrganizationsEditOrganization#CONTACT_ADD_BUTTON"
+			);
+
+			if ("${makePrimary}" == "true") {
+				Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Primary");
+			}
+
+			// Addresses
+
+			if (isSet(addressType)) {
+				Select(locator1 = "Select#TYPE", value1 = "${addressType}");
+			}
+
+			if (isSet(street1)) {
+				Type(locator1 = "TextInput#STREET_1", value1 = "${street1}");
+			}
+
+			if (isSet(city)) {
+				Type(locator1 = "TextInput#CITY", value1 = "${city}");
+			}
+
+			if (isSet(country)) {
+				Select(locator1 = "Select#COUNTRY", value1 = "${country}");
+			}
+
+			if (isSet(region)) {
+				Select(locator1 = "Select#REGION", value1 = "${region}");
+			}
+
+			if (isSet(postalCode)) {
+				Type(locator1 = "TextInput#POSTAL_CODE", value1 = "${postalCode}");
+			}
+
+			// Phone Numbers
+
+			if (isSet(number)) {
+				Type(locator1 = "TextInput#NUMBER", value1 = "${number}");
+			}
+
+			if (isSet(extension)) {
+				Type(locator1 = "TextInput#EXTENSION", value1 = "${extension}");
+			}
+
+			// Additional Email Addresses
+
+			if (isSet(address)) {
+				Type(locator1 = "TextInput#ADDRESS", value1 = "${address}");
+			}
+
+			// Websites
+
+			if (isSet(url)) {
+				Type(locator1 = "TextInput#URL", value1 = "${url}");
+			}
+
+			// Opening Hours
+
+			if (isSet(mondayOpen)) {
+				Select(locator1 = "Select#MONDAY_OPEN", value1 = "${mondayOpen}");
+			}
+
+			if (isSet(mondayClose)) {
+				Select(locator1 = "Select#MONDAY_CLOSE", value1 = "${mondayClose}");
+			}
+		}
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addCP {
 		AssertClick(locator1 = "NavBar#ORGANIZATIONS", value1 = "Organizations");
 

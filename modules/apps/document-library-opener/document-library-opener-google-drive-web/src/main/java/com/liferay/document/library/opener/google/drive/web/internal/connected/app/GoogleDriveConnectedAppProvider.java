@@ -53,6 +53,10 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 
 	@Override
 	public ConnectedApp getConnectedApp(User user) throws PortalException {
+		if (!_dlOpenerGoogleDriveManager.isConfigured(user.getCompanyId())) {
+			return null;
+		}
+
 		Credential credential = _oAuth2Manager.getCredential(
 			user.getCompanyId(), user.getUserId());
 

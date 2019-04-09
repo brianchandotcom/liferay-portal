@@ -1180,6 +1180,10 @@ public interface PropsKeys {
 
 	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
 
 	public static final String DL_WEBDAV_SUBSTITUTION_CHAR =

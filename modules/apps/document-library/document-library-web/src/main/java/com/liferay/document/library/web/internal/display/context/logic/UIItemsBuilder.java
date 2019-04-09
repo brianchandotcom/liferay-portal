@@ -350,7 +350,7 @@ public class UIItemsBuilder {
 			mvcActionCommandName = "/document_library/edit_file_shortcut";
 		}
 
-		PortletURL portletURL = _getActionURL(mvcActionCommandName, cmd);
+		PortletURL portletURL = _getDeleteActionURL(mvcActionCommandName, cmd);
 
 		if (_fileShortcut == null) {
 			portletURL.setParameter(
@@ -1146,6 +1146,33 @@ public class UIItemsBuilder {
 		_currentURL = portletURL.toString();
 
 		return _currentURL;
+	}
+
+	private PortletURL _getDeleteActionURL(
+		String mvcActionCommandName, String cmd) {
+
+		String currentMvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName");
+
+		if (currentMvcRenderCommandName.equals(
+				"/document_library/view_file_entry")) {
+
+			String redirect = ParamUtil.getString(_request, "redirect");
+
+			if (Validator.isNull(redirect)) {
+				LiferayPortletResponse liferayPortletResponse =
+					_getLiferayPortletResponse();
+
+				PortletURL portletURL =
+					liferayPortletResponse.createRenderURL();
+
+				redirect = portletURL.toString();
+			}
+
+			return _getActionURL(mvcActionCommandName, cmd, redirect);
+		}
+
+		return _getActionURL(mvcActionCommandName, cmd);
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest() {

@@ -1,7 +1,7 @@
-import {CLEAR_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
+import {CLEAR_DROP_TARGET, MOVE_ROW, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './rowConstants';
 import {FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
-import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
+import {getTargetBorder, getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -112,6 +112,29 @@ function moveItem(store, moveItemAction, moveItemPayload) {
 		.dispatchAction(
 			CLEAR_DROP_TARGET
 		);
+}
+
+/**
+ * Moves a row one position in the given direction
+ * @param {number} direction
+ * @param {object} row
+ * @param {object} store Store instance that dispatches the actions
+ * @param {array} structure
+ * @review
+ */
+function moveRow(direction, rowIndex, store, structure) {
+	const row = structure[rowIndex];
+	const targetRow = structure[rowIndex + direction];
+
+	if (targetRow) {
+		const moveItemPayload = {
+			rowId: row.rowId,
+			targetBorder: getTargetBorder(direction),
+			targetItemId: targetRow.rowId
+		};
+
+		moveItem(store, MOVE_ROW, moveItemPayload);
+	}
 }
 
 /**
@@ -346,6 +369,7 @@ export {
 	add,
 	addRow,
 	moveItem,
+	moveRow,
 	remove,
 	removeItem,
 	setIn,

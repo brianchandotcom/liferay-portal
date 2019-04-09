@@ -7,10 +7,10 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
-import {MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS} from '../../actions/actions.es';
+import {REMOVE_ROW, UPDATE_ROW_COLUMNS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {getItemMoveDirection, getItemPath, getRowIndex, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, removeItem, setIn, updateRow} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {getItemMoveDirection, getItemPath, getRowIndex, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {moveRow, removeItem, setIn, updateRow} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -349,24 +349,13 @@ class FragmentEntryLinkListRow extends Component {
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 
 			const direction = getItemMoveDirection(event.which);
-			const rowId = document.activeElement.dataset.layoutRowId;
-			const rowIndex = getRowIndex(
-				this.layoutData.structure,
-				rowId
+
+			moveRow(
+				direction,
+				getRowIndex(this.layoutData.structure, this.rowId),
+				this.store,
+				this.layoutData.structure
 			);
-			const targetItem = this.layoutData.structure[
-				rowIndex + direction
-			];
-
-			if (direction && targetItem) {
-				const moveItemPayload = {
-					rowId,
-					targetBorder: getTargetBorder(direction),
-					targetItemId: targetItem.rowId
-				};
-
-				moveItem(this.store, MOVE_ROW, moveItemPayload);
-			}
 		}
 	}
 

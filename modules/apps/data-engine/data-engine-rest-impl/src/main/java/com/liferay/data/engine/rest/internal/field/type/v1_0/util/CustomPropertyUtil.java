@@ -17,11 +17,16 @@ package com.liferay.data.engine.rest.internal.field.type.v1_0.util;
 import com.liferay.data.engine.rest.dto.v1_0.CustomProperty;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -77,6 +82,20 @@ public class CustomPropertyUtil {
 		}
 
 		return Collections.emptyList();
+	}
+
+	public static Long getLong(CustomProperty[] customProperties, String key) {
+		if (ArrayUtil.isEmpty(customProperties)) {
+			return Long.valueOf(0);
+		}
+
+		for (CustomProperty customProperty : customProperties) {
+			if (StringUtils.equals(key, customProperty.getKey())) {
+				return GetterUtil.getLong(customProperty.getValue());
+			}
+		}
+
+		return Long.valueOf(0);
 	}
 
 	public static String getString(

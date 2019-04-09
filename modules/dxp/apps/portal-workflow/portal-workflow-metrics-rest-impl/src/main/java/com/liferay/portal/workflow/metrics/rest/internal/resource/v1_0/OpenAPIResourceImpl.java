@@ -80,6 +80,8 @@ public class OpenAPIResourceImpl {
 
 			add(SLAResourceImpl.class);
 
+			add(TaskResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

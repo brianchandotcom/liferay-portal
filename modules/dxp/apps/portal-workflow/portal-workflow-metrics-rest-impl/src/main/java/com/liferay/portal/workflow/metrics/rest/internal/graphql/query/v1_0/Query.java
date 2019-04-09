@@ -24,9 +24,11 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -67,6 +69,14 @@ public class Query {
 
 		_slaResourceComponentServiceObjects =
 			slaResourceComponentServiceObjects;
+	}
+
+	public static void setTaskResourceComponentServiceObjects(
+		ComponentServiceObjects<TaskResource>
+			taskResourceComponentServiceObjects) {
+
+		_taskResourceComponentServiceObjects =
+			taskResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -142,6 +152,25 @@ public class Query {
 			slaResource -> slaResource.getSLA(slaId));
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Task> getProcessTasksPage(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> {
+				Page paginationPage = taskResource.getProcessTasksPage(
+					processId, Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -185,11 +214,21 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(TaskResource taskResource)
+		throws Exception {
+
+		taskResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<NodeResource>
 		_nodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaskResource>
+		_taskResourceComponentServiceObjects;
 
 }

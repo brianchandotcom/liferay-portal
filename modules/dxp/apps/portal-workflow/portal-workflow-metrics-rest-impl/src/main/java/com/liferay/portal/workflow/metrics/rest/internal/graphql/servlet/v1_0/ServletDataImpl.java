@@ -20,6 +20,7 @@ import com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0.Quer
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 
 import javax.annotation.Generated;
 
@@ -49,6 +50,8 @@ public class ServletDataImpl implements ServletData {
 			_processResourceComponentServiceObjects);
 		Query.setSLAResourceComponentServiceObjects(
 			_slaResourceComponentServiceObjects);
+		Query.setTaskResourceComponentServiceObjects(
+			_taskResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -77,5 +80,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TaskResource>
+		_taskResourceComponentServiceObjects;
 
 }

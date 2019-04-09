@@ -33,7 +33,7 @@ class EditCategories extends Component {
 	created() {
 		this.append = true;
 		this.dataSource = [];
-		this.urlCategories = `/bulk-rest/v1.0/content-spaces/${this.groupIds[0]}/taxonomy-vocabularies/common`;
+		this.urlCategories = `/bulk-rest/v1.0/sites/${this.groupIds[0]}/taxonomy-vocabularies/common`;
 
 		this._feedbackErrorClass = 'form-feedback-item';
 		this._requiredVocabularyErrorMarkupText = '<div class="' + this._feedbackErrorClass + '">' + Liferay.Language.get('this-field-is-required') + '</div>';

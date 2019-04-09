@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -81,18 +80,8 @@ public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
-	}
-
-	@Override
-	public Page<Organization> getMyUserAccountOrganizationsPage(
-			Long userAccountId)
-		throws Exception {
-
-		return _getOrganizationsPage(userAccountId);
 	}
 
 	@Override
@@ -117,14 +106,6 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _getOrganizationsPage(0L, search, filter, pagination, sorts);
-	}
-
-	@Override
-	public Page<Organization> getUserAccountOrganizationsPage(
-			Long userAccountId)
-		throws Exception {
-
-		return _getOrganizationsPage(userAccountId);
 	}
 
 	private HoursAvailable _createHoursAvailable(
@@ -157,15 +138,6 @@ public class OrganizationResourceImpl
 		};
 
 		return decimalFormat.format(hour);
-	}
-
-	private Page<Organization> _getOrganizationsPage(Long userAccountId)
-		throws Exception {
-
-		User user = _userService.getUserById(userAccountId);
-
-		return Page.of(
-			transform(user.getOrganizations(), this::_toOrganization));
 	}
 
 	private Page<Organization> _getOrganizationsPage(

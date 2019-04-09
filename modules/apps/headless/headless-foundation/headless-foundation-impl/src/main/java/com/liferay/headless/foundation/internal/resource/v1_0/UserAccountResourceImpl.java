@@ -18,8 +18,11 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
 import com.liferay.headless.foundation.dto.v1_0.Email;
+import com.liferay.headless.foundation.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
+import com.liferay.headless.foundation.dto.v1_0.RoleBrief;
+import com.liferay.headless.foundation.dto.v1_0.SiteBrief;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.EmailUtil;
@@ -33,11 +36,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.ListTypeConstants;
-import com.liferay.portal.kernel.model.ListTypeModel;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -48,29 +51,21 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ListTypeService;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-import java.util.function.Function;
-
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,20 +83,17 @@ public class UserAccountResourceImpl
 	extends BaseUserAccountResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteUserAccount(Long userAccountId) throws Exception {
-		_userService.deleteUser(userAccountId);
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
 	@Override
-	public UserAccount getMyUserAccount(Long userAccountId) throws Exception {
-		return _toUserAccount(_userService.getUserById(userAccountId));
+	public UserAccount getMyUserAccount() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return _toUserAccount(
+			_userService.getUserById(permissionChecker.getUserId()));
 	}
 
 	@Override
@@ -164,111 +156,6 @@ public class UserAccountResourceImpl
 			search, filter, pagination, sorts);
 	}
 
-	@Override
-	public UserAccount postUserAccount(MultipartBody multipartBody)
-		throws Exception {
-
-		UserAccount userAccount = multipartBody.getValueAsInstance(
-			"userAccount", UserAccount.class);
-
-		User user = _addUser(userAccount);
-
-		_userLocalService.updatePortrait(
-			user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
-
-		return _toUserAccount(user);
-	}
-
-	@Override
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		return _toUserAccount(_addUser(userAccount));
-	}
-
-	@Override
-	public UserAccount putUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception {
-
-		User user = _userService.getUserById(userAccountId);
-		long prefixId = _getListTypeId(
-			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
-		long suffixId = _getListTypeId(
-			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
-		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
-		ContactInformation contactInformation =
-			userAccount.getContactInformation();
-
-		return _toUserAccount(
-			_userLocalService.updateUser(
-				user.getUserId(), user.getPassword(), null, null, false,
-				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
-				userAccount.getAlternateName(), userAccount.getEmail(),
-				user.getFacebookId(), user.getOpenId(), false, null,
-				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-				user.getComments(), userAccount.getGivenName(),
-				user.getMiddleName(), userAccount.getFamilyName(), prefixId,
-				suffixId, true, birthDateCalendar.get(Calendar.MONTH),
-				birthDateCalendar.get(Calendar.DATE),
-				birthDateCalendar.get(Calendar.YEAR),
-				_getOrElse(contactInformation, ContactInformation::getSms),
-				_getOrElse(contactInformation, ContactInformation::getFacebook),
-				_getOrElse(contactInformation, ContactInformation::getJabber),
-				_getOrElse(contactInformation, ContactInformation::getSkype),
-				_getOrElse(contactInformation, ContactInformation::getTwitter),
-				userAccount.getJobTitle(), user.getGroupIds(),
-				user.getOrganizationIds(), user.getRoleIds(), null,
-				user.getUserGroupIds(), new ServiceContext()));
-	}
-
-	private User _addUser(UserAccount userAccount) throws Exception {
-		long prefixId = _getListTypeId(
-			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
-		long suffixId = _getListTypeId(
-			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
-		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
-
-		return _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, contextCompany.getCompanyId(), true,
-			null, null, Validator.isNull(userAccount.getAlternateName()),
-			userAccount.getAlternateName(), userAccount.getEmail(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			userAccount.getGivenName(), StringPool.BLANK,
-			userAccount.getFamilyName(), prefixId, suffixId, true,
-			birthDateCalendar.get(Calendar.MONTH),
-			birthDateCalendar.get(Calendar.DATE),
-			birthDateCalendar.get(Calendar.YEAR), userAccount.getJobTitle(),
-			null, null, null, null, false, new ServiceContext());
-	}
-
-	private Calendar _getBirthDateCalendar(UserAccount userAccount) {
-		Calendar calendar = Calendar.getInstance();
-
-		if (userAccount.getBirthDate() == null) {
-			calendar.setTime(new Date(0));
-		}
-		else {
-			calendar.setTime(userAccount.getBirthDate());
-		}
-
-		return calendar;
-	}
-
-	private long _getListTypeId(String name, String type) {
-		if (name == null) {
-			return 0;
-		}
-
-		return Optional.ofNullable(
-			_listTypeService.getListType(name, type)
-		).map(
-			ListTypeModel::getListTypeId
-		).orElseThrow(
-			() -> new BadRequestException("Unable to get list type: " + name)
-		);
-	}
-
 	private String _getListTypeMessage(long listTypeId) throws Exception {
 		if (listTypeId == 0) {
 			return null;
@@ -278,19 +165,6 @@ public class UserAccountResourceImpl
 
 		return LanguageUtil.get(
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
-	}
-
-	private String _getOrElse(
-		ContactInformation contactInformation,
-		Function<ContactInformation, String> function) {
-
-		return Optional.ofNullable(
-			contactInformation
-		).map(
-			function
-		).orElse(
-			null
-		);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) {
@@ -317,6 +191,35 @@ public class UserAccountResourceImpl
 				_userService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	private OrganizationBrief _toOrganizationBrief(Organization organization) {
+		return new OrganizationBrief() {
+			{
+				id = organization.getOrganizationId();
+				name = organization.getName();
+			}
+		};
+	}
+
+	private RoleBrief _toRoleBrief(Role role) {
+		return new RoleBrief() {
+			{
+				id = role.getRoleId();
+				name = role.getTitle(
+					contextAcceptLanguage.getPreferredLocale());
+			}
+		};
+	}
+
+	private SiteBrief _toSiteBrief(Group group) {
+		return new SiteBrief() {
+			{
+				id = group.getGroupId();
+				name = group.getName(
+					contextAcceptLanguage.getPreferredLocale());
+			}
+		};
 	}
 
 	private UserAccount _toUserAccount(User user) throws Exception {
@@ -356,6 +259,7 @@ public class UserAccountResourceImpl
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 				honorificPrefix = _getListTypeMessage(contact.getPrefixId());
+
 				honorificSuffix = _getListTypeMessage(contact.getSuffixId());
 				id = user.getUserId();
 				jobTitle = user.getJobTitle();
@@ -364,6 +268,19 @@ public class UserAccountResourceImpl
 						User.class.getName(), user.getUserId()),
 					AssetTag.NAME_ACCESSOR);
 				name = user.getFullName();
+				organizationBriefs = transformToArray(
+					user.getOrganizations(),
+					organization -> _toOrganizationBrief(organization),
+					OrganizationBrief.class);
+				roleBriefs = transformToArray(
+					_roleService.getUserRoles(user.getUserId()),
+					role -> _toRoleBrief(role), RoleBrief.class);
+				siteBriefs = transformToArray(
+					_groupService.getGroups(
+						contextCompany.getCompanyId(),
+						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
+					site -> _toSiteBrief(site), SiteBrief.class);
+
 				setDashboardURL(
 					() -> {
 						Group group = user.getGroup();
@@ -402,10 +319,16 @@ public class UserAccountResourceImpl
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private GroupService _groupService;
+
+	@Reference
 	private ListTypeService _listTypeService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private UserLocalService _userLocalService;

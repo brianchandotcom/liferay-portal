@@ -36,7 +36,10 @@ definition {
 	macro gotoEntryMenuItem {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		ClickNoError(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			key_menuItem = "${menuItem}"
+		);
 	}
 
 	macro openAssetListsAdmin {

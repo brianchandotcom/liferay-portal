@@ -224,6 +224,20 @@ public class FreeMarkerTool {
 			javaMethodSignature, httpMethods);
 	}
 
+	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+		Operation operation = javaMethodSignature.getOperation();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (isPathParameter(javaMethodParameter, operation)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasPostSiteJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
 
@@ -268,20 +282,6 @@ public class FreeMarkerTool {
 			}
 
 			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-		Operation operation = javaMethodSignature.getOperation();
-
-		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			if (isPathParameter(javaMethodParameter, operation)) {
-				return true;
-			}
 		}
 
 		return false;

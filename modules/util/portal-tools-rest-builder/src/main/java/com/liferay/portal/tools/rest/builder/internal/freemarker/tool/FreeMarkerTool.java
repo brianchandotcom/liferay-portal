@@ -224,9 +224,15 @@ public class FreeMarkerTool {
 
 	public boolean hasJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
-		String... parameterNames) {
+		String returnType, String... parameterNames) {
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (!Objects.equals(
+					returnType, javaMethodSignature.getReturnType())) {
+
+				continue;
+			}
+
 			Operation operation = javaMethodSignature.getOperation();
 
 			if (!Objects.equals(httpMethod, getHTTPMethod(operation))) {

@@ -20,12 +20,7 @@
 String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="maps"
-/>
-
-<h3><liferay-ui:message key="maps" /></h3>
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 <liferay-map:map-provider-selector
 	configurationPrefix="settings"

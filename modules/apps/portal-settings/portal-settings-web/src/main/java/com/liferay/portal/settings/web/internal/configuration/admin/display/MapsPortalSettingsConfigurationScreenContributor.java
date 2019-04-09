@@ -12,50 +12,51 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.internal.servlet.taglib.ui;
+package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.map.constants.MapProviderWebKeys;
 import com.liferay.map.util.MapProviderHelperUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
-import java.io.IOException;
+import java.util.Locale;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
- * @author Philip Jones
+ * @author Drew Brokke
  */
-@Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=20",
-	service = FormNavigatorEntry.class
-)
-public class CompanySettingsMapsFormNavigatorEntry
-	extends BaseCompanySettingsFormNavigatorEntry {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class MapsPortalSettingsConfigurationScreenContributor
+	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.
-			CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return "third-party";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/maps.jsp";
 	}
 
 	@Override
 	public String getKey() {
+		return "third-party-maps";
+	}
+
+	@Override
+	public String getName(Locale locale) {
 		return "maps";
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
+	public void setAttributes(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -64,22 +65,6 @@ public class CompanySettingsMapsFormNavigatorEntry
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
 			MapProviderHelperUtil.getMapProviderKey(
 				themeDisplay.getCompanyId()));
-
-		super.include(request, response);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/maps.jsp";
 	}
 
 }

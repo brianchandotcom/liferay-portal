@@ -34,10 +34,6 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FormResource {
 
-	public Page<Form> getContentSpaceFormsPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception;
-
 	public Form getForm(Long formId) throws Exception;
 
 	public Form postFormEvaluateContext(Long formId, Form form)
@@ -45,6 +41,9 @@ public interface FormResource {
 
 	public FormDocument postFormUploadFile(
 			Long formId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Page<Form> getSiteFormsPage(Long siteId, Pagination pagination)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

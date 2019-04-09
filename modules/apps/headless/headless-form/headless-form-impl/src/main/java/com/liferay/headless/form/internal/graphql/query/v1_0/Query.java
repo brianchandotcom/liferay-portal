@@ -80,8 +80,17 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Form> getContentSpaceFormsPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
+		return _applyComponentServiceObjects(
+			_formResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formResource -> formResource.getForm(formId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Form> getSiteFormsPage(
+			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -90,20 +99,11 @@ public class Query {
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			formResource -> {
-				Page paginationPage = formResource.getContentSpaceFormsPage(
-					contentSpaceId, Pagination.of(pageSize, page));
+				Page paginationPage = formResource.getSiteFormsPage(
+					siteId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
-		return _applyComponentServiceObjects(
-			_formResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formResource -> formResource.getForm(formId));
 	}
 
 	@GraphQLField
@@ -166,26 +166,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formStructureResource -> {
-				Page paginationPage =
-					formStructureResource.getContentSpaceFormStructuresPage(
-						contentSpaceId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormStructure getFormStructure(
 			@GraphQLName("formStructureId") Long formStructureId)
 		throws Exception {
@@ -195,6 +175,26 @@ public class Query {
 			this::_populateResourceContext,
 			formStructureResource -> formStructureResource.getFormStructure(
 				formStructureId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<FormStructure> getSiteFormStructuresPage(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formStructureResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formStructureResource -> {
+				Page paginationPage =
+					formStructureResource.getSiteFormStructuresPage(
+						siteId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

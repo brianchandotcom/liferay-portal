@@ -80,11 +80,6 @@ public class FormStructureSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"contentSpaceId\": ");
-
-		sb.append(formStructure.getContentSpaceId());
-		sb.append(", ");
-
 		sb.append("\"creator\": ");
 
 		sb.append(formStructure.getCreator());
@@ -144,6 +139,11 @@ public class FormStructureSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"siteId\": ");
+
+		sb.append(formStructure.getSiteId());
+		sb.append(", ");
+
 		sb.append("\"successPage\": ");
 
 		sb.append(formStructure.getSuccessPage());
@@ -196,11 +196,6 @@ public class FormStructureSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "contentSpaceId")) {
-				if (jsonParserFieldValue != null) {
-					formStructure.setContentSpaceId((Long)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setCreator(
@@ -242,6 +237,11 @@ public class FormStructureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					formStructure.setSiteId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "successPage")) {

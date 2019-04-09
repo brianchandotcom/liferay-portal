@@ -111,155 +111,6 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceFormsPage() throws Exception {
-		Long contentSpaceId = testGetContentSpaceFormsPage_getContentSpaceId();
-		Long irrelevantContentSpaceId =
-			testGetContentSpaceFormsPage_getIrrelevantContentSpaceId();
-
-		if ((irrelevantContentSpaceId != null)) {
-			Form irrelevantForm = testGetContentSpaceFormsPage_addForm(
-				irrelevantContentSpaceId, randomIrrelevantForm());
-
-			Page<Form> page = invokeGetContentSpaceFormsPage(
-				irrelevantContentSpaceId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantForm), (List<Form>)page.getItems());
-			assertValid(page);
-		}
-
-		Form form1 = testGetContentSpaceFormsPage_addForm(
-			contentSpaceId, randomForm());
-
-		Form form2 = testGetContentSpaceFormsPage_addForm(
-			contentSpaceId, randomForm());
-
-		Page<Form> page = invokeGetContentSpaceFormsPage(
-			contentSpaceId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2), (List<Form>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetContentSpaceFormsPageWithPagination() throws Exception {
-		Long contentSpaceId = testGetContentSpaceFormsPage_getContentSpaceId();
-
-		Form form1 = testGetContentSpaceFormsPage_addForm(
-			contentSpaceId, randomForm());
-
-		Form form2 = testGetContentSpaceFormsPage_addForm(
-			contentSpaceId, randomForm());
-
-		Form form3 = testGetContentSpaceFormsPage_addForm(
-			contentSpaceId, randomForm());
-
-		Page<Form> page1 = invokeGetContentSpaceFormsPage(
-			contentSpaceId, Pagination.of(1, 2));
-
-		List<Form> forms1 = (List<Form>)page1.getItems();
-
-		Assert.assertEquals(forms1.toString(), 2, forms1.size());
-
-		Page<Form> page2 = invokeGetContentSpaceFormsPage(
-			contentSpaceId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Form> forms2 = (List<Form>)page2.getItems();
-
-		Assert.assertEquals(forms2.toString(), 1, forms2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2, form3),
-			new ArrayList<Form>() {
-				{
-					addAll(forms1);
-					addAll(forms2);
-				}
-			});
-	}
-
-	protected Form testGetContentSpaceFormsPage_addForm(
-			Long contentSpaceId, Form form)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceFormsPage_getContentSpaceId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceFormsPage_getIrrelevantContentSpaceId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Form> invokeGetContentSpaceFormsPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/forms", contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return outputObjectMapper.readValue(
-			string,
-			new TypeReference<Page<Form>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceFormsPageResponse(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{contentSpaceId}/forms", contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetForm() throws Exception {
 		Form postForm = testGetForm_addForm();
 
@@ -445,6 +296,136 @@ public abstract class BaseFormResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetSiteFormsPage() throws Exception {
+		Long siteId = testGetSiteFormsPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteFormsPage_getIrrelevantSiteId();
+
+		if ((irrelevantSiteId != null)) {
+			Form irrelevantForm = testGetSiteFormsPage_addForm(
+				irrelevantSiteId, randomIrrelevantForm());
+
+			Page<Form> page = invokeGetSiteFormsPage(
+				irrelevantSiteId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantForm), (List<Form>)page.getItems());
+			assertValid(page);
+		}
+
+		Form form1 = testGetSiteFormsPage_addForm(siteId, randomForm());
+
+		Form form2 = testGetSiteFormsPage_addForm(siteId, randomForm());
+
+		Page<Form> page = invokeGetSiteFormsPage(siteId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(form1, form2), (List<Form>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetSiteFormsPageWithPagination() throws Exception {
+		Long siteId = testGetSiteFormsPage_getSiteId();
+
+		Form form1 = testGetSiteFormsPage_addForm(siteId, randomForm());
+
+		Form form2 = testGetSiteFormsPage_addForm(siteId, randomForm());
+
+		Form form3 = testGetSiteFormsPage_addForm(siteId, randomForm());
+
+		Page<Form> page1 = invokeGetSiteFormsPage(siteId, Pagination.of(1, 2));
+
+		List<Form> forms1 = (List<Form>)page1.getItems();
+
+		Assert.assertEquals(forms1.toString(), 2, forms1.size());
+
+		Page<Form> page2 = invokeGetSiteFormsPage(siteId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Form> forms2 = (List<Form>)page2.getItems();
+
+		Assert.assertEquals(forms2.toString(), 1, forms2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(form1, form2, form3),
+			new ArrayList<Form>() {
+				{
+					addAll(forms1);
+					addAll(forms2);
+				}
+			});
+	}
+
+	protected Form testGetSiteFormsPage_addForm(Long siteId, Form form)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetSiteFormsPage_getSiteId() throws Exception {
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetSiteFormsPage_getIrrelevantSiteId() throws Exception {
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected Page<Form> invokeGetSiteFormsPage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/sites/{siteId}/forms", siteId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<Form>>() {
+			});
+	}
+
+	protected Http.Response invokeGetSiteFormsPageResponse(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/sites/{siteId}/forms", siteId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
@@ -503,6 +484,10 @@ public abstract class BaseFormResourceTestCase {
 			valid = false;
 		}
 
+		if (!Objects.equals(form.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -510,14 +495,6 @@ public abstract class BaseFormResourceTestCase {
 					"availableLanguages", additionalAssertFieldName)) {
 
 				if (form.getAvailableLanguages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("contentSpaceId", additionalAssertFieldName)) {
-				if (form.getContentSpaceId() == null) {
 					valid = false;
 				}
 
@@ -630,6 +607,10 @@ public abstract class BaseFormResourceTestCase {
 			return true;
 		}
 
+		if (!Objects.equals(form1.getSiteId(), form2.getSiteId())) {
+			return false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -639,16 +620,6 @@ public abstract class BaseFormResourceTestCase {
 				if (!Objects.equals(
 						form1.getAvailableLanguages(),
 						form2.getAvailableLanguages())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("contentSpaceId", additionalAssertFieldName)) {
-				if (!Objects.equals(
-						form1.getContentSpaceId(), form2.getContentSpaceId())) {
 
 					return false;
 				}
@@ -829,11 +800,6 @@ public abstract class BaseFormResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("contentSpaceId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -896,6 +862,11 @@ public abstract class BaseFormResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("structure")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -913,7 +884,6 @@ public abstract class BaseFormResourceTestCase {
 	protected Form randomForm() {
 		return new Form() {
 			{
-				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
@@ -921,6 +891,7 @@ public abstract class BaseFormResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				siteId = testGroup.getGroupId();
 				structureId = RandomTestUtil.randomLong();
 			}
 		};
@@ -928,6 +899,8 @@ public abstract class BaseFormResourceTestCase {
 
 	protected Form randomIrrelevantForm() {
 		Form randomIrrelevantForm = randomForm();
+
+		randomIrrelevantForm.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantForm;
 	}

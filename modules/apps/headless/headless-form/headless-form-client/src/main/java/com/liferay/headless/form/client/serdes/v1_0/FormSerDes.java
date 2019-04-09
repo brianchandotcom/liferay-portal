@@ -76,11 +76,6 @@ public class FormSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"contentSpaceId\": ");
-
-		sb.append(form.getContentSpaceId());
-		sb.append(", ");
-
 		sb.append("\"creator\": ");
 
 		sb.append(form.getCreator());
@@ -175,6 +170,11 @@ public class FormSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"siteId\": ");
+
+		sb.append(form.getSiteId());
+		sb.append(", ");
+
 		sb.append("\"structure\": ");
 
 		sb.append(form.getStructure());
@@ -229,11 +229,6 @@ public class FormSerDes {
 				if (jsonParserFieldValue != null) {
 					form.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "contentSpaceId")) {
-				if (jsonParserFieldValue != null) {
-					form.setContentSpaceId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
@@ -293,6 +288,11 @@ public class FormSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					form.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					form.setSiteId((Long)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "structure")) {

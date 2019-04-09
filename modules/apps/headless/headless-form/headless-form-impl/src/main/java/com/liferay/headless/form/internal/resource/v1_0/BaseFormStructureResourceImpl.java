@@ -55,25 +55,6 @@ public abstract class BaseFormStructureResourceImpl
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/content-spaces/{contentSpaceId}/form-structures")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "FormStructure")})
-	public Page<FormStructure> getContentSpaceFormStructuresPage(
-			@NotNull @PathParam("contentSpaceId") Long contentSpaceId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
 	@Path("/form-structures/{formStructureId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormStructure")})
@@ -82,6 +63,25 @@ public abstract class BaseFormStructureResourceImpl
 		throws Exception {
 
 		return new FormStructure();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/sites/{siteId}/form-structures")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormStructure")})
+	public Page<FormStructure> getSiteFormStructuresPage(
+			@NotNull @PathParam("siteId") Long siteId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

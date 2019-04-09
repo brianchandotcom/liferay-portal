@@ -252,7 +252,161 @@ definition {
 		}
 	}
 
-	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872."
+	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
+	@priority = "5"
+	test DiscardContentPageDraft {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+		}
+
+		task ("Discard the draft") {
+			PageEditor.clickDiscardDraft();
+		}
+
+		task ("Assert the Title fragment is no longer present") {
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are still enabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Publish"
+			);
+		}
+
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now disabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Publish"
+			);
+		}
+
+		task ("Edit the Title fragment's editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Title",
+				id = "title",
+				text = "New editable fragment text"
+			);
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now enabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Publish"
+			);
+		}
+
+		task ("Discard the draft") {
+			PageEditor.clickDiscardDraft();
+		}
+
+		task ("Assert the Title fragment's text has reverted back to what it was before") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now disabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Publish"
+			);
+		}
+
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now enabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Publish"
+			);
+		}
+
+		task ("Discard the draft") {
+			PageEditor.clickDiscardDraft();
+		}
+
+		task ("Assert the Rich Text fragment has been removed") {
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now disabled") {
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Discard Draft"
+			);
+
+			AssertVisible(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Publish"
+			);
+		}
+	}
+
+	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872. This test has been extended to cover LPS-78726. Changes to content pages only appear after they are published."
 	@priority = "5"
 	test EditContentPage {
 		property portal.acceptance = "true";
@@ -278,13 +432,57 @@ definition {
 			);
 		}
 
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
+
+		task ("Assert the Title fragment is not present because it has not been published yet") {
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
+
+		task ("Assert the Rich Text fragment is not present because it has not been published yet") {
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
+		task ("View the content page") {
+			ContentPages.clickBack();
+		}
+
+		task ("Assert the Title fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
+
+		task ("Assert the Rich Text fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
 			);
 		}
 
@@ -306,6 +504,42 @@ definition {
 				text = "New editable fragment text"
 			);
 		}
+
+		task ("View the content page") {
+			ContentPages.clickBack();
+		}
+
+		task ("Assert the Title fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
+
+		task ("Assert the Rich Text fragment is still has its original text because the edit has not been published yet") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
+
+		task ("Assert the Content fragment is not present because the adding of the fragment has not been published yet") {
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+				key_fragmentClass = "body",
+				key_position = "3"
+			);
+		}
+
+		task ("Navigate to the content page's edit mode") {
+			ContentPages.clickPencil();
+		}
+
 
 		task ("Publish the content page") {
 			PageEditor.clickPublish();

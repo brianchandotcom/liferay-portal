@@ -37,6 +37,14 @@ definition {
 		);
 	}
 
+	macro clickDiscardDraft {
+		Button.clickNoError(
+			button = "Discard Draft"
+		);
+
+		Confirm();
+	}
+
 	macro clickPublish {
 		Button.click(
 			button = "Publish"

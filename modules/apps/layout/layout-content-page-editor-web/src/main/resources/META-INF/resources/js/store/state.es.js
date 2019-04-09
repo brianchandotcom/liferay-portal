@@ -3,6 +3,31 @@ import {Config} from 'metal-state';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
+const LayoutDataShape = Config.shapeOf(
+	{
+		nextColumnId: Config.number(),
+		nextRowId: Config.number(),
+		structure: Config.arrayOf(
+			Config.shapeOf(
+				{
+					columns: Config.arrayOf(
+						Config.shapeOf(
+							{
+								columnId: Config.string(),
+								fragmentEntryLinkIds: Config.arrayOf(
+									Config.string()
+								),
+								size: Config.string().value('')
+							}
+						)
+					),
+					rowId: Config.string()
+				}
+			)
+		)
+	}
+);
+
 /**
  * Initial state
  * @review
@@ -242,6 +267,23 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * List of layoutData related to segmentsExperiences
+	 * @default ''
+	 * @review
+	 * @type {!array}
+	 */
+	layoutDataList: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					layoutData: LayoutDataShape.required(),
+					segmentsExperienceId: Config.string().required()
+				}
+			)
+		)
+		.value([]),
+
+	/**
 	 * URL for updating a distinct fragment entries of the editor.
 	 * @default ''
 	 * @instance
@@ -436,31 +478,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {{structure: Array}}
 	 */
-	layoutData: Config
-		.shapeOf(
-			{
-				nextColumnId: Config.number(),
-				nextRowId: Config.number(),
-				structure: Config.arrayOf(
-					Config.shapeOf(
-						{
-							columns: Config.arrayOf(
-								Config.shapeOf(
-									{
-										columnId: Config.string(),
-										fragmentEntryLinkIds: Config.arrayOf(
-											Config.string()
-										),
-										size: Config.string().value('')
-									}
-								)
-							),
-							rowId: Config.string()
-						}
-					)
-				)
-			}
-		)
+	layoutData: LayoutDataShape
 		.value(
 			{
 				nextColumnId: 0,

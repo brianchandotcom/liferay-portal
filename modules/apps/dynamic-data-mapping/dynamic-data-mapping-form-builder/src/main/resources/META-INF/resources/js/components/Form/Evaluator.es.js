@@ -40,8 +40,12 @@ const WithEvaluator = ChildComponent => {
 			pages: Config.array().valueFn('_pagesValueFn')
 		}
 
+		attached() {
+			this.evaluate();
+		}
+
 		created() {
-			this._processEvaluation = debounce(this._processEvaluation.bind(this), 300);
+			this.evaluate = debounce(this.evaluate.bind(this), 300);
 		}
 
 		willReceiveProps(props) {
@@ -66,34 +70,50 @@ const WithEvaluator = ChildComponent => {
 			const {evaluable} = fieldInstance;
 
 			if (evaluable) {
-				this._processEvaluation(fieldInstance);
+				this.evaluate(fieldInstance);
 			}
 
 			this.emit('fieldEdited', event);
 		}
 
 		/**
-		 * Merges fields from two array of pages. This is used to get new information from the evaluator
-		 * and update fields with it while maintaining properties that were not changed by the evaluation process.
+		 * Merges fields from two array of pages. This is used to get new
+		 * information from the evaluator and update fields with it while
+		 * maintaining properties that were not changed by the evaluation
+		 * process.
 		 * @private
 		 */
 
 		_mergePages(sourcePages, newPages) {
 			const visitor = new PagesVisitor(sourcePages);
 
-			const settingsContext = visitor.mapFields(
+			return visitor.mapFields(
 				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-					const currentField = newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
+					let newField = {
+						...field,
+						...newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex]
+					};
 
-					if (currentField.fieldName === 'name') {
-						currentField.visible = true;
+					if (newField.fieldName === 'name') {
+						newField = {
+							...newField,
+							visible: true
+						};
 					}
 
-					return currentField;
+					if (field.localizable) {
+						newField = {
+							...newField,
+							localizedValue: {
+								...field.localizedValue,
+								...(newField.localizedValue || {})
+							}
+						};
+					}
+
+					return newField;
 				}
 			);
-
-			return settingsContext;
 		}
 
 		/**
@@ -106,27 +126,29 @@ const WithEvaluator = ChildComponent => {
 			return formContext.pages;
 		}
 
-		/**
-		 * @private
-		 */
-
-		_processEvaluation(fieldInstance) {
-			if (!fieldInstance.isDisposed() && !this.isDisposed()) {
-				const {fieldName} = fieldInstance;
-				const {fieldType, formContext, url} = this.props;
+		evaluate(fieldInstance) {
+			if (!this.isDisposed()) {
+				const {
+					editingLanguageId,
+					formContext,
+					url
+				} = this.props;
 				const {pages} = this.state;
+
+				let fieldName;
+
+				if (fieldInstance && !fieldInstance.isDisposed()) {
+					fieldName = fieldInstance.fieldName;
+				}
 
 				makeFetch(
 					{
 						body: convertToSearchParams(
 							{
-								languageId: themeDisplay.getLanguageId(),
-								newField: '',
+								languageId: editingLanguageId,
 								p_auth: Liferay.authToken,
-								portletNamespace: '',
 								serializedFormContext: JSON.stringify(formContext),
-								trigger: fieldName,
-								type: fieldType
+								trigger: fieldName
 							}
 						),
 						url

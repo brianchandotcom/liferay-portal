@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -211,10 +211,10 @@ public class OrganizationScreenNavigationRegistrar {
 	}
 
 	private static final String _CATEGORY_CONTACT =
-		UserFormConstants.CATEGORY_KEY_CONTACT;
+		UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
 
 	private static final String _CATEGORY_GENERAL =
-		UserFormConstants.CATEGORY_KEY_GENERAL;
+		UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL;
 
 	private BundleContext _bundleContext;
 

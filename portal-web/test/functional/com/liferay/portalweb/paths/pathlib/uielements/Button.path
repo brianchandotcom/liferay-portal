@@ -530,7 +530,7 @@
 </tr>
 <tr>
 	<td>SELECT_CATEGORIES</td>
-	<td>//button[contains(.,'Select Categories')] | //button[@title='Select Categories']</td>
+	<td>//button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

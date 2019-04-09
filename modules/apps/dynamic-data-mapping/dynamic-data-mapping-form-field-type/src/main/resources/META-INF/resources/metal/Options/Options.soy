@@ -7,6 +7,8 @@
 	{@param? _handleOptionFocused: any}
 	{@param? _handleOptionLabelEdited: any}
 	{@param? _handleOptionValueEdited: any}
+	{@param? defaultLanguageId: string}
+	{@param? editingLanguageId: string}
 	{@param? id: string}
 	{@param? items: list<[
 		disabled: bool,
@@ -31,12 +33,14 @@
 
 						{let $fieldConfig kind="html"}
 							<div class="ddm-field-options" data-index={index($option)}>
-								<svg
-									aria-hidden="true"
-									class="lexicon-icon ddm-options-drag lexicon-icon-drag"
-								>
-									<use xlink:href="{$spritemap}#drag" />
-								</svg>
+								<span class="ddm-options-drag {$readOnly ? 'disabled': ''}">
+									<svg
+										aria-hidden="true"
+										class="lexicon-icon lexicon-icon-drag"
+									>
+										<use xlink:href="{$spritemap}#drag" />
+									</svg>
+								</span>
 
 								<div class="ddm-option-entry">
 									{call KeyValue.render}
@@ -48,10 +52,11 @@
 										] /}
 										{param generateKeyword: $option.generateKeyword /}
 										{param keyword: $option.value /}
+										{param keywordReadOnly: $defaultLanguageId != $editingLanguageId /}
 										{param index: index($option) /}
 										{param name: 'option' + index($option) /}
 										{param placeholder: $placeholder /}
-										{param readOnly: $readOnly ? $readOnly : $option.disabled /}
+										{param readOnly: $option.disabled /}
 										{param ref: 'option' + index($option) /}
 										{param required: $required /}
 										{param showLabel: false /}
@@ -59,7 +64,7 @@
 										{param value: $option.label /}
 									{/call}
 
-									{if not isLast($option)}
+									{if not isLast($option) and not $readOnly}
 										<button class="close close-modal" data-onclick={$_handleOptionDeleted} type="button">
 											<svg
 												aria-hidden="true"

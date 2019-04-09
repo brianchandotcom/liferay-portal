@@ -19,7 +19,49 @@ import {
 
 class Options extends Component {
 	static STATE = {
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
+
+		defaultLanguageId: Config.string(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Options
+		 * @type {?bool}
+		 */
+
+		defaultOption: Config.bool().internal().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
+
+		editingLanguageId: Config.string(),
+
+		/**
+		 * @default 'boolean'
+		 * @instance
+		 * @memberof Options
+		 * @type {?(boolean|undefined)}
+		 */
+
 		evaluable: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
 
 		fieldName: Config.string(),
 
@@ -58,6 +100,13 @@ class Options extends Component {
 				}
 			)
 		).internal().valueFn('_internalItemsValueFn'),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
 
 		id: Config.string(),
 
@@ -106,33 +155,51 @@ class Options extends Component {
 
 		spritemap: Config.string(),
 
+		/**
+		 * @default enter-an-option
+		 * @instance
+		 * @memberof Options
+		 * @type {?(string)}
+		 */
+
 		placeholder: Config.string().value(Liferay.Language.get('enter-an-option')),
 
 		/**
-		 * @default undefined
+		 * @default options
 		 * @instance
-		 * @memberof Text
+		 * @memberof Options
 		 * @type {?(string|undefined)}
 		 */
 
 		type: Config.string().value('options'),
 
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
+
 		value: Config.object().value({}),
 
-		visible: Config.bool().value(true),
+		/**
+		 * @default true
+		 * @instance
+		 * @memberof Options
+		 * @type {?string}
+		 */
 
-		defaultOption: Config.bool().internal().value(false)
+		visible: Config.bool().value(true)
 	};
 
 	attached() {
 		let defaultOption = false;
 		const defaultOptionLabel = Liferay.Language.get('option').toLowerCase();
-		const options = this.value[this.getCurrentLanguageId()] || [];
+
+		const options = this.getValue();
 
 		if ((options.length == 1) && (options[0].label.toLowerCase() == defaultOptionLabel)) {
 			defaultOption = true;
-
-			this._handleFieldEdited({}, options);
 		}
 
 		this.setState(
@@ -160,46 +227,19 @@ class Options extends Component {
 	}
 
 	willReceiveState(changes) {
-		if (changes.value) {
-			const {items} = this;
-			let changed = false;
+		const {editingLanguageId} = this;
 
-			const options = this.getItems(changes.value.newVal[this.getCurrentLanguageId()]);
-
-			if (options.length !== items.length) {
-				changed = true;
-			}
-			else {
-				options.find(
-					(option, index) => {
-						if (!items[index]) {
-							changed = true;
-						}
-						else if (
-							items[index].label !== option.label ||
-							items[index].value !== option.value
-						) {
-							changed = true;
-						}
-
-						return changed;
-					}
-				);
-			}
-
-			if (changed) {
-				this.setState(
-					{
-						items: options
-					}
-				);
-			}
+		if (changes.value && changes.value.newVal[editingLanguageId]) {
+			this.setState(
+				{
+					items: this.getItems(changes.value.newVal[editingLanguageId])
+				}
+			);
 		}
 	}
 
 	deleteOption(deletedIndex) {
-		const currentLanguage = this.getCurrentLanguageId();
-		const options = [...this.value[currentLanguage]].filter((option, currentIndex) => currentIndex !== deletedIndex);
+		const options = [...this.getValue()].filter((option, currentIndex) => currentIndex !== deletedIndex);
 
 		this._handleFieldEdited({}, options);
 
@@ -218,22 +258,22 @@ class Options extends Component {
 		);
 	}
 
-	getCurrentLanguageId() {
-		return themeDisplay.getLanguageId();
-	}
-
 	getFieldIndex(element) {
 		return parseInt(dom.closest(element, '.ddm-field-options').dataset.index, 10);
 	}
 
 	getItems(options = []) {
-		return [
-			...options,
-			{
+		const {defaultLanguageId, editingLanguageId} = this;
+		const items = [...options];
+
+		if (defaultLanguageId === editingLanguageId) {
+			items.push({
 				label: '',
 				value: ''
-			}
-		].map(
+			});
+		}
+
+		return items.map(
 			option => {
 				return {
 					...option,
@@ -243,8 +283,25 @@ class Options extends Component {
 		);
 	}
 
+	getValue() {
+		const {defaultLanguageId, editingLanguageId} = this;
+		let value = [];
+
+		if (this.value && this.value[editingLanguageId]) {
+			value = this.value[editingLanguageId];
+		}
+		else if (this.value && this.value[defaultLanguageId]) {
+			value = this.value[defaultLanguageId];
+		}
+		else {
+			value = [];
+		}
+
+		return value;
+	}
+
 	moveOption(sourceIndex, targetIndex) {
-		let options = [...this.value[this.getCurrentLanguageId()]];
+		let options = [...this.getValue()];
 
 		if (sourceIndex < options.length) {
 			options.splice(
@@ -314,7 +371,15 @@ class Options extends Component {
 	}
 
 	shouldGenerateOptionValue(option) {
-		return option.value === '' || (new RegExp(`^${normalizeFieldName(option.label)}\\d*$`)).test(option.value);
+		const {defaultLanguageId, editingLanguageId} = this;
+
+		return (
+			defaultLanguageId === editingLanguageId &&
+			(
+				option.value === '' ||
+				(new RegExp(`^${normalizeFieldName(option.label)}\\d*$`)).test(option.value)
+			)
+		);
 	}
 
 	_createDragDrop() {
@@ -322,7 +387,7 @@ class Options extends Component {
 			{
 				container: this.element,
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.ddm-options-drag',
+				handles: '.ddm-options-drag:not(.disabled)',
 				sources: '.ddm-field-options',
 				targets: '.ddm-options-target',
 				useShim: false
@@ -353,10 +418,10 @@ class Options extends Component {
 	}
 
 	_handleOptionBlurred(event) {
-		const {value} = this;
+		const {editingLanguageId, value} = this;
 		const normalizedValue = this.normalizeValue(value, true);
 
-		this._handleFieldEdited(event, normalizedValue[this.getCurrentLanguageId()]);
+		this._handleFieldEdited(event, normalizedValue[editingLanguageId]);
 	}
 
 	_handleOptionDeleted(event) {
@@ -371,8 +436,9 @@ class Options extends Component {
 	}
 
 	_handleOptionEdited(event, property) {
+		const {editingLanguageId} = this;
 		const {fieldInstance, value} = event;
-		let options = this.value[this.getCurrentLanguageId()];
+		let options = this.getValue();
 
 		const optionExists = options.some(
 			(option, index) => {
@@ -410,7 +476,7 @@ class Options extends Component {
 			{
 				value: {
 					...this.value,
-					[this.getCurrentLanguageId()]: options
+					[editingLanguageId]: options
 				}
 			},
 			() => {
@@ -451,7 +517,7 @@ class Options extends Component {
 	}
 
 	_internalItemsValueFn() {
-		const options = this.value[this.getCurrentLanguageId()];
+		const options = this.getValue();
 
 		return this.getItems(options || []);
 	}

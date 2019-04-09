@@ -1,25 +1,39 @@
 import {PagesVisitor} from '../../../util/visitors.es';
 
-export const containsOptions = ({type}) => {
-	return type === 'options';
-};
+export const updateLocalizedOptions = (field, defaultLanguageId, editingLanguageId, newOptions = []) => {
+	let localizedValue = field.value;
 
-export const updateSettingsContextOptions = (field, locale, newOptions) => {
+	if (defaultLanguageId === editingLanguageId) {
+		localizedValue = {
+			...localizedValue,
+			[defaultLanguageId]: newOptions
+		};
+	}
+	else {
+		const defaultOptions = localizedValue[defaultLanguageId];
+
+		localizedValue = {
+			...localizedValue,
+			[editingLanguageId]: defaultOptions
+				.filter(
+					({value}) => !!value
+				)
+				.map(
+					(option, index) => ({
+						...option,
+						label: newOptions[index].label
+					})
+				)
+		};
+	}
+
 	return {
 		...field,
-		value: {
-			...field.value,
-			[locale]: newOptions.map(
-				option => {
-					return option;
-				}
-			)
-		}
+		value: localizedValue
 	};
 };
 
-export const updateSettingsContextProperty = (state, settingsContext, propertyName, propertyValue) => {
-	const {locale} = state;
+export const updateSettingsContextProperty = (defaultLanguageId, editingLanguageId, settingsContext, propertyName, propertyValue) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	return {
@@ -27,8 +41,8 @@ export const updateSettingsContextProperty = (state, settingsContext, propertyNa
 		pages: visitor.mapFields(
 			field => {
 				if (propertyName === field.fieldName) {
-					if (containsOptions(field)) {
-						field = updateSettingsContextOptions(field, locale, propertyValue);
+					if (field.type === 'options') {
+						field = updateLocalizedOptions(field, defaultLanguageId, editingLanguageId, propertyValue);
 					}
 					else {
 						field = {
@@ -40,7 +54,7 @@ export const updateSettingsContextProperty = (state, settingsContext, propertyNa
 					if (field.localizable) {
 						field.localizedValue = {
 							...field.localizedValue,
-							[locale]: propertyValue
+							[editingLanguageId]: propertyValue
 						};
 					}
 				}

@@ -1,7 +1,7 @@
 import {PagesVisitor} from './visitors.es';
 
-export const formatFieldName = (instanceId, locale, value) => {
-	return `ddm$$${value}$${instanceId}$0$$${locale}`;
+export const formatFieldName = (instanceId, languageId, value) => {
+	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
 };
 
 export const generateInstanceId = length => {
@@ -20,8 +20,7 @@ export const generateInstanceId = length => {
  * Makes sure fields have its settings form filled up with some default values.
  */
 
-export const normalizeSettingsContextPages = (pages, namespace, fieldType, generatedFieldName) => {
-	const translationManager = Liferay.component(`${namespace}translationManager`);
+export const normalizeSettingsContextPages = (pages, editingLanguageId, fieldType, generatedFieldName) => {
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
@@ -40,7 +39,7 @@ export const normalizeSettingsContextPages = (pages, namespace, fieldType, gener
 					...field,
 					localizedValue: {
 						...field.localizedValue,
-						[translationManager.get('editingLocale')]: fieldType.label
+						[editingLanguageId]: fieldType.label
 					},
 					type: 'text',
 					value: fieldType.label
@@ -68,18 +67,28 @@ export const normalizeSettingsContextPages = (pages, namespace, fieldType, gener
 	);
 };
 
-/**
- * Converts the settings Form of a field into an object of field properties.
- */
-
-export const getFieldPropertiesFromSettingsContext = (locale, settingsContext) => {
+export const getFieldProperties = ({pages}, defaultLanguageId, editingLanguageId) => {
 	const properties = {};
-	const visitor = new PagesVisitor(settingsContext.pages);
+	const visitor = new PagesVisitor(pages);
 
 	visitor.mapFields(
-		({fieldName, type, value}) => {
-			if (type === 'options') {
-				properties[fieldName] = value[locale];
+		({fieldName, localizable, localizedValue, type, value}) => {
+			if (localizable && localizedValue[editingLanguageId] && localizedValue[editingLanguageId].JSONArray) {
+				properties[fieldName] = localizedValue[editingLanguageId].JSONArray;
+			}
+			else if (localizable && localizedValue[editingLanguageId]) {
+				properties[fieldName] = localizedValue[editingLanguageId];
+			}
+			else if (localizable && localizedValue[defaultLanguageId]) {
+				properties[fieldName] = localizedValue[defaultLanguageId];
+			}
+			else if (type == 'options') {
+				if (!value[editingLanguageId] && value[defaultLanguageId]) {
+					properties[fieldName] = value[defaultLanguageId];
+				}
+				else {
+					properties[fieldName] = value[editingLanguageId];
+				}
 			}
 			else {
 				properties[fieldName] = value;

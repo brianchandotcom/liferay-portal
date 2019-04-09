@@ -1,16 +1,16 @@
 import * as FormSupport from '../../Form/FormSupport.es';
-import {generateInstanceId} from '../../../util/fieldSupport.es';
+import {generateInstanceId, getFieldProperties} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
 	const {addedToPlaceholder, focusedField, target} = event;
 	const {fieldName, name, settingsContext} = focusedField;
 	const {pageIndex, rowIndex} = target;
-	const {editingLanguageId, spritemap} = props;
+	const {defaultLanguageId, editingLanguageId, spritemap} = props;
 	let {pages} = state;
 	let {columnIndex} = target;
 
 	const fieldProperties = {
-		...FormSupport.getFieldProperties(settingsContext, editingLanguageId),
+		...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
 		fieldName,
 		instanceId: generateInstanceId(8),
 		name,
@@ -25,8 +25,6 @@ const handleFieldAdded = (props, state, event) => {
 		columnIndex = 0;
 	}
 
-	pages = FormSupport.addFieldToColumn(pages, target.pageIndex, target.rowIndex, target.columnIndex, fieldProperties);
-
 	return {
 		focusedField: {
 			...fieldProperties,
@@ -35,7 +33,13 @@ const handleFieldAdded = (props, state, event) => {
 			pageIndex,
 			rowIndex
 		},
-		pages
+		pages: FormSupport.addFieldToColumn(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex,
+			fieldProperties
+		)
 	};
 };
 

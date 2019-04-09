@@ -253,30 +253,6 @@ export const getIndexes = node => {
 	};
 };
 
-export const getFieldProperties = ({pages}, locale) => {
-	const properties = {};
-	const visitor = new PagesVisitor(pages);
-
-	visitor.mapFields(
-		({fieldName, localizable, localizedValue, type, value}) => {
-			if (localizable && localizedValue[locale] && localizedValue[locale].JSONArray) {
-				properties[fieldName] = localizedValue[locale].JSONArray;
-			}
-			else if (localizable) {
-				properties[fieldName] = localizedValue[locale];
-			}
-			else if (type == 'options') {
-				properties[fieldName] = value[locale];
-			}
-			else {
-				properties[fieldName] = value;
-			}
-		}
-	);
-
-	return properties;
-};
-
 export const updateField = (
 	pages,
 	fieldName,

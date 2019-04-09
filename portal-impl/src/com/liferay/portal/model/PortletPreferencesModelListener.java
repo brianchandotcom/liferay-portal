@@ -124,7 +124,7 @@ public class PortletPreferencesModelListener
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
 					 (portletPreferences.getPlid() > 0)) {
 
-				if (LayoutVersioningThreadLocal.isLayoutUpdateInProgress()) {
+				if (LayoutVersioningThreadLocal.isLayoutUpgradeInProgres()) {
 					return;
 				}
 

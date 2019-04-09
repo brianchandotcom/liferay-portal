@@ -2930,7 +2930,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout publishDraft(Layout draftLayout) throws PortalException {
-		LayoutVersioningThreadLocal.setLayoutUpdateInProgress(true);
+		boolean layoutUpgradeInProgress =
+			LayoutVersioningThreadLocal.isLayoutUpgradeInProgres();
+
+		LayoutVersioningThreadLocal.setLayoutUpgradeInProgress(true);
+
+		Layout layout = null;
 
 		try {
 			LayoutVersion oldLayoutVersion = fetchLatestVersion(draftLayout);
@@ -2939,17 +2944,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				return super.publishDraft(draftLayout);
 			}
 
-			Layout layout = super.publishDraft(draftLayout);
+			layout = super.publishDraft(draftLayout);
 
 			LayoutVersion newLayoutVersion = fetchLatestVersion(layout);
 
 			_copyPortletPreferences(oldLayoutVersion, newLayoutVersion);
-
-			return layout;
 		}
 		finally {
-			LayoutVersioningThreadLocal.setLayoutUpdateInProgress(false);
+			LayoutVersioningThreadLocal.setLayoutUpgradeInProgress(
+				layoutUpgradeInProgress);
 		}
+
+		return layout;
 	}
 
 	/**

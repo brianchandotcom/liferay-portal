@@ -21,31 +21,19 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
  */
 public class LayoutVersioningThreadLocal {
 
-	public static boolean isEnabled() {
-		return _enabled.get();
+	public static boolean isLayoutUpgradeInProgres() {
+		return _layoutUpgradeInProgress.get();
 	}
 
-	public static boolean isLayoutUpdateInProgress() {
-		return _layoutUpdateInProgress.get();
-	}
-
-	public static void setEnabled(boolean enabled) {
-		_enabled.set(enabled);
-	}
-
-	public static void setLayoutUpdateInProgress(
+	public static void setLayoutUpgradeInProgress(
 		boolean layoutUpgradeInProgress) {
 
-		_layoutUpdateInProgress.set(layoutUpgradeInProgress);
+		_layoutUpgradeInProgress.set(layoutUpgradeInProgress);
 	}
 
-	private static final ThreadLocal<Boolean> _enabled =
+	private static final ThreadLocal<Boolean> _layoutUpgradeInProgress =
 		new CentralizedThreadLocal<>(
-			LayoutVersioningThreadLocal.class + "._enabled",
-			() -> Boolean.TRUE);
-	private static final ThreadLocal<Boolean> _layoutUpdateInProgress =
-		new CentralizedThreadLocal<>(
-			LayoutVersioningThreadLocal.class + "._layoutUpdateInProgress",
+			LayoutVersioningThreadLocal.class + "._layoutUpgradeInProgress",
 			() -> Boolean.FALSE);
 
 }

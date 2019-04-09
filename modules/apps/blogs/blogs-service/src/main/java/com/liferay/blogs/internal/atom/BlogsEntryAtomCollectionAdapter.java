@@ -232,13 +232,9 @@ public class BlogsEntryAtomCollectionAdapter
 			null, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
-		_blogsEntryService = blogsEntryService;
-	}
-
 	private static final String _COLLECTION_NAME = "blogs";
 
+	@Reference
 	private BlogsEntryService _blogsEntryService;
 
 }

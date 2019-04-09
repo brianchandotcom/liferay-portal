@@ -80,7 +80,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 	@Reference
 	private ImageLocalService _imageLocalService;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference

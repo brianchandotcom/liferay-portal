@@ -48,13 +48,7 @@ public class BlogsEntryPermissionUpdateHandler
 		_blogsEntryLocalService.updateBlogsEntry(blogsEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntrySetLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

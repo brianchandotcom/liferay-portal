@@ -243,7 +243,7 @@ public class FreeMarkerTool {
 
 			String methodName = javaMethodSignature.getMethodName();
 
-			if (!methodName.startsWith(sb.toString())) {
+			if (!Objects.equals(methodName, sb.toString())) {
 				continue;
 			}
 

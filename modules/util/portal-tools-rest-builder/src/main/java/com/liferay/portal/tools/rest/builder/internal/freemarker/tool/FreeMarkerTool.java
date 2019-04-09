@@ -165,6 +165,41 @@ public class FreeMarkerTool {
 			schema);
 	}
 
+	public JavaMethodSignature getPostSiteJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			Operation operation = javaMethodSignature.getOperation();
+
+			if (!Objects.equals("post", getHTTPMethod(operation))) {
+				continue;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(getHTTPMethod(operation));
+			sb.append("Site");
+			sb.append(StringUtil.upperCaseFirstLetter(schemaName));
+
+			String methodName = javaMethodSignature.getMethodName();
+
+			if (!Objects.equals(methodName, sb.toString())) {
+				continue;
+			}
+
+			List<JavaMethodParameter> javaMethodParameters =
+				javaMethodSignature.getJavaMethodParameters();
+
+			if (javaMethodParameters.size() != 2) {
+				continue;
+			}
+
+			return javaMethodSignature;
+		}
+
+		return null;
+	}
+
 	public String getResourceArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 
@@ -249,41 +284,6 @@ public class FreeMarkerTool {
 		}
 
 		return false;
-	}
-
-	public JavaMethodSignature getPostSiteJavaMethodSignature(
-		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
-
-		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			Operation operation = javaMethodSignature.getOperation();
-
-			if (!Objects.equals("post", getHTTPMethod(operation))) {
-				continue;
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(getHTTPMethod(operation));
-			sb.append("Site");
-			sb.append(StringUtil.upperCaseFirstLetter(schemaName));
-
-			String methodName = javaMethodSignature.getMethodName();
-
-			if (!Objects.equals(methodName, sb.toString())) {
-				continue;
-			}
-
-			List<JavaMethodParameter> javaMethodParameters =
-				javaMethodSignature.getJavaMethodParameters();
-
-			if (javaMethodParameters.size() != 2) {
-				continue;
-			}
-
-			return javaMethodSignature;
-		}
-
-		return null;
 	}
 
 	public boolean hasRequestBodyMediaType(

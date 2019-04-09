@@ -181,20 +181,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			permissionChecker, entry, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
+	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Reference(
@@ -203,6 +190,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	private ModelResourcePermission<BookmarksEntry>
 		_bookmarksEntryModelResourcePermission;
 
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(

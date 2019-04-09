@@ -69,13 +69,7 @@ public class FindFolderAction extends FindStrutsAction {
 		return "folderId";
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

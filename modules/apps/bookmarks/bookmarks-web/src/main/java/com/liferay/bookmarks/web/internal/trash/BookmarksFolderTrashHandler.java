@@ -207,13 +207,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 			permissionChecker, folder, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(

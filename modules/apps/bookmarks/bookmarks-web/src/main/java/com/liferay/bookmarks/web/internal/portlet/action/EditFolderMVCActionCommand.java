@@ -153,18 +153,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderService(
-		BookmarksFolderService bookmarksFolderService) {
-
-		_bookmarksFolderService = bookmarksFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	protected void subscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -216,7 +204,10 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private BookmarksFolderService _bookmarksFolderService;
+
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

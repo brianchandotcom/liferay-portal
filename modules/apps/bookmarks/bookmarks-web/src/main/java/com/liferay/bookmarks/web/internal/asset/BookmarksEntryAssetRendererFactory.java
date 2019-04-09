@@ -152,21 +152,7 @@ public class BookmarksEntryAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
+	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Reference(
@@ -183,6 +169,7 @@ public class BookmarksEntryAssetRendererFactory
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
 	private ServletContext _servletContext;
 
 }

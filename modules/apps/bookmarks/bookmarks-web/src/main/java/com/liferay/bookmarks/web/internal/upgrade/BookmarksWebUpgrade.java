@@ -48,19 +48,10 @@ public class BookmarksWebUpgrade implements UpgradeStepRegistrator {
 				BookmarksPortletKeys.BOOKMARKS_ADMIN));
 	}
 
-	@Reference(unbind = "-")
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

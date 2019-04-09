@@ -123,21 +123,7 @@ public class BookmarksFolderAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
@@ -149,6 +135,7 @@ public class BookmarksFolderAssetRendererFactory
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
 	private ServletContext _servletContext;
 
 	@Reference

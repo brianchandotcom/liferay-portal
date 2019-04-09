@@ -201,13 +201,6 @@ public class BookmarksPortletToolbarContributor
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderService(
-		BookmarksFolderService bookmarksFolderService) {
-
-		_bookmarksFolderService = bookmarksFolderService;
-	}
-
 	private BookmarksFolder _getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
@@ -276,6 +269,7 @@ public class BookmarksPortletToolbarContributor
 	private ModelResourcePermission<BookmarksFolder>
 		_bookmarksFolderModelResourcePermission;
 
+	@Reference
 	private BookmarksFolderService _bookmarksFolderService;
 
 	@Reference

@@ -75,14 +75,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "/bookmarks/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksPortletToolbarContributor(
-		BookmarksPortletToolbarContributor bookmarksPortletToolbarContributor) {
-
-		_bookmarksPortletToolbarContributor =
-			bookmarksPortletToolbarContributor;
-	}
-
+	@Reference
 	private BookmarksPortletToolbarContributor
 		_bookmarksPortletToolbarContributor;
 

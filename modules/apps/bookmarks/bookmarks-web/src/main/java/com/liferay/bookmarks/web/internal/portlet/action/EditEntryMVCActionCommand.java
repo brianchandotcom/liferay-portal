@@ -230,25 +230,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryService(
-		BookmarksEntryService bookmarksEntryService) {
-
-		_bookmarksEntryService = bookmarksEntryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderService(
-		BookmarksFolderService bookmarksFolderService) {
-
-		_bookmarksFolderService = bookmarksFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	protected void subscribeEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -303,7 +284,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return entry;
 	}
 
+	@Reference
 	private BookmarksEntryService _bookmarksEntryService;
+
+	@Reference
 	private BookmarksFolderService _bookmarksFolderService;
 
 	@Reference
@@ -312,6 +296,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

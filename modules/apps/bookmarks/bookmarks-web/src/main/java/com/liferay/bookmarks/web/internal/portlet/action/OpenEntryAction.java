@@ -68,13 +68,7 @@ public class OpenEntryAction implements StrutsAction {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryService(
-		BookmarksEntryService bookmarksEntryService) {
-
-		_bookmarksEntryService = bookmarksEntryService;
-	}
-
+	@Reference
 	private BookmarksEntryService _bookmarksEntryService;
 
 	@Reference

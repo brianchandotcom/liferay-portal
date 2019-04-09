@@ -22,7 +22,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 <div class="container-fluid-1280 pt-2">
 	<liferay-frontend:edit-form
-		action="<%= layoutsAdminDisplayContext.getAddLayoutURL() %>"
+		action="<%= layoutsAdminDisplayContext.getAddLayoutActionURL() %>"
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"

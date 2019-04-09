@@ -124,6 +124,11 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
+	public String getAddLayoutActionURL() {
+		return ParamUtil.getString(
+			_request, "layoutActionURL", getAddLayoutURL());
+	}
+
 	public List<DropdownItem> getAddLayoutDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -300,6 +305,21 @@ public class LayoutsAdminDisplayContext {
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 		return configureLayoutURL.toString();
+	}
+
+	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
+		PortletURL copyLayoutRenderURL =
+			_liferayPortletResponse.createActionURL();
+
+		copyLayoutRenderURL.setParameter(
+			"mvcRenderCommandName", "/layout/add_layout");
+
+		copyLayoutRenderURL.setParameter(
+			"layoutActionURL", getCopyLayoutURL(layout));
+
+		copyLayoutRenderURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return copyLayoutRenderURL.toString();
 	}
 
 	public String getCopyLayoutURL(Layout layout) {
@@ -1398,7 +1418,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (isShowCopyLayoutAction(layout)) {
-			jsonObject.put("copyLayoutURL", getCopyLayoutURL(layout));
+			jsonObject.put("copyLayoutURL", getCopyLayoutRenderURL(layout));
 		}
 
 		if (isShowDeleteAction(layout)) {

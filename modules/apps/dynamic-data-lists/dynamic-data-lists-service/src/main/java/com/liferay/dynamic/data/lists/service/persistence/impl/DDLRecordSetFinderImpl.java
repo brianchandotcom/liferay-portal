@@ -385,7 +385,7 @@ public class DDLRecordSetFinderImpl
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(DDLRecordSet.name)", StringPool.LIKE, false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDLRecordSet.description", StringPool.LIKE, true,
+				sql, "LOWER(DDLRecordSet.description)", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);

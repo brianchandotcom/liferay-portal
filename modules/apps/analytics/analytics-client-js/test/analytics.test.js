@@ -271,7 +271,7 @@ describe('Analytics Client', () => {
 
 			Analytics.reset();
 			Analytics.dispose();
-			
+
 			sendDummyEvents(Analytics, 1);
 
 			Analytics.flush().then(() => {

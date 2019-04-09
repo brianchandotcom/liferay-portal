@@ -197,7 +197,7 @@ class Analytics {
 
 		if (newUserIdRequired) {
 			return Promise.resolve(this._generateUserId());
-		} 
+		}
 		else {
 			return Promise.resolve(storage.get(STORAGE_KEY_USER_ID));
 		}

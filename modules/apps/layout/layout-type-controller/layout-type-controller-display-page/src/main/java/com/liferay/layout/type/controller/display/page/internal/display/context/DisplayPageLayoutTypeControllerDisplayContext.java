@@ -17,11 +17,8 @@ package com.liferay.layout.type.controller.display.page.internal.display.context
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
-import com.liferay.asset.info.display.contributor.AssetInfoDisplayObject;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,34 +57,14 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		_request = request;
 
-		InfoDisplayObject infoDisplayObject =
-			(InfoDisplayObject)request.getAttribute(
-				DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT);
-
-		if (infoDisplayObject == null) {
-			long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				assetEntryId);
-
-			if (assetEntry != null) {
-				infoDisplayObject = new AssetInfoDisplayObject(assetEntry);
-
-				request.setAttribute(
-					DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT,
-					infoDisplayObject);
-
-				request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-			}
-		}
-
-		_infoDisplayObject = infoDisplayObject;
+		_infoDisplayObject = (InfoDisplayObject)request.getAttribute(
+			DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT);
 
 		InfoDisplayContributor infoDisplayContributor =
 			(InfoDisplayContributor)_request.getAttribute(
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
-		if ((infoDisplayContributor == null) && (infoDisplayObject != null)) {
+		if ((infoDisplayContributor == null) && (_infoDisplayObject != null)) {
 			InfoDisplayContributorTracker infoDisplayContributorTracker =
 				(InfoDisplayContributorTracker)request.getAttribute(
 					ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
@@ -96,7 +72,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			infoDisplayContributor =
 				infoDisplayContributorTracker.getInfoDisplayContributor(
 					PortalUtil.getClassName(
-						infoDisplayObject.getClassNameId()));
+						_infoDisplayObject.getClassNameId()));
 		}
 
 		_infoDisplayContributor = infoDisplayContributor;

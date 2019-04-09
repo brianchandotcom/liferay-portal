@@ -545,7 +545,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			_getLayoutPageTemplateEntry(serviceContext);
 
 		layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(
+			LayoutPageTemplateEntryServiceUtil.updateStatus(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				WorkflowConstants.STATUS_APPROVED);
 

@@ -17,7 +17,9 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse, trashHelper);
+BlogEntriesDisplayContextProvider blogEntriesDisplayContextProvider = blogsWebComponentProvider.getBlogEntriesDisplayContextProvider();
+
+BlogEntriesDisplayContext blogEntriesDisplayContext = blogEntriesDisplayContextProvider.getBlogEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
 SearchContainer entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();

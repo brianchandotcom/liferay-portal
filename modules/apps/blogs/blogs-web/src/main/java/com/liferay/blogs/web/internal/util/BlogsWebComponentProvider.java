@@ -14,9 +14,12 @@
 
 package com.liferay.blogs.web.internal.util;
 
+import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContextProvider;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -24,8 +27,14 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = {})
 public class BlogsWebComponentProvider {
 
-	public static BlogsWebComponentProvider getDLWebComponentProvider() {
+	public static BlogsWebComponentProvider getBlogsWebComponentProvider() {
 		return _blogsWebComponentProvider;
+	}
+
+	public BlogEntriesDisplayContextProvider
+		getBlogEntriesDisplayContextProvider() {
+
+		return _blogEntriesDisplayContextProvider;
 	}
 
 	@Activate
@@ -39,5 +48,9 @@ public class BlogsWebComponentProvider {
 	}
 
 	private static BlogsWebComponentProvider _blogsWebComponentProvider;
+
+	@Reference
+	private BlogEntriesDisplayContextProvider
+		_blogEntriesDisplayContextProvider;
 
 }

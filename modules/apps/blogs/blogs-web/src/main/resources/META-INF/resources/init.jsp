@@ -66,6 +66,7 @@ page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext" %><%@
+page import="com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContextProvider" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagementToolbarDisplayContext" %><%@
@@ -78,6 +79,7 @@ page import="com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryImageA
 page import="com.liferay.blogs.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@
+page import="com.liferay.blogs.web.internal.util.BlogsWebComponentProvider" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
@@ -169,6 +171,8 @@ page import="javax.portlet.WindowState" %>
 
 <%
 AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
+
+BlogsWebComponentProvider blogsWebComponentProvider = BlogsWebComponentProvider.getBlogsWebComponentProvider();
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

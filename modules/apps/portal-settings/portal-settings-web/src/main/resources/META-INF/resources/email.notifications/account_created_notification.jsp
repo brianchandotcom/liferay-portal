@@ -66,6 +66,6 @@ String sectionName = StringPool.BLANK;
 	/>
 
 	<aui:fieldset cssClass="definition-of-terms email-user-add terms" label="definition-of-terms">
-		<%@ include file="/definition_of_terms.jspf" %>
+		<%@ include file="/email.notifications/definition_of_terms.jspf" %>
 	</aui:fieldset>
 </aui:fieldset>

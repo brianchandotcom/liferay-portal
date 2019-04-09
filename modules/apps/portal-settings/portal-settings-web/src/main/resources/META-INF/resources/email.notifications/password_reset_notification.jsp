@@ -39,5 +39,5 @@ String sectionName = "password-reset-notification";
 />
 
 <aui:fieldset cssClass="definition-of-terms email-verification terms" label="definition-of-terms">
-	<%@ include file="/definition_of_terms.jspf" %>
+	<%@ include file="/email.notifications/definition_of_terms.jspf" %>
 </aui:fieldset>

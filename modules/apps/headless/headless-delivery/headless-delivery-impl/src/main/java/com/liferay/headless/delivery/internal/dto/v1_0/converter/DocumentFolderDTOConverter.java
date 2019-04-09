@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.portal.kernel.repository.model.Folder",
+	property = "asset.entry.class.name=com.liferay.portal.kernel.repository.model.DLFolder",
 	service = {DocumentFolderDTOConverter.class, DTOConverter.class}
 )
 public class DocumentFolderDTOConverter implements DTOConverter {

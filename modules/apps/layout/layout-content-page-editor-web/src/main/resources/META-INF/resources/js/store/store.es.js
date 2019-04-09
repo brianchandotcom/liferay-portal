@@ -111,6 +111,21 @@ class Store extends State {
 
 		this._setInitialState(initialState);
 		this.registerReducers(reducers);
+
+		if ((process.env.NODE_ENV === 'development') && (STORE_DEVTOOLS_ID in window)) {
+			this._devTools = window[STORE_DEVTOOLS_ID].connect();
+
+			this._devTools.init(this._state);
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	disposed() {
+		if (this._devTools) {
+			this._devTools.disconnect();
+		}
 	}
 
 	/**
@@ -137,6 +152,16 @@ class Store extends State {
 						this._state = this._getFrozenState(nextState);
 
 						this.emit('change', this._state);
+
+						if (this._devTools) {
+							this._devTools.send(
+								{
+									payload,
+									type: actionType
+								},
+								this._state
+							);
+						}
 					}
 
 					return new Promise(
@@ -265,6 +290,19 @@ class Store extends State {
  * @type {!Object}
  */
 Store.STATE = {
+
+	/**
+	 * Redux devtools
+	 * @instance
+	 * @memberOf Store
+	 * @private
+	 * @review
+	 * @type {any|null}
+	 */
+	_devTools: Config
+		.any()
+		.internal()
+		.value(null),
 
 	/**
 	 * @default Promise.resolve()

@@ -6,9 +6,9 @@ import './FragmentEntryLinkContent.es';
 import templates from './FragmentEntryLink.soy';
 import {MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {getFragmentColumn, getItemMoveDirection, getItemPath, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {getFragmentColumn, getFragmentRowIndex, getItemMoveDirection, getItemPath, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {moveItem, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, moveRow, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -86,27 +86,42 @@ class FragmentEntryLink extends Component {
 	_handleFragmentKeyUp(event) {
 		event.stopPropagation();
 
-		const column = getFragmentColumn(
-			this.layoutData.structure,
-			this.fragmentEntryLinkId
-		);
 		const direction = getItemMoveDirection(event.which);
-		const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
-			this.fragmentEntryLinkId
-		);
-		const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
-			fragmentIndex + direction
-		];
+		const {fragmentEntryLinkType} = event.delegateTarget.dataset;
 
-		if (direction && targetFragmentEntryLinkId) {
-			const moveItemPayload = {
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				targetBorder: getTargetBorder(direction),
-				targetItemId: targetFragmentEntryLinkId,
-				targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			};
+		if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+			moveRow(
+				direction,
+				getFragmentRowIndex(
+					this.layoutData.structure,
+					this.fragmentEntryLinkId
+				),
+				this.store,
+				this.layoutData.structure
+			);
+		}
+		else {
+			const column = getFragmentColumn(
+				this.layoutData.structure,
+				this.fragmentEntryLinkId
+			);
+			const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
+				this.fragmentEntryLinkId
+			);
+			const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
+				fragmentIndex + direction
+			];
 
-			moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
+			if (direction && targetFragmentEntryLinkId) {
+				const moveItemPayload = {
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					targetBorder: getTargetBorder(direction),
+					targetItemId: targetFragmentEntryLinkId,
+					targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				};
+
+				moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
+			}
 		}
 	}
 

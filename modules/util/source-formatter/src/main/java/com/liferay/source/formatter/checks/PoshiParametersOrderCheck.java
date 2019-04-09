@@ -37,27 +37,27 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		return _sortPoshiParameter(fileName, content);
+		return _sortPoshiParameters(fileName, content);
 	}
 
-	private String _sortPoshiParameter(String fileName, String content) {
+	private String _sortPoshiParameters(String fileName, String content) {
 		Matcher matcher1 = _methodCallPattern.matcher(content);
 
 		while (matcher1.find()) {
-			String s = matcher1.group(1);
-
-			String parameters = matcher1.group(2);
-
 			Map<String, String> parametersMap = new TreeMap<>(
 				new NaturalOrderStringComparator());
+
+			String parameters = matcher1.group(2);
 
 			Matcher matcher2 = _parametersPattern.matcher(parameters);
 
 			while (matcher2.find()) {
-				if (parametersMap.containsKey(matcher2.group(1))) {
+				String parameterName = matcher2.group(1);
+
+				if (parametersMap.containsKey(parameterName)) {
 					addMessage(
 						fileName,
-						"Parameter '" + matcher2.group(1) + "' is already used",
+						"Parameter '" + parameterName + "' is already used",
 						getLineNumber(content, matcher1.start(1)));
 
 					parametersMap.clear();
@@ -65,14 +65,14 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 					break;
 				}
 
-				parametersMap.put(matcher2.group(1), matcher2.group(3));
+				parametersMap.put(parameterName, matcher2.group(3));
 			}
 
 			if (parametersMap.isEmpty()) {
 				continue;
 			}
 
-			String indent = SourceUtil.getIndent(s);
+			String indent = SourceUtil.getIndent(matcher1.group(1));
 
 			StringBundler sb = new StringBundler();
 
@@ -99,7 +99,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 			}
 
 			content = StringUtil.replaceFirst(
-				content, matcher1.group(2), sb.toString(), matcher1.start(1));
+				content, parameters, sb.toString(), matcher1.start(1));
 		}
 
 		return content;

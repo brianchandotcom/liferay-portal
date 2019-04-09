@@ -141,7 +141,7 @@ public class Transformer {
 			template.put("groupId", scopeGroupId);
 			template.put("journalTemplatesPath", templatesPath);
 
-			mergeTemplate(template, unsyncStringWriter, false);
+			template.processTemplate(unsyncStringWriter);
 		}
 		catch (Exception e) {
 			throw new TransformException("Unhandled exception", e);
@@ -227,19 +227,6 @@ public class Transformer {
 		sb.append(classNameId);
 
 		return sb.toString();
-	}
-
-	protected void mergeTemplate(
-			Template template, UnsyncStringWriter unsyncStringWriter,
-			boolean propagateException)
-		throws Exception {
-
-		if (propagateException) {
-			template.doProcessTemplate(unsyncStringWriter);
-		}
-		else {
-			template.processTemplate(unsyncStringWriter);
-		}
 	}
 
 	protected void prepareTemplate(ThemeDisplay themeDisplay, Template template)

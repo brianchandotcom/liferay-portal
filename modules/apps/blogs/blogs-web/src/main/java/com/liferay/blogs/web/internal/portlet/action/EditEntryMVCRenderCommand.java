@@ -95,17 +95,11 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		return "/blogs/edit_entry.jsp";
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorHelper(
-		BlogsItemSelectorHelper blogsItemSelectorHelper) {
-
-		_blogsItemSelectorHelper = blogsItemSelectorHelper;
-	}
-
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private volatile ModelResourcePermission<BlogsEntry>
 		_blogsEntryModelResourcePermission;
 
+	@Reference
 	private BlogsItemSelectorHelper _blogsItemSelectorHelper;
 
 	@Reference

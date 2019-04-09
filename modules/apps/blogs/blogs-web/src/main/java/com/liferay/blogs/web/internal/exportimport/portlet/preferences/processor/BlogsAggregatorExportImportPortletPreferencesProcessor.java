@@ -93,27 +93,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -203,6 +182,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")
@@ -215,7 +195,10 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
 
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

@@ -160,13 +160,7 @@ public class BlogsExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")

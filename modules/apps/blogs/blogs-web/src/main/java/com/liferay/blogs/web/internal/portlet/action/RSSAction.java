@@ -162,19 +162,10 @@ public class RSSAction implements StrutsAction {
 		return blogsGroupServiceOverriddenConfiguration.enableRss();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
-		_blogsEntryService = blogsEntryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
+	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

@@ -231,26 +231,13 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private StagedModelRepository<BookmarksEntry>
 		_bookmarksEntryStagedModelRepository;
 
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
@@ -264,6 +251,7 @@ public class BookmarksExportImportPortletPreferencesProcessor
 	)
 	private PortletDataHandler _bookmarksPortletDataHandler;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

@@ -44,11 +44,7 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeBookmarksFolderResourceBlock());
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
+	@Reference
 	private SettingsFactory _settingsFactory;
 
 }

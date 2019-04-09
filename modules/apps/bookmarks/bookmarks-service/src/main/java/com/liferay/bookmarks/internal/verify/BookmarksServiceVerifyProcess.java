@@ -48,13 +48,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		verifyTree();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
 	protected void updateFolderAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<BookmarksFolder> folders =
@@ -100,6 +93,7 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksServiceVerifyProcess.class);
 
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference

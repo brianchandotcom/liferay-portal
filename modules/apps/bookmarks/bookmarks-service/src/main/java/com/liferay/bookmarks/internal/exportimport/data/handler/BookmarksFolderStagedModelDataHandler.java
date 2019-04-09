@@ -116,15 +116,8 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<BookmarksFolder> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private StagedModelRepository<BookmarksFolder> _stagedModelRepository;
 
 }

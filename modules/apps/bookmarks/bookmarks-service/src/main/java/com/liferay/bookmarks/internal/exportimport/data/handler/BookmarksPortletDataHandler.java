@@ -140,14 +140,12 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		setStagingControls(getExportControls());
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
 		target = "(javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN + ")"
 	)
 	private PortletDataHandler _bookmarksAdminPortletDataHandler;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

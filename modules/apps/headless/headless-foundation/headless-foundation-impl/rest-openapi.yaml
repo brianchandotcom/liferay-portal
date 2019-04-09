@@ -433,46 +433,43 @@ components:
                     items:
                         type: string
                     type: array
-                myOrganizations:
-                    items:
-                        $ref: "#/components/schemas/Organization"
-                    readOnly: true
-                    type: array
-                myOrganizationsIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 name:
                     type: string
-                profileURL:
-                    type: string
-                roles:
+                organizationBriefs:
                     items:
-                        $ref: "#/components/schemas/Role"
+                        properties:
+                            id:
+                                format: int64
+                                type: integer
+                            name:
+                                type: string
+                        type: object
                     readOnly: true
                     type: array
-                rolesIds:
+                profileURL:
+                    type: string
+                roleBriefs:
                     items:
-                        format: int64
-                        type: integer
+                        properties:
+                            id:
+                                format: int64
+                                type: integer
+                            name:
+                                type: string
+                        type: object
+                    readOnly: true
                     type: array
-                    writeOnly: true
-                tasksAssignedToMe:
+                siteBriefs:
                     items:
-                        format: uri
-                        type: string
+                        properties:
+                            id:
+                                format: int64
+                                type: integer
+                            name:
+                                type: string
+                        type: object
+                    readOnly: true
                     type: array
-                tasksAssignedToMyRoles:
-                    items:
-                        format: uri
-                        type: string
-                    type: array
-            required:
-                - email
-                - familyName
-                - givenName
             type: object
         WebUrl:
             description: https://www.schema.org/WebUrl
@@ -564,16 +561,9 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
-    "/my-user-accounts/{userAccountId}":
+    "/my-user-account":
         get:
             operationId: getMyUserAccount
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
             responses:
                 200:
                     content:
@@ -582,46 +572,6 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
-    "/my-user-accounts/{userAccountId}/organizations":
-        get:
-            operationId: getMyUserAccountOrganizationsPage
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Organization"
-                                type: array
-                    description: ""
-            tags: ["Organization"]
-    "/my-user-accounts/{userAccountId}/roles":
-        get:
-            operationId: getMyUserAccountRolesPage
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Role"
-                                type: array
-                    description: ""
-            tags: ["Role"]
     "/organizations":
         get:
             operationId: getOrganizationsPage
@@ -1436,47 +1386,7 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-        post:
-            operationId: postUserAccount
-            parameters: []
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/UserAccount"
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                file:
-                                    format: binary
-                                    type: string
-                                userAccount:
-                                    $ref: "#/components/schemas/UserAccount"
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserAccount"
-                    description: ""
-            tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
-        delete:
-            operationId: deleteUserAccount
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["UserAccount"]
         get:
             operationId: getUserAccount
             parameters:
@@ -1486,28 +1396,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserAccount"
-                    description: ""
-            tags: ["UserAccount"]
-        put:
-            operationId: putUserAccount
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/UserAccount"
             responses:
                 200:
                     content:
@@ -1596,26 +1484,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["PostalAddress"]
-    "/user-accounts/{userAccountId}/roles":
-        get:
-            operationId: getUserAccountRolesPage
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Role"
-                                type: array
-                    description: ""
-            tags: ["Role"]
     "/user-accounts/{userAccountId}/web-urls":
         get:
             operationId: getUserAccountWebUrlsPage

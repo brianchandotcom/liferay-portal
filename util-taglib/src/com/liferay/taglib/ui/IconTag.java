@@ -89,6 +89,14 @@ public class IconTag extends IncludeTag {
 		return _linkCssClass;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getLinkTitle() {
+		return _linkTitle;
+	}
+
 	public String getMarkupView() {
 		return _markupView;
 	}

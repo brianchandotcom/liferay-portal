@@ -69,22 +69,6 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
-	public Page<DataLayout> getContentSpaceDataLayoutPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_ddmStructureLayoutLocalService.getStructureLayouts(
-					contentSpaceId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				this::_toDataLayout),
-			pagination,
-			_ddmStructureLayoutLocalService.getStructureLayoutsCount(
-				contentSpaceId));
-	}
-
-	@Override
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
@@ -96,32 +80,18 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
-	public void postContentSpaceDataLayoutPermission(
-			Long contentSpaceId, String operation,
-			DataLayoutPermission dataLayoutPermission)
+	public Page<DataLayout> getSiteDataLayoutPage(
+			Long siteId, Pagination pagination)
 		throws Exception {
 
-		DataEnginePermissionUtil.checkOperationPermission(
-			contentSpaceId, _groupLocalService, operation);
-
-		List<String> actionIds = new ArrayList<>();
-
-		if (dataLayoutPermission.getAddDataLayout()) {
-			actionIds.add(DataActionKeys.ADD_DATA_LAYOUT);
-		}
-
-		if (dataLayoutPermission.getDefinePermissions()) {
-			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
-		}
-
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		DataEnginePermissionUtil.persistPermission(
-			actionIds, contextCompany, operation,
-			_resourcePermissionLocalService, _roleLocalService,
-			dataLayoutPermission.getRoleNames());
+		return Page.of(
+			transform(
+				_ddmStructureLayoutLocalService.getStructureLayouts(
+					siteId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				this::_toDataLayout),
+			pagination,
+			_ddmStructureLayoutLocalService.getStructureLayoutsCount(siteId));
 	}
 
 	@Override
@@ -137,8 +107,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_LAYOUT, ddmStructure.getGroupId(),
-			_groupLocalService);
+			DataActionKeys.ADD_DATA_LAYOUT, _groupLocalService,
+			ddmStructure.getGroupId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -171,7 +141,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
 
 		DataEnginePermissionUtil.checkOperationPermission(
-			ddmStructureLayout.getGroupId(), _groupLocalService, operation);
+			_groupLocalService, operation, ddmStructureLayout.getGroupId());
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -192,8 +162,38 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		}
 
 		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, ddmStructureLayout.getGroupId(),
-			dataLayoutId, operation, DataLayoutConstants.RESOURCE_NAME,
+			actionIds, contextCompany, dataLayoutId,
+			operation, DataLayoutConstants.RESOURCE_NAME,
+			_resourcePermissionLocalService, _roleLocalService,
+			dataLayoutPermission.getRoleNames(),
+			ddmStructureLayout.getGroupId());
+	}
+
+	@Override
+	public void postSiteDataLayoutPermission(
+			Long siteId, String operation,
+			DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
+		DataEnginePermissionUtil.checkOperationPermission(
+			_groupLocalService, operation, siteId);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataLayoutPermission.getAddDataLayout()) {
+			actionIds.add(DataActionKeys.ADD_DATA_LAYOUT);
+		}
+
+		if (dataLayoutPermission.getDefinePermissions()) {
+			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		DataEnginePermissionUtil.persistPermission(
+			actionIds, contextCompany, operation,
 			_resourcePermissionLocalService, _roleLocalService,
 			dataLayoutPermission.getRoleNames());
 	}

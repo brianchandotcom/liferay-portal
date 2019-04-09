@@ -92,40 +92,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Override
-	public Page<DataDefinition> getContentSpaceDataDefinitionsPage(
-			Long contentSpaceId, String keywords, Pagination pagination)
-		throws Exception {
-
-		if (Validator.isNull(keywords)) {
-			return Page.of(
-				transform(
-					_ddmStructureService.getStructures(
-						contextCompany.getCompanyId(),
-						new long[] {contentSpaceId}, _getClassNameId(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-					DataDefinitionUtil::toDataDefinition),
-				pagination,
-				_ddmStructureService.getStructuresCount(
-					contextCompany.getCompanyId(), new long[] {contentSpaceId},
-					_getClassNameId()));
-		}
-
-		return Page.of(
-			transform(
-				_ddmStructureService.search(
-					contextCompany.getCompanyId(), new long[] {contentSpaceId},
-					_getClassNameId(), keywords, WorkflowConstants.STATUS_ANY,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				DataDefinitionUtil::toDataDefinition),
-			pagination,
-			_ddmStructureService.searchCount(
-				contextCompany.getCompanyId(), new long[] {contentSpaceId},
-				_getClassNameId(), keywords, WorkflowConstants.STATUS_ANY));
-	}
-
-	@Override
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
 		throws Exception {
 
@@ -138,63 +104,36 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Override
-	public DataDefinition postContentSpaceDataDefinition(
-			Long contentSpaceId, DataDefinition dataDefinition)
+	public Page<DataDefinition> getSiteDataDefinitionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
-		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_DEFINITION, contentSpaceId,
-			_groupLocalService);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		dataDefinition = DataDefinitionUtil.toDataDefinition(
-			_ddmStructureLocalService.addStructure(
-				PrincipalThreadLocal.getUserId(), contentSpaceId,
-				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				_getClassNameId(), null,
-				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
-				LocalizedValueUtil.toLocalizationMap(
-					dataDefinition.getDescription()),
-				DataDefinitionUtil.toJSON(dataDefinition),
-				dataDefinition.getStorageType(), serviceContext));
-
-		_resourceLocalService.addModelResources(
-			contextCompany.getCompanyId(), contentSpaceId,
-			PrincipalThreadLocal.getUserId(),
-			InternalDataDefinition.class.getName(), dataDefinition.getId(),
-			serviceContext.getModelPermissions());
-
-		return dataDefinition;
-	}
-
-	@Override
-	public void postContentSpaceDataDefinitionPermission(
-			Long contentSpaceId, String operation,
-			DataDefinitionPermission dataDefinitionPermission)
-		throws Exception {
-
-		DataEnginePermissionUtil.checkOperationPermission(
-			contentSpaceId, _groupLocalService, operation);
-
-		List<String> actionIds = new ArrayList<>();
-
-		if (dataDefinitionPermission.getAddDataDefinition()) {
-			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+		if (Validator.isNull(keywords)) {
+			return Page.of(
+				transform(
+					_ddmStructureService.getStructures(
+						contextCompany.getCompanyId(), new long[] {siteId},
+						_getClassNameId(), pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
+					DataDefinitionUtil::toDataDefinition),
+				pagination,
+				_ddmStructureService.getStructuresCount(
+					contextCompany.getCompanyId(), new long[] {siteId},
+					_getClassNameId()));
 		}
 
-		if (dataDefinitionPermission.getDefinePermissions()) {
-			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
-		}
-
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		DataEnginePermissionUtil.persistPermission(
-			actionIds, contextCompany, operation,
-			_resourcePermissionLocalService, _roleLocalService,
-			dataDefinitionPermission.getRoleNames());
+		return Page.of(
+			transform(
+				_ddmStructureService.search(
+					contextCompany.getCompanyId(), new long[] {siteId},
+					_getClassNameId(), keywords, WorkflowConstants.STATUS_ANY,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				DataDefinitionUtil::toDataDefinition),
+			pagination,
+			_ddmStructureService.searchCount(
+				contextCompany.getCompanyId(), new long[] {siteId},
+				_getClassNameId(), keywords, WorkflowConstants.STATUS_ANY));
 	}
 
 	@Override
@@ -207,7 +146,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkOperationPermission(
-			ddmStructure.getGroupId(), _groupLocalService, operation);
+			_groupLocalService, operation, ddmStructure.getGroupId());
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -228,8 +167,67 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 
 		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, ddmStructure.getGroupId(),
-			dataDefinitionId, operation, DataDefinitionConstants.RESOURCE_NAME,
+			actionIds, contextCompany, dataDefinitionId,
+			operation, DataDefinitionConstants.RESOURCE_NAME,
+			_resourcePermissionLocalService, _roleLocalService,
+			dataDefinitionPermission.getRoleNames(), ddmStructure.getGroupId());
+	}
+
+	@Override
+	public DataDefinition postSiteDataDefinition(
+			Long siteId, DataDefinition dataDefinition)
+		throws Exception {
+
+		DataEnginePermissionUtil.checkPermission(
+			DataActionKeys.ADD_DATA_DEFINITION, _groupLocalService, siteId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		dataDefinition = DataDefinitionUtil.toDataDefinition(
+			_ddmStructureLocalService.addStructure(
+				PrincipalThreadLocal.getUserId(), siteId,
+				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				_getClassNameId(), null,
+				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
+				LocalizedValueUtil.toLocalizationMap(
+					dataDefinition.getDescription()),
+				DataDefinitionUtil.toJSON(dataDefinition),
+				dataDefinition.getStorageType(), serviceContext));
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), siteId,
+			PrincipalThreadLocal.getUserId(),
+			InternalDataDefinition.class.getName(), dataDefinition.getId(),
+			serviceContext.getModelPermissions());
+
+		return dataDefinition;
+	}
+
+	@Override
+	public void postSiteDataDefinitionPermission(
+			Long siteId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		DataEnginePermissionUtil.checkOperationPermission(
+			_groupLocalService, operation, siteId);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataDefinitionPermission.getAddDataDefinition()) {
+			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+		}
+
+		if (dataDefinitionPermission.getDefinePermissions()) {
+			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		DataEnginePermissionUtil.persistPermission(
+			actionIds, contextCompany, operation,
 			_resourcePermissionLocalService, _roleLocalService,
 			dataDefinitionPermission.getRoleNames());
 	}

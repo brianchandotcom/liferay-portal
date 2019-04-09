@@ -47,8 +47,7 @@ import javax.ws.rs.BadRequestException;
 public class DataEnginePermissionUtil {
 
 	public static void checkOperationPermission(
-			long contentSpaceId, GroupLocalService groupLocalService,
-			String operation)
+			GroupLocalService groupLocalService, String operation, long siteId)
 		throws Exception {
 
 		if (!StringUtil.equalsIgnoreCase(
@@ -61,31 +60,28 @@ public class DataEnginePermissionUtil {
 		}
 
 		checkPermission(
-			DataActionKeys.DEFINE_PERMISSIONS, contentSpaceId,
-			groupLocalService);
+			DataActionKeys.DEFINE_PERMISSIONS, groupLocalService, siteId);
 	}
 
 	public static void checkPermission(
-			String actionId, Long contentSpaceId,
-			GroupLocalService groupLocalService)
+			String actionId, GroupLocalService groupLocalService, Long siteId)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		Group group = groupLocalService.fetchGroup(contentSpaceId);
+		Group group = groupLocalService.fetchGroup(siteId);
 
 		if ((group != null) && group.isStagingGroup()) {
 			group = group.getLiveGroup();
 		}
 
 		if (!permissionChecker.hasPermission(
-				group, DataEngineConstants.RESOURCE_NAME, contentSpaceId,
-				actionId)) {
+				group, DataEngineConstants.RESOURCE_NAME, siteId, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DataEngineConstants.RESOURCE_NAME,
-				contentSpaceId, actionId);
+				permissionChecker, DataEngineConstants.RESOURCE_NAME, siteId,
+				actionId);
 		}
 	}
 
@@ -122,10 +118,10 @@ public class DataEnginePermissionUtil {
 	}
 
 	public static void persistModelPermission(
-			List<String> actionIds, Company company, long contentSpaceId,
-			long modelId, String operation, String resourceName,
-			ResourcePermissionLocalService resourcePermissionLocalService,
-			RoleLocalService roleLocalService, String[] roleNames)
+			List<String> actionIds, Company company, long modelId, String operation,
+			String resourceName, ResourcePermissionLocalService resourcePermissionLocalService,
+			RoleLocalService roleLocalService,
+			String[] roleNames, long siteId)
 		throws Exception {
 
 		if (StringUtil.equalsIgnoreCase(
@@ -139,7 +135,7 @@ public class DataEnginePermissionUtil {
 			}
 
 			resourcePermissionLocalService.addModelResourcePermissions(
-				company.getCompanyId(), contentSpaceId,
+				company.getCompanyId(), siteId,
 				PrincipalThreadLocal.getUserId(), resourceName,
 				String.valueOf(modelId), modelPermissions);
 		}

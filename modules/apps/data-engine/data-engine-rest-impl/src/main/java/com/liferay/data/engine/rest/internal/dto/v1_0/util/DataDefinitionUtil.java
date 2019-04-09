@@ -36,7 +36,6 @@ public class DataDefinitionUtil {
 
 		return new DataDefinition() {
 			{
-				contentSpaceId = ddmStructure.getGroupId();
 				dataDefinitionFields = JSONUtil.toArray(
 					jsonObject.getJSONArray("fields"),
 					fieldJSONObject -> _toDataDefinitionField(fieldJSONObject),
@@ -52,6 +51,7 @@ public class DataDefinitionUtil {
 				id = ddmStructure.getStructureId();
 				name = LocalizedValueUtil.toLocalizedValues(
 					ddmStructure.getNameMap());
+				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();
 				userId = ddmStructure.getUserId();
 			}

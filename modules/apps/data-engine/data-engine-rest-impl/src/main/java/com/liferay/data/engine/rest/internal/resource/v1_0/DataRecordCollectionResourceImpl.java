@@ -71,38 +71,6 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
-			Long contentSpaceId, String keywords, Pagination pagination)
-		throws Exception {
-
-		if (Validator.isNull(keywords)) {
-			return Page.of(
-				transform(
-					_ddlRecordSetLocalService.getRecordSets(
-						contentSpaceId, pagination.getStartPosition(),
-						pagination.getEndPosition()),
-					DataRecordCollectionUtil::toDataRecordCollection),
-				pagination,
-				_ddlRecordSetLocalService.getRecordSetsCount(contentSpaceId));
-		}
-
-		Group group = _groupLocalService.getGroup(contentSpaceId);
-
-		return Page.of(
-			transform(
-				_ddlRecordSetLocalService.search(
-					group.getCompanyId(), contentSpaceId, keywords,
-					DDLRecordSetConstants.SCOPE_DATA_ENGINE,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				DataRecordCollectionUtil::toDataRecordCollection),
-			pagination,
-			_ddlRecordSetLocalService.searchCount(
-				group.getCompanyId(), contentSpaceId, keywords,
-				DDLRecordSetConstants.SCOPE_DATA_ENGINE));
-	}
-
-	@Override
 	public Page<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				Long dataDefinitionId, String keywords, Pagination pagination)
@@ -152,32 +120,35 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public void postContentSpaceDataRecordCollectionPermission(
-			Long contentSpaceId, String operation,
-			DataRecordCollectionPermission dataRecordCollectionPermission)
+	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
-		DataEnginePermissionUtil.checkOperationPermission(
-			contentSpaceId, _groupLocalService, operation);
-
-		List<String> actionIds = new ArrayList<>();
-
-		if (dataRecordCollectionPermission.getAddDataRecordCollection()) {
-			actionIds.add(DataActionKeys.ADD_DATA_RECORD_COLLECTION);
+		if (Validator.isNull(keywords)) {
+			return Page.of(
+				transform(
+					_ddlRecordSetLocalService.getRecordSets(
+						siteId, pagination.getStartPosition(),
+						pagination.getEndPosition()),
+					DataRecordCollectionUtil::toDataRecordCollection),
+				pagination,
+				_ddlRecordSetLocalService.getRecordSetsCount(siteId));
 		}
 
-		if (dataRecordCollectionPermission.getDefinePermissions()) {
-			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
-		}
+		Group group = _groupLocalService.getGroup(siteId);
 
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		DataEnginePermissionUtil.persistPermission(
-			actionIds, contextCompany, operation,
-			_resourcePermissionLocalService, _roleLocalService,
-			dataRecordCollectionPermission.getRoleNames());
+		return Page.of(
+			transform(
+				_ddlRecordSetLocalService.search(
+					group.getCompanyId(), siteId, keywords,
+					DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				DataRecordCollectionUtil::toDataRecordCollection),
+			pagination,
+			_ddlRecordSetLocalService.searchCount(
+				group.getCompanyId(), siteId, keywords,
+				DDLRecordSetConstants.SCOPE_DATA_ENGINE));
 	}
 
 	@Override
@@ -267,6 +238,35 @@ public class DataRecordCollectionResourceImpl
 			actionIds, contextCompany, ddlRecordSet.getGroupId(),
 			dataRecordCollectionId, operation,
 			DataRecordCollectionConstants.RESOURCE_NAME,
+			_resourcePermissionLocalService, _roleLocalService,
+			dataRecordCollectionPermission.getRoleNames());
+	}
+
+	@Override
+	public void postSiteDataRecordCollectionPermission(
+			Long siteId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		DataEnginePermissionUtil.checkOperationPermission(
+			siteId, _groupLocalService, operation);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataRecordCollectionPermission.getAddDataRecordCollection()) {
+			actionIds.add(DataActionKeys.ADD_DATA_RECORD_COLLECTION);
+		}
+
+		if (dataRecordCollectionPermission.getDefinePermissions()) {
+			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		DataEnginePermissionUtil.persistPermission(
+			actionIds, contextCompany, operation,
 			_resourcePermissionLocalService, _roleLocalService,
 			dataRecordCollectionPermission.getRoleNames());
 	}

@@ -148,6 +148,7 @@ import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.EncryptionParameters;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.EncryptionConfigurationCriterion;
+import org.opensaml.xmlsec.criterion.EncryptionOptionalCriterion;
 import org.opensaml.xmlsec.encryption.support.DataEncryptionParameters;
 import org.opensaml.xmlsec.encryption.support.DecryptionException;
 import org.opensaml.xmlsec.encryption.support.KeyEncryptionParameters;
@@ -1429,13 +1430,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				CompanyThreadLocal.getCompanyId(),
 				samlPeerEntityContext.getEntityId());
 
+		CriteriaSet criteriaSet = new CriteriaSet(
+			new EncryptionConfigurationCriterion(
+				ConfigurationService.get(EncryptionConfiguration.class)),
+			new RoleDescriptorCriterion(spSSODescriptor));
+
+		if (!samlIdpSpConnection.isEncryptionForced()) {
+			criteriaSet.add(new EncryptionOptionalCriterion(true));
+		}
+
 		EncryptionParameters encryptionParameters =
 			_samlMetadataEncryptionParametersResolver.resolveSingle(
-				new CriteriaSet(
-					new EncryptionConfigurationCriterion(
-						ConfigurationService.get(
-							EncryptionConfiguration.class)),
-					new RoleDescriptorCriterion(spSSODescriptor)));
+				criteriaSet);
 
 		if (encryptionParameters != null) {
 			Encrypter encrypter = new Encrypter(

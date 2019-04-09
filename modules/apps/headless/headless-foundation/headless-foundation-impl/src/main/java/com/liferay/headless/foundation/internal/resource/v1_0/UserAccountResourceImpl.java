@@ -134,6 +134,12 @@ public class UserAccountResourceImpl
 
 		return _getUserAccountsPage(
 			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("userName", StringPool.BLANK),
+					BooleanClauseOccur.MUST_NOT);
 			},
 			search, filter, pagination, sorts);
 	}

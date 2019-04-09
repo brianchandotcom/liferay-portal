@@ -54,20 +54,6 @@ String version = openSSOConfiguration.version();
 	<aui:input cssClass="lfr-input-text-container" label="email-address-attribute" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "emailAddressAttr" %>' type="text" value="<%= emailAddressAttr %>" />
 
 	<%@ include file="/dynamic_include/com.liferay.portal.settings.web/opensso_user_name.jspf" %>
-
-	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "testOpenSSOSettings();" %>' value="test-opensso-configuration" />
-
-		<portlet:actionURL name="/portal_settings/opensso_delete" var="resetValuesURL">
-			<portlet:param name="tabs1" value="opensso" />
-		</portlet:actionURL>
-
-		<%
-		String taglibOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" value="reset-values" />
-	</aui:button-row>
 </aui:fieldset>
 
 <aui:script>

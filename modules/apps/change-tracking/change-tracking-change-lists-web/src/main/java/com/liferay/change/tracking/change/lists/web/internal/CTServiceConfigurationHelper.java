@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.web.internal.util;
+package com.liferay.change.tracking.change.lists.web.internal;
 
 import com.liferay.change.tracking.configuration.CTServiceConfiguration;
 import com.liferay.change.tracking.kernel.util.ChangeTrackingThreadLocal;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(immediate = true, service = {})
-public class ChangeTrackingThreadLocalSetter {
+public class CTServiceConfigurationHelper {
 
 	@Activate
 	protected void activate() {
@@ -49,7 +49,7 @@ public class ChangeTrackingThreadLocalSetter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ChangeTrackingThreadLocalSetter.class);
+		CTServiceConfigurationHelper.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

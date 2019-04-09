@@ -310,7 +310,7 @@ public class AssetEntryUsagesDisplayContext {
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);
 
-			assetEntryUsagesCount = getDisplayPagesUsageCount();
+			assetEntryUsagesCount = getPageTemplatesUsageCount();
 		}
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
 			assetEntryUsages =

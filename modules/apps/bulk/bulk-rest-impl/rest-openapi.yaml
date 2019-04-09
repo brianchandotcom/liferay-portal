@@ -106,31 +106,6 @@ paths:
                                 $ref: "#/components/schemas/MessageSelection"
                     description: ""
             tags: ["MessageSelection"]
-    "/content-spaces/{contentSpaceId}/taxonomy-vocabularies/common":
-        post:
-            operationId: postContentSpaceTaxonomyVocabulariesCommonPage
-            parameters:
-                - in: path
-                  name: contentSpaceId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentBulkSelection"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/TaxonomyVocabulary"
-                                type: array
-                    description: ""
-            tags: ["TaxonomyVocabulary"]
     "/keywords/batch":
         patch:
             operationId: patchKeywordBatch
@@ -176,6 +151,31 @@ paths:
                                 type: array
                     description: ""
             tags: ["Keyword"]
+    "/sites/{siteId}/taxonomy-vocabularies/common":
+        post:
+            operationId: postSiteTaxonomyVocabulariesCommonPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
+                                type: array
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
     "/status":
         get:
             operationId: getStatus

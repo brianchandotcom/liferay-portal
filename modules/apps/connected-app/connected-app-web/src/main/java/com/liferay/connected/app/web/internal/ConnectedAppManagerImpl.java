@@ -20,6 +20,8 @@ import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
@@ -42,11 +44,16 @@ public class ConnectedAppManagerImpl implements ConnectedAppManager {
 		List<ConnectedApp> connectedApps = new ArrayList<>();
 
 		for (ConnectedAppProvider connectedAppProvider : _serviceTrackerList) {
-			ConnectedApp connectedApp = connectedAppProvider.getConnectedApp(
-				user);
+			try {
+				ConnectedApp connectedApp = connectedAppProvider.getConnectedApp(
+					user);
 
-			if (connectedApp != null) {
-				connectedApps.add(connectedApp);
+				if (connectedApp != null) {
+					connectedApps.add(connectedApp);
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
 			}
 		}
 
@@ -58,6 +65,9 @@ public class ConnectedAppManagerImpl implements ConnectedAppManager {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, ConnectedAppProvider.class);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConnectedAppManagerImpl.class);
 
 	private ServiceTrackerList<ConnectedAppProvider, ConnectedAppProvider>
 		_serviceTrackerList;

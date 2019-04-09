@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.info.display.internal.portlet;
+package com.liferay.layout.type.controller.display.page.internal.portlet;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
@@ -55,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = FriendlyURLResolver.class)
-public class AssetInfoDisplayContributorFriendlyURLResolver
+public class DisplayPageContributorFriendlyURLResolver
 	implements FriendlyURLResolver {
 
 	@Override
@@ -79,23 +76,30 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 			InfoDisplayWebKeys.VERSION_CLASS_PK,
 			_getVersionClassPK(friendlyURL));
 
-		AssetEntry assetEntry = _getAssetEntry(
+		InfoDisplayObject infoDisplayObject = _getInfoDisplayObject(
 			infoDisplayContributor, groupId, friendlyURL);
 
-		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		Object modelEntry = infoDisplayObject.getModelEntry();
 
-		Locale locale = _portal.getLocale(request);
+		if (modelEntry instanceof AssetEntry) {
+			AssetEntry assetEntry = (AssetEntry)modelEntry;
 
-		_portal.setPageDescription(assetEntry.getDescription(locale), request);
+			Locale locale = _portal.getLocale(request);
 
-		_portal.setPageKeywords(
-			_assetHelper.getAssetKeywords(
-				assetEntry.getClassName(), assetEntry.getClassPK()),
-			request);
+			_portal.setPageDescription(
+				assetEntry.getDescription(locale), request);
 
-		_portal.setPageTitle(assetEntry.getTitle(locale), request);
+			_portal.setPageKeywords(
+				_assetHelper.getAssetKeywords(
+					assetEntry.getClassName(), assetEntry.getClassPK()),
+				request);
 
-		Layout layout = _getAssetEntryLayout(assetEntry);
+			_portal.setPageTitle(assetEntry.getTitle(locale), request);
+		}
+
+		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, infoDisplayObject);
+
+		Layout layout = _getInfoDisplayObjectLayout(infoDisplayObject);
 
 		return _portal.getLayoutActualURL(layout, mainPath);
 	}
@@ -110,8 +114,9 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 		InfoDisplayContributor infoDisplayContributor =
 			_getInfoDisplayContributor(friendlyURL);
 
-		Layout layout = _getAssetEntryLayout(
-			_getAssetEntry(infoDisplayContributor, groupId, friendlyURL));
+		Layout layout = _getInfoDisplayObjectLayout(
+			_getInfoDisplayObject(
+				infoDisplayContributor, groupId, friendlyURL));
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
@@ -137,55 +142,6 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 		return ArrayUtil.toStringArray(urlSeparators);
 	}
 
-	private AssetEntry _getAssetEntry(
-			InfoDisplayContributor infoDisplayContributor, long groupId,
-			String friendlyURL)
-		throws PortalException {
-
-		String className = infoDisplayContributor.getClassName();
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					_portal.getClassNameId(className));
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			groupId, _getUrlTitle(friendlyURL));
-
-		return assetRendererFactory.getAssetEntry(
-			className, assetRenderer.getClassPK());
-	}
-
-	private Layout _getAssetEntryLayout(AssetEntry assetEntry) {
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK());
-
-		if (assetDisplayPageEntry == null) {
-			return null;
-		}
-
-		if (assetDisplayPageEntry.getType() !=
-				AssetDisplayPageConstants.TYPE_DEFAULT) {
-
-			return _layoutLocalService.fetchLayout(
-				assetDisplayPageEntry.getPlid());
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
-
-		if (layoutPageTemplateEntry != null) {
-			return _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid());
-		}
-
-		return null;
-	}
-
 	private InfoDisplayContributor _getInfoDisplayContributor(
 			String friendlyURL)
 		throws PortalException {
@@ -203,6 +159,49 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 		}
 
 		return infoDisplayContributor;
+	}
+
+	private InfoDisplayObject _getInfoDisplayObject(
+			InfoDisplayContributor infoDisplayContributor, long groupId,
+			String friendlyURL)
+		throws PortalException {
+
+		return infoDisplayContributor.getInfoDisplayObject(
+			groupId, _getUrlTitle(friendlyURL));
+	}
+
+	private Layout _getInfoDisplayObjectLayout(
+		InfoDisplayObject infoDisplayObject) {
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				infoDisplayObject.getGroupId(),
+				infoDisplayObject.getClassNameId(),
+				infoDisplayObject.getClassPK());
+
+		if (assetDisplayPageEntry == null) {
+			return null;
+		}
+
+		if (assetDisplayPageEntry.getType() !=
+				AssetDisplayPageConstants.TYPE_DEFAULT) {
+
+			return _layoutLocalService.fetchLayout(
+				assetDisplayPageEntry.getPlid());
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				infoDisplayObject.getGroupId(),
+				infoDisplayObject.getClassNameId(),
+				infoDisplayObject.getClassTypeId());
+
+		if (layoutPageTemplateEntry != null) {
+			return _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+		}
+
+		return null;
 	}
 
 	private String _getInfoURLSeparator(String friendlyURL) {
@@ -230,9 +229,6 @@ public class AssetInfoDisplayContributorFriendlyURLResolver
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	@Reference
-	private AssetEntryService _assetEntryService;
 
 	@Reference
 	private AssetHelper _assetHelper;

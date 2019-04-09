@@ -85,6 +85,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Global Templates");
 		}
+		else if (isSet(sitePageType)) {
+			var sitePageType = "${sitePageType}";
+		}
 		else {
 			var sitePageType = "Widget Page";
 		}

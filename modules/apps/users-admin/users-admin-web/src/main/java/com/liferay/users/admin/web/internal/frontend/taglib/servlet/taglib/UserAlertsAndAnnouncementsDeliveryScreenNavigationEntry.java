@@ -16,7 +16,7 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,12 +37,13 @@ public class UserAlertsAndAnnouncementsDeliveryScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_PREFERENCES;
+		return UserScreenNavigationEntryConstants.CATEGORY_KEY_PREFERENCES;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY;
+		return UserScreenNavigationEntryConstants.
+			ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY;
 	}
 
 	@Override

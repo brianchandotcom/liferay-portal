@@ -66,7 +66,7 @@ renderResponse.setTitle(headerTitle);
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= organization %>"
 	headerContainerCssClass="container-fluid container-fluid-max-xl"
-	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_ORGANIZATIONS %>"
+	key="<%= UserScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ORGANIZATIONS %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
 	portletURL="<%= portletURL %>"

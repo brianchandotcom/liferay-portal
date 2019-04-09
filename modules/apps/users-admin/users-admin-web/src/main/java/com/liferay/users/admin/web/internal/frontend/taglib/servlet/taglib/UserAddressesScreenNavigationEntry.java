@@ -16,7 +16,7 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,12 +37,12 @@ public class UserAddressesScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_CONTACT;
+		return UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_ADDRESSES;
+		return UserScreenNavigationEntryConstants.ENTRY_KEY_ADDRESSES;
 	}
 
 	@Override

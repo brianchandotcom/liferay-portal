@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext;
 
@@ -89,7 +89,8 @@ public class OrganizationScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return UserFormConstants.SCREEN_NAVIGATION_KEY_ORGANIZATIONS;
+		return UserScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_ORGANIZATIONS;
 	}
 
 	@Override

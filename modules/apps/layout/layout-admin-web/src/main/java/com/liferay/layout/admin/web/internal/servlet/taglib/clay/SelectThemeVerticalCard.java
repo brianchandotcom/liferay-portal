@@ -51,7 +51,7 @@ public class SelectThemeVerticalCard implements VerticalCard {
 
 	@Override
 	public String getElementClasses() {
-		return "card-interactive card-interactive-secondary selector-button";
+		return "card-img-align-top card-interactive card-interactive-secondary selector-button";
 	}
 
 	@Override

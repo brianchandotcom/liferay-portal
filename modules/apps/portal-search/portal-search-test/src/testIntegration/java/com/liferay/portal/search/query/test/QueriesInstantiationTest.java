@@ -201,7 +201,7 @@ public class QueriesInstantiationTest {
 	}
 
 	@Test
-	public void testGeoShapeQuery() {
+	public void testGeoShapeQuery1() {
 		ShapeBuilder shapeBuilder = null;
 
 		GeoShapeQuery geoShapeQuery = _queries.geoShape("field", shapeBuilder);
@@ -261,7 +261,7 @@ public class QueriesInstantiationTest {
 	}
 
 	@Test
-	public void testMoreLikeThisQuery() {
+	public void testMoreLikeThisQuery1() {
 		List<String> likeTexts = new ArrayList<>();
 
 		MoreLikeThisQuery moreLikeThisQuery = _queries.moreLikeThis(likeTexts);
@@ -278,7 +278,7 @@ public class QueriesInstantiationTest {
 	}
 
 	@Test
-	public void testMultiMatchQuery() {
+	public void testMultiMatchQuery1() {
 		Object value = null;
 		Set<String> fields = new HashSet<>();
 
@@ -323,7 +323,7 @@ public class QueriesInstantiationTest {
 	}
 
 	@Test
-	public void testRangeTermQuery() {
+	public void testRangeTermQuery1() {
 		boolean includesLower = true;
 		boolean includesUpper = true;
 

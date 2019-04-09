@@ -45,7 +45,7 @@ public class SortsInstantiationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testFieldSort() {
+	public void testFieldSort1() {
 		FieldSort fieldSort = _sorts.field("field");
 
 		Assert.assertNotNull(fieldSort);

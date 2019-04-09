@@ -56,8 +56,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 
 				if (parametersMap.containsKey(parameterName)) {
 					addMessage(
-						fileName,
-						"Parameter '" + parameterName + "' is already used",
+						fileName, "Duplicate parameter '" + parameterName + "'",
 						getLineNumber(content, matcher1.start(1)));
 
 					parametersMap.clear();

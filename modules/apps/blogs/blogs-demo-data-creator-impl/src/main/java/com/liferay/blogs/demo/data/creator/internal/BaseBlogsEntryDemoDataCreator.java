@@ -93,30 +93,15 @@ public abstract class BaseBlogsEntryDemoDataCreator
 		rootFolderDemoDataCreator.delete();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		this.blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFileEntryDemoDataCreator(
-		FileEntryDemoDataCreator fileEntryDemoDataCreator) {
-
-		this.fileEntryDemoDataCreator = fileEntryDemoDataCreator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRootFolderDemoDataCreator(
-		RootFolderDemoDataCreator rootFolderDemoDataCreator) {
-
-		this.rootFolderDemoDataCreator = rootFolderDemoDataCreator;
-	}
-
+	@Reference
 	protected BlogsEntryLocalService blogsEntryLocalService;
+
 	protected final List<Long> entryIds = new CopyOnWriteArrayList<>();
+
+	@Reference
 	protected FileEntryDemoDataCreator fileEntryDemoDataCreator;
+
+	@Reference
 	protected RootFolderDemoDataCreator rootFolderDemoDataCreator;
 
 	private Date _getRandomDate() {

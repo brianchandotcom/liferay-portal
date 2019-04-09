@@ -11,7 +11,6 @@ import templates from './FragmentEntryLinkList.soy';
 import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
 import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
-import {getFragmentColumn, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -298,37 +297,6 @@ class FragmentEntryLinkList extends Component {
 			}
 
 			moveItem(this.store, moveItemAction, moveItemPayload);
-		}
-	}
-
-	/**
-	 * @param {Event} event
-	 * @private
-	 * @review
-	 */
-	_handleFragmentMove(event) {
-		const {fragmentEntryLinkId} = event;
-
-		const column = getFragmentColumn(
-			this.layoutData.structure,
-			fragmentEntryLinkId
-		);
-		const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
-			fragmentEntryLinkId
-		);
-		const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
-			fragmentIndex + event.direction
-		];
-
-		if (event.direction && targetFragmentEntryLinkId) {
-			const moveItemPayload = {
-				fragmentEntryLinkId,
-				targetBorder: getTargetBorder(event.direction),
-				targetItemId: targetFragmentEntryLinkId,
-				targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			};
-
-			moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
 		}
 	}
 

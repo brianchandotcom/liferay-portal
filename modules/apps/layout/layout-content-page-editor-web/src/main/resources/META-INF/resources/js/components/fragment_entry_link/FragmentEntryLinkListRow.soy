@@ -16,7 +16,6 @@
 	{@param rowId: string}
 	{@param? _columnResizerVisible: bool}
 	{@param? _fragmentsEditorRowTypes: ?}
-	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
 	{@param? _handleRowKeyUp: any}
 	{@param? _handleRowRemoveButtonClick: any}
@@ -183,7 +182,6 @@
 				{foreach $column in $columns}
 					{call .column}
 						{param _columnResizerVisible: $_columnResizerVisible /}
-						{param _handleFragmentMove: $_handleFragmentMove /}
 						{param _handleResizerMouseDown: $_handleResizerMouseDown /}
 						{param _resizeColumnIndex: $_resizeColumnIndex /}
 						{param activeItemId: $activeItemId /}
@@ -227,7 +225,6 @@
 	{@param fragmentsEditorRowTypes: ?}
 	{@param key: string}
 	{@param? _columnResizerVisible: bool}
-	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
 	{@param? _resizeColumnIndex: number}
 	{@param? defaultSegmentsExperienceId: string}
@@ -312,7 +309,6 @@
 					{param rowType: $rowType /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
-					{param _handleFragmentMove: $_handleFragmentMove /}
 				{/call}
 			{/if}
 		{/foreach}
@@ -340,7 +336,6 @@
 	{@param name: string}
 	{@param selectedMappingTypes: ?}
 	{@param store: ?}
-	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
 	{@param? rowType: ?}
 
@@ -349,9 +344,6 @@
 		{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 		{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 		{param editableValues: $editableValues /}
-		{param events: [
-			'moveFragment': $_handleFragmentMove
-		] /}
 		{param fragmentEntryLinkId: $fragmentEntryLinkId /}
 		{param key: $key /}
 		{param name: $name /}

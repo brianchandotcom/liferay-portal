@@ -21,7 +21,6 @@
 			rowId: string
 		]>
 	]}
-	{@param? _handleFragmentMove: any}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
@@ -51,7 +50,6 @@
 		<div class="{$entryLinksClasses}">
 			{foreach $row in $layoutData.structure}
 				{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkListRow.render}
-					{param _handleFragmentMove: $_handleFragmentMove /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}

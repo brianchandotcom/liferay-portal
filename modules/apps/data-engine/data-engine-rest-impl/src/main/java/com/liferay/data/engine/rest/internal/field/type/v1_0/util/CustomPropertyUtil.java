@@ -33,14 +33,16 @@ public class CustomPropertyUtil {
 	public static CustomProperty[] add(
 		CustomProperty[] customProperties, String key, Object value) {
 
-		if (ArrayUtil.isEmpty(customProperties)) {
-			return null;
-		}
-
 		CustomProperty customProperty = new CustomProperty();
 
 		customProperty.setKey(key);
 		customProperty.setValue(value);
+
+		if (customProperties == null) {
+			customProperties = new CustomProperty[] {customProperty};
+
+			return customProperties;
+		}
 
 		return ArrayUtil.append(customProperties, customProperty);
 	}

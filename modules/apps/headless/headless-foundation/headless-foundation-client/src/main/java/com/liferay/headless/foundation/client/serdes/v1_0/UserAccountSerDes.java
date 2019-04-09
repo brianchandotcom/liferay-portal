@@ -14,8 +14,9 @@
 
 package com.liferay.headless.foundation.client.serdes.v1_0;
 
-import com.liferay.headless.foundation.client.dto.v1_0.Organization;
-import com.liferay.headless.foundation.client.dto.v1_0.Role;
+import com.liferay.headless.foundation.client.dto.v1_0.OrganizationsBrief;
+import com.liferay.headless.foundation.client.dto.v1_0.RolesBrief;
+import com.liferay.headless.foundation.client.dto.v1_0.SitesBrief;
 import com.liferay.headless.foundation.client.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.client.json.BaseJSONParser;
 
@@ -180,55 +181,34 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"myOrganizations\": ");
-
-		if (userAccount.getMyOrganizations() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getMyOrganizations().length; i++) {
-				sb.append(userAccount.getMyOrganizations()[i]);
-
-				if ((i + 1) < userAccount.getMyOrganizations().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"myOrganizationsIds\": ");
-
-		if (userAccount.getMyOrganizationsIds() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getMyOrganizationsIds().length;
-				 i++) {
-
-				sb.append(userAccount.getMyOrganizationsIds()[i]);
-
-				if ((i + 1) < userAccount.getMyOrganizationsIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
 		sb.append("\"name\": ");
 
 		sb.append("\"");
 		sb.append(userAccount.getName());
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"organizationsBrief\": ");
+
+		if (userAccount.getOrganizationsBrief() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getOrganizationsBrief().length;
+				 i++) {
+
+				sb.append(userAccount.getOrganizationsBrief()[i]);
+
+				if ((i + 1) < userAccount.getOrganizationsBrief().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"profileURL\": ");
@@ -238,18 +218,18 @@ public class UserAccountSerDes {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"roles\": ");
+		sb.append("\"rolesBrief\": ");
 
-		if (userAccount.getRoles() == null) {
+		if (userAccount.getRolesBrief() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getRoles().length; i++) {
-				sb.append(userAccount.getRoles()[i]);
+			for (int i = 0; i < userAccount.getRolesBrief().length; i++) {
+				sb.append(userAccount.getRolesBrief()[i]);
 
-				if ((i + 1) < userAccount.getRoles().length) {
+				if ((i + 1) < userAccount.getRolesBrief().length) {
 					sb.append(", ");
 				}
 			}
@@ -259,68 +239,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"rolesIds\": ");
+		sb.append("\"sitesBrief\": ");
 
-		if (userAccount.getRolesIds() == null) {
+		if (userAccount.getSitesBrief() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getRolesIds().length; i++) {
-				sb.append(userAccount.getRolesIds()[i]);
+			for (int i = 0; i < userAccount.getSitesBrief().length; i++) {
+				sb.append(userAccount.getSitesBrief()[i]);
 
-				if ((i + 1) < userAccount.getRolesIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMe\": ");
-
-		if (userAccount.getTasksAssignedToMe() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getTasksAssignedToMe().length;
-				 i++) {
-
-				sb.append("\"");
-				sb.append(userAccount.getTasksAssignedToMe()[i]);
-				sb.append("\"");
-
-				if ((i + 1) < userAccount.getTasksAssignedToMe().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMyRoles\": ");
-
-		if (userAccount.getTasksAssignedToMyRoles() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getTasksAssignedToMyRoles().length;
-				 i++) {
-
-				sb.append("\"");
-				sb.append(userAccount.getTasksAssignedToMyRoles()[i]);
-				sb.append("\"");
-
-				if ((i + 1) < userAccount.getTasksAssignedToMyRoles().length) {
+				if ((i + 1) < userAccount.getSitesBrief().length) {
 					sb.append(", ");
 				}
 			}
@@ -457,29 +387,24 @@ public class UserAccountSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "myOrganizations")) {
-				if (jsonParserFieldValue != null) {
-					userAccount.setMyOrganizations(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OrganizationSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Organization[size]
-						));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "myOrganizationsIds")) {
-
-				if (jsonParserFieldValue != null) {
-					userAccount.setMyOrganizationsIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "organizationsBrief")) {
+
+				if (jsonParserFieldValue != null) {
+					userAccount.setOrganizationsBrief(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> OrganizationsBriefSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new OrganizationsBrief[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
@@ -487,36 +412,28 @@ public class UserAccountSerDes {
 					userAccount.setProfileURL((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "roles")) {
+			else if (Objects.equals(jsonParserFieldName, "rolesBrief")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setRoles(
+					userAccount.setRolesBrief(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> RoleSerDes.toDTO((String)object)
+							object -> RolesBriefSerDes.toDTO((String)object)
 						).toArray(
-							size -> new Role[size]
+							size -> new RolesBrief[size]
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "rolesIds")) {
+			else if (Objects.equals(jsonParserFieldName, "sitesBrief")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setRolesIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "tasksAssignedToMe")) {
-				if (jsonParserFieldValue != null) {
-					userAccount.setTasksAssignedToMe(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "tasksAssignedToMyRoles")) {
-
-				if (jsonParserFieldValue != null) {
-					userAccount.setTasksAssignedToMyRoles(
-						toStrings((Object[])jsonParserFieldValue));
+					userAccount.setSitesBrief(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> SitesBriefSerDes.toDTO((String)object)
+						).toArray(
+							size -> new SitesBrief[size]
+						));
 				}
 			}
 			else {

@@ -58,18 +58,6 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
-	@Path("/my-user-accounts/{userAccountId}/organizations")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Organization")})
-	public Page<Organization> getMyUserAccountOrganizationsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),

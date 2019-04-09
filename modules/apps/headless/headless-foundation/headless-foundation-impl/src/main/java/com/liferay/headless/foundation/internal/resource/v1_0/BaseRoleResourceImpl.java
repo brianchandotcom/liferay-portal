@@ -54,18 +54,6 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
-	@Path("/my-user-accounts/{userAccountId}/roles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Role")})
-	public Page<Role> getMyUserAccountRolesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -90,18 +78,6 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		throws Exception {
 
 		return new Role();
-	}
-
-	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}/roles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Role")})
-	public Page<Role> getUserAccountRolesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

@@ -240,24 +240,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getMyUserAccountOrganizationsPage(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> {
-				Page paginationPage =
-					organizationResource.getMyUserAccountOrganizationsPage(
-						userAccountId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -426,23 +408,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getMyUserAccountRolesPage(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			roleResource -> {
-				Page paginationPage = roleResource.getMyUserAccountRolesPage(
-					userAccountId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<Role> getRolesPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -466,23 +431,6 @@ public class Query {
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			roleResource -> roleResource.getRole(roleId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Role> getUserAccountRolesPage(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			roleResource -> {
-				Page paginationPage = roleResource.getUserAccountRolesPage(
-					userAccountId);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField
@@ -651,15 +599,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getMyUserAccount(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
+	public UserAccount getMyUserAccount() throws Exception {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.getMyUserAccount(
-				userAccountId));
+			userAccountResource -> userAccountResource.getMyUserAccount());
 	}
 
 	@GraphQLField

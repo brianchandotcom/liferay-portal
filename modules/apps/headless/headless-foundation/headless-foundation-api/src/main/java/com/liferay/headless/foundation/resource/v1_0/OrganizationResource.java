@@ -34,10 +34,6 @@ import javax.annotation.Generated;
 @Generated("")
 public interface OrganizationResource {
 
-	public Page<Organization> getMyUserAccountOrganizationsPage(
-			Long userAccountId)
-		throws Exception;
-
 	public Page<Organization> getOrganizationsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;

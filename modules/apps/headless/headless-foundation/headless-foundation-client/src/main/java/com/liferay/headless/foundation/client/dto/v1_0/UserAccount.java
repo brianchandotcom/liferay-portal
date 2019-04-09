@@ -362,49 +362,6 @@ public class UserAccount {
 
 	protected String[] keywords;
 
-	public Organization[] getMyOrganizations() {
-		return myOrganizations;
-	}
-
-	public void setMyOrganizations(Organization[] myOrganizations) {
-		this.myOrganizations = myOrganizations;
-	}
-
-	public void setMyOrganizations(
-		UnsafeSupplier<Organization[], Exception>
-			myOrganizationsUnsafeSupplier) {
-
-		try {
-			myOrganizations = myOrganizationsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Organization[] myOrganizations;
-
-	public Long[] getMyOrganizationsIds() {
-		return myOrganizationsIds;
-	}
-
-	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
-		this.myOrganizationsIds = myOrganizationsIds;
-	}
-
-	public void setMyOrganizationsIds(
-		UnsafeSupplier<Long[], Exception> myOrganizationsIdsUnsafeSupplier) {
-
-		try {
-			myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long[] myOrganizationsIds;
-
 	public String getName() {
 		return name;
 	}
@@ -423,6 +380,28 @@ public class UserAccount {
 	}
 
 	protected String name;
+
+	public OrganizationsBrief[] getOrganizationsBrief() {
+		return organizationsBrief;
+	}
+
+	public void setOrganizationsBrief(OrganizationsBrief[] organizationsBrief) {
+		this.organizationsBrief = organizationsBrief;
+	}
+
+	public void setOrganizationsBrief(
+		UnsafeSupplier<OrganizationsBrief[], Exception>
+			organizationsBriefUnsafeSupplier) {
+
+		try {
+			organizationsBrief = organizationsBriefUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected OrganizationsBrief[] organizationsBrief;
 
 	public String getProfileURL() {
 		return profileURL;
@@ -445,89 +424,46 @@ public class UserAccount {
 
 	protected String profileURL;
 
-	public Role[] getRoles() {
-		return roles;
+	public RolesBrief[] getRolesBrief() {
+		return rolesBrief;
 	}
 
-	public void setRoles(Role[] roles) {
-		this.roles = roles;
+	public void setRolesBrief(RolesBrief[] rolesBrief) {
+		this.rolesBrief = rolesBrief;
 	}
 
-	public void setRoles(
-		UnsafeSupplier<Role[], Exception> rolesUnsafeSupplier) {
+	public void setRolesBrief(
+		UnsafeSupplier<RolesBrief[], Exception> rolesBriefUnsafeSupplier) {
 
 		try {
-			roles = rolesUnsafeSupplier.get();
+			rolesBrief = rolesBriefUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Role[] roles;
+	protected RolesBrief[] rolesBrief;
 
-	public Long[] getRolesIds() {
-		return rolesIds;
+	public SitesBrief[] getSitesBrief() {
+		return sitesBrief;
 	}
 
-	public void setRolesIds(Long[] rolesIds) {
-		this.rolesIds = rolesIds;
+	public void setSitesBrief(SitesBrief[] sitesBrief) {
+		this.sitesBrief = sitesBrief;
 	}
 
-	public void setRolesIds(
-		UnsafeSupplier<Long[], Exception> rolesIdsUnsafeSupplier) {
+	public void setSitesBrief(
+		UnsafeSupplier<SitesBrief[], Exception> sitesBriefUnsafeSupplier) {
 
 		try {
-			rolesIds = rolesIdsUnsafeSupplier.get();
+			sitesBrief = sitesBriefUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long[] rolesIds;
-
-	public String[] getTasksAssignedToMe() {
-		return tasksAssignedToMe;
-	}
-
-	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
-		this.tasksAssignedToMe = tasksAssignedToMe;
-	}
-
-	public void setTasksAssignedToMe(
-		UnsafeSupplier<String[], Exception> tasksAssignedToMeUnsafeSupplier) {
-
-		try {
-			tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] tasksAssignedToMe;
-
-	public String[] getTasksAssignedToMyRoles() {
-		return tasksAssignedToMyRoles;
-	}
-
-	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
-		this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
-	}
-
-	public void setTasksAssignedToMyRoles(
-		UnsafeSupplier<String[], Exception>
-			tasksAssignedToMyRolesUnsafeSupplier) {
-
-		try {
-			tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] tasksAssignedToMyRoles;
+	protected SitesBrief[] sitesBrief;
 
 }

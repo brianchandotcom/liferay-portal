@@ -16,16 +16,19 @@
 	{let $fieldCssClassAttribute kind="text"}
 		form-group
 
-		{if $errorMessage and not $valid}
+		{if $errorMessage and $valid == false}
 			has-error
 		{/if}
 	{/let}
 
 	<div class="{$fieldCssClassAttribute}">
 		{if $repeatable}
-			<div class="ddm-form-field-repeatable-add-button">
-				<a class="icon-plus-sign lfr-ddm-form-field-repeatable-add-button" href="javascript:;"></a>
-			</div>
+			{call ClayButton.render}
+				{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
+				{param icon: 'plus' /}
+				{param spritemap: $spritemap /}
+				{param type: 'button' /}
+			{/call}
 		{/if}
 
 		{let $attributesLabel kind="attributes"}
@@ -69,7 +72,7 @@
 			<span class="form-text">{$tip}</span>
 		{/if}
 
-		{if $errorMessage and not $valid}
+		{if $errorMessage and not $valid == false}
 			<div class="form-feedback-group">
 				<div class="form-feedback-item">{$errorMessage}</div>
 			</div>

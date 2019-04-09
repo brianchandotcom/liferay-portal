@@ -1,29 +1,20 @@
 @import "bourbon";
 @import "mixins";
 
-[data-file-icon-color-2] .dropdown-item-indicator {
-	color: #50D2A0;
-	.lexicon-icon {
-		height: 1.25em;
-		width: auto;
+@mixin file-icon($colorIndex, $color) {
+	[data-file-icon-color-#{$colorIndex}] .dropdown-item-indicator {
+		color: $color;
+
+		.lexicon-icon {
+			height: 1.25em;
+			width: auto;
+		}
 	}
 }
 
-[data-file-icon-color-4] .dropdown-item-indicator {
-	color: #FFB46E;
-	.lexicon-icon {
-		height: 1.25em;
-		width: auto;
-	}
-}
-
-[data-file-icon-color-6] .dropdown-item-indicator {
-	color: #4B9BFF;
-	.lexicon-icon {
-		height: 1.25em;
-		width: auto;
-	}
-}
+@include file-icon(2, #50D2A0);
+@include file-icon(4, #FFB46E);
+@include file-icon(6, #4B9BFF);
 
 .portlet-document-library, .portlet-document-library-display {
 	@import "document_library_preview";

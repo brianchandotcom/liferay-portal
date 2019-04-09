@@ -11,11 +11,11 @@ import {
 } from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
 
 /**
- * KeywordValue.
+ * KeyValue.
  * @extends Component
  */
 
-class KeywordValue extends Component {
+class KeyValue extends Component {
 	static STATE = {
 
 		/**
@@ -30,7 +30,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default false
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?bool}
 		 */
 
@@ -39,7 +39,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?(string|undefined)}
 		 */
 
@@ -48,16 +48,25 @@ class KeywordValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?(string|undefined)}
 		*/
 
 		keyword: Config.string(),
 
 		/**
+		 * @default false
+		 * @instance
+		 * @memberof KeyValue
+		 * @type {?boolean}
+		*/
+
+		keywordReadOnly: Config.bool().value(false),
+
+		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?(string|undefined)}
 		 */
 
@@ -75,7 +84,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default false
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?bool}
 		 */
 
@@ -93,7 +102,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default false
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?bool}
 		 */
 
@@ -102,7 +111,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default true
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?bool}
 		 */
 
@@ -111,7 +120,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?(string|undefined)}
 		 */
 
@@ -138,7 +147,7 @@ class KeywordValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeywordValue
+		 * @memberof KeyValue
 		 * @type {?(bool)}
 		 */
 
@@ -274,6 +283,6 @@ class KeywordValue extends Component {
 	}
 }
 
-Soy.register(KeywordValue, templates);
+Soy.register(KeyValue, templates);
 
-export default KeywordValue;
+export default KeyValue;

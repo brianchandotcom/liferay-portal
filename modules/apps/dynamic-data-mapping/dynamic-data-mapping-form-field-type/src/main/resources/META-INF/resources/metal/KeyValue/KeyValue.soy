@@ -10,6 +10,7 @@
 	{@param? _keyword: string}
 	{@param? _value: string}
 	{@param? id: string}
+	{@param? keywordReadOnly: bool}
 	{@param? label: string}
 	{@param? placeholder: string}
 	{@param? readOnly: bool}
@@ -27,15 +28,16 @@
 				{param _handleValueInputBlurred: $_handleValueInputBlurred /}
 				{param _handleValueInputEdited: $_handleValueInputEdited /}
 				{param _handleValueInputFocused: $_handleValueInputFocused /}
-				{param _keyword: $_keyword /}
-				{param _value: $_value /}
 				{param id: $id /}
+				{param keyword: $_keyword /}
+				{param keywordReadOnly: $keywordReadOnly /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
 				{param readOnly: $readOnly /}
 				{param required: $required /}
 				{param showLabel: $showLabel /}
 				{param spritemap: $spritemap /}
+				{param value: $_value /}
 			{/call}
 		{/param}
 
@@ -56,13 +58,14 @@
 	{@param? _handleValueInputBlurred: any}
 	{@param? _handleValueInputEdited: any}
 	{@param? _handleValueInputFocused: any}
-	{@param? _keyword: string}
-	{@param? _value: string}
+	{@param? keyword: string}
+	{@param? keywordReadOnly: bool}
 	{@param? placeholder: string}
 	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
+	{@param? value: string}
 
 	{call Text.render}
 		{param events: [
@@ -77,18 +80,23 @@
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
-		{param value: $_value /}
+		{param value: $value /}
 	{/call}
 
 	<div class="active form-text key-value-editor">
-		<label class="control-label key-value-label">Field Name:</label>
+		<label class="control-label key-value-label">{msg desc=""}field-name{/msg}:</label>
 
 		<input
 			class="key-value-input"
 			data-onblur="{$_handleKeywordInputBlurred}"
 			data-oninput="{$_handleKeywordInputChanged}"
+
+			{if $keywordReadOnly}
+				readOnly
+			{/if}
+
 			type="text"
-			value="{$_keyword}"
+			value="{$keyword}"
 		/>
 	</div>
 {/template}

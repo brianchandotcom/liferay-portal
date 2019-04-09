@@ -17,6 +17,14 @@ definition {
 			C = "54545445"
 		);
 
+		var character11 = '''(''';
+
+		var character12 = ''')''';
+
+		var character17 = '''{''';
+
+		var character18 = '''}''';
+
 		deee.oneParameter(
 			DDDD = "353535"
 		);

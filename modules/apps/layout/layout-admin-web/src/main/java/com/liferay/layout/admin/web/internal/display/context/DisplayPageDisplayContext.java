@@ -57,7 +57,7 @@ public class DisplayPageDisplayContext {
 		}
 
 		SearchContainer displayPagesSearchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
+			_renderRequest, getPortletURL(), null,
 			"there-are-no-display-page-templates");
 
 		displayPagesSearchContainer.setRowChecker(

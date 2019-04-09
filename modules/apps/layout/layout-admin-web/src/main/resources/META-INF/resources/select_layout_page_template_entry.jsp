@@ -116,6 +116,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<c:choose>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 						<liferay-ui:search-container
+							iteratorURL="<%= currentURLObj %>"
 							total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
 						>
 							<liferay-ui:search-container-results

@@ -169,7 +169,7 @@ public class LayoutPageTemplateDisplayContext {
 
 		SearchContainer layoutPageTemplateEntriesSearchContainer =
 			new SearchContainer(
-				_renderRequest, _renderResponse.createRenderURL(), null,
+				_renderRequest, getPortletURL(), null,
 				"there-are-no-page-templates");
 
 		layoutPageTemplateEntriesSearchContainer.setRowChecker(

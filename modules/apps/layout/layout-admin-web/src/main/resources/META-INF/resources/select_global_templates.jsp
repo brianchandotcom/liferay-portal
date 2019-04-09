@@ -22,6 +22,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 
 <div id="<portlet:namespace />layoutPageTemplateEntries">
 	<liferay-ui:search-container
+		iteratorURL="<%= currentURLObj %>"
 		total="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntriesCount() %>"
 	>
 		<liferay-ui:search-container-results

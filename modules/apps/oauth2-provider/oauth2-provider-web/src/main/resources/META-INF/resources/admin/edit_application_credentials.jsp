@@ -76,7 +76,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<c:if test="<%= oAuth2Application != null %>">
 						<aui:fieldset style="margin-bottom: 1em; border-bottom: 2px solid #F0F0F0;">
 							<div class="pencil-wrapper">
-								<aui:button href="" icon="icon-pencil" onClick='<%= renderResponse.getNamespace() + "showEditClientIdModal();" %>' value="" />
+								<aui:button href="" onClick='<%= renderResponse.getNamespace() + "showEditClientIdModal();" %>' value="edit" />
 
 								<aui:input name="clientId" readonly="true" required="<%= true %>" type="text" />
 							</div>
@@ -84,7 +84,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 							<aui:input name="originalClientId" type="hidden" value="<%= clientId %>" />
 
 							<div class="pencil-wrapper">
-								<aui:button href="" icon="icon-pencil" onClick='<%= renderResponse.getNamespace() + "showEditClientSecretModal();" %>' value="" />
+								<aui:button href="" onClick='<%= renderResponse.getNamespace() + "showEditClientSecretModal();" %>' value="edit" />
 
 								<aui:input name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
 							</div>
@@ -313,12 +313,20 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			}
 		).render();
 
+		modal.on(
+			'render',
+				function(event) {
+					<portlet:namespace />updateComponent(applyField, populateField.val());
+				}
+		);
+
 		modal.addToolbar(
 			[
 				{
 					label: '<liferay-ui:message key="cancel" />',
 					on: {
 						click: function() {
+							<portlet:namespace />updateComponent(applyField, populateField.val());
 							modal.hide();
 						}
 					}

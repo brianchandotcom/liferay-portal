@@ -47,5 +47,9 @@
 			<finder-column name="containerType" />
 			<finder-column name="containerKey" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

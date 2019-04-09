@@ -324,30 +324,6 @@ public class CalendarResourceStagedModelDataHandler
 		return code;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void updateCalendars(
 		PortletDataContext portletDataContext,
 		CalendarResource calendarResource,
@@ -377,13 +353,19 @@ public class CalendarResourceStagedModelDataHandler
 		}
 	}
 
+	@Reference
 	private CalendarLocalService _calendarLocalService;
+
+	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

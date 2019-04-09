@@ -67,13 +67,7 @@ public class CalendarBookingWorkflowHandler
 			userId, classPK, status, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

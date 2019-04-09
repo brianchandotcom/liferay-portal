@@ -48,13 +48,7 @@ public class CalendarPermissionUpdateHandler
 		_calendarLocalService.updateCalendar(calendar);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarSetLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
+	@Reference
 	private CalendarLocalService _calendarLocalService;
 
 }

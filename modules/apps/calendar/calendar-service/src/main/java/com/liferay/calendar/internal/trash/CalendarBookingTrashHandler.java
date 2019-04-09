@@ -84,13 +84,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 			CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Reference(

@@ -90,13 +90,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
+	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;
 
 	@Reference

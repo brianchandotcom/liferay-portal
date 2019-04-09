@@ -356,46 +356,20 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 		return exportActionableDynamicQuery;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarNotificationTemplateLocalService(
-		CalendarNotificationTemplateLocalService
-			calendarNotificationTemplateLocalService) {
-
-		_calendarNotificationTemplateLocalService =
-			calendarNotificationTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
 	private CalendarLocalService _calendarLocalService;
+
+	@Reference
 	private CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
+
+	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

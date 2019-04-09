@@ -341,20 +341,6 @@ public class CalendarBookingStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	private long[] _getChildCalendarIds(
 		PortletDataContext portletDataContext, Map<Long, Long> calendarIds,
 		CalendarBooking calendarBooking) {
@@ -383,7 +369,10 @@ public class CalendarBookingStagedModelDataHandler
 		CalendarBookingWorkflowConstants.STATUS_MAYBE
 	};
 
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 }

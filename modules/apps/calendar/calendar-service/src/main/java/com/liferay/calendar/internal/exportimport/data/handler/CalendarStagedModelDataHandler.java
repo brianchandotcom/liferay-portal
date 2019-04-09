@@ -266,18 +266,6 @@ public class CalendarStagedModelDataHandler
 		return calendarNameMap;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected boolean validateMissingReference(
 		long companyId, String uuid, long groupId, String name) {
 
@@ -295,7 +283,10 @@ public class CalendarStagedModelDataHandler
 		return true;
 	}
 
+	@Reference
 	private CalendarLocalService _calendarLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

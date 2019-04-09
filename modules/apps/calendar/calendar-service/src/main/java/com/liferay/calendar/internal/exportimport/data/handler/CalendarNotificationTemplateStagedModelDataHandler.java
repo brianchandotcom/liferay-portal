@@ -215,34 +215,14 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			calendarNotificationTemplate, importedCalendarNotificationTemplate);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
-
-		_calendarLocalService = calendarLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarNotificationTemplateExportImportContentProcessor(
-		CalendarNotificationTemplateExportImportContentProcessor
-			calendarNotificationTemplateExportImportContentProcessor) {
-
-		_calendarNotificationTemplateExportImportContentProcessor =
-			calendarNotificationTemplateExportImportContentProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarNotificationTemplateLocalService(
-		CalendarNotificationTemplateLocalService
-			calendarNotificationTemplateLocalService) {
-
-		_calendarNotificationTemplateLocalService =
-			calendarNotificationTemplateLocalService;
-	}
-
+	@Reference
 	private CalendarLocalService _calendarLocalService;
+
+	@Reference
 	private CalendarNotificationTemplateExportImportContentProcessor
 		_calendarNotificationTemplateExportImportContentProcessor;
+
+	@Reference
 	private CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
 

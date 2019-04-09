@@ -123,24 +123,20 @@ AUI.add(
 
 							action = null;
 						}
-
-						if (action === 'editCategories') {
+						else if (action === 'editCategories') {
 							instance._openModalCategories();
 
 							action = null;
 						}
-
-						if (action === 'move' || action === 'moveEntries') {
+						else if (action === 'move' || action === 'moveEntries') {
 							instance._openModalMove();
 
 							action = null;
 						}
-
-						if (action === 'download') {
+						else if (action === 'download') {
 							url = instance.get('downloadEntryUrl');
 						}
-
-						if (action === 'deleteEntries') {
+						else if (action === 'deleteEntries') {
 							if (instance.get('trashEnabled')) {
 								action = 'move_to_trash';
 							}

@@ -83,17 +83,17 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX,
-					"document-text", "6"));
+					_DOCUMENT_ICON, _DOCUMENT_ICON_COLOR));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX,
-					"document-presentation", "4"));
+					_PRESENTATION_ICON, _PRESENTATION_ICON_COLOR));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX,
-					"document-table", "2"));
+					_SPREADSHEET_ICON, _SPREADSHEET_ICON_COLOR));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -164,6 +164,18 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		return _language.get(resourceBundle, key);
 	}
+
+	private static final String _DOCUMENT_ICON = "document-text";
+
+	private static final String _DOCUMENT_ICON_COLOR = "6";
+
+	private static final String _PRESENTATION_ICON = "document-presentation";
+
+	private static final String _PRESENTATION_ICON_COLOR = "4";
+
+	private static final String _SPREADSHEET_ICON = "document-table";
+
+	private static final String _SPREADSHEET_ICON_COLOR = "2";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLOpenerGoogleDriveDLPortletToolbarContributorContext.class);

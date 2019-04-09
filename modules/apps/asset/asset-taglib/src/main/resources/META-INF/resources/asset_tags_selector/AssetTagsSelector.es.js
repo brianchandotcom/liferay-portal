@@ -80,6 +80,10 @@ class AssetTagsSelector extends Component {
 		return this.selectedItems.map(selectedItem => selectedItem.value).join();
 	}
 
+	_handleInputFocus(event) {
+		this.emit('inputFocus', event);
+	}
+
 	/**
 	 * Updates tags fallback and notifies that a new tag has been added
 	 * @param {!Event} event

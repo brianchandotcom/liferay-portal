@@ -8,6 +8,7 @@
 	{@param namespace: string}
 	{@param spritemap: string}
 	{@param? _handleFormSubmit: any}
+	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
 	{@param? description: string}
@@ -23,6 +24,7 @@
 					{else}
 						{call .tags}
 							{param _commonTags: $_commonTags /}
+							{param _handleInputFocus: $_handleInputFocus /}
 							{param _handleRadioChange: $_handleRadioChange /}
 							{param _handleSelectedItemsChange: $_handleSelectedItemsChange /}
 							{param groupIds: $groupIds /}
@@ -73,6 +75,7 @@
 	{@param groupIds: list<?>}
 	{@param namespace: string}
 	{@param spritemap: string}
+	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
 	{@param? description: string}
@@ -121,6 +124,7 @@
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}
 		{param elementClasses: 'clay-multi-select' /}
 		{param events: [
+			'inputFocus': $_handleInputFocus,
 			'itemAdded': $_handleSelectedItemsChange,
 			'itemRemoved': $_handleSelectedItemsChange
 		]/}

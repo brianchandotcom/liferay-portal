@@ -111,6 +111,15 @@ class EditTags extends Component {
 		);
 	}
 
+	_handleInputFocus(event) {
+		const dataProvider = event.target.refs.autocomplete.refs.dataProvider;
+		const modalDialog = this.element.querySelector('.modal-dialog');
+
+		if (modalDialog && dataProvider && !modalDialog.contains(dataProvider.element)) {
+			modalDialog.appendChild(dataProvider.element)
+		}
+	}
+
 	/**
 	 * Sync the input radio with the state
 	 * @param {!Event} event

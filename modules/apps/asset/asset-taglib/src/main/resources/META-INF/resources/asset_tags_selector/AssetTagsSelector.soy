@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
+	{@param? _handleInputFocus: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
 	{@param? selectedItems: list<?>}
@@ -22,6 +23,7 @@
 			{param autocompleteFilterCondition: 'name' /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
+				'inputFocus': $_handleInputFocus,
 				'selectButtonClick': $_handleButtonClicked,
 				'labelItemAdded': $_handleItemAdded,
 				'labelItemRemoved': $_handleItemRemoved

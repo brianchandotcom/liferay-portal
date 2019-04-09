@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -135,6 +136,12 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	private int _getType(long plid) {
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+			plid = layout.getClassPK();
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(plid);

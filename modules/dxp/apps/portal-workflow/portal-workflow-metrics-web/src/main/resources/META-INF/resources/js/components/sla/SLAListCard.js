@@ -120,8 +120,8 @@ class SLAListCard extends React.Component {
 	render() {
 		const { requestOriginType } = this;
 		const {
-			itemToRemove,
 			items = [],
+			itemToRemove,
 			showConfirmDialog,
 			showSLAsUpdatingAlert,
 			totalCount

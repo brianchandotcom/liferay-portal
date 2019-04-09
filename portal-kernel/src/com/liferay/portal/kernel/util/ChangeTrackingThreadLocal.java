@@ -29,12 +29,6 @@ public class ChangeTrackingThreadLocal {
 		return _layoutUpdateInProgress.get();
 	}
 
-	public static void setLayoutTrackingDefaultEnabled(
-		boolean layoutTrackingDefaultEnabled) {
-
-		_layoutTrackingDefaultEnabled = layoutTrackingDefaultEnabled;
-	}
-
 	public static void setLayoutTrackingEnabled(boolean enabled) {
 		_layoutTrackingEnabled.set(enabled);
 	}
@@ -45,7 +39,14 @@ public class ChangeTrackingThreadLocal {
 		_layoutUpdateInProgress.set(layoutUpgradeInProgress);
 	}
 
-	private static boolean _layoutTrackingDefaultEnabled;
+	public static void setLayoutTrackingDefaultEnabled(
+		boolean layoutTrackingDefaultEnabled) {
+
+		_layoutTrackingDefaultEnabled = layoutTrackingDefaultEnabled;
+	}
+
+	private static boolean _layoutTrackingDefaultEnabled = false;
+
 	private static final ThreadLocal<Boolean> _layoutTrackingEnabled =
 		new CentralizedThreadLocal<>(
 			ChangeTrackingThreadLocal.class + "._layoutTrackingEnabled",

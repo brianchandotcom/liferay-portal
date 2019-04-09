@@ -117,24 +117,25 @@ class Store extends State {
 					)
 				),
 				Promise.resolve(this._state)
-			)
-				.then(
-					nextState => {
+			).then(
+				nextState => {
+					if (this._state !== nextState) {
 						this._state = this._getFrozenState(nextState);
 
 						this.emit('change', this._state);
-
-						return new Promise(
-							resolve => {
-								requestAnimationFrame(
-									() => {
-										resolve(this);
-									}
-								);
-							}
-						);
 					}
-				)
+
+					return new Promise(
+						resolve => {
+							requestAnimationFrame(
+								() => {
+									resolve(this);
+								}
+							);
+						}
+					);
+				}
+			)
 		);
 
 		return this;

@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ public class UserConnectedAppScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_GENERAL;
+		return UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class UserConnectedAppScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return UserFormConstants.SCREEN_NAVIGATION_KEY_USERS;
+		return UserScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_USERS;
 	}
 
 	@Override

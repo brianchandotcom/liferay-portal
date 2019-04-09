@@ -5,16 +5,22 @@ import core from 'metal';
 import dom from 'metal-dom';
 import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
+import Notifications from './util/Notifications.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
 import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
 import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
+import {LocalStorageMechanism, Storage} from 'metal-storage';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
+
+const STORAGE_KEY_SHOW_PUBLISHED_ALERTS = 'dynamic-data-mapping-form-web-shown-alerts';
+
+const storage = new Storage(new LocalStorageMechanism());
 
 /**
  * Form.
@@ -197,16 +203,6 @@ class Form extends Component {
 		saved: Config.bool(),
 
 		/**
-		 * Wether a published alert needs to be shown or not
-		 * @default false
-		 * @instance
-		 * @memberof Form
-		 * @type {!boolean}
-		 */
-
-		showPublishAlert: Config.bool().value(false),
-
-		/**
 		 * The path to the SVG spritemap file containing the icons.
 		 * @default undefined
 		 * @instance
@@ -331,6 +327,21 @@ class Form extends Component {
 		return promise;
 	}
 
+	_getTranslationManager() {
+		let promise;
+
+		const translationManager = Liferay.component('translationManager');
+
+		if (translationManager) {
+			promise = Promise.resolve(translationManager);
+		}
+		else {
+			promise = Liferay.componentReady('translationManager');
+		}
+
+		return promise;
+	}
+
 	_handleBackButtonClicked(event) {
 		if (this._autoSave.hasUnsavedChanges()) {
 			event.preventDefault();
@@ -390,20 +401,6 @@ class Form extends Component {
 		return this.checkEditorLimit(event, 120);
 	}
 
-	/*
-	 * Handles "pagesChanged" event. Updates hidden input with serialized From Builder context.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handlePagesChanged(event) {
-		this.setState(
-			{
-				pages: event.newVal
-			}
-		);
-	}
-
 	/**
 	 * @param newVal
 	 * Handles "paginationModeChanged" event. Updates the page mode to use it when form builder is saved.
@@ -431,6 +428,8 @@ class Form extends Component {
 		else if (!newVal && !saved) {
 			shareFormIcon.classList.add('hide');
 		}
+
+		this.togglePublishedAlertsShown();
 	}
 
 	/**
@@ -477,17 +476,6 @@ class Form extends Component {
 		return this._autoSave.save(true).then(
 			() => {
 				return `${this._createFormURL()}/preview`;
-			}
-		);
-	}
-
-	_resolvePublishURL() {
-		return this._autoSave.save(false).then(
-			() => {
-				return {
-					formInstanceId: this._getFormInstanceId(),
-					publishURL: this._createFormURL()
-				};
 			}
 		);
 	}
@@ -624,13 +612,35 @@ class Form extends Component {
 		}
 	}
 
+	isShowPublishedStatusAlerts() {
+		const {formInstanceId} = this.props;
+
+		return formInstanceId > 0 && !!storage.get(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId);
+	}
+
+	togglePublishedAlertsShown() {
+		const {formInstanceId} = this.props;
+
+		if (this.isShowPublishedStatusAlerts()) {
+			storage.remove(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId);
+		}
+		else {
+			storage.set(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId, true);
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */
 
 	attached() {
 		const {layoutProvider} = this.refs;
-		const {localizedDescription, localizedName, namespace, published} = this.props;
+		const {
+			localizedDescription,
+			localizedName,
+			namespace,
+			published
+		} = this.props;
 		const {paginationMode} = this.state;
 
 		this._eventHandler = new EventHandler();
@@ -652,11 +662,21 @@ class Form extends Component {
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
+			dependencies.push(this._getTranslationManager());
 		}
 
 		Promise.all(dependencies).then(
 			results => {
-				const translationManager = Liferay.component(`${namespace}translationManager`);
+				const translationManager = results[3];
+
+				if (translationManager) {
+					translationManager.on(
+						'editingLocaleChange',
+						event => {
+							this.props.editingLanguageId = event.newVal;
+						}
+					);
+				}
 
 				this._stateSyncronizer = new StateSyncronizer(
 					{
@@ -700,6 +720,32 @@ class Form extends Component {
 			dom.on('.back-url-link', 'click', this._handleBackButtonClicked),
 			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked)
 		);
+
+		if (this.isShowPublishedStatusAlerts()) {
+			if (published) {
+				this._showPublishedAlert(this._createFormURL());
+			}
+			else {
+				this._showUnpublishedAlert();
+			}
+
+			this.togglePublishedAlertsShown();
+		}
+	}
+
+	_showPublishedAlert(publishURL) {
+		const message = Liferay.Language.get('the-form-was-published-successfully-access-it-with-this-url-x');
+
+		Notifications.showAlert(
+			message.replace(
+				/\{0\}/gim,
+				`<span style="font-weight: 500"><a href=${publishURL} target="_blank">${publishURL}</a></span>`
+			)
+		);
+	}
+
+	_showUnpublishedAlert() {
+		Notifications.showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'));
 	}
 
 	checkEditorLimit(event, limit) {
@@ -716,7 +762,6 @@ class Form extends Component {
 		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
 		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(this);
 		this._handleNameEditorKeydown = this._handleNameEditorKeydown.bind(this);
-		this._handlePagesChanged = this._handlePagesChanged.bind(this);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(this);
 		this._handlePublishedChanged = this._handlePublishedChanged.bind(this);
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
@@ -730,6 +775,8 @@ class Form extends Component {
 		if (this._autoSave) {
 			this._autoSave.dispose();
 		}
+
+		Notifications.closeAlert();
 
 		this._eventHandler.removeAllListeners();
 	}
@@ -837,23 +884,24 @@ class Form extends Component {
 	render() {
 		const {
 			context,
+			defaultLanguageId,
+			editingLanguageId,
 			fieldSetDefinitionURL,
 			fieldSets,
 			fieldTypes,
-			formInstanceId,
 			groupId,
 			namespace,
 			published,
 			redirectURL,
-			showPublishAlert,
 			spritemap,
 			view
 		} = this.props;
 
 		const layoutProviderProps = {
 			...this.props,
+			defaultLanguageId,
+			editingLanguageId,
 			events: {
-				pagesChanged: this._handlePagesChanged,
 				paginationModeChanged: this._handlePaginationModeChanded
 			},
 			initialPages: context.pages,
@@ -905,11 +953,8 @@ class Form extends Component {
 										publishedChanged: this._handlePublishedChanged
 									}
 								}
-								formInstanceId={formInstanceId}
 								namespace={namespace}
 								published={published}
-								resolvePublishURL={this._createFormURL}
-								showPublishAlert={showPublishAlert}
 								spritemap={spritemap}
 								submitForm={this.submitForm}
 								url={Liferay.DDM.FormSettings.publishFormInstanceURL}

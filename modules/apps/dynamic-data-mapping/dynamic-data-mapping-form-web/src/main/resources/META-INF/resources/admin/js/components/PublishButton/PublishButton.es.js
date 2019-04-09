@@ -1,24 +1,19 @@
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
-import Notifications from '../../util/Notifications.es';
 import {Config} from 'metal-state';
 
 class PublishButton extends Component {
 	static PROPS = {
 		namespace: Config.string().required(),
 		published: Config.bool().value(false),
-		resolvePublishURL: Config.func().required(),
-		showPublishAlert: Config.bool().value(false),
 		spritemap: Config.string().required(),
 		submitForm: Config.func().required(),
 		url: Config.string()
 	};
 
-	disposeInternal() {
-		Notifications.closeAlert();
-	}
-
 	publish(event) {
+		this.props.published = true;
+
 		return this._savePublished(event, true);
 	}
 
@@ -37,20 +32,13 @@ class PublishButton extends Component {
 	}
 
 	unpublish(event) {
+		this.props.published = false;
+
 		return this._savePublished(event, false);
 	}
 
 	render() {
-		const {published, resolvePublishURL, showPublishAlert, spritemap} = this.props;
-
-		if (showPublishAlert) {
-			if (published) {
-				this._showPublishAlert(resolvePublishURL());
-			}
-			else {
-				this._showUnpublishAlert();
-			}
-		}
+		const {published, spritemap} = this.props;
 
 		return (
 			<ClayButton
@@ -71,7 +59,7 @@ class PublishButton extends Component {
 		this.toggle(event);
 	}
 
-	_savePublished(event, published) {
+	_savePublished(event) {
 		const {namespace, submitForm, url} = this.props;
 
 		event.preventDefault();
@@ -83,21 +71,6 @@ class PublishButton extends Component {
 		}
 
 		return Promise.resolve(submitForm());
-	}
-
-	_showPublishAlert(publishURL) {
-		const message = Liferay.Language.get('the-form-was-published-successfully-access-it-with-this-url-x');
-
-		Notifications.showAlert(
-			message.replace(
-				/\{0\}/gim,
-				`<span style="font-weight: 500"><a href=${publishURL} target="_blank">${publishURL}</a></span>`
-			)
-		);
-	}
-
-	_showUnpublishAlert() {
-		Notifications.showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'));
 	}
 }
 

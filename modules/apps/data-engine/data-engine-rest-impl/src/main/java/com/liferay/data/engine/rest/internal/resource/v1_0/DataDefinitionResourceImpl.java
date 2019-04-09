@@ -167,8 +167,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 
 		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, dataDefinitionId,
-			operation, DataDefinitionConstants.RESOURCE_NAME,
+			actionIds, contextCompany, dataDefinitionId, operation,
+			DataDefinitionConstants.RESOURCE_NAME,
 			_resourcePermissionLocalService, _roleLocalService,
 			dataDefinitionPermission.getRoleNames(), ddmStructure.getGroupId());
 	}

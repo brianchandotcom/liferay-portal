@@ -162,10 +162,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		}
 
 		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, dataLayoutId,
-			operation, DataLayoutConstants.RESOURCE_NAME,
-			_resourcePermissionLocalService, _roleLocalService,
-			dataLayoutPermission.getRoleNames(),
+			actionIds, contextCompany, dataLayoutId, operation,
+			DataLayoutConstants.RESOURCE_NAME, _resourcePermissionLocalService,
+			_roleLocalService, dataLayoutPermission.getRoleNames(),
 			ddmStructureLayout.getGroupId());
 	}
 

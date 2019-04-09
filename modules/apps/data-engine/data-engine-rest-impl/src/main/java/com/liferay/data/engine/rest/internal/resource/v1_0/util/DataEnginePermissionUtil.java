@@ -118,10 +118,10 @@ public class DataEnginePermissionUtil {
 	}
 
 	public static void persistModelPermission(
-			List<String> actionIds, Company company, long modelId, String operation,
-			String resourceName, ResourcePermissionLocalService resourcePermissionLocalService,
-			RoleLocalService roleLocalService,
-			String[] roleNames, long siteId)
+			List<String> actionIds, Company company, long modelId,
+			String operation, String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService,
+			RoleLocalService roleLocalService, String[] roleNames, long siteId)
 		throws Exception {
 
 		if (StringUtil.equalsIgnoreCase(

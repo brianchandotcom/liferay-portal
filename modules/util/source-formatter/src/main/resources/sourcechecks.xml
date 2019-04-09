@@ -201,7 +201,6 @@
 		<check name="JavaTermMetadataLineBreakCheck" />
 		<check name="JavaTermOrderCheck" />
 		<check name="JavaTermStylingCheck" />
-		<check name="LocaleUtilCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
@@ -291,6 +290,7 @@
 		<check name="JavaVerifyUpgradeConnectionCheck" />
 		<check name="JavaXMLSecurityCheck" />
 		<check name="LanguageKeysCheck" />
+		<check name="LocaleUtilCheck" />
 		<check name="ResourceBundleCheck" />
 		<check name="StringMethodsCheck" />
 		<check name="SubstringCheck" />
@@ -340,7 +340,6 @@
 		<check name="JSPUnusedTermsCheck" />
 		<check name="JSPWhitespaceCheck" />
 		<check name="JSPXSSVulnerabilitiesCheck" />
-		<check name="LocaleUtilCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
@@ -364,6 +363,7 @@
 		<check name="JSPLanguageKeysCheck" />
 		<check name="JSPSendRedirectCheck" />
 		<check name="JSPStringMethodsCheck" />
+		<check name="LocaleUtilCheck" />
 		<check name="ResourceBundleCheck" />
 		<check name="SubstringCheck" />
 	</source-processor>

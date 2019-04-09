@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -82,18 +82,18 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX, "6",
-					"document-text"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX,
+					"document-text", "6"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX, "4",
-					"document-presentation"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX,
+					"document-presentation", "4"));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX, "2",
-					"document-table"));
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX,
+					"document-table", "2"));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -102,7 +102,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 	private URLMenuItem _createURLMenuItem(
 		PortletRequest portletRequest, Folder folder, String key,
-		String contentType, String fileIconColorIndex, String icon) {
+		String contentType, String icon, String iconColor) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
@@ -111,11 +111,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));
 		urlMenuItem.setData(
-			new HashMap<String, Object>() {
-				{
-					put("file-icon-color-" + fileIconColorIndex, true);
-				}
-			});
+			Collections.singletonMap("file-icon-color-" + iconColor, true));
 
 		return urlMenuItem;
 	}

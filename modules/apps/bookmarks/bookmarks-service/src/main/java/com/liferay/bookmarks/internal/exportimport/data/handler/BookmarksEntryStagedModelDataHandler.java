@@ -134,7 +134,6 @@ public class BookmarksEntryStagedModelDataHandler
 	}
 
 	@Reference(
-		service = BookmarksEntryStagedModelRepository.class,
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private BookmarksEntryStagedModelRepository

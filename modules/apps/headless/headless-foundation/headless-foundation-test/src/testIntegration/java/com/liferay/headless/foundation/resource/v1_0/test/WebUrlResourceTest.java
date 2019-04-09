@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -151,7 +152,10 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 		};
 	}
 
+	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

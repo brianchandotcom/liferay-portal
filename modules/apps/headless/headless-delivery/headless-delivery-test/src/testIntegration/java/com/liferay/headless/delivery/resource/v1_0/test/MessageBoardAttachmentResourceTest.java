@@ -19,10 +19,9 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.test.util.MBTestUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
@@ -48,14 +47,13 @@ public class MessageBoardAttachmentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User user = UserTestUtil.addGroupAdminUser(testGroup);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		MBMessage mbMessage = MBTestUtil.addMessage(
-			testGroup.getGroupId(), user.getUserId(),
+			testGroup.getGroupId(),
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_mbThread = mbMessage.getThread();

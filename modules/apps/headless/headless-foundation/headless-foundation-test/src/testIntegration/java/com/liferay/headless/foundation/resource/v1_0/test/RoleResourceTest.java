@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
 import java.util.Objects;
@@ -123,6 +124,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		};
 	}
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

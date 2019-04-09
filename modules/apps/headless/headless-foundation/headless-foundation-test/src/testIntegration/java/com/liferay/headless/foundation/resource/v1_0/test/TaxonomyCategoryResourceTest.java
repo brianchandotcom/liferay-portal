@@ -18,10 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 
 import java.util.Objects;
 
@@ -41,11 +40,10 @@ public class TaxonomyCategoryResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User user = UserTestUtil.addGroupAdminUser(testGroup);
-
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			user.getUserId(), testGroup.getGroupId(),
-			RandomTestUtil.randomString(), new ServiceContext());
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			new ServiceContext());
 	}
 
 	protected void assertValid(TaxonomyCategory taxonomyCategory) {

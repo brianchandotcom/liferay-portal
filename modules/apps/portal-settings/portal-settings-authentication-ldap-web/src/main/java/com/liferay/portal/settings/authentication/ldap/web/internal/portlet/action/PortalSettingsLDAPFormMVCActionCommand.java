@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +33,7 @@ import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsWebKeys;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -76,23 +78,30 @@ public class PortalSettingsLDAPFormMVCActionCommand
 			return;
 		}
 
-		updateLDAPAuthConfigurationProvider(
-			actionRequest, _ldapAuthConfigurationProvider,
-			themeDisplay.getCompanyId());
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		updateLDAPExportConfigurationProvider(
-			actionRequest, _ldapExportConfigurationProvider,
-			themeDisplay.getCompanyId());
-
-		updateLDAPImportConfigurationProvider(
-			actionRequest, _ldapImportConfigurationProvider,
-			themeDisplay.getCompanyId());
-
-		sortLdapServerConfigurations(
-			themeDisplay.getCompanyId(),
-			ParamUtil.getString(
-				actionRequest,
-				"ldap--" + LDAPConstants.AUTH_SERVER_PRIORITY + "--"));
+		if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_AUTH)) {
+			updateLDAPAuthConfigurationProvider(
+				actionRequest, _ldapAuthConfigurationProvider,
+				themeDisplay.getCompanyId());
+		}
+		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_EXPORT)) {
+			updateLDAPExportConfigurationProvider(
+				actionRequest, _ldapExportConfigurationProvider,
+				themeDisplay.getCompanyId());
+		}
+		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_IMPORT)) {
+			updateLDAPImportConfigurationProvider(
+				actionRequest, _ldapImportConfigurationProvider,
+				themeDisplay.getCompanyId());
+		}
+		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_SERVER)) {
+			sortLdapServerConfigurations(
+				themeDisplay.getCompanyId(),
+				ParamUtil.getString(
+					actionRequest,
+					"ldap--" + LDAPConstants.AUTH_SERVER_PRIORITY + "--"));
+		}
 	}
 
 	@Override

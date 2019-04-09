@@ -15,11 +15,9 @@
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants;
 
 /**
- * @author Michael C. Han
+ * @author Drew Brokke
  */
-public class LDAPSettingsConstants {
-
-	public static final String BCRYPT = "BCRYPT";
+public class LDAPSettingsWebKeys {
 
 	public static final String CMD_UPDATE_AUTH = "CMD_UPDATE_AUTH";
 
@@ -28,30 +26,5 @@ public class LDAPSettingsConstants {
 	public static final String CMD_UPDATE_IMPORT = "CMD_UPDATE_IMPORT";
 
 	public static final String CMD_UPDATE_SERVER = "CMD_UPDATE_SERVER";
-
-	public static final String IMPORT_METHOD_GROUP = "group";
-
-	public static final String IMPORT_METHOD_USER = "user";
-
-	public static final String IMPORT_USER_SYNC_STRATEGY_AUTH_TYPE =
-		"auth-type";
-
-	public static final String IMPORT_USER_SYNC_STRATEGY_UUID = "uuid";
-
-	public static final String MD2 = "MD2";
-
-	public static final String MD5 = "MD5";
-
-	public static final String NONE = "NONE";
-
-	public static final String SHA = "SHA";
-
-	public static final String SHA_256 = "SHA-256";
-
-	public static final String SHA_384 = "SHA-384";
-
-	public static final String SSHA = "SSHA";
-
-	public static final String UFC_CRYPT = "UFC-CRYPT";
 
 }

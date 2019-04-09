@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -140,32 +139,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected void assertValid(UserAccount userAccount) {
-		boolean valid = false;
-
-		if ((userAccount.getFamilyName() != null) &&
-			(userAccount.getGivenName() != null) &&
-			(userAccount.getId() != null)) {
-
-			valid = true;
-		}
-
-		Assert.assertTrue(valid);
-	}
-
-	@Override
-	protected boolean equals(
-		UserAccount userAccount, UserAccount userAccount2) {
-
-		if (Objects.equals(
-				userAccount.getFamilyName(), userAccount2.getFamilyName()) &&
-			Objects.equals(
-				userAccount.getGivenName(), userAccount2.getGivenName())) {
-
-			return true;
-		}
-
-		return false;
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"familyName", "givenName"};
 	}
 
 	@Override
@@ -184,25 +159,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected UserAccount randomIrrelevantUserAccount() {
-		return randomUserAccount();
-	}
-
-	@Override
 	protected UserAccount randomUserAccount() {
-		return new UserAccount() {
-			{
-				additionalName = RandomTestUtil.randomString();
-				alternateName = RandomTestUtil.randomString();
-				birthDate = RandomTestUtil.nextDate();
-				email = RandomTestUtil.randomString() + "@liferay.com";
-				familyName = RandomTestUtil.randomString();
-				givenName = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
-				image = RandomTestUtil.randomString();
-				jobTitle = RandomTestUtil.randomString();
-			}
-		};
+		UserAccount userAccount = super.randomUserAccount();
+
+		userAccount.setEmail(userAccount.getEmail() + "@liferay.com");
+
+		return userAccount;
 	}
 
 	@Override
@@ -226,9 +188,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetOrganizationUserAccountsPage_getOrganizationId()
-		throws Exception {
-
+	protected Long testGetOrganizationUserAccountsPage_getOrganizationId() {
 		return _organization.getOrganizationId();
 	}
 
@@ -258,9 +218,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetWebSiteUserAccountsPage_getWebSiteId()
-		throws Exception {
-
+	protected Long testGetWebSiteUserAccountsPage_getWebSiteId() {
 		return testGroup.getGroupId();
 	}
 

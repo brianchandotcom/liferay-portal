@@ -25,6 +25,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteEntry {
+		AssetListsAdmin.gotoEntryMenuItem(menuItem = "Delete");
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro gotoEntryMenuItem {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 

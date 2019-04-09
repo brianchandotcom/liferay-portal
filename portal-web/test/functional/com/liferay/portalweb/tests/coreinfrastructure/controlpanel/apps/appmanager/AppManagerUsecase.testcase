@@ -12,6 +12,7 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test InstallUninstallApp {
 		var appName = "test-app-portlet";

@@ -51,4 +51,25 @@ definition {
 			value1 = "View in Context"
 		);
 	}
+
+	@description = "This is a test for LPS-93357. The subscribe button can be enabled/disabled."
+	@priority = "3"
+	test enableDisableSubscribeButton {
+		task ("Assert the subscribe button is disabled by default") {
+			AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
+		}
+
+		task("Enable the subscribe button") {
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
+		}
+
+		task ("Assert the subscribe button displays") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name"
+			);
+
+			AssertElementPresent(locator1 = "Button#SUBSCRIBE");
+		}
+	}
 }

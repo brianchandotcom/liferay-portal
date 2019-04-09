@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.web.internal.configuration.admin.category;
+package com.liferay.change.tracking.change.lists.web.internal;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 

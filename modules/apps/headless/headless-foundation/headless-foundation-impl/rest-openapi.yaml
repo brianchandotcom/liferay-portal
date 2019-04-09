@@ -459,6 +459,17 @@ components:
                         type: object
                     readOnly: true
                     type: array
+                sitesBrief:
+                    items:
+                        properties:
+                            id:
+                                format: int64
+                                type: integer
+                            name:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
             type: object
         WebUrl:
             description: https://www.schema.org/WebUrl

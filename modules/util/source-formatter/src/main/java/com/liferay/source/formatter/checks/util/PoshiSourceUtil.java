@@ -27,8 +27,9 @@ import java.util.regex.Pattern;
 public class PoshiSourceUtil {
 
 	public static int[] getMultiLineCommentsPositions(String content) {
-		Matcher matcher = _multiLineComments.matcher(content);
 		List<Integer> multiLineCommentsPositions = new ArrayList<>();
+
+		Matcher matcher = _multiLineCommentsPattern.matcher(content);
 
 		while (matcher.find()) {
 			multiLineCommentsPositions.add(
@@ -41,8 +42,9 @@ public class PoshiSourceUtil {
 	}
 
 	public static int[] getMultiLineStringPositions(String content) {
-		Matcher matcher = _multiLineStringPattern.matcher(content);
 		List<Integer> multiLineStringPositions = new ArrayList<>();
+
+		Matcher matcher = _multiLineStringPattern.matcher(content);
 
 		while (matcher.find()) {
 			multiLineStringPositions.add(
@@ -57,9 +59,9 @@ public class PoshiSourceUtil {
 	public static boolean isInsideMultiLineComments(
 		int lineNumber, int[] multiLineCommentsPositions) {
 
-		for (int i = 0; i < multiLineCommentsPositions.length - 1; i = i + 2) {
+		for (int i = 0; i < multiLineCommentsPositions.length - 1; i += 2) {
 			if (lineNumber < multiLineCommentsPositions[i]) {
-				break;
+				return false;
 			}
 
 			if (lineNumber <= multiLineCommentsPositions[i + 1]) {
@@ -73,9 +75,9 @@ public class PoshiSourceUtil {
 	public static boolean isInsideMultiLineString(
 		int lineNumber, int[] multiLineStringPositions) {
 
-		for (int i = 0; i < multiLineStringPositions.length - 1; i = i + 2) {
+		for (int i = 0; i < multiLineStringPositions.length - 1; i += 2) {
 			if (lineNumber < multiLineStringPositions[i]) {
-				break;
+				return false;
 			}
 
 			if (lineNumber <= multiLineStringPositions[i + 1]) {
@@ -86,7 +88,7 @@ public class PoshiSourceUtil {
 		return false;
 	}
 
-	private static final Pattern _multiLineComments = Pattern.compile(
+	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
 		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _multiLineStringPattern = Pattern.compile(
 		"[ \t]*.+ = '''.*?'''", Pattern.DOTALL);

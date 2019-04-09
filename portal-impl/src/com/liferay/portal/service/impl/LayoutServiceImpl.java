@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,6 +67,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 
@@ -812,9 +814,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), targetGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
-			schedulerEndDate, cronText);
+		Trigger trigger = null;
+
+		if (MapUtil.getBoolean(parameterMap, "usePortalTimeZone", true)) {
+			trigger = TriggerFactoryUtil.createTrigger(
+				PortalUUIDUtil.generate(), groupName, schedulerStartDate,
+				schedulerEndDate, cronText);
+		}
+		else {
+			String timeZoneId = MapUtil.getString(parameterMap, "timeZoneId");
+
+			trigger = TriggerFactoryUtil.createTrigger(
+				PortalUUIDUtil.generate(), groupName, schedulerStartDate,
+				schedulerEndDate, TimeZone.getTimeZone(timeZoneId), cronText);
+		}
 
 		User user = userPersistence.findByPrimaryKey(getUserId());
 
@@ -880,9 +893,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), sourceGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
-			schedulerEndDate, cronText);
+		Trigger trigger = null;
+
+		if (MapUtil.getBoolean(parameterMap, "usePortalTimeZone", true)) {
+			trigger = TriggerFactoryUtil.createTrigger(
+				PortalUUIDUtil.generate(), groupName, schedulerStartDate,
+				schedulerEndDate, cronText);
+		}
+		else {
+			String timeZoneId = MapUtil.getString(parameterMap, "timeZoneId");
+
+			trigger = TriggerFactoryUtil.createTrigger(
+				PortalUUIDUtil.generate(), groupName, schedulerStartDate,
+				schedulerEndDate, TimeZone.getTimeZone(timeZoneId), cronText);
+		}
 
 		User user = userPersistence.findByPrimaryKey(getUserId());
 

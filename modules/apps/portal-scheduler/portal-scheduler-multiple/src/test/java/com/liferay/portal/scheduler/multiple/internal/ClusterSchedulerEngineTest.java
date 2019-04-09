@@ -72,6 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -2463,6 +2464,14 @@ public class ClusterSchedulerEngineTest {
 		public Trigger createTrigger(
 			String jobName, String groupName, Date startDate, Date endDate,
 			String cronExpression) {
+
+			return null;
+		}
+
+		@Override
+		public Trigger createTrigger(
+			String jobName, String groupName, Date startDate, Date endDate,
+			TimeZone timeZone, String cronExpression) {
 
 			return null;
 		}

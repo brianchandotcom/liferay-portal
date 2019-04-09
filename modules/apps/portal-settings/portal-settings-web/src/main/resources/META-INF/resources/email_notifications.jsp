@@ -31,26 +31,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 />
 
 <liferay-ui:tabs
-	names="email-verification-notification,password-changed-notification,password-reset-notification"
+	names="password-changed-notification,password-reset-notification"
 	refresh="<%= false %>"
 >
-	<liferay-ui:section>
-		<liferay-ui:error key="emailVerificationSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />
-
-		<liferay-frontend:email-notification-settings
-			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_BODY)) %>'
-			emailParam="adminEmailVerification"
-			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationSubject", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT)) %>'
-			fieldPrefix="settings"
-			showEmailEnabled="<%= false %>"
-		/>
-
-		<aui:fieldset cssClass="definition-of-terms email-verification terms" label="definition-of-terms">
-			<%@ include file="/definition_of_terms.jspf" %>
-		</aui:fieldset>
-	</liferay-ui:section>
-
 	<liferay-ui:section>
 		<liferay-ui:error key="emailPasswordSentSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />

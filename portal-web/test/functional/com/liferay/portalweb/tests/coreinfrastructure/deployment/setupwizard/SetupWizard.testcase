@@ -75,11 +75,12 @@ definition {
 
 		SetupWizard.finishConfigurationPG();
 
-		for (var filedName : list "Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name") {
+		for (var fieldName : list "Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name") {
+			var key_fieldName = "${fieldName}";
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#REQUIRED_ALERT",
 				value1 = "This field is required.",
-				key_filedName = "${filedName}"
 			);
 		}
 

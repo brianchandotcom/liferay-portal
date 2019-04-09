@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>REQUIRED_ALERT</td>
-	<td>//div[contains(@class,'has-error')] | //div[contains(@class,'has-error') and contains(.,'key_filedName')]</td>
+	<td>//div[contains(@class,'has-error')] | //div[contains(@class,'has-error') and contains(.,'key_fieldName')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -41,8 +41,12 @@ import com.liferay.registry.ServiceReference;
 
 import java.io.InputStream;
 
+import java.util.Locale;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -83,6 +87,37 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Test
+	public void testGetContentSpaceStructuredContentWithDifferentLocale()
+		throws Exception {
+
+		StructuredContent structuredContent = invokePostSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		String title = structuredContent.getTitle();
+
+		locale = Locale.FRANCE;
+
+		String frenchTitle = RandomTestUtil.randomString();
+
+		structuredContent.setTitle(frenchTitle);
+
+		invokePutStructuredContent(
+			structuredContent.getId(), structuredContent);
+
+		structuredContent = invokeGetStructuredContent(
+			structuredContent.getId());
+
+		Assert.assertEquals(frenchTitle, structuredContent.getTitle());
+
+		locale = LocaleUtil.getDefault();
+
+		structuredContent = invokeGetStructuredContent(
+			structuredContent.getId());
+
+		Assert.assertEquals(title, structuredContent.getTitle());
 	}
 
 	@Override

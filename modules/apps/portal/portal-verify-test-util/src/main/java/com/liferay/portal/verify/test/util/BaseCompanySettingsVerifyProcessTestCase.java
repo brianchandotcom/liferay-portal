@@ -25,11 +25,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.util.List;
 
@@ -38,6 +36,11 @@ import javax.portlet.PortletPreferences;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Michael C. Han
@@ -50,23 +53,10 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	public void setUp() throws Exception {
 		super.setUp();
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			BaseCompanySettingsVerifyProcessTestCase.class);
 
-		ServiceReference<CompanyLocalService> companyLocalServiceReference =
-			registry.getServiceReference(CompanyLocalService.class);
-
-		companyLocalService = registry.getService(companyLocalServiceReference);
-
-		ServiceReference<PrefsProps> prefsPropsServiceReference =
-			registry.getServiceReference(PrefsProps.class);
-
-		prefsProps = registry.getService(prefsPropsServiceReference);
-
-		ServiceReference<SettingsFactory> configurationAdminServiceReference =
-			registry.getServiceReference(SettingsFactory.class);
-
-		settingsFactory = registry.getService(
-			configurationAdminServiceReference);
+		_bundleContext = bundle.getBundleContext();
 
 		UnicodeProperties properties = new UnicodeProperties();
 
@@ -137,10 +127,8 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		try {
-			Registry registry = RegistryUtil.getRegistry();
-
 			ServiceReference<?>[] serviceReferences =
-				registry.getServiceReferences(
+				_bundleContext.getServiceReferences(
 					VerifyProcess.class.getName(),
 					StringBundler.concat(
 						"(&(objectClass=", VerifyProcess.class.getName(),
@@ -151,7 +139,8 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 				throw new IllegalStateException("Unable to get verify process");
 			}
 
-			return (VerifyProcess)registry.getService(serviceReferences[0]);
+			return (VerifyProcess)_bundleContext.getService(
+				serviceReferences[0]);
 		}
 		catch (Exception ise) {
 			throw new IllegalStateException("Unable to get verify process");
@@ -163,8 +152,15 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	protected abstract void populateLegacyProperties(
 		UnicodeProperties properties);
 
+	@Inject
 	protected CompanyLocalService companyLocalService;
+
+	@Inject
 	protected PrefsProps prefsProps;
+
+	@Inject
 	protected SettingsFactory settingsFactory;
+
+	private BundleContext _bundleContext;
 
 }

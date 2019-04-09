@@ -94,7 +94,7 @@ definition {
 		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "An asset list with that title already exists."
+				value1 = "A content set with that title already exists."
 			);
 		}
 	}

@@ -10,6 +10,29 @@ const MOVE_ITEM_DIRECTIONS = {
 };
 
 /**
+ * @param {object} objectToClone
+ * @returns {object}
+ */
+function deepClone(objectToClone) {
+	let cloned = objectToClone;
+	if (typeof cloned == 'object' && cloned !== null) {
+		if (Array.isArray(cloned)) {
+			cloned = objectToClone.map(
+				arrayItem => deepClone(arrayItem)
+			);
+		}
+		else {
+			cloned = Object.assign({}, cloned);
+			for (let clonedKey in cloned) {
+				cloned[clonedKey] = deepClone(cloned[clonedKey]);
+			}
+		}
+	}
+
+	return cloned;
+}
+
+/**
  * Returns the column with the given columnId
  * @param {Object} structure
  * @param {string} columnId
@@ -326,6 +349,7 @@ function itemIsInPath(path, itemId, itemType) {
 }
 
 export {
+	deepClone,
 	getColumn,
 	getDropRowPosition,
 	getItemPath,

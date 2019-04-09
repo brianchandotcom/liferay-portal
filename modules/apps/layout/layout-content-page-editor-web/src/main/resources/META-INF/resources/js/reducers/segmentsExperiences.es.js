@@ -1,5 +1,6 @@
 import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from '../actions/actions.es';
 import {setIn, updateLayoutData} from '../utils/FragmentsEditorUpdateUtils.es';
+import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/add-segments-experience';
 
@@ -26,7 +27,7 @@ function _storeNewLayoutData(state, segmentsExperienceId) {
 			nextState.defaultSegmentsExperienceId === nextState.segmentsExperienceId ||
 			!nextState.segmentsExperienceId
 		) {
-			baseLayoutData = nextState.layoutData;
+			baseLayoutData = deepClone(nextState.layoutData);
 		}
 		else {
 			const defaultExperienceLayoutListItem = nextState.layoutDataList.find(
@@ -34,7 +35,7 @@ function _storeNewLayoutData(state, segmentsExperienceId) {
 					return segmentedLayout.segmentsExperienceId === nextState.defaultSegmentsExperienceId;
 				}
 			);
-			baseLayoutData = defaultExperienceLayoutListItem && defaultExperienceLayoutListItem.layoutData;
+			baseLayoutData = defaultExperienceLayoutListItem && deepClone(defaultExperienceLayoutListItem.layoutData);
 		}
 
 		updateLayoutData(

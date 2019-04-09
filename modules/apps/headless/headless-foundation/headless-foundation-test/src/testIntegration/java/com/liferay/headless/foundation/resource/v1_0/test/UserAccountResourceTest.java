@@ -202,7 +202,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			UserAccount userAccount)
 		throws Exception {
 
-		return _addUserAccount(randomUserAccount());
+		return _addUserAccount(userAccount);
 	}
 
 	@Override

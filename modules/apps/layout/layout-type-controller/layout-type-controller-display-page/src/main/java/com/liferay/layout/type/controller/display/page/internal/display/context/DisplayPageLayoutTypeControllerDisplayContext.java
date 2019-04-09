@@ -75,7 +75,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 				request.setAttribute(
 					DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT,
-					assetEntry);
+					infoDisplayObject);
 				request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 			}
 		}

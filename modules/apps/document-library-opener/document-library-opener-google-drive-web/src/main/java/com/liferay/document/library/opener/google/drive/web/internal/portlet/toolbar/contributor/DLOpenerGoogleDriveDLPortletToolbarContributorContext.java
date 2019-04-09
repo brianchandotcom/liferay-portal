@@ -111,7 +111,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));
 		urlMenuItem.setData(
-			Collections.singletonMap("file-icon-color-" + iconColor, true));
+			Collections.singletonMap("file-icon-color", iconColor));
 
 		return urlMenuItem;
 	}

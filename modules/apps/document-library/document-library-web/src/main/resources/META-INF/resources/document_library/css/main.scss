@@ -2,7 +2,7 @@
 @import "mixins";
 
 @mixin file-icon($colorIndex, $color) {
-	[data-file-icon-color-#{$colorIndex}] .dropdown-item-indicator {
+	[data-file-icon-color="#{$colorIndex}"] .dropdown-item-indicator {
 		color: $color;
 
 		.lexicon-icon {

@@ -36,6 +36,7 @@ import javax.portlet.PortletPreferences;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -48,15 +49,18 @@ import org.osgi.framework.ServiceReference;
 public abstract class BaseCompanySettingsVerifyProcessTestCase
 	extends BaseVerifyProcessTestCase {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
+	@BeforeClass
+	public static void setUpClass() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			BaseCompanySettingsVerifyProcessTestCase.class);
 
 		_bundleContext = bundle.getBundleContext();
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
 		UnicodeProperties properties = new UnicodeProperties();
 
@@ -161,6 +165,6 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	@Inject
 	protected SettingsFactory settingsFactory;
 
-	private BundleContext _bundleContext;
+	private static BundleContext _bundleContext;
 
 }

@@ -150,9 +150,18 @@ public class AssetEntryUsagesDisplayContext {
 			return layout.getName(themeDisplay.getLocale());
 		}
 
+		long plid = assetEntryUsage.getPlid();
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			assetEntryUsage.getPlid());
+
+		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+			plid = layout.getClassPK();
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(assetEntryUsage.getPlid());
+				fetchLayoutPageTemplateEntryByPlid(plid);
 
 		if (layoutPageTemplateEntry == null) {
 			return StringPool.BLANK;

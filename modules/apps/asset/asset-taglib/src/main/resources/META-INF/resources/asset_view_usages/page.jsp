@@ -61,10 +61,10 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 			<div class="text-secondary">
 				<c:choose>
-					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
+					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
 						<liferay-ui:message key="display-page-template" />
 					</c:when>
-					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE %>">
+					<c:when test="<%= assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE %>">
 						<liferay-ui:message key="page" />
 					</c:when>
 					<c:otherwise>
@@ -77,7 +77,7 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
-			<c:if test="<%= assetEntryUsage.getType() != AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
+			<c:if test="<%= assetEntryUsage.getType() != AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
 
 				<%
 				Map<String, String> data = new HashMap<>();

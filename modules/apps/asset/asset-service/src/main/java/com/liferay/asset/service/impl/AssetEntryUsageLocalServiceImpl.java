@@ -14,7 +14,7 @@
 
 package com.liferay.asset.service.impl;
 
-import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
+import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -150,13 +150,13 @@ public class AssetEntryUsageLocalServiceImpl
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				return AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
+				return AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
 			}
 
-			return AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE;
+			return AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE;
 		}
 
-		return AssetEntryUsagesTypeConstants.TYPE_LAYOUT;
+		return AssetEntryUsageConstants.TYPE_LAYOUT;
 	}
 
 	@Reference

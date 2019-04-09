@@ -17,7 +17,7 @@ package com.liferay.asset.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class AssetEntryUsagesTypeConstants {
+public class AssetEntryUsageConstants {
 
 	public static final int TYPE_DEFAULT = 0;
 

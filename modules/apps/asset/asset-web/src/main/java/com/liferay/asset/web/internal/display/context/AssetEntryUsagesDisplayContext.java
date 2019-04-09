@@ -14,7 +14,7 @@
 
 package com.liferay.asset.web.internal.display.context;
 
-import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
+import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.model.AssetEntryUsage;
@@ -104,7 +104,7 @@ public class AssetEntryUsagesDisplayContext {
 		AssetEntryUsage assetEntryUsage) {
 
 		if (assetEntryUsage.getType() ==
-				AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
 
 			return Collections.emptyList();
 		}
@@ -133,9 +133,7 @@ public class AssetEntryUsagesDisplayContext {
 	}
 
 	public String getAssetEntryUsageName(AssetEntryUsage assetEntryUsage) {
-		if (assetEntryUsage.getType() ==
-				AssetEntryUsagesTypeConstants.TYPE_LAYOUT) {
-
+		if (assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_LAYOUT) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				assetEntryUsage.getPlid());
 
@@ -172,14 +170,12 @@ public class AssetEntryUsagesDisplayContext {
 
 	public String getAssetEntryUsageTypeLabel(AssetEntryUsage assetEntryUsage) {
 		if (assetEntryUsage.getType() ==
-				AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
 
 			return "display-page-template";
 		}
 
-		if (assetEntryUsage.getType() ==
-				AssetEntryUsagesTypeConstants.TYPE_LAYOUT) {
-
+		if (assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_LAYOUT) {
 			return "page";
 		}
 
@@ -226,7 +222,7 @@ public class AssetEntryUsagesDisplayContext {
 	public int getDisplayPagesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
 			getAssetEntryId(),
-			AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE);
+			AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE);
 	}
 
 	public String getNavigation() {
@@ -241,13 +237,12 @@ public class AssetEntryUsagesDisplayContext {
 
 	public int getPagesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(), AssetEntryUsagesTypeConstants.TYPE_LAYOUT);
+			getAssetEntryId(), AssetEntryUsageConstants.TYPE_LAYOUT);
 	}
 
 	public int getPageTemplatesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(),
-			AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE);
+			getAssetEntryId(), AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE);
 	}
 
 	public PortletURL getPortletURL() {
@@ -303,8 +298,7 @@ public class AssetEntryUsagesDisplayContext {
 		if (Objects.equals(getNavigation(), "pages")) {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(),
-					AssetEntryUsagesTypeConstants.TYPE_LAYOUT,
+					getAssetEntryId(), AssetEntryUsageConstants.TYPE_LAYOUT,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);
@@ -315,7 +309,7 @@ public class AssetEntryUsagesDisplayContext {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					getAssetEntryId(),
-					AssetEntryUsagesTypeConstants.TYPE_PAGE_TEMPLATE,
+					AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);
@@ -326,7 +320,7 @@ public class AssetEntryUsagesDisplayContext {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					getAssetEntryId(),
-					AssetEntryUsagesTypeConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
+					AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);

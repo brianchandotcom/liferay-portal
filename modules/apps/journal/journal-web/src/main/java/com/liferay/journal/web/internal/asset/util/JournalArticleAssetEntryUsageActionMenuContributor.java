@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.asset.util;
 
-import com.liferay.asset.constants.AssetEntryUsagesTypeConstants;
+import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
@@ -65,9 +65,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
 		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
 
-		if (assetEntryUsage.getType() !=
-				AssetEntryUsagesTypeConstants.TYPE_LAYOUT) {
-
+		if (assetEntryUsage.getType() != AssetEntryUsageConstants.TYPE_LAYOUT) {
 			return Collections.emptyList();
 		}
 

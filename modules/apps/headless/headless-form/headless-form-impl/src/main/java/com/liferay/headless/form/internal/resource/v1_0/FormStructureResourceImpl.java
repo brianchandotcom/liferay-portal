@@ -72,28 +72,27 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 
 	@Override
-	public Page<FormStructure> getContentSpaceFormStructuresPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_ddmStructureLocalService.getStructures(
-					contentSpaceId, _getClassNameId(),
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toFormStructure),
-			pagination,
-			_ddmStructureLocalService.getStructuresCount(
-				contentSpaceId, _getClassNameId()));
-	}
-
-	@Override
 	public FormStructure getFormStructure(Long formStructureId)
 		throws Exception {
 
 		return _toFormStructure(
 			_ddmStructureLocalService.getStructure(formStructureId));
+	}
+
+	@Override
+	public Page<FormStructure> getSiteFormStructuresPage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_ddmStructureLocalService.getStructures(
+					siteId, _getClassNameId(), pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
+				this::_toFormStructure),
+			pagination,
+			_ddmStructureLocalService.getStructuresCount(
+				siteId, _getClassNameId()));
 	}
 
 	private long _getClassNameId() {
@@ -324,7 +323,6 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					ddmStructure.getAvailableLanguageIds());
-				contentSpaceId = ddmStructure.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(ddmStructure.getUserId()));
@@ -340,6 +338,7 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(
 					contextAcceptLanguage.getPreferredLocale());
+				siteId = ddmStructure.getGroupId();
 
 				setSuccessPage(
 					() -> {

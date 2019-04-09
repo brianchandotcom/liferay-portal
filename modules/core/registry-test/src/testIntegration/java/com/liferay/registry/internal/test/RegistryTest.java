@@ -120,24 +120,6 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void testGetRegistryService() {
-		org.osgi.framework.ServiceReference<Registry> serviceReference =
-			_bundleContext.getServiceReference(Registry.class);
-
-		Registry registry = _bundleContext.getService(serviceReference);
-
-		Assert.assertNotNull(registry);
-	}
-
-	@Test
-	public void testGetRegistryServiceReference() {
-		org.osgi.framework.ServiceReference<Registry> serviceReference =
-			_bundleContext.getServiceReference(Registry.class);
-
-		Assert.assertNotNull(serviceReference);
-	}
-
-	@Test
 	public void testGetServiceByClass() {
 		InterfaceOne interfaceOne = getInstance();
 

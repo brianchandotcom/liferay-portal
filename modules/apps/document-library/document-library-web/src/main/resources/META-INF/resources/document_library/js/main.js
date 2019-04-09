@@ -236,7 +236,7 @@ AUI.add(
 									instance._moveSingleElement(event.folderid, parameterName, parameterValue);
 								}
 								else {
-									instance._moveCurrectSelection(event.folderid);
+									instance._moveCurrentSelection(event.folderid);
 								}
 							}
 						);
@@ -255,7 +255,7 @@ AUI.add(
 						}
 					},
 
-					_moveCurrectSelection: function(newFolderId) {
+					_moveCurrentSelection: function(newFolderId) {
 						var instance = this;
 
 						var form = instance.get('form').node;
@@ -310,7 +310,7 @@ AUI.add(
 							if (!instance._searchContainer.select ||
 								selectedItems.indexOf(dropTarget.one('input[type=checkbox]'))
 							) {
-								instance._moveCurrectSelection(folderId);
+								instance._moveCurrentSelection(folderId);
 							}
 						}
 					},

@@ -255,11 +255,15 @@ public class DLAdminManagementToolbarDisplayContext {
 				availableActionDropdownItems.add("checkout");
 			}
 
-			if (_hasValidAssetVocabularies) {
-				availableActionDropdownItems.add("editCategories");
-			}
+			if (!RepositoryUtil.isExternalRepository(
+					fileEntry.getRepositoryId())) {
 
-			availableActionDropdownItems.add("editTags");
+				if (_hasValidAssetVocabularies) {
+					availableActionDropdownItems.add("editCategories");
+				}
+
+				availableActionDropdownItems.add("editTags");
+			}
 		}
 
 		if (DLFileEntryPermission.contains(

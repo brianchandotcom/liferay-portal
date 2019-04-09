@@ -76,6 +76,21 @@ components:
                         type: string
                     type: array
             type: object
+        Task:
+            description: https://www.schema.org/Task
+            properties:
+                name:
+                    type: string
+                onTimeTaskCount:
+                    format: int64
+                    type: integer
+                overdueTaskCount:
+                    format: int64
+                    type: integer
+                taskCount:
+                    format: int64
+                    type: integer
+            type: object
 info:
     description: ""
     title: ""
@@ -210,6 +225,40 @@ paths:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""
             tags: ["SLA"]
+    "/processes/{processId}/tasks":
+        get:
+            operationId: getProcessTasksPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                    description: ""
+            tags: ["Task"]
     "/slas/{slaId}":
         delete:
             operationId: deleteSLA

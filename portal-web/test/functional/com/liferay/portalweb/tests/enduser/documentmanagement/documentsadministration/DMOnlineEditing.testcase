@@ -126,7 +126,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled"
+			value1 = "Untitled",
+			key_dmDocumentTitle = "Untitled"
 		);
 	}
 
@@ -181,7 +182,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled"
+			value1 = "Untitled",
+			key_dmDocumentTitle = "Untitled"
 		);
 	}
 
@@ -236,7 +238,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled"
+			value1 = "Untitled",
+			key_dmDocumentTitle = "Untitled"
 		);
 	}
 
@@ -269,7 +272,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Document"
+			value1 = "Edited Google Document",
+			key_dmDocumentTitle = "Edited Google Document"
 		);
 	}
 
@@ -302,7 +306,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
+			value1 = "${dmDocumentTitle}",
+			key_dmDocumentTitle = "${dmDocumentTitle}"
 		);
 	}
 
@@ -335,7 +340,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Sheet"
+			value1 = "Edited Google Sheet",
+			key_dmDocumentTitle = "Edited Google Sheet"
 		);
 	}
 
@@ -368,7 +374,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Slide"
+			value1 = "Edited Google Slide",
+			key_dmDocumentTitle = "Edited Google Slide"
 		);
 	}
 

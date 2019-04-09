@@ -3,21 +3,40 @@
 @import "./field-types-panel";
 @import "./form-page";
 @import "./form-pagination";
-@import "./layout-builder";
+@import "./moveable";
+@import "./resizeable";
 @import "./share_url_popover";
 @import "./sidebar";
 
-.ddm-form-builder .ddm-select-option-label .label-item {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+$c: '.ddm-form-builder';
+
+#{$c} {
+	.ddm-select-option-label .label-item {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.ddm-field-container .btn:disabled {
+		cursor: inherit;
+	}
+
+	.ddm-parent-dragging {
+		border: none;
+
+		.ddm-field-actions-container {
+			display: none;
+		}
+	}
+
+	.ddm-field-container {
+		&:hover, &:active {
+			border-color: #CDCED9;
+		}
+	}
 }
 
 .ddm-select-dropdown .dropdown-item:focus {
 	background-color: transparent;
-}
-
-.ddm-form-builder .ddm-field-container .btn:disabled {
-	cursor: inherit;
 }

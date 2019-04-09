@@ -1,0 +1,82 @@
+$c: '.ddm-form-builder';
+
+#{$c} {
+	.moveable {
+		.ddm-field-container {
+			cursor: -webkit-grab;
+		}
+	}
+
+	.ddm-field-container {
+		border: 1px solid transparent;
+		position: relative;
+	}
+
+	.ddm-drag {
+		background-color: #FFF;
+		padding: 1rem 15px;
+		width: 100%;
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.ddm-drag .form-control {
+		cursor: -webkit-grab;
+	}
+
+	.ddm-drag.dragging .form-control {
+		cursor: -webkit-grabbing;
+	}
+
+	.ddm-drag.dragging {
+		border-radius: 4px;
+		box-shadow: 0 0px 3px 0 rgba(0, 0, 0, 0.2);
+		cursor: -webkit-grabbing;
+		opacity: 0.7;
+		position: absolute;
+		z-index: 10;
+	}
+
+	.ddm-drag-item {
+		cursor: -webkit-grab;
+		position: inherit;
+	}
+
+	.ddm-drag-item.dragging {
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+		cursor: -webkit-grabbing;
+		z-index: 20;
+	}
+
+	.col.col-empty.lfr-initial-col .ddm-target,
+	.ddm-parent-dragging {
+		background-color: #F7F8F9;
+		border: 2px dashed #A7A9BC;
+		border-radius: 4px;
+		color: #A7A9BC;
+	}
+
+	.col.col-empty {
+		&.lfr-initial-col .ddm-target {
+			line-height: 57px;
+			text-align: center;
+
+			&.targetOver {
+				color: $light-blue-500;
+			}
+		}
+
+		.ddm-target {
+			border: 2px dashed transparent;
+			border-radius: 4px;
+			min-height: 16px;
+
+			&.targetOver {
+				background-color: $light-100;
+				border-color: $light-blue-200;
+			}
+		}
+	}
+}

@@ -1,0 +1,74 @@
+$c: '.ddm-form-builder';
+
+#{$c} {
+	.ddm-resize-column {
+		margin-left: -25px;
+		width: 21px;
+	}
+
+	.ddm-resize-handle, .ddm-resize-column {
+		top: 0!important;
+	}
+
+	@for $range from 1 to 13 {
+		.ddm-resize-column:nth-child(#{$range}) {
+			left: $range * (100% / 12);
+		}
+	}
+
+	.ddm-parent-dragging {
+		.ddm-resize-handle-right,
+		.ddm-resize-handle-left {
+			display: none;
+		}
+	}
+
+	.ddm-field-container {
+		.ddm-resize-handle-left {
+			left: -1px!important;
+		}
+
+		.ddm-resize-handle-right {
+			left: inherit!important;
+			right: -1px!important;
+		}
+
+		.ddm-resize-handle-left,
+		.ddm-resize-handle-right {
+			background-color: #CCCCCC;
+			cursor: inherit;
+			opacity: 0;
+			transition: opacity ease-out 0.3s;
+		}
+
+		&:hover, &:active {
+			border-color: #CDCED9;
+
+			.ddm-resize-handle-left,
+			.ddm-resize-handle-right {
+				opacity: 0.5;
+			}
+		}
+	}
+
+	.resizeable .ddm-field-container {
+		&:hover, &:active {
+			.ddm-resize-handle-left,
+			.ddm-resize-handle-right {
+				background-color: #1C67FB;
+				cursor: col-resize;
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.ddm-resize-handle, .ddm-resize-column {
+	height: 100%;
+	position: absolute;
+	width: 5px;
+}
+
+.shim {
+	cursor: -webkit-grabbing;
+}

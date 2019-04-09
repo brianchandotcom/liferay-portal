@@ -14,6 +14,7 @@ $c: '.ddm-form-pagination';
 		border-bottom: 1px solid $light-400;
 		margin-bottom: 1.4rem;
 		padding-bottom: .2rem;
+		padding-right: 6rem;
 	}
 
 	&.pagination-mode {
@@ -42,5 +43,23 @@ $c: '.ddm-form-pagination';
 
 	.multi-step-item {
 		cursor: pointer;
+	}
+}
+
+.ddm-paginated-builder {
+	padding: 0;
+	position: relative;
+
+	.ddm-paginated-builder-dropdown {
+		position: absolute;
+		right: 3rem;
+	}
+
+	&.bottom .ddm-paginated-builder-dropdown {
+		bottom: 25px;
+	}
+
+	&.top .ddm-paginated-builder-dropdown {
+		top: 45px;
 	}
 }

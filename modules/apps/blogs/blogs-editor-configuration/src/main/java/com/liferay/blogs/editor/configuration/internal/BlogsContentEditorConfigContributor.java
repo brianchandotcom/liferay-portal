@@ -92,11 +92,6 @@ public class BlogsContentEditorConfigContributor
 		_populateTwitterButton(jsonObject);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	protected String getAllowedContentLists() {
 		return "li ol ul;";
 	}
@@ -233,6 +228,7 @@ public class BlogsContentEditorConfigContributor
 		}
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

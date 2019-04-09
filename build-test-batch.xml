@@ -3757,7 +3757,10 @@ log.sanitizer.enabled=false</echo>
 	<target name="js-unit-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="npmRunTest" />
+				<gradle-execute dir="modules" task="npmRunTest">
+					<arg value="--continue" />
+					<arg value="--parallel" />
+				</gradle-execute>
 
 				<replace
 					dir="modules"

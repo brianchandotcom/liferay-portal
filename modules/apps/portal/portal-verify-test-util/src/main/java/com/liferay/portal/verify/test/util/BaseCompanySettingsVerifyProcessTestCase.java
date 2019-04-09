@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.verify.VerifyException;

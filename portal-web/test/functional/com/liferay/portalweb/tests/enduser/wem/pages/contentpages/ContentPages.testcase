@@ -540,7 +540,6 @@ definition {
 			ContentPages.clickPencil();
 		}
 
-
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
 		}

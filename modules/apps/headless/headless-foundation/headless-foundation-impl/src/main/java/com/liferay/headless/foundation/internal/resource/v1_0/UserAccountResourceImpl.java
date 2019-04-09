@@ -22,6 +22,7 @@ import com.liferay.headless.foundation.dto.v1_0.OrganizationsBrief;
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.RolesBrief;
+import com.liferay.headless.foundation.dto.v1_0.SitesBrief;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.EmailUtil;
@@ -35,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -211,6 +214,16 @@ public class UserAccountResourceImpl
 		};
 	}
 
+	private SitesBrief _toSitesBrief(Group group) {
+		return new SitesBrief() {
+			{
+				id = group.getGroupId();
+				name = group.getName(
+					contextAcceptLanguage.getPreferredLocale());
+			}
+		};
+	}
+
 	private UserAccount _toUserAccount(User user) throws Exception {
 		Contact contact = user.getContact();
 
@@ -264,6 +277,11 @@ public class UserAccountResourceImpl
 				rolesBrief = transformToArray(
 					_roleService.getUserRoles(user.getUserId()),
 					role -> _toRolesBrief(role), RolesBrief.class);
+				sitesBrief = transformToArray(
+					_groupService.getGroups(
+						contextCompany.getCompanyId(),
+						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
+					site -> _toSitesBrief(site), SitesBrief.class);
 
 				setDashboardURL(
 					() -> {
@@ -301,6 +319,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private ListTypeService _listTypeService;

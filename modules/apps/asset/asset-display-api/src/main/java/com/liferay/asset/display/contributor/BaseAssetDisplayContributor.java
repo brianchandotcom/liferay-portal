@@ -15,11 +15,13 @@
 package com.liferay.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
+import com.liferay.asset.info.display.contributor.AssetInfoDisplayObject;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.HashMap;
@@ -129,6 +132,27 @@ public abstract class BaseAssetDisplayContributor<T>
 			fieldName, StringPool.BLANK);
 
 		return fieldValue;
+	}
+
+	@Override
+	public InfoDisplayObject<AssetEntry> getInfoDisplayObject(
+			long groupId, String urlTitle)
+		throws PortalException {
+
+		String className = getClassName();
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					PortalUtil.getClassNameId(className));
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			groupId, urlTitle);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			className, assetRenderer.getClassPK());
+
+		return new AssetInfoDisplayObject(assetEntry);
 	}
 
 	@Override

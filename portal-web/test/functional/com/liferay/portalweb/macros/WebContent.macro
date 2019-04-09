@@ -11,6 +11,10 @@ definition {
 	}
 
 	macro addCP {
+		AssertVisible(
+			locator1 = "WCEditWebContent#SIDEBAR"
+		);
+
 		if (isSet(webContentTitle)) {
 			Click(locator1 = "TextInput#TITLE");
 

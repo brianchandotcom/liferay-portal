@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,7 +50,7 @@ public class EditDisplayPageMenuDisplayContext {
 	public EditDisplayPageMenuDisplayContext(HttpServletRequest request) {
 		_request = request;
 
-		_infoDisplayObject = (InfoDisplayObject)request.getAttribute(
+		_assetEntry = (AssetEntry)request.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -69,7 +68,7 @@ public class EditDisplayPageMenuDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.format(
 									_request, "edit-x",
-									_infoDisplayObject.getTitle(
+									_assetEntry.getTitle(
 										_themeDisplay.getLocale())));
 						});
 				}
@@ -113,28 +112,20 @@ public class EditDisplayPageMenuDisplayContext {
 	}
 
 	private String _getEditAssetEntryURL() throws Exception {
-		Object modelEntry = _infoDisplayObject.getModelEntry();
-
-		if (!(modelEntry instanceof AssetEntry)) {
-			return StringPool.BLANK;
-		}
-
-		AssetEntry assetEntry = (AssetEntry)modelEntry;
-
-		if (assetEntry == null) {
+		if (_assetEntry == null) {
 			return StringPool.BLANK;
 		}
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
+				_assetEntry.getClassName());
 
 		if (assetRendererFactory == null) {
 			return StringPool.BLANK;
 		}
 
 		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
+			_assetEntry.getClassPK());
 
 		if (assetRenderer == null) {
 			return StringPool.BLANK;
@@ -159,7 +150,7 @@ public class EditDisplayPageMenuDisplayContext {
 		return editAssetEntryURL.toString();
 	}
 
-	private final InfoDisplayObject _infoDisplayObject;
+	private final AssetEntry _assetEntry;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

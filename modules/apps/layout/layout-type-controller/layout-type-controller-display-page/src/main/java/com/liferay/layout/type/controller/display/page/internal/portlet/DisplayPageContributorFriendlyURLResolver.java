@@ -25,6 +25,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObject;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,9 +96,13 @@ public class DisplayPageContributorFriendlyURLResolver
 				request);
 
 			_portal.setPageTitle(assetEntry.getTitle(locale), request);
+
+			request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		}
 
-		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, infoDisplayObject);
+		request.setAttribute(
+			DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT,
+			infoDisplayObject);
 
 		Layout layout = _getInfoDisplayObjectLayout(infoDisplayObject);
 

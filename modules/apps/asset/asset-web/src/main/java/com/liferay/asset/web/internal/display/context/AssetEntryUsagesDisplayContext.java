@@ -257,6 +257,7 @@ public class AssetEntryUsagesDisplayContext {
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"assetEntryId", String.valueOf(getAssetEntryId()));
+		portletURL.setParameter("navigation", getNavigation());
 
 		return portletURL;
 	}
@@ -277,7 +278,7 @@ public class AssetEntryUsagesDisplayContext {
 		}
 
 		SearchContainer assetEntryUsagesSearchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
+			_renderRequest, getPortletURL(), null,
 			"there-are-no-asset-entry-usages");
 
 		boolean orderByAsc = false;

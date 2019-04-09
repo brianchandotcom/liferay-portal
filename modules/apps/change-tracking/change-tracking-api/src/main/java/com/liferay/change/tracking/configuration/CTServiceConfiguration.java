@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Máté Thurzó
  */
 @ExtendedObjectClassDefinition(
-	category = "change-tracking",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "publishing", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.change.tracking.configuration.CTServiceConfiguration",
@@ -33,9 +32,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "enable-layout-tracking-help",
-		name = "enable-layout-tracking", required = false
+		deflt = "false", description = "enable-change-tracking-help",
+		name = "enable-change-tracking", required = false
 	)
-	public boolean enableLayoutTracking();
+	public boolean enableChangeTracking();
 
 }

@@ -19,18 +19,18 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 /**
  * @author Daniel Kocsis
  */
-public class ChangeTrackingThreadLocal {
+public class LayoutVersioningThreadLocal {
 
-	public static boolean isLayoutTrackingEnabled() {
-		return _layoutTrackingEnabled.get();
+	public static boolean isEnabled() {
+		return _enabled.get();
 	}
 
 	public static boolean isLayoutUpdateInProgress() {
 		return _layoutUpdateInProgress.get();
 	}
 
-	public static void setLayoutTrackingEnabled(boolean enabled) {
-		_layoutTrackingEnabled.set(enabled);
+	public static void setEnabled(boolean enabled) {
+		_enabled.set(enabled);
 	}
 
 	public static void setLayoutUpdateInProgress(
@@ -39,21 +39,13 @@ public class ChangeTrackingThreadLocal {
 		_layoutUpdateInProgress.set(layoutUpgradeInProgress);
 	}
 
-	public static void setLayoutTrackingDefaultEnabled(
-		boolean layoutTrackingDefaultEnabled) {
-
-		_layoutTrackingDefaultEnabled = layoutTrackingDefaultEnabled;
-	}
-
-	private static boolean _layoutTrackingDefaultEnabled = false;
-
-	private static final ThreadLocal<Boolean> _layoutTrackingEnabled =
+	private static final ThreadLocal<Boolean> _enabled =
 		new CentralizedThreadLocal<>(
-			ChangeTrackingThreadLocal.class + "._layoutTrackingEnabled",
-			() -> _layoutTrackingDefaultEnabled);
+			LayoutVersioningThreadLocal.class + "._enabled",
+			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutUpdateInProgress =
 		new CentralizedThreadLocal<>(
-			ChangeTrackingThreadLocal.class + "._layoutUpdateInProgress",
+			LayoutVersioningThreadLocal.class + "._layoutUpdateInProgress",
 			() -> Boolean.FALSE);
 
 }

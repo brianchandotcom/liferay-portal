@@ -897,7 +897,7 @@ definition {
 
 		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-		Panel.expandPanel(panel = "Select Asset List");
+		Panel.expandPanel(panel = "Select Content Set");
 
 		Button.clickSelect();
 

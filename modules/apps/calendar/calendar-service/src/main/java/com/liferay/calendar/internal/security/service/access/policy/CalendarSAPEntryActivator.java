@@ -102,13 +102,13 @@ public class CalendarSAPEntryActivator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarSAPEntryActivator.class);
 
-	@Reference(unbind = "-")
+	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private ServiceRegistration<PortalInstanceLifecycleListener>
 		_serviceRegistration;
 
-	@Reference(unbind = "-")
+	@Reference
 	private UserLocalService _userLocalService;
 
 	private class CalendarPortalInstanceLifecycleListener

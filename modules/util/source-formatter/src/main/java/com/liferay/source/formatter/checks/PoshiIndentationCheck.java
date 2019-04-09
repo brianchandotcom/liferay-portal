@@ -53,7 +53,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 				PoshiSourceUtil.getMultiLineCommentsPositions(content);
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineNumber = lineNumber + 1;
+				lineNumber++;
 
 				if (PoshiSourceUtil.isInsideMultiLineComments(
 						lineNumber, multiLineCommentsPositions)) {
@@ -72,6 +72,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 					if (StringUtil.count(line, "'''") == 1) {
 						insideMultiLineString = true;
+
 						int x = line.indexOf("(");
 						int y = line.indexOf("'''");
 

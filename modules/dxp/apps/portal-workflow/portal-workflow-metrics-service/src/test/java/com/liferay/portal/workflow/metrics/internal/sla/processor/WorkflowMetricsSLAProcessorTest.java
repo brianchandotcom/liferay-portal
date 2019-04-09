@@ -175,6 +175,12 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
 			WorkflowMetricsSLADefinition.class);
 
+		when(
+			workflowMetricsSLADefinition.getStartNodeNames()
+		).thenReturn(
+			"1:leave"
+		);
+
 		_test(
 			createDateLocalDateTime, 0, null, localDateTime, true, 0, 0,
 			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.NEW,

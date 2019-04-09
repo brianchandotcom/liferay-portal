@@ -17,31 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AssetRendererFactory assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
+
 InfoDisplayObject infoDisplayObject = displayPageLayoutTypeControllerDisplayContext.getInfoDisplayObject();
-AssetRendererFactory assetRendererFactory = null;
-LayoutPageTemplateStructure layoutPageTemplateStructure = null;
-long[] segmentsExperienceIds = GetterUtil.getLongValues(request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS), new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
-JSONArray structureJSONArray = null;
 
-if (infoDisplayObject != null) {
-	if (infoDisplayObject instanceof AssetInfoDisplayObject) {
-		AssetEntry assetEntry = (AssetEntry)infoDisplayObject;
-
-		assetRendererFactory = assetEntry.getAssetRendererFactory();
-	}
-
-	LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(displayPageLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId());
-
-	layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(infoDisplayObject.getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), layoutPageTemplateEntry.getPlid(), true);
-
-	String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
-
-	if (Validator.isNotNull(data)) {
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-		structureJSONArray = dataJSONObject.getJSONArray("structure");
-	}
-}
+JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray();
 %>
 
 <liferay-ui:success key="displayPagePublished" message="the-display-page-template-was-published-succesfully" />
@@ -55,6 +35,8 @@ if (infoDisplayObject != null) {
 
 		<%
 		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+
+		long[] segmentsExperienceIds = displayPageLayoutTypeControllerDisplayContext.getSegmentExperienceIds();
 
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);

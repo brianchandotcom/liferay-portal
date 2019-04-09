@@ -339,7 +339,7 @@ definition {
 					ContentTargetingCampaign.addTrackingActionPageCP(
 						pageAlias = "${pageAlias}",
 						pageFriendlyURL = "{pageFriendlyURL}",
-						pageTrackingActionSelect = "${pageTrackingActionSelect]"
+						pageTrackingActionSelect = "${pageTrackingActionSelect}"
 					);
 				}
 			}

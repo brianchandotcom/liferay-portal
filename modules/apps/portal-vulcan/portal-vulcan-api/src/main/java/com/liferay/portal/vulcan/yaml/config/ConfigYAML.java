@@ -47,6 +47,10 @@ public class ConfigYAML {
 		return _testDir;
 	}
 
+	public boolean isForcePredictableOperationId() {
+		return _forcePredictableOperationId;
+	}
+
 	public void setApiDir(String apiDir) {
 		_apiDir = apiDir;
 	}
@@ -67,6 +71,12 @@ public class ConfigYAML {
 		_clientDir = clientDir;
 	}
 
+	public void setForcePredictableOperationId(
+		boolean forcePredictableOperationId) {
+
+		_forcePredictableOperationId = forcePredictableOperationId;
+	}
+
 	public void setImplDir(String implDir) {
 		_implDir = implDir;
 	}
@@ -80,6 +90,7 @@ public class ConfigYAML {
 	private Application _application;
 	private String _author;
 	private String _clientDir;
+	private boolean _forcePredictableOperationId = true;
 	private String _implDir = "src/main/java";
 	private String _testDir;
 

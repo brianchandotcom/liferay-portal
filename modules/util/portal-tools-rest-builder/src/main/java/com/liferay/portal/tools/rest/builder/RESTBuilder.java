@@ -205,7 +205,11 @@ public class RESTBuilder {
 
 		String content = _fixOpenAPIPathParameters(FileUtil.read(file));
 
-		FileUtil.write(file, _fixOpenAPIOperationIds(freeMarkerTool, content));
+		if (_configYAML.isForcePredictableOperationId()) {
+			content = _fixOpenAPIOperationIds(freeMarkerTool, content);
+		}
+
+		FileUtil.write(file, content);
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)

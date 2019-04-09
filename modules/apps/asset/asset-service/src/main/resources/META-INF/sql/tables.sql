@@ -7,7 +7,7 @@ create table AssetEntryUsage (
 	assetEntryId LONG,
 	plid LONG,
 	containerType LONG,
-	containerKey VARCHAR(75) null,
+	containerKey VARCHAR(200) null,
 	type_ INTEGER,
 	lastPublishDate DATE null
 );

@@ -25,6 +25,8 @@ import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 
 import java.io.IOException;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Hugo Huijser
  */
@@ -50,12 +52,13 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			boolean insideMultiLineString = false;
 
 			int[] multiLineCommentsPositions =
-				PoshiSourceUtil.getMultiLineCommentsPositions(content);
+				PoshiSourceUtil.getMultiLinePositions(
+					content, _multiLineCommentsPattern);
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (PoshiSourceUtil.isInsideMultiLineComments(
+				if (PoshiSourceUtil.isInsideMultiLines(
 						lineNumber, multiLineCommentsPositions)) {
 
 					sb.append(line);
@@ -131,5 +134,8 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 		return sb.toString();
 	}
+
+	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
+		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 
 }

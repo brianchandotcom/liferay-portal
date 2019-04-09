@@ -20,6 +20,8 @@ import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 
 import java.io.IOException;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Alan Huang
  */
@@ -38,8 +40,8 @@ public class PoshiStylingCheck extends BaseFileCheck {
 	private void _checkLineBreak(String fileName, String content) {
 		int x = -1;
 
-		int[] multiLineStringPositions =
-			PoshiSourceUtil.getMultiLineStringPositions(content);
+		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+			content, _multiLineStringPattern);
 
 		while (true) {
 			x = content.indexOf(CharPool.SEMICOLON, x + 1);
@@ -50,7 +52,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 
 			if ((content.charAt(x + 1) != CharPool.NEW_LINE) &&
 				!ToolsUtil.isInsideQuotes(content, x) &&
-				!PoshiSourceUtil.isInsideMultiLineString(
+				!PoshiSourceUtil.isInsideMultiLines(
 					getLineNumber(content, x), multiLineStringPositions)) {
 
 				addMessage(
@@ -59,5 +61,8 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			}
 		}
 	}
+
+	private static final Pattern _multiLineStringPattern = Pattern.compile(
+		"[ \t]*.+ = '''.*?'''", Pattern.DOTALL);
 
 }

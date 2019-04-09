@@ -85,7 +85,9 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 								new String[] {")", "}"});
 						}
 					}
-					else {
+					else if (!s.endsWith("= (;") && !s.endsWith("= {;") &&
+							 !s.endsWith("= );") && !s.endsWith("= };")) {
+
 						level += getLevel(
 							s, new String[] {"(", "{"},
 							new String[] {")", "}"});

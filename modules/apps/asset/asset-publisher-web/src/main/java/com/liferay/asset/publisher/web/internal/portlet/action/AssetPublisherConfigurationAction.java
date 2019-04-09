@@ -30,7 +30,6 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.internal.util.AssetQueryRule;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -355,9 +354,6 @@ public class AssetPublisherConfigurationAction
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long[] assetEntryIds = ParamUtil.getLongValues(
 			actionRequest, "assetEntryIds");
 		int assetEntryOrder = ParamUtil.getInteger(
@@ -365,19 +361,9 @@ public class AssetPublisherConfigurationAction
 		String assetEntryType = ParamUtil.getString(
 			actionRequest, "assetEntryType");
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		for (long assetEntryId : assetEntryIds) {
 			assetPublisherWebUtil.addSelection(
 				preferences, assetEntryId, assetEntryOrder, assetEntryType);
-
-			assetEntryUsageLocalService.addAssetEntryUsage(
-				themeDisplay.getScopeGroupId(), assetEntryId,
-				themeDisplay.getPlid(), portal.getClassNameId(Portlet.class),
-				portletDisplay.getPortletResource(), serviceContext);
 		}
 	}
 
@@ -595,13 +581,6 @@ public class AssetPublisherConfigurationAction
 		}
 
 		preferences.setValues("assetEntryXml", newEntries);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		assetEntryUsageLocalService.deleteAssetEntryUsages(
-			themeDisplay.getPlid(), portal.getClassNameId(Portlet.class),
-			portal.getPortletId(actionRequest));
 	}
 
 	protected void setScopes(
@@ -822,9 +801,6 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected AssetEntryActionRegistry assetEntryActionRegistry;
-
-	@Reference
-	protected AssetEntryUsageLocalService assetEntryUsageLocalService;
 
 	@Reference
 	protected AssetHelper assetHelper;

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+package com.liferay.configuration.admin.display;
 
-<%@ page import="com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration" %><%@
-page import="com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.PortalSettingsOpenNLPDocumentAssetAutoTagProviderConstants" %>
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-<%@ page import="javax.portlet.ActionRequest" %>
+import java.io.Serializable;
 
-<liferay-frontend:defineObjects />
+/**
+ * @author Drew Brokke
+ */
+public interface ConfigurationVisibilityController {
+
+	public boolean isVisible(
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK);
+
+}

@@ -15,7 +15,7 @@
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -102,12 +102,12 @@ public class OpenNLPDocumentAssetAutoTagProvider
 						"bin.bin")));
 	}
 
-	private OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+	private OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(long companyId)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
-			OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class,
+			OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId,
 				OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
@@ -133,11 +133,11 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration =
+		OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
+			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
 				_getConfiguration(fileEntry.getCompanyId());
 
-		if (!openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+		if (!openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
 				enabled()) {
 
 			return Collections.emptyList();
@@ -149,7 +149,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
 
 		float confidenceThreshold =
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+			openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
 				confidenceThreshold();
 
 		return Stream.of(

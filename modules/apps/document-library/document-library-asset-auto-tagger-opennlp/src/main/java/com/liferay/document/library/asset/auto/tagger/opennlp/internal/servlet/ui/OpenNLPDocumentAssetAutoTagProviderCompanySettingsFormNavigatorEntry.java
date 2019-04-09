@@ -17,7 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal.servlet.
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -125,10 +125,10 @@ public class
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration =
+		OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
+			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
 				_configurationProvider.getConfiguration(
-					OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+					OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.
 						class,
 					new CompanyServiceSettingsLocator(
 						themeDisplay.getCompanyId(),
@@ -136,9 +136,9 @@ public class
 							SERVICE_NAME));
 
 		request.setAttribute(
-			OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class.
+			OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class.
 				getName(),
-			openNPLDocumentAssetAutoTagProviderCompanyConfiguration);
+			openNLPDocumentAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

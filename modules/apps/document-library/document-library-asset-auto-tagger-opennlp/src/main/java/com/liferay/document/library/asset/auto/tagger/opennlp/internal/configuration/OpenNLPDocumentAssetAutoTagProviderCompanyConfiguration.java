@@ -27,11 +27,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "opennlp-auto-tag-provider-configuration-description",
-	id = "com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "opennlp-auto-tag-provider-configuration-name"
 )
-public interface OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration {
+public interface OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration {
 
 	/**
 	 * Enables auto tagging of documents using a pre-trained opennlp model.

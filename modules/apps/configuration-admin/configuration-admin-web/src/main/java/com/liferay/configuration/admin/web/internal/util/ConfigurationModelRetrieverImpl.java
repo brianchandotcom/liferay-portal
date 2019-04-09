@@ -14,7 +14,10 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -44,6 +47,7 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -207,6 +211,11 @@ public class ConfigurationModelRetrieverImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_configurationVisibilityControllerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, ConfigurationVisibilityController.class,
+				"configuration.pid");
 	}
 
 	protected void collectConfigurationModels(
@@ -241,6 +250,11 @@ public class ConfigurationModelRetrieverImpl
 
 			configurationModels.put(pid, configurationModel);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_configurationVisibilityControllerServiceTrackerMap.close();
 	}
 
 	protected String getAndFilterString(String... filterStrings) {
@@ -296,6 +310,15 @@ public class ConfigurationModelRetrieverImpl
 			metaTypeInformation.getObjectClassDefinition(pid, locale),
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
 			StringPool.QUESTION, factory);
+
+		ConfigurationVisibilityController configurationVisibilityController =
+			_configurationVisibilityControllerServiceTrackerMap.getService(pid);
+
+		if ((configurationVisibilityController != null) &&
+			!configurationVisibilityController.isVisible(scope, scopePK)) {
+
+			return null;
+		}
 
 		if (!scope.equals(scope.SYSTEM) && configurationModel.isFactory()) {
 			return null;
@@ -383,6 +406,9 @@ public class ConfigurationModelRetrieverImpl
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	private ServiceTrackerMap<String, ConfigurationVisibilityController>
+		_configurationVisibilityControllerServiceTrackerMap;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;

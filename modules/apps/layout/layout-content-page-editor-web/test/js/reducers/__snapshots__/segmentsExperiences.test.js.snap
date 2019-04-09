@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`segments experiences reducers createSegmentsExperienceReducer communicates with API and updates the state 1`] = `
+Object {
+  "availableSegmentsExperiences": Object {
+    "SEGMENTS_EXPERIENCE_ID": Object {
+      "active": true,
+      "name": "test experience name",
+      "segmentsEntryId": "test-segment-id",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+  },
+  "classNameId": "test-class-name-id",
+  "classPK": "test-class-p-k",
+  "defaultLanguageId": "en_US",
+  "defaultSegmentsExperienceId": "DEFAULT_SEGMENTS_EXPERIENCE_ID",
+  "layoutData": Object {
+    "any": "object",
+  },
+  "layoutDataList": Array [
+    Object {
+      "layoutData": Object {
+        "any": "object",
+      },
+      "segmentsExperienceId": "DEFAULT_SEGMENTS_EXPERIENCE_ID",
+    },
+    Object {
+      "layoutData": Object {
+        "any": "object",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+  ],
+  "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+}
+`;
+
+exports[`segments experiences reducers createSegmentsExperienceReducer communicates with API and updates the state 2`] = `
+Object {
+  "availableSegmentsExperiences": Object {
+    "SEGMENTS_EXPERIENCE_ID": Object {
+      "active": true,
+      "name": "test experience name",
+      "segmentsEntryId": "test-segment-id",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+    "SEGMENTS_EXPERIENCE_ID_SECOND": Object {
+      "active": true,
+      "name": "second test experience name",
+      "segmentsEntryId": "test-segment-id",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  },
+  "classNameId": "test-class-name-id",
+  "classPK": "test-class-p-k",
+  "defaultLanguageId": "en_US",
+  "defaultSegmentsExperienceId": "DEFAULT_SEGMENTS_EXPERIENCE_ID",
+  "layoutData": Object {
+    "any": "object",
+  },
+  "layoutDataList": Array [
+    Object {
+      "layoutData": Object {
+        "any": "object",
+      },
+      "segmentsExperienceId": "DEFAULT_SEGMENTS_EXPERIENCE_ID",
+    },
+    Object {
+      "layoutData": Object {
+        "any": "object",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+    Object {
+      "layoutData": Object {
+        "any": "object",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  ],
+  "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+}
+`;
+
+exports[`segments experiences reducers deleteExperience communicates with API and updates the state 1`] = `
+Object {
+  "availableSegmentsExperiences": Object {
+    "SEGMENTS_EXPERIENCE_ID_DEFAULT": Object {
+      "name": "A default test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+    "SEGMENTS_EXPERIENCE_ID_SECOND": Object {
+      "name": "A second test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  },
+  "classNameId": "test-class-name-id",
+  "classPK": "test-class-p-k",
+  "defaultLanguageId": "en_US",
+  "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+}
+`;
+
+exports[`segments experiences reducers deleteExperience communicates with API and updates the state 2`] = `
+Object {
+  "availableSegmentsExperiences": Object {
+    "SEGMENTS_EXPERIENCE_ID_DEFAULT": Object {
+      "name": "A default test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+  },
+  "classNameId": "test-class-name-id",
+  "classPK": "test-class-p-k",
+  "defaultLanguageId": "en_US",
+  "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+}
+`;
+
+exports[`segments experiences reducers selectSegmentsExperienceReducer 1`] = `
+Object {
+  "availableSegmentsExperiences": Object {
+    "SEGMENTS_EXPERIENCE_ID": Object {
+      "active": true,
+      "name": "A test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+    "SEGMENTS_EXPERIENCE_ID_DEFAULT": Object {
+      "active": true,
+      "name": "A default test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+    "SEGMENTS_EXPERIENCE_ID_SECOND": Object {
+      "active": true,
+      "name": "A second test experience",
+      "segmentsEntryId": "notRelevantSegmentId",
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  },
+  "layoutData": Object {
+    "testId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+  },
+  "layoutDataList": Array [
+    Object {
+      "layoutData": Object {
+        "testId": "SEGMENTS_EXPERIENCE_ID",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID",
+    },
+    Object {
+      "layoutData": Object {
+        "testId": "switched-SEGMENTS_EXPERIENCE_ID_DEFAULT",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+    Object {
+      "layoutData": Object {
+        "testId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  ],
+  "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+}
+`;

@@ -25,7 +25,7 @@
 				<span class="sticker">
 					<span class="inline-item">
 						<liferay-ui:user-portrait
-							cssClass="sticker-lg"
+							cssClass="sticker-lg text-secondary"
 							user="<%= user %>"
 						/>
 					</span>

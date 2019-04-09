@@ -43,6 +43,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 	private String _sortPoshiParameters(String fileName, String content) {
 		Matcher matcher1 = _methodCallPattern.matcher(content);
 
+		outerLoop:
 		while (matcher1.find()) {
 			Map<String, String> parametersMap = new TreeMap<>(
 				new NaturalOrderStringComparator());
@@ -59,9 +60,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 						fileName, "Duplicate parameter '" + parameterName + "'",
 						getLineNumber(content, matcher1.start(1)));
 
-					parametersMap.clear();
-
-					break;
+					continue outerLoop;
 				}
 
 				parametersMap.put(parameterName, matcher2.group(3));

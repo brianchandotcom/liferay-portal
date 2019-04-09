@@ -63,6 +63,11 @@ public class OAuth2Manager {
 		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 			_getGoogleAuthorizationCodeFlow(companyId);
 
+		if (googleAuthorizationCodeFlow == null) {
+			throw new PortalException(
+				"No Google Authorization Code Flow found");
+		}
+
 		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
 			googleAuthorizationCodeFlow.newAuthorizationUrl();
 
@@ -85,6 +90,10 @@ public class OAuth2Manager {
 		try {
 			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 				_getGoogleAuthorizationCodeFlow(companyId);
+
+			if (googleAuthorizationCodeFlow == null) {
+				return null;
+			}
 
 			return googleAuthorizationCodeFlow.loadCredential(
 				String.valueOf(userId));
@@ -126,6 +135,11 @@ public class OAuth2Manager {
 		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 			_getGoogleAuthorizationCodeFlow(companyId);
 
+		if (googleAuthorizationCodeFlow == null) {
+			throw new PortalException(
+				"No Google Authorization Code Flow found");
+		}
+
 		GoogleAuthorizationCodeTokenRequest
 			googleAuthorizationCodeTokenRequest =
 				googleAuthorizationCodeFlow.newTokenRequest(code);
@@ -147,10 +161,12 @@ public class OAuth2Manager {
 			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 				_getGoogleAuthorizationCodeFlow(companyId);
 
-			DataStore<StoredCredential> credentialDataStore =
-				googleAuthorizationCodeFlow.getCredentialDataStore();
+			if (googleAuthorizationCodeFlow != null) {
+				DataStore<StoredCredential> credentialDataStore =
+					googleAuthorizationCodeFlow.getCredentialDataStore();
 
-			credentialDataStore.delete(String.valueOf(userId));
+				credentialDataStore.delete(String.valueOf(userId));
+			}
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -175,8 +191,7 @@ public class OAuth2Manager {
 		throws PortalException {
 
 		if (!isConfigured(companyId)) {
-			throw new PortalException(
-				"Google Drive Opener is not properly configured");
+			return null;
 		}
 
 		try {

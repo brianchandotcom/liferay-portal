@@ -74,7 +74,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 
 			String indent = SourceUtil.getIndent(matcher1.group(1));
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(parametersMap.size() * 7);
 
 			for (Map.Entry<String, String> entry : parametersMap.entrySet()) {
 				if (parametersMap.size() == 1) {

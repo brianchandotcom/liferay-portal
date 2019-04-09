@@ -18,6 +18,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.info.display.contributor.AssetInfoDisplayObject;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -76,6 +77,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 				request.setAttribute(
 					DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT,
 					infoDisplayObject);
+
 				request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 			}
 		}
@@ -101,19 +103,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
-		AssetRendererFactory assetRendererFactory = null;
-
-		if (_infoDisplayObject != null) {
-			Object modelEntry = _infoDisplayObject.getModelEntry();
-
-			if (modelEntry instanceof AssetEntry) {
-				AssetEntry assetEntry = (AssetEntry)modelEntry;
-
-				assetRendererFactory = assetEntry.getAssetRendererFactory();
-			}
-		}
-
-		return assetRendererFactory;
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassNameId(
+				_infoDisplayObject.getClassNameId());
 	}
 
 	public Map<String, Object> getInfoDisplayFieldsValues()

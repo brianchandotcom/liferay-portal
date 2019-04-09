@@ -1,0 +1,20 @@
+{namespace SuccessPagePaginationItem}
+
+{deltemplate FormRenderer.PaginationItem variant="'success'"}
+	{@param? _handlePaginationItemClicked: any}
+	{@param activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+
+	{let $classes kind="text"}
+		page-item
+
+		{if $activePage == -1}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$classes}" data-onclick="{$_handlePaginationItemClicked}" data-page-index="{$pageIndex}">
+		<a class="page-link" href="javascript:;">{msg desc=""}success-page{/msg}</a>
+	</li>
+{/deltemplate}

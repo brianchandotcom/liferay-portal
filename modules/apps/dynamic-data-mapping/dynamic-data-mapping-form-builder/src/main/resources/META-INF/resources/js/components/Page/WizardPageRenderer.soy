@@ -1,0 +1,210 @@
+{namespace WizardPageRenderer}
+
+{deltemplate PageRenderer.container variant="'wizard'"}
+	{@param activePage: number}
+	{@param pageIndex: number}
+	{@param paginationMode: string}
+	{@param spritemap: string}
+	{@param total: number}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? editable: bool}
+	{@param? empty: bool}
+	{@param? page: ?}
+
+	<div class="ddm-layout-builder ddm-page-container-layout">
+		{if $activePage == $pageIndex}
+			<div class="ddm-form-page pl-4 pr-4">
+				{delcall PageRenderer.PageHeader data="$page" variant="$page.headerRenderer"}
+					{param description: $page.description /}
+					{param pageIndex: $pageIndex /}
+					{param title: $page.title /}
+					{param total: $total /}
+				{/delcall}
+
+				<div class="form-builder-layout">
+					{delcall PageRenderer.page variant="$paginationMode"}
+						{param _handleFieldBlurred: $_handleFieldBlurred /}
+						{param _handleFieldClicked: $_handleFieldClicked /}
+						{param _handleFieldEdited: $_handleFieldEdited /}
+						{param editable: $editable /}
+						{param empty: $empty /}
+						{param page: $page /}
+						{param pageIndex: $pageIndex /}
+						{param paginationMode: $paginationMode /}
+						{param spritemap: $spritemap /}
+					{/delcall}
+				</div>
+			</div>
+		{/if}
+	</div>
+{/deltemplate}
+
+{deltemplate PageRenderer.page variant="'wizard'"}
+	{@param paginationMode: string}
+	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? editable: bool}
+	{@param? empty: bool}
+	{@param? page: ?}
+	{@param? pageIndex: number}
+
+	<div class="layout-page">
+		{if $empty}
+			{let $attributes kind="attributes"}
+				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
+				data-ddm-field-column="0"
+				data-ddm-field-page="{$pageIndex}"
+				data-ddm-field-row="0"
+			{/let}
+
+			<div class="row">
+				<div {$attributes}>
+					<div class="ddm-target" id="lfr-initial-col-message">{msg desc=""}drag-from-sidebar-and-drop-here{/msg}</div>
+				</div>
+			</div>
+		{else}
+			{foreach $row in $page.rows}
+				{if isFirst($row) and $editable}
+					{call PageRenderer.fieldEmpty}
+						{param isRow: true /}
+						{param pageIndex: $pageIndex /}
+						{param rowIndex: 0 /}
+						{param size: 12 /}
+					{/call}
+				{/if}
+
+				{delcall PageRenderer.row variant="$paginationMode"}
+					{param _handleFieldBlurred: $_handleFieldBlurred /}
+					{param _handleFieldClicked: $_handleFieldClicked /}
+					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param editable: $editable /}
+					{param pageIndex: $pageIndex /}
+					{param paginationMode: $paginationMode /}
+					{param row: $row /}
+					{param rowIndex: index($row) /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+
+				{if $editable}
+					{call PageRenderer.fieldEmpty}
+						{param isRow: true /}
+						{param pageIndex: $pageIndex /}
+						{param rowIndex: index($row) + 1 /}
+						{param size: 12 /}
+					{/call}
+				{/if}
+			{/foreach}
+		{/if}
+	</div>
+{/deltemplate}
+
+{deltemplate PageRenderer.row variant="'wizard'"}
+	{@param paginationMode: string}
+	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? editable: bool}
+	{@param? pageIndex: number}
+	{@param? row: ?}
+	{@param? rowIndex: number}
+
+	<div class="position-relative row">
+		{foreach $column in $row.columns}
+			{delcall PageRenderer.column variant="'wizard'"}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldClicked: $_handleFieldClicked /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param column: $column /}
+				{param columnIndex: index($column) /}
+				{param editable: $editable /}
+				{param pageIndex: $pageIndex /}
+				{param rowIndex: $rowIndex /}
+				{param spritemap: $spritemap /}
+			{/delcall}
+		{/foreach}
+	</div>
+{/deltemplate}
+
+{deltemplate PageRenderer.column variant="'wizard'"}
+	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? column: ?}
+	{@param? columnIndex: number}
+	{@param? editable: bool}
+	{@param? pageIndex: number}
+	{@param? rowIndex: number}
+
+	{if length($column.fields) != 0}
+		{let $indexes kind="attributes"}
+			{if $rowIndex != 'undefined'}
+				data-ddm-field-row="{$rowIndex}"
+			{/if}
+
+			{if $pageIndex != 'undefined'}
+				data-ddm-field-page="{$pageIndex}"
+			{/if}
+
+			{if $columnIndex != 'undefined'}
+				data-ddm-field-column="{$columnIndex}"
+			{/if}
+		{/let}
+
+		{let $attributes kind="attributes"}
+			class="col-md-{$column.size} col-ddm"
+
+			{$indexes}
+		{/let}
+
+		<div {$attributes}>
+			{let $content kind="html"}
+				{foreach $field in $column.fields}
+					{let $fieldType: $field.type /}
+
+					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
+						{param readOnly: true  /}
+						{param events: [
+							'fieldBlurred': $_handleFieldBlurred,
+							'fieldEdited': $_handleFieldEdited
+						] /}
+						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
+						{param spritemap: $spritemap /}
+					{/delcall}
+				{/foreach}
+			{/let}
+
+			{if $editable}
+				<div class="ddm-field-container h-100">
+					<div class="ddm-resize-handle ddm-resize-handle-left" {$indexes}></div>
+
+					{let $attributesDrag kind="attributes"}
+						class="ddm-drag"
+
+						data-onclick="{$_handleFieldClicked}"
+					{/let}
+
+					<div {$attributesDrag}>
+						{$content}
+					</div>
+
+					<div class="ddm-resize-handle ddm-resize-handle-right" {$indexes}></div>
+				</div>
+			{else}
+				{$content}
+			{/if}
+		</div>
+	{elseif $editable}
+		{call PageRenderer.fieldEmpty}
+			{param columnIndex: $columnIndex /}
+			{param pageIndex: $pageIndex /}
+			{param rowIndex: $rowIndex /}
+			{param size: $column.size /}
+		{/call}
+	{/if}
+{/deltemplate}

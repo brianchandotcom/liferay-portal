@@ -1,191 +1,109 @@
 {namespace FormRenderer}
 
 {template .render}
+	{@param pages: ?}
 	{@param spritemap: string}
-	{@param? _handleColumnResized: any}
-	{@param? _handleChangePage: any}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleExpandedChanged: any}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
-	{@param? _handlePageSettingsClicked: any}
+	{@param? _handlePaginationItemClicked: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
-	{@param? _handleSuccesPageChanged: any}
-	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
-	{@param? defaultPageTitle: string}
-	{@param? dropdownExpanded: bool}
 	{@param? editable: bool}
-	{@param? modeRenderer: string}
-	{@param? pages: ?}
-	{@param? pageSettingsItems: ?}
 	{@param? paginationMode: string}
-	{@param? successPageLabel: string}
-	{@param? successPageSettings: ?}
-	{@param? view: ?}
 
-	{let $contentRenderer: $modeRenderer ?: 'grid' /}
+	{let $currentPaginationMode: $paginationMode ?: 'paginated' /}
 	{let $total: length($pages) /}
 
-	{delcall FormRenderer.pages variant="$contentRenderer"}
-		{param _handleColumnResized: $_handleColumnResized /}
-		{param _handleChangePage: $_handleChangePage /}
-		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
-		{param _handleExpandedChanged: $_handleExpandedChanged /}
+	{delcall FormRenderer.pages}
 		{param _handleFieldBlurred: $_handleFieldBlurred /}
 		{param _handleFieldClicked: $_handleFieldClicked /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
-		{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
+		{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 		{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 		{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
-		{param _handleSuccesPageChanged: $_handleSuccesPageChanged /}
-		{param _handleUpdatePage: $_handleUpdatePage /}
-		{param activePage: $activePage /}
-		{param contentRenderer: $contentRenderer /}
-		{param defaultPageTitle: $defaultPageTitle /}
-		{param dropdownExpanded: $dropdownExpanded /}
+		{param activePage: $activePage ?: 0 /}
 		{param editable: $editable /}
 		{param pages: $pages /}
-		{param pageSettingsItems: $pageSettingsItems /}
-		{param paginationMode: $paginationMode /}
+		{param paginationMode: $currentPaginationMode /}
 		{param spritemap: $spritemap /}
-		{param successPageLabel: $successPageLabel /}
-		{param successPageSettings: $successPageSettings /}
 		{param total: $total /}
-		{param view: $view /}
 	{/delcall}
 {/template}
 
-{deltemplate FormRenderer.pages variant="'grid'"}
+{deltemplate FormRenderer.pages}
+	{@param activePage: number}
+	{@param pages: ?}
+	{@param paginationMode: string}
 	{@param spritemap: string}
-	{@param? _handleColumnResized: any}
-	{@param? _handleChangePage: any}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleExpandedChanged: any}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
-	{@param? _handlePageSettingsClicked: any}
+	{@param? _handlePaginationItemClicked: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
-	{@param? _handleSuccesPageChanged: any}
-	{@param? _handleUpdatePage: any}
-	{@param? activePage: number}
-	{@param? contentRenderer: string}
-	{@param? defaultPageTitle: string}
-	{@param? dropdownExpanded: bool}
 	{@param? editable: bool}
-	{@param? pages: ?}
-	{@param? pageSettingsItems: ?}
-	{@param? paginationMode: string}
-	{@param? successPageLabel: string}
-	{@param? successPageSettings: ?}
-	{@param? total: int}
-	{@param? view: ?}
 
 	<div class="position-relative">
-		{if ($paginationMode == 'wizard') or (length($pages) == 1 and not $successPageSettings.enabled)}
-			{delcall FormRenderer.paginationContainer}
-				{param _handleChangePage: $_handleChangePage /}
-				{param _handleExpandedChanged: $_handleExpandedChanged /}
+		{if ($paginationMode == 'wizard') or (length($pages) == 1)}
+			{delcall FormRenderer.PaginationContainer}
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
-				{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
 				{param activePage: $activePage /}
-				{param defaultPageTitle: $defaultPageTitle /}
-				{param dropdownExpanded: $dropdownExpanded /}
 				{param pages: $pages /}
-				{param pageSettingsItems: $pageSettingsItems /}
 				{param paginationMode: $paginationMode /}
 				{param spritemap: $spritemap /}
-				{param successPageLabel: $successPageLabel /}
-				{param successPageSettings: $successPageSettings /}
-				{param view: $view /}
 			{/delcall}
 		{/if}
 
-		{if $activePage == -1}
-			{call SuccessPage.render}
-				{param successPageSettings: $successPageSettings /}
+		{foreach $page in $pages}
+			{call PageRenderer.render}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
 				{param events: [
-					'successPageChanged': $_handleSuccesPageChanged
+					'fieldBlurred': $_handleFieldBlurred,
+					'fieldClicked': $_handleFieldClicked,
+					'fieldEdited': $_handleFieldEdited
 				] /}
-				{param ref: 'successPage' /}
+				{param page: $page /}
+				{param pageIndex: index($page) /}
+				{param paginationMode: $paginationMode /}
+				{param ref: 'pageRenderer' + index($page) /}
+				{param key: index($page) /}
+				{param spritemap: $spritemap /}
+				{param total: length($pages) /}
 			{/call}
-		{else}
-			{foreach $page in $pages}
-				{call PageRenderer.render}
-					{param activePage: $activePage /}
-					{param contentRenderer: $contentRenderer /}
-					{param editable: $editable /}
-					{param events: [
-						'deleteButtonClicked': $_handleDeleteButtonClicked,
-						'columnResized': $_handleColumnResized,
-						'deleteFieldClicked': $_handleDeleteButtonClicked,
-						'duplicateButtonClicked': $_handleDuplicateButtonClicked,
-						'fieldBlurred': $_handleFieldBlurred,
-						'fieldClicked': $_handleFieldClicked,
-						'fieldEdited': $_handleFieldEdited,
-						'updatePage': $_handleUpdatePage
-					] /}
-					{param page: $page /}
-					{param pageIndex: index($page) /}
-					{param ref: 'pageRenderer' + index($page) /}
-					{param spritemap: $spritemap /}
-					{param total: $total /}
-					{param view: $view /}
-				{/call}
-			{/foreach}
-		{/if}
+		{/foreach}
 
 		{let $multiple: length($pages) > 1 /}
 
-		{if ($multiple and ($paginationMode == 'pagination')) or (($paginationMode == 'pagination') and (length($pages) == 1) and $successPageSettings.enabled)}
-			{delcall FormRenderer.paginationContainer}
-				{param _handleChangePage: $_handleChangePage /}
-				{param _handleExpandedChanged: $_handleExpandedChanged /}
+		{if ($multiple and ($paginationMode == 'paginated')) or (($paginationMode == 'paginated') and (length($pages) == 1))}
+			{delcall FormRenderer.PaginationContainer}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
-				{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 				{param activePage: $activePage /}
-				{param defaultPageTitle: $defaultPageTitle /}
-				{param dropdownExpanded: $dropdownExpanded /}
 				{param pages: $pages /}
-				{param pageSettingsItems: $pageSettingsItems /}
 				{param paginationMode: $paginationMode /}
 				{param spritemap: $spritemap /}
-				{param successPageLabel: $successPageLabel /}
-				{param successPageSettings: $successPageSettings /}
 			{/delcall}
 		{/if}
 	</div>
 {/deltemplate}
 
-{deltemplate FormRenderer.paginationContainer}
+{deltemplate FormRenderer.PaginationContainer}
+	{@param activePage: number}
+	{@param paginationMode: string}
 	{@param spritemap: string}
-	{@param? _handleChangePage: any}
-	{@param? _handleExpandedChanged: any}
+	{@param? _handlePaginationItemClicked: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
-	{@param? _handlePageSettingsClicked: any}
-	{@param? activePage: number}
-	{@param? defaultPageTitle: string}
-	{@param? dropdownExpanded: bool}
 	{@param? pages: ?}
-	{@param? pageSettingsItems: ?}
-	{@param? paginationMode: string}
-	{@param? successPageLabel: string}
-	{@param? successPageSettings: ?}
-	{@param? total: int}
-	{@param? view: ?}
 
-	{let $multiple: length($pages) > 1 or $successPageSettings.enabled /}
+	{let $multiple: length($pages) > 1 /}
 	{let $classes kind="text"}
 		ddm-form-pagination
 
@@ -197,112 +115,93 @@
 
 		{if $multiple and $paginationMode == 'wizard'}
 			{sp}wizard-mode
-		{elseif $multiple and $paginationMode == 'pagination'}
+		{elseif $multiple and $paginationMode == 'paginated'}
 			{sp}pagination-mode
 		{/if}
 	{/let}
 
 	<div class="{$classes}">
 		{if $multiple and ($paginationMode == 'wizard')}
-			{delcall FormRenderer.wizard}
-				{param _handleChangePage: $_handleChangePage /}
+			{delcall FormRenderer.Wizard}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param activePage: $activePage /}
-				{param defaultPageTitle: $defaultPageTitle /}
 				{param pages: $pages /}
 				{param spritemap: $spritemap /}
-				{param successPageLabel: $successPageLabel /}
-				{param successPageSettings: $successPageSettings /}
 			{/delcall}
-		{elseif $multiple and ($paginationMode == 'pagination')}
-			{delcall FormRenderer.pagination}
-				{param _handleChangePage: $_handleChangePage /}
+		{elseif $multiple and ($paginationMode == 'paginated')}
+			{delcall FormRenderer.Pagination}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
 				{param activePage: $activePage /}
 				{param pages: $pages /}
-				{param successPageLabel: $successPageLabel /}
-				{param successPageSettings: $successPageSettings /}
 			{/delcall}
-		{/if}
-
-		{if $view != 'fieldSets'}
-			<div class="ddm-page-settings" role="group">
-				{call ClayActionsDropdown.render}
-					{param items: $pageSettingsItems /}
-					{param triggerClasses: 'component-action' /}
-					{param events: [
-						'itemClicked': $_handlePageSettingsClicked
-					] /}
-					{param spritemap: $spritemap /}
-				{/call}
-			</div>
 		{/if}
 	</div>
 {/deltemplate}
 
-{deltemplate FormRenderer.wizard}
-	{@param? _handleChangePage: any}
+{deltemplate FormRenderer.Wizard}
+	{@param? _handlePaginationItemClicked: any}
 	{@param? activePage: number}
-	{@param? defaultPageTitle: string}
 	{@param? pages: ?}
-	{@param? successPageLabel: string}
-	{@param? successPageSettings: ?}
 
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{foreach $page in $pages}
-			{let $title: $page.title ? $page.title : $defaultPageTitle /}
 			{let $pageIndex: index($page) /}
-			{let $step: $pageIndex + 1 /}
-			{let $classes kind="text"}
-				multi-step-item
-				{if $step != length($pages) or $successPageSettings.enabled}
-					{sp}multi-step-item-expand
-				{/if}
 
-				{if $pageIndex == $activePage}
-					{sp}active
-				{/if}
-			{/let}
-
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="{$pageIndex}">
-				<div class="multi-step-divider"></div>
-				<div class="multi-step-indicator">
-					<div class="multi-step-indicator-label">{$title}</div>
-
-					<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
-				</div>
-			</li>
+			{delcall FormRenderer.WizardItem variant="$page.paginationItemRenderer"}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
+				{param activePage: $activePage /}
+				{param page: $page /}
+				{param pageIndex: $pageIndex /}
+				{param total: length($pages) /}
+			{/delcall}
 		{/foreach}
-
-		{if $successPageSettings.enabled}
-			{let $classes kind="text"}
-				multi-step-item complete
-
-				{if $activePage == -1}
-					{sp}active
-				{/if}
-			{/let}
-
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="-1">
-				<div class="multi-step-divider"></div>
-				<div class="multi-step-indicator">
-					<div class="multi-step-indicator-label">{$successPageLabel}</div>
-
-					<a class="multi-step-icon" href="javascript:;"></a>
-				</div>
-			</li>
-		{/if}
 	</ol>
 {/deltemplate}
 
-{deltemplate FormRenderer.pagination}
-	{@param? _handleChangePage: any}
+{deltemplate FormRenderer.WizardItem}
+	{@param? _handlePaginationItemClicked: any}
+	{@param? activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+	{@param total: number}
+
+	{let $step: $pageIndex + 1 /}
+
+	{let $classes kind="text"}
+		multi-step-item
+
+		{if $step != $total}
+			{sp}multi-step-item-expand
+		{/if}
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$classes}" data-onclick="{$_handlePaginationItemClicked}" data-page-index="{$pageIndex}">
+		<div class="multi-step-divider"></div>
+		<div class="multi-step-indicator">
+			{let $defaultPageTitle kind="text"}
+				{msg desc=""}untitled-page{/msg}
+			{/let}
+			{let $title: $page.title ? $page.title : $defaultPageTitle /}
+
+			<div class="multi-step-indicator-label">{$title}</div>
+
+			<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
+		</div>
+	</li>
+{/deltemplate}
+
+{deltemplate FormRenderer.Pagination}
+	{@param activePage: number}
+	{@param? _handlePaginationItemClicked: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
-	{@param? activePage: number}
 	{@param? pages: ?}
-	{@param? successPageLabel: string}
-	{@param? successPageSettings: ?}
 
 	<ul class="ddm-pagination justify-content-center pagination">
 		{let $wizardClasses kind="text"}
@@ -316,44 +215,25 @@
 		<li class="{$wizardClasses}" data-onclick="{$_handlePaginationLeftClicked}">
 			<a class="page-link" href="javascript:;" role="button">
 				«
-				<span class="sr-only">Previous</span>
+				<span class="sr-only">{msg desc=""}previous{/msg}</span>
 			</a>
 		</li>
 
 		{foreach $page in $pages}
 			{let $pageIndex: index($page) /}
-			{let $step: $pageIndex + 1 /}
-			{let $classes kind="text"}
-				page-item
 
-				{if $pageIndex == $activePage}
-					{sp}active
-				{/if}
-			{/let}
-
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="{$pageIndex}">
-				<a class="page-link" href="javascript:;">{$step}</a>
-			</li>
+			{delcall FormRenderer.PaginationItem variant="$page.paginationItemRenderer"}
+				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
+				{param activePage: $activePage /}
+				{param page: $page /}
+				{param pageIndex: $pageIndex /}
+			{/delcall}
 		{/foreach}
-
-		{if $successPageSettings.enabled}
-			{let $classes kind="text"}
-				page-item
-
-				{if $activePage == -1}
-					{sp}active
-				{/if}
-			{/let}
-
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="-1">
-				<a class="page-link" href="javascript:;">{$successPageLabel}</a>
-			</li>
-		{/if}
 
 		{let $paginationClasses kind="text"}
 			page-item
 
-			{if ($activePage == (length($pages) - 1) and  not $successPageSettings.enabled) or ($successPageSettings.enabled and $activePage == -1)}
+			{if ($activePage == (length($pages) - 1)) or ($activePage == -1)}
 				{sp}visibility-hidden
 			{/if}
 		{/let}
@@ -361,43 +241,28 @@
 		<li class="{$paginationClasses}" data-onclick="{$_handlePaginationRightClicked}">
 			<a class="page-link" href="javascript:;" role="button">
 				»
-				<span class="sr-only">Next</span>
+				<span class="sr-only">{msg desc=""}next{/msg}</span>
 			</a>
 		</li>
 	</ul>
 {/deltemplate}
 
-{deltemplate FormRenderer.pages variant="'list'"}
-	{@param spritemap: string}
-	{@param? _handleFieldBlurred: any}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleFieldEdited: any}
-	{@param? _handleUpdatePage: any}
-	{@param? activePage: number}
-	{@param? contentRenderer: string}
-	{@param? editable: bool}
-	{@param? pages: ?}
-	{@param? total: int}
+{deltemplate FormRenderer.PaginationItem}
+	{@param activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+	{@param? _handlePaginationItemClicked: any}
 
-	<div class="ddm-page-list-container">
-		{foreach $page in $pages}
-			{call PageRenderer.render}
-				{param activePage: $activePage /}
-				{param contentRenderer: $contentRenderer /}
-				{param editable: $editable /}
-				{param events: [
-					'deleteButtonClicked': $_handleDeleteButtonClicked,
-					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
-					'fieldBlurred': $_handleFieldBlurred,
-					'fieldEdited': $_handleFieldEdited,
-					'updatePage': $_handleUpdatePage
-				] /}
-				{param page: $page /}
-				{param pageIndex: index($page) /}
-				{param spritemap: $spritemap /}
-				{param total: $total /}
-			{/call}
-		{/foreach}
-	</div>
+	{let $step: $pageIndex + 1 /}
+	{let $classes kind="text"}
+		page-item
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$classes}" data-onclick="{$_handlePaginationItemClicked}" data-page-index="{$pageIndex}">
+		<a class="page-link" href="javascript:;">{$step}</a>
+	</li>
 {/deltemplate}

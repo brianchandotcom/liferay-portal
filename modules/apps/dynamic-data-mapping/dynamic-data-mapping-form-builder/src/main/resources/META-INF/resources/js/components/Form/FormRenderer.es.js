@@ -1,14 +1,11 @@
 import '../Page/PageRenderer.es';
 import '../SuccessPage/SuccessPage.es';
 import 'clay-button';
-import * as FormSupport from './FormSupport.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
 import {Config} from 'metal-state';
-import {DragDrop} from 'metal-drag-drop';
 import {pageStructure} from '../../util/config.es';
-import {setValue} from '../../util/i18n.es';
 
 /**
  * FormRenderer.
@@ -34,43 +31,7 @@ class FormRenderer extends Component {
 		 * @type {?bool}
 		 */
 
-		dragAndDropDisabled: Config.bool().value(false),
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {?bool}
-		 */
-
 		editable: Config.bool().value(false),
-
-		/**
-		 * @default 'Untitled Page'
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {?string}
-		 */
-
-		defaultPageTitle: Config.string().value(Liferay.Language.get('untitled-page')),
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {boolean}
-		 */
-
-		dropdownExpanded: Config.bool().value(false).internal(),
-
-		/**
-		 * @default grid
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {?bool}
-		 */
-
-		modeRenderer: Config.oneOf(['grid', 'list']).value('grid'),
 
 		/**
 		 * @default []
@@ -88,307 +49,36 @@ class FormRenderer extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required(),
-
-		/**
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {string}
-		 */
-		successPageLabel: Config.string().value(Liferay.Language.get('success-page')),
-
-		/**
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {object}
-		 */
-		successPageSettings: Config.shapeOf(
-			{
-				body: Config.object(),
-				enabled: Config.bool(),
-				title: Config.object()
-			}
-		).value({})
+		spritemap: Config.string().required()
 	};
-
-	/**
-	 * @inheritDoc
-	 */
-
-	attached() {
-		if (this.editable && !this.dragAndDropDisabled) {
-			this._startDrag();
-		}
-
-		if (this.refs.dropdown) {
-			this.refs.dropdown.refs.dropdown.on('expandedChanged', this._handleExpandedChanged.bind(this));
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	disposeInternal() {
-		super.disposeInternal();
-		this.disposeDragAndDrop();
-	}
-
-	prepareStateForRender(state) {
-		return {
-			...state,
-			pageSettingsItems: this._getPageSettingsItems()
-		};
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	willReceiveState(nextState) {
-		if (nextState.pages && this.editable && !this.dragAndDropDisabled) {
-			this._dragAndDrop.setState(
-				{
-					targets: '.ddm-target'
-				}
-			);
-		}
-		return nextState;
-	}
-
-	disposeDragAndDrop() {
-		if (this._dragAndDrop) {
-			this._dragAndDrop.dispose();
-		}
-	}
 
 	_handleFieldClicked(index) {
 		this.emit('fieldClicked', index);
 	}
 
 	/**
-	 * Render page options acordding the older form's options order
+	 * @param {!Object} event
 	 * @private
 	 */
 
-	_getPageSettingsItems() {
-		const pageSettingsItems = [
-			{
-				'label': Liferay.Language.get('add-new-page'),
-				'settingsItem': 'add-page'
-			}
-		];
-
-		const successPageEnabled = this.successPageSettings.enabled;
-
-		if ((this.pages.length === 1) && (this.activePage != -1)) {
-			pageSettingsItems.push(
-				{
-					'label': Liferay.Language.get('reset-page'),
-					'settingsItem': 'reset-page'
-				}
-			);
-
-			if (!successPageEnabled) {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('add-success-page'),
-						'settingsItem': 'add-success-page'
-					}
-				);
-			}
-		}
-		else {
-			pageSettingsItems.push(
-				{
-					'label': Liferay.Language.get('delete-current-page'),
-					'settingsItem': 'delete-page'
-				}
-			);
-
-			if (!successPageEnabled) {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('add-success-page'),
-						'settingsItem': 'add-success-page'
-					}
-				);
-			}
-		}
-
-		if (this.pages.length > 1) {
-			let label = Liferay.Language.get('switch-pagination-to-top');
-
-			if (this.paginationMode == 'wizard') {
-				label = Liferay.Language.get('switch-pagination-to-bottom');
-			}
-
-			pageSettingsItems.push(
-				{
-					label,
-					settingsItem: 'switch-pagination-mode'
-				}
-			);
-		}
-
-		return pageSettingsItems;
-	}
-
-	_handleExpandedChanged({newVal}) {
-		this.dropdownExpanded = newVal;
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
 	}
 
 	/**
-	 * Add a page to the context
+	 * @param {!Object} payload
 	 * @private
 	 */
 
-	_addPage() {
-		this.emit('pageAdded');
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
 	}
 
-	/**
-	 * Add a success page to the context
-	 * @private
-	 */
-
-	_addSuccessPage() {
-		return this._updateSuccessPage(
-			{
-				body: 'Your information was successfully received. Thank you for filling out the form.',
-				enabled: true,
-				title: 'Done'
-			},
-			-1
-		);
-	}
-
-	_updateSuccessPage({body = '', title = '', enabled}, activePageValue) {
-		const language = themeDisplay.getLanguageId();
-		const successPageSettings = {
-			body: {},
-			enabled,
-			title: {}
-		};
-
-		this.activePage = activePageValue;
-
-		setValue(successPageSettings, language, 'body', body);
-		setValue(successPageSettings, language, 'title', title);
-
-		this.emit('activePageUpdated', this.activePage);
-		this.emit('successPageChanged', successPageSettings);
-	}
-
-	_deletePage() {
-		this.emit('pageDeleted', this.activePage);
-	}
-
-	_deleteSuccessPage() {
-		return this._updateSuccessPage(
-			{
-				enabled: false
-			},
-			this.pages.length - 1
-		);
-	}
-
-	/*
-	 * @param {Object} data
-	 * @private
-	 */
-
-	_handlePageSettingsClicked({data}) {
-		const {settingsItem} = data.item;
-
-		this.dropdownExpanded = false;
-
-		if (settingsItem == 'add-page') {
-			this._addPage();
-		}
-		else if (settingsItem === 'reset-page') {
-			this._resetPage();
-		}
-		else if (settingsItem === 'delete-page' && this.activePage === -1) {
-			this._deleteSuccessPage();
-		}
-		else if (settingsItem === 'delete-page') {
-			this._deletePage();
-		}
-		else if (settingsItem == 'switch-pagination-mode') {
-			this._switchPaginationMode();
-		}
-		else if (settingsItem == 'add-success-page') {
-			this._addSuccessPage();
-		}
-	}
-
-	/*
-	 * @param {Object} data
-	 * @private
-	 */
-
-	_handleSuccesPageChanged(successPageSettings) {
-		this.emit('successPageChanged', successPageSettings);
-	}
-
-	_switchPaginationMode() {
-		this.emit('paginationModeUpdated');
-	}
-
-	_resetPage() {
-		this.emit('pageReset');
-	}
-
-	_handleColumnResized(event) {
-		this.emit('columnResized', event);
-	}
-
-	_handleChangePage({delegateTarget: {dataset}}) {
+	_handlePaginationItemClicked({delegateTarget: {dataset}}) {
+		const {dispatch} = this.context;
 		const {pageIndex} = dataset;
 
-		this.activePage = parseInt(pageIndex, 10);
-		this.emit('activePageUpdated', this.activePage);
-	}
-
-	_handleDragStarted({source}) {
-		const {height} = source.getBoundingClientRect();
-		const {parentElement} = source;
-
-		parentElement.setAttribute('style', `height: ${height}px !important;`);
-		parentElement.classList.add('ddm-parent-dragging');
-	}
-
-	/**
-	 * @param {!Object} data
-	 * @private
-	 */
-
-	_handleDragAndDropEnd({source, target}) {
-		const lastParent = document.querySelector('.ddm-parent-dragging');
-
-		if (lastParent) {
-			lastParent.classList.remove('ddm-parent-dragging');
-			lastParent.removeAttribute('style');
-		}
-
-		if (target) {
-			const sourceIndex = FormSupport.getIndexes(
-				source.parentElement.parentElement
-			);
-			const targetIndex = FormSupport.getIndexes(target.parentElement);
-
-			source.innerHTML = '';
-
-			const addedToPlaceholder = ![...target.parentElement.parentElement.classList].includes('position-relative');
-
-			this._handleFieldMoved(
-				{
-					addedToPlaceholder,
-					source: sourceIndex,
-					target: targetIndex
-				}
-			);
-		}
+		dispatch('activePageUpdated', Number(pageIndex));
 	}
 
 	/**
@@ -425,95 +115,6 @@ class FormRenderer extends Component {
 			'activePageUpdated',
 			index
 		);
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', event);
-	}
-
-	/**
-	 * @param {!Object} payload
-	 * @private
-	 */
-
-	_handleFieldEdited(event) {
-		this.emit('fieldEdited', event);
-	}
-
-	/**
-	 * @param {!Object} payload
-	 * @private
-	 */
-
-	_handleFieldMoved(event) {
-		this.emit('fieldMoved', event);
-	}
-
-	/**
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleDeleteButtonClicked(data) {
-		this.emit('fieldDeleted', data);
-	}
-
-	/**
-     * @param {!Event} event
-     * @private
-     */
-
-	_handleDuplicateButtonClicked(data) {
-		this.emit('fieldDuplicated', data);
-	}
-
-	/**
-	 * @param {!Object} payload
-	 * @private
-	 */
-
-	_handleUpdatePage({page, pageIndex}) {
-		this.emit(
-			'pagesUpdated',
-			this.pages.map(
-				(currentPage, index) => {
-					if (index === pageIndex) {
-						currentPage = {
-							...currentPage,
-							...page
-						};
-					}
-
-					return currentPage;
-				}
-			)
-		);
-	}
-
-	/**
-	 * @private
-	 */
-
-	_startDrag() {
-		this._dragAndDrop = new DragDrop(
-			{
-				sources: '.ddm-drag',
-				targets: '.ddm-target',
-				useShim: false
-			}
-		);
-
-		this._dragAndDrop.on(
-			DragDrop.Events.END,
-			this._handleDragAndDropEnd.bind(this)
-		);
-
-		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 	}
 }
 

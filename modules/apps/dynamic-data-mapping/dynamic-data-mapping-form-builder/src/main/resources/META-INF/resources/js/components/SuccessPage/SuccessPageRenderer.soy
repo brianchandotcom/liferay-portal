@@ -1,0 +1,16 @@
+{namespace SuccessPageRenderer}
+
+{deltemplate PageRenderer.container variant="'success'"}
+	{@param activePage: number}
+	{@param pageIndex: number}
+	{@param paginationMode: string}
+	{@param spritemap: string}
+	{@param total: number}
+	{@param? page: ?}
+
+	{if $activePage == $pageIndex}
+		{call SuccessPage.render}
+			{param successPageSettings: $page?.successPageSettings /}
+		{/call}
+	{/if}
+{/deltemplate}

@@ -1,36 +1,45 @@
 {namespace SuccessPage}
 
 {template .render}
-	{@param? _handleSuccessPageSettingsChanged: any}
-	{@param? contentLabel: string}
-	{@param? successPageSettings: ?}
-	{@param? titleLabel: string}
+	{@param? _handleSuccessPageUpdated: any}
+	{@param? body: string}
+	{@param? title: string}
 
 	{delcall SuccessPage.container}
-		{param _handleSuccessPageSettingsChanged: $_handleSuccessPageSettingsChanged /}
-		{param contentLabel: $contentLabel /}
-		{param successPageSettings: $successPageSettings /}
-		{param titleLabel: $titleLabel /}
+		{param _handleSuccessPageUpdated: $_handleSuccessPageUpdated /}
+		{param body: $body /}
+		{param title: $title /}
 	{/delcall}
 {/template}
 
 {deltemplate SuccessPage.container}
-	{@param? _handleSuccessPageSettingsChanged: any}
-	{@param? contentLabel: string}
-	{@param? successPageSettings: ?}
-	{@param? titleLabel: string}
+	{@param? _handleSuccessPageUpdated: any}
+	{@param? body: string}
+	{@param? title: string}
 
 	<div class="ddm-page-success-layout">
 		<div class="form-builder-success-page pb-3 pt-2">
-			<label class="control-label">{$titleLabel}</label>
+			<label class="control-label">{msg desc=""}title{/msg}</label>
 
-			<input class="form-builder-success-page-title form-control" data-onkeyup="{$_handleSuccessPageSettingsChanged}" data-setting="title" type="text" value="{$successPageSettings.title.en_US}" />
+			<input
+				class="form-builder-success-page-title form-control"
+				data-oninput="{$_handleSuccessPageUpdated}"
+				data-setting="title"
+				type="text"
+				value="{$title}"
+			/>
 
 			<br />
 
-			<label class="control-label">{$contentLabel}</label>
+			<label class="control-label">{msg desc=""}content{/msg}</label>
 
-			<input class="form-builder-success-page-content form-control" data-onkeyup="{$_handleSuccessPageSettingsChanged}" data-setting="body" type="text" value="{$successPageSettings.body.en_US}" />
+			<input
+				class="form-builder-success-page-content form-control"
+				data-oninput="{$_handleSuccessPageUpdated}"
+				data-setting="body"
+				type="text"
+				value="{$body}"
+			/>
 		</div>
 	</div>
 {/deltemplate}

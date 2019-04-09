@@ -12,7 +12,7 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
-import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {getFieldProperties, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
 
@@ -72,8 +72,7 @@ class Sidebar extends Component {
 			{
 				add: {
 					items: [
-						Liferay.Language.get('elements'),
-						Liferay.Language.get('element-sets')
+						Liferay.Language.get('elements')
 					]
 				},
 				edit: {
@@ -87,6 +86,23 @@ class Sidebar extends Component {
 	};
 
 	static PROPS = {
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?string}
+		 */
+
+		defaultLanguageId: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?string}
+		 */
+
 		editingLanguageId: Config.string(),
 
 		/**
@@ -177,6 +193,14 @@ class Sidebar extends Component {
 		this.emit('fieldBlurred');
 	}
 
+	syncEditingLanguageId() {
+		const {evaluableForm} = this.refs;
+
+		if (evaluableForm) {
+			evaluableForm.evaluate();
+		}
+	}
+
 	syncVisible(visible) {
 		if (!visible) {
 			this.emit('fieldBlurred');
@@ -184,11 +208,11 @@ class Sidebar extends Component {
 	}
 
 	changeFieldType(type) {
-		const {editingLanguageId, fieldTypes, focusedField, namespace} = this.props;
+		const {defaultLanguageId, editingLanguageId, fieldTypes, focusedField} = this.props;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
-			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
+			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, editingLanguageId, newFieldType, focusedField.fieldName)
 		};
 		let {settingsContext} = focusedField;
 
@@ -201,11 +225,13 @@ class Sidebar extends Component {
 			{
 				...focusedField,
 				...newFieldType,
-				...getFieldPropertiesFromSettingsContext(editingLanguageId, settingsContext),
+				...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
 				settingsContext,
 				type: newFieldType.name
 			}
 		);
+
+		this.refs.evaluableForm.evaluate();
 	}
 
 	/**
@@ -228,7 +254,7 @@ class Sidebar extends Component {
 	}
 
 	isChangeFieldTypeEnabled() {
-		return true;
+		return !this.isActionsDisabled();
 	}
 
 	/**
@@ -297,17 +323,11 @@ class Sidebar extends Component {
 	}
 
 	_cancelFieldChanges(indexes) {
-		this.emit(
-			'fieldChangesCanceled',
-			indexes
-		);
+		this.emit('fieldChangesCanceled', indexes);
 	}
 
 	_deleteField(indexes) {
-		this.emit(
-			'fieldDeleted',
-			indexes
-		);
+		this.emit('fieldDeleted', {indexes});
 	}
 
 	_dropdownFieldTypesValueFn() {
@@ -328,10 +348,7 @@ class Sidebar extends Component {
 	}
 
 	_duplicateField(indexes) {
-		this.emit(
-			'fieldDuplicated',
-			indexes
-		);
+		this.emit('fieldDuplicated', {indexes});
 	}
 
 	_fieldTypesGroupValueFn() {
@@ -422,7 +439,13 @@ class Sidebar extends Component {
 		const {transitionEnd} = this;
 		const {open} = this.state;
 
-		if (this._isCloseButton(target) || (open && !this._isSidebarElement(target))) {
+		if (
+			this._isCloseButton(target) ||
+			(open && (
+				!this._isSidebarElement(target) &&
+				!this._isTranslationItem(target)
+			))
+		) {
 			this.close();
 
 			dom.once(
@@ -453,34 +476,20 @@ class Sidebar extends Component {
 		const {fieldTypes} = this.props;
 		const fieldTypeName = data.source.dataset.fieldTypeName;
 
-		const fieldSetId = data.source.dataset.fieldSetId;
-
 		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
-		if (fieldSetId) {
-			this.emit(
-				'fieldSetAdded',
-				{
-					data,
-					fieldSetId,
-					target: indexes
-				}
-			);
-		}
-		else {
-			this.emit(
-				'fieldAdded',
-				{
-					data,
-					fieldType: {
-						...fieldType,
-						editable: true
-					},
-					target: indexes
-				}
-			);
-		}
+		this.emit(
+			'fieldAdded',
+			{
+				data,
+				fieldType: {
+					...fieldType,
+					editable: true
+				},
+				target: indexes
+			}
+		);
 	}
 
 	/**
@@ -539,14 +548,16 @@ class Sidebar extends Component {
 			rowIndex
 		};
 
-		if (settingsItem === 'duplicate-field') {
-			this._duplicateField(indexes);
-		}
-		else if (settingsItem === 'delete-field') {
-			this._deleteField(indexes);
-		}
-		else if (settingsItem === 'cancel-field-changes') {
-			this._cancelFieldChanges(indexes);
+		if (!item.disabled) {
+			if (settingsItem === 'duplicate-field') {
+				this._duplicateField(indexes);
+			}
+			else if (settingsItem === 'delete-field') {
+				this._deleteField(indexes);
+			}
+			else if (settingsItem === 'cancel-field-changes') {
+				this._cancelFieldChanges(indexes);
+			}
 		}
 	}
 
@@ -622,6 +633,10 @@ class Sidebar extends Component {
 			alloyEditorToolbarNode || fieldTypesDropdownNode || fieldColumnNode ||
 			element.contains(node) || this._isSettingsElement(node)
 		);
+	}
+
+	_isTranslationItem(node) {
+		return !!dom.closest(node, '.lfr-translationmanager');
 	}
 
 	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {
@@ -763,57 +778,6 @@ class Sidebar extends Component {
 		);
 	}
 
-	_renderFieldSets() {
-		const {fieldSets, spritemap} = this.props;
-		const group = Object.keys(fieldSets);
-
-		return (
-			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-				{group.map(
-					(key, index) => (
-						<div
-							aria-labelledby={`#ddm-field-types-${key}-header`}
-							class="panel-collapse show"
-							id={`ddm-field-types-${key}-body`}
-							key={key}
-							role="tabpanel"
-						>
-							<div class="panel-body p-0 m-0 list-group">
-								<div
-									class="ddm-drag-item list-group-item list-group-item-flex"
-									data-field-set-id={fieldSets[key].id}
-									data-field-set-name={fieldSets[key].name}
-									key={`fieldType_${fieldSets[key].name}`}
-									ref={`fieldType_${fieldSets[key].name}`}
-								>
-									<div class="autofit-col">
-										<span class="sticker sticker-secondary">
-											<span class="inline-item">
-												<svg
-													aria-hidden="true"
-													class={`lexicon-icon lexicon-icon-${fieldSets[key].icon}`}
-												>
-													<use
-														xlink:href={`${spritemap}#${fieldSets[key].icon}`}
-													/>
-												</svg>
-											</span>
-										</span>
-									</div>
-									<div class="autofit-col autofit-col-expand">
-										<h4 class="list-group-title text-truncate">
-											<span>{fieldSets[key].name}</span>
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					)
-				)}
-			</div>
-		);
-	}
-
 	_renderNavItems() {
 		const {activeTab, tabs} = this.state;
 
@@ -870,15 +834,23 @@ class Sidebar extends Component {
 		);
 	}
 
+	isActionsDisabled() {
+		const {defaultLanguageId, editingLanguageId} = this.props;
+
+		return defaultLanguageId !== editingLanguageId;
+	}
+
 	_renderTopBar() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
 		const editMode = this._isEditMode();
 		const fieldActions = [
 			{
+				disabled: this.isActionsDisabled(),
 				label: Liferay.Language.get('duplicate-field'),
 				settingsItem: 'duplicate-field'
 			},
 			{
+				disabled: this.isActionsDisabled(),
 				label: Liferay.Language.get('remove-field'),
 				settingsItem: 'delete-field'
 			},
@@ -907,7 +879,7 @@ class Sidebar extends Component {
 					<Fragment>
 						<li class="tbar-item">
 							<ClayButton
-								editable={true}
+								disabled={this.isActionsDisabled()}
 								events={previousButtonEvents}
 								icon="angle-left"
 								ref="previousButton"
@@ -968,6 +940,32 @@ class Sidebar extends Component {
 		);
 	}
 
+	isFieldReadOnly(field) {
+		const {defaultLanguageId, editingLanguageId} = this.props;
+
+		return !field.localizable && editingLanguageId !== defaultLanguageId;
+	}
+
+	getFormContext() {
+		const {defaultLanguageId, editingLanguageId, focusedField} = this.props;
+		const {settingsContext} = focusedField;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		return {
+			...settingsContext,
+			pages: visitor.mapFields(
+				field => {
+					return {
+						...field,
+						defaultLanguageId,
+						editingLanguageId,
+						readOnly: this.isFieldReadOnly(field)
+					};
+				}
+			)
+		};
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -979,8 +977,6 @@ class Sidebar extends Component {
 			focusedField,
 			spritemap
 		} = this.props;
-
-		const {settingsContext} = focusedField;
 
 		const layoutRenderEvents = {
 			evaluated: this._handleEvaluatorChanged,
@@ -1028,11 +1024,8 @@ class Sidebar extends Component {
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{!editMode && (activeTab == 0) &&
+						{!editMode &&
 							this._renderFieldTypeGroups()
-						}
-						{!editMode && (activeTab == 1) &&
-							this._renderFieldSets()
 						}
 						{editMode && (
 							<div class="sidebar-body ddm-field-settings">
@@ -1043,9 +1036,9 @@ class Sidebar extends Component {
 										editingLanguageId={editingLanguageId}
 										events={layoutRenderEvents}
 										fieldType={focusedField.type}
-										formContext={settingsContext}
-										modeRenderer="list"
-										ref="FormRenderer"
+										formContext={this.getFormContext()}
+										paginationMode="tabbed"
+										ref="evaluableForm"
 										spritemap={spritemap}
 										url={EVALUATOR_URL}
 									/>

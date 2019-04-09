@@ -1,0 +1,29 @@
+{namespace EditablePageHeader}
+
+{deltemplate PageRenderer.PageHeader variant="'editable'"}
+	{@param pageIndex: number}
+	{@param total: number}
+	{@param? description: string}
+	{@param? title: string}
+	{@param? placeholder: string}
+
+	<textarea
+		class="form-builder-page-header-title form-control p-0"
+		maxlength="120"
+		placeholder="{$placeholder ?: ''}"
+	>
+		{$title}
+	</textarea>
+
+	{let $descriptionPlaceholder kind="text"}
+		{msg desc=""}add-a-short-description-for-this-page{/msg}
+	{/let}
+
+	{let $pageDescriptionAttributes kind="attributes"}
+		class="form-builder-page-header-description form-control p-0"
+		maxlength="120"
+		placeholder="{$descriptionPlaceholder}"
+	{/let}
+
+	<textarea {$pageDescriptionAttributes}>{$description}</textarea>
+{/deltemplate}

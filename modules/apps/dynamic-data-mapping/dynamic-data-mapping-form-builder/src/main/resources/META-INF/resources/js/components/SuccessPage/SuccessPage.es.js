@@ -10,32 +10,33 @@ class SucessPage extends Component {
 		/**
 		 * @instance
 		 * @memberof SucessPage
-		 * @type {?string}
-		 */
-		contentLabel: Config.string().value(Liferay.Language.get('content')),
-
-		/**
-		 * @instance
-		 * @memberof SucessPage
 		 * @type {?object}
 		 */
-		successPageSettings: Config.object(),
 
-		/**
-		 * @instance
-		 * @memberof SucessPage
-		 * @type {?string}
-		 */
-		titleLabel: Config.string().value(Liferay.Language.get('title'))
+		successPageSettings: Config.object().value({})
 	}
 
-	_handleSuccessPageSettingsChanged(event) {
+	prepareStateForRender(state) {
+		const {store} = this.context;
+		const {editingLanguageId} = store.props;
+		const {successPageSettings} = this;
+		const {body, title} = successPageSettings;
+
+		return {
+			...state,
+			body: body[editingLanguageId] || '',
+			title: title[editingLanguageId] || ''
+		};
+	}
+
+	_handleSuccessPageUpdated(event) {
+		const {dispatch, store} = this.context;
+		const {editingLanguageId} = store.props;
 		const {delegateTarget} = event;
 		const {dataset: {setting}, value} = delegateTarget;
 		const {successPageSettings} = this;
-		const language = themeDisplay.getLanguageId();
 
-		this.emit('successPageChanged', setValue(successPageSettings, language, setting, value));
+		dispatch('successPageChanged', setValue(successPageSettings, editingLanguageId, setting, value));
 	}
 }
 

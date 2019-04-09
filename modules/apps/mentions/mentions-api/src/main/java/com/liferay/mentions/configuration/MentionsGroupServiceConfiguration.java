@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(
-	category = "community-tools",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "community-tools")
 @Meta.OCD(
 	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",
 	localization = "content/Language",

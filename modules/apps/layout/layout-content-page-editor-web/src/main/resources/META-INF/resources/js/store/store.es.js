@@ -2,6 +2,20 @@ import State, {Config} from 'metal-state';
 import {DEFAULT_INITIAL_STATE} from './state.es';
 
 /**
+ * ID of the development devTool that may be connected to store.
+ * We are relying on redux-devtools, so we can continue using
+ * them when we move to a proper state-management library.
+ *
+ * They provide a global hook that is available when the browser
+ * has redux-devtools-extension installed:
+ *
+ * http://extension.remotedev.io/#usage
+ *
+ * @review
+ */
+const STORE_DEVTOOLS_ID = '__REDUX_DEVTOOLS_EXTENSION__';
+
+/**
  * Connects a given component to a given store, syncing it's properties with it.
  * @param {Component} component
  * @param {Store} store

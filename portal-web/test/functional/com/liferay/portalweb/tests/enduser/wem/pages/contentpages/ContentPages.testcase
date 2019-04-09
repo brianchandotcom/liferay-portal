@@ -244,7 +244,7 @@ definition {
 		}
 
 		task ("Navigate back to the content page") {
-			ContentPages.clickBack();
+			PageEditor.clickBack();
 		}
 
 		task ("Assert the page cannot be edited by asserting the fragments side bar is not present") {
@@ -465,7 +465,7 @@ definition {
 		}
 
 		task ("View the content page") {
-			ContentPages.clickBack();
+			PageEditor.clickBack();
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -506,7 +506,7 @@ definition {
 		}
 
 		task ("View the content page") {
-			ContentPages.clickBack();
+			PageEditor.clickBack();
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -546,7 +546,7 @@ definition {
 		}
 
 		task ("View the content page") {
-			ContentPages.clickBack();
+			PageEditor.clickBack();
 		}
 
 		task ("Assert the Title Fragment is present") {

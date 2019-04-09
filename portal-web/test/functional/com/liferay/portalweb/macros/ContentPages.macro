@@ -47,12 +47,6 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro clickBack {
-		Click(
-			locator1 = "Icon#ANGLE_LEFT_BACK"
-		);
-	}
-
 	macro clickPencil {
 		Click(
 			locator1 = "Button#PENCIL"

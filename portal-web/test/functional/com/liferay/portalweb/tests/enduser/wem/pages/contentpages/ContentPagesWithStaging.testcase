@@ -217,7 +217,7 @@ definition {
 		}
 
 		task ("Navigate back to the content page") {
-			ContentPages.clickBack();
+			PageEditor.clickBack();
 		}
 
 		task ("Assert the Title fragment is present") {

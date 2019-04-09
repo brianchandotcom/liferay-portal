@@ -37,6 +37,12 @@ definition {
 		);
 	}
 
+	macro clickBack {
+		Click(
+			locator1 = "Icon#ANGLE_LEFT_BACK"
+		);
+	}
+
 	macro clickDiscardDraft {
 		Button.clickNoError(
 			button = "Discard Draft"

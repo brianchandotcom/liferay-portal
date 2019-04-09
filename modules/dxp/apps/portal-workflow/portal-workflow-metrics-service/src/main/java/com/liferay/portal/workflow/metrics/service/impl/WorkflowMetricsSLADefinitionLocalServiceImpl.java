@@ -146,6 +146,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setStopNodeNames(
 			StringUtil.merge(stopNodeNames));
 
+		workflowMetricsSLADefinitionPersistence.update(
+			workflowMetricsSLADefinition);
+
 		_workflowMetricsPortalExecutor.execute(
 			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
 				workflowMetricsSLADefinition.getCompanyId(),
@@ -153,8 +156,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId()));
 
-		return workflowMetricsSLADefinitionPersistence.update(
-			workflowMetricsSLADefinition);
+		return workflowMetricsSLADefinition;
 	}
 
 	protected void validate(

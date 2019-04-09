@@ -105,30 +105,19 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.contacts.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.contacts.model.Entry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.contacts.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.contacts.model.Entry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.contacts.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.contacts.model.Entry"),
-		true);
-
 	public static final long EMAILADDRESS_COLUMN_BITMASK = 1L;
 
 	public static final long USERID_COLUMN_BITMASK = 2L;
 
 	public static final long FULLNAME_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.contacts.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.contacts.model.Entry"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public EntryModelImpl() {
 	}
@@ -517,12 +506,12 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -671,6 +660,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		Entry.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _entryId;
 	private long _groupId;

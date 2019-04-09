@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -43,7 +44,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -100,7 +100,7 @@ public class JournalArticleInfoDisplayContributorTest {
 
 		List<InfoDisplayField> infoDisplayFields =
 			infoDisplayContributor.getClassTypeInfoDisplayFields(
-				_ddmStructure.getStructureId(), Locale.ENGLISH);
+				_ddmStructure.getStructureId(), LocaleUtil.ENGLISH);
 
 		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
 

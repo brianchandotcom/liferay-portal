@@ -121,7 +121,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 		if (Objects.nonNull(locale) &&
 			!Objects.equals(
-				locale.getLanguage(), Locale.ENGLISH.getLanguage())) {
+				locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage())) {
 
 			return Collections.emptySet();
 		}
@@ -273,10 +273,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			ContentTypes.TEXT_PLAIN));
 	private static final Set<String> _supportedEntityLanguages = new HashSet<>(
 		Arrays.asList(
-			Locale.CHINESE.getLanguage(), Locale.ENGLISH.getLanguage(),
-			Locale.FRENCH.getLanguage(), Locale.GERMAN.getLanguage(),
-			Locale.ITALIAN.getLanguage(), Locale.JAPAN.getLanguage(),
-			Locale.KOREAN.getLanguage(), LocaleUtil.PORTUGAL.getLanguage(),
+			LocaleUtil.CHINESE.getLanguage(), LocaleUtil.ENGLISH.getLanguage(),
+			LocaleUtil.FRENCH.getLanguage(), LocaleUtil.GERMAN.getLanguage(),
+			LocaleUtil.ITALIAN.getLanguage(), LocaleUtil.JAPAN.getLanguage(),
+			LocaleUtil.KOREAN.getLanguage(), LocaleUtil.PORTUGAL.getLanguage(),
 			LocaleUtil.SPAIN.getLanguage()));
 
 	static {

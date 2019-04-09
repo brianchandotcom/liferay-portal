@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -93,7 +94,7 @@ public class PortletTCKBridge {
 		long userId = user.getUserId();
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
-			Locale.US, _TCK_SITE_GROUP_NAME);
+			LocaleUtil.US, _TCK_SITE_GROUP_NAME);
 
 		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0L,

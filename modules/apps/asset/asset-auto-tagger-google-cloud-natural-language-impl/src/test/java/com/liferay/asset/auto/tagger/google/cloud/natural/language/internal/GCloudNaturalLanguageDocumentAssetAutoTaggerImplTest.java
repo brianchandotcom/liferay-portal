@@ -154,7 +154,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 				String.class, Locale.class
 			},
 			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			RandomTestUtil.randomString(), Locale.GERMAN);
+			RandomTestUtil.randomString(), LocaleUtil.GERMAN);
 
 		Assert.assertEquals(
 			tagNames.toString(), Collections.emptySet(), tagNames);

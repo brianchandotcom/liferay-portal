@@ -41,12 +41,12 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortPoshiParameter(String fileName, String content) {
-		Matcher matcher = _methodCallPattern.matcher(content);
+		Matcher matcher1 = _methodCallPattern.matcher(content);
 
-		while (matcher.find()) {
-			String s = matcher.group(1);
+		while (matcher1.find()) {
+			String s = matcher1.group(1);
 
-			String parameters = matcher.group(2);
+			String parameters = matcher1.group(2);
 
 			Map<String, String> parametersMap = new TreeMap<>(
 				new NaturalOrderStringComparator());
@@ -58,7 +58,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						"Parameter '" + matcher2.group(1) + "' is already used",
-						getLineNumber(content, matcher.start(1)));
+						getLineNumber(content, matcher1.start(1)));
 
 					parametersMap.clear();
 
@@ -99,7 +99,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 			}
 
 			content = StringUtil.replaceFirst(
-				content, matcher.group(2), sb.toString(), matcher.start(1));
+				content, matcher1.group(2), sb.toString(), matcher1.start(1));
 		}
 
 		return content;

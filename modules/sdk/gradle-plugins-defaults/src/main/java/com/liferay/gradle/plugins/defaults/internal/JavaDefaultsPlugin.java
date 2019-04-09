@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -39,7 +40,10 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, JavaPlugin javaPlugin) {
-		_configureTasksJar(project);
+		String portalVersion = PortalTools.getPortalVersion(project);
+
+		_configureTasksJar(project, portalVersion);
+
 		_configureTasksTest(project);
 	}
 
@@ -51,7 +55,11 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 	private JavaDefaultsPlugin() {
 	}
 
-	private void _configureTaskJarEnabled(Jar jar) {
+	private void _configureTaskJarEnabled(Jar jar, String portalVersion) {
+		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
+			return;
+		}
+
 		Project project = jar.getProject();
 
 		String name = project.getName();
@@ -61,7 +69,9 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 		}
 	}
 
-	private void _configureTasksJar(Project project) {
+	private void _configureTasksJar(
+		Project project, final String portalVersion) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -73,7 +83,7 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 					String taskName = jar.getName();
 
 					if (taskName.startsWith(JavaPlugin.JAR_TASK_NAME)) {
-						_configureTaskJarEnabled(jar);
+						_configureTaskJarEnabled(jar, portalVersion);
 					}
 				}
 

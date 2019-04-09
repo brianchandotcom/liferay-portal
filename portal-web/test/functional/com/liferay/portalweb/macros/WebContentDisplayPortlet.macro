@@ -426,7 +426,7 @@ definition {
 	}
 
 	macro viewImageFieldViaWCD {
-		SikuliAssertElementPresent(locator1 = "WCD#WEB_CONTENT_IMAGE_PNG");
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_IMAGE_PNG");
 	}
 
 	macro viewRecycleBinMessage {

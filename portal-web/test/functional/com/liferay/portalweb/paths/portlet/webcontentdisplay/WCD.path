@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_IMAGE_PNG</td>
-	<td>portal/screenshots/ddm/liferay_logo_image.png</td>
+	<td>//img[contains(@src,'Document_2.jpeg')]</td>
 	<td></td>
 </tr>
 <tr>

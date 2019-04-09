@@ -203,7 +203,10 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 		if (StringUtil.endsWith(
 				previousParsedJavaTerm.getContent(),
-				CharPool.OPEN_CURLY_BRACE)) {
+				CharPool.OPEN_CURLY_BRACE) ||
+			Objects.equals(
+				previousParsedJavaTerm.getClassName(),
+				JavaSwitchCaseStatement.class.getName())) {
 
 			return NO_ACTION_REQUIRED;
 		}

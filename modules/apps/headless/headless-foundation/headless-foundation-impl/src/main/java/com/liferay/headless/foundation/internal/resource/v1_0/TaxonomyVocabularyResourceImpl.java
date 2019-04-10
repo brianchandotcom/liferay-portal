@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +62,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,6 +71,7 @@ import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.MapUtils;
 
 import org.osgi.service.component.annotations.Component;
@@ -288,20 +292,29 @@ public class TaxonomyVocabularyResourceImpl
 						if (classNameId ==
 								AssetCategoryConstants.ALL_CLASS_NAME_ID) {
 
-							return AssetType.Type.ALL_ASSET_TYPES;
+							return AssetTypeType.ALL_ASSET_TYPES.toString();
 						}
 
-						return _classNameToAssetTypeTypes.get(
-							_portal.getClassName(classNameId));
+						AssetTypeType assetTypeType =
+							_classNameToAssetTypeTypes.get(
+								_portal.getClassName(classNameId));
+
+						if (assetTypeType != null) {
+							return assetTypeType.toString();
+						}
+
+						return _getModelResource(
+							AssetRendererFactoryRegistryUtil.
+								getAssetRendererFactoryByClassName(
+									_portal.getClassName(classNameId)));
 					});
 			}
 		};
 	}
 
 	private AssetType[] _getAssetTypes(
-			AssetVocabularySettingsHelper assetVocabularySettingsHelper,
-			long groupId)
-		throws Exception {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper,
+		long groupId) {
 
 		long[] classNameIds = assetVocabularySettingsHelper.getClassNameIds();
 
@@ -326,18 +339,68 @@ public class TaxonomyVocabularyResourceImpl
 		return assetTypes;
 	}
 
-	private long _getClassNameId(AssetType.Type assetTypeType) {
-		if (Objects.equals(AssetType.Type.ALL_ASSET_TYPES, assetTypeType)) {
+	private String _getAvailableAssetTypes(
+		List<AssetRendererFactory<?>> categorizableAssetRenderFactories) {
+
+		List assetTypes = ListUtils.union(
+			transform(
+				categorizableAssetRenderFactories,
+				assetRenderedFactory -> {
+					String className = assetRenderedFactory.getClassName();
+
+					if (_classNameToAssetTypeTypes.containsKey(className)) {
+						AssetTypeType assetTypeType =
+							_classNameToAssetTypeTypes.get(className);
+
+						return assetTypeType.toString();
+					}
+
+					return _getModelResource(assetRenderedFactory);
+				}),
+			Collections.singletonList(
+				AssetTypeType.ALL_ASSET_TYPES.toString()));
+
+		return Arrays.toString(assetTypes.toArray());
+	}
+
+	private long _getClassNameId(String type) {
+		AssetTypeType assetTypeType = AssetTypeType.create(type);
+
+		if (Objects.equals(AssetTypeType.ALL_ASSET_TYPES, assetTypeType)) {
 			return AssetCategoryConstants.ALL_CLASS_NAME_ID;
 		}
 
-		if (!_assetTypeTypeToClassNames.containsKey(assetTypeType)) {
+		List<AssetRendererFactory<?>> categorizableAssetRenderFactories =
+			ListUtil.filter(
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+					contextCompany.getCompanyId()),
+				AssetRendererFactory::isCategorizable);
+
+		Stream<AssetRendererFactory<?>> stream =
+			categorizableAssetRenderFactories.stream();
+
+		Optional<AssetRendererFactory<?>> assetRendererFactoryOptional =
+			stream.filter(
+				assetRendererFactory -> type.equals(
+					_getModelResource(assetRendererFactory))
+			).findFirst();
+
+		String className = assetRendererFactoryOptional.map(
+			AssetRendererFactory::getClassName
+		).orElse(
+			_assetTypeTypeToClassNames.get(assetTypeType)
+		);
+
+		if (className == null) {
 			throw new BadRequestException(
-				"Invalid asset type: " + assetTypeType);
+				StringBundler.concat(
+					"Asset type ", type,
+					" not available, the supported asset types are: ",
+					_getAvailableAssetTypes(
+						categorizableAssetRenderFactories)));
 		}
 
-		return _portal.getClassNameId(
-			_assetTypeTypeToClassNames.get(assetTypeType));
+		return _portal.getClassNameId(className);
 	}
 
 	private long _getClassTypePK(long classNameId, String subtype, long groupId)
@@ -372,6 +435,14 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		throw new BadRequestException("Invalid subtype " + subtype);
+	}
+
+	private String _getModelResource(
+		AssetRendererFactory<?> assetRendererFactory) {
+
+		return ResourceActionsUtil.getModelResource(
+			contextAcceptLanguage.getPreferredLocale(),
+			assetRendererFactory.getClassName());
 	}
 
 	private String _getSettings(AssetType[] assetTypes, long groupId)
@@ -445,33 +516,30 @@ public class TaxonomyVocabularyResourceImpl
 		};
 	}
 
-	private static final Map<AssetType.Type, String>
-		_assetTypeTypeToClassNames = new HashMap<AssetType.Type, String>() {
+	private static final Map<AssetTypeType, String> _assetTypeTypeToClassNames =
+		new HashMap<AssetTypeType, String>() {
 			{
-				put(AssetType.Type.WEB_SITE, Group.class.getName());
-				put(AssetType.Type.WEB_PAGE, Layout.class.getName());
-				put(AssetType.Type.ORGANIZATION, Organization.class.getName());
-				put(AssetType.Type.USER_ACCOUNT, User.class.getName());
+				put(AssetTypeType.WEB_SITE, Group.class.getName());
+				put(AssetTypeType.WEB_PAGE, Layout.class.getName());
+				put(AssetTypeType.ORGANIZATION, Organization.class.getName());
+				put(AssetTypeType.USER_ACCOUNT, User.class.getName());
 				put(
-					AssetType.Type.BLOG_POSTING,
+					AssetTypeType.BLOG_POSTING,
 					"com.liferay.blogs.model.BlogsEntry");
 				put(
-					AssetType.Type.DOCUMENT,
+					AssetTypeType.DOCUMENT,
 					"com.liferay.document.library.kernel.model.DLFileEntry");
 				put(
-					AssetType.Type.KNOWLEDGE_BASE_ARTICLE,
+					AssetTypeType.KNOWLEDGE_BASE_ARTICLE,
 					"com.liferay.knowledge.base.model.KBArticle");
 				put(
-					AssetType.Type.STRUCTURED_CONTENT,
+					AssetTypeType.STRUCTURED_CONTENT,
 					"com.liferay.journal.model.JournalArticle");
-				put(
-					AssetType.Type.WIKI_PAGE,
-					"com.liferay.wiki.model.WikiPage");
+				put(AssetTypeType.WIKI_PAGE, "com.liferay.wiki.model.WikiPage");
 			}
 		};
-	private static final Map<String, AssetType.Type>
-		_classNameToAssetTypeTypes = MapUtils.invertMap(
-			_assetTypeTypeToClassNames);
+	private static final Map<String, AssetTypeType> _classNameToAssetTypeTypes =
+		MapUtils.invertMap(_assetTypeTypeToClassNames);
 	private static final EntityModel _entityModel = new VocabularyEntityModel();
 
 	@Reference
@@ -485,5 +553,39 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private enum AssetTypeType {
+
+		ALL_ASSET_TYPES("AllAssetTypes"), BLOG_POSTING("BlogPosting"),
+		DOCUMENT("Document"), KNOWLEDGE_BASE_ARTICLE("KnowledgeBaseArticle"),
+		ORGANIZATION("Organization"), STRUCTURED_CONTENT("StructuredContent"),
+		USER_ACCOUNT("UserAccount"), WEB_PAGE("WebPage"), WEB_SITE("WebSite"),
+		WIKI_PAGE("WikiPage");
+
+		public static AssetTypeType create(String value) {
+			for (AssetTypeType assetTypeType : values()) {
+				if (Objects.equals(assetTypeType.getValue(), value)) {
+					return assetTypeType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		public String toString() {
+			return _value;
+		}
+
+		private AssetTypeType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 }

@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -202,11 +201,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testGeoShapeQuery1() {
-		ShapeBuilder shapeBuilder = null;
-
-		GeoShapeQuery geoShapeQuery = _queries.geoShape("field", shapeBuilder);
-
-		Assert.assertNotNull(geoShapeQuery);
+		Assert.assertNotNull(_queries.geoShape("field", null));
 	}
 
 	@Test

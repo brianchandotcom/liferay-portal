@@ -94,33 +94,6 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			_expectedFieldValues(blogsEntry), document, searchTerm);
 	}
 
-	private void _setUpBlogsEntryFixture() {
-		blogsEntryFixture = new BlogsEntryFixture(_group);
-
-		_blogsEntries = blogsEntryFixture.getBlogsEntries();
-	}
-
-	private void _setUpBlogsEntryIndexerFixture() {
-		blogsEntryIndexerFixture = new IndexerFixture<>(BlogsEntry.class);
-	}
-
-	private void _setUpIndexedFieldsFixture() {
-		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
-	}
-
-	private void _setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
-	}
-
 	protected BlogsEntryFixture blogsEntryFixture;
 	protected IndexerFixture<BlogsEntry> blogsEntryIndexerFixture;
 	protected IndexedFieldsFixture indexedFieldsFixture;
@@ -220,6 +193,33 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			map.put("localized_" + key, title);
 			map.put("localized_" + key + "_sortable", title);
 		}
+	}
+
+	private void _setUpBlogsEntryFixture() {
+		blogsEntryFixture = new BlogsEntryFixture(_group);
+
+		_blogsEntries = blogsEntryFixture.getBlogsEntries();
+	}
+
+	private void _setUpBlogsEntryIndexerFixture() {
+		blogsEntryIndexerFixture = new IndexerFixture<>(BlogsEntry.class);
+	}
+
+	private void _setUpIndexedFieldsFixture() {
+		indexedFieldsFixture = new IndexedFieldsFixture(
+			resourcePermissionLocalService, searchEngineHelper);
+	}
+
+	private void _setUpUserSearchFixture() throws Exception {
+		userSearchFixture = new UserSearchFixture();
+
+		userSearchFixture.setUp();
+
+		_group = userSearchFixture.addGroup();
+
+		_groups = userSearchFixture.getGroups();
+
+		_users = userSearchFixture.getUsers();
 	}
 
 	@DeleteAfterTestRun

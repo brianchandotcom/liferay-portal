@@ -44,23 +44,20 @@ public class BlogsEntryModelSummaryContributor
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		String content = LocalizationUtil.getLocalizedName(
-			Field.CONTENT, languageId);
-		String title = LocalizationUtil.getLocalizedName(
-			Field.TITLE, languageId);
-
-		return createSummary(document, content, title);
+		return _createSummary(
+			document,
+			LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+			LocalizationUtil.getLocalizedName(Field.TITLE, languageId));
 	}
 
-	protected Summary createSummary(
+	private Summary _createSummary(
 		Document document, String titleField, String contentField) {
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String title = document.get(prefix + titleField, titleField);
-		String content = document.get(prefix + contentField, contentField);
-
-		Summary summary = new Summary(title, content);
+		Summary summary = new Summary(
+			document.get(prefix + titleField, titleField),
+			document.get(prefix + contentField, contentField));
 
 		summary.setMaxContentLength(200);
 

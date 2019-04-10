@@ -65,7 +65,7 @@ public class UserPortraitTag extends IncludeTag {
 		String portraitURL = _getPortraitURL(user, themeDisplay);
 
 		if (Validator.isNull(portraitURL)) {
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(11);
 
 			sb.append("<span class=\"sticker sticker-circle sticker-light ");
 			sb.append("user-icon-color-");

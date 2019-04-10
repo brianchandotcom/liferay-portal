@@ -89,8 +89,8 @@ public abstract class BaseVerticalCard
 			}
 
 			if (user.getPortraitId() == 0) {
-                return "user";
-            }
+				return "user";
+			}
 
 			return StringPool.BLANK;
 		}

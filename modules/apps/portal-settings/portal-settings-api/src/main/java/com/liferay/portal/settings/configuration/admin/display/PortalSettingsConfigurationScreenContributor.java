@@ -56,6 +56,10 @@ public interface PortalSettingsConfigurationScreenContributor {
 		return null;
 	}
 
+	public default boolean isVisible() {
+		return true;
+	}
+
 	public default void setAttributes(
 		HttpServletRequest request, HttpServletResponse response) {
 	}

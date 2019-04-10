@@ -23,7 +23,6 @@ import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
-import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Igor Beslic
@@ -31,7 +30,6 @@ import org.talend.sdk.component.api.meta.Documentation;
  */
 @Checkable("checkInputDataStore")
 @DataStore("InputDataStore")
-@Documentation("Aggregator data store for authentication stores")
 @GridLayout(
 	{
 		@GridLayout.Row("_authenticationMethod"), @GridLayout.Row("_serverURL"),
@@ -83,18 +81,15 @@ public class InputDataStore {
 	}
 
 	@DefaultValue("BASIC")
-	@Documentation("Authentication Method")
 	@Option
 	@Required
 	private AuthenticationMethod _authenticationMethod;
 
 	@ActiveIf(target = "_authenticationMethod", value = "BASIC")
-	@Documentation("Basic Data Store")
 	@Option
 	private BasicDataStore _basicDataStore;
 
 	@ActiveIf(target = "_authenticationMethod", value = "OAUTH2")
-	@Documentation("OAuth2 Data Store")
 	@Option
 	private OAuthDataStore _oAuthDataStore;
 

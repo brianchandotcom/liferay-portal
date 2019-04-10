@@ -31,13 +31,11 @@ import org.talend.sdk.component.api.input.Emitter;
 import org.talend.sdk.component.api.input.PartitionMapper;
 import org.talend.sdk.component.api.input.PartitionSize;
 import org.talend.sdk.component.api.input.Split;
-import org.talend.sdk.component.api.meta.Documentation;
 import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
 /**
  * @author Zoltán Takács
  */
-@Documentation("LiferayInputMapper")
 @Icon(Icon.IconType.STAR)
 @PartitionMapper(name = "tLiferayInput")
 @Version(1)

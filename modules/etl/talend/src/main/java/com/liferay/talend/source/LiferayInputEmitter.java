@@ -24,14 +24,12 @@ import javax.annotation.PreDestroy;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.input.Producer;
-import org.talend.sdk.component.api.meta.Documentation;
 import org.talend.sdk.component.api.record.Record;
 import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
 /**
  * @author Zoltán Takács
  */
-@Documentation("LiferayInputEmitter")
 public class LiferayInputEmitter implements Serializable {
 
 	public LiferayInputEmitter(

@@ -25,7 +25,6 @@ import org.talend.sdk.component.api.meta.Documentation;
 /**
  * @author Zoltán Takács
  */
-@Documentation("LiferayInputMapper configuration")
 @GridLayout(
 	{
 		@GridLayout.Row("_restDataSet"), @GridLayout.Row("_timeout"),

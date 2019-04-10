@@ -23,14 +23,12 @@ import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
-import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Zoltán Takács
  * @author Igor Beslic
  */
 @DataSet("RestDataSet")
-@Documentation("RestDataSet configuration")
 @GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_endpoint")})
 public class RestDataSet implements Serializable {
 
@@ -48,7 +46,6 @@ public class RestDataSet implements Serializable {
 	 * DataStore parameter now is not needed, just an example how we can use it
 	 * in UIActionService if needed.
 	 */
-	@Documentation("Endpoint")
 	@Option
 	@Required
 	@Suggestable(parameters = "_inputDataStore", value = "fetchEndpoints")

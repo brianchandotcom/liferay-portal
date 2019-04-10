@@ -19,13 +19,11 @@ import java.io.Serializable;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
-import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Igor Beslic
  */
 @DataStore("OAuthDataStore")
-@Documentation("OAuthDataStore configuration")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {@GridLayout.Row({"_consumerKey", "_consumerSecret"})}

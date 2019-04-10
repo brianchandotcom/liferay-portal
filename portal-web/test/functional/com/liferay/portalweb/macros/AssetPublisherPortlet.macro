@@ -114,11 +114,11 @@ definition {
 
 		var key_sortOrder = "${sortOrder}";
 
-		if (IsNotVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON")) {
-			Click(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_GENERIC_ICON");
+		if ((isSet(sortOrder)) && (IsVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON"))) {
+			Click(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
 		}
 
-		AssertVisible(
+		AssertNotVisible(
 			locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON"
 		);
 

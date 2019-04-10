@@ -230,7 +230,7 @@
 </tr>
 <tr>
 	<td>ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON</td>
-	<td>//div[contains(@class,'order-by-type')]//a[contains(.,'${key_sortOrder}')][span//*[name()='svg'][contains(@class,'icon-angle')]]</td>
+	<td>//div[contains(@class,'order-by-type')]//a[contains(.,'${key_sortOrder}')][span//*[name()='svg'][contains(@class,'icon-order-arrow')]]</td>
 	<td></td>
 </tr>
 <tr>

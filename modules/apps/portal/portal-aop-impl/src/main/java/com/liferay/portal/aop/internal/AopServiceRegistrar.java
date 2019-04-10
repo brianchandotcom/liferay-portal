@@ -14,6 +14,7 @@
 
 package com.liferay.portal.aop.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -185,7 +186,7 @@ public class AopServiceRegistrar {
 
 			if (ArrayUtil.isEmpty(aopInterfaces)) {
 				aopInterfaces = ArrayUtil.remove(
-					aopServiceClass.getInterfaces(), AopService.class);
+					ReflectionUtil.getInterfaces(aopService), AopService.class);
 			}
 
 			if (!Arrays.equals(_aopServiceInterfaces, aopInterfaces)) {

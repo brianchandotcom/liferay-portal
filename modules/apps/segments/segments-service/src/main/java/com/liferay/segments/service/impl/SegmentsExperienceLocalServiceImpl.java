@@ -76,6 +76,7 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.create(segmentsExperienceId);
 
+		segmentsExperience.setUuid(serviceContext.getUuid());
 		segmentsExperience.setGroupId(groupId);
 		segmentsExperience.setCompanyId(user.getCompanyId());
 		segmentsExperience.setUserId(user.getUserId());

@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.internal.util;
 
-import com.liferay.message.boards.internal.configuration.MBDiscussionGroupServiceConfiguration;
+import com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 

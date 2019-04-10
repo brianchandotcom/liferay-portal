@@ -22,7 +22,7 @@ import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -49,10 +49,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/document-folder.properties",
-	scope = ServiceScope.PROTOTYPE, service = DocumentFolderResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class DocumentFolderResourceImpl
 	extends BaseDocumentFolderResourceImpl implements EntityModelResource {
 

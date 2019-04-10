@@ -17,8 +17,8 @@ package com.liferay.bulk.rest.internal.resource.v1_0;
 import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
-import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/message-selection.properties",
-	scope = ServiceScope.PROTOTYPE, service = MessageSelectionResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class MessageSelectionResourceImpl
 	extends BaseMessageSelectionResourceImpl {
 

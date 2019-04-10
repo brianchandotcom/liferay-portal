@@ -30,8 +30,8 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.OrganizationEntityModel;
-import com.liferay.headless.foundation.resource.v1_0.OrganizationResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -73,10 +73,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/organization.properties",
-	scope = ServiceScope.PROTOTYPE, service = OrganizationResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
 

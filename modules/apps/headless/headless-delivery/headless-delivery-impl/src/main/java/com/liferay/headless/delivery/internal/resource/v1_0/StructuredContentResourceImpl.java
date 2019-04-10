@@ -44,7 +44,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -57,6 +56,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -114,10 +114,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/structured-content.properties",
-	scope = ServiceScope.PROTOTYPE, service = StructuredContentResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
 

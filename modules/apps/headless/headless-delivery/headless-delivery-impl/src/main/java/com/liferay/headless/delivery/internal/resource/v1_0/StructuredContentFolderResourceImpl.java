@@ -19,10 +19,10 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentFolderDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -45,11 +45,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/structured-content-folder.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = StructuredContentFolderResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class StructuredContentFolderResourceImpl
 	extends BaseStructuredContentFolderResourceImpl
 	implements EntityModelResource {

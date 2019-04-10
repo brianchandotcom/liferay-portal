@@ -16,7 +16,7 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
-import com.liferay.headless.foundation.resource.v1_0.PhoneResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/phone.properties",
-	scope = ServiceScope.PROTOTYPE, service = PhoneResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Override

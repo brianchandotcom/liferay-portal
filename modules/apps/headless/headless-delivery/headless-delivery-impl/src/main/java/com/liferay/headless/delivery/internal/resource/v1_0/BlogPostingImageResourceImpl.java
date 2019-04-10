@@ -21,7 +21,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
@@ -48,10 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/blog-posting-image.properties",
-	scope = ServiceScope.PROTOTYPE, service = BlogPostingImageResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class BlogPostingImageResourceImpl
 	extends BaseBlogPostingImageResourceImpl implements EntityModelResource {
 

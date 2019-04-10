@@ -21,9 +21,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.headless.common.spi.resource.SPICommentResource;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CommentUtil;
-import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
-	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class CommentResourceImpl
 	extends BaseCommentResourceImpl implements EntityModelResource {
 

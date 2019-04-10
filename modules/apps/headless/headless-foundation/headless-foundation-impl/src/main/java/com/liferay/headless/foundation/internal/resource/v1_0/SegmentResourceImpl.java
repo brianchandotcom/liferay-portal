@@ -15,7 +15,7 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Segment;
-import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/segment.properties",
-	scope = ServiceScope.PROTOTYPE, service = SegmentResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 	@Override

@@ -22,12 +22,12 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterConte
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardMessageDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -58,10 +58,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/message-board-message.properties",
-	scope = ServiceScope.PROTOTYPE, service = MessageBoardMessageResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class MessageBoardMessageResourceImpl
 	extends BaseMessageBoardMessageResourceImpl implements EntityModelResource {
 

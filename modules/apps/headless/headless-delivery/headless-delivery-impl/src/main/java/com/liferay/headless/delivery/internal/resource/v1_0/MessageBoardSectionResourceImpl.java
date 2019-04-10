@@ -18,10 +18,10 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -50,10 +50,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/message-board-section.properties",
-	scope = ServiceScope.PROTOTYPE, service = MessageBoardSectionResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class MessageBoardSectionResourceImpl
 	extends BaseMessageBoardSectionResourceImpl implements EntityModelResource {
 

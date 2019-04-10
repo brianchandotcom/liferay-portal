@@ -14,7 +14,7 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
-import com.liferay.headless.form.resource.v1_0.FormResource;
+import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -22,9 +22,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/form.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class FormResourceImpl extends BaseFormResourceImpl {
 }

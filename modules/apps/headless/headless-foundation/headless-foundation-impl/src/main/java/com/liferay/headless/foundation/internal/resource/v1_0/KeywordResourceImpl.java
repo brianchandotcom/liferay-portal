@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.KeywordEntityModel;
-import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/keyword.properties",
-	scope = ServiceScope.PROTOTYPE, service = KeywordResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class KeywordResourceImpl
 	extends BaseKeywordResourceImpl implements EntityModelResource {
 

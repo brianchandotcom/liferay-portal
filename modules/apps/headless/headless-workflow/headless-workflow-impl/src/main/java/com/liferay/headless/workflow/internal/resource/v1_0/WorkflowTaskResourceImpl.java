@@ -20,8 +20,8 @@ import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
-import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,10 +46,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/workflow-task.properties",
-	scope = ServiceScope.PROTOTYPE, service = WorkflowTaskResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Override

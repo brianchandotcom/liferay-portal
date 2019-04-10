@@ -27,7 +27,7 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterConte
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
@@ -62,10 +62,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/blog-posting.properties",
-	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class BlogPostingResourceImpl
 	extends BaseBlogPostingResourceImpl implements EntityModelResource {
 

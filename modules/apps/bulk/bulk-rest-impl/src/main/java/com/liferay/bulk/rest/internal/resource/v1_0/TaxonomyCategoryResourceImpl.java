@@ -16,11 +16,11 @@ package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
-import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-category.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaxonomyCategoryResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class TaxonomyCategoryResourceImpl
 	extends BaseTaxonomyCategoryResourceImpl {
 

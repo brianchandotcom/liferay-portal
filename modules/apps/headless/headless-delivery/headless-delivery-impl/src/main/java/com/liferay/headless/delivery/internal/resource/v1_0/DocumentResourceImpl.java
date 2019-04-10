@@ -28,8 +28,8 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterConte
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
-import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -66,10 +66,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/document.properties",
-	scope = ServiceScope.PROTOTYPE, service = DocumentResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class DocumentResourceImpl
 	extends BaseDocumentResourceImpl implements EntityModelResource {
 

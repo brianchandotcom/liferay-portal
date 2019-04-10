@@ -25,9 +25,9 @@ import com.liferay.headless.foundation.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.CategoryEntityModel;
-import com.liferay.headless.foundation.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -65,10 +65,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-category.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaxonomyCategoryResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class TaxonomyCategoryResourceImpl
 	extends BaseTaxonomyCategoryResourceImpl implements EntityModelResource {
 

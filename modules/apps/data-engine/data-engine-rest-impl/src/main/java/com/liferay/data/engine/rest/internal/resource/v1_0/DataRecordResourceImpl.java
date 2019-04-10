@@ -27,7 +27,6 @@ import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunction
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionResult;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorage;
-import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
@@ -39,6 +38,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -68,10 +68,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/data-record.properties",
-	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Activate

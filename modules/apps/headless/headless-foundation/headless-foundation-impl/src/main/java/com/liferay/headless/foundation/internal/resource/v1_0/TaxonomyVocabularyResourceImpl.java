@@ -26,8 +26,8 @@ import com.liferay.headless.foundation.dto.v1_0.AssetType;
 import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
-import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -77,10 +77,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-vocabulary.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl implements EntityModelResource {
 

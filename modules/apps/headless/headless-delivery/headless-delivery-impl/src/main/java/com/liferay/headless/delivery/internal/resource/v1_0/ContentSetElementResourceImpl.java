@@ -21,7 +21,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,10 +46,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/content-set-element.properties",
-	scope = ServiceScope.PROTOTYPE, service = ContentSetElementResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class ContentSetElementResourceImpl
 	extends BaseContentSetElementResourceImpl {
 

@@ -15,8 +15,8 @@
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.Status;
-import com.liferay.bulk.rest.resource.v1_0.StatusResource;
 import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 
 import javax.ws.rs.core.Context;
@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/status.properties",
-	scope = ServiceScope.PROTOTYPE, service = StatusResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class StatusResourceImpl extends BaseStatusResourceImpl {
 
 	@Override

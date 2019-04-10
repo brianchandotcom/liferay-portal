@@ -25,9 +25,9 @@ import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
-import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
@@ -56,10 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-vocabulary.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl {
 

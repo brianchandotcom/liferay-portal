@@ -39,7 +39,7 @@ import com.liferay.headless.form.dto.v1_0.Row;
 import com.liferay.headless.form.dto.v1_0.SuccessPage;
 import com.liferay.headless.form.dto.v1_0.Validation;
 import com.liferay.headless.form.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.form.resource.v1_0.FormStructureResource;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -65,10 +65,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  * @author Victor Oliveira
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/form-structure.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormStructureResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 
 	@Override

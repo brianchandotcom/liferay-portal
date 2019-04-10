@@ -23,13 +23,13 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
-import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -53,10 +53,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/data-layout.properties",
-	scope = ServiceScope.PROTOTYPE, service = DataLayoutResource.class
-)
+@Component(scope = ServiceScope.PROTOTYPE, service = AopService.class)
 public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Override

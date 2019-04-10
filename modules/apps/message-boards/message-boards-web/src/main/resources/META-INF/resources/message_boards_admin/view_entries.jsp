@@ -131,6 +131,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 							<div>
 								<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= (subcategoriesCount == 1) ? "x-category" : "x-categories" %>' />
 							</div>
+
 							<div>
 								<liferay-ui:message arguments="<%= threadsCount %>" key='<%= (threadsCount == 1) ? "x-thread" : "x-threads" %>' />
 							</div>
@@ -220,6 +221,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
+
 									<div>
 										<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</div>
@@ -256,6 +258,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 							<div>
 								<liferay-ui:message arguments="<%= repliesCount %>" key='<%= (repliesCount == 1) ? "x-reply" : "x-replies" %>' />
 							</div>
+
 							<div>
 								<liferay-ui:message arguments="<%= viewCount %>" key='<%= (viewCount == 1) ? "x-view" : "x-views" %>' />
 							</div>

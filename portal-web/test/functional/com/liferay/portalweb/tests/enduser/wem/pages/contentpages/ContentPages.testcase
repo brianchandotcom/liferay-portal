@@ -464,10 +464,6 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("View the content page") {
-			PageEditor.clickBack();
-		}
-
 		task ("Assert the Title fragment is present") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",
@@ -542,10 +538,6 @@ definition {
 
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
-		}
-
-		task ("View the content page") {
-			PageEditor.clickBack();
 		}
 
 		task ("Assert the Title Fragment is present") {

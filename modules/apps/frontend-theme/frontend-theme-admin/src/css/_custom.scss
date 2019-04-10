@@ -5,8 +5,8 @@
 @import "components/table";
 @import "portlet/portlet";
 
-@import "third_party/font_awesome_alloy";
-@import "third_party/font_glyphicons";
+@import "liferay-font-awesome/scss/font-awesome";
+@import "liferay-font-awesome/scss/glyphicons";
 
 body {
 	background-color: $bg-color;

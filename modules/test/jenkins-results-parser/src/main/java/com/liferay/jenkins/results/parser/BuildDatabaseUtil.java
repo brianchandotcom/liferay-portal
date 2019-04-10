@@ -47,7 +47,7 @@ public class BuildDatabaseUtil {
 		File baseDir = new File(baseDirPath);
 
 		if (!baseDir.exists()) {
-			baseDir.mkdir();
+			baseDir.mkdirs();
 		}
 
 		String distNodes = System.getenv("DIST_NODES");

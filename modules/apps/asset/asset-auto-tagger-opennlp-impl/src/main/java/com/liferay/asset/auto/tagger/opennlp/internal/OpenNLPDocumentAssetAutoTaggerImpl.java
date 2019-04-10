@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.opennlp.internal;
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.IOException;
 
@@ -53,14 +54,13 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-			OpenNLPDocumentAssetAutoTagCompanyConfiguration
-				openNLPDocumentAssetAutoTagCompanyConfiguration,
-			String content, Locale locale, String mimeType)
-		throws Exception {
+		OpenNLPDocumentAssetAutoTagCompanyConfiguration
+			openNLPDocumentAssetAutoTagCompanyConfiguration,
+		String content, Locale locale, String mimeType) {
 
 		if (Objects.nonNull(locale) &&
 			!Objects.equals(
-				locale.getLanguage(), Locale.ENGLISH.getLanguage())) {
+				locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage())) {
 
 			return Collections.emptyList();
 		}
@@ -96,10 +96,9 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-			OpenNLPDocumentAssetAutoTagCompanyConfiguration
-				openNLPDocumentAssetAutoTagCompanyConfiguration,
-			String content, String mimeType)
-		throws Exception {
+		OpenNLPDocumentAssetAutoTagCompanyConfiguration
+			openNLPDocumentAssetAutoTagCompanyConfiguration,
+		String content, String mimeType) {
 
 		return getTagNames(
 			openNLPDocumentAssetAutoTagCompanyConfiguration, content, null,

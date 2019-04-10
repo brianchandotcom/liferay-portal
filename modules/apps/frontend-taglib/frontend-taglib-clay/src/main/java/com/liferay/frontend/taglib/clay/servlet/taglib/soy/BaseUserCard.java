@@ -57,10 +57,6 @@ public abstract class BaseUserCard
 		return null;
 	}
 
-	@Override
-	public String getInitials() {
-		return user.getInitials();
-	}
 
 	@Override
 	public String getName() {

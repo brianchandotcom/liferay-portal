@@ -42,6 +42,11 @@ public class UserCardTag extends BaseClayCardTag {
 		putValue("imageSrc", imageSrc);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #executeDynamicQuery(DynamicQuery)}
+	 */
+	@Deprecated
 	public void setInitials(String initials) {
 		putValue("initials", initials);
 	}
@@ -73,10 +78,6 @@ public class UserCardTag extends BaseClayCardTag {
 
 		if (context.get("imageSrc") == null) {
 			setImageSrc(_userCard.getImageSrc());
-		}
-
-		if (context.get("initials") == null) {
-			setInitials(_userCard.getInitials());
 		}
 
 		if (context.get("name") == null) {

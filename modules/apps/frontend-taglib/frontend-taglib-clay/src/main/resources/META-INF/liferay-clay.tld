@@ -2345,7 +2345,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.1.0, with no direct replacement.</description>
 			<name>initials</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -152,26 +152,10 @@ describe(
 		test(
 			'deleteExperience communicates with API and updates the state',
 			(done) => {
-				let prevLiferayGlobal = {...global.Liferay};
+				global.fetch = () => new Promise(resolve => resolve());
+				global.formData = () => {};
 
-				global.Liferay = {
-					Service(
-						URL,
-						{
-							segmentsExperienceId
-						},
-						callbackFunc,
-						errorFunc
-					) {
-						return callbackFunc(
-							{
-								segmentsExperienceId
-							}
-						);
-					}
-				};
-
-				const spy = jest.spyOn(global.Liferay, 'Service');
+				const spy = jest.spyOn(global, 'fetch');
 
 				const availableSegmentsExperiences = {
 					[SEGMENTS_EXPERIENCE_ID]: {
@@ -193,6 +177,7 @@ describe(
 
 				const classNameId = 'test-class-name-id';
 				const classPK = 'test-class-p-k';
+				const deleteSegmentsExperienceURL = 'deleteSegmentsExperienceURL';
 
 				const prevState = {
 					availableSegmentsExperiences,
@@ -200,6 +185,7 @@ describe(
 					classPK,
 					defaultLanguageId: 'en_US',
 					defaultSegmentsExperienceId: SEGMENTS_EXPERIENCE_ID_DEFAULT,
+					deleteSegmentsExperienceURL,
 					layoutData: {
 						'current': 'layout',
 					},
@@ -226,6 +212,12 @@ describe(
 					segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND,
 				};
 
+				const fetchParams = {
+					body: expect.any(Object),
+					credentials: 'include',
+					method: 'POST'
+				};
+
 				deleteSegmentsExperienceReducer(
 					prevState,
 					DELETE_SEGMENTS_EXPERIENCE,
@@ -238,10 +230,8 @@ describe(
 
 						expect(spy).toHaveBeenCalledTimes(1);
 						expect(spy).toHaveBeenLastCalledWith(
-							expect.stringContaining(''),
-							{segmentsExperienceId: SEGMENTS_EXPERIENCE_ID},
-							expect.objectContaining({}),
-							expect.objectContaining({})
+							expect.stringContaining(deleteSegmentsExperienceURL),
+							expect.objectContaining(fetchParams)
 						);
 
 						deleteSegmentsExperienceReducer(
@@ -258,10 +248,8 @@ describe(
 
 						expect(spy).toHaveBeenCalledTimes(2);
 						expect(spy).toHaveBeenLastCalledWith(
-							expect.stringContaining(''),
-							{segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND},
-							expect.objectContaining({}),
-							expect.objectContaining({})
+							expect.stringContaining(deleteSegmentsExperienceURL),
+							expect.objectContaining(fetchParams)
 						);
 						done();
 						global.Liferay = prevLiferayGlobal;

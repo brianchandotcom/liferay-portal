@@ -100,6 +100,7 @@ Object {
   "classPK": "test-class-p-k",
   "defaultLanguageId": "en_US",
   "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "deleteSegmentsExperienceURL": "deleteSegmentsExperienceURL",
   "layoutData": Object {
     "default": "layoutData",
   },
@@ -134,6 +135,7 @@ Object {
   "classPK": "test-class-p-k",
   "defaultLanguageId": "en_US",
   "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "deleteSegmentsExperienceURL": "deleteSegmentsExperienceURL",
   "layoutData": Object {
     "default": "layoutData",
   },

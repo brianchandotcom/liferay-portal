@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -50,10 +51,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Leonardo Barros
  */
+@RunWith(Arquillian.class)
 public class DDMStructureManagerUtilTest {
 
 	@ClassRule

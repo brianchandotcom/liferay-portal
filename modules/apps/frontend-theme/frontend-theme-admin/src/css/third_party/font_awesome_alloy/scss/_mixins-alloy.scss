@@ -8,8 +8,8 @@
 
 @mixin icon-FontAwesome() {
 	font-family: 'fontawesome-alloy';
-	font-style: normal;
 	font-weight: normal;
+	font-style: normal;
 	text-decoration: inherit;
 	-webkit-font-smoothing: antialiased;
 	*margin-right: .3em; // fixes ie7 issues
@@ -23,12 +23,12 @@
 
 @mixin icon-stack($width: 2em, $height: 2em, $top-font-size: 1em, $base-font-size: 2em) {
 	.icon-stack {
+		position: relative;
 		display: inline-block;
+		width: $width;
 		height: $height;
 		line-height: $width;
-		position: relative;
 		vertical-align: -35%;
-		width: $width;
 		[class^="icon-"],
 		[class*=" icon-"] {
 			*line-height: $height;

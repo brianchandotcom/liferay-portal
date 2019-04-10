@@ -1,19 +1,17 @@
-/* ---------- Use the following CSS code if you want to use data attributes for inserting your icons ---------- */
-
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
-	content: attr(data-icon);
 	font-family: 'fontawesome-alloy';
-	font-variant: normal;
-	font-weight: normal;
-	line-height: 1;
+	content: attr(data-icon);
 	speak: none;
+	font-weight: normal;
+	font-variant: normal;
 	text-transform: none;
+	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* ---------- Use the following CSS code if you want to have a class per icon ---------- */
-
+/* Use the following CSS code if you want to have a class per icon */
 /*
 Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
@@ -76,11 +74,11 @@ you can use the generic selector below, but it's slower:
 
 	.icon-stack & {
 		display: block;
+		text-align: center;
+		position: absolute;
+		width: 100%;
 		height: 100%;
 		line-height: inherit;
-		position: absolute;
-		text-align: center;
-		width: 100%;
 	}
 }
 

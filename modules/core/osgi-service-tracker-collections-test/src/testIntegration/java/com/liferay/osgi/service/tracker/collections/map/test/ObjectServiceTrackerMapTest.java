@@ -14,36 +14,35 @@
 
 package com.liferay.osgi.service.tracker.collections.map.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
-import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
-import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
-import com.liferay.osgi.service.tracker.collections.internal.map.TrackedTwo;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -51,21 +50,24 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class ObjectServiceTrackerMapTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
-	public void setUp() throws BundleException {
-		bundle.start();
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectServiceTrackerMapTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}
 
 	@After
-	public void tearDown() throws BundleException {
-		bundle.stop();
-
+	public void tearDown() {
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
 
@@ -121,20 +123,23 @@ public class ObjectServiceTrackerMapTest {
 
 		TrackedOne trackedOne2 = new TrackedOne();
 
-		registerService(trackedOne2, 1);
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne2, 1);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			trackedOne1, 2);
 
 		Assert.assertEquals(
 			trackedOne1, serviceTrackerMap.getService("aTarget"));
 
-		serviceRegistration1.unregister();
+		serviceRegistration2.unregister();
 
 		Assert.assertEquals(
 			trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
 	}
 
 	@Test
@@ -299,7 +304,7 @@ public class ObjectServiceTrackerMapTest {
 
 		ServiceTrackerMapBuilder.Collector
 			<String, TrackedOne, TrackedOne, TrackedOne> collector =
-				mapper.collectSingleValue((sr1, sr2) -> sr1.compareTo(sr2));
+				mapper.collectSingleValue(Comparator.naturalOrder());
 
 		_serviceTrackerMap = collector.build();
 
@@ -821,9 +826,6 @@ public class ObjectServiceTrackerMapTest {
 				serviceReferenceCounts.size());
 		}
 	}
-
-	@ArquillianResource
-	public Bundle bundle;
 
 	protected ServiceTrackerMap<String, TrackedOne> createServiceTrackerMap(
 		BundleContext bundleContext) {

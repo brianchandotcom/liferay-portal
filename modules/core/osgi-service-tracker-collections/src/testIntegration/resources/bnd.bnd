@@ -1,9 +1,0 @@
-Bundle-Name: Liferay OSGi Service Tracker Collections Test
-Bundle-SymbolicName: com.liferay.osgi.service.tracker.collections.test
-Bundle-Version: 1.0.0
--includeresource:\
-	.,\
-	../../../classes,\
-	../../../test-classes/integration,\
-	@../../../test-lib/com.liferay.osgi.felix.util.jar!/org/apache/felix/utils/log/*,\
-	@../../../test-lib/org.osgi.service.log.jar!/org/osgi/service/log/*

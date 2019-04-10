@@ -14,15 +14,13 @@
 
 package com.liferay.osgi.service.tracker.collections.map.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.osgi.service.tracker.collections.internal.DefaultServiceTrackerCustomizer;
-import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
-import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,40 +33,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class ListServiceTrackerMapTest {
 
-	@Before
-	public void setUp() throws BundleException {
-		_bundle.start();
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
-		_bundleContext = _bundle.getBundleContext();
+	@Before
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ListServiceTrackerMapTest.class);
+
+		_bundleContext = bundle.getBundleContext();
 	}
 
 	@After
-	public void tearDown() throws BundleException {
+	public void tearDown() {
 		_serviceTrackerMap.close();
-
-		_bundle.stop();
 	}
 
 	@Test
@@ -642,8 +642,6 @@ public class ListServiceTrackerMapTest {
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
 			new PropertyServiceReferenceMapper<>("target"),
-			new DefaultServiceTrackerCustomizer<>(_bundleContext),
-			new PropertyServiceReferenceComparator<>("service.ranking"),
 			serviceTrackerMapListener);
 	}
 
@@ -685,9 +683,6 @@ public class ListServiceTrackerMapTest {
 	protected BundleContextWrapper wrapContext() {
 		return new BundleContextWrapper(_bundleContext);
 	}
-
-	@ArquillianResource
-	private Bundle _bundle;
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;

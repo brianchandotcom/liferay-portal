@@ -14,9 +14,11 @@
 
 package com.liferay.osgi.service.tracker.collections.list.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,18 +26,17 @@ import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -43,21 +44,23 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Adolfo Pérez
  */
-@BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class ServiceTrackerListTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
-	public void setUp() throws BundleException {
-		bundle.start();
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(ServiceTrackerListTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		bundle.stop();
-
+	public void tearDown() {
 		if (_serviceTrackerList != null) {
 			_serviceTrackerList.close();
 
@@ -227,9 +230,6 @@ public class ServiceTrackerListTest {
 		Assert.assertEquals(
 			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
-
-	@ArquillianResource
-	public Bundle bundle;
 
 	public static class CustomizedService {
 	}

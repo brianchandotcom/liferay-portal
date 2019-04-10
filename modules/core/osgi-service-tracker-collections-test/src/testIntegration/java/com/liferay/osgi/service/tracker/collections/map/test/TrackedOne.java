@@ -12,21 +12,25 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.collections.internal.map;
+package com.liferay.osgi.service.tracker.collections.map.test;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Raymond Augé
  */
-public class TrackedTwo {
+public class TrackedOne {
 
-	public TrackedTwo(TrackedOne trackedOne) {
-		_trackedOne = trackedOne;
+	public TrackedOne() {
+		_key = null;
 	}
 
-	public TrackedOne getTrackedOne() {
-		return _trackedOne;
+	public TrackedOne(String key) {
+		_key = key;
 	}
 
-	private final TrackedOne _trackedOne;
+	public String getKey() {
+		return _key;
+	}
+
+	private final String _key;
 
 }

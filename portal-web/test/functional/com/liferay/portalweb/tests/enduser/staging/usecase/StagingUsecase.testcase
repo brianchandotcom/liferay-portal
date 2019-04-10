@@ -151,7 +151,7 @@ definition {
 
 	@priority = "5"
 	test DeleteLivePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -333,7 +333,7 @@ definition {
 
 	@priority = "5"
 	test ImportLARsOnStagedSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(
@@ -1056,7 +1056,7 @@ definition {
 
 	@priority = "5"
 	test TrashEntryReferencePublishing {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(

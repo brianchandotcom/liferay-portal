@@ -64,7 +64,7 @@ definition {
 	@priority = "4"
 	test CheckPublicationSummaryRemote {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryRemote";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");

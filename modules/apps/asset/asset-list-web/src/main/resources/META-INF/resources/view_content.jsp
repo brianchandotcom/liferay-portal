@@ -18,7 +18,7 @@
 
 <div class="container-fluid-1280 pt-3">
 	<liferay-ui:search-container
-		id="fragmentEntries"
+		id="assetEntries"
 		searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

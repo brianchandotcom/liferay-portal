@@ -59,8 +59,7 @@ public class TaxonomyVocabularyResourceTest
 						{
 							required = RandomTestUtil.randomBoolean();
 							subtype = "AllAssetSubtypes";
-							type = RandomTestUtil.randomEnum(
-								AssetType.Type.class);
+							type = "AllAssetTypes";
 						}
 					}
 				};

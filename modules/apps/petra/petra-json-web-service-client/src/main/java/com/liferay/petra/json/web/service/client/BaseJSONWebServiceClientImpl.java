@@ -156,16 +156,20 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public void destroy() {
-		try {
-			_asyncHttpClient.close();
-		}
-		catch (IOException ioe) {
-			_logger.error("Unable to close client", ioe);
+		if (_asyncHttpClient != null) {
+			try {
+				_asyncHttpClient.close();
+			}
+			catch (IOException ioe) {
+				_logger.error("Unable to close client", ioe);
+			}
+
+			_asyncHttpClient = null;
 		}
 
-		_asyncHttpClient = null;
-
-		_idleConnectionMonitorThread.shutdown();
+		if (_idleConnectionMonitorThread != null) {
+			_idleConnectionMonitorThread.shutdown();
+		}
 	}
 
 	@Override

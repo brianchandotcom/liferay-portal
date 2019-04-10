@@ -33,6 +33,8 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 
 import java.io.Serializable;
 
+import java.util.function.Supplier;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import org.osgi.service.component.annotations.Activate;
@@ -41,37 +43,33 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-public abstract class BaseWorkflowMetricsIndexer<T> {
+public abstract class BaseWorkflowMetricsIndexer {
 
-	public void addDocument(T t) {
+	public void addDocument(Supplier<Document> documentSupplier) {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			getIndexName(), createDocument(t));
+			getIndexName(), documentSupplier.get());
 
 		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
-	public void deleteDocument(T t) {
-		Document document = createDocument(t);
+	public void deleteDocument(Supplier<Document> documentSupplier) {
+		Document document = documentSupplier.get();
 
 		document.addKeyword("deleted", true);
 
 		_updateDocument(document);
 	}
 
-	public void updateDocument(T t) {
-		Document document = createDocument(t);
-
-		_updateDocument(document);
+	public void updateDocument(Supplier<Document> documentSupplier) {
+		_updateDocument(documentSupplier.get());
 	}
 
 	@Activate
 	protected void activate() throws Exception {
 		createIndex();
 	}
-
-	protected abstract Document createDocument(T t);
 
 	protected void createIndex() throws PortalException {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =

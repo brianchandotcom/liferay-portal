@@ -31,6 +31,10 @@ import java.util.Dictionary;
  */
 public interface AopService {
 
+	public default Object decorateAopProxy(Object aopProxy) {
+		return aopProxy;
+	}
+
 	/**
 	 * Returns the services that the service proxy registers into OSGi for this
 	 * <code>AopService</code>.

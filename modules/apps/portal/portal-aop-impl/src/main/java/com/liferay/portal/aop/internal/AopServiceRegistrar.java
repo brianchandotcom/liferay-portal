@@ -149,9 +149,10 @@ public class AopServiceRegistrar {
 
 		Class<? extends AopService> aopServiceClass = _aopService.getClass();
 
-		Object aopProxy = ProxyUtil.newProxyInstance(
-			aopServiceClass.getClassLoader(), _aopServiceInterfaces,
-			_aopInvocationHandler);
+		Object aopProxy = _aopService.decorateAopProxy(
+			ProxyUtil.newProxyInstance(
+				aopServiceClass.getClassLoader(), _aopServiceInterfaces,
+				_aopInvocationHandler));
 
 		_aopService.setAopProxy(aopProxy);
 
@@ -203,11 +204,14 @@ public class AopServiceRegistrar {
 
 			_aopServices.put(aopInvocationHandler, aopService);
 
-			Object aopProxy = ProxyUtil.newProxyInstance(
-				aopServiceClass.getClassLoader(), _aopServiceInterfaces,
-				aopInvocationHandler);
+			Object aopProxy = aopService.decorateAopProxy(
+				ProxyUtil.newProxyInstance(
+					aopServiceClass.getClassLoader(), _aopServiceInterfaces,
+					aopInvocationHandler));
 
 			aopService.setAopProxy(aopProxy);
+
+			_aopInvocationHandlers.put(aopProxy, aopInvocationHandler);
 
 			return aopProxy;
 		}
@@ -218,8 +222,7 @@ public class AopServiceRegistrar {
 			Object aopProxy) {
 
 			AopInvocationHandler aopInvocationHandler =
-				ProxyUtil.fetchInvocationHandler(
-					aopProxy, AopInvocationHandler.class);
+				_aopInvocationHandlers.remove(aopProxy);
 
 			AopCacheManager.destroy(aopInvocationHandler);
 
@@ -235,6 +238,8 @@ public class AopServiceRegistrar {
 			_transactionExecutor = transactionExecutor;
 		}
 
+		private final Map<Object, AopInvocationHandler> _aopInvocationHandlers =
+			new ConcurrentHashMap<>();
 		private final Map<AopInvocationHandler, AopService> _aopServices =
 			new ConcurrentHashMap<>();
 		private final ServiceObjects<AopService> _serviceObjects;

@@ -12,21 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.significance.MutualInformationSignificanceHeuristic;
 
 /**
  * @author Michael C. Han
+ * @author André de Oliveira
  */
-@ProviderType
-public class MutualInformationSignifanceHeuristic
-	extends NxySignificanceHeuristic {
+public class MutualInformationSignificanceHeuristicImpl
+	implements MutualInformationSignificanceHeuristic {
 
-	public MutualInformationSignifanceHeuristic(
+	public MutualInformationSignificanceHeuristicImpl(
 		boolean backgroundIsSuperset, boolean includeNegatives) {
 
-		super(backgroundIsSuperset, includeNegatives);
+		_backgroundIsSuperset = backgroundIsSuperset;
+		_includeNegatives = includeNegatives;
 	}
+
+	@Override
+	public boolean isBackgroundIsSuperset() {
+		return _backgroundIsSuperset;
+	}
+
+	@Override
+	public boolean isIncludeNegatives() {
+		return _includeNegatives;
+	}
+
+	private final boolean _backgroundIsSuperset;
+	private final boolean _includeNegatives;
 
 }

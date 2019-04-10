@@ -12,20 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.significance.JLHScoreSignificanceHeuristic;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-@ProviderType
-public class ChiSquareSignifanceHeuristic extends NxySignificanceHeuristic {
-
-	public ChiSquareSignifanceHeuristic(
-		boolean backgroundIsSuperset, boolean includeNegatives) {
-
-		super(backgroundIsSuperset, includeNegatives);
-	}
-
+public class JLHScoreSignificanceHeuristicImpl
+	implements JLHScoreSignificanceHeuristic {
 }

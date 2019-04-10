@@ -12,17 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
 
 /**
  * @author Michael C. Han
  * @author André de Oliveira
  */
-@ProviderType
-public interface GNDSignificanceHeuristic extends SignificanceHeuristic {
+public class GNDSignificanceHeuristicImpl implements GNDSignificanceHeuristic {
 
-	public boolean isBackgroundIsSuperset();
+	public GNDSignificanceHeuristicImpl(boolean backgroundIsSuperset) {
+		_backgroundIsSuperset = backgroundIsSuperset;
+	}
+
+	@Override
+	public boolean isBackgroundIsSuperset() {
+		return _backgroundIsSuperset;
+	}
+
+	private final boolean _backgroundIsSuperset;
 
 }

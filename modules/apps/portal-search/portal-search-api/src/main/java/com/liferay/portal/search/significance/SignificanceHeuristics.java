@@ -16,10 +16,26 @@ package com.liferay.portal.search.significance;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.search.script.Script;
+
 /**
- * @author Michael C. Han
+ * @author Wade Cao
  */
 @ProviderType
-public class PercentageScoreSignifanceHeuristic
-	implements SignificanceHeuristic {
+public interface SignificanceHeuristics {
+
+	public ChiSquareSignificanceHeuristic chiSquare(
+		boolean backgroundIsSuperset, boolean includeNegatives);
+
+	public GNDSignificanceHeuristic gnd(boolean backgroundIsSuperset);
+
+	public JLHScoreSignificanceHeuristic jlhScore();
+
+	public MutualInformationSignificanceHeuristic mutualInformation(
+		boolean backgroundIsSuperset, boolean includeNegatives);
+
+	public PercentageScoreSignificanceHeuristic percentageScore();
+
+	public ScriptSignificanceHeuristic script(Script script);
+
 }

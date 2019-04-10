@@ -12,30 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 
 /**
  * @author Michael C. Han
+ * @author André de Oliveira
  */
-@ProviderType
-public abstract class NxySignificanceHeuristic
-	implements SignificanceHeuristic {
+public class ChiSquareSignificanceHeuristicImpl
+	implements ChiSquareSignificanceHeuristic {
 
-	public NxySignificanceHeuristic(
-		boolean backgroundIsSuperset, boolean includeNegatives) {
-
-		_backgroundIsSuperset = backgroundIsSuperset;
-		_includeNegatives = includeNegatives;
-	}
-
+	@Override
 	public boolean isBackgroundIsSuperset() {
 		return _backgroundIsSuperset;
 	}
 
+	@Override
 	public boolean isIncludeNegatives() {
 		return _includeNegatives;
+	}
+
+	protected ChiSquareSignificanceHeuristicImpl(
+		boolean backgroundIsSuperset, boolean includeNegatives) {
+
+		_backgroundIsSuperset = backgroundIsSuperset;
+		_includeNegatives = includeNegatives;
 	}
 
 	private final boolean _backgroundIsSuperset;

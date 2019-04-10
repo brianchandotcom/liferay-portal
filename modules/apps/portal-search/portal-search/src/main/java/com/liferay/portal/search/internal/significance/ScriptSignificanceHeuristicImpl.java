@@ -12,17 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.significance.ScriptSignificanceHeuristic;
 
 /**
  * @author Michael C. Han
  * @author André de Oliveira
  */
-@ProviderType
-public interface GNDSignificanceHeuristic extends SignificanceHeuristic {
+public class ScriptSignificanceHeuristicImpl
+	implements ScriptSignificanceHeuristic {
 
-	public boolean isBackgroundIsSuperset();
+	public ScriptSignificanceHeuristicImpl(Script script) {
+		_script = script;
+	}
+
+	@Override
+	public Script getScript() {
+		return _script;
+	}
+
+	private final Script _script;
 
 }

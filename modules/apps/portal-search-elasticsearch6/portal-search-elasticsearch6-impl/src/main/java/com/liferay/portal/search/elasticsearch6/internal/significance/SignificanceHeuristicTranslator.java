@@ -15,12 +15,12 @@
 package com.liferay.portal.search.elasticsearch6.internal.significance;
 
 import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
-import com.liferay.portal.search.significance.ChiSquareSignifanceHeuristic;
+import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
-import com.liferay.portal.search.significance.JLHScoreSignifanceHeuristic;
-import com.liferay.portal.search.significance.MutualInformationSignifanceHeuristic;
-import com.liferay.portal.search.significance.PercentageScoreSignifanceHeuristic;
-import com.liferay.portal.search.significance.ScriptSignifanceHeuristic;
+import com.liferay.portal.search.significance.JLHScoreSignificanceHeuristic;
+import com.liferay.portal.search.significance.MutualInformationSignificanceHeuristic;
+import com.liferay.portal.search.significance.PercentageScoreSignificanceHeuristic;
+import com.liferay.portal.search.significance.ScriptSignificanceHeuristic;
 import com.liferay.portal.search.significance.SignificanceHeuristic;
 
 import org.elasticsearch.script.Script;
@@ -40,51 +40,58 @@ public class SignificanceHeuristicTranslator {
 		SignificanceHeuristic translate(
 			SignificanceHeuristic significanceHeuristic) {
 
-		if (significanceHeuristic instanceof ChiSquareSignifanceHeuristic) {
-			ChiSquareSignifanceHeuristic chiSquareSignifanceHeuristic =
-				(ChiSquareSignifanceHeuristic)significanceHeuristic;
+		if (significanceHeuristic instanceof ChiSquareSignificanceHeuristic) {
+			ChiSquareSignificanceHeuristic chiSquareSignificanceHeuristic =
+				(ChiSquareSignificanceHeuristic)significanceHeuristic;
 
 			return new ChiSquare(
-				chiSquareSignifanceHeuristic.isIncludeNegatives(),
-				chiSquareSignifanceHeuristic.isBackgroundIsSuperset());
+				chiSquareSignificanceHeuristic.isIncludeNegatives(),
+				chiSquareSignificanceHeuristic.isBackgroundIsSuperset());
 		}
-		else if (significanceHeuristic instanceof GNDSignificanceHeuristic) {
+
+		if (significanceHeuristic instanceof GNDSignificanceHeuristic) {
 			GNDSignificanceHeuristic gndSignificanceHeuristic =
 				(GNDSignificanceHeuristic)significanceHeuristic;
 
 			return new GND(gndSignificanceHeuristic.isBackgroundIsSuperset());
 		}
-		else if (significanceHeuristic instanceof JLHScoreSignifanceHeuristic) {
+
+		if (significanceHeuristic instanceof JLHScoreSignificanceHeuristic) {
 			return new JLHScore();
 		}
-		else if (significanceHeuristic instanceof
-					MutualInformationSignifanceHeuristic) {
 
-			MutualInformationSignifanceHeuristic
-				mutualInformationSignifanceHeuristic =
-					(MutualInformationSignifanceHeuristic)significanceHeuristic;
+		if (significanceHeuristic instanceof
+				MutualInformationSignificanceHeuristic) {
+
+			MutualInformationSignificanceHeuristic
+				mutualInformationSignificanceHeuristic =
+					(MutualInformationSignificanceHeuristic)
+						significanceHeuristic;
 
 			return new MutualInformation(
-				mutualInformationSignifanceHeuristic.isIncludeNegatives(),
-				mutualInformationSignifanceHeuristic.isBackgroundIsSuperset());
+				mutualInformationSignificanceHeuristic.isIncludeNegatives(),
+				mutualInformationSignificanceHeuristic.
+					isBackgroundIsSuperset());
 		}
-		else if (significanceHeuristic instanceof
-					PercentageScoreSignifanceHeuristic) {
+
+		if (significanceHeuristic instanceof
+				PercentageScoreSignificanceHeuristic) {
 
 			return new PercentageScore();
 		}
-		else if (significanceHeuristic instanceof ScriptSignifanceHeuristic) {
-			ScriptSignifanceHeuristic scriptSignifanceHeuristic =
-				(ScriptSignifanceHeuristic)significanceHeuristic;
+
+		if (significanceHeuristic instanceof ScriptSignificanceHeuristic) {
+			ScriptSignificanceHeuristic scriptSignificanceHeuristic =
+				(ScriptSignificanceHeuristic)significanceHeuristic;
 
 			Script script = _scriptTranslator.translate(
-				scriptSignifanceHeuristic.getScript());
+				scriptSignificanceHeuristic.getScript());
 
 			return new ScriptHeuristic(script);
 		}
 
 		throw new IllegalArgumentException(
-			"Invalid signficance heuristic:" + significanceHeuristic);
+			"Invalid significance heuristic: " + significanceHeuristic);
 	}
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();

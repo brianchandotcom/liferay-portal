@@ -21,8 +21,6 @@ import aQute.bnd.annotation.ProviderType;
  * @author André de Oliveira
  */
 @ProviderType
-public interface GNDSignificanceHeuristic extends SignificanceHeuristic {
-
-	public boolean isBackgroundIsSuperset();
-
+public interface PercentageScoreSignificanceHeuristic
+	extends SignificanceHeuristic {
 }

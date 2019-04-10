@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.significance;
+package com.liferay.portal.search.internal.significance;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.significance.PercentageScoreSignificanceHeuristic;
 
 /**
- * @author Michael C. Han
  * @author André de Oliveira
  */
-@ProviderType
-public interface GNDSignificanceHeuristic extends SignificanceHeuristic {
-
-	public boolean isBackgroundIsSuperset();
-
+public class PercentageScoreSignificanceHeuristicImpl
+	implements PercentageScoreSignificanceHeuristic {
 }

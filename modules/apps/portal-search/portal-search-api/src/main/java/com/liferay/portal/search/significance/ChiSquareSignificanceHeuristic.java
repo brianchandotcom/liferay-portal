@@ -17,12 +17,13 @@ package com.liferay.portal.search.significance;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Michael C. Han
  * @author André de Oliveira
  */
 @ProviderType
-public interface GNDSignificanceHeuristic extends SignificanceHeuristic {
+public interface ChiSquareSignificanceHeuristic extends SignificanceHeuristic {
 
 	public boolean isBackgroundIsSuperset();
+
+	public boolean isIncludeNegatives();
 
 }

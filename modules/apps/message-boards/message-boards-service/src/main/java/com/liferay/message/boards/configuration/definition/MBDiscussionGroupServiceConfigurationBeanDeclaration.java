@@ -12,37 +12,23 @@
  * details.
  */
 
-package com.liferay.comment.web.internal.category;
+package com.liferay.message.boards.configuration.definition;
 
-import com.liferay.configuration.admin.category.ConfigurationCategory;
+import com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author István András Dézsi
  */
-@Component(service = ConfigurationCategory.class)
-public class CommentsConfigurationCategory implements ConfigurationCategory {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class MBDiscussionGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public String getCategoryIcon() {
-		return _CATEGORY_ICON;
+	public Class<?> getConfigurationBeanClass() {
+		return MBDiscussionGroupServiceConfiguration.class;
 	}
-
-	@Override
-	public String getCategoryKey() {
-		return _CATEGORY_KEY;
-	}
-
-	@Override
-	public String getCategorySection() {
-		return _CATEGORY_SECTION;
-	}
-
-	private static final String _CATEGORY_ICON = "comments";
-
-	private static final String _CATEGORY_KEY = "comments";
-
-	private static final String _CATEGORY_SECTION = "content";
 
 }

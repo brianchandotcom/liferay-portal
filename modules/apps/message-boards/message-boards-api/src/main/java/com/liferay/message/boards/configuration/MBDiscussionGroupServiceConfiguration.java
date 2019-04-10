@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.configuration;
+package com.liferay.message.boards.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	category = "comments", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.message.boards.internal.configuration.MBDiscussionGroupServiceConfiguration",
+	id = "com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration",
 	localization = "content/Language", name = "discussion-configuration-name"
 )
 public interface MBDiscussionGroupServiceConfiguration {
@@ -44,19 +44,19 @@ public interface MBDiscussionGroupServiceConfiguration {
 	public String emailFromAddress();
 
 	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/discussion.email.comments.added.enabled}",
-		name = "email-discussion-comment-added-enabled", required = false
+		deflt = "true", name = "email-discussion-comment-added-enabled",
+		required = false
 	)
 	public boolean discussionEmailCommentsAddedEnabled();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/portlet/messageboards/dependencies/discussion_email_body.tmpl}",
+		deflt = "${resource:com/liferay/message/boards/dependencies/discussion_email_body.tmpl}",
 		name = "email-discussion-comment-added-body", required = false
 	)
 	public LocalizedValuesMap discussionEmailBody();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/portlet/messageboards/dependencies/discussion_email_subject.tmpl}",
+		deflt = "${resource:com/liferay/message/boards/dependencies/discussion_email_subject.tmpl}",
 		name = "email-discussion-comment-added-subject", required = false
 	)
 	public LocalizedValuesMap discussionEmailSubject();

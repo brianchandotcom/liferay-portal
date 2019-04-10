@@ -78,9 +78,7 @@ public class AssetTypeSerDes {
 			sb.append("null");
 		}
 		else {
-			sb.append("\"");
 			sb.append(assetType.getType());
-			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -136,8 +134,7 @@ public class AssetTypeSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					assetType.setType(
-						AssetType.Type.create((String)jsonParserFieldValue));
+					assetType.setType((String)jsonParserFieldValue);
 				}
 			}
 			else {

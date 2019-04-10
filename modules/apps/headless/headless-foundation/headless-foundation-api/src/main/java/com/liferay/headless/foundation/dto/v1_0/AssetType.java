@@ -14,11 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,43 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetType")
 public class AssetType {
-
-	public static enum Type {
-
-		ALL_ASSET_TYPES("AllAssetTypes"), BLOG_POSTING("BlogPosting"),
-		DOCUMENT("Document"), KNOWLEDGE_BASE_ARTICLE("KnowledgeBaseArticle"),
-		ORGANIZATION("Organization"), STRUCTURED_CONTENT("StructuredContent"),
-		USER_ACCOUNT("UserAccount"), WEB_PAGE("WebPage"), WEB_SITE("WebSite"),
-		WIKI_PAGE("WikiPage");
-
-		@JsonCreator
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	public Boolean getRequired() {
 		return required;
@@ -133,25 +94,16 @@ public class AssetType {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtype;
 
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -165,7 +117,7 @@ public class AssetType {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -222,9 +174,7 @@ public class AssetType {
 			sb.append("null");
 		}
 		else {
-			sb.append("\"");
 			sb.append(type);
-			sb.append("\"");
 		}
 
 		sb.append("}");

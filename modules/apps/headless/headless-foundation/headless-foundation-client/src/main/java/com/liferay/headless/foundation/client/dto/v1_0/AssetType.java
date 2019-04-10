@@ -16,8 +16,6 @@ package com.liferay.headless.foundation.client.dto.v1_0;
 
 import com.liferay.headless.foundation.client.function.UnsafeSupplier;
 
-import java.util.Objects;
-
 import javax.annotation.Generated;
 
 /**
@@ -26,41 +24,6 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class AssetType {
-
-	public static enum Type {
-
-		ALL_ASSET_TYPES("AllAssetTypes"), BLOG_POSTING("BlogPosting"),
-		DOCUMENT("Document"), KNOWLEDGE_BASE_ARTICLE("KnowledgeBaseArticle"),
-		ORGANIZATION("Organization"), STRUCTURED_CONTENT("StructuredContent"),
-		USER_ACCOUNT("UserAccount"), WEB_PAGE("WebPage"), WEB_SITE("WebSite"),
-		WIKI_PAGE("WikiPage");
-
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	public Boolean getRequired() {
 		return required;
@@ -104,23 +67,15 @@ public class AssetType {
 
 	protected String subtype;
 
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -129,6 +84,6 @@ public class AssetType {
 		}
 	}
 
-	protected Type type;
+	protected String type;
 
 }

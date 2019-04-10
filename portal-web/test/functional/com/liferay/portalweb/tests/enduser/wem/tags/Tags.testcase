@@ -193,10 +193,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertTextEquals(
-			locator1 = "ContentRow#ENTRY_CONTENT_DESCRIPTIVE_TITLE",
-			value1 = "tagname1"
-		);
+		LexiconList.viewListEntryTitle(listEntry = "tagname1");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

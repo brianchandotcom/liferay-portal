@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.CustomProperty;
+import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -77,6 +78,22 @@ public class CustomPropertyUtil {
 		}
 
 		return Collections.emptyList();
+	}
+
+	public static LocalizedValue[] getLocalizedValue(
+		CustomProperty[] customProperties, String key) {
+
+		if (ArrayUtil.isEmpty(customProperties)) {
+			return new LocalizedValue[0];
+		}
+
+		for (CustomProperty customProperty : customProperties) {
+			if (StringUtils.equals(key, customProperty.getKey())) {
+				return (LocalizedValue[])customProperty.getValue();
+			}
+		}
+
+		return new LocalizedValue[0];
 	}
 
 	public static String getString(

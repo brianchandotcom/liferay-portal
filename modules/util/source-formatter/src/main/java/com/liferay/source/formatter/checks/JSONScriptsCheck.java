@@ -14,9 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +23,7 @@ import org.json.JSONObject;
 
 /**
  * @author Alan Huang
+ * @author Hugo Huijser
  */
 public class JSONScriptsCheck extends BaseFileCheck {
 
@@ -32,69 +31,64 @@ public class JSONScriptsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.endsWith("/package.json")) {
-			_checkMissingScripts(fileName, content);
+		if (absolutePath.endsWith("/package.json") &&
+			absolutePath.contains("/modules/apps/")) {
+
+			JSONObject jsonObject = new JSONObject(content);
+
+			_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
+			_checkRequiredScripts(fileName, jsonObject);
 		}
 
 		return content;
 	}
 
-	private void _checkMissingScripts(String fileName, String content) {
-		JSONObject jsonObject = new JSONObject(content);
+	private void _checkIncorrectEntry(
+		String fileName, JSONObject jsonObject, String entryName) {
 
-		if (jsonObject.isNull("devDependencies")) {
-			return;
-		}
-
-		JSONObject devDependenciesJSONObject = jsonObject.getJSONObject(
-			"devDependencies");
-
-		for (Map.Entry<String, String> entry : _requiredScriptsMap.entrySet()) {
-			String packageName = entry.getKey();
-
-			if (devDependenciesJSONObject.isNull(packageName)) {
-				continue;
-			}
-
-			for (String requiredScript : StringUtil.split(entry.getValue())) {
-				if (jsonObject.isNull("scripts")) {
-					addMessage(
-						fileName, _getMessage(packageName, requiredScript));
-
-					continue;
-				}
-
-				JSONObject scriptsJSONObject = jsonObject.getJSONObject(
-					"scripts");
-
-				if (scriptsJSONObject.isNull(requiredScript)) {
-					addMessage(
-						fileName, _getMessage(packageName, requiredScript));
-
-					continue;
-				}
-
-				String scriptValue = scriptsJSONObject.getString(
-					requiredScript);
-
-				if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
-					addMessage(
-						fileName, _getMessage(packageName, requiredScript));
-				}
-			}
+		if (!jsonObject.isNull(entryName)) {
+			addMessage(fileName, "Entry '" + entryName + "' is not allowed");
 		}
 	}
 
-	private String _getMessage(String packageName, String requiredScript) {
-		return StringBundler.concat(
-			"When using '" + packageName + "', a script for '", requiredScript,
-			"' is required");
+	private void _checkRequiredScripts(String fileName, JSONObject jsonObject) {
+		if (jsonObject.isNull("scripts")) {
+			addMessage(fileName, "Missing entry 'scripts'");
+
+			return;
+		}
+
+		JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+
+		for (Map.Entry<String, String> entry : _requiredScriptsMap.entrySet()) {
+			String entryName = entry.getKey();
+
+			if (scriptsJSONObject.isNull(entryName)) {
+				addMessage(
+					fileName, "Missing entry '" + entryName + "' in 'scripts'");
+
+				continue;
+			}
+
+			String value = scriptsJSONObject.getString(entryName);
+
+			if (!value.matches(entry.getValue())) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Value '", value, "' for entry '", entryName,
+						"' does not match expected value '", entry.getValue(),
+						"'"));
+			}
+		}
 	}
 
 	private static final Map<String, String> _requiredScriptsMap =
 		new HashMap<String, String>() {
 			{
-				put("liferay-npm-scripts", "csf,format");
+				put("build", "liferay-npm-scripts build.*");
+				put("checkFormat", "liferay-npm-scripts lint");
+				put("format", "liferay-npm-scripts format");
 			}
 		};
 

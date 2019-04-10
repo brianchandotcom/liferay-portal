@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator';
 import Icon from './Icon';
 import React from 'react';
 
@@ -6,8 +7,10 @@ import React from 'react';
  * @memberof shared/components
  */
 export default class MultiSelect extends React.Component {
-	constructor({ data, selectedTags }) {
-		super({ data, selectedTags });
+	constructor(props) {
+		super(props);
+
+		const { data, selectedTags } = props;
 
 		this.state = {
 			active: false,
@@ -16,23 +19,17 @@ export default class MultiSelect extends React.Component {
 			selectedTags,
 			verticalIndex: -1
 		};
-
-		this.addTag = this.addTag.bind(this);
-		this.hideDropList = this.hideDropList.bind(this);
-		this.onSearch = this.onSearch.bind(this);
-		this.removeTag = this.removeTag.bind(this);
-		this.showDropList = this.showDropList.bind(this);
 	}
 
-	get dataFiltred() {
-		const { data, searchKey, selectedTags } = this.state;
-		const term = searchKey.toLowerCase().trim();
-
-		return data
-			.filter(tag => selectedTags.indexOf(tag) === -1)
-			.filter(tag => term === '' || tag.toLowerCase().indexOf(term) > -1);
+	componentDidMount() {
+		document.addEventListener('mousedown', this.handleClickOutside);
 	}
 
+	componentWillUnmount() {
+		document.removeEventListener('mousedown', this.handleClickOutside);
+	}
+
+	@autobind
 	addTag(event) {
 		const tag = event.currentTarget.getAttribute('data-tag');
 		const { selectedTags } = this.state;
@@ -42,12 +39,42 @@ export default class MultiSelect extends React.Component {
 		});
 	}
 
+	@autobind
+	cancelAllDropList() {
+		const event = new Event('mousedown', { bubbles: true });
+
+		this.wrapperRef.dispatchEvent(event);
+	}
+
+	get dataFiltered() {
+		const { data, searchKey, selectedTags } = this.state;
+		const term = searchKey.toLowerCase().trim();
+
+		return data
+			.filter(tag => selectedTags.indexOf(tag) === -1)
+			.filter(tag => term === '' || tag.toLowerCase().indexOf(term) > -1);
+	}
+
+	@autobind
+	handleClickOutside(event) {
+		if (
+			this.state.active &&
+			this.dataFiltered.length &&
+			this.wrapperRef &&
+			!this.wrapperRef.contains(event.target)
+		) {
+			this.hideDropList();
+		}
+	}
+
+	@autobind
 	hideDropList() {
 		this.setState({ active: false });
 	}
 
+	@autobind
 	onSearch(event) {
-		const dataFiltred = this.dataFiltred;
+		const dataFiltered = this.dataFiltered;
 		const {
 			keyCode,
 			target: { value: searchKey }
@@ -55,7 +82,7 @@ export default class MultiSelect extends React.Component {
 		let { selectedTags, verticalIndex } = this.state;
 
 		if ([38, 40].indexOf(keyCode) > -1) {
-			const dataCount = dataFiltred.length;
+			const dataCount = dataFiltered.length;
 
 			verticalIndex = keyCode === 40 ? verticalIndex + 1 : verticalIndex - 1;
 			verticalIndex =
@@ -68,7 +95,7 @@ export default class MultiSelect extends React.Component {
 			this.setState({ verticalIndex });
 		}
 		else if (keyCode === 13 && verticalIndex > -1) {
-			selectedTags = [...selectedTags, dataFiltred[verticalIndex]];
+			selectedTags = [...selectedTags, dataFiltered[verticalIndex]];
 			this.setState({
 				searchKey: '',
 				selectedTags,
@@ -83,6 +110,7 @@ export default class MultiSelect extends React.Component {
 		}
 	}
 
+	@autobind
 	removeTag(event) {
 		const tagIndex = Number(event.currentTarget.getAttribute('data-tag-index'));
 		const { selectedTags } = this.state;
@@ -93,12 +121,33 @@ export default class MultiSelect extends React.Component {
 		});
 	}
 
+	@autobind
+	setWrapperRef(wrapperRef) {
+		this.wrapperRef = wrapperRef;
+	}
+
+	@autobind
 	showDropList() {
 		this.setState({ active: true });
 	}
 
+	@autobind
+	toggleDropList() {
+		this.setState({ active: !this.state.active });
+	}
+
 	render() {
 		const { active, selectedTags, verticalIndex } = this.state;
+		const {
+			dataFiltered,
+			dataFiltered: { length: dataFilteredLength }
+		} = this;
+
+		const className = `${
+			active ? 'is-active' : ''
+		} align-items-start form-control form-control-tag-group multi-select-wrapper`;
+
+		const isLast = index => index === dataFilteredLength - 1;
 
 		const tagRender = (text, tagIndex) => (
 			<span
@@ -107,6 +156,7 @@ export default class MultiSelect extends React.Component {
 				tabIndex="-1"
 			>
 				<span className="label-item label-item-expand">{text}</span>
+
 				<span className="label-item label-item-after">
 					<button
 						aria-label="Close"
@@ -121,37 +171,43 @@ export default class MultiSelect extends React.Component {
 			</span>
 		);
 
-		const className = `${
-			active ? 'is-active' : ''
-		} align-items-start form-control form-control-tag-group multi-select-wrapper`;
-
 		return (
 			<div
 				className={className}
-				onDoubleClick={this.hideDropList}
-				onFocus={this.showDropList}
+				onFocus={this.cancelAllDropList}
+				ref={this.setWrapperRef}
 			>
-				<div className="col-11 p-0">
+				<div className="col-11 p-0 d-flex flex-wrap">
 					{selectedTags.map((tag, index) => tagRender(tag, index))}
+
 					<input
 						className="form-control-inset"
+						onFocus={this.showDropList}
 						onKeyUp={this.onSearch}
 						type="text"
 					/>
 				</div>
-				<div className="col-1 mt-1">
+
+				<div
+					className="col-1 mt-1 text-right"
+					onClick={this.toggleDropList}
+					style={{ paddingRight: '0px' }}
+				>
 					<Icon iconName="caret-double" />
 				</div>
-				{active && (
+
+				{active && dataFilteredLength > 0 && (
 					<div className="drop-suggestion dropdown-menu" tabIndex="-1">
 						<ul className="list-unstyled">
-							{this.dataFiltred.map((tag, index) => (
+							{dataFiltered.map((tag, index) => (
 								<li data-tag={`${tag}`} key={index} onClick={this.addTag}>
 									<a
 										className={`dropdown-item ${
 											index === verticalIndex ? 'active' : ''
 										}`}
-										href={`#${index}`}
+										data-senna-off
+										href="javascript:;"
+										{...(isLast(index) ? { onBlur: this.hideDropList } : {})}
 									>
 										{tag}
 									</a>

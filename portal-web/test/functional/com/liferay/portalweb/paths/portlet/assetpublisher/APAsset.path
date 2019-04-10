@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ASSET_CONTENT</td>
-	<td>//div[@class='asset-content']/div[contains(.,'${key_assetContent}')]</td>
+	<td>//div[contains(@class,'asset-content')]/div[contains(.,'${key_assetContent}')]</td>
 	<td></td>
 </tr>
 <tr>

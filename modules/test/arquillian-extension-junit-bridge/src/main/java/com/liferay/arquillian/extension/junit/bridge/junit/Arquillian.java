@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
+import com.liferay.petra.string.CharPool;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -33,16 +34,23 @@ import java.net.URI;
 import java.net.URL;
 
 import java.nio.channels.ServerSocketChannel;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.SecureRandom;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,6 +93,16 @@ public class Arquillian extends Runner implements Filterable {
 
 		if (frameworkMethods.isEmpty()) {
 			throw new NoTestsRemainException();
+		}
+
+		Iterator<Class> iterator = _classes.iterator();
+
+		while (iterator.hasNext()) {
+			Class<?> clazz = iterator.next();
+
+			if (!filter.shouldRun(Description.createSuiteDescription(clazz))) {
+				iterator.remove();
+			}
 		}
 	}
 
@@ -166,6 +184,8 @@ public class Arquillian extends Runner implements Filterable {
 			}
 			finally {
 				frameworkMBean.uninstallBundle(bundleId);
+
+				_classes.remove(_clazz);
 			}
 		}
 		catch (Throwable t) {
@@ -216,6 +236,54 @@ public class Arquillian extends Runner implements Filterable {
 
 	private static final Logger _logger = Logger.getLogger(
 		Arquillian.class.getName());
+
+	private static final Set<Class> _classes = new HashSet<Class>() {
+		{
+			try {
+				Path srcDir = Paths.get(
+					System.getProperty("user.dir"), "src", "testIntegration",
+					"java");
+
+				Files.walkFileTree(
+					srcDir,
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult visitFile(
+								Path path,
+								BasicFileAttributes basicFileAttributes)
+							throws IOException {
+
+							Path relativePath = srcDir.relativize(path);
+
+							String relativePathString = relativePath.toString();
+
+							if (relativePathString.endsWith("Test.java")) {
+								relativePathString =
+									relativePathString.substring(
+										0, relativePathString.length() - 5);
+
+								relativePathString = relativePathString.replace(
+									CharPool.SLASH, CharPool.PERIOD);
+
+								try {
+									add(Class.forName(relativePathString));
+								}
+								catch (ClassNotFoundException cnfe) {
+									throw new RuntimeException(cnfe);
+								}
+							}
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
+			}
+			catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
+	};
 
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();

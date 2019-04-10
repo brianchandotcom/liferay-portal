@@ -42,10 +42,6 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 		if (matcher.find()) {
 			List<String> annotations = ListUtil.fromString(matcher.group());
 
-			if (annotations.size() < 2) {
-				return content;
-			}
-
 			Collections.sort(
 				annotations,
 				new Comparator<String>() {

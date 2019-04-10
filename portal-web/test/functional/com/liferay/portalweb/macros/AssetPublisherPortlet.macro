@@ -1512,8 +1512,6 @@ definition {
 			value1 = "Add Content (Select Scope and Type)"
 		);
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
 		Select(locator1 = "Select#SCOPE", value1 = "${siteName1}");
 
 		AssertSelectedLabel(locator1 = "Select#SCOPE", value1 = "${siteName1}");

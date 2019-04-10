@@ -12,11 +12,11 @@ const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL = '/segments.segmentsexperience/up
 
 /**
  * Stores a the layout data of a new experience in layoutDataList
- * @param {!object} state
- * @param {!array} state.layoutDataList
- * @param {!object} state.layoutData
- * @param {!string} state.defaultSegmentsExperienceId
- * @param {!string} segmentsExperienceId The segmentsExperience id that owns this LayoutData
+ * @param {object} state
+ * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {object} state.layoutData
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {string} segmentsExperienceId The segmentsExperience id that owns this LayoutData
  * @returns {Promise}
  */
 function _storeNewLayoutData(state, segmentsExperienceId) {
@@ -68,8 +68,10 @@ function _storeNewLayoutData(state, segmentsExperienceId) {
 
 /**
  *
- * @param {!object} state
- * @param {!string} segmentsExperienceId
+ * @param {object} state
+ * @param {object} state.layoutData
+ * @param {Array<{segmentsExperienceId: string ,layoutData: object}>} state.layoutDataList
+ * @param {string} segmentsExperienceId
  * @returns {Promise}
  */
 function _switchLayoutDataList(state, segmentsExperienceId) {
@@ -142,10 +144,10 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 
 /**
  *
- * @param {oject} state
- * @param {array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {object} state
+ * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
  * @param {string} state.defaultSegmentsExperienceId
- * @returns
+ * @returns {object}
  */
 function _switchLayoutDataToDefault(state) {
 	let nextState = state;
@@ -167,9 +169,8 @@ function _switchLayoutDataToDefault(state) {
 
 /**
  *
- *
  * @param {object} state
- * @param {array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
  * @param {string} segmentsExperienceId
  * @returns {object}
  */
@@ -189,9 +190,10 @@ function _removeLayoutDataItem(state, segmentsExperienceId) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
+ * @param {object} state
+ * @param {string} state.defaultLanguageId
+ * @param {string} actionType
+ * @param {object} payload
  * @param {string} payload.segmentsEntryId
  * @param {string} payload.name
  * @return {Promise}
@@ -289,10 +291,12 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
+ * @param {object} state
+ * @param {Array} state.availableSegmentsExperiences
+ * @param {string} state.segmentsExperienceId
+ * @param {string} actionType
  * @param {object} payload
- * @param {!string} payload.experienceId
+ * @param {string} payload.experienceId
  * @returns {Promise}
  */
 function deleteSegmentsExperienceReducer(state, actionType, payload) {
@@ -364,10 +368,11 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
  *
  *
  * @export
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!string} payload.segmentsExperienceId
+ * @param {object} state
+ * @param {string} state.segmentsExperienceId
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {string} payload.segmentsExperienceId
  * @returns {Promise}
  */
 function selectSegmentsExperienceReducer(state, actionType, payload) {
@@ -403,12 +408,12 @@ function selectSegmentsExperienceReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!string} payload.segmentsEntryId
- * @param {!string} payload.name
- * @param {!string} payload.segmentsExperienceId
+ * @param {object} state
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {string} payload.segmentsEntryId
+ * @param {string} payload.name
+ * @param {string} payload.segmentsExperienceId
  * @return {Promise}
  * @review
  */
@@ -479,12 +484,13 @@ function editSegmentsExperienceReducer(state, actionType, payload) {
 /**
  *
  *
- * @param {*} state
- * @param {!string} actionType
+ * @param {object} state
+ * @param {Array} state.availableSegmentsExperiences
+ * @param {string} actionType
  * @param {object} payload
- * @param {!('up' | 'down')} payload.direction
- * @param {!string} payload.segmentsExperienceId
- * @param {!number} payload.priority
+ * @param {('up' | 'down')} payload.direction
+ * @param {string} payload.segmentsExperienceId
+ * @param {number} payload.priority
  * @return {Promise}
  */
 function updateSegmentsExperiencePriorityReducer(state, actionType, payload) {

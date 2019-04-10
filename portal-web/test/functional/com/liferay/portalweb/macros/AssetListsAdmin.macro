@@ -4,7 +4,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
+			text = "${assetListTitle}"
 		);
 
 		Button.clickSave();
@@ -17,7 +17,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
+			text = "${assetListTitle}"
 		);
 
 		Button.clickSave();
@@ -82,12 +82,12 @@ definition {
 	}
 
 	macro viewAssetList {
-		var key_title = "${title}";
+		var key_title = "${assetListTitle}";
 		var key_type = "${type}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
-			value1 = "${title}"
+			value1 = "${assetListTitle}"
 		);
 
 		AssertTextEquals.assertPartialText(

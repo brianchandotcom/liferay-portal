@@ -32,7 +32,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -42,7 +42,7 @@ definition {
 			);
 
 			AssetListsAdmin.addDynamicSelection(
-				title = "Dynamic Asset List Test"
+				assetListTitle = "Dynamic Asset List Test"
 			);
 		}
 
@@ -52,12 +52,12 @@ definition {
 			);
 
 			AssetListsAdmin.viewAssetList(
-				title = "Manual Asset List Test",
+				assetListTitle = "Manual Asset List Test",
 				type = "Manual"
 			);
 
 			AssetListsAdmin.viewAssetList(
-				title = "Dynamic Asset List Test",
+				assetListTitle = "Dynamic Asset List Test",
 				type = "Dynamic"
 			);
 		}
@@ -72,7 +72,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -108,7 +108,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -118,7 +118,7 @@ definition {
 			);
 
 			AssetListsAdmin.addDynamicSelection(
-				title = "Dynamic Asset List Test"
+				assetListTitle = "Dynamic Asset List Test"
 			);
 		}
 
@@ -152,7 +152,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -169,7 +169,7 @@ definition {
 
 		task ("Assert that the name of the asset list changed correctly") {
 			AssetListsAdmin.viewAssetList(
-				title = "Manual Asset List Edit",
+				assetListTitle = "Manual Asset List Edit",
 				type = "Manual"
 			);
 		}
@@ -192,7 +192,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -237,7 +237,7 @@ definition {
 			);
 
 			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
+				assetListTitle = "Manual Asset List Test"
 			);
 		}
 

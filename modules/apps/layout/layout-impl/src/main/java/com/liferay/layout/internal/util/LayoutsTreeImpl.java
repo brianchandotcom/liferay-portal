@@ -532,13 +532,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			_log.debug(sb.toString());
 		}
 
-		if (childLayout) {
-			if ((layouts.size() >
-					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) &&
-				(start == PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)) {
+		if (childLayout &&
+			(layouts.size() >
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) &&
+			(start == PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)) {
 
-				start = end;
-			}
+			start = end;
 		}
 
 		return layouts.subList(start, end);

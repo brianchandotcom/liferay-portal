@@ -58,7 +58,9 @@ public class RenderedContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(renderedContent.getRenderedContentURL());
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -69,7 +71,9 @@ public class RenderedContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(renderedContent.getTemplateName());
+			sb.append("\"");
 		}
 
 		sb.append("}");

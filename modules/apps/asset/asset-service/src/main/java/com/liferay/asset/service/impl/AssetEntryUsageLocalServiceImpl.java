@@ -136,6 +136,10 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	private int _getType(long plid) {
+		if (plid <= 0) {
+			return AssetEntryUsageConstants.TYPE_DEFAULT;
+		}
+
 		Layout layout = layoutLocalService.fetchLayout(plid);
 
 		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {

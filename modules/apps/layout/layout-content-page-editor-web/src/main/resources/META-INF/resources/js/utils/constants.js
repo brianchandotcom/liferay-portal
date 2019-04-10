@@ -240,7 +240,7 @@ export const TEXT_ALIGNMENT_OPTIONS = [
  */
 export const TEXT_STYLES = [
 	{
-		label: Liferay.Language.get('regular'),
+		label: Liferay.Language.get('normal'),
 		textStyleId: ''
 	},
 	{
@@ -248,7 +248,35 @@ export const TEXT_STYLES = [
 		textStyleId: 'small'
 	},
 	{
-		label: Liferay.Language.get('Large'),
+		label: Liferay.Language.get('lead'),
 		textStyleId: 'lead'
+	},
+	{
+		label: Liferay.Util.sub(
+			Liferay.Language.get('heading-x'),
+			'1'
+		),
+		textStyleId: 'h1'
+	},
+	{
+		label: Liferay.Util.sub(
+			Liferay.Language.get('heading-x'),
+			'2'
+		),
+		textStyleId: 'h2'
+	},
+	{
+		label: Liferay.Util.sub(
+			Liferay.Language.get('heading-x'),
+			'3'
+		),
+		textStyleId: 'h3'
+	},
+	{
+		label: Liferay.Util.sub(
+			Liferay.Language.get('heading-x'),
+			'4'
+		),
+		textStyleId: 'h4'
 	}
 ];

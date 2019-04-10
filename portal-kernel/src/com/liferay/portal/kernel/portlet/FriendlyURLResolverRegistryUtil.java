@@ -67,6 +67,10 @@ public class FriendlyURLResolverRegistryUtil {
 		return _instance._getURLSeparators();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void register(FriendlyURLResolver friendlyURLResolver) {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -77,6 +81,10 @@ public class FriendlyURLResolverRegistryUtil {
 		_serviceRegistrations.put(friendlyURLResolver, serviceRegistration);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void unregister(FriendlyURLResolver friendlyURLResolver) {
 		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
 			_serviceRegistrations.remove(friendlyURLResolver);

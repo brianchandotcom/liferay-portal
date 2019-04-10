@@ -62,7 +62,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h4>
+			<h2 class="h5">
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
 						<c:choose>
@@ -81,13 +81,13 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 				%>
 
 				<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-					<span class="text-default <%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></span>
+					<div class="<%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></div>
 				</c:if>
 
 				<c:if test="<%= thread.isQuestion() %>">
 					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
 				</c:if>
-			</h4>
+			</h2>
 
 			<c:choose>
 				<c:when test="<%= (message != null) && (thread.getMessageCount() == 1) %>">
@@ -104,9 +104,9 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 					%>
 
-					<h5 class="text-default">
+					<div>
 						<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
-					</h5>
+					</div>
 				</c:when>
 				<c:otherwise>
 
@@ -122,9 +122,9 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 					String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
 					%>
 
-					<h5 class="text-default">
+					<div>
 						<liferay-ui:message arguments="<%= new String[] {messageUserName, lastPostDateDescription} %>" key="x-replied-x-ago" />
-					</h5>
+					</div>
 				</c:otherwise>
 			</c:choose>
 
@@ -139,12 +139,12 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 			int viewCount = thread.getViewCount();
 			%>
 
-			<span class="h6 text-default">
+			<div>
 				<liferay-ui:message arguments="<%= repliesCount %>" key='<%= (repliesCount == 1) ? "x-reply" : "x-replies" %>' />
-			</span>
-			<span class="h6 text-default">
+			</div>
+			<div>
 				<liferay-ui:message arguments="<%= viewCount %>" key='<%= (viewCount == 1) ? "x-view" : "x-views" %>' />
-			</span>
+			</div>
 
 			<c:if test="<%= thread.isQuestion() %>">
 
@@ -152,17 +152,17 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 				int threadAnswersCount = MBMessageServiceUtil.getThreadAnswersCount(thread.getGroupId(), thread.getCategoryId(), thread.getThreadId());
 				%>
 
-				<span class="h6">
+				<div>
 					<%= threadAnswersCount %>
 
 					<liferay-ui:message key='<%= (threadAnswersCount == 1) ? "answer" : "answers" %>' />
-				</span>
+				</div>
 			</c:if>
 
 			<c:if test="<%= thread.isLocked() %>">
-				<span class="h6">
+				<div>
 					<liferay-ui:message key="locked" />
-				</span>
+				</div>
 			</c:if>
 		</liferay-ui:search-container-column-text>
 

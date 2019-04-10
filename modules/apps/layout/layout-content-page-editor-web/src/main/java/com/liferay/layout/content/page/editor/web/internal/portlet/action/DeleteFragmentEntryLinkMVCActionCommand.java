@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -103,6 +105,10 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 			}
 		}
 
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+			_portal.getClassNameId(FragmentEntryLink.class),
+			String.valueOf(fragmentEntryLinkId), themeDisplay.getPlid());
+
 		return fragmentEntryLink;
 	}
 
@@ -145,11 +151,17 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

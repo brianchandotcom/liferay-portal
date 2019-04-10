@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -40,11 +39,7 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -63,13 +58,10 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
-	@Path("/my-user-accounts/{userAccountId}")
+	@Path("/my-user-account")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount getMyUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
+	public UserAccount getMyUserAccount() throws Exception {
 		return new UserAccount();
 	}
 
@@ -117,60 +109,12 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount postUserAccount(MultipartBody multipartBody)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Override
-	@DELETE
-	@Path("/user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public void deleteUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-	}
-
-	@Override
 	@GET
 	@Path("/user-accounts/{userAccountId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount getUserAccount(
 			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount putUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();

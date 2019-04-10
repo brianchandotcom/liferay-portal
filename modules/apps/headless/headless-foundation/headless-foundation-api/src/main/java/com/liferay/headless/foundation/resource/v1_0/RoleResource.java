@@ -32,15 +32,9 @@ import javax.annotation.Generated;
 @Generated("")
 public interface RoleResource {
 
-	public Page<Role> getMyUserAccountRolesPage(Long userAccountId)
-		throws Exception;
-
 	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
 
 	public Role getRole(Long roleId) throws Exception;
-
-	public Page<Role> getUserAccountRolesPage(Long userAccountId)
-		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -32,9 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,8 +39,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -121,8 +116,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testGetMyUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 
-		UserAccount getUserAccount = invokeGetMyUserAccount(
-			postUserAccount.getId());
+		UserAccount getUserAccount = invokeGetMyUserAccount();
 
 		assertEquals(postUserAccount, getUserAccount);
 		assertValid(getUserAccount);
@@ -135,14 +129,10 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount invokeGetMyUserAccount(Long userAccountId)
-		throws Exception {
-
+	protected UserAccount invokeGetMyUserAccount() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath("/my-user-accounts/{userAccountId}", userAccountId);
+		String location = _resourceURL + "/my-user-account";
 
 		options.setLocation(location);
 
@@ -162,14 +152,10 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetMyUserAccountResponse(Long userAccountId)
-		throws Exception {
-
+	protected Http.Response invokeGetMyUserAccountResponse() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath("/my-user-accounts/{userAccountId}", userAccountId);
+		String location = _resourceURL + "/my-user-account";
 
 		options.setLocation(location);
 
@@ -799,204 +785,6 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount testPostUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokePostUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			inputObjectMapper.writeValueAsString(userAccount),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location = _resourceURL + _toPath("/user-accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return outputObjectMapper.readValue(string, UserAccount.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostUserAccountResponse(
-			UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/user-accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostFormDataUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount =
-			testPostFormDataUserAccount_addUserAccount(randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount testPostFormDataUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokePostFormDataUserAccount(
-			MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.addPart(
-			"userAccount",
-			inputObjectMapper.writeValueAsString(multipartBody.getValues()));
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location = _resourceURL + _toPath("/user-accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return outputObjectMapper.readValue(string, UserAccount.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostFormDataUserAccountResponse(
-			MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/user-accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteUserAccount() throws Exception {
-		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
-
-		assertResponseCode(
-			204, invokeDeleteUserAccountResponse(userAccount.getId()));
-
-		assertResponseCode(
-			404, invokeGetUserAccountResponse(userAccount.getId()));
-	}
-
-	protected UserAccount testDeleteUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void invokeDeleteUserAccount(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}", userAccountId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteUserAccountResponse(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}", userAccountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
 
@@ -1049,87 +837,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				_toPath("/user-accounts/{userAccountId}", userAccountId);
 
 		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutUserAccount() throws Exception {
-		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount putUserAccount = invokePutUserAccount(
-			postUserAccount.getId(), randomUserAccount);
-
-		assertEquals(randomUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		UserAccount getUserAccount = invokeGetUserAccount(
-			putUserAccount.getId());
-
-		assertEquals(randomUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokePutUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			inputObjectMapper.writeValueAsString(userAccount),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}", userAccountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return outputObjectMapper.readValue(string, UserAccount.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutUserAccountResponse(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			inputObjectMapper.writeValueAsString(userAccount),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}", userAccountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
 
 		HttpUtil.URLtoByteArray(options);
 
@@ -1647,8 +1354,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("myOrganizations", additionalAssertFieldName)) {
-				if (userAccount.getMyOrganizations() == null) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (userAccount.getName() == null) {
 					valid = false;
 				}
 
@@ -1656,17 +1363,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"myOrganizationsIds", additionalAssertFieldName)) {
+					"organizationBriefs", additionalAssertFieldName)) {
 
-				if (userAccount.getMyOrganizationsIds() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (userAccount.getName() == null) {
+				if (userAccount.getOrganizationBriefs() == null) {
 					valid = false;
 				}
 
@@ -1681,36 +1380,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roles", additionalAssertFieldName)) {
-				if (userAccount.getRoles() == null) {
+			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
+				if (userAccount.getRoleBriefs() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("rolesIds", additionalAssertFieldName)) {
-				if (userAccount.getRolesIds() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"tasksAssignedToMe", additionalAssertFieldName)) {
-
-				if (userAccount.getTasksAssignedToMe() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"tasksAssignedToMyRoles", additionalAssertFieldName)) {
-
-				if (userAccount.getTasksAssignedToMyRoles() == null) {
+			if (Objects.equals("siteBriefs", additionalAssertFieldName)) {
+				if (userAccount.getSiteBriefs() == null) {
 					valid = false;
 				}
 
@@ -1931,10 +1610,9 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("myOrganizations", additionalAssertFieldName)) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.equals(
-						userAccount1.getMyOrganizations(),
-						userAccount2.getMyOrganizations())) {
+						userAccount1.getName(), userAccount2.getName())) {
 
 					return false;
 				}
@@ -1943,21 +1621,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"myOrganizationsIds", additionalAssertFieldName)) {
+					"organizationBriefs", additionalAssertFieldName)) {
 
 				if (!Objects.equals(
-						userAccount1.getMyOrganizationsIds(),
-						userAccount2.getMyOrganizationsIds())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.equals(
-						userAccount1.getName(), userAccount2.getName())) {
+						userAccount1.getOrganizationBriefs(),
+						userAccount2.getOrganizationBriefs())) {
 
 					return false;
 				}
@@ -1976,9 +1644,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roles", additionalAssertFieldName)) {
+			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
 				if (!Objects.equals(
-						userAccount1.getRoles(), userAccount2.getRoles())) {
+						userAccount1.getRoleBriefs(),
+						userAccount2.getRoleBriefs())) {
 
 					return false;
 				}
@@ -1986,36 +1655,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("rolesIds", additionalAssertFieldName)) {
+			if (Objects.equals("siteBriefs", additionalAssertFieldName)) {
 				if (!Objects.equals(
-						userAccount1.getRolesIds(),
-						userAccount2.getRolesIds())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"tasksAssignedToMe", additionalAssertFieldName)) {
-
-				if (!Objects.equals(
-						userAccount1.getTasksAssignedToMe(),
-						userAccount2.getTasksAssignedToMe())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"tasksAssignedToMyRoles", additionalAssertFieldName)) {
-
-				if (!Objects.equals(
-						userAccount1.getTasksAssignedToMyRoles(),
-						userAccount2.getTasksAssignedToMyRoles())) {
+						userAccount1.getSiteBriefs(),
+						userAccount2.getSiteBriefs())) {
 
 					return false;
 				}
@@ -2189,22 +1832,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("myOrganizations")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("myOrganizationsIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getName()));
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("organizationBriefs")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("profileURL")) {
@@ -2215,22 +1853,12 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("roles")) {
+		if (entityFieldName.equals("roleBriefs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("rolesIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("tasksAssignedToMe")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("tasksAssignedToMyRoles")) {
+		if (entityFieldName.equals("siteBriefs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

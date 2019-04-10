@@ -55,8 +55,6 @@ public class ServletDataImpl implements ServletData {
 			_taxonomyCategoryResourceComponentServiceObjects);
 		Mutation.setTaxonomyVocabularyResourceComponentServiceObjects(
 			_taxonomyVocabularyResourceComponentServiceObjects);
-		Mutation.setUserAccountResourceComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects);
 
 		Query.setEmailResourceComponentServiceObjects(
 			_emailResourceComponentServiceObjects);
@@ -112,10 +110,6 @@ public class ServletDataImpl implements ServletData {
 		_taxonomyVocabularyResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<UserAccountResource>
-		_userAccountResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<EmailResource>
 		_emailResourceComponentServiceObjects;
 
@@ -142,6 +136,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<UserAccountResource>
+		_userAccountResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WebUrlResource>

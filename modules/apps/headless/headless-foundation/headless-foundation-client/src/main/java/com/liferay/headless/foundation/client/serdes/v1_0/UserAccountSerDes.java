@@ -14,8 +14,9 @@
 
 package com.liferay.headless.foundation.client.serdes.v1_0;
 
-import com.liferay.headless.foundation.client.dto.v1_0.Organization;
-import com.liferay.headless.foundation.client.dto.v1_0.Role;
+import com.liferay.headless.foundation.client.dto.v1_0.OrganizationBrief;
+import com.liferay.headless.foundation.client.dto.v1_0.RoleBrief;
+import com.liferay.headless.foundation.client.dto.v1_0.SiteBrief;
 import com.liferay.headless.foundation.client.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.client.json.BaseJSONParser;
 
@@ -248,50 +249,6 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"myOrganizations\": ");
-
-		if (userAccount.getMyOrganizations() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getMyOrganizations().length; i++) {
-				sb.append(userAccount.getMyOrganizations()[i]);
-
-				if ((i + 1) < userAccount.getMyOrganizations().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"myOrganizationsIds\": ");
-
-		if (userAccount.getMyOrganizationsIds() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getMyOrganizationsIds().length;
-				 i++) {
-
-				sb.append(userAccount.getMyOrganizationsIds()[i]);
-
-				if ((i + 1) < userAccount.getMyOrganizationsIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
 		sb.append("\"name\": ");
 
 		if (userAccount.getName() == null) {
@@ -299,6 +256,29 @@ public class UserAccountSerDes {
 		}
 		else {
 			sb.append(userAccount.getName());
+		}
+
+		sb.append(", ");
+
+		sb.append("\"organizationBriefs\": ");
+
+		if (userAccount.getOrganizationBriefs() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getOrganizationBriefs().length;
+				 i++) {
+
+				sb.append(userAccount.getOrganizationBriefs()[i]);
+
+				if ((i + 1) < userAccount.getOrganizationBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append(", ");
@@ -314,18 +294,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"roles\": ");
+		sb.append("\"roleBriefs\": ");
 
-		if (userAccount.getRoles() == null) {
+		if (userAccount.getRoleBriefs() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getRoles().length; i++) {
-				sb.append(userAccount.getRoles()[i]);
+			for (int i = 0; i < userAccount.getRoleBriefs().length; i++) {
+				sb.append(userAccount.getRoleBriefs()[i]);
 
-				if ((i + 1) < userAccount.getRoles().length) {
+				if ((i + 1) < userAccount.getRoleBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -335,68 +315,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"rolesIds\": ");
+		sb.append("\"siteBriefs\": ");
 
-		if (userAccount.getRolesIds() == null) {
+		if (userAccount.getSiteBriefs() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getRolesIds().length; i++) {
-				sb.append(userAccount.getRolesIds()[i]);
+			for (int i = 0; i < userAccount.getSiteBriefs().length; i++) {
+				sb.append(userAccount.getSiteBriefs()[i]);
 
-				if ((i + 1) < userAccount.getRolesIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMe\": ");
-
-		if (userAccount.getTasksAssignedToMe() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getTasksAssignedToMe().length;
-				 i++) {
-
-				sb.append("\"");
-				sb.append(userAccount.getTasksAssignedToMe()[i]);
-				sb.append("\"");
-
-				if ((i + 1) < userAccount.getTasksAssignedToMe().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMyRoles\": ");
-
-		if (userAccount.getTasksAssignedToMyRoles() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < userAccount.getTasksAssignedToMyRoles().length;
-				 i++) {
-
-				sb.append("\"");
-				sb.append(userAccount.getTasksAssignedToMyRoles()[i]);
-				sb.append("\"");
-
-				if ((i + 1) < userAccount.getTasksAssignedToMyRoles().length) {
+				if ((i + 1) < userAccount.getSiteBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -537,29 +467,24 @@ public class UserAccountSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "myOrganizations")) {
-				if (jsonParserFieldValue != null) {
-					userAccount.setMyOrganizations(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OrganizationSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Organization[size]
-						));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "myOrganizationsIds")) {
-
-				if (jsonParserFieldValue != null) {
-					userAccount.setMyOrganizationsIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "organizationBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					userAccount.setOrganizationBriefs(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> OrganizationBriefSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new OrganizationBrief[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
@@ -567,36 +492,28 @@ public class UserAccountSerDes {
 					userAccount.setProfileURL((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "roles")) {
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setRoles(
+					userAccount.setRoleBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> RoleSerDes.toDTO((String)object)
+							object -> RoleBriefSerDes.toDTO((String)object)
 						).toArray(
-							size -> new Role[size]
+							size -> new RoleBrief[size]
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "rolesIds")) {
+			else if (Objects.equals(jsonParserFieldName, "siteBriefs")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setRolesIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "tasksAssignedToMe")) {
-				if (jsonParserFieldValue != null) {
-					userAccount.setTasksAssignedToMe(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "tasksAssignedToMyRoles")) {
-
-				if (jsonParserFieldValue != null) {
-					userAccount.setTasksAssignedToMyRoles(
-						toStrings((Object[])jsonParserFieldValue));
+					userAccount.setSiteBriefs(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> SiteBriefSerDes.toDTO((String)object)
+						).toArray(
+							size -> new SiteBrief[size]
+						));
 				}
 			}
 			else {

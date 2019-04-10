@@ -31,8 +31,6 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotEmpty;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("UserAccount")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"email", "familyName", "givenName"})
 @XmlRootElement(name = "UserAccount")
 public class UserAccount {
 
@@ -262,7 +259,6 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String email;
 
 	public String getFamilyName() {
@@ -290,7 +286,6 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String familyName;
 
 	public String getGivenName() {
@@ -318,7 +313,6 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String givenName;
 
 	public String getHonorificPrefix() {
@@ -481,61 +475,6 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public Organization[] getMyOrganizations() {
-		return myOrganizations;
-	}
-
-	public void setMyOrganizations(Organization[] myOrganizations) {
-		this.myOrganizations = myOrganizations;
-	}
-
-	@JsonIgnore
-	public void setMyOrganizations(
-		UnsafeSupplier<Organization[], Exception>
-			myOrganizationsUnsafeSupplier) {
-
-		try {
-			myOrganizations = myOrganizationsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Organization[] myOrganizations;
-
-	public Long[] getMyOrganizationsIds() {
-		return myOrganizationsIds;
-	}
-
-	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
-		this.myOrganizationsIds = myOrganizationsIds;
-	}
-
-	@JsonIgnore
-	public void setMyOrganizationsIds(
-		UnsafeSupplier<Long[], Exception> myOrganizationsIdsUnsafeSupplier) {
-
-		try {
-			myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] myOrganizationsIds;
-
 	public String getName() {
 		return name;
 	}
@@ -560,6 +499,34 @@ public class UserAccount {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	public OrganizationBrief[] getOrganizationBriefs() {
+		return organizationBriefs;
+	}
+
+	public void setOrganizationBriefs(OrganizationBrief[] organizationBriefs) {
+		this.organizationBriefs = organizationBriefs;
+	}
+
+	@JsonIgnore
+	public void setOrganizationBriefs(
+		UnsafeSupplier<OrganizationBrief[], Exception>
+			organizationBriefsUnsafeSupplier) {
+
+		try {
+			organizationBriefs = organizationBriefsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected OrganizationBrief[] organizationBriefs;
 
 	public String getProfileURL() {
 		return profileURL;
@@ -588,20 +555,20 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileURL;
 
-	public Role[] getRoles() {
-		return roles;
+	public RoleBrief[] getRoleBriefs() {
+		return roleBriefs;
 	}
 
-	public void setRoles(Role[] roles) {
-		this.roles = roles;
+	public void setRoleBriefs(RoleBrief[] roleBriefs) {
+		this.roleBriefs = roleBriefs;
 	}
 
 	@JsonIgnore
-	public void setRoles(
-		UnsafeSupplier<Role[], Exception> rolesUnsafeSupplier) {
+	public void setRoleBriefs(
+		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
 
 		try {
-			roles = rolesUnsafeSupplier.get();
+			roleBriefs = roleBriefsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -613,22 +580,22 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Role[] roles;
+	protected RoleBrief[] roleBriefs;
 
-	public Long[] getRolesIds() {
-		return rolesIds;
+	public SiteBrief[] getSiteBriefs() {
+		return siteBriefs;
 	}
 
-	public void setRolesIds(Long[] rolesIds) {
-		this.rolesIds = rolesIds;
+	public void setSiteBriefs(SiteBrief[] siteBriefs) {
+		this.siteBriefs = siteBriefs;
 	}
 
 	@JsonIgnore
-	public void setRolesIds(
-		UnsafeSupplier<Long[], Exception> rolesIdsUnsafeSupplier) {
+	public void setSiteBriefs(
+		UnsafeSupplier<SiteBrief[], Exception> siteBriefsUnsafeSupplier) {
 
 		try {
-			rolesIds = rolesIdsUnsafeSupplier.get();
+			siteBriefs = siteBriefsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -639,63 +606,8 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] rolesIds;
-
-	public String[] getTasksAssignedToMe() {
-		return tasksAssignedToMe;
-	}
-
-	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
-		this.tasksAssignedToMe = tasksAssignedToMe;
-	}
-
-	@JsonIgnore
-	public void setTasksAssignedToMe(
-		UnsafeSupplier<String[], Exception> tasksAssignedToMeUnsafeSupplier) {
-
-		try {
-			tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] tasksAssignedToMe;
-
-	public String[] getTasksAssignedToMyRoles() {
-		return tasksAssignedToMyRoles;
-	}
-
-	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
-		this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
-	}
-
-	@JsonIgnore
-	public void setTasksAssignedToMyRoles(
-		UnsafeSupplier<String[], Exception>
-			tasksAssignedToMyRolesUnsafeSupplier) {
-
-		try {
-			tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] tasksAssignedToMyRoles;
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected SiteBrief[] siteBriefs;
 
 	@Override
 	public boolean equals(Object object) {
@@ -912,48 +824,6 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"myOrganizations\": ");
-
-		if (myOrganizations == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < myOrganizations.length; i++) {
-				sb.append(myOrganizations[i]);
-
-				if ((i + 1) < myOrganizations.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"myOrganizationsIds\": ");
-
-		if (myOrganizationsIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < myOrganizationsIds.length; i++) {
-				sb.append(myOrganizationsIds[i]);
-
-				if ((i + 1) < myOrganizationsIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
 		sb.append("\"name\": ");
 
 		if (name == null) {
@@ -961,6 +831,27 @@ public class UserAccount {
 		}
 		else {
 			sb.append(name);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"organizationBriefs\": ");
+
+		if (organizationBriefs == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < organizationBriefs.length; i++) {
+				sb.append(organizationBriefs[i]);
+
+				if ((i + 1) < organizationBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append(", ");
@@ -976,18 +867,18 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"roles\": ");
+		sb.append("\"roleBriefs\": ");
 
-		if (roles == null) {
+		if (roleBriefs == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < roles.length; i++) {
-				sb.append(roles[i]);
+			for (int i = 0; i < roleBriefs.length; i++) {
+				sb.append(roleBriefs[i]);
 
-				if ((i + 1) < roles.length) {
+				if ((i + 1) < roleBriefs.length) {
 					sb.append(", ");
 				}
 			}
@@ -997,64 +888,18 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"rolesIds\": ");
+		sb.append("\"siteBriefs\": ");
 
-		if (rolesIds == null) {
+		if (siteBriefs == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < rolesIds.length; i++) {
-				sb.append(rolesIds[i]);
+			for (int i = 0; i < siteBriefs.length; i++) {
+				sb.append(siteBriefs[i]);
 
-				if ((i + 1) < rolesIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMe\": ");
-
-		if (tasksAssignedToMe == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < tasksAssignedToMe.length; i++) {
-				sb.append("\"");
-				sb.append(tasksAssignedToMe[i]);
-				sb.append("\"");
-
-				if ((i + 1) < tasksAssignedToMe.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"tasksAssignedToMyRoles\": ");
-
-		if (tasksAssignedToMyRoles == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < tasksAssignedToMyRoles.length; i++) {
-				sb.append("\"");
-				sb.append(tasksAssignedToMyRoles[i]);
-				sb.append("\"");
-
-				if ((i + 1) < tasksAssignedToMyRoles.length) {
+				if ((i + 1) < siteBriefs.length) {
 					sb.append(", ");
 				}
 			}

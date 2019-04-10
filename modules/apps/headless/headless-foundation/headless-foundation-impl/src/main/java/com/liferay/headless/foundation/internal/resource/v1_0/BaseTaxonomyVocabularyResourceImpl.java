@@ -45,6 +45,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	implements AopService, TaxonomyVocabularyResource {
 
 	@Override
+	public Object decorateAopProxy(Object aopProxy) {
+		return new TaxonomyVocabularyResourceWrapper(
+			(TaxonomyVocabularyResource)aopProxy);
+	}
+
+	@Override
 	public Dictionary<String, Object> getProperties() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

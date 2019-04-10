@@ -49,6 +49,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,12 +66,15 @@ public class DDMStructureManagerUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		_classNameId = _portal.getClassNameId(
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_classNameId = _portal.getClassNameId(
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -380,13 +384,13 @@ public class DDMStructureManagerUtilTest {
 		return ddmFormValues;
 	}
 
-	private long _classNameId;
+	private static long _classNameId;
+
+	@Inject
+	private static Portal _portal;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

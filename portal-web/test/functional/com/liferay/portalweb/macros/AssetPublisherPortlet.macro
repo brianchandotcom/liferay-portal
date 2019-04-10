@@ -1225,8 +1225,6 @@ definition {
 			value1 = "Add Content (Select Scope and Type)"
 		);
 
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
 		Select(locator1 = "Select#SCOPE", value1 = "${siteScope1}");
 
 		AssertSelectedLabel(locator1 = "Select#SCOPE", value1 = "${siteScope1}");
@@ -1235,14 +1233,12 @@ definition {
 
 		AssertSelectedLabel(locator1 = "Select#SCOPE", value1 = "${siteScope2}");
 
-		Refresh();
+		Button.clickCancel();
 
 		AssetPublisherPortlet.viewPG(
 			assetContent = "${assetContent}",
 			assetTitle = "${assetTitle}"
 		);
-
-		Click(locator1 = "APAsset#ASSET_BACK_TO_ICON");
 	}
 
 	macro viewCustomADTRichSummaryPG {

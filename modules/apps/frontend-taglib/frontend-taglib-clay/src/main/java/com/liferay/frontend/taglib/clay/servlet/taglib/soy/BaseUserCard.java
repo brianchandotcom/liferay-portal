@@ -57,7 +57,6 @@ public abstract class BaseUserCard
 		return null;
 	}
 
-
 	@Override
 	public String getName() {
 		return HtmlUtil.escape(user.getFullName());

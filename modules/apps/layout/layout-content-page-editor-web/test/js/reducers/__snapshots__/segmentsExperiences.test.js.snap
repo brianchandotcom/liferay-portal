@@ -100,6 +100,23 @@ Object {
   "classPK": "test-class-p-k",
   "defaultLanguageId": "en_US",
   "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "layoutData": Object {
+    "default": "layoutData",
+  },
+  "layoutDataList": Array [
+    Object {
+      "layoutData": Object {
+        "default": "layoutData",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+    Object {
+      "layoutData": Object {
+        "second": "layoutData",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
+    },
+  ],
   "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_SECOND",
 }
 `;
@@ -117,6 +134,17 @@ Object {
   "classPK": "test-class-p-k",
   "defaultLanguageId": "en_US",
   "defaultSegmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+  "layoutData": Object {
+    "default": "layoutData",
+  },
+  "layoutDataList": Array [
+    Object {
+      "layoutData": Object {
+        "default": "layoutData",
+      },
+      "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
+    },
+  ],
   "segmentsExperienceId": "SEGMENTS_EXPERIENCE_ID_DEFAULT",
 }
 `;

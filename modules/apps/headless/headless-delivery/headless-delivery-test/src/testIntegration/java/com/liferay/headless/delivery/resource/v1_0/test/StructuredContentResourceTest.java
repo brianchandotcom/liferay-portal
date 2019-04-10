@@ -90,7 +90,7 @@ public class StructuredContentResourceTest
 	}
 
 	@Test
-	public void testGetContentSpaceStructuredContentWithDifferentLocale()
+	public void testGetSiteStructuredContentWithDifferentLocale()
 		throws Exception {
 
 		StructuredContent structuredContent = invokePostSiteStructuredContent(

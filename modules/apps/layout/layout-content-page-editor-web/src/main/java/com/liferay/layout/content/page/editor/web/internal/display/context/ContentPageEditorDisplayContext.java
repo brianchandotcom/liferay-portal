@@ -386,9 +386,9 @@ public class ContentPageEditorDisplayContext {
 		availableSoyContext.put(
 			"icon", "pages-tree"
 		).put(
-			"label", LanguageUtil.get(resourceBundle, "structure")
+			"label", LanguageUtil.get(resourceBundle, "page-structure")
 		).put(
-			"sidebarPanelId", "structure"
+			"sidebarPanelId", "page-structure"
 		);
 
 		soyContexts.add(availableSoyContext);

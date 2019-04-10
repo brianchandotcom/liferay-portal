@@ -5,7 +5,7 @@ import './fragments/SidebarElementsPanel.es';
 import './fragments/SidebarSectionsPanel.es';
 import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
-import './structure/SidebarStructurePanel.es';
+import './page_structure/SidebarPageStructurePanel.es';
 import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';

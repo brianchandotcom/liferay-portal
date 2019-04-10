@@ -39,8 +39,8 @@
 				{call com.liferay.layout.content.page.editor.web.SidebarMappingPanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $selectedSidebarPanelId == 'structure'}
-				{call com.liferay.layout.content.page.editor.web.SidebarStructurePanel.render}
+			{elseif $selectedSidebarPanelId == 'page-structure'}
+				{call com.liferay.layout.content.page.editor.web.SidebarPageStructurePanel.render}
 					{param store: $store /}
 				{/call}
 			{elseif $selectedSidebarPanelId == 'widgets'}

@@ -16,12 +16,9 @@ package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,32 +27,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
+public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 
 	@Override
-	public void onAfterCreate(KaleoNode kaleoNode) {
-		if (Objects.equals(kaleoNode.getType(), NodeType.CONDITION.name()) ||
-			Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
-			return;
-		}
-
+	public void onAfterCreate(KaleoTask kaleoTask) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoNode kaleoNode) {
-		if (Objects.equals(kaleoNode.getType(), NodeType.CONDITION.name()) ||
-			Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
-			return;
-		}
-
+	public void onAfterRemove(KaleoTask kaleoTask) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
 	}
 
 	@Reference

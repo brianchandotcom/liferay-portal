@@ -27,7 +27,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
-import java.util.Objects;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,46 +39,21 @@ import org.osgi.service.component.annotations.Reference;
 public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(KaleoNode kaleoNode) {
-		Document document = new DocumentImpl();
+		return _createDocument(
+			kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
+			kaleoNode.isInitial(), kaleoNode.getKaleoDefinitionVersionId(),
+			kaleoNode.getModifiedDate(), kaleoNode.getName(),
+			kaleoNode.getKaleoNodeId(), kaleoNode.getPrimaryKey(),
+			kaleoNode.isTerminal(), kaleoNode.getType());
+	}
 
-		document.addUID(
-			"WorkflowMetricsNode",
-			digest(
-				kaleoNode.getCompanyId(),
-				kaleoNode.getKaleoDefinitionVersionId(),
-				kaleoNode.getPrimaryKey()));
-		document.addKeyword("companyId", kaleoNode.getCompanyId());
-		document.addDateSortable("createDate", kaleoNode.getCreateDate());
-		document.addKeyword("deleted", false);
-		document.addKeyword("initial", kaleoNode.isInitial());
-		document.addDateSortable("modifiedDate", kaleoNode.getModifiedDate());
-		document.addKeyword("name", kaleoNode.getName());
-
-		Long nodeId = getNodeId(kaleoNode);
-
-		if (nodeId != null) {
-			document.addKeyword("nodeId", nodeId);
-		}
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoNode.getKaleoDefinitionVersionId());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"processId", kaleoDefinition.getKaleoDefinitionId());
-		}
-
-		document.addKeyword("terminal", kaleoNode.isTerminal());
-		document.addKeyword("type", kaleoNode.getType());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"version",
-				StringBundler.concat(
-					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
-		}
-
-		return document;
+	public Document createDocument(KaleoTask kaleoTask) {
+		return _createDocument(
+			kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
+			kaleoTask.getKaleoDefinitionVersionId(),
+			kaleoTask.getModifiedDate(), kaleoTask.getName(),
+			kaleoTask.getKaleoTaskId(), kaleoTask.getPrimaryKey(), false,
+			NodeType.TASK.name());
 	}
 
 	@Override
@@ -91,31 +66,69 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		return "WorkflowMetricsNodeType";
 	}
 
-	protected Long getNodeId(KaleoNode kaleoNode) {
-		if (Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-			try {
-				KaleoTask kaleoTask =
-					_kaleoTaskLocalService.getKaleoNodeKaleoTask(
-						kaleoNode.getKaleoNodeId());
-
-				return kaleoTask.getKaleoTaskId();
-			}
-			catch (Exception e) {
-				return null;
-			}
-		}
-
-		return kaleoNode.getKaleoNodeId();
-	}
-
 	@Override
 	protected void populateIndex() throws PortalException {
+		_populateIndexWithKaleoNode();
+		_populateIndexWithKaleoTask();
+	}
+
+	private Document _createDocument(
+		long companyId, Date createDate, boolean initial,
+		long kaleoDefinitionVersionId, Date modifiedDate, String name,
+		long nodeId, long primaryKey, boolean terminal, String type) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsNode",
+			digest(companyId, kaleoDefinitionVersionId, primaryKey));
+		document.addKeyword("companyId", companyId);
+		document.addDateSortable("createDate", createDate);
+		document.addKeyword("deleted", false);
+		document.addKeyword("initial", initial);
+		document.addDateSortable("modifiedDate", modifiedDate);
+		document.addKeyword("name", name);
+		document.addKeyword("nodeId", nodeId);
+
+		KaleoDefinition kaleoDefinition = getKaleoDefinition(
+			kaleoDefinitionVersionId);
+
+		if (kaleoDefinition != null) {
+			document.addKeyword(
+				"processId", kaleoDefinition.getKaleoDefinitionId());
+		}
+
+		document.addKeyword("terminal", terminal);
+		document.addKeyword("type", type);
+
+		if (kaleoDefinition != null) {
+			document.addKeyword(
+				"version",
+				StringBundler.concat(
+					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+		}
+
+		return document;
+	}
+
+	private void _populateIndexWithKaleoNode() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoNode kaleoNode) -> addDocument(
 				() -> createDocument(kaleoNode)));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	private void _populateIndexWithKaleoTask() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_kaleoTaskLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoTask kaleoTask) -> addDocument(
+				() -> createDocument(kaleoTask)));
 
 		actionableDynamicQuery.performActions();
 	}

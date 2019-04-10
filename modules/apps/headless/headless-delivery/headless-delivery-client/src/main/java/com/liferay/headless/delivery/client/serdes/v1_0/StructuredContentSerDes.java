@@ -541,7 +541,7 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
-						(Number)jsonParserFieldValue);
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedContents")) {

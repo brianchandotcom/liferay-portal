@@ -50,7 +50,8 @@ public class DetailASTUtil {
 				DetailAST previousSiblingDetailAST =
 					slistDetailAST.getPreviousSibling();
 
-				return previousSiblingDetailAST.findFirstToken(TokenTypes.COLON);
+				return previousSiblingDetailAST.findFirstToken(
+					TokenTypes.COLON);
 			}
 
 			DetailAST lastChildDetailAST = detailAST.getLastChild();

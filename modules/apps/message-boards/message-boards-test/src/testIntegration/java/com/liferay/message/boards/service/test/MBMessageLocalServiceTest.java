@@ -22,6 +22,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -243,6 +244,28 @@ public class MBMessageLocalServiceTest {
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(HtmlUtil.escape(subject), message.getBody());
+	}
+
+	@Test(expected = PortalException.class)
+	public void testCannotReplyToAnUnapprovedMessage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, "bbcode",
+			Collections.emptyList(), false, 0.0, false, serviceContext);
+
+		MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			parentMessage.getThreadId(), parentMessage.getMessageId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, "bbcode", null,
+			false, 0.0, false, serviceContext);
 	}
 
 	@Test

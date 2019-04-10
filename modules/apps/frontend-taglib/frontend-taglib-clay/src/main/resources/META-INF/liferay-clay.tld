@@ -580,6 +580,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>triggerTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

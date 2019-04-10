@@ -141,6 +141,54 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 }
 
 /**
+ *
+ * @param {oject} state
+ * @param {array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {string} state.defaultSegmentsExperienceId
+ * @returns
+ */
+function _switchLayoutDataToDefault(state) {
+	let nextState = state;
+
+	let baseLayoutData = nextState.layoutDataList.find(
+		layoutDataItem => {
+			return layoutDataItem.segmentsExperienceId === nextState.defaultSegmentsExperienceId;
+		}
+	);
+
+	nextState = setIn(
+		nextState,
+		['layoutData'],
+		baseLayoutData.layoutData
+	);
+
+	return nextState;
+}
+
+/**
+ *
+ *
+ * @param {object} state
+ * @param {array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {string} segmentsExperienceId
+ * @returns {object}
+ */
+function _removeLayoutDataItem(state, segmentsExperienceId) {
+	let nextState = state;
+	nextState = setIn(
+		nextState,
+		['layoutDataList'],
+		nextState.layoutDataList.filter(
+			layoutDataItem => {
+				return layoutDataItem.segmentsExperienceId !== segmentsExperienceId;
+			}
+		)
+	);
+
+	return nextState;
+}
+
+/**
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
@@ -280,7 +328,8 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 									}
 								}
 							);
-
+							nextState = _switchLayoutDataToDefault(nextState);
+							nextState = _removeLayoutDataItem(nextState, segmentsExperienceId);
 							nextState = setIn(
 								nextState,
 								['availableSegmentsExperiences'],

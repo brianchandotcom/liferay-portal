@@ -203,7 +203,30 @@ describe(
 					classPK,
 					defaultLanguageId: 'en_US',
 					defaultSegmentsExperienceId: SEGMENTS_EXPERIENCE_ID_DEFAULT,
-					segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND
+					layoutData: {
+						'current': 'layout',
+					},
+					layoutDataList: [
+						{
+							segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_DEFAULT,
+							layoutData: {
+								'default': 'layoutData'
+							}
+						},
+						{
+							segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND,
+							layoutData: {
+								'second': 'layoutData'
+							}
+						},
+						{
+							segmentsExperienceId: SEGMENTS_EXPERIENCE_ID,
+							layoutData: {
+								'first': 'layoutData'
+							}
+						}
+					],
+					segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND,
 				};
 
 				deleteSegmentsExperienceReducer(

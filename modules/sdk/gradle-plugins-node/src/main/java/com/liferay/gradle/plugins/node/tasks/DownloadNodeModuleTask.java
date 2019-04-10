@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 
 import java.io.File;
 
@@ -97,7 +98,13 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		completeArgs.add("install");
+		if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+			completeArgs.add("add");
+		}
+		else {
+			completeArgs.add("install");
+		}
+
 		completeArgs.add(getModuleName() + "@" + getModuleVersion());
 
 		return completeArgs;

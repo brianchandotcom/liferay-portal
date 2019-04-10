@@ -23,7 +23,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayField;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -105,7 +105,7 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 	}
 
 	@Override
-	public InfoDisplayObject<AssetEntry> getInfoDisplayObject(
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException {
 
@@ -122,7 +122,7 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			className, assetRenderer.getClassPK());
 
-		return new AssetInfoDisplayObject(assetEntry);
+		return new AssetInfoDisplayObjectProvider(assetEntry);
 	}
 
 	@Override

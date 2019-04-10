@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
@@ -115,11 +115,12 @@ public class AssetInfoDisplayContributorAdapter
 	}
 
 	@Override
-	public InfoDisplayObject<AssetEntry> getInfoDisplayObject(
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException {
 
-		return _assetDisplayContributor.getInfoDisplayObject(groupId, urlTitle);
+		return _assetDisplayContributor.getInfoDisplayObjectProvider(
+			groupId, urlTitle);
 	}
 
 	@Override

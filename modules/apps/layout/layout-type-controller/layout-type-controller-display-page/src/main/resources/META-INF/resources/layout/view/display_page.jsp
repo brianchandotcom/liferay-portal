@@ -19,7 +19,7 @@
 <%
 AssetRendererFactory assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
 
-InfoDisplayObject infoDisplayObject = displayPageLayoutTypeControllerDisplayContext.getInfoDisplayObject();
+InfoDisplayObjectProvider infoDisplayObjectProvider = displayPageLayoutTypeControllerDisplayContext.getInfoDisplayObjectProvider();
 
 JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray();
 %>
@@ -140,15 +140,15 @@ JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.get
 		%>
 
 	</c:when>
-	<c:when test="<%= infoDisplayObject != null %>">
+	<c:when test="<%= infoDisplayObjectProvider != null %>">
 		<div class="sheet">
 			<div class="sheet-header">
 				<h2 class="sheet-title">
-					<%= infoDisplayObject.getTitle(locale) %>
+					<%= infoDisplayObjectProvider.getTitle(locale) %>
 				</h2>
 
 				<div class="sheet-text">
-					<%= infoDisplayObject.getDescription(locale) %>
+					<%= infoDisplayObjectProvider.getDescription(locale) %>
 				</div>
 			</div>
 		</div>

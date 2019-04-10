@@ -12,7 +12,6 @@
 			}
 		}
 	],
-	"contentSpaceId" : 20123,
 	"contentStructureId" : 36501,
 	"creator" : {
 		"familyName" : "Test",
@@ -35,6 +34,7 @@
 			"templateName" : "Basic Web Content"
 		}
 	],
+	"siteId" : 20123,
 	"title" : "bwc1 title",
 	"uuid" : "9a213fb8-57ca-ae9f-5b07-fd3ffb2f1526"
 }

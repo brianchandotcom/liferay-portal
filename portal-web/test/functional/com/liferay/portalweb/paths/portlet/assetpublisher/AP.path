@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>METADATA_TAGS</td>
-	<td>//dd[contains(@class,'tags')]</td>
+	<td>//span[@class='taglib-asset-tags-summary']/a[contains(@class,'label')]</td>
 	<td></td>
 </tr>
 </tbody>

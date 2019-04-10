@@ -22,6 +22,11 @@ import org.junit.Test;
 public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testIncorrectAnnotationsOrder() throws Exception {
+		test("IncorrectAnnotationsOrder.testmacro");
+	}
+
+	@Test
 	public void testIncorrectLineBreak() throws Exception {
 		test(
 			"IncorrectLineBreak.testmacro",

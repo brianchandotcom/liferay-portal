@@ -1,0 +1,5 @@
+@ignore = "true"
+@component-name = "portal-acceptance"
+definition {
+	property portal.release = "true";
+}

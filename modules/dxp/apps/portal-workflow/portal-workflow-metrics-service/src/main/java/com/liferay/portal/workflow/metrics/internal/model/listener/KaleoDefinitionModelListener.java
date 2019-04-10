@@ -37,7 +37,7 @@ public class KaleoDefinitionModelListener
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.addDocument(
-				() -> _processWorkflowMetricsIndexer.createDocument(
+				_processWorkflowMetricsIndexer.createDocument(
 					kaleoDefinition)));
 	}
 
@@ -47,7 +47,7 @@ public class KaleoDefinitionModelListener
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.deleteDocument(
-				() -> _processWorkflowMetricsIndexer.createDocument(
+				_processWorkflowMetricsIndexer.createDocument(
 					kaleoDefinition)));
 	}
 
@@ -57,7 +57,7 @@ public class KaleoDefinitionModelListener
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.updateDocument(
-				() -> _processWorkflowMetricsIndexer.createDocument(
+				_processWorkflowMetricsIndexer.createDocument(
 					kaleoDefinition)));
 	}
 

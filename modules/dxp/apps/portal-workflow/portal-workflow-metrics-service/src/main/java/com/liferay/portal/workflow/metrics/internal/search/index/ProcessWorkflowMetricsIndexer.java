@@ -27,8 +27,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
-import java.util.function.Supplier;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
-	public void addDocument(Supplier<Document> documentSupplier) {
-		Document document = documentSupplier.get();
-
+	public void addDocument(Document document) {
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
@@ -137,7 +133,7 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoDefinition kaleoDefinition) -> addDocument(
-				() -> createDocument(kaleoDefinition)));
+				createDocument(kaleoDefinition)));
 
 		actionableDynamicQuery.performActions();
 	}

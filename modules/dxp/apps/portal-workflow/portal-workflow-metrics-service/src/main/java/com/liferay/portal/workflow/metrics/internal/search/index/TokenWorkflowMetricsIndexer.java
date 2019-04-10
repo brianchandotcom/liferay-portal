@@ -119,7 +119,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTaskInstanceToken kaleoTaskInstanceToken) -> addDocument(
-				() -> createDocument(kaleoTaskInstanceToken)));
+				createDocument(kaleoTaskInstanceToken)));
 
 		actionableDynamicQuery.performActions();
 	}

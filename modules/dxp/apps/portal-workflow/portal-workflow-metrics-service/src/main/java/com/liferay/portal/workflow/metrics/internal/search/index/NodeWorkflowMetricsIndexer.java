@@ -116,8 +116,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_kaleoNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoNode kaleoNode) -> addDocument(
-				() -> createDocument(kaleoNode)));
+			(KaleoNode kaleoNode) -> addDocument(createDocument(kaleoNode)));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -127,8 +126,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_kaleoTaskLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTask kaleoTask) -> addDocument(
-				() -> createDocument(kaleoTask)));
+			(KaleoTask kaleoTask) -> addDocument(createDocument(kaleoTask)));
 
 		actionableDynamicQuery.performActions();
 	}

@@ -34,7 +34,7 @@ public class KaleoTaskInstanceTokenModelListener
 	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.addDocument(
-				() -> _tokenWorkflowMetricsIndexer.createDocument(
+				_tokenWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 
@@ -42,7 +42,7 @@ public class KaleoTaskInstanceTokenModelListener
 	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.deleteDocument(
-				() -> _tokenWorkflowMetricsIndexer.createDocument(
+				_tokenWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 
@@ -50,7 +50,7 @@ public class KaleoTaskInstanceTokenModelListener
 	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.updateDocument(
-				() -> _tokenWorkflowMetricsIndexer.createDocument(
+				_tokenWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 

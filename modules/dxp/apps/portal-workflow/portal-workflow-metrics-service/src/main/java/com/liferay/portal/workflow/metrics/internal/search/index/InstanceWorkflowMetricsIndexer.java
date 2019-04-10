@@ -28,7 +28,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import java.time.Duration;
 
 import java.util.Date;
-import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,10 +96,8 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	public void deleteDocument(Supplier<Document> documentSupplier) {
-		super.deleteDocument(documentSupplier);
-
-		Document document = documentSupplier.get();
+	public void deleteDocument(Document document) {
+		super.deleteDocument(document);
 
 		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
 			GetterUtil.getLong(document.get("companyId")),
@@ -124,7 +121,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoInstance kaleoInstance) -> addDocument(
-				() -> createDocument(kaleoInstance)));
+				createDocument(kaleoInstance)));
 
 		actionableDynamicQuery.performActions();
 	}

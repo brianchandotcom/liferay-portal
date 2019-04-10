@@ -101,10 +101,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				optional.ifPresent(
 					workflowMetricsSLAProcessResult ->
 						_slaProcessResultWorkflowMetricsIndexer.addDocument(
-							() ->
-								_slaProcessResultWorkflowMetricsIndexer.
-									createDocument(
-										workflowMetricsSLAProcessResult)));
+							_slaProcessResultWorkflowMetricsIndexer.
+								createDocument(
+									workflowMetricsSLAProcessResult)));
 			});
 
 		return BackgroundTaskResult.SUCCESS;

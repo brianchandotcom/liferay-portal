@@ -33,14 +33,14 @@ public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 	public void onAfterCreate(KaleoTask kaleoTask) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				() -> _nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
 	}
 
 	@Reference

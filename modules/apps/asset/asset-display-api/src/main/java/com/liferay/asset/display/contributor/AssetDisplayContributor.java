@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -123,7 +123,7 @@ public interface AssetDisplayContributor {
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 	}
 
-	public InfoDisplayObject<AssetEntry> getInfoDisplayObject(
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException;
 

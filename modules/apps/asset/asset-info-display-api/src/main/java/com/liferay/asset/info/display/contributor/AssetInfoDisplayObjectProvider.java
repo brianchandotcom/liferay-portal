@@ -15,16 +15,21 @@
 package com.liferay.asset.info.display.contributor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 
 /**
  * @author Jürgen Kappler
  */
-public class AssetInfoDisplayObject implements InfoDisplayObject<AssetEntry> {
+public class AssetInfoDisplayObjectProvider
+	implements InfoDisplayObjectProvider<AssetEntry> {
 
-	public AssetInfoDisplayObject(AssetEntry assetEntry) {
+	public AssetInfoDisplayObjectProvider(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
 	}
 
@@ -49,13 +54,27 @@ public class AssetInfoDisplayObject implements InfoDisplayObject<AssetEntry> {
 	}
 
 	@Override
+	public AssetEntry getDisplayObject() {
+		return _assetEntry;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _assetEntry.getGroupId();
 	}
 
 	@Override
-	public AssetEntry getModelEntry() {
-		return _assetEntry;
+	public String getKeywords(Locale locale) {
+		String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
+			_assetEntry.getClassName(), _assetEntry.getClassPK());
+		String[] categoryNames = AssetCategoryLocalServiceUtil.getCategoryNames(
+			_assetEntry.getClassName(), _assetEntry.getClassPK());
+
+		String[] keywords = new String[tagNames.length + categoryNames.length];
+
+		ArrayUtil.combine(tagNames, categoryNames, keywords);
+
+		return StringUtil.merge(keywords);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ package com.liferay.layout.type.controller.display.page.internal.product.navigat
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.InfoDisplayTemplate;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -105,20 +105,21 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		InfoDisplayTemplate infoDisplayTemplate =
-			(InfoDisplayTemplate)request.getAttribute(
-				DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_TEMPLATE);
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)request.getAttribute(
+				DisplayPageLayoutTypeControllerWebKeys.
+					INFO_DISPLAY_OBJECT_PROVIDER);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(
-					infoDisplayTemplate.getClassNameId());
+					infoDisplayObjectProvider.getClassNameId());
 
 		AssetRenderer assetRenderer = null;
 
 		if (assetRendererFactory != null) {
 			assetRendererFactory.getAssetRenderer(
-				infoDisplayTemplate.getClassPK());
+				infoDisplayObjectProvider.getClassPK());
 		}
 
 		if (((assetRenderer == null) ||

@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
  * @author Jürgen Kappler
  */
-public interface InfoDisplayObject<T> extends Serializable {
+public interface InfoDisplayObjectProvider<T> extends Serializable {
 
 	public long getClassNameId();
 
@@ -31,11 +31,11 @@ public interface InfoDisplayObject<T> extends Serializable {
 
 	public String getDescription(Locale locale);
 
-	public String getEditURL(HttpServletRequest request) throws Exception;
+	public T getDisplayObject();
 
 	public long getGroupId();
 
-	public T getModelEntry();
+	public String getKeywords(Locale locale);
 
 	public String getTitle(Locale locale);
 

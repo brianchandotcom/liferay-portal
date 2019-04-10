@@ -15,13 +15,13 @@
 package com.liferay.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
-import com.liferay.asset.info.display.contributor.AssetInfoDisplayObject;
+import com.liferay.asset.info.display.contributor.AssetInfoDisplayObjectProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -135,7 +135,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	}
 
 	@Override
-	public InfoDisplayObject<AssetEntry> getInfoDisplayObject(
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException {
 
@@ -152,7 +152,7 @@ public abstract class BaseAssetDisplayContributor<T>
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			className, assetRenderer.getClassPK());
 
-		return new AssetInfoDisplayObject(assetEntry);
+		return new AssetInfoDisplayObjectProvider(assetEntry);
 	}
 
 	@Override

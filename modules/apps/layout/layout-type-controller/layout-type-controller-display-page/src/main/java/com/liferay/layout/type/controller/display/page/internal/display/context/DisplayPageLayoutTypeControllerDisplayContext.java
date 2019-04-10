@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObject;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -57,14 +57,18 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		_request = request;
 
-		_infoDisplayObject = (InfoDisplayObject)request.getAttribute(
-			DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_OBJECT);
+		_infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)request.getAttribute(
+				DisplayPageLayoutTypeControllerWebKeys.
+					INFO_DISPLAY_OBJECT_PROVIDER);
 
 		InfoDisplayContributor infoDisplayContributor =
 			(InfoDisplayContributor)_request.getAttribute(
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
-		if ((infoDisplayContributor == null) && (_infoDisplayObject != null)) {
+		if ((infoDisplayContributor == null) &&
+			(_infoDisplayObjectProvider != null)) {
+
 			InfoDisplayContributorTracker infoDisplayContributorTracker =
 				(InfoDisplayContributorTracker)request.getAttribute(
 					ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
@@ -72,7 +76,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			infoDisplayContributor =
 				infoDisplayContributorTracker.getInfoDisplayContributor(
 					PortalUtil.getClassName(
-						_infoDisplayObject.getClassNameId()));
+						_infoDisplayObjectProvider.getClassNameId()));
 		}
 
 		_infoDisplayContributor = infoDisplayContributor;
@@ -81,7 +85,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	public AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
-				_infoDisplayObject.getClassNameId());
+				_infoDisplayObjectProvider.getClassNameId());
 	}
 
 	public Map<String, Object> getInfoDisplayFieldsValues()
@@ -95,24 +99,25 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		if (versionClassPK > 0) {
 			return _infoDisplayContributor.getVersionInfoDisplayFieldsValues(
-				_infoDisplayObject.getModelEntry(), versionClassPK,
+				_infoDisplayObjectProvider.getDisplayObject(), versionClassPK,
 				themeDisplay.getLocale());
 		}
 
 		return _infoDisplayContributor.getInfoDisplayFieldsValues(
-			_infoDisplayObject.getModelEntry(), themeDisplay.getLocale());
+			_infoDisplayObjectProvider.getDisplayObject(),
+			themeDisplay.getLocale());
 	}
 
-	public InfoDisplayObject getInfoDisplayObject() {
-		return _infoDisplayObject;
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider() {
+		return _infoDisplayObjectProvider;
 	}
 
 	public long getLayoutPageTemplateEntryId() {
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
-				_infoDisplayObject.getGroupId(),
-				_infoDisplayObject.getClassNameId(),
-				_infoDisplayObject.getClassPK());
+				_infoDisplayObjectProvider.getGroupId(),
+				_infoDisplayObjectProvider.getClassNameId(),
+				_infoDisplayObjectProvider.getClassPK());
 
 		if ((assetDisplayPageEntry == null) ||
 			(assetDisplayPageEntry.getType() ==
@@ -130,9 +135,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.
 				fetchDefaultLayoutPageTemplateEntry(
-					_infoDisplayObject.getGroupId(),
-					_infoDisplayObject.getClassNameId(),
-					_infoDisplayObject.getClassTypeId());
+					_infoDisplayObjectProvider.getGroupId(),
+					_infoDisplayObjectProvider.getClassNameId(),
+					_infoDisplayObjectProvider.getClassTypeId());
 
 		if (defaultLayoutPageTemplateEntry != null) {
 			return defaultLayoutPageTemplateEntry.
@@ -149,9 +154,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public JSONArray getStructureJSONArray() throws PortalException {
-		InfoDisplayObject infoDisplayObject = getInfoDisplayObject();
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			getInfoDisplayObjectProvider();
 
-		if (infoDisplayObject == null) {
+		if (infoDisplayObjectProvider == null) {
 			return null;
 		}
 
@@ -164,7 +170,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					infoDisplayObject.getGroupId(),
+					infoDisplayObjectProvider.getGroupId(),
 					PortalUtil.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry.getPlid(), true);
 
@@ -181,7 +187,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	private final InfoDisplayContributor _infoDisplayContributor;
-	private final InfoDisplayObject _infoDisplayObject;
+	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
 	private final HttpServletRequest _request;
 
 }

@@ -120,8 +120,12 @@ public class SegmentsExperienceLocalServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		_addSegmentsExperience(segmentsEntry);
-		_addSegmentsExperience(segmentsEntry);
+		SegmentsTestUtil.addSegmentsExperience(
+			_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			_classNameId, _classPK);
+		SegmentsTestUtil.addSegmentsExperience(
+			_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			_classNameId, _classPK);
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -147,7 +151,9 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@Test
 	public void testDeleteSegmentsExperience() throws Exception {
-		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
 
 		_segmentsExperienceLocalService.deleteSegmentsExperience(
 			segmentsExperience.getSegmentsExperienceId());
@@ -161,11 +167,21 @@ public class SegmentsExperienceLocalServiceTest {
 	public void testDeleteSegmentsExperienceWithMidrangePriority()
 		throws Exception {
 
-		SegmentsExperience segmentsExperience1 = _addSegmentsExperience();
-		SegmentsExperience segmentsExperience2 = _addSegmentsExperience();
-		SegmentsExperience segmentsExperience3 = _addSegmentsExperience();
-		SegmentsExperience segmentsExperience4 = _addSegmentsExperience();
-		SegmentsExperience segmentsExperience5 = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience3 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience4 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience5 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
 
 		_segmentsExperienceLocalService.deleteSegmentsExperience(
 			segmentsExperience2.getSegmentsExperienceId());
@@ -203,7 +219,9 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@Test
 	public void testMoveSegmentsExperienceToInvalidPosition() throws Exception {
-		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
 
 		SegmentsExperience segmentsExperienceNegativePosition =
 			_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
@@ -227,8 +245,12 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@Test
 	public void testMoveSegmentsExperienceToValidPosition() throws Exception {
-		SegmentsExperience segmentsExperience1 = _addSegmentsExperience();
-		SegmentsExperience segmentsExperience2 = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
 
 		int priority1 = segmentsExperience1.getPriority();
 		int priority2 = segmentsExperience2.getPriority();
@@ -253,7 +275,9 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@Test
 	public void testUpdateSegmentsExperience() throws Exception {
-		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
@@ -270,23 +294,6 @@ public class SegmentsExperienceLocalServiceTest {
 			updatedSegmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(nameMap, updatedSegmentsExperience.getNameMap());
 		Assert.assertEquals(active, updatedSegmentsExperience.isActive());
-	}
-
-	private SegmentsExperience _addSegmentsExperience() throws Exception {
-		return _addSegmentsExperience(
-			SegmentsTestUtil.addSegmentsEntry(_group.getGroupId()));
-	}
-
-	private SegmentsExperience _addSegmentsExperience(
-			SegmentsEntry segmentsEntry)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		return _segmentsExperienceLocalService.addSegmentsExperience(
-			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
-			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
 	}
 
 	private long _classNameId;

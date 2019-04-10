@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryRelLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -114,6 +116,49 @@ public class SegmentsTestUtil {
 		return SegmentsEntryLocalServiceUtil.addSegmentsEntry(
 			segmentsEntryKey, nameMap, descriptionMap, true, criteria, source,
 			type, serviceContext);
+	}
+
+	public static SegmentsExperience addSegmentsExperience(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = addSegmentsEntry(groupId);
+
+		return addSegmentsExperience(
+			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK);
+	}
+
+	public static SegmentsExperience addSegmentsExperience(
+			long groupId, long segmentsEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, serviceContext);
+	}
+
+	public static SegmentsExperience addSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK,
+			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
+	}
+
+	public static SegmentsExperience addSegmentsExperience(
+			long classNameId, long classPK, ServiceContext serviceContext)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = addSegmentsEntry(
+			serviceContext.getScopeGroupId());
+
+		return addSegmentsExperience(
+			segmentsEntry.getSegmentsEntryId(), classNameId, classPK,
+			serviceContext);
 	}
 
 }

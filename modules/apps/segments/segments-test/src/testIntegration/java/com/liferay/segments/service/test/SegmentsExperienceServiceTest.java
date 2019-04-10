@@ -147,9 +147,11 @@ public class SegmentsExperienceServiceTest {
 	public void testDeleteSegmentsExperienceWithDeletePermission()
 		throws Exception {
 
-		SegmentsExperience segmentsEntry = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
 			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
@@ -164,7 +166,7 @@ public class SegmentsExperienceServiceTest {
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
 			_segmentsExperienceService.deleteSegmentsExperience(
-				segmentsEntry.getSegmentsExperienceId());
+				segmentsExperience.getSegmentsExperienceId());
 		}
 	}
 
@@ -172,15 +174,17 @@ public class SegmentsExperienceServiceTest {
 	public void testDeleteSegmentsExperienceWithoutDeletePermission()
 		throws Exception {
 
-		SegmentsExperience segmentsEntry = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
 			_segmentsExperienceService.deleteSegmentsExperience(
-				segmentsEntry.getSegmentsExperienceId());
+				segmentsExperience.getSegmentsExperienceId());
 		}
 	}
 
@@ -192,10 +196,13 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			serviceContext);
-		_addSegmentsExperience(serviceContext);
-		_addSegmentsExperience(serviceContext);
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			_company.getCompanyId());
@@ -231,9 +238,12 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		_addSegmentsExperience(serviceContext);
-		_addSegmentsExperience(serviceContext);
-		_addSegmentsExperience(serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -253,12 +263,15 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience1 = _addSegmentsExperience(
-			serviceContext);
-		SegmentsExperience segmentsExperience2 = _addSegmentsExperience(
-			serviceContext);
-		SegmentsExperience segmentsExperience3 = _addSegmentsExperience(
-			serviceContext);
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience3 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
 
 		for (Role role :
 				RoleLocalServiceUtil.getRoles(_company.getCompanyId())) {
@@ -299,12 +312,15 @@ public class SegmentsExperienceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsExperience segmentsExperience1 = _addSegmentsExperience(
-			serviceContext);
-		SegmentsExperience segmentsExperience2 = _addSegmentsExperience(
-			serviceContext);
-		SegmentsExperience segmentsExperience3 = _addSegmentsExperience(
-			serviceContext);
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience3 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -327,9 +343,11 @@ public class SegmentsExperienceServiceTest {
 	public void testGetSegmentsExperienceWithoutViewPermission()
 		throws Exception {
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			_company.getCompanyId());
@@ -357,9 +375,11 @@ public class SegmentsExperienceServiceTest {
 
 	@Test
 	public void testGetSegmentsExperienceWithViewPermission() throws Exception {
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -373,9 +393,11 @@ public class SegmentsExperienceServiceTest {
 	public void testUpdateSegmentsExperienceWithoutUpdatePermission()
 		throws Exception {
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -392,9 +414,11 @@ public class SegmentsExperienceServiceTest {
 	public void testUpdateSegmentsExperienceWithUpdatePermission()
 		throws Exception {
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, _companyAdminUser.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
 			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
@@ -423,11 +447,9 @@ public class SegmentsExperienceServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		return _segmentsExperienceLocalService.addSegmentsExperience(
+		return _segmentsExperienceService.addSegmentsExperience(
 			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomInt(1, Integer.MAX_VALUE), true,
-			serviceContext);
+			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
 	}
 
 	private long _classNameId;

@@ -34,6 +34,10 @@ public interface ConfigurationScreen {
 
 	public String getScope();
 
+	public default boolean isVisible() {
+		return true;
+	}
+
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 

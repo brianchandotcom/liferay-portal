@@ -14,16 +14,12 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.petra.string.StringPool;
+import com.liferay.info.display.contributor.InfoDisplayTemplate;
+import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -38,8 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -50,8 +44,8 @@ public class EditDisplayPageMenuDisplayContext {
 	public EditDisplayPageMenuDisplayContext(HttpServletRequest request) {
 		_request = request;
 
-		_assetEntry = (AssetEntry)request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
+		_infoDisplayTemplate = (InfoDisplayTemplate)request.getAttribute(
+			DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_TEMPLATE);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -59,16 +53,16 @@ public class EditDisplayPageMenuDisplayContext {
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				String editAssetEntryURL = _getEditAssetEntryURL();
+				String editURL = _infoDisplayTemplate.getEditURL(_request);
 
-				if (Validator.isNotNull(editAssetEntryURL)) {
+				if (Validator.isNotNull(editURL)) {
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(editAssetEntryURL);
+							dropdownItem.setHref(editURL);
 							dropdownItem.setLabel(
 								LanguageUtil.format(
 									_request, "edit-x",
-									_assetEntry.getTitle(
+									_infoDisplayTemplate.getTitle(
 										_themeDisplay.getLocale())));
 						});
 				}
@@ -111,46 +105,7 @@ public class EditDisplayPageMenuDisplayContext {
 		};
 	}
 
-	private String _getEditAssetEntryURL() throws Exception {
-		if (_assetEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
-
-		if (assetRendererFactory == null) {
-			return StringPool.BLANK;
-		}
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_assetEntry.getClassPK());
-
-		if (assetRenderer == null) {
-			return StringPool.BLANK;
-		}
-
-		if (!assetRenderer.hasEditPermission(
-				_themeDisplay.getPermissionChecker())) {
-
-			return StringPool.BLANK;
-		}
-
-		PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
-			_request, LiferayWindowState.NORMAL, _themeDisplay.getURLCurrent());
-
-		if (editAssetEntryURL == null) {
-			return StringPool.BLANK;
-		}
-
-		editAssetEntryURL.setParameter(
-			"portletResource", assetRendererFactory.getPortletId());
-
-		return editAssetEntryURL.toString();
-	}
-
-	private final AssetEntry _assetEntry;
+	private final InfoDisplayTemplate _infoDisplayTemplate;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

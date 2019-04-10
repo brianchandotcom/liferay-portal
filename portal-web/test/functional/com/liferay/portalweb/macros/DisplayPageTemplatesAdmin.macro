@@ -8,46 +8,37 @@ definition {
 	}
 
 	macro deleteDisplayPage {
-		LexiconCard.delete(
-			card = "${displayPageName}"
-		);
+		LexiconCard.delete(card = "${displayPageName}");
 	}
 
 	macro gotoDisplayPage {
-		LexiconCard.clickCardTitle(
-			card = "${displayPageName}"
-		);
+		LexiconCard.clickCardTitle(card = "${displayPageName}");
 	}
 
 	macro gotoDisplayPageEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = "${displayPageName}",
-			item = "${item}"
-		);
+			item = "${item}");
 	}
 
 	macro markDisplayPageAsDefault {
 		LexiconCard.clickEllipsisItem(
 			card = "${displayPageName}",
-			item = "Mark As Default"
-		);
+			item = "Mark As Default");
 
 		AssertVisible(
-			locator1 = "LexiconCard#CARD_STICKER",
-			key_card = "${displayPageName}");
+			key_card = "${displayPageName}",
+			locator1 = "LexiconCard#CARD_STICKER");
 	}
 
 	macro openDisplayPagesAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-page-templates"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-page-templates");
 	}
 
 	macro renameDisplayPage {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "${displayPageName}",
-			item = "Rename"
-		);
+			item = "Rename");
 
 		PortletEntry.inputName(name = "${newDisplayPageName}");
 
@@ -55,15 +46,11 @@ definition {
 	}
 
 	macro viewDisplayPageNotPresent {
-		LexiconCard.viewCardNotPresent(
-			card = "${displayPageName}"
-		);
+		LexiconCard.viewCardNotPresent(card = "${displayPageName}");
 	}
 
 	macro viewDisplayPagePresent {
-		LexiconCard.viewCardPresent(
-			card = "${displayPageName}"
-		);
+		LexiconCard.viewCardPresent(card = "${displayPageName}");
 	}
 
 	macro viewPGViaAP {
@@ -72,21 +59,20 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
+		AssertClick(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${webContentTitle}");
 
 		for (var content : list "${contentList}") {
 			AssertElementPresent(
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT",
-				key_text = "${content}"
-			);
+				key_text = "${content}",
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
 	}
 }

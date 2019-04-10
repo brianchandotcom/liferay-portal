@@ -31,8 +31,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -40,13 +39,11 @@ definition {
 import com.liferay.portal.kernel.util.PortalUtil;
 
 out.println(PortalUtil.escapeRedirect("/"));
-'''
-		);
+''');
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "/"
-		);
+			value1 = "/");
 	}
 
 	@priority = "5"
@@ -58,8 +55,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Web Content Display Page");
 
@@ -69,21 +65,18 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "WC WebContent Title",
-			menuItem = "View History"
-		);
+			menuItem = "View History");
 
 		Pause(locator1 = "3000");
 
@@ -95,8 +88,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "You do not have the roles required to access this portlet."
-		);
+			value1 = "You do not have the roles required to access this portlet.");
 	}
 
 	@description = "This is a use case for LPS-87768."
@@ -107,39 +99,35 @@ out.println(PortalUtil.escapeRedirect("/"));
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Power User", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
@@ -149,16 +137,13 @@ out.println(PortalUtil.escapeRedirect("/"));
 		var plid = Page.getPlidFromHtmlSource();
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(
-			url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}'''
-		);
+		Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
 		AssertElementNotPresent(
-			locator1 = "Portlet#BODY",
-			key_portletName = "Purchased"
-		);
+			key_portletName = "Purchased",
+			locator1 = "Portlet#BODY");
 	}
 
 	@priority = "5"
@@ -183,41 +168,32 @@ out.println(PortalUtil.escapeRedirect("/"));
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
-
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}");
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Forbidden"
-		);
+			value1 = "Forbidden");
 	}
 
 	@priority = "5"
@@ -226,34 +202,32 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com");
 
 		Pause(locator1 = "3000");
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(
+			key_pageName = "Welcome",
+			locator1 = "Home#PAGE");
 
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World"
-		);
+			value1 = "Hello World");
 
 		AssertElementPresent(locator1 = "HelloWorld#PORTLET_CONTENT");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test");
 
-		Navigator.openSpecificURL(
-			url = '''${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test'''
-		);
+		Navigator.openSpecificURL(url = '''${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test''');
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Test");
+		AssertElementPresent(
+			key_pageName = "Test",
+			locator1 = "Home#PAGE");
 	}
 
 	@description = "This is a use case for LPS-73595."
@@ -277,13 +251,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ViewNoInvokedPortletViaURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/web/guest/home/?p_p_id=asdf&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/home/?p_p_id=asdf&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "This portlet has been undeployed. Please redeploy it or remove it from the page."
-		);
+			value1 = "This portlet has been undeployed. Please redeploy it or remove it from the page.");
 	}
 }

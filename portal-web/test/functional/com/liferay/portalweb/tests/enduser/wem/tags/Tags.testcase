@@ -13,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Tags"
-		);
+			portlet = "Tags");
 	}
 
 	tearDown {
@@ -35,8 +34,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Tags"
-		);
+			portlet = "Tags");
 
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
@@ -45,7 +43,9 @@ definition {
 	test CannotMergeSingleTagViewWarning {
 		Tag.addCP(tagName = "tagname1");
 
-		Tag.gotoMerge(mergeMethod = "menuItem", tagName = "tagname1");
+		Tag.gotoMerge(
+			mergeMethod = "menuItem",
+			tagName = "tagname1");
 
 		Tag.mergeSingleTagWarning();
 	}
@@ -97,7 +97,9 @@ definition {
 
 		Tag.viewCP(tagName = "tagname1");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "tagname1");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "tagname1");
 
 		PortletEntry.inputName(name = "tagname2");
 
@@ -116,7 +118,9 @@ definition {
 
 		Tag.viewCP(tagName = "tagname1");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "tagname1");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "tagname1");
 
 		PortletEntry.inputName(name = "tagname2");
 
@@ -143,8 +147,7 @@ definition {
 
 		Tag.mergeTags(
 			mergedTag = "tagname1",
-			tagNameList = "tagname1,tagname2,tagname3"
-		);
+			tagNameList = "tagname1,tagname2,tagname3");
 
 		Tag.viewCP(tagName = "tagname1");
 
@@ -175,8 +178,7 @@ definition {
 
 		Tag.mergeTags(
 			mergedTag = "tagname1",
-			tagNameList = "tagname1,tagname2,tagname3,tagname7"
-		);
+			tagNameList = "tagname1,tagname2,tagname3,tagname7");
 
 		for (var i : list "1,4,5,6") {
 			Tag.viewCP(tagName = "tagname${i}");
@@ -195,16 +197,14 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ENTRY_CONTENT_DESCRIPTIVE_TITLE",
-			value1 = "tagname1"
-		);
+			value1 = "tagname1");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
+			key_columnNumber = "2",
 			locator1 = "ContentRow#ENTRY_CONTENT_LIST_COLUMN",
-			value1 = "tagname1",
-			key_columnNumber = "2"
-		);
+			value1 = "tagname1");
 	}
 
 	@priority = "4"
@@ -225,8 +225,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries"
-		);
+			value1 = "20 Entries");
 
 		Pagination.viewResults(results = "Showing 1 to 20 of 25 entries.");
 

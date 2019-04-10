@@ -22,8 +22,7 @@ definition {
 	macro viewDefaultPG {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No subscriptions were found."
-		);
+			value1 = "No subscriptions were found.");
 	}
 
 	macro viewSubscription {
@@ -32,15 +31,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MySubscriptions#ASSET_TITLE",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		var assetType = StringUtil.toUpperCase("${assetType}");
 
 		AssertTextEquals(
 			locator1 = "MySubscriptions#ASSET_TYPE",
-			value1 = "${assetType}"
-		);
+			value1 = "${assetType}");
 	}
 
 	macro viewUnsubscribedViaInfoPanel {

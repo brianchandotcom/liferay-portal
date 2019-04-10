@@ -9,33 +9,29 @@ definition {
 			clientProfile = "${clientProfile}",
 			description = "${description}",
 			privacyPolicyURL = "${privacyPolicyURL}",
-			websiteURL = "${websiteURL}"
-		);
+			websiteURL = "${websiteURL}");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${applicationName}");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "${applicationName}");
 	}
 
 	macro deleteApplication {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
-		AssertConfirm.assertPartialConfirmation(
-			value1 = "Are you sure you want to delete the application?"
-		);
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete the application?");
 
 		AssertElementNotPresent(
-			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME",
-			key_tableName = "${applicationName}"
-		);
+			key_tableName = "${applicationName}",
+			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME");
 	}
 
 	macro editApplication {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		var newGeneratedClientSecret = OAuth2.inputApplicationValues(
 			applicationName = "${newApplicationName}",
@@ -52,7 +48,9 @@ definition {
 		);
 
 		if (isSet(newApplicationName)) {
-			AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${newApplicationName}");
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "${newApplicationName}");
 		}
 
 		return "${newGeneratedClientSecret}";
@@ -61,35 +59,30 @@ definition {
 	macro editScopes {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		AssertClick(
+			key_navItem = "Scopes",
 			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Scopes",
-			key_navItem = "Scopes"
-		);
+			value1 = "Scopes");
 
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "Scopes"
-		);
+			key_navItem = "Scopes",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		if ((isSet(checkGlobalScope)) || (isSet(uncheckGlobalScope))) {
 			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
 
 			if (isSet(checkGlobalScope)) {
 				Check(
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
-					key_scopeName = "${checkGlobalScope}"
-				);
+					key_scopeName = "${checkGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
 			}
 
 			if (isSet(uncheckGlobalScope)) {
 				Uncheck(
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
-					key_scopeName = "${uncheckGlobalScope}"
-				);
+					key_scopeName = "${uncheckGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
 			}
 		}
 
@@ -105,18 +98,16 @@ definition {
 			if (isSet(resourceCheckList)) {
 				for (var scopeName : list "${resourceCheckList}") {
 					Check(
-						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
-						key_scopeName = "${scopeName}"
-					);
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");
 				}
 			}
 
 			if (isSet(resourceUncheckList)) {
 				for (var scopeName : list "${resourceUncheckList}") {
 					Uncheck(
-						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
-						key_scopeName = "${scopeName}"
-					);
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");
 				}
 			}
 
@@ -125,9 +116,8 @@ definition {
 
 				while (IsElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED", key_matchCount = "${count}")) {
 					Uncheck(
-						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED",
-						key_matchCount = "${count}"
-					);
+						key_matchCount = "${count}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED");
 
 					var count = MathUtil.sum("${count}", "1");
 				}
@@ -157,8 +147,7 @@ definition {
 
 			Type(
 				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD",
-				value1 = "${clientId}"
-			);
+				value1 = "${clientId}");
 
 			Button.clickApply();
 		}
@@ -176,8 +165,7 @@ definition {
 
 				Type(
 					locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD",
-					value1 = "${clientSecret}"
-				);
+					value1 = "${clientSecret}");
 			}
 
 			Button.clickApply();
@@ -192,7 +180,9 @@ definition {
 		}
 
 		if (isSet(websiteURL)) {
-			PortletEntry.inputText(fieldLabel = "Website URL", text = "${websiteURL}");
+			PortletEntry.inputText(
+				fieldLabel = "Website URL",
+				text = "${websiteURL}");
 		}
 
 		if (isSet(description)) {
@@ -200,39 +190,37 @@ definition {
 		}
 
 		if (isSet(callbackURI)) {
-			PortletEntry.inputTextArea(fieldId = "redirectURIs", text = "${callbackURI}");
+			PortletEntry.inputTextArea(
+				fieldId = "redirectURIs",
+				text = "${callbackURI}");
 		}
 
 		if (isSet(privacyPolicyURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Privacy Policy URL",
-				text = "${privacyPolicyURL}"
-			);
+				text = "${privacyPolicyURL}");
 		}
 
 		if (isSet(clientProfile)) {
 			Select(
+				key_fieldLabel = "Client Profile",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${clientProfile}",
-				key_fieldLabel = "Client Profile"
-			);
+				value1 = "${clientProfile}");
 		}
 
 		if (isSet(checkboxCheckList)) {
 			for (var checkboxName : list "${checkboxCheckList}") {
 				Check(
-					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
-					key_checkboxName = "${checkboxName}"
-				);
+					key_checkboxName = "${checkboxName}",
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
 			}
 		}
 
 		if (isSet(checkboxUncheckList)) {
 			for (var checkboxName : list "${checkboxUncheckList}") {
 				Uncheck(
-					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
-					key_checkboxName = "${checkboxName}"
-				);
+					key_checkboxName = "${checkboxName}",
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
 			}
 		}
 
@@ -242,36 +230,29 @@ definition {
 	macro revokeGrantedAuthViaAdmin {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		AssertClick(
+			key_navItem = "Authorizations",
 			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Authorizations",
-			key_navItem = "Authorizations"
-		);
+			value1 = "Authorizations");
 
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "Authorizations"
-		);
+			key_navItem = "Authorizations",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		AssertClickNoError(
+			key_rowEntry = "${userName}",
 			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_REVOKE_BUTTON",
-			value1 = "Revoke",
-			key_rowEntry = "${userName}"
-		);
+			value1 = "Revoke");
 
-		AssertConfirm.waitForConfirmation(
-			value1 = "Are you sure you want to revoke the authorization?"
-		);
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to revoke the authorization?");
 
 		Alert.viewSuccessMessage();
 
 		AssertElementNotPresent(
-			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME",
-			key_userName = "${userName}"
-		);
+			key_userName = "${userName}",
+			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME");
 
 		Navigator.gotoBack();
 	}
@@ -280,22 +261,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "OAuth 2 Connected Applications"
-		);
+			portlet = "OAuth 2 Connected Applications");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		AssertClickNoError(
 			locator1 = "OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON",
-			value1 = "Remove Access"
-		);
+			value1 = "Remove Access");
 
-		AssertConfirm.waitForConfirmation(
-			value1 = "${applicationName} will no longer have access to your account. Removed access cannot be recovered."
-		);
+		AssertConfirm.waitForConfirmation(value1 = "${applicationName} will no longer have access to your account. Removed access cannot be recovered.");
 
 		Alert.viewSuccessMessage();
 	}
@@ -303,69 +279,65 @@ definition {
 	macro viewApplication {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		if (isSet(clientId)) {
 			AssertTextEquals(
 				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID",
-				value1 = "${clientId}"
-			);
+				value1 = "${clientId}");
 		}
 
 		if (isSet(clientSecret)) {
 			AssertTextEquals(
 				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET",
-				value1 = "${clientSecret}"
-			);
+				value1 = "${clientSecret}");
 		}
 
 		if (isSet(applicationName)) {
-			AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${applicationName}");
+			AssertTextEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "${applicationName}");
 		}
 
 		if (isSet(websiteURL)) {
 			AssertTextEquals(
+				key_fieldLabel = "Website URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${websiteURL}",
-				key_fieldLabel = "Website URL"
-			);
+				value1 = "${websiteURL}");
 		}
 
 		if (isSet(description)) {
-			AssertTextEquals(locator1 = "TextArea#DESCRIPTION", value1 = "${description}");
+			AssertTextEquals(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${description}");
 		}
 
 		if (isSet(privacyPolicyURL)) {
 			AssertTextEquals(
+				key_fieldLabel = "Privacy Policy URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${privacyPolicyURL}",
-				key_fieldLabel = "Privacy Policy URL"
-			);
+				value1 = "${privacyPolicyURL}");
 		}
 
 		if (isSet(callbackURI)) {
 			AssertTextEquals.assertPartialText(
+				key_text = "redirectURIs",
 				locator1 = "TextArea#ANY",
-				value1 = "${callbackURI}",
-				key_text = "redirectURIs"
-			);
+				value1 = "${callbackURI}");
 		}
 
 		if (isSet(clientProfile)) {
 			AssertSelectedLabel(
+				key_fieldLabel = "Client Profile",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${clientProfile}",
-				key_fieldLabel = "Client Profile"
-			);
+				value1 = "${clientProfile}");
 		}
 
 		if (isSet(checkboxCheckList)) {
 			for (var checkboxName : list "${checkboxCheckList}") {
 				AssertChecked(
-					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
-					key_checkboxName = "${checkboxName}"
-				);
+					key_checkboxName = "${checkboxName}",
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
 			}
 		}
 
@@ -374,51 +346,43 @@ definition {
 
 	macro viewApplicationInTable {
 		AssertElementPresent(
-			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME",
-			key_tableName = "${applicationName}"
-		);
+			key_tableName = "${applicationName}",
+			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME");
 
 		AssertTextEquals(
+			key_tableName = "${applicationName}",
 			locator1 = "OAuth2#ADMIN_TABLE_APP_DESCRIPTION",
-			value1 = "${description}",
-			key_tableName = "${applicationName}"
-		);
+			value1 = "${description}");
 
 		AssertTextEquals(
+			key_tableName = "${applicationName}",
 			locator1 = "OAuth2#ADMIN_TABLE_APP_CLIENT_ID",
-			value1 = "${clientId}",
-			key_tableName = "${applicationName}"
-		);
+			value1 = "${clientId}");
 	}
 
 	macro viewGrantedAuthViaAdmin {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		AssertClick(
+			key_navItem = "Authorizations",
 			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Authorizations",
-			key_navItem = "Authorizations"
-		);
+			value1 = "Authorizations");
 
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "Authorizations"
-		);
+			key_navItem = "Authorizations",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		if ("${noAuthorizations}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No authorizations were found."
-			);
+				value1 = "No authorizations were found.");
 		}
 		else {
 			AssertElementPresent(
-				locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME",
-				key_userName = "${userName}"
-			);
+				key_userName = "${userName}",
+				locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME");
 		}
 
 		Navigator.gotoBack();
@@ -428,49 +392,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "OAuth 2 Connected Applications"
-		);
+			portlet = "OAuth 2 Connected Applications");
 
 		if ("${noAuthorizations}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No connected applications were found."
-			);
+				value1 = "No connected applications were found.");
 		}
 		else {
 			AssertElementPresent(
-				locator1 = "OAuth2#USER_CONNECTED_APP_TABLE_NAME",
-				key_appName = "${applicationName}"
-			);
+				key_appName = "${applicationName}",
+				locator1 = "OAuth2#USER_CONNECTED_APP_TABLE_NAME");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View",
-				rowEntry = "${applicationName}"
-			);
+				rowEntry = "${applicationName}");
 
 			AssertTextEquals(
 				locator1 = "OAuth2#USER_CONNECTED_APP_VIEW_NAME",
-				value1 = "${applicationName}"
-			);
+				value1 = "${applicationName}");
 		}
 	}
 
 	macro viewScopes {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${applicationName}"
-		);
+			rowEntry = "${applicationName}");
 
 		AssertClick(
+			key_navItem = "Scopes",
 			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Scopes",
-			key_navItem = "Scopes"
-		);
+			value1 = "Scopes");
 
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "Scopes"
-		);
+			key_navItem = "Scopes",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		if ((isSet(allResourceScopesUnchecked)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
 			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
@@ -484,26 +440,23 @@ definition {
 			if (isSet(resourceCheckedList)) {
 				for (var scopeName : list "${resourceCheckedList}") {
 					AssertChecked(
-						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
-						key_scopeName = "${scopeName}"
-					);
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");
 				}
 			}
 
 			if (isSet(resourceUncheckedList)) {
 				for (var scopeName : list "${resourceUncheckedList}") {
 					AssertNotChecked(
-						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
-						key_scopeName = "${scopeName}"
-					);
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");
 				}
 			}
 
 			if ("${allResourceScopesUnchecked}" == "true") {
 				AssertElementNotPresent(
-					locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED",
-					key_matchCount = "1"
-				);
+					key_matchCount = "1",
+					locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED");
 			}
 		}
 
@@ -512,16 +465,14 @@ definition {
 
 			if (isSet(checkedGlobalScope)) {
 				AssertChecked(
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
-					key_scopeName = "${checkedGlobalScope}"
-				);
+					key_scopeName = "${checkedGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
 			}
 
 			if (isSet(uncheckedGlobalScope)) {
 				AssertNotChecked(
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
-					key_scopeName = "${uncheckedGlobalScope}"
-				);
+					key_scopeName = "${uncheckedGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
 			}
 		}
 

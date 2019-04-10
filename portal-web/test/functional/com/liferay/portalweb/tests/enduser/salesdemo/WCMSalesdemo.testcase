@@ -32,8 +32,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "IFrame Page");
 
@@ -41,8 +40,7 @@ definition {
 			columnName = "1 Column",
 			pageName = "IFrame Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "IFrame Page");
 
@@ -58,8 +56,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",
-			value1 = "updated"
-		);
+			value1 = "updated");
 	}
 
 	@priority = "4"
@@ -71,15 +68,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "DHS Content",
-			webContentTitle = "DHS Title"
-		);
+			webContentTitle = "DHS Title");
 
 		PortletEntry.publish();
 
@@ -88,67 +83,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.configurePage(
 			columnName = "2 Columns (50/50)",
 			pageName = "Welcome",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Welcome");
 
-		Content.addPG(assetTitle = "DHS Title", webContentContent = "DHS Content");
+		Content.addPG(
+			assetTitle = "DHS Title",
+			webContentContent = "DHS Content");
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "DHS Content",
-			webContentTitle = "DHS Title"
-		);
+			webContentTitle = "DHS Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		WebContent.viewNoEditWCViaWCD();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			webContentContent = "DHS Content"
-		);
+			webContentContent = "DHS Content");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Sales Page");
 

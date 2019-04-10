@@ -20,8 +20,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			User.tearDownCP();
 
@@ -44,70 +43,59 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "Button#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_COMMUNITY",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_COMMUNITY",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		AssertElementNotPresent(locator1 = "Button#ADD");
 	}
@@ -119,136 +107,115 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "View Control Panel Menu",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.assignRegRoleCP(
 			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Parent Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(
 			parentSiteName = "Parent Site Name",
-			siteName = "Child SiteName"
-		);
+			siteName = "Child SiteName");
 
 		ProductMenu.gotoSite(site = "Parent Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Parent Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn userln",
-			roleTitle = "Site Administrator"
-		);
+			roleTitle = "Site Administrator");
 
 		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn userln",
-			roleTitle = "Site Administrator"
-		);
+			roleTitle = "Site Administrator");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_siteName = "Parent Site Name";
 
@@ -258,8 +225,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Parent Site Name"
-		);
+			value1 = "Parent Site Name");
 
 		AssertTextNotPresent(value1 = "Child SiteName");
 
@@ -269,8 +235,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Child SiteName"
-		);
+			value1 = "Child SiteName");
 
 		AssertTextNotPresent(value1 = "Parent Site Name");
 
@@ -280,15 +245,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Parent Site Name"
-		);
+			value1 = "Parent Site Name");
 
 		var key_siteName = "Child SiteName";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Child SiteName"
-		);
+			value1 = "Child SiteName");
 
 		Site.viewSiteAdminPermissionsCP(siteName = "Parent Site Name");
 
@@ -308,85 +271,77 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName1");
+		Site.addBlankCP(
+			parentSiteName = "Site Name",
+			siteName = "Child SiteName1");
 
 		ProductMenu.gotoSite(site = "Child SiteName1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Regrole Name", userScreenName = "usersn");
+		Role.assignRegRoleCP(
+			roleTitle = "Regrole Name",
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_COMMUNITY",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_siteName = "Site Name";
 
@@ -398,7 +353,9 @@ definition {
 
 		PortletEntry.inputName(name = "Child SiteName2");
 
-		Click(locator1 = "Button#SAVE", value1 = "Save");
+		Click(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		PortletEntry.save();
 
@@ -407,8 +364,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_siteName = "Child SiteName1";
 
@@ -422,76 +378,72 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "Child SiteName2"
-		);
+			value1 = "Child SiteName2");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Pages");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "MANAGE_SUBGROUPS",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_site = "Child SiteName1";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "Child SiteName1"
-		);
+			value1 = "Child SiteName1");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Pages");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_site = "Child SiteName2";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "Child SiteName2"
-		);
+			value1 = "Child SiteName2");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Pages");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "MANAGE_SUBGROUPS",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_siteName = "Child SiteName1";
 
@@ -505,10 +457,11 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "Child SiteName2"
-		);
+			value1 = "Child SiteName2");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Pages");
 	}
 
 	@priority = "4"
@@ -523,142 +476,118 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No sites were found."
-		);
+			value1 = "No sites were found.");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "MANAGE_LAYOUTS",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_site = "${siteName}";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 
 		var key_siteName = "${siteName}";
 
-		AssertElementPresent(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME"
-		);
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var key_site = "Site Name";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-			value1 = "Site Name"
-		);
+			value1 = "Site Name");
 
 		var key_siteName = "Site Name";
 
-		AssertElementPresent(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME"
-		);
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "MANAGE_LAYOUTS",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No sites were found."
-		);
+			value1 = "No sites were found.");
 	}
 }

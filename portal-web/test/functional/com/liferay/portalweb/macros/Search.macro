@@ -4,9 +4,13 @@ definition {
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
 
-		Type(locator1 = "TextInput#SEARCH", value1 = "${searchTerm}");
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${searchTerm}");
 
-		KeyPress(locator1 = "TextInput#SEARCH", value1 = "\RETURN");
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
 	}
 
 	macro searchPG {
@@ -14,16 +18,19 @@ definition {
 
 		AssertElementPresent(locator1 = "Portlet#SEARCH_FIELD");
 
-		Type(locator1 = "Portlet#SEARCH_FIELD", value1 = "${searchTerm}");
+		Type(
+			locator1 = "Portlet#SEARCH_FIELD",
+			value1 = "${searchTerm}");
 
-		KeyPress(locator1 = "Portlet#SEARCH_FIELD", value1 = "\RETURN");
+		KeyPress(
+			locator1 = "Portlet#SEARCH_FIELD",
+			value1 = "\RETURN");
 	}
 
 	macro viewNoResultAssetTitle {
 		AssertElementNotPresent(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			key_searchAssetTitle = "${searchAssetTitle}"
-		);
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
 	macro viewResultAssetTitle {
@@ -31,7 +38,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "${searchAssetTitle}"
-		);
+			value1 = "${searchAssetTitle}");
 	}
 }

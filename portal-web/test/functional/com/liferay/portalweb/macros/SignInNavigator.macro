@@ -1,13 +1,21 @@
 definition {
 	macro gotoCreateAccount {
-		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
 
-		AssertClick(locator1 = "Link#CREATE_ACCOUNT", value1 = "Create Account");
+		AssertClick(
+			locator1 = "Link#CREATE_ACCOUNT",
+			value1 = "Create Account");
 	}
 
 	macro gotoForgotPassword {
-		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
 
-		AssertClick(locator1 = "Link#FORGOT_PASSWORD", value1 = "Forgot Password");
+		AssertClick(
+			locator1 = "Link#FORGOT_PASSWORD",
+			value1 = "Forgot Password");
 	}
 }

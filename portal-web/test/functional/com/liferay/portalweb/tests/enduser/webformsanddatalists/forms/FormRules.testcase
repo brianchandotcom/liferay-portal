@@ -23,8 +23,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Forms"
-			);
+				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
 
@@ -41,8 +40,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -69,14 +67,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Require",
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2"
-		);
+			actionTarget = "Text Field 2");
 
 		FormsAdminNavigator.gotoFormBuilder();
 
@@ -93,8 +89,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
 
@@ -107,14 +102,12 @@ definition {
 			conditionFieldValue = "test edit",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2"
-		);
+			actionTarget = "Text Field 2");
 
 		FormRules.save();
 	}
@@ -127,8 +120,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -155,14 +147,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2"
-		);
+			actionTarget = "Text Field 2");
 
 		FormRules.save();
 
@@ -173,8 +163,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -192,8 +181,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -205,7 +193,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.editText(fieldName = "predefinedValue", fieldValue = "test");
+		FormFields.editText(
+			fieldName = "predefinedValue",
+			fieldValue = "test");
 
 		Form.closeSidebar();
 
@@ -224,14 +214,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Require",
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2"
-		);
+			actionTarget = "Text Field 2");
 
 		FormRules.save();
 
@@ -241,8 +229,7 @@ definition {
 			conditionField = "Text Field 1",
 			conditionFieldConstant = "test",
 			conditionOperator = "Is equal to",
-			ruleNumber = "1"
-		);
+			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
 
@@ -256,12 +243,13 @@ definition {
 
 		FormFields.viewFieldValidationErrorMessage(
 			fieldName = "TextField2",
-			fieldValidationErrorMessage = "This field is required."
-		);
+			fieldValidationErrorMessage = "This field is required.");
 
 		Refresh();
 
-		FormFields.editText(fieldName = "TextField1", fieldValue = "testing");
+		FormFields.editText(
+			fieldName = "TextField1",
+			fieldValue = "testing");
 
 		FormFields.viewRequiredAsteriskNotPresent();
 
@@ -277,8 +265,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -305,14 +292,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2"
-		);
+			actionTarget = "Text Field 2");
 
 		FormRules.save();
 
@@ -323,15 +308,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		Form.duplicate(formName = "Test Form");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "Copy of Test Form"
-		);
+			rowEntry = "Copy of Test Form");
 
 		FormsAdminNavigator.gotoRules();
 
@@ -341,8 +324,7 @@ definition {
 			conditionField = "Text Field 1",
 			conditionFieldConstant = "test",
 			conditionOperator = "Is equal to",
-			ruleNumber = "1"
-		);
+			ruleNumber = "1");
 	}
 
 	@description = "This is a use case for LPS-69733."
@@ -354,8 +336,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -375,8 +356,7 @@ definition {
 
 		FormRules.selectConditionField(
 			conditionField = "Text Field",
-			conditionRowNumber = "1"
-		);
+			conditionRowNumber = "1");
 
 		FormRules.viewConditionOperatorOptionsIsPresent(conditionRowNumber = "1");
 	}
@@ -393,8 +373,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
 
@@ -408,8 +387,7 @@ definition {
 			outputParameterType = "List",
 			password = "test",
 			url = "${portalURL}/api/jsonws/country/get-countries",
-			username = "test@liferay.com"
-		);
+			username = "test@liferay.com");
 
 		FormsAdmin.saveDataProvider();
 
@@ -418,8 +396,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -448,14 +425,12 @@ definition {
 			conditionFieldValue = "country",
 			conditionOperator = "Contains",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Autofill",
 			actionRowNumber = "1",
-			actionTarget = "Liferay Countries"
-		);
+			actionTarget = "Liferay Countries");
 
 		FormRules.selectAutofillOutput(dataProviderOutput = "Countries");
 
@@ -468,14 +443,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -485,21 +461,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.viewTextLabel(fieldLabel = "Text Field", fieldName = "TextField");
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "TextField");
 
-		FormFields.editText(fieldName = "TextField", fieldValue = "test");
-
-		FormFields.viewSelectOptionsList(
-			fieldName = "Countries",
-			selectOption = "Option"
-		);
-
-		FormFields.editText(fieldName = "TextField", fieldValue = "country");
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "test");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
-			selectOption = "Afghanistan"
-		);
+			selectOption = "Option");
+
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "country");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Afghanistan");
 	}
 
 	@description = "This is a use case for LPS-71592."
@@ -514,8 +494,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -545,15 +524,15 @@ definition {
 
 		FormRules.selectConditionField(
 			conditionField = "Quantity",
-			conditionRowNumber = "1"
-		);
+			conditionRowNumber = "1");
 
 		FormRules.selectConditionOperator(
 			conditionOperator = "Is not empty",
-			conditionRowNumber = "1"
-		);
+			conditionRowNumber = "1");
 
-		FormRules.selectAction(action = "Calculate", actionRowNumber = "1");
+		FormRules.selectAction(
+			action = "Calculate",
+			actionRowNumber = "1");
 
 		FormRules.selectCalculateResultField(calculateResultField = "Total");
 
@@ -572,14 +551,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -589,11 +569,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.editText(fieldName = "Value", fieldValue = "5");
+		FormFields.editText(
+			fieldName = "Value",
+			fieldValue = "5");
 
-		FormFields.editText(fieldName = "Quantity", fieldValue = "10");
+		FormFields.editText(
+			fieldName = "Quantity",
+			fieldValue = "10");
 
-		FormFields.viewTextValue(fieldName = "Total", fieldValue = "50");
+		FormFields.viewTextValue(
+			fieldName = "Total",
+			fieldValue = "50");
 	}
 
 	@priority = "5"
@@ -607,8 +593,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -635,14 +620,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Require",
 			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
+			actionTarget = "Date Field");
 
 		FormRules.save();
 
@@ -653,14 +636,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -672,7 +656,9 @@ definition {
 
 		FormFields.viewRequiredAsteriskNotPresent();
 
-		FormFields.editText(fieldName = "TextField", fieldValue = "test");
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "test");
 
 		FormFields.viewRequiredAsterisk();
 
@@ -690,8 +676,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -727,29 +712,28 @@ definition {
 
 		FormRules.selectRuleCondition(condition = "AND");
 
-		FormRules.viewRuleCondition(condition = "AND", conditonRowNumber = "1");
+		FormRules.viewRuleCondition(
+			condition = "AND",
+			conditonRowNumber = "1");
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 1",
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 2",
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "2",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
+			actionTarget = "Date Field");
 
 		FormRules.save();
 
@@ -760,14 +744,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -777,16 +762,21 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
+		FormFields.editText(
+			fieldName = "TextField1",
+			fieldValue = "test");
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "Date"
-		);
+			fieldName = "Date");
 
-		FormFields.editText(fieldName = "TextField2", fieldValue = "test");
+		FormFields.editText(
+			fieldName = "TextField2",
+			fieldValue = "test");
 
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "Date");
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "Date");
 	}
 
 	@priority = "4"
@@ -797,8 +787,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -824,22 +813,19 @@ definition {
 			conditionField = "User",
 			conditionOperator = "Belongs to",
 			conditionRowNumber = "1",
-			conditionValueType = "Site Administrator"
-		);
+			conditionValueType = "Site Administrator");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Manager"
-		);
+			actionTarget = "Manager");
 
 		FormRules.addAction();
 
 		FormRules.configureActionOptions(
 			action = "Require",
 			actionRowNumber = "2",
-			actionTarget = "Manager"
-		);
+			actionTarget = "Manager");
 
 		FormRules.save();
 
@@ -849,8 +835,7 @@ definition {
 			conditionField = "User",
 			conditionFieldConstant = "Site Administrator",
 			conditionOperator = "Belongs to",
-			ruleNumber = "1"
-		);
+			ruleNumber = "1");
 
 		FormRules.viewSummary(
 			action = "Show",
@@ -858,8 +843,7 @@ definition {
 			conditionField = "User",
 			conditionFieldConstant = "Site Administrator",
 			conditionOperator = "Belongs to",
-			ruleNumber = "1"
-		);
+			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
 
@@ -868,14 +852,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -885,35 +870,44 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
+		FormFields.viewTextField(
+			fieldLabel = "Public",
+			fieldName = "Public");
 
 		FormFields.viewTextFieldNotVisible(
 			fieldLabel = "Manager",
-			fieldName = "Manager"
-		);
+			fieldName = "Manager");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Site Administrator",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
+		FormFields.viewTextField(
+			fieldLabel = "Public",
+			fieldName = "Public");
 
-		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
+		FormFields.viewTextField(
+			fieldLabel = "Manager",
+			fieldName = "Manager");
 
-		FormFields.editText(fieldName = "Public", fieldValue = "Message");
+		FormFields.editText(
+			fieldName = "Public",
+			fieldValue = "Message");
 
-		FormFields.editText(fieldName = "Manager", fieldValue = "Admin Comments");
+		FormFields.editText(
+			fieldName = "Manager",
+			fieldValue = "Admin Comments");
 
-		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
+		FormFields.viewTextField(
+			fieldLabel = "Manager",
+			fieldName = "Manager");
 
 		FormPortlet.submitSuccessfully();
 
@@ -922,17 +916,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
 
-		FormsAdmin.viewFormTableEntry(fieldLabel = "Public", fieldValue = "Message");
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Public",
+			fieldValue = "Message");
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Manager",
-			fieldValue = "Admin Comments"
-		);
+			fieldValue = "Admin Comments");
 	}
 
 	@description = "This is a use case for LPS-71399."
@@ -945,8 +939,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -971,14 +964,12 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field",
 			conditionOperator = "Is not empty",
-			conditionRowNumber = "1"
-		);
+			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
+			actionTarget = "Date Field");
 
 		FormRules.save();
 
@@ -992,27 +983,37 @@ definition {
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
+			fieldName = "DateField");
 
-		FormFields.editText(fieldName = "TextField", fieldValue = "1");
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "1");
 
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "DateField");
 
-		FormFields.editText(fieldName = "TextField", fieldValue = "Test");
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "Test");
 
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "DateField");
 
-		FormFields.editText(fieldName = "TextField", fieldValue = "%");
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "%");
 
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "DateField");
 
 		FormFields.editTextWithBackspace(fieldName = "TextField");
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
+			fieldName = "DateField");
 	}
 
 	@description = "This is a use case for LPS-75495."
@@ -1024,8 +1025,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -1060,14 +1060,12 @@ definition {
 			conditionFieldValue = "test",
 			conditionOperator = "Is equal to",
 			conditionRowNumber = "1",
-			conditionValueType = "Value"
-		);
+			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Date Field"
-		);
+			actionTarget = "Date Field");
 
 		FormRules.save();
 
@@ -1079,15 +1077,20 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.editText(fieldName = "TextField2", fieldValue = "testing");
+		FormFields.editText(
+			fieldName = "TextField2",
+			fieldValue = "testing");
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "DateField"
-		);
+			fieldName = "DateField");
 
-		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
+		FormFields.editText(
+			fieldName = "TextField1",
+			fieldValue = "test");
 
-		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "DateField");
 	}
 }

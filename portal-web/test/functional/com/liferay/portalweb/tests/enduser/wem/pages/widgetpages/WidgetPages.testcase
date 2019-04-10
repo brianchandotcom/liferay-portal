@@ -37,9 +37,13 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Site Page");
 
-		SitePages.addPublicPage(pageName = "Site Page Name", pageTemplateName = "Wiki");
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			pageTemplateName = "Wiki");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Test Site Name");
 
 		for (var portletName : list "Tags Navigation,Categories Navigation,Wiki") {
 			Portlet.viewSpecificPG(portletName = "${portletName}");
@@ -55,26 +59,22 @@ definition {
 
 			SitePages.addPublicPage(
 				pageName = "${portlet} Full Page Application",
-				sitePageType = "Full Page Application"
-			);
+				sitePageType = "Full Page Application");
 
 			SitePages.configurePage(
 				pageName = "${portlet} Full Page Application",
 				portlet = "${portlet}",
 				privacy = "Public Pages",
-				sitePageType = "Full Page Application"
-			);
+				sitePageType = "Full Page Application");
 
 			Navigator.gotoSitePage(
 				pageName = "${portlet} Full Page Application",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 
 			AssertTextEquals(
+				key_portletTitleName = "${portlet}",
 				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-				value1 = "${portlet}",
-				key_portletTitleName = "${portlet}"
-			);
+				value1 = "${portlet}");
 
 			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 		}
@@ -95,19 +95,20 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "${childPageName}",
-				parentLayoutName = "Site Page"
-			);
+				parentLayoutName = "Site Page");
 		}
 
 		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
-			Page.view(depth = "2", pageName = "${childPageName}", privacy = "Public Pages");
+			Page.view(
+				depth = "2",
+				pageName = "${childPageName}",
+				privacy = "Public Pages");
 		}
 	}
 
@@ -118,21 +119,21 @@ definition {
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Test Site Name",
 			layoutName = "Site Child Page",
-			parentLayoutName = "Site Page"
-		);
+			parentLayoutName = "Site Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Site Page",
-			url = "${portalURL}/group/test-site-name/site-child-page"
-		);
+			url = "${portalURL}/group/test-site-name/site-child-page");
 
-		Page.view(depth = "2", pageName = "Site Child Page", privacy = "Private Pages");
+		Page.view(
+			depth = "2",
+			pageName = "Site Child Page",
+			privacy = "Private Pages");
 	}
 
 	@priority = "4"
@@ -142,21 +143,18 @@ definition {
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Test Site Name",
-			layoutName = "Blogs Page"
-		);
+			layoutName = "Blogs Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Blogs Page",
-			url = "${portalURL}/group/test-site-name"
-		);
+			url = "${portalURL}/group/test-site-name");
 
 		Portlet.addPG(
 			pageAccess = "Private",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			siteName = "Test Site Name",
-			siteURL = "true"
-		);
+			siteURL = "true");
 	}
 
 	@priority = "4"
@@ -166,15 +164,15 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Site Page",
-			url = "${portalURL}/web/test-site-name/site-page"
-		);
+			url = "${portalURL}/web/test-site-name/site-page");
 
-		Page.view(pageName = "Site Page", privacy = "Public Pages");
+		Page.view(
+			pageName = "Site Page",
+			privacy = "Public Pages");
 	}
 
 	@priority = "4"
@@ -183,10 +181,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Blogs Page"
-		);
+			layoutName = "Blogs Page");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 	}
@@ -197,10 +196,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page Name"
-		);
+			layoutName = "Site Page Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
@@ -212,10 +212,11 @@ definition {
 			columnName = "1 Column",
 			pageName = "Site Page Name",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Test Site Name");
 
 		Page.viewPageLayout(pageLayout = "1 Column");
 
@@ -226,10 +227,11 @@ definition {
 				columnName = "${columnName}",
 				pageName = "Site Page Name",
 				privacy = "Public Pages",
-				sitePageType = "Widget Page"
-			);
+				sitePageType = "Widget Page");
 
-			Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Test Site Name");
 
 			Portlet.viewPG(portletName = "Web Content Display");
 		}
@@ -243,8 +245,7 @@ definition {
 		for (var pageName : list "Site Page 1,Site Page 2,Site Page 3") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "${pageName}"
-			);
+				layoutName = "${pageName}");
 		}
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -259,20 +260,25 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Site Page");
 
 		Page.editName(pageNameEdit = "Site Page Edit");
 
-		Page.view(pageName = "Site Page Edit", privacy = "Public Pages");
+		Page.view(
+			pageName = "Site Page Edit",
+			privacy = "Public Pages");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Welcome");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Welcome");
 
 		Page.viewSelectedLayoutColumn(columnName = "1 Column");
 
@@ -280,7 +286,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Home");
 
-		Page.view(pageName = "Home", privacy = "Public Pages");
+		Page.view(
+			pageName = "Home",
+			privacy = "Public Pages");
 	}
 
 	@priority = "4"
@@ -293,10 +301,11 @@ definition {
 		SitePages.addPublicPage(
 			pageName = "Site Page",
 			pageTypeURL = "https://www.google.com",
-			sitePageType = "Embedded"
-		);
+			sitePageType = "Embedded");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Test Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -304,13 +313,11 @@ definition {
 			pageName = "Site Page",
 			pageTypeURL = "https://www.liferay.com",
 			privacy = "Public Pages",
-			sitePageType = "Embedded"
-		);
+			sitePageType = "Embedded");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Site Page",
-			url = "${portalURL}/web/test-site-name"
-		);
+			url = "${portalURL}/web/test-site-name");
 
 		Page.viewEmbeddedPagePG();
 	}
@@ -321,9 +328,13 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.addPublicPage(pageName = "Site Page", pageTemplateName = "Blog");
+		SitePages.addPublicPage(
+			pageName = "Site Page",
+			pageTemplateName = "Blog");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Test Site Name");
 
 		Blogs.viewControlsPG();
 	}
@@ -335,32 +346,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addCommunityCP(siteName = "Site Name");
 
@@ -369,16 +375,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -386,21 +392,30 @@ definition {
 			pageName = "Home",
 			siteName = "Site Name",
 			siteTemplate = "Community",
-			siteURL = "true"
-		);
+			siteURL = "true");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site Name");
 
 		SiteTemplates.viewNoInfoMessage();
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 }

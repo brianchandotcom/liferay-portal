@@ -12,18 +12,23 @@ definition {
 			Click(locator1 = "RSSFeed#FEEDS_ADD_ROW_BUTTON");
 		}
 
-		Type(locator1 = "RSSFeed#FEEDS_TITLE_NAME_FIELD", value1 = "${feedTitle}");
+		Type(
+			locator1 = "RSSFeed#FEEDS_TITLE_NAME_FIELD",
+			value1 = "${feedTitle}");
 
 		if ("${feedType}" == "file") {
-			Type(locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD", value1 = "file://");
+			Type(
+				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
+				value1 = "file://");
 
 			UploadCommonFile(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "${feedUrlLink}"
-			);
+				value1 = "${feedUrlLink}");
 		}
 		else {
-			Type(locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD", value1 = "${feedUrlLink}");
+			Type(
+				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
+				value1 = "${feedUrlLink}");
 		}
 	}
 
@@ -36,8 +41,7 @@ definition {
 		DragAndDrop(
 			locator1 = "RSSFeed#FEEDS_1",
 			locator2 = "RSSFeed#FEEDS_2",
-			value1 = "${rowLocation}"
-		);
+			value1 = "${rowLocation}");
 	}
 
 	macro configureFeedDisplayStyle {
@@ -47,7 +51,9 @@ definition {
 
 		Panel.expandPanel(panel = "Feeds");
 
-		Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${feedDisplayStyle}");
+		Select(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "${feedDisplayStyle}");
 	}
 
 	macro deleteFeed {
@@ -61,8 +67,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#UNDO_LINK",
-			value1 = "Undo"
-		);
+			value1 = "Undo");
 	}
 
 	macro disableShowFeedTitle {
@@ -72,13 +77,11 @@ definition {
 
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE",
-			value1 = "Show Feed Title"
-		);
+			value1 = "Show Feed Title");
 
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION",
-			value1 = "Show Feed Description"
-		);
+			value1 = "Show Feed Description");
 	}
 
 	macro openFeed {
@@ -86,14 +89,15 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "RSSFeed#FEEDS_TITLE",
-			value1 = "${feedTitle}"
-		);
+			value1 = "${feedTitle}");
 
 		SelectWindow(locator1 = "title=Site Page Name 2 - Site Name - ${siteName}");
 	}
 
 	macro updateFeedTime {
-		Type(locator1 = "RSSFeed#FEED_TIME", value1 = "${feedTime}");
+		Type(
+			locator1 = "RSSFeed#FEED_TIME",
+			value1 = "${feedTime}");
 
 		SystemSettings.saveConfiguration();
 	}
@@ -109,14 +113,15 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_CUSTOM_ADT_TITLE",
-			value1 = "${feedContentTitle}"
-		);
+			value1 = "${feedContentTitle}");
 	}
 
 	macro viewDeleteFeed {
 		var key_feedTitle = "${feedTitle}";
 
-		AssertTextNotPresent(locator1 = "RSSFeed#FEEDS_TITLE", value1 = "${feedTitle}");
+		AssertTextNotPresent(
+			locator1 = "RSSFeed#FEEDS_TITLE",
+			value1 = "${feedTitle}");
 	}
 
 	macro viewDisplayFeedTitle {
@@ -124,8 +129,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_TITLE",
-			value1 = "${feedTitle}"
-		);
+			value1 = "${feedTitle}");
 	}
 
 	macro viewFeedContent {
@@ -133,8 +137,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_CONTENT",
-			value1 = "${feedEntryContent}"
-		);
+			value1 = "${feedEntryContent}");
 	}
 
 	macro viewNavigationDisplayFeedTitle {
@@ -142,8 +145,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEED_NAVIGATION_DISPLAY_STYLE",
-			value1 = "${feedTitle}"
-		);
+			value1 = "${feedTitle}");
 
 		if ("${navigationNullADT}" == "true") {
 			AssertElementNotPresent(locator1 = "RSSFeed#FEED_PANEL_TOGGLE");
@@ -170,15 +172,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEEDS_TITLE_NAME_FIELD",
-			value1 = "${feedTitle}"
-		);
+			value1 = "${feedTitle}");
 	}
 
 	macro viewPortletConfigurationInfo {
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "This application is not visible to users yet. Select at least one valid rss feed to make it visible."
-		);
+			value1 = "This application is not visible to users yet. Select at least one valid rss feed to make it visible.");
 	}
 
 	macro viewUpdateFeedTitle {
@@ -192,8 +192,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEED_PANEL_HEADING",
-			value1 = "${feedHeading}"
-		);
+			value1 = "${feedHeading}");
 	}
 
 	macro viewWarningMessageDisplay {
@@ -203,8 +202,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "${errorMessage}"
-		);
+			value1 = "${errorMessage}");
 	}
 
 	macro waitForRSSLoad {
@@ -212,7 +210,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
-			value1 = "RSS Publisher"
-		);
+			value1 = "RSS Publisher");
 	}
 }

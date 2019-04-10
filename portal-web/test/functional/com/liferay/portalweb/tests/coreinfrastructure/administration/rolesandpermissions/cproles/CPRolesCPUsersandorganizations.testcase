@@ -19,8 +19,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			Organization.tearDownCP();
 
@@ -41,42 +40,35 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.UserGroup",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -84,44 +76,39 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
-		);
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ORGANIZATION",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ORGANIZATION",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
 	}
@@ -135,88 +122,74 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
-		);
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_USER",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_USER",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
-		);
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
 	}

@@ -2,16 +2,14 @@ definition {
 	macro configureDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (IsElementPresent(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED")) {
 			AssertClick(
 				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN",
-				value1 = "Display Settings"
-			);
+				value1 = "Display Settings");
 		}
 
 		if ("${enableDisplaySettingsShowSearch}" == "true") {
@@ -24,47 +22,34 @@ definition {
 		if (isSet(entriesToDisplayCount)) {
 			Select(
 				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT",
-				value1 = "${entriesToDisplayCount}"
-			);
+				value1 = "${entriesToDisplayCount}");
 		}
 
 		if ("${enableDisplaySettingsRelatedAssets}" == "true") {
-			Check(
-				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX"
-			);
+			Check(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX");
 		}
 		else if ("${enableDisplaySettingsRelatedAssets}" == "false") {
-			Uncheck(
-				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX"
-			);
+			Uncheck(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX");
 		}
 
 		if (isSet(currentDisplayStyleViews)) {
 			while (IsElementPresent(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT")) {
-				Click(
-					locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT"
-				);
+				Click(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT");
 
-				Click(
-					locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON"
-				);
+				Click(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON");
 			}
 
 			if (!("${currentDisplayStyleViews}" == "")) {
 				for (var currentDisplayStyleView : list "${currentDisplayStyleViews}") {
 					Select(
 						locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT",
-						value1 = "${currentDisplayStyleView}"
-					);
+						value1 = "${currentDisplayStyleView}");
 
-					Click(
-						locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON"
-					);
+					Click(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON");
 
 					AssertTextEquals.assertPartialText(
 						locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT",
-						value1 = "${currentDisplayStyleView}"
-					);
+						value1 = "${currentDisplayStyleView}");
 				}
 			}
 		}
@@ -76,8 +61,7 @@ definition {
 
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "Message#ERROR_1",
-				value1 = "Display style views cannot be empty."
-			);
+				value1 = "Display style views cannot be empty.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -87,12 +71,13 @@ definition {
 	macro configureRootFolderPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -102,13 +87,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER",
-			value1 = "${dmFolderName}"
-		);
+			value1 = "${dmFolderName}");
 
 		AssertClick(
 			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_CHOOSE",
-			value1 = "Choose"
-		);
+			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -116,8 +99,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD",
-			value1 = "${dmFolderName}"
-		);
+			value1 = "${dmFolderName}");
 
 		PortletEntry.save();
 
@@ -127,16 +109,19 @@ definition {
 	macro configureScopetoGlobalPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Navigator.gotoNavItem(navItem = "Scope");
 
-		Select(locator1 = "Select#SCOPE", value1 = "Global");
+		Select(
+			locator1 = "Select#SCOPE",
+			value1 = "Global");
 
-		AssertSelectedLabel(locator1 = "Select#SCOPE", value1 = "Global");
+		AssertSelectedLabel(
+			locator1 = "Select#SCOPE",
+			value1 = "Global");
 
 		Click(locator1 = "Button#SAVE");
 
@@ -146,24 +131,21 @@ definition {
 	macro viewDefaultConfigurationDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (IsElementPresent(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED")) {
 			AssertClick(
 				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN",
-				value1 = "Display Settings"
-			);
+				value1 = "Display Settings");
 		}
 
 		AssertChecked(locator1 = "Checkbox#SHOW_SEARCH_CHECKBOX");
 
 		AssertTextEquals.assertValue(
 			locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT",
-			value1 = "20"
-		);
+			value1 = "20");
 
 		AssertChecked(locator1 = "Checkbox#SHOW_SEARCH_CHECKBOX");
 
@@ -175,13 +157,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
-			value1 = "Documents and Media"
-		);
+			value1 = "Documents and Media");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder."
-		);
+			value1 = "There are no documents or media files in this folder.");
 	}
 
 	macro viewNoPermissionCP {
@@ -189,12 +169,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
-			value1 = "Documents and Media"
-		);
+			value1 = "Documents and Media");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder."
-		);
+			value1 = "There are no documents or media files in this folder.");
 	}
 }

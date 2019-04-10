@@ -3,9 +3,7 @@ definition {
 		for (var contentName : list "${checkContentNameList}") {
 			var key_contentName = "${contentName}";
 
-			Check.checkToggleSwitch(
-				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL"
-			);
+			Check.checkToggleSwitch(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
 		}
 	}
 
@@ -73,10 +71,11 @@ definition {
 
 			Type(
 				locator1 = "Select#DATE_RANGE_START_DATE",
-				value1 = "${dateRangeStartDate}"
-			);
+				value1 = "${dateRangeStartDate}");
 
-			Type(locator1 = "Select#DATE_RANGE_END_DATE", value1 = "${dateRangeEndDate}");
+			Type(
+				locator1 = "Select#DATE_RANGE_END_DATE",
+				value1 = "${dateRangeEndDate}");
 
 			Click(locator1 = "Link#REFRESH_COUNTS");
 		}
@@ -89,9 +88,7 @@ definition {
 	}
 
 	macro contentDeletion {
-		Click(
-			locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX"
-		);
+		Click(locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX");
 	}
 
 	macro deleteMissingPages {
@@ -107,16 +104,14 @@ definition {
 	macro setTitle {
 		Type(
 			locator1 = "StagingPublishToLive#PUBLICATION_TITLE",
-			value1 = "${publicationTitle}"
-		);
+			value1 = "${publicationTitle}");
 	}
 
 	macro uncheckContentNameList {
 		for (var contentName : list "${uncheckContentNameList}") {
 			Uncheck.uncheckToggleSwitch(
-				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL",
-				key_contentName = "${contentName}"
-			);
+				key_contentName = "${contentName}",
+				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
 		}
 	}
 
@@ -147,7 +142,9 @@ definition {
 
 		Click(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
 
-		AssertClick(locator1 = "Button#OK", value1 = "OK");
+		AssertClick(
+			locator1 = "Button#OK",
+			value1 = "OK");
 	}
 
 	macro uncheckSubSubContent {
@@ -157,14 +154,15 @@ definition {
 
 		AssertClick(
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
-			value1 = "Change"
-		);
+			value1 = "Change");
 
 		var key_subContent = "${subContent}";
 		var key_subSubContent = "${uncheckSubSubContent}";
 
 		Click(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
 
-		AssertClick(locator1 = "Button#OK", value1 = "OK");
+		AssertClick(
+			locator1 = "Button#OK",
+			value1 = "OK");
 	}
 }

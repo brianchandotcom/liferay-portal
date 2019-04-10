@@ -12,29 +12,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "image"
-		);
+			fieldName = "image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -42,14 +38,12 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Image",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 	}
 
 	tearDown {
@@ -61,8 +55,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			Site.tearDownCP();
 		}
@@ -81,69 +74,70 @@ definition {
 
 		ItemSelector.uploadFile(
 			navTab = "Web Content Images",
-			uploadFileName = "Document_3.png"
-		);
+			uploadFileName = "Document_3.png");
 
 		FormFields.editTextAlt(
 			fieldName = "image",
-			fieldValue = "English (United States) Image Description"
-		);
+			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
-
-		FormFields.editText(fieldName = "title", fieldValue = "Spanish (Spain) Title");
-
-		FormFields.editTextAlt(
-			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description"
-		);
-
-		PortletEntry.changeLocale(fieldName = "Title", locale = "pt-BR");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
 		FormFields.editText(
 			fieldName = "title",
-			fieldValue = "Portuguese (Brazil) Title"
-		);
+			fieldValue = "Spanish (Spain) Title");
 
 		FormFields.editTextAlt(
 			fieldName = "image",
-			fieldValue = "Portuguese (Brazil) Image Description"
-		);
+			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "en-US");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "pt-BR");
+
+		FormFields.editText(
+			fieldName = "title",
+			fieldValue = "Portuguese (Brazil) Title");
+
+		FormFields.editTextAlt(
+			fieldName = "image",
+			fieldValue = "Portuguese (Brazil) Image Description");
+
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "en-US");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
-			fieldValue = "English (United States) Title"
-		);
+			fieldValue = "English (United States) Title");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
-			fieldValue = "English (United States) Image Description"
-		);
+			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
-			fieldValue = "Spanish (Spain) Title"
-		);
+			fieldValue = "Spanish (Spain) Title");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description"
-		);
+			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "pt-BR");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "pt-BR");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
-			fieldValue = "Portuguese (Brazil) Title"
-		);
+			fieldValue = "Portuguese (Brazil) Title");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
-			fieldValue = "Portuguese (Brazil) Image Description"
-		);
+			fieldValue = "Portuguese (Brazil) Image Description");
 	}
 }

@@ -1,10 +1,14 @@
 definition {
 	macro _applyChanges {
-		AssertClick(locator1 = "Button#APPLY_EFFECTS", value1 = "Apply");
+		AssertClick(
+			locator1 = "Button#APPLY_EFFECTS",
+			value1 = "Apply");
 	}
 
 	macro _saveFile {
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro applyChangesAndSaveFile {
@@ -34,8 +38,7 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "${navTab}"
-		);
+			value1 = "${navTab}");
 
 		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 

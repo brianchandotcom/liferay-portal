@@ -32,20 +32,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Site Templates"
-		);
+			portlet = "Site Templates");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "search",
 			pageTemplateName = "Search",
-			siteTemplateName = "Community Site"
-		);
+			siteTemplateName = "Community Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addCommunityCP(siteName = "Site Name");
 
@@ -53,17 +50,13 @@ definition {
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
-		PermissionsInline.assertDefaultPG(
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+		PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
-		PermissionsInline.assertDefaultPG(
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+		PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -75,8 +68,7 @@ definition {
 
 		SiteTemplates.resetPageChanges(
 			columnNumberTo = "1",
-			portletName = "Asset Publisher"
-		);
+			portletName = "Asset Publisher");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -84,9 +76,7 @@ definition {
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
-		PermissionsInline.assertDefaultPG(
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+		PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -94,8 +84,7 @@ definition {
 			pollsQuestion = "What is the most important issue for this election?",
 			pollsQuestionChoiceA = "The Economy",
 			pollsQuestionChoiceB = "The National Debt",
-			pollsQuestionTitle = "Election Poll"
-		);
+			pollsQuestionTitle = "Election Poll");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -105,21 +94,17 @@ definition {
 
 		Polls.viewPollPG(
 			pollsQuestion = "What is the most important issue for this election?",
-			pollsQuestionChoiceList = "The Economy,The National Debt"
-		);
+			pollsQuestionChoiceList = "The Economy,The National Debt");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
-		PermissionsInline.assertDefaultPG(
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+		PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "This is the message boards thread.",
-			threadSubject = "Thread"
-		);
+			threadSubject = "Thread");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -127,13 +112,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "This is the message boards thread.",
-			threadSubject = "Thread"
-		);
+			threadSubject = "Thread");
 
 		MessageboardsThread.viewPG(
 			threadBody = "This is the message boards thread.",
-			threadSubject = "Thread"
-		);
+			threadSubject = "Thread");
 
 		User.logoutPG();
 
@@ -147,21 +130,23 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "This is the message boards thread.",
-			threadSubject = "Thread"
-		);
+			threadSubject = "Thread");
 
 		MessageboardsThread.viewPG(
 			threadBody = "This is the message boards thread.",
-			threadSubject = "Thread"
-		);
+			threadSubject = "Thread");
 
 		Portlet.viewTitle(portletName = "Election Poll");
 
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "Please sign in to vote.");
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Please sign in to vote.");
 
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		SignIn.signIn(userEmailAddress = "test@liferay.com", userPassword = "test");
+		SignIn.signIn(
+			userEmailAddress = "test@liferay.com",
+			userPassword = "test");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
 
@@ -169,8 +154,7 @@ definition {
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+			roleList = "Guest,Owner,Power User,Site Member,User");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -178,8 +162,7 @@ definition {
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Owner,Power User,Site Member,User"
-		);
+			roleList = "Guest,Owner,Power User,Site Member,User");
 
 		User.logoutPG();
 
@@ -187,12 +170,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_1_COLUMN_1",
-			value1 = "You do not have the roles required to access this portlet."
-		);
+			value1 = "You do not have the roles required to access this portlet.");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_1_COLUMN_2",
-			value1 = "You do not have the roles required to access this portlet."
-		);
+			value1 = "You do not have the roles required to access this portlet.");
 	}
 }

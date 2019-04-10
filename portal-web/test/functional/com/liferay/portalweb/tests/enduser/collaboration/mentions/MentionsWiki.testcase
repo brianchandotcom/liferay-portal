@@ -14,17 +14,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Wiki Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "Wiki Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Wiki Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -36,49 +36,45 @@ definition {
 			userEmailAddress = PropsUtil.get("email.address.4"),
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = PropsUtil.get("email.address.4"),
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Virtual Instances"
-		);
+			portlet = "Virtual Instances");
 
-		PortalInstances.editCP(mailDomain = "gmail.com", virtualHost = "localhost");
+		PortalInstances.editCP(
+			mailDomain = "gmail.com",
+			virtualHost = "localhost");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 	}
@@ -107,8 +103,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -135,12 +130,10 @@ definition {
 		Mentions.addMentionViaComments(
 			entryComment = "Comment mentioning",
 			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn"
-		);
+			mentionsUserScreenName = "usersn");
 
 		Mentions.viewCommentMentionTagLink(
 			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn"
-		);
+			mentionsUserScreenName = "usersn");
 	}
 }

@@ -32,27 +32,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		var key_userScreenName = "test";
 
 		AssertClick(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "test"
-		);
+			value1 = "test");
 
 		Pause(locator1 = "5000");
 
@@ -61,225 +56,199 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		Audit.searchCP(
 			searchTerm = "${userId}",
 			userId = "${userId}",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
-		Audit.searchCP(searchTerm = "Test Test", userName = "Test Test");
+		Audit.searchCP(
+			searchTerm = "Test Test",
+			userName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		Audit.searchCP(
 			resourceId = "${userId}",
 			searchTerm = "${userId}",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		Audit.searchCP(
 			resourceName = "com.liferay.portal.kernel.model.User",
 			searchTerm = "com.liferay.portal.kernel.model.User",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		Audit.searchCP(
 			resourceAction = "Login",
 			searchTerm = "Login",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		User.logoutPG();
 
 		User.loginUserInvalidPG(
 			password = "user",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		var key_resourceAction = "LOGIN_FAILURE";
 		var key_resourceName = "User";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
-			value1 = "LOGIN_FAILURE"
-		);
+			value1 = "LOGIN_FAILURE");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "test1@liferay.com",
 			userFirstName = "test1",
 			userLastName = "test1",
-			userScreenName = "test1"
-		);
+			userScreenName = "test1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1"
-		);
+			userScreenName = "test1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.impersonateCP(siteName = "${siteName}", userScreenName = "test1");
+		User.impersonateCP(
+			siteName = "${siteName}",
+			userScreenName = "test1");
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(
-			locator1 = "title=Users and Organizations - Control Panel - ${siteName}"
-		);
+		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		var key_resourceAction = "IMPERSONATE";
 		var key_resourceName = "User";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
-			value1 = "IMPERSONATE"
-		);
+			value1 = "IMPERSONATE");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Role1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Role1", userScreenName = "test1");
+		Role.assignRegRoleCP(
+			roleTitle = "Role1",
+			userScreenName = "test1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "User Group1");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "User Group1",
-			userScreenName = "test1"
-		);
+			userScreenName = "test1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Audit"
-		);
+			portlet = "Audit");
 
 		var key_resourceAction = "ADD";
 		var key_resourceName = "Role";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
-			value1 = "com.liferay.portal.kernel.model.Role"
-		);
+			value1 = "com.liferay.portal.kernel.model.Role");
 
 		var key_resourceAction = "ADD";
 		var key_resourceName = "Role";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
-			value1 = "ADD"
-		);
+			value1 = "ADD");
 
 		var key_resourceAction = "ASSIGN";
 		var key_resourceName = "User";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
-			value1 = "com.liferay.portal.kernel.model.User"
-		);
+			value1 = "com.liferay.portal.kernel.model.User");
 
 		var key_resourceAction = "ASSIGN";
 		var key_resourceName = "User";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
-			value1 = "ASSIGN"
-		);
+			value1 = "ASSIGN");
 
 		var key_resourceAction = "ADD";
 		var key_resourceName = "UserGroup";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
-			value1 = "com.liferay.portal.kernel.model.UserGroup"
-		);
+			value1 = "com.liferay.portal.kernel.model.UserGroup");
 
 		var key_resourceAction = "ADD";
 		var key_resourceName = "UserGroup";
 
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
-			value1 = "ADD"
-		);
+			value1 = "ADD");
 
 		AssertTextEquals(
 			locator1 = "xpath=(//tr[contains(.,'ASSIGN') and contains(.,'User')]/td[4])[2]",
-			value1 = "com.liferay.portal.kernel.model.User"
-		);
+			value1 = "com.liferay.portal.kernel.model.User");
 
 		AssertTextEquals(
 			locator1 = "xpath=(//tr[contains(.,'ASSIGN') and contains(.,'User')]/td[5])[2]",
-			value1 = "ASSIGN"
-		);
+			value1 = "ASSIGN");
 	}
 }

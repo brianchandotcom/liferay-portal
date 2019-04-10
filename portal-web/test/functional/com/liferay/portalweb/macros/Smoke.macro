@@ -8,16 +8,14 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
-				portlet = "Sites"
-			);
+				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
-				portlet = "Sites"
-			);
+				portlet = "Sites");
 
 			Site.viewCP(siteName = "Site Name");
 		}
@@ -25,8 +23,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page1");
 
@@ -39,19 +36,29 @@ definition {
 		var portletName = "Hello World";
 
 		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {
-			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
 
-			Portlet.addPG(i = "${i}", portletName = "${portletName}");
-
-			Portlet.viewTitle(portletName = "${portletName}");
-
-			Portlet.viewBody(portletBody = "${portletBody}", portletName = "${portletName}");
-
-			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "Site Name");
+			Portlet.addPG(
+				i = "${i}",
+				portletName = "${portletName}");
 
 			Portlet.viewTitle(portletName = "${portletName}");
 
-			Portlet.viewBody(portletBody = "${portletBody}", portletName = "${portletName}");
+			Portlet.viewBody(
+				portletBody = "${portletBody}",
+				portletName = "${portletName}");
+
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
+
+			Portlet.viewTitle(portletName = "${portletName}");
+
+			Portlet.viewBody(
+				portletBody = "${portletBody}",
+				portletName = "${portletName}");
 		}
 
 		var portlet = "Web Content";
@@ -62,8 +69,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "${portlet}"
-			);
+				portlet = "${portlet}");
 
 			SiteAdmin.viewPortletTitle(portletTitle = "${portlet}");
 		}
@@ -76,8 +82,7 @@ definition {
 
 			WebContent.addCP(
 				webContentContent = "${webContentContent}",
-				webContentTitle = "${webContentTitle}"
-			);
+				webContentTitle = "${webContentTitle}");
 
 			PortletEntry.publish();
 
@@ -89,12 +94,10 @@ definition {
 	macro viewWelcomePage {
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World"
-		);
+			value1 = "Hello World");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "HelloWorld#PORTLET_CONTENT",
-			value1 = "Welcome to Liferay"
-		);
+			value1 = "Welcome to Liferay");
 	}
 }

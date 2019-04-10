@@ -2,17 +2,20 @@ definition {
 	macro configureSetupPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(directorySites)) {
-			Select(locator1 = "Select#SITES", value1 = "${directorySites}");
+			Select(
+				locator1 = "Select#SITES",
+				value1 = "${directorySites}");
 		}
 
 		if (isSet(directoryDisplayStyle)) {
-			Select(locator1 = "Select#DISPLAY_STYLE", value1 = "${directoryDisplayStyle}");
+			Select(
+				locator1 = "Select#DISPLAY_STYLE",
+				value1 = "${directoryDisplayStyle}");
 		}
 
 		Button.clickSave();
@@ -23,50 +26,41 @@ definition {
 	macro viewDefaultConfigurationPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#SITES",
-			value1 = "Top Level"
-		);
+			value1 = "Top Level");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#SITES",
-			value1 = "Parent Level"
-		);
+			value1 = "Parent Level");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#SITES",
-			value1 = "Siblings"
-		);
+			value1 = "Siblings");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#SITES",
-			value1 = "Children"
-		);
+			value1 = "Children");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "Icon"
-		);
+			value1 = "Icon");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "Descriptive"
-		);
+			value1 = "Descriptive");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "List"
-		);
+			value1 = "List");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "List Hierarchy"
-		);
+			value1 = "List Hierarchy");
 
 		SelectFrameTop();
 	}
@@ -76,8 +70,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitesDirectory#DESCRIPTIVE_SITE_ENTRY",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 	}
 
 	macro viewListHierarchyPG {
@@ -85,38 +78,33 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE",
-			value1 = "${availableSiteName}"
-		);
+			value1 = "${availableSiteName}");
 
 		var key_siteName = "${currentSiteName}";
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT",
-			value1 = "${currentSiteName}"
-		);
+			value1 = "${currentSiteName}");
 
 		var key_childSiteName = "${childSiteName1}";
 		var key_siteName = "${currentSiteName}";
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName1}"
-		);
+			value1 = "${childSiteName1}");
 
 		var key_childSiteName = "${childSiteName2}";
 		var key_siteName = "${currentSiteName}";
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName2}"
-		);
+			value1 = "${childSiteName2}");
 
 		var key_childSiteName = "${childSiteName3}";
 		var key_siteName = "${currentSiteName}";
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName3}"
-		);
+			value1 = "${childSiteName3}");
 	}
 }

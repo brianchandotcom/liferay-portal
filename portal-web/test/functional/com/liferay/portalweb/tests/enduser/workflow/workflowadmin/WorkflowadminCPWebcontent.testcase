@@ -15,8 +15,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 	}
 
 	tearDown {
@@ -43,14 +42,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -59,85 +56,72 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		WebContentFolder.addSubfolderCP(
 			folderName = "WC Folder Name",
 			subfolderDescription = "WC Subfolder Description",
-			subfolderName = "WC Subfolder Name"
-		);
+			subfolderName = "WC Subfolder Name");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Subfolder Name",
 			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow"
-		);
+			workflowRestriction = "Default Workflow");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Subfolder Name",
-			webContentTitle = "WC Subfolder Name"
-		);
+			webContentTitle = "WC Subfolder Name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureAndWorkflowCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Subfolder Name",
-			webContentTitle = "WC Subfolder Name"
-		);
+			webContentTitle = "WC Subfolder Name");
 
 		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title");
 
@@ -145,7 +129,6 @@ definition {
 
 		WebContent.viewCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 }

@@ -11,9 +11,8 @@ definition {
 
 	macro gotoEdit {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS",
-			key_rowEntry = "${rowEntry}"
-		);
+			key_rowEntry = "${rowEntry}",
+			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 	}
@@ -63,8 +62,7 @@ definition {
 
 		AssertClick(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 
 		Pause(locator1 = "1000");
 	}

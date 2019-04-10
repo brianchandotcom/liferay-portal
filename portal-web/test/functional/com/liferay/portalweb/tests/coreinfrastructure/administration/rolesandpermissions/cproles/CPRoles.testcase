@@ -31,8 +31,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
@@ -41,10 +40,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.viewCP(roleTitle = "Roles Orgrole Name", roleType = "Organization");
+		Role.viewCP(
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization");
 	}
 
 	@priority = "4"
@@ -52,18 +52,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.viewCP(roleTitle = "Roles Regrole Name", roleType = "Regular");
+		Role.viewCP(
+			roleTitle = "Roles Regrole Name",
+			roleType = "Regular");
 	}
 
 	@priority = "5"
@@ -73,8 +73,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -83,10 +82,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.viewCP(roleTitle = "Roles Siterole Name", roleType = "Site");
+		Role.viewCP(
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site");
 	}
 
 	@priority = "5"
@@ -99,24 +99,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.deleteCP(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}

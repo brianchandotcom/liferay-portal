@@ -32,8 +32,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Company Picnic");
 
@@ -41,8 +40,7 @@ definition {
 			columnName = "1 Column",
 			pageName = "Company Picnic",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Company Picnic");
 
@@ -50,39 +48,33 @@ definition {
 
 		DDLList.addViaDDLDisplayPG(
 			ddlListDescription = "Sign up list for our company picnic.",
-			ddlListName = "Potluck Sign Up List"
-		);
+			ddlListName = "Potluck Sign Up List");
 
 		DDLDataDefinition.addViaDDLDisplayPG(
 			ddlDataDefinitionDescription = "List for Potlucks",
-			ddlDataDefinitionName = "Potluck Items"
-		);
+			ddlDataDefinitionName = "Potluck Items");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "First Name",
-			fieldName = "FirstName"
-		);
+			fieldName = "FirstName");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Last Name",
-			fieldName = "LastName"
-		);
+			fieldName = "LastName");
 
 		DynamicDataMapping.addField(
 			field = "Select",
 			fieldFieldLabel = "What are you bringing?",
-			fieldName = "WhatAreYouBringing"
-		);
+			fieldName = "WhatAreYouBringing");
 
 		DynamicDataMapping.editFieldOptions(
 			field = "Select",
 			fieldFieldLabel = "What are you bringing?",
 			fieldName = "WhatAreYouBringing",
 			fieldOptionsNames = "Carrots,Beef Jerky,Chips",
-			fieldOptionsValues = "Carrots,Beef Jerky,Chips"
-		);
+			fieldOptionsValues = "Carrots,Beef Jerky,Chips");
 
 		DDLDataDefinition.saveViaDDLDisplayPG();
 
@@ -97,20 +89,17 @@ definition {
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "John",
 			fieldFieldLabel = "First Name",
-			fieldName = "FirstName"
-		);
+			fieldName = "FirstName");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Doe",
 			fieldFieldLabel = "Last Name",
-			fieldName = "LastName"
-		);
+			fieldName = "LastName");
 
 		DDLRecord.populateFieldSelect(
 			ddlRecordFieldData = "Beef Jerky",
 			fieldFieldLabel = "What are you bringing?",
-			fieldName = "WhatAreYouBringing"
-		);
+			fieldName = "WhatAreYouBringing");
 
 		PortletEntry.publish();
 
@@ -119,58 +108,49 @@ definition {
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Jane",
 			fieldFieldLabel = "First Name",
-			fieldName = "FirstName"
-		);
+			fieldName = "FirstName");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Smith",
 			fieldFieldLabel = "Last Name",
-			fieldName = "LastName"
-		);
+			fieldName = "LastName");
 
 		DDLRecord.populateFieldSelect(
 			ddlRecordFieldData = "Carrots",
 			fieldFieldLabel = "What are you bringing?",
-			fieldName = "WhatAreYouBringing"
-		);
+			fieldName = "WhatAreYouBringing");
 
 		PortletEntry.publish();
 
 		for (var ddlRecordFieldData : list "John,Jane") {
 			DDLRecord.viewViaDDLDisplayTable(
 				ddlRecordFieldData = "${ddlRecordFieldData}",
-				fieldFieldLabel = "First Name"
-			);
+				fieldFieldLabel = "First Name");
 		}
 
 		for (var ddlRecordFieldData : list "Doe,Smith") {
 			DDLRecord.viewViaDDLDisplayTable(
 				ddlRecordFieldData = "${ddlRecordFieldData}",
-				fieldFieldLabel = "Last Name"
-			);
+				fieldFieldLabel = "Last Name");
 		}
 
 		for (var ddlRecordFieldData : list "Beef Jerky,Carrots") {
 			DDLRecord.viewViaDDLDisplayTable(
 				ddlRecordFieldData = "${ddlRecordFieldData}",
-				fieldFieldLabel = "What are you bringing"
-			);
+				fieldFieldLabel = "What are you bringing");
 		}
 
 		DDLRecord.viewStatusViaDDLDisplayTable(
 			fieldFieldLabel = "Status",
-			workflowStatus = "APPROVED"
-		);
+			workflowStatus = "APPROVED");
 
 		DDLRecord.viewViaDDLDisplayTable(
 			ddlRecordFieldData = "Test Test",
-			fieldFieldLabel = "Author"
-		);
+			fieldFieldLabel = "Author");
 
 		DDLDisplayPortlet.configureListViewPG(
 			configureCheckBoxName = "TEMPLATES_SPREADSHEET_VIEW_CHECKBOX",
-			configureChecked = "true"
-		);
+			configureChecked = "true");
 
 		PortletEntry.save();
 
@@ -179,19 +159,16 @@ definition {
 		DDLRecord.populateFieldTextViaSpreadsheetView(
 			ddlRecordFieldData = "Joe",
 			ddlRecordRow = "3",
-			fieldName = "FirstName"
-		);
+			fieldName = "FirstName");
 
 		DDLRecord.populateFieldTextViaSpreadsheetView(
 			ddlRecordFieldData = "Perkins",
 			ddlRecordRow = "3",
-			fieldName = "LastName"
-		);
+			fieldName = "LastName");
 
 		DDLRecord.populateFieldSelectViaSpreadsheetView(
 			ddlRecordFieldData = "Chips",
 			ddlRecordRow = "3",
-			fieldName = "WhatAreYouBringing"
-		);
+			fieldName = "WhatAreYouBringing");
 	}
 }

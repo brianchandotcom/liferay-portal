@@ -16,7 +16,9 @@ definition {
 	}
 
 	macro addPG {
-		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+		AssertClick(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
 
 		PortletEntry.inputName(name = "${categoryName}");
 
@@ -27,17 +29,17 @@ definition {
 		if ("${displayStyle}" == "Question") {
 			Select(
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
-				value1 = "Question"
-			);
+				value1 = "Question");
 		}
 		else if ("${displayStyle" == "Default") {
 			Select(
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
-				value1 = "Default"
-			);
+				value1 = "Default");
 		}
 
-		Click(locator1 = "Button#SAVE", value1 = "Save");
+		Click(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 	}
@@ -48,8 +50,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -67,10 +68,11 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
-		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+		AssertClick(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
 
 		PortletEntry.inputName(name = "${subCategoryNullName}");
 
@@ -86,10 +88,11 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
-		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+		AssertClick(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
 
 		PortletEntry.inputName(name = "${subCategoryName}");
 
@@ -103,17 +106,17 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		var key_subCategoryName = "${subCategoryName}";
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
-		);
+			value1 = "${subCategoryName}");
 
-		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+		AssertClick(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
 
 		PortletEntry.inputName(name = "${subCategorySubCategoryName}");
 
@@ -137,8 +140,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
 
@@ -154,8 +156,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
 
@@ -163,14 +164,15 @@ definition {
 
 		PortletEntry.inputName(name = "${categoryNameEdit}");
 
-		Click(locator1 = "Button#SAVE", value1 = "Save");
+		Click(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryNameEdit}"
-		);
+			value1 = "${categoryNameEdit}");
 	}
 
 	macro gotoCP {
@@ -178,15 +180,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		AssertClick(
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${categoryName}");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "${categoryName}");
 	}
 
 	macro gotoPG {
@@ -196,16 +198,14 @@ definition {
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-				value1 = "${categoryDescription}"
-			);
+				value1 = "${categoryDescription}");
 		}
 		else {
 			var key_categoryName = "${categoryName}";
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}"
-			);
+				value1 = "${categoryName}");
 		}
 
 		if ("${subCategoryEnabled}" == "true") {
@@ -213,8 +213,7 @@ definition {
 
 			Click(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${subCategoryName}"
-			);
+				value1 = "${subCategoryName}");
 		}
 	}
 
@@ -223,8 +222,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
 
@@ -239,8 +237,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		IsElementPresent(locator1 = "Checkbox#SELECT_ALL");
 
@@ -258,43 +255,34 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
-		AssertElementNotPresent(
-			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC"
-		);
+		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC");
 
 		var key_subcategoriesNumber = "${subcategoriesNumber}";
 		var key_threadsNumber = "${threadsNumber}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "0"
-		);
+			value1 = "0");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "0"
-		);
+			value1 = "0");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "0"
-		);
+			value1 = "0");
 
 		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		AssertElementNotPresent(locator1 = "MessageBoards#SUBCATEGORY_TABLE_PANEL");
 
-		AssertElementNotPresent(
-			locator1 = "MessageBoards#SUBCATEGORY_TABLE_CATEGORY_GENERIC"
-		);
+		AssertElementNotPresent(locator1 = "MessageBoards#SUBCATEGORY_TABLE_CATEGORY_GENERIC");
 	}
 
 	macro viewCP {
@@ -304,64 +292,56 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		var key_subcategoriesNumber = "${subcategoriesNumber}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "${subcategoriesNumber}"
-		);
+			value1 = "${subcategoriesNumber}");
 
 		var key_threadsNumber = "${threadsNumber}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
-		);
+			value1 = "${threadsNumber}");
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${categoryName}");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "${categoryName}");
 	}
 
 	macro viewDefaultPG {
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
 
-		AssertElementNotPresent(
-			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
-		);
+		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC");
 	}
 
 	macro viewMySubscriptionsPG {
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS",
-			value1 = "My Subscriptions"
-		);
+			value1 = "My Subscriptions");
 
 		AssertTextEquals(
+			key_parentcategory1 = "${parentcategory1}",
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1",
-			value1 = "${parentcategory1}",
-			key_parentcategory1 = "${parentcategory1}"
-		);
+			value1 = "${parentcategory1}");
 
 		AssertTextEquals(
+			key_parentcategory2 = "${parentcategory2}",
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2",
-			value1 = "${parentcategory2}",
-			key_parentcategory2 = "${parentcategory2}"
-		);
+			value1 = "${parentcategory2}");
 
 		AssertTextEquals.assertPartialText(
+			key_subscribedThread = "${subscribedThread}",
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3",
-			value1 = "${subscribedThread}",
-			key_subscribedThread = "${subscribedThread}"
-		);
+			value1 = "${subscribedThread}");
 	}
 
 	macro viewNoPG {
@@ -386,22 +366,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		if (isSet(threadsNumber)) {
 			var key_threadsNumber = "${threadsNumber}";
 
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-				value1 = "${threadsNumber} Threads"
-			);
+				value1 = "${threadsNumber} Threads");
 		}
 		else if ("${threadPostCount}" == "1") {
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-				value1 = "1 Thread"
-			);
+				value1 = "1 Thread");
 		}
 
 		if ("categoryDescriptionEnabled" == "true") {
@@ -409,20 +386,17 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-				value1 = "${categoryDescription}"
-			);
+				value1 = "${categoryDescription}");
 		}
 		else {
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}"
-			);
+				value1 = "${categoryName}");
 		}
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 	}
 
 	macro viewSubcategoryFromSubcategoryPG {
@@ -432,25 +406,21 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
-		);
+			value1 = "${subCategoryName}");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY_DESCRIPTION",
-			value1 = "${subCategoryDescription}"
-		);
+			value1 = "${subCategoryDescription}");
 
 		Click(locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${subCategoryName}"
-		);
+			value1 = "${subCategoryName}");
 	}
 
 	macro viewSubcategoryPG {
@@ -458,8 +428,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 
 		var key_categoryDescription = "${subCategoryDescription}";
 		var key_categoryName = "${subCategoryName}";
@@ -467,23 +436,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${subCategoryName}"
-		);
+			value1 = "${subCategoryName}");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-			value1 = "${subCategoryDescription}"
-		);
+			value1 = "${subCategoryDescription}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
-		);
+			value1 = "${threadsNumber}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "${threadsNumber}"
-		);
+			value1 = "${threadsNumber}");
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
 
@@ -491,7 +456,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${subCategoryName}"
-		);
+			value1 = "${subCategoryName}");
 	}
 }

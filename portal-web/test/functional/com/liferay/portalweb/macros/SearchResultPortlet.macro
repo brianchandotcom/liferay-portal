@@ -11,8 +11,7 @@ definition {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "${searchAssetTitle}",
 				searchAssetType = "${searchAssetType}",
-				searchTerm = "${searchTerm}"
-			);
+				searchTerm = "${searchTerm}");
 		}
 	}
 
@@ -27,24 +26,21 @@ definition {
 
 			SearchResultPortlet.viewSearchResultNotPresent(
 				searchAssetTitle = "${searchAssetTitle}",
-				searchAssetType = "${searchAssetType}"
-			);
+				searchAssetType = "${searchAssetType}");
 		}
 	}
 
 	macro viewNoSearchResults {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found that matched the keywords: ${searchTerm}."
-		);
+			value1 = "No results were found that matched the keywords: ${searchTerm}.");
 	}
 
 	macro viewSearchResultNotPresent {
 		AssertElementNotPresent(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
 			key_searchAssetTitle = "${searchAssetTitle}",
-			key_searchAssetType = "${searchAssetType}"
-		);
+			key_searchAssetType = "${searchAssetType}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC");
 	}
 
 	macro viewSearchResults {
@@ -53,33 +49,28 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
-			value1 = "${searchAssetTitle}"
-		);
+			value1 = "${searchAssetTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
-			value1 = "${searchAssetType}"
-		);
+			value1 = "${searchAssetType}");
 
 		if (isSet(entryDate)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
-				value1 = "${entryDate}"
-			);
+				value1 = "${entryDate}");
 		}
 
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
-				value1 = "${searchAssetSummary}"
-			);
+				value1 = "${searchAssetSummary}");
 		}
 
 		if (isSet(searchTerm)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
-				value1 = "${searchTerm}"
-			);
+				value1 = "${searchTerm}");
 		}
 	}
 }

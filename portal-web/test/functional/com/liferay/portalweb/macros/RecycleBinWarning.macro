@@ -1,6 +1,8 @@
 definition {
 	macro renameEntry {
-		Type(locator1 = "TextInput#NEW_NAME", value1 = "${renamedTrashEntryTitle}");
+		Type(
+			locator1 = "TextInput#NEW_NAME",
+			value1 = "${renamedTrashEntryTitle}");
 	}
 
 	macro selectRename {

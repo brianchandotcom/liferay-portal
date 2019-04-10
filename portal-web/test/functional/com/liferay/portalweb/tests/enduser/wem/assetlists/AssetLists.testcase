@@ -27,39 +27,27 @@ definition {
 	@priority = "5"
 	test AddAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addDynamicSelection(
-				title = "Dynamic Asset List Test"
-			);
+			AssetListsAdmin.addDynamicSelection(title = "Dynamic Asset List Test");
 		}
 
 		task ("Assert Asset List Entry names and types") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewAssetList(
 				title = "Manual Asset List Test",
-				type = "Manual"
-			);
+				type = "Manual");
 
 			AssetListsAdmin.viewAssetList(
 				title = "Dynamic Asset List Test",
-				type = "Dynamic"
-			);
+				type = "Dynamic");
 		}
 	}
 
@@ -67,26 +55,19 @@ definition {
 	@priority = "3"
 	test AddDuplicateAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Create an asset list that has the same name as the first asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
 
 			PortletEntry.inputText(
 				fieldLabel = "Title",
-				text = "Manual Asset List Test"
-			);
+				text = "Manual Asset List Test");
 
 			Button.clickSave();
 		}
@@ -94,8 +75,7 @@ definition {
 		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "An asset list with that title already exists."
-			);
+				value1 = "An asset list with that title already exists.");
 		}
 	}
 
@@ -103,43 +83,27 @@ definition {
 	@priority = "5"
 	test DeleteAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addDynamicSelection(
-				title = "Dynamic Asset List Test"
-			);
+			AssetListsAdmin.addDynamicSelection(title = "Dynamic Asset List Test");
 		}
 
 		task ("Delete both asset lists") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.delete(
-				rowEntry = "Manual Asset List Test"
-			);
+			LexiconEntry.delete(rowEntry = "Manual Asset List Test");
 
-			LexiconEntry.delete(
-				rowEntry = "Dynamic Asset List Test"
-			);
+			LexiconEntry.delete(rowEntry = "Dynamic Asset List Test");
 		}
 
 		task ("Assert the taglib that displays when there are no entries displays") {
-			AssertElementPresent(
-				locator1 = "Message#EMPTY_INFO_TAGLIB"
-			);
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 		}
 	}
 
@@ -147,31 +111,23 @@ definition {
 	@priority = "5"
 	test RenameAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Rename the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.renameAssetList(
 				assetListName = "Manual Asset List Test",
-				title = "Manual Asset List Edit"
-			);
+				title = "Manual Asset List Edit");
 		}
 
 		task ("Assert that the name of the asset list changed correctly") {
 			AssetListsAdmin.viewAssetList(
 				title = "Manual Asset List Edit",
-				type = "Manual"
-			);
+				type = "Manual");
 		}
 	}
 
@@ -182,42 +138,31 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
-				title = "WC WebContent Title"
-			);
+				title = "WC WebContent Title");
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Select the created web content article to be linked to the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Asset List Test",
 				assetName = "WC WebContent Title",
-				assetType = "Basic Web Content"
-			);
+				assetType = "Basic Web Content");
 		}
 
 		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
 				assetListName = "Manual Asset List Test",
 				assetTitle = "WC WebContent Title",
-				assetType = "Web Content Article"
-			);
+				assetType = "Web Content Article");
 		}
 	}
 
@@ -227,25 +172,19 @@ definition {
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name"
-			);
+				layoutName = "Test Page Name");
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(
-				title = "Manual Asset List Test"
-			);
+			AssetListsAdmin.addManualSelection(title = "Manual Asset List Test");
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
 		}
@@ -253,24 +192,18 @@ definition {
 		task ("Select the created manual asset list to be used in the asset publisher portlet") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.selectAssetList(
-				assetListName = "Manual Asset List Test"
-			);
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Asset List Test");
 		}
 
 		task ("Assert the created asset list is used exactly once") {
-			AssetListsAdmin.openAssetListsAdmin(
-				siteURLKey = "test-site-name"
-			);
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewUsages(
 				assetListName = "Manual Asset List Test",
 				usageAmount = "1",
-				usageType = "All"
-			);
+				usageType = "All");
 		}
 	}
 }

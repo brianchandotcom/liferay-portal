@@ -18,16 +18,14 @@ definition {
 		task ("Add a fragment collection via JSON") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
-				name = "Collection Name"
-			);
+				name = "Collection Name");
 		}
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				groupName = "Test Site Name",
-				name = "Fragment Name"
-			);
+				name = "Fragment Name");
 		}
 
 		task ("Navigate to fragments admin") {
@@ -62,21 +60,15 @@ definition {
 		}
 
 		task ("View resource") {
-			FragmentsAdmin.viewEntryPresent(
-				entry = "Document_1.png"
-			);
+			FragmentsAdmin.viewEntryPresent(entry = "Document_1.png");
 		}
 
 		task ("Delete resource") {
-			FragmentsAdmin.deleteEntry(
-				entry = "Document_1.png"
-			);
+			FragmentsAdmin.deleteEntry(entry = "Document_1.png");
 		}
 
 		task ("View no resource") {
-			FragmentsAdmin.viewEntryNotPresent(
-				entry = "Document_1.png"
-			);
+			FragmentsAdmin.viewEntryNotPresent(entry = "Document_1.png");
 		}
 	}
 
@@ -90,8 +82,7 @@ definition {
 		task ("Copy the section fragment") {
 			FragmentsAdmin.gotoEntryEllipsisItem(
 				entry = "Fragment Name",
-				item = "Make a Copy"
-			);
+				item = "Make a Copy");
 		}
 
 		task ("Navigate to fragments admin") {
@@ -99,22 +90,17 @@ definition {
 		}
 
 		task ("Assert the copied section fragment is present") {
-			FragmentsAdmin.viewEntryPresent(
-				entry = "Fragment Name (Copy)"
-			);
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name (Copy)");
 		}
 
 		task ("Assert the copied section fragment retained the HTML from the original section fragment by asserting the preview in the fragment editor") {
-			FragmentsAdmin.gotoEntry(
-				entry = "Fragment Name (Copy)"
-			);
+			FragmentsAdmin.gotoEntry(entry = "Fragment Name (Copy)");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			AssertTextEquals(
 				locator1 = "//div[contains(@id,'fragment')]",
-				value1 = "test"
-			);
+				value1 = "test");
 
 			SelectFrameTop();
 		}
@@ -130,9 +116,7 @@ definition {
 		}
 
 		task ("Delete the section fragment") {
-			FragmentsAdmin.deleteEntry(
-				entry = "Fragment Name"
-			);
+			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
 		}
 
 		task ("Navigate to fragments admin") {
@@ -176,8 +160,7 @@ definition {
 		task ("Rename the section fragment") {
 			FragmentsAdmin.gotoEntryEllipsisItem(
 				entry = "Fragment Name",
-				item = "Rename"
-			);
+				item = "Rename");
 
 			PortletEntry.inputName(name = "Rename Fragment");
 
@@ -215,8 +198,7 @@ definition {
 		task ("Add the section fragment to the page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Fragment Name"
-			);
+				fragmentName = "Fragment Name");
 
 			PageEditor.viewAutoSaveMessage();
 		}
@@ -230,14 +212,11 @@ definition {
 		}
 
 		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
-			FragmentsAdmin.deleteEntry(
-				entry = "Fragment Name"
-			);
+			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR",
-				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates."
-			);
+				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.");
 		}
 	}
 
@@ -269,14 +248,11 @@ definition {
 		task ("Assert the second section fragment is in draft status") {
 			FragmentsAdmin.viewEntryWorkflowStatus(
 				entry = "Fragment Name 2",
-				workflowStatus = "Draft"
-			);
+				workflowStatus = "Draft");
 		}
 
 		task ("Edit the second section fragment") {
-			FragmentsAdmin.gotoEntry(
-				entry = "Fragment Name 2"
-			);
+			FragmentsAdmin.gotoEntry(entry = "Fragment Name 2");
 
 			var htmlSnippet = '''
 <html>${line.separator}
@@ -287,8 +263,7 @@ definition {
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}"
-			);
+				value1 = "${htmlSnippet}");
 		}
 
 		task ("Publish the second section fragment") {

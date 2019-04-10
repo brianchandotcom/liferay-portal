@@ -12,20 +12,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -56,9 +53,7 @@ definition {
 	@description = "This test adds a tag for a single document via management toolbar"
 	@priority = "4"
 	test AddTagToSingleAsset {
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.jpeg,Document_2.docx"
-		);
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.jpeg,Document_2.docx");
 
 		var key_dmDocumentTitle = "Document_1.jpeg";
 
@@ -68,8 +63,7 @@ definition {
 
 		DMDocument.editTags(
 			dmDocumentTitle = "Document_1.jpeg",
-			tagName = "newtag"
-		);
+			tagName = "newtag");
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpeg");
 
@@ -79,16 +73,13 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Document_1.jpeg",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@description = "This test edits tags by bulk using Append action."
 	@priority = "4"
 	test EditAndAppendTags {
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt"
-		);
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
 		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
@@ -99,8 +90,7 @@ definition {
 		DMDocument.editTags(
 			itemNumber = "2",
 			multipleDocuments = "true",
-			tagName = "tagone"
-		);
+			tagName = "tagone");
 
 		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
@@ -119,8 +109,7 @@ definition {
 		DMDocument.editTags(
 			itemNumber = "2",
 			multipleDocuments = "true",
-			tagName = "tagtwo"
-		);
+			tagName = "tagtwo");
 
 		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
@@ -135,22 +124,18 @@ definition {
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Document_2.jpg",
-				searchAssetType = "Document"
-			);
+				searchAssetType = "Document");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Document_4.txt",
-				searchAssetType = "Document"
-			);
+				searchAssetType = "Document");
 		}
 	}
 
 	@description = "This test edits tags by bulk using Replace action."
 	@priority = "4"
 	test EditAndReplaceTags {
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt"
-		);
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
 		var key_dmDocumentTitle = "Document_1.doc";
 
@@ -160,8 +145,7 @@ definition {
 
 		DMDocument.editTags(
 			dmDocumentTitle = "Document_1.doc",
-			tagName = "one"
-		);
+			tagName = "one");
 
 		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
@@ -173,8 +157,7 @@ definition {
 
 		DMDocument.editTags(
 			dmDocumentTitle = "Document_3.xls",
-			tagName = "two"
-		);
+			tagName = "two");
 
 		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
@@ -186,8 +169,7 @@ definition {
 			editAction = "Replace",
 			itemNumber = "2",
 			multipleDocuments = "true",
-			tagName = "three"
-		);
+			tagName = "three");
 
 		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
@@ -201,13 +183,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Document_1.doc",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Document_3.xls",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		for (var key_searchTerm : list "one,two") {
 			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
@@ -221,12 +201,9 @@ definition {
 	test MoveDocumentsToFolder {
 		DMFolder.addPG(
 			dmFolderDescription = "Folder 1",
-			dmFolderName = "Folder 1"
-		);
+			dmFolderName = "Folder 1");
 
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.doc,Document_2.doc"
-		);
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.doc");
 
 		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.doc") {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
@@ -234,8 +211,7 @@ definition {
 
 		DMDocument.moveToFolderPG(
 			bulkSelection = "2 of 3 Selected",
-			dmFolderName = "Folder 1"
-		);
+			dmFolderName = "Folder 1");
 
 		Navigator.openURL();
 
@@ -245,8 +221,7 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -254,7 +229,6 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc"
-		);
+			dmDocumentTitle = "Document_2.doc");
 	}
 }

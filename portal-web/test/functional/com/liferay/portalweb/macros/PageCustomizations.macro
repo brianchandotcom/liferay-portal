@@ -1,19 +1,18 @@
 definition {
 	macro enableSectionCustomizableCP {
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "${pageName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Panel.expandPanel(panel = "Customization Settings");
 
-		Check.checkToggleSwitch(
-			locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS"
-		);
+		Check.checkToggleSwitch(locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS");
 
 		Check.toggleSwitch(
-			locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX",
-			key_columnId = "${columnId}"
-		);
+			key_columnId = "${columnId}",
+			locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
 
 		Button.clickSave();
 	}
@@ -31,9 +30,7 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Reset My Customizations");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to reset your customizations to default?"
-			);
+			AssertConfirm(value1 = "Are you sure you want to reset your customizations to default?");
 		}
 	}
 
@@ -42,17 +39,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
-			value1 = "You can customize this page."
-		);
+			value1 = "You can customize this page.");
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE",
-			value1 = "View Page without my customizations"
-		);
+			value1 = "View Page without my customizations");
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS",
-			value1 = "Reset My Customizations"
-		);
+			value1 = "Reset My Customizations");
 	}
 }

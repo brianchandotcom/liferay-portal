@@ -6,8 +6,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Wiki"
-			);
+				portlet = "Wiki");
 
 			WikiNavigator.gotoNode(wikiNodeName = "${wikiNodeName}");
 
@@ -17,7 +16,9 @@ definition {
 
 			Click(locator1 = "Icon#INFO");
 
-			AssertClick.assertPartialTextClickAt(locator1 = "Link#FEED", value1 = "Feed");
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Link#FEED",
+				value1 = "Feed");
 
 			Pause(locator1 = "3000");
 		}
@@ -26,16 +27,19 @@ definition {
 	macro _editEmptyFrontPage {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text."
-		);
+			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertElementPresent(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		AssertElementPresent(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		AlloyEditor.addContent(content = "${wikiPageContent}");
 	}
 
 	macro addAttachmentViaPageEdit {
-		AssertClick(locator1 = "Link#WIKI_EDIT", value1 = "Edit");
+		AssertClick(
+			locator1 = "Link#WIKI_EDIT",
+			value1 = "Edit");
 
 		Panel.expandPanel(panel = "Attachments");
 
@@ -45,38 +49,43 @@ definition {
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${attachmentFileName}"
-		);
+			value1 = "${attachmentFileName}");
 
 		PortletEntry.publish();
 	}
 
 	macro addChildPagePG {
-		AssertClick(locator1 = "Link#ADD_CHILD_PAGE", value1 = "Add Child Page");
+		AssertClick(
+			locator1 = "Link#ADD_CHILD_PAGE",
+			value1 = "Add Child Page");
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiChildPageContent}",
-			title = "${wikiChildPageTitle}"
-		);
+			title = "${wikiChildPageTitle}");
 
-		Click(locator1 = "Button#PUBLISH", value1 = "Publish");
+		Click(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro addChildPagePGViaWD {
-		AssertClick(locator1 = "Link#ADD_CHILD_PAGE", value1 = "Add Child Page");
+		AssertClick(
+			locator1 = "Link#ADD_CHILD_PAGE",
+			value1 = "Add Child Page");
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiChildPageContent}",
-			title = "${wikiChildPageTitle}"
-		);
+			title = "${wikiChildPageTitle}");
 
-		Click(locator1 = "Button#PUBLISH", value1 = "Publish");
+		Click(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewSuccessMessage();
 	}
@@ -84,9 +93,13 @@ definition {
 	macro addComment {
 		Click.clickAt(locator1 = "Comments#COMMENT_FIELD");
 
-		Type.typeEditor(locator1 = "Comments#COMMENT_FIELD", value1 = "${entryComment}");
+		Type.typeEditor(
+			locator1 = "Comments#COMMENT_FIELD",
+			value1 = "${entryComment}");
 
-		AssertClick.assertTextClickAt(locator1 = "Button#REPLY", value1 = "Reply");
+		AssertClick.assertTextClickAt(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
 
 		Alert.viewSuccessMessage();
 	}
@@ -98,59 +111,63 @@ definition {
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiPageContent}",
-			title = "${wikiPageTitle}"
-		);
+			title = "${wikiPageTitle}");
 
 		PortletEntry.publish();
 	}
 
 	macro addFrontPageChildPageInvalidTitle {
-		AssertClick(locator1 = "Link#ADD_CHILD_PAGE", value1 = "Add Child Page");
+		AssertClick(
+			locator1 = "Link#ADD_CHILD_PAGE",
+			value1 = "Add Child Page");
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiChildPageContent}",
-			title = "${wikiChildPageTitle}"
-		);
+			title = "${wikiChildPageTitle}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "Please enter a valid title."
-		);
+			value1 = "Please enter a valid title.");
 	}
 
 	macro addFrontPageChildPageInvalidTitleViaWD {
-		AssertClick(locator1 = "Link#ADD_CHILD_PAGE", value1 = "Add Child Page");
+		AssertClick(
+			locator1 = "Link#ADD_CHILD_PAGE",
+			value1 = "Add Child Page");
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiChildPageContent}",
-			title = "${wikiChildPageTitle}"
-		);
+			title = "${wikiChildPageTitle}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_ENTER_A_VALID_TITLE",
-			value1 = "Please enter a valid title."
-		);
+			value1 = "Please enter a valid title.");
 	}
 
 	macro addFrontPageCP {
 		AssertClick(
 			locator1 = "Message#INFO_LINK",
-			value1 = "This page is empty. Edit it to add some text."
-		);
+			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertElementPresent(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		AssertElementPresent(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		AlloyEditor.addContent(content = "${wikiFrontPageContent}");
 
@@ -161,34 +178,36 @@ definition {
 		var key_wikiNodeName = "${wikiNodeName}";
 
 		if (isSet(addFrontPagetoNode)) {
-			AssertClick(locator1 = "Wiki#NODE_NAME", value1 = "${wikiNodeName}");
+			AssertClick(
+				locator1 = "Wiki#NODE_NAME",
+				value1 = "${wikiNodeName}");
 		}
 
 		AssertClick.assertTextClickAtAndPause(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text."
-		);
+			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertElementPresent(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		AssertElementPresent(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		if ("${creoleSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			Select.pauseSelect(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "Creole"
-			);
+				value1 = "Creole");
 
 			AlloyEditor.addContent(content = "${wikiPageContent}");
 		}
 		else if ("${htmlSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
-			SelectNoError(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN", value1 = "HTML");
+			SelectNoError(
+				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+				value1 = "HTML");
 
-			AssertConfirm(
-				value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?"
-			);
+			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
 			AlloyEditor.addContent(content = "${wikiPageContent}");
 		}
@@ -216,20 +235,17 @@ definition {
 
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}"
-		);
+			uploadFileName = "${uploadFileName}");
 	}
 
 	macro addLocalizedFrontPagePG {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "${emptyPageMessage}"
-		);
+			value1 = "${emptyPageMessage}");
 
 		Type.typeEditor(
 			locator1 = "//div[contains(@class,'alloy-editor') and contains(@class,'cke_editable_inline')]",
-			value1 = "${wikiPageContent}"
-		);
+			value1 = "${wikiPageContent}");
 
 		if ("${rtl}" == "true") {
 			var textDirection = "rtl";
@@ -238,16 +254,13 @@ definition {
 			var textDirection = "ltr";
 		}
 
-		AssertElementPresent(
-			locator1 = "//div[contains(@class,'cke_contents_${textDirection}')]"
-		);
+		AssertElementPresent(locator1 = "//div[contains(@class,'cke_contents_${textDirection}')]");
 
 		Click(locator1 = "Button#PUBLISH_LOCALIZED");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "${successMessage}"
-		);
+			value1 = "${successMessage}");
 
 		AssertElementPresent(locator1 = "//html[@dir='${textDirection}']");
 
@@ -255,8 +268,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY_HTML",
-			value1 = "${wikiPageContent}"
-		);
+			value1 = "${wikiPageContent}");
 	}
 
 	macro addPageWithWorkflowPG {
@@ -264,13 +276,11 @@ definition {
 
 		AlloyEditor.addTitleAndContent(
 			content = "${wikiPageContent}",
-			title = "${wikiPageTitle}"
-		);
+			title = "${wikiPageTitle}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		Alert.viewSuccessMessage();
 	}
@@ -279,16 +289,14 @@ definition {
 		if (isSet(viewableBy)) {
 			Select(
 				locator1 = "AssetPermissions#VIEWABLE_AS_SELECT",
-				value1 = "${viewableBy}"
-			);
+				value1 = "${viewableBy}");
 		}
 
 		if (isSet(permissionsDefinitionKey)) {
 			if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
 				AssertClick.assertPartialTextClickAt(
 					locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
-					value1 = "More Options"
-				);
+					value1 = "More Options");
 			}
 
 			var key_permissionsDefinitionKey = "${permissionsDefinitionKey}";
@@ -301,7 +309,9 @@ definition {
 	macro addPG {
 		WikiNavigator.gotoAddPageViaPG();
 
-		AssertElementPresent(locator1 = "AlloyEditor#EDITOR", key_editor = "title");
+		AssertElementPresent(
+			key_editor = "title",
+			locator1 = "AlloyEditor#EDITOR");
 
 		AlloyEditor.addTitle(title = "${wikiPageTitle}");
 
@@ -310,8 +320,7 @@ definition {
 		if ("${viewFormat}" == "true") {
 			AssertSelectedLabel(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${wikiFormat}"
-			);
+				value1 = "${wikiFormat}");
 		}
 
 		AlloyEditor.addContent(content = "${wikiPageContent}");
@@ -337,10 +346,14 @@ definition {
 		if (isSet(customFieldText)) {
 			Panel.expandPanel(panel = "Custom Fields");
 
-			Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customFieldText}");
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldText}");
 		}
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewSuccessMessage();
 	}
@@ -360,21 +373,35 @@ definition {
 	macro changeParentWikipagetoWikipagePG {
 		var key_wikiPageTitle = "${wikiPage2Title}";
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPage2Title}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPage2Title}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPage2Content}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPage2Content}");
 
-		AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertClick(locator1 = "Link#MOVE", value1 = "Move");
+		AssertClick(
+			locator1 = "Link#MOVE",
+			value1 = "Move");
 
-		AssertClick(locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT", value1 = "Change Parent");
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT",
+			value1 = "Change Parent");
 
 		var key_wikiPageTitle = "${wikiPage1Title}";
 
-		Select(locator1 = "Select#NEW_PARENT", value1 = "- ${wikiPage1Title}");
+		Select(
+			locator1 = "Select#NEW_PARENT",
+			value1 = "- ${wikiPage1Title}");
 
-		AssertClick(locator1 = "Button#CHANGE", value1 = "Change Parent");
+		AssertClick(
+			locator1 = "Button#CHANGE",
+			value1 = "Change Parent");
 
 		Alert.viewSuccessMessage();
 	}
@@ -386,21 +413,21 @@ definition {
 
 		Click(locator1 = "Icon#INFO");
 
-		AssertClick(locator1 = "NavBar#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "NavBar#DETAILS",
+			value1 = "Details");
 
 		MenuItem.click(menuItem = "Versions");
 
 		var key_wikiPageVersion = "${wikiPageVersionNew}";
 
 		Click.waitForMenuToggleJSClick(
-			locator1 = "Wiki#COMPARE_VERSIONS_VERSION_ACTIONS",
-			key_wikiPageVersion = "${wikiPageVersionNew}"
-		);
+			key_wikiPageVersion = "${wikiPageVersionNew}",
+			locator1 = "Wiki#COMPARE_VERSIONS_VERSION_ACTIONS");
 
 		AssertClick(
 			locator1 = "Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK",
-			value1 = "Compare to..."
-		);
+			value1 = "Compare to...");
 
 		SelectFrame(locator1 = "Wiki#COMPARE_VERSIONS_IFRAME");
 
@@ -408,8 +435,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION",
-			value1 = "${wikiPageVersionNew}"
-		);
+			value1 = "${wikiPageVersionNew}");
 
 		AssertElementPresent(locator1 = "Wiki#COMPARE_VERSIONS_DATE");
 
@@ -417,15 +443,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION",
-			value1 = "${wikiPageVersionOld}"
-		);
+			value1 = "${wikiPageVersionOld}");
 
 		AssertElementPresent(locator1 = "Wiki#COMPARE_VERSIONS_DATE");
 
 		AssertClick(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION_LINK",
-			value1 = "${wikiPageVersionOld}"
-		);
+			value1 = "${wikiPageVersionOld}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -433,34 +457,39 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_DIFF",
-			value1 = "${wikiPageVersionDiff}"
-		);
+			value1 = "${wikiPageVersionDiff}");
 	}
 
 	macro compareVersionsPG {
 		var key_wikiNodeName = "${wikiNodeName}";
 
-		AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertClick(locator1 = "Wiki#PAGE_TABS_HISTORY", value1 = "History");
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_HISTORY",
+			value1 = "History");
 
-		AssertClick(locator1 = "Wiki#HISTORY_VERSIONS_TAB", value1 = "Versions");
+		AssertClick(
+			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
+			value1 = "Versions");
 
 		var key_wikiPageVersionNew = "${wikiPageVersionNew}";
 
 		Check(
 			locator1 = "WikiTable#SELECT_VERSION_NEW_VERSION_CHECKBOX",
-			value1 = "${wikiPageVersionNew}"
-		);
+			value1 = "${wikiPageVersionNew}");
 
 		var key_wikiPageVersionOld = "${wikiPageVersionOld}";
 
 		Check(
 			locator1 = "WikiTable#SELECT_VERSION_OLD_VERSION_CHECKBOX",
-			value1 = "${wikiPageVersionOld}"
-		);
+			value1 = "${wikiPageVersionOld}");
 
-		AssertClick(locator1 = "Button#COMPARE_VERSIONS", value1 = "Compare Versions");
+		AssertClick(
+			locator1 = "Button#COMPARE_VERSIONS",
+			value1 = "Compare Versions");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -471,77 +500,64 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF_ADDED",
-				value1 = "${wikiPageContentCompareAdded}"
-			);
+				value1 = "${wikiPageContentCompareAdded}");
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF_REMOVED",
-				value1 = "${wikiPageContentCompareRemoved}"
-			);
+				value1 = "${wikiPageContentCompareRemoved}");
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_PARAGRAPH_FULL",
-				value1 = "${wikiPageContentCompareFull}"
-			);
+				value1 = "${wikiPageContentCompareFull}");
 
 			AssertClick(
 				locator1 = "Wiki#COMPARE_ACTIVITIES_NAVIGATION_TEXT_MODE_LINK",
-				value1 = "Text Mode"
-			);
+				value1 = "Text Mode");
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_TITLE_VERSION_OLD",
-				value1 = "${wikiPageTitle} ${wikiPageVersionOld}"
-			);
+				value1 = "${wikiPageTitle} ${wikiPageVersionOld}");
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_TITLE_VERSION_NEW",
-				value1 = "${wikiPageTitle} ${wikiPageVersionNew}"
-			);
+				value1 = "${wikiPageTitle} ${wikiPageVersionNew}");
 
 			if (isSet(compareLineNumberOld)) {
 				AssertTextEquals(
 					locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_LINE_NUMBER_OLD_1",
-					value1 = "Line ${compareLineNumberOld}"
-				);
+					value1 = "Line ${compareLineNumberOld}");
 			}
 			else {
 				AssertTextEquals(
 					locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_LINE_NUMBER_OLD_1",
-					value1 = "Line 1"
-				);
+					value1 = "Line 1");
 			}
 
 			if (isSet(compareLineNumberNew)) {
 				AssertTextEquals(
 					locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_LINE_NUMBER_NEW_1",
-					value1 = "Line ${compareLineNumberNew}"
-				);
+					value1 = "Line ${compareLineNumberNew}");
 			}
 			else {
 				AssertTextEquals(
 					locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_LINE_NUMBER_NEW_1",
-					value1 = "Line 1"
-				);
+					value1 = "Line 1");
 			}
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_OLD_1",
-				value1 = "${wikiPageContentCompareOld}"
-			);
+				value1 = "${wikiPageContentCompareOld}");
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_NEW_1",
-				value1 = "${wikiPageContentCompareNew}"
-			);
+				value1 = "${wikiPageContentCompareNew}");
 		}
 		else {
 			var key_wikiPageVersionDiff = "${wikiPageVersionDiff}";
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF",
-				value1 = "${wikiPageVersionDiff}"
-			);
+				value1 = "${wikiPageVersionDiff}");
 		}
 	}
 
@@ -550,8 +566,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 
 		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
@@ -571,16 +586,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WikiTable#ALL_PAGES_REVISION",
-			value1 = "1.0"
-		);
+			value1 = "1.0");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 	}
@@ -597,13 +610,11 @@ definition {
 		if ("${wikiPageTitle}" == "FrontPage") {
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-				value1 = "FrontPage"
-			);
+				value1 = "FrontPage");
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_REVISION",
-				value1 = "1.0 (Minor Edit)"
-			);
+				value1 = "1.0 (Minor Edit)");
 		}
 		else {
 			AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
@@ -621,28 +632,32 @@ definition {
 
 		Type.typeEditor(
 			locator1 = "Comments#EDIT_COMMENT_FIELD",
-			value1 = "${entryCommentEdit}"
-		);
+			value1 = "${entryCommentEdit}");
 
 		AssertClick(
+			key_text = "Save",
 			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
-			value1 = "Save",
-			key_text = "Save"
-		);
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro editFrontPagePG {
-		AssertClick(locator1 = "Link#WIKI_EDIT", value1 = "Edit");
+		AssertClick(
+			locator1 = "Link#WIKI_EDIT",
+			value1 = "Edit");
 
 		Pause(locator1 = "3000");
 
 		AlloyEditor.addContent(content = "${wikiPageContentEdit}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContentEdit}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContentEdit}");
 
 		Alert.viewSuccessMessage();
 	}
@@ -652,7 +667,9 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		Click(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
@@ -677,14 +694,18 @@ definition {
 		if (isSet(customFieldTextEdit)) {
 			Panel.expandPanel(panel = "Custom Fields");
 
-			Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customFieldTextEdit}");
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldTextEdit}");
 		}
 
 		PortletEntry.publish();
 
 		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContentEdit}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContentEdit}");
 	}
 
 	macro linkPG {
@@ -692,42 +713,51 @@ definition {
 
 		AssertTextNotPresent(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPage2Title}"
-		);
+			value1 = "${wikiPage2Title}");
 
 		AssertTextNotPresent(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPage2Content}"
-		);
+			value1 = "${wikiPage2Content}");
 
-		AssertClick(locator1 = "Link#EDIT", value1 = "Edit");
+		AssertClick(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
 
 		AlloyEditor.clickContentField();
 
 		Panel.expandPanel(panel = "Configuration");
 
-		Select(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN", value1 = "Creole");
+		Select(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "Creole");
 
 		AlloyEditor.addContent(content = "${wikiPage2Link}");
 
 		PortletEntry.publish();
 
-		AssertClick(locator1 = "WikiEntry#BODY_LINK", value1 = "${wikiPage2Title}");
+		AssertClick(
+			locator1 = "WikiEntry#BODY_LINK",
+			value1 = "${wikiPage2Title}");
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPage2Title}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPage2Title}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPage2Content}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPage2Content}");
 	}
 
 	macro markAsSpamCP {
-		AssertClick(locator1 = "Link#MARK_AS_SPAM", value1 = "Mark as Spam");
+		AssertClick(
+			locator1 = "Link#MARK_AS_SPAM",
+			value1 = "Mark as Spam");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "This version has been flagged as spam. An administrator will review your version as soon as possible."
-		);
+			value1 = "This version has been flagged as spam. An administrator will review your version as soon as possible.");
 	}
 
 	macro moveToRecycleBinCP {
@@ -751,7 +781,9 @@ definition {
 	}
 
 	macro removeAttachmentViaPageEdit {
-		AssertClick(locator1 = "Link#EDIT", value1 = "Edit");
+		AssertClick(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
 
 		Panel.expandPanel(panel = "Attachments");
 
@@ -759,8 +791,7 @@ definition {
 
 		AssertVisible(
 			locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin"
-		);
+			value1 = "Move to Recycle Bin");
 
 		Click(locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN");
 
@@ -770,15 +801,15 @@ definition {
 	macro removeRedirectWikiPagePG {
 		AssertClick(
 			locator1 = "Link#REDIRECT",
-			value1 = "(Redirected from ${wikiPageTitle})"
-		);
+			value1 = "(Redirected from ${wikiPageTitle})");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO_1",
-			value1 = "This page is currently redirected to ${wikiPageTitleRename}."
-		);
+			value1 = "This page is currently redirected to ${wikiPageTitleRename}.");
 
-		AssertClick(locator1 = "Button#REMOVE_REDIRECT", value1 = "Remove Redirect");
+		AssertClick(
+			locator1 = "Button#REMOVE_REDIRECT",
+			value1 = "Remove Redirect");
 
 		AlloyEditor.addContent(content = "${wikiPage2Content}");
 
@@ -788,25 +819,41 @@ definition {
 	macro renameWikiPageCP {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Move");
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		Type(locator1 = "TextInput#NEW_TITLE", value1 = "${wikiPageTitleRename}");
+		Type(
+			locator1 = "TextInput#NEW_TITLE",
+			value1 = "${wikiPageTitleRename}");
 
-		AssertClick(locator1 = "Button#RENAME", value1 = "Rename");
+		AssertClick(
+			locator1 = "Button#RENAME",
+			value1 = "Rename");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro renameWikiPagePG {
-		AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertClick(locator1 = "Link#MOVE", value1 = "Move");
+		AssertClick(
+			locator1 = "Link#MOVE",
+			value1 = "Move");
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		Type(locator1 = "TextInput#NEW_TITLE", value1 = "${wikiPageTitleRename}");
+		Type(
+			locator1 = "TextInput#NEW_TITLE",
+			value1 = "${wikiPageTitleRename}");
 
-		AssertClick(locator1 = "Button#RENAME", value1 = "Rename");
+		AssertClick(
+			locator1 = "Button#RENAME",
+			value1 = "Rename");
 
 		Alert.viewSuccessMessage();
 	}
@@ -814,15 +861,25 @@ definition {
 	macro revertChangeParentWikipagetoWikipagePG {
 		var key_wikiPageTitle = "${wikiPage2Title}";
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPage2Title}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPage2Title}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPage2Content}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPage2Content}");
 
-		AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertClick(locator1 = "Wiki#PAGE_TABS_HISTORY", value1 = "History");
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_HISTORY",
+			value1 = "History");
 
-		AssertClick(locator1 = "Wiki#HISTORY_VERSIONS_TAB", value1 = "Versions");
+		AssertClick(
+			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
+			value1 = "Versions");
 
 		var key_wikiPageRevision = "1.1";
 		var key_wikiPageTitle = "${wikiPage2Title}";
@@ -830,15 +887,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersion1Summary}"
-		);
+			value1 = "${wikiVersion1Summary}");
 
 		var key_wikiPageRevision = "1.0";
 
 		Click.waitForMenuToggleJSClick(
-			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS",
-			key_wikiPageRevision = "${wikiPageRevision}"
-		);
+			key_wikiPageRevision = "${wikiPageRevision}",
+			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS");
 
 		MenuItem.click(menuItem = "Revert");
 
@@ -849,27 +904,33 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersion2Summary}"
-		);
+			value1 = "${wikiVersion2Summary}");
 	}
 
 	macro revertEditPG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertClick(locator1 = "Wiki#PAGE_TABS_HISTORY", value1 = "History");
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_HISTORY",
+			value1 = "History");
 
-		AssertClick(locator1 = "Wiki#HISTORY_VERSIONS_TAB", value1 = "Versions");
+		AssertClick(
+			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
+			value1 = "Versions");
 
 		var key_wikiPageRevision = "${wikiPageRevisionOld}";
 
 		Click.waitForMenuToggleJSClick(
-			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS",
-			key_wikiPageRevision = "${wikiPageRevision}"
-		);
+			key_wikiPageRevision = "${wikiPageRevision}",
+			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS");
 
 		MenuItem.click(menuItem = "Revert");
 
@@ -880,27 +941,31 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersionSummary}"
-		);
+			value1 = "${wikiVersionSummary}");
 	}
 
 	macro searchPG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		Search.searchPG(portletName = "Wiki", searchTerm = "${searchTerm}");
+		Search.searchPG(
+			portletName = "Wiki",
+			searchTerm = "${searchTerm}");
 	}
 
 	macro selectNewParent {
-		Select(locator1 = "Select#NEW_PARENT", value1 = "- ${wikiParentName}");
+		Select(
+			locator1 = "Select#NEW_PARENT",
+			value1 = "- ${wikiParentName}");
 
-		AssertClick(locator1 = "Button#CHANGE_PARENT", value1 = "Change Parent");
+		AssertClick(
+			locator1 = "Button#CHANGE_PARENT",
+			value1 = "Change Parent");
 	}
 
 	macro submitForPublication {
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		Alert.viewSuccessMessage();
 	}
@@ -911,8 +976,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -937,8 +1001,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 	}
@@ -947,22 +1010,24 @@ definition {
 		var key_attachmentFileName = "${attachmentFileName}";
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertVisible(locator1 = "Link#EDIT", value1 = "Edit");
+		AssertVisible(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
 
-		AssertClick(locator1 = "Link#EDIT", value1 = "Edit");
+		AssertClick(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
 
 		Panel.expandPanel(panel = "Attachments");
 
 		AssertTextEquals(
 			locator1 = "Wiki#ATTACHMENT_TABLE_FILE_NAME",
-			value1 = "${attachmentFileName}"
-		);
+			value1 = "${attachmentFileName}");
 
 		if (isSet(attachmentFileSize)) {
 			AssertTextEquals(
 				locator1 = "Wiki#ATTACHMENT_TABLE_SIZE",
-				value1 = "${attachmentFileSize}"
-			);
+				value1 = "${attachmentFileSize}");
 		}
 		else {
 			AssertElementPresent(locator1 = "Wiki#ATTACHMENT_TABLE_SIZE");
@@ -970,38 +1035,37 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin"
-		);
+			value1 = "Move to Recycle Bin");
 	}
 
 	macro viewChildPagePG {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiChildPageTitle}"
-		);
+			value1 = "${wikiChildPageTitle}");
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiChildPageContent}"
-		);
+			value1 = "${wikiChildPageContent}");
 	}
 
 	macro viewChildPagePGViaWD {
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#CHILD_PAGE_HEADER",
-			value1 = "Child Page"
-		);
+			value1 = "Child Page");
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
 		AssertTextEquals(
 			locator1 = "Wiki#CHILD_PAGE_TITLE",
-			value1 = "${wikiChildPageTitle}"
-		);
+			value1 = "${wikiChildPageTitle}");
 	}
 
 	macro viewCommentPG {
@@ -1010,42 +1074,53 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${entryComment}"
-		);
+			value1 = "${entryComment}");
 	}
 
 	macro viewCommentRatingGood {
-		AssertTextEquals(locator1 = "Ratings#THUMB_UP", value1 = "1");
+		AssertTextEquals(
+			locator1 = "Ratings#THUMB_UP",
+			value1 = "1");
 
-		AssertTextEquals(locator1 = "Ratings#THUMB_DOWN", value1 = "0");
+		AssertTextEquals(
+			locator1 = "Ratings#THUMB_DOWN",
+			value1 = "0");
 	}
 
 	macro viewCP {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(locator1 = "Portlet#H2_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		if ("${akismetEnabled}" == "true") {
 			AssertTextNotPresent(
 				locator1 = "Message#SUCCESS",
-				value1 = "Version ${wikiPageRevision} was marked as spam."
-			);
+				value1 = "Version ${wikiPageRevision} was marked as spam.");
 
 			AssertTextNotPresent(
 				locator1 = "Message#ERROR",
-				value1 = "This version has been flagged as spam. An administrator will review your version as soon as possible."
-			);
+				value1 = "This version has been flagged as spam. An administrator will review your version as soon as possible.");
 		}
 	}
 
 	macro viewCustomADTSocialPG {
-		AssertClick(locator1 = "WikiTable#NAVIGATION_FRONTPAGE", value1 = "FrontPage");
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_FRONTPAGE",
+			value1 = "FrontPage");
 
-		AssertTextEquals(locator1 = "Portlet#H1_HEADER", value1 = "FrontPage");
+		AssertTextEquals(
+			locator1 = "Portlet#H1_HEADER",
+			value1 = "FrontPage");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		AssertElementPresent(locator1 = "Link#ADD_CHILD_PAGE");
 
@@ -1067,10 +1142,11 @@ definition {
 	macro viewDefaultPGViaWD {
 		AssertTextEquals(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text."
-		);
+			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "FrontPage");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "FrontPage");
 
 		AssertTextNotPresent(value1 = "${wikiPageContent}");
 
@@ -1082,13 +1158,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#PAGE_HEADER",
-			value1 = "FrontPage"
-		);
+			value1 = "FrontPage");
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiFrontPageContent}"
-		);
+			value1 = "${wikiFrontPageContent}");
 
 		AssertElementNotPresent(locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE");
 
@@ -1096,17 +1170,27 @@ definition {
 	}
 
 	macro viewFrontPageDefaultADTPG {
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "FrontPage");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "FrontPage");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		AssertElementPresent(locator1 = "Link#ADD_CHILD_PAGE");
 
-		AssertTextEquals(locator1 = "Link#EDIT", value1 = "Edit");
+		AssertTextEquals(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
 
-		AssertTextEquals(locator1 = "Link#DETAILS", value1 = "Details");
+		AssertTextEquals(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
 
-		AssertTextEquals(locator1 = "Link#PRINT", value1 = "Print");
+		AssertTextEquals(
+			locator1 = "Link#PRINT",
+			value1 = "Print");
 
 		AssertElementPresent(locator1 = "Comments#PANEL_TOGGLE");
 
@@ -1120,8 +1204,7 @@ definition {
 	macro viewFrontPageDefaultCP {
 		AssertTextEquals(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text."
-		);
+			value1 = "This page is empty. Edit it to add some text.");
 
 		AssertTextNotPresent(value1 = "${wikiFrontPageContent}");
 	}
@@ -1129,9 +1212,13 @@ definition {
 	macro viewFrontPagePG {
 		var key_wikiNodeName = "${wikiNodeName}";
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "FrontPage");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "FrontPage");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		AssertTextNotPresent(value1 = "This page is empty. Edit it to add some text.");
 	}
@@ -1150,8 +1237,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY_HTML",
-			value1 = "${wikiPageContent}"
-		);
+			value1 = "${wikiPageContent}");
 	}
 
 	macro viewNoChildPagePG {
@@ -1159,13 +1245,11 @@ definition {
 
 		AssertTextNotPresent(
 			locator1 = "Wiki#CHILD_PAGE_HEADER",
-			value1 = "Children Pages"
-		);
+			value1 = "Children Pages");
 
 		AssertTextNotPresent(
 			locator1 = "Wiki#CHILD_PAGE_TITLE",
-			value1 = "${wikiChildPageTitle}"
-		);
+			value1 = "${wikiChildPageTitle}");
 	}
 
 	macro viewNoChildPagePGViaAllPages {
@@ -1173,20 +1257,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "WikiTable#ALL_PAGES_STATUS", value1 = "APPROVED");
+		AssertTextEquals(
+			locator1 = "WikiTable#ALL_PAGES_STATUS",
+			value1 = "APPROVED");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_REVISION",
-			value1 = "${wikiPageRevision}"
-		);
+			value1 = "${wikiPageRevision}");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_USER",
-			value1 = "${wikiPageUsername}"
-		);
+			value1 = "${wikiPageUsername}");
 
 		AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_DATE");
 
@@ -1210,31 +1293,32 @@ definition {
 	macro viewPageNoAttachment {
 		WikiPage.viewPG(
 			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}"
-		);
+			wikiPageTitle = "${wikiPageTitle}");
 
 		AssertElementNotPresent(locator1 = "WikiEntry#ATTACHMENTS_LABEL");
 
 		AssertElementNotPresent(
-			locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
-			key_attachmentFileName = "${attachmentFileName}"
-		);
+			key_attachmentFileName = "${attachmentFileName}",
+			locator1 = "WikiEntry#ATTACHMENT_FILE_NAME");
 	}
 
 	macro viewPagePG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
 		if (isSet(customFieldText)) {
 			var key_customFieldContent = "${customFieldText}";
 
 			AssertTextEquals(
 				locator1 = "Wiki#CUSTOM_FIELD_CONTENT",
-				value1 = "${customFieldText}"
-			);
+				value1 = "${customFieldText}");
 		}
 	}
 
@@ -1245,133 +1329,133 @@ definition {
 
 		WikiPage.viewPG(
 			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}"
-		);
+			wikiPageTitle = "${wikiPageTitle}");
 
 		AssertElementPresent(locator1 = "WikiEntry#ATTACHMENTS_LABEL");
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
-			value1 = "${attachmentFileName}"
-		);
+			value1 = "${attachmentFileName}");
 	}
 
 	macro viewPageWithWorkflowPG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(locator1 = "Portlet#H2_HEADER_2", value1 = "Pending Approval");
+		AssertTextEquals(
+			locator1 = "Portlet#H2_HEADER_2",
+			value1 = "Pending Approval");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_WIKI_PAGE_NAME",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_STATUS",
-			value1 = "${wikiPageStatus}"
-		);
+			value1 = "${wikiPageStatus}");
 
-		AssertTextEquals(locator1 = "WikiTable#DRAFT_PAGES_REVISION", value1 = "1.0");
+		AssertTextEquals(
+			locator1 = "WikiTable#DRAFT_PAGES_REVISION",
+			value1 = "1.0");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_USER",
-			value1 = "${wikiPageUsername}"
-		);
+			value1 = "${wikiPageUsername}");
 
 		AssertElementPresent(locator1 = "WikiTable#DRAFT_PAGES_DATE");
 	}
 
 	macro viewPG {
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
 		if ("${wikiPageContentGeneric}" == "true") {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY_GENERIC",
-				value1 = "${wikiPageContent}"
-			);
+				value1 = "${wikiPageContent}");
 		}
 		else if ("${wikiPageContentLink}" == "true") {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY_LINK",
-				value1 = "${wikiPageContent}"
-			);
+				value1 = "${wikiPageContent}");
 		}
 		else {
-			AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+			AssertTextEquals(
+				locator1 = "WikiEntry#BODY",
+				value1 = "${wikiPageContent}");
 		}
 
 		if ("viewViewCount" == "true") {
 			if ("${viewCountNumber}" == "1") {
 				AssertTextEquals(
 					locator1 = "Wiki#VIEW_COUNT",
-					value1 = "${viewCountNumber} View"
-				);
+					value1 = "${viewCountNumber} View");
 			}
 			else if ("${viewCountNumber}" == "0") {
-				AssertTextEquals(locator1 = "Wiki#VIEW_COUNT", value1 = "");
+				AssertTextEquals(
+					locator1 = "Wiki#VIEW_COUNT",
+					value1 = "");
 			}
 			else {
 				AssertTextEquals(
 					locator1 = "Wiki#VIEW_COUNT",
-					value1 = "${viewCountNumber} Views"
-				);
+					value1 = "${viewCountNumber} Views");
 			}
 		}
 
 		if ("${viewIncomingLinks}" == "true") {
-			AssertClick(locator1 = "Link#DETAILS", value1 = "Details");
+			AssertClick(
+				locator1 = "Link#DETAILS",
+				value1 = "Details");
 
 			AssertClick(
 				locator1 = "Wiki#PAGE_TABS_INCOMING_LINKS",
-				value1 = "Incoming Links"
-			);
+				value1 = "Incoming Links");
 
 			var key_wikiPageTitle = "${wikiPageTitleIncomingLink}";
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-				value1 = "${wikiPageTitleIncomingLink}"
-			);
+				value1 = "${wikiPageTitleIncomingLink}");
 
-			AssertTextEquals(locator1 = "WikiTable#ALL_PAGES_STATUS", value1 = "Approved");
+			AssertTextEquals(
+				locator1 = "WikiTable#ALL_PAGES_STATUS",
+				value1 = "Approved");
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_REVISION",
-				value1 = "${wikiPageRevisionIncomingLink}"
-			);
+				value1 = "${wikiPageRevisionIncomingLink}");
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_USER",
-				value1 = "${wikiPageUsernameIncomingLink}"
-			);
+				value1 = "${wikiPageUsernameIncomingLink}");
 
 			AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_DATE");
 
 			AssertClick(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-				value1 = "${wikiPageTitleIncomingLink}"
-			);
+				value1 = "${wikiPageTitleIncomingLink}");
 
 			AssertTextEquals(
 				locator1 = "Portlet#H3_HEADER_2",
-				value1 = "${wikiPageTitleIncomingLink}"
-			);
+				value1 = "${wikiPageTitleIncomingLink}");
 
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY",
-				value1 = "${wikiPageContentIncomingLink}"
-			);
+				value1 = "${wikiPageContentIncomingLink}");
 		}
 	}
 
 	macro viewPGViaWD {
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 
-		AssertTextNotPresent(
-			value1 = "Please configure this portlet to make it visible to all users."
-		);
+		AssertTextNotPresent(value1 = "Please configure this portlet to make it visible to all users.");
 
 		AssertElementNotPresent(locator1 = "Message#INFO_1");
 	}
@@ -1401,12 +1485,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (1 Vote)"
-		);
+			value1 = "Average (1 Vote)");
 	}
 
 	macro viewRedirectLinkPG {
-		AssertTextEquals(locator1 = "Link#REDIRECT", value1 = "${wikiPageRedirectLink}");
+		AssertTextEquals(
+			locator1 = "Link#REDIRECT",
+			value1 = "${wikiPageRedirectLink}");
 	}
 
 	macro viewRSS {
@@ -1416,31 +1501,37 @@ definition {
 
 		Click(locator1 = "Icon#INFO");
 
-		AssertClick.assertPartialTextClickAt(locator1 = "Link#FEED", value1 = "Feed");
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Link#FEED",
+			value1 = "Feed");
 
 		Pause(locator1 = "3000");
 
 		WikiPage._checkForRSSTitleCP(
 			wikiNodeName = "${wikiNodeName}",
 			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}"
-		);
+			wikiPageTitle = "${wikiPageTitle}");
 
 		SelectWindow(locator1 = "title=${wikiPageTitle}");
 
 		var key_entryContent = "${wikiPageContent}";
 		var key_entryTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(locator1 = "RSS#FEED_TITLE", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "RSS#FEED_TITLE",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "RSS#FEED_SUBTITLE", value1 = "${wikiPageTitle}");
+		AssertTextEquals(
+			locator1 = "RSS#FEED_SUBTITLE",
+			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(locator1 = "RSS#ENTRY_CONTENT", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "RSS#ENTRY_CONTENT",
+			value1 = "${wikiPageContent}");
 
 		AssertClick(
 			locator1 = "RSS#ENTRY_TITLE",
-			value1 = "${wikiPageTitle} ${version}"
-		);
+			value1 = "${wikiPageTitle} ${version}");
 	}
 
 	macro viewSearchResultsPG {
@@ -1449,48 +1540,43 @@ definition {
 		if ("${searchNoResults}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO_1",
-				value1 = "No pages were found that matched the keywords: ${searchTerm}."
-			);
+				value1 = "No pages were found that matched the keywords: ${searchTerm}.");
 
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_CREATE_NEW_PAGE_LINK",
-				value1 = "Create a new page on this topic."
-			);
+				value1 = "Create a new page on this topic.");
 		}
 		else if ("${wikiComment}" == "true") {
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_COMMENT_BODY",
-				value1 = "${commentBody}"
-			);
+				value1 = "${commentBody}");
 		}
 		else if ("${wikiAttachment}" == "true") {
 			Click(locator1 = "Wiki#SEARCH_RESULT_ATTACHMENT_BODY");
 
 			AssertTextEquals(
-				locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
 				key_attachmentFileName = "${wikiAttachmentBody}",
-				value1 = "${wikiAttachmentBody}"
-			);
+				locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
+				value1 = "${wikiAttachmentBody}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_TITLE",
-				value1 = "${wikiPageTitle}"
-			);
+				value1 = "${wikiPageTitle}");
 
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_DESCRIPTION",
-				value1 = "${wikiPageContent}"
-			);
+				value1 = "${wikiPageContent}");
 
 			if (isSet(wikiNodeName)) {
 				AssertTextEquals(
 					locator1 = "Wiki#SEARCH_RESULT_NODE",
-					value1 = "${wikiNodeName}"
-				);
+					value1 = "${wikiNodeName}");
 			}
 			else {
-				AssertTextEquals(locator1 = "Wiki#SEARCH_RESULT_NODE", value1 = "Main");
+				AssertTextEquals(
+					locator1 = "Wiki#SEARCH_RESULT_NODE",
+					value1 = "Main");
 			}
 		}
 	}
@@ -1500,9 +1586,8 @@ definition {
 			var key_tagName = "${tagName}";
 
 			AssertElementPresent(
-				locator1 = "AssetCategorization#TAG",
-				key_tagName = StringUtil.lowerCase("${tagName}")
-			);
+				key_tagName = StringUtil.lowerCase("${tagName}"),
+				locator1 = "AssetCategorization#TAG");
 		}
 	}
 
@@ -1510,17 +1595,17 @@ definition {
 		if ("${viewCountNumber}" == "1") {
 			AssertTextEquals(
 				locator1 = "Wiki#VIEW_COUNT",
-				value1 = "${viewCountNumber} View"
-			);
+				value1 = "${viewCountNumber} View");
 		}
 		else if ("${viewCountNumber}" == "0") {
-			AssertTextEquals(locator1 = "Wiki#VIEW_COUNT", value1 = "");
+			AssertTextEquals(
+				locator1 = "Wiki#VIEW_COUNT",
+				value1 = "");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Wiki#VIEW_COUNT",
-				value1 = "${viewCountNumber} Views"
-			);
+				value1 = "${viewCountNumber} Views");
 		}
 	}
 }

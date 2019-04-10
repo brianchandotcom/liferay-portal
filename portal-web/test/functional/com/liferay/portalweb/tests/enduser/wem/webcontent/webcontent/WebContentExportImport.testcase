@@ -39,13 +39,11 @@ definition {
 		DynamicDataMapping.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "contents"
-		);
+			fieldName = "contents");
 
 		DynamicDataMapping.editFieldTip(
 			fieldFieldLabel = "Web Content",
-			fieldTip = "Choose as many content pieces as you would like to feature."
-		);
+			fieldTip = "Choose as many content pieces as you would like to feature.");
 
 		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "Web Content");
 
@@ -55,8 +53,7 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "content-display-templates.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		Refresh();
 
@@ -78,8 +75,7 @@ definition {
 			WebContentTemplates.viewCP(
 				structureName = "Content List",
 				templateDescription = "",
-				templateName = "${templateName}"
-			);
+				templateName = "${templateName}");
 		}
 	}
 
@@ -92,8 +88,7 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "frontPage-structures.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		Refresh();
 
@@ -107,16 +102,14 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "space-templates.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		for (var templateName : list "3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events") {
 			Navigator.gotoNavItem(navItem = "Templates");
 
 			WebContentTemplates.viewCP(
 				templateDescription = "",
-				templateName = "${templateName}"
-			);
+				templateName = "${templateName}");
 
 			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 		}
@@ -130,8 +123,7 @@ definition {
 			webContentImage = "Spaceport.jpg",
 			webContentTextBox = "Space Program Academy of Continuing Education",
 			webContentTextBox2 = "Dare to dream out of this world",
-			webContentTitle = "S.P.A.C.E. Banner"
-		);
+			webContentTitle = "S.P.A.C.E. Banner");
 
 		PortletEntry.publish();
 
@@ -144,8 +136,7 @@ definition {
 			webContentImage = "Spaceport.jpg",
 			webContentTextBox = "Space Program Academy of Continuing Education",
 			webContentTextBox2 = "Dare to dream out of this world",
-			webContentTitle = "S.P.A.C.E. Banner"
-		);
+			webContentTitle = "S.P.A.C.E. Banner");
 	}
 
 	@priority = "4"
@@ -158,20 +149,17 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DynamicDataMapping.addFieldNested(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "webContent"
-		);
+			fieldName = "webContent");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -183,8 +171,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -193,8 +180,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "Basic Web Content",
 			templateName = "Basic Web Content",
-			webContentTitle = "Basic WebContent Title"
-		);
+			webContentTitle = "Basic WebContent Title");
 
 		PortletEntry.publish();
 
@@ -207,10 +193,11 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentSelectWCFile = "Basic WebContent Title",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
-		FormFields.editText(fieldName = "Text", fieldValue = "WC WebContent Text");
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "WC WebContent Text");
 
 		PortletEntry.publish();
 
@@ -229,21 +216,17 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "structure-templates.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddWithStructureCP(
-			structureName = "3 Column with Images"
-		);
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "3 Column with Images");
 
 		WebContent.addWithStructureCP(
 			fieldName = "title",
 			webContentTextBox = "Green Waste",
 			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
-			webContentTitle = "Agricultural Science Front Page"
-		);
+			webContentTitle = "Agricultural Science Front Page");
 
 		PortletEntry.publish();
 
@@ -253,8 +236,7 @@ definition {
 			fieldName = "title",
 			webContentTextBox = "Green Waste",
 			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
-			webContentTitle = "Agricultural Science Front Page"
-		);
+			webContentTitle = "Agricultural Science Front Page");
 	}
 
 	@priority = "4"
@@ -267,14 +249,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -286,8 +266,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -297,8 +276,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -320,8 +298,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -329,12 +306,13 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
-		DynamicDataMapping.viewField(fieldFieldLabel = "Text", fieldName = "Text");
+		DynamicDataMapping.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -342,8 +320,7 @@ definition {
 
 		WebContentTemplates.viewCP(
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 	}
 
 	@priority = "4"
@@ -352,8 +329,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page"
-		);
+			layoutName = "Test Page");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -361,14 +337,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Test Structure Description",
-			structureName = "Test Structure"
-		);
+			structureName = "Test Structure");
 
 		DynamicDataMapping.addField(
 			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage"
-		);
+			fieldName = "LinkToPage");
 
 		WebContentStructures.saveCP(structureName = "Test Structure");
 
@@ -379,8 +353,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Test Structure",
 			templateDescription = "Test Template Description",
-			templateName = "Test Template"
-		);
+			templateName = "Test Template");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -390,8 +363,7 @@ definition {
 			linkedPageName = "Test Page",
 			structureName = "Test Structure",
 			templateName = "Test Template",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		PortletEntry.publish();
 
@@ -407,8 +379,7 @@ definition {
 			importValidationMissingItem = "Linked Page",
 			larFileName = "WebContent_portlet.lar",
 			linkedPageName = "Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 	}
 
 	@ignore = "true"
@@ -418,25 +389,24 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Site Page Name"
-		);
+			layoutName = "Site Page Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LAR.importPortlet(
 			larFileName = "space-content-7.0.lar",
 			siteName = "Site Name",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
@@ -444,7 +414,9 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.viewApplicationDecorator(decorator = "Barebone");
 	}
@@ -455,25 +427,21 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.addCP(
 			folderDescription = "News Folder Description",
-			folderName = "News"
-		);
+			folderName = "News");
 
 		WebContentFolder.addCP(
 			folderDescription = "Events Folder Description",
-			folderName = "Events"
-		);
+			folderName = "Events");
 
 		LAR.importPortlet(
 			larFileName = "space-web-content.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -483,17 +451,17 @@ definition {
 
 		WebContent.moveArticlesToFolderCP(
 			folderName = "News",
-			webContentArticlesList = "When It All Began...,Stravinksy in Space?,Student Spotlight"
-		);
+			webContentArticlesList = "When It All Began...,Stravinksy in Space?,Student Spotlight");
 
 		WebContent.moveArticlesToFolderCP(
 			folderName = "Events",
-			webContentArticlesList = "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series"
-		);
+			webContentArticlesList = "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentFolder.gotoCP(folderName = "News", webContentTitle = "News");
+		WebContentFolder.gotoCP(
+			folderName = "News",
+			webContentTitle = "News");
 
 		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight") {
 			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
@@ -501,7 +469,9 @@ definition {
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentFolder.gotoCP(folderName = "Events", webContentTitle = "Events");
+		WebContentFolder.gotoCP(
+			folderName = "Events",
+			webContentTitle = "Events");
 
 		for (var webContentTitle : list "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
 			WebContent.viewTitle(webContentTitle = "${webContentTitle}");

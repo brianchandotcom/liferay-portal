@@ -2,36 +2,31 @@ definition {
 	macro addIdentityProviderConnection {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
-			value1 = "Add Identity Provider"
-		);
+			value1 = "Add Identity Provider");
 
-		Type(locator1 = "TextInput#SAML_NAME_FIELD", value1 = "${idpNameID}");
+		Type(
+			locator1 = "TextInput#SAML_NAME_FIELD",
+			value1 = "${idpNameID}");
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${idpEntityID}"
-		);
+			value1 = "${idpEntityID}");
 
-		Check(
-			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
 
 		Type(
 			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-			value1 = "${idpMetadataURL}"
-		);
+			value1 = "${idpMetadataURL}");
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "${nameIdentifierFormat}"
-			);
+				value1 = "${nameIdentifierFormat}");
 		}
 		else {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "Email Address"
-			);
+				value1 = "Email Address");
 		}
 
 		PortletEntry.save();
@@ -40,24 +35,21 @@ definition {
 	macro addServiceProviderConnection {
 		AssertClick(
 			locator1 = "CPSAMLAdminServiceProviderConnections#ADD_SERVICE_PROVIDER_BUTTON",
-			value1 = "Add Service Provider"
-		);
+			value1 = "Add Service Provider");
 
-		Type(locator1 = "TextInput#SAML_NAME_FIELD", value1 = "${spNameID}");
+		Type(
+			locator1 = "TextInput#SAML_NAME_FIELD",
+			value1 = "${spNameID}");
 
 		Type(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${spEntityID}"
-		);
+			value1 = "${spEntityID}");
 
-		Check(
-			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
 
 		Type(
 			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-			value1 = "${spMetadataURL}"
-		);
+			value1 = "${spMetadataURL}");
 
 		if (!(isSet(nameIdentifierAttributeName))) {
 			var nameIdentifierAttributeName = "emailAddress";
@@ -65,25 +57,20 @@ definition {
 
 		Type(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
-			value1 = "${nameIdentifierAttributeName}"
-		);
+			value1 = "${nameIdentifierAttributeName}");
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "${nameIdentifierFormat}"
-			);
+				value1 = "${nameIdentifierFormat}");
 		}
 
 		if (isSet(attributes)) {
-			Check(
-				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE"
-			);
+			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE");
 
 			Type(
 				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
-				value1 = "${attributes}"
-			);
+				value1 = "${attributes}");
 		}
 
 		PortletEntry.save();
@@ -91,25 +78,17 @@ definition {
 
 	macro configureIdentityProvider {
 		if ("${signMetadata}" == "disable") {
-			Uncheck(
-				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
-			);
+			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX");
 		}
 		else {
-			Check(
-				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
-			);
+			Check(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX");
 		}
 
 		if ("${authnRequestSignatureRequired}" == "disable") {
-			Uncheck(
-				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
-			);
+			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 		}
 		else {
-			Check(
-				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
-			);
+			Check(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 		}
 
 		PortletEntry.save();
@@ -117,16 +96,13 @@ definition {
 
 	macro configureIdentityProviderConnection {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
-			key_samlEntityID = "${samlEntityID}"
-		);
+			key_samlEntityID = "${samlEntityID}",
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		MenuItem.click(menuItem = "Edit");
 
 		if ("${forceAuthn}" == "enable") {
-			Check(
-				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_FORCE_AUTHN_CHECKBOX"
-			);
+			Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_FORCE_AUTHN_CHECKBOX");
 		}
 
 		PortletEntry.save();
@@ -134,15 +110,11 @@ definition {
 
 	macro configureServiceProvider {
 		if ("${signAuthnRequests}" == "disable") {
-			Uncheck(
-				locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX"
-			);
+			Uncheck(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX");
 		}
 
 		if ("${allowShowingTheLoginPortlet}" == "disable") {
-			Uncheck(
-				locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_ALLOW_SHOWING_THE_LOGIN_PORTLET_CHECKBOX"
-			);
+			Uncheck(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_ALLOW_SHOWING_THE_LOGIN_PORTLET_CHECKBOX");
 		}
 
 		PortletEntry.save();
@@ -150,16 +122,13 @@ definition {
 
 	macro configureServiceProviderConnection {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
-			key_samlEntityID = "${samlEntityID}"
-		);
+			key_samlEntityID = "${samlEntityID}",
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		MenuItem.click(menuItem = "Edit");
 
 		if ("${forceEncryption}" == "enable") {
-			Check(
-				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_FORCE_ENCRYPTION"
-			);
+			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_FORCE_ENCRYPTION");
 		}
 
 		PortletEntry.save();
@@ -167,18 +136,14 @@ definition {
 
 	macro deleteSAMLConnection {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON",
-			key_samlEntityID = "${samlEntityID}"
-		);
+			key_samlEntityID = "${samlEntityID}",
+			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		ClickNoError(
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			key_menuItem = "Delete"
-		);
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-		AssertConfirm.waitForConfirmation(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}

@@ -2,30 +2,24 @@ definition {
 	macro viewContentPG {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${welcomeMessage}"
-		);
+			value1 = "${welcomeMessage}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${droolsContent}"
-		);
+			value1 = "${droolsContent}");
 
 		if (isSet(screenshotFileName)) {
-			SikuliAssertElementPresent(
-				locator1 = "Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG"
-			);
+			SikuliAssertElementPresent(locator1 = "Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG");
 		}
 	}
 
 	macro viewDefaultPG {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${welcomeMessage}"
-		);
+			value1 = "${welcomeMessage}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "There are no results."
-		);
+			value1 = "There are no results.");
 	}
 }

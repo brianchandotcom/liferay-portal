@@ -37,20 +37,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -58,17 +55,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		AssertClick(locator1 = "Button#NEW_THREAD", value1 = "New Thread");
+		AssertClick(
+			locator1 = "Button#NEW_THREAD",
+			value1 = "New Thread");
 
 		AssertElementPresent(locator1 = "TextInput#SUBJECT");
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "Message Boards Subject");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "Message Boards Subject");
 
-		AlloyEditor.typeEditor(content = "Message Boards Body", editor = "body");
+		AlloyEditor.typeEditor(
+			content = "Message Boards Body",
+			editor = "body");
 
 		Copy(locator1 = "TextInput#SUBJECT");
 
-		Paste(locator1 = "AlloyEditor#EDITOR", key_editor = "body");
+		Paste(
+			key_editor = "body",
+			locator1 = "AlloyEditor#EDITOR");
 
 		PortletEntry.publish();
 
@@ -78,14 +83,12 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "Message Boards Subject",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Subject",
 			threadSubject = "Message Boards Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "5"
@@ -95,49 +98,42 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.moveToRecycleBinCP(
 			assetName = "MB Thread Message Subject",
 			assetType = "Message Boards Thread",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
-			assetType = "Message Boards Thread"
-		);
+			assetType = "Message Boards Thread");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 
@@ -146,8 +142,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
@@ -159,48 +154,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.moveToRecycleBinCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.restoreCP(
 			assetName = "MB Thread Message Subject",
 			assetRestoreLocation = "Home",
-			assetType = "Message Boards Thread"
-		);
+			assetType = "Message Boards Thread");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 
@@ -209,14 +197,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "3"
@@ -224,20 +210,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -248,23 +231,20 @@ definition {
 		MessageboardsThread.addPGWithAttachment(
 			mbThreadAttachment = "Document_1.docx",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Search.searchPG(
 			portletName = "Message Boards",
-			searchTerm = "This is a *.docx file."
-		);
+			searchTerm = "This is a *.docx file.");
 
 		MessageboardsPortlet.viewSearchResultPG(
 			mbThreadAttachment = "Document_1.docx",
 			searchTerm = "This is a *.doc x file.",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "3"
@@ -272,20 +252,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -295,24 +272,21 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.replyPG(
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "1",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.splitThreadPG(
 			threadBody = "MB Thread Message Body",
@@ -320,8 +294,7 @@ definition {
 			threadSplitReplyBody = "Split Reply Thread Body",
 			threadSplitReplySubject = "Split Reply Thread Subject",
 			threadSplitSubject = "MB Thread Split Subject",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -332,8 +305,7 @@ definition {
 			threadSplitReplyBody = "Split Reply Thread Body",
 			threadSplitReplySubject = "Split Reply Thread Subject",
 			threadSplitSubject = "MB Thread Split Subject",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@description = "This is a use case for LPS-65368."
@@ -344,20 +316,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -367,13 +336,11 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		JSONMBMessage.addMessage(
 			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>'''
-		);
+			threadSubject = '''<script>alert(123);</script>''');
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -381,14 +348,12 @@ definition {
 			lastPostUserName = "Anonymous",
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewBBCodeNoXSS(
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''',
-			userName = "Anonymous"
-		);
+			userName = "Anonymous");
 
 		var actualScript = '''<script>alert(123);</script>''';
 
@@ -404,20 +369,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -426,28 +388,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page 2",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page 2",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		MessageboardsPortlet.configureScopePG(
-			scopeName = "Message Boards Page 2 (Create New)"
-		);
+		MessageboardsPortlet.configureScopePG(scopeName = "Message Boards Page 2 (Create New)");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
@@ -456,20 +413,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page 3",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page 3",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
@@ -485,24 +439,21 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Root Thread Message Body",
-			threadSubject = "MB Root Thread Message Subject"
-		);
+			threadSubject = "MB Root Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.addPG(
 			categoryDescription = "MB Category1 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category1 Name"
-		);
+			categoryName = "MB Category1 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.addPG(
 			categoryDescription = "MB Category2 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category2 Name"
-		);
+			categoryName = "MB Category2 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -510,118 +461,101 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Root Thread Message Body",
-			threadSubject = "MB Root Thread Message Subject"
-		);
+			threadSubject = "MB Root Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Root Thread Message Body",
-			threadSubject = "MB Root Thread Message Subject"
-		);
+			threadSubject = "MB Root Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Category1 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category1 Name"
-		);
+			categoryName = "MB Category1 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Category2 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category2 Name"
-		);
+			categoryName = "MB Category2 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category1 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category1 Name"
-		);
+			categoryName = "MB Category1 Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread1 Message Body",
-			threadSubject = "MB Thread1 Message Subject"
-		);
+			threadSubject = "MB Thread1 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category2 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category2 Name"
-		);
+			categoryName = "MB Category2 Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread2 Message Body",
-			threadSubject = "MB Thread2 Message Subject"
-		);
+			threadSubject = "MB Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category1 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category1 Name"
-		);
+			categoryName = "MB Category1 Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread1 Message Body",
-			threadSubject = "MB Thread1 Message Subject"
-		);
+			threadSubject = "MB Thread1 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread1 Message Body",
-			threadSubject = "MB Thread1 Message Subject"
-		);
+			threadSubject = "MB Thread1 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category2 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category2 Name"
-		);
+			categoryName = "MB Category2 Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread2 Message Body",
-			threadSubject = "MB Thread2 Message Subject"
-		);
+			threadSubject = "MB Thread2 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread2 Message Body",
-			threadSubject = "MB Thread2 Message Subject"
-		);
+			threadSubject = "MB Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Root Thread2 Message Body",
-			threadSubject = "MB Root Thread2 Message Subject"
-		);
+			threadSubject = "MB Root Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.addPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.addPG(
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
@@ -629,96 +563,82 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Root Thread2 Message Body",
-			threadSubject = "MB Root Thread2 Message Subject"
-		);
+			threadSubject = "MB Root Thread2 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Root Thread2 Message Body",
-			threadSubject = "MB Root Thread2 Message Subject"
-		);
+			threadSubject = "MB Root Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread3 Message Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread4 Message Body",
-			threadSubject = "MB Thread4 Message Subject"
-		);
+			threadSubject = "MB Thread4 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread3 Message Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread3 Message Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		MessageboardsThread.gotoPG(
 			categoryDescription = "MB Category4 Description",
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread4 Message Body",
-			threadSubject = "MB Thread4 Message Subject"
-		);
+			threadSubject = "MB Thread4 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread4 Message Body",
-			threadSubject = "MB Thread4 Message Subject"
-		);
+			threadSubject = "MB Thread4 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
@@ -726,14 +646,12 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Root Thread2 Message Body",
-			threadSubject = "MB Root Thread2 Message Subject"
-		);
+			threadSubject = "MB Root Thread2 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Root Thread2 Message Body",
 			threadsNumber = "0",
-			threadSubject = "MB Root Thread2 Message Subject"
-		);
+			threadSubject = "MB Root Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
@@ -741,8 +659,7 @@ definition {
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
 			categoryName = "MB Category3 Name",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
@@ -750,62 +667,53 @@ definition {
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
 			categoryName = "MB Category4 Name",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		MessageboardsThread.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread3 Message Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread3 Message Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		MessageboardsThread.gotoPG(
 			categoryDescription = "MB Category4 Description",
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread4 Message Body",
-			threadSubject = "MB Thread4 Message Subject"
-		);
+			threadSubject = "MB Thread4 Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread4 Message Body",
-			threadSubject = "MB Thread4 Message Subject"
-		);
+			threadSubject = "MB Thread4 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
 
 		PermissionsInline.gotoMessageBoardsCategoryPG(
 			categoryDescription = "MB Category4 Description",
-			categoryName = "MB Category4 Name"
-		);
+			categoryName = "MB Category4 Name");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		User.logoutPG();
 
@@ -824,22 +732,19 @@ definition {
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		MessageboardsThread.replyWithAttachmentPG(
 			mbThreadAttachment = "Document_4.jpeg",
 			threadReplyBody = "MB Thread1 Reply Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		MessageboardsCategory.gotoPG(
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category3 Name"
-		);
+			categoryName = "MB Category3 Name");
 
 		Pause(locator1 = "5000");
 
@@ -848,104 +753,83 @@ definition {
 			replyCount = "1",
 			threadBody = "MB Thread3 Message Body",
 			threadReplyBody = "MB Thread1 Reply Body",
-			threadSubject = "MB Thread3 Message Subject"
-		);
+			threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		Search.searchPG(
 			portletName = "Message Boards (Message Boards Page 2)",
-			searchTerm = "MB Thread3 Message Subject"
-		);
+			searchTerm = "MB Thread3 Message Subject");
 
 		MessageboardsPortlet.viewSearchResultPG(
 			threadBody = "MB Thread3 Message Body",
 			threadSubject = "MB Thread3 Message Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		Search.searchPG(
 			portletName = "Message Boards (Message Boards Page 2)",
-			searchTerm = "MB Thread4 Message Subject"
-		);
+			searchTerm = "MB Thread4 Message Subject");
 
 		MessageboardsPortlet.viewSearchResultPG(
 			threadBody = "MB Thread4 Message Body",
 			threadSubject = "MB Thread4 Message Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		Search.searchPG(
 			portletName = "Message Boards (Message Boards Page 2)",
-			searchTerm = "MB Thread1 Message Subject"
-		);
+			searchTerm = "MB Thread1 Message Subject");
 
-		MessageboardsPortlet.viewNoSearchResultSubjectPG(
-			threadSubject = "MB Thread1 Message Subject"
-		);
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(threadSubject = "MB Thread1 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page 2");
 
 		Search.searchPG(
 			portletName = "Message Boards (Message Boards Page 2)",
-			searchTerm = "MB Thread2 Message Subject"
-		);
+			searchTerm = "MB Thread2 Message Subject");
 
-		MessageboardsPortlet.viewNoSearchResultSubjectPG(
-			threadSubject = "MB Thread2 Message Subject"
-		);
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(threadSubject = "MB Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Search.searchPG(
 			portletName = "Message Boards",
-			searchTerm = "MB Thread1 Message Subject"
-		);
+			searchTerm = "MB Thread1 Message Subject");
 
 		MessageboardsPortlet.viewSearchResultPG(
 			threadBody = "MB Thread1 Message Body",
 			threadSubject = "MB Thread1 Message Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Search.searchPG(
 			portletName = "Message Boards",
-			searchTerm = "MB Thread2 Message Subject"
-		);
+			searchTerm = "MB Thread2 Message Subject");
 
 		MessageboardsPortlet.viewSearchResultPG(
 			threadBody = "MB Thread2 Message Body",
 			threadSubject = "MB Thread2 Message Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Search.searchPG(
 			portletName = "Message Boards",
-			searchTerm = "MB Thread3 Message Subject"
-		);
+			searchTerm = "MB Thread3 Message Subject");
 
-		MessageboardsPortlet.viewNoSearchResultSubjectPG(
-			threadSubject = "MB Thread3 Message Subject"
-		);
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(threadSubject = "MB Thread3 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Search.searchPG(
 			portletName = "Message Boards",
-			searchTerm = "MB Thread4 Message Subject"
-		);
+			searchTerm = "MB Thread4 Message Subject");
 
-		MessageboardsPortlet.viewNoSearchResultSubjectPG(
-			threadSubject = "MB Thread4 Message Subject"
-		);
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(threadSubject = "MB Thread4 Message Subject");
 	}
 
 	@priority = "3"
@@ -953,76 +837,66 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addBlankCP(membershipType = "Private", siteName = "Blank Site Name");
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Blank Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Site Page Name",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Site Page Name",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Blank Site Name"
-		);
+			siteName = "Blank Site Name");
 
 		Portlet.addPG(portletName = "Message Boards");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Blank Site Name"
-		);
+			siteName = "Blank Site Name");
 
 		MessageboardsThread.addPGWithPermissions(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
-			viewableBySelection = "Owner"
-		);
+			viewableBySelection = "Owner");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Blank Site Name"
-		);
+			siteName = "Blank Site Name");
 
 		MessageboardsThread.replyPG(
 			threadReplyBody = "MB Thread Message Subject Reply",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		PermissionsInline.gotoMessageBoardsThreadReplyPG(
 			pageName = "Site Page Name",
 			siteName = "Blank Site Name",
 			siteURL = "true",
 			threadReplyBody = "MB Thread Message Subject Reply",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		for (var roleTitle : list "Power User,User") {
 			PermissionsInline.viewPermissionsRemoved(
 				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "${roleTitle}"
-			);
+				roleTitle = "${roleTitle}");
 		}
 
 		PermissionsInline.viewPermissionsChecked(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 	}
 
 	@priority = "4"
@@ -1037,76 +911,68 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.configureMailServerSettings(
 			needsReply = "true",
 			userName = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Virtual Instances"
-		);
+			portlet = "Virtual Instances");
 
-		PortalInstances.editCP(mailDomain = "gmail.com", virtualHost = "localhost");
+		PortalInstances.editCP(
+			mailDomain = "gmail.com",
+			virtualHost = "localhost");
 
 		JSONUser.addUser(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = PropsUtil.get("email.address.3"),
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
 
-		MessageboardsPortlet.configureMessageEmailFromCP(
-			emailFromAddress = PropsUtil.get("email.address.2")
-		);
+		MessageboardsPortlet.configureMessageEmailFromCP(emailFromAddress = PropsUtil.get("email.address.2"));
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1120,8 +986,7 @@ definition {
 
 		User.loginPG(
 			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.3")
-		);
+			userEmailAddress = PropsUtil.get("email.address.3"));
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1133,8 +998,7 @@ definition {
 
 		User.loginPG(
 			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.4")
-		);
+			userEmailAddress = PropsUtil.get("email.address.4"));
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1142,15 +1006,12 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB1"
-		);
+			threadSubject = "MB Thread Message Subject GMMB1");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 
@@ -1158,8 +1019,7 @@ definition {
 			emailFromUserName = "Test Test",
 			gmailAssetType = "GMMB1",
 			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1"
-		);
+			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1");
 
 		Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject GMMB1 Reply");
 
@@ -1180,14 +1040,11 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Message Subject GMMB1 Reply",
 			threadSubject = "MB Thread Message Subject GMMB1",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1");
 	}
 
 	@priority = "3"
@@ -1195,20 +1052,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1218,75 +1072,69 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		PermissionsInline.gotoMessageBoardsPG(pageName = "Message Boards Page");
 
 		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
 			Role.definePermissionPG(
 				permissionDefinitionKey = "${permissionDefinitionKey}",
-				roleTitle = "User"
-			);
+				roleTitle = "User");
 		}
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.replyPG(
 			threadReplyBody = "MB Thread1 Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.replyPG(
 			threadReplyBody = "MB Thread2 Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		User.logoutPG();
 
@@ -1298,13 +1146,11 @@ definition {
 			lastPostUserName = "userfn2 userln2",
 			replyCount = "2",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.banUser(
 			threadReplyBody = "MB Thread1 Reply Body",
-			userName = "userfn1 userln1"
-		);
+			userName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1312,13 +1158,11 @@ definition {
 			lastPostUserName = "userfn2 userln2",
 			replyCount = "2",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.banUser(
 			threadReplyBody = "MB Thread2 Reply Body",
-			userName = "userfn2 userln2"
-		);
+			userName = "userfn2 userln2");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1336,20 +1180,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1357,39 +1198,34 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body 1",
-			threadSubject = "MB Thread Message Subject 1"
-		);
+			threadSubject = "MB Thread Message Subject 1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body 2",
-			threadSubject = "MB Thread Message Subject 2"
-		);
+			threadSubject = "MB Thread Message Subject 2");
 
 		RSS.viewFeed(
 			entryContent = "MB Thread Message Body 2",
 			entryTitle = "MB Thread Message Subject 2",
 			feedSubtitle = "MB Thread Message Subject 2",
 			feedTitle = "MB Thread Message Subject 2",
-			rssURL = "message_boards"
-		);
+			rssURL = "message_boards");
 
 		Click(locator1 = "NavBar#HOME");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
-			threadSubject = "MB Thread Message Subject 1"
-		);
+			threadSubject = "MB Thread Message Subject 1");
 
 		RSS.viewFeed(
 			entryContent = "MB Thread Message Body 1",
 			entryTitle = "MB Thread Message Subject 1",
 			feedSubtitle = "MB Thread Message Subject 1",
 			feedTitle = "MB Thread Message Subject 1",
-			rssURL = "message_boards"
-		);
+			rssURL = "message_boards");
 
 		Click(locator1 = "NavBar#HOME");
 
@@ -1397,8 +1233,7 @@ definition {
 
 		RSS.viewFeedEntry(
 			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
-			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2"
-		);
+			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2");
 	}
 
 	@priority = "4"
@@ -1406,20 +1241,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1429,15 +1261,13 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread1 Message Body",
-			threadSubject = "MB Thread1 Message Subject"
-		);
+			threadSubject = "MB Thread1 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			threadPostNumber = "1",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1445,15 +1275,13 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread1 Message Body",
-			threadSubject = "MB Thread1 Message Subject"
-		);
+			threadSubject = "MB Thread1 Message Subject");
 
 		MessageboardsThread.editPG(
 			saveAsDraft = "true",
 			threadBodyEdit = "MB Thread1 Message Body Edit",
 			threadSubject = "MB Thread1 Message Subject",
-			threadSubjectEdit = "MB Thread1 Message Subject Edit"
-		);
+			threadSubjectEdit = "MB Thread1 Message Subject Edit");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1461,31 +1289,27 @@ definition {
 
 		MessageboardsThread.editViaMyPosts(
 			threadSubject = "MB Thread1 Message Subject Edit",
-			threadSubjectEdit = "true"
-		);
+			threadSubjectEdit = "true");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			lastPostUserName = "Test Test",
 			startedByUserName = "Test Test",
-			threadPostNumber = "1"
-		);
+			threadPostNumber = "1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread2 Message Body",
-			threadSubject = "MB Thread2 Message Subject"
-		);
+			threadSubject = "MB Thread2 Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			lastPostUserName = "Test Test",
 			startedByUserName = "Test Test",
-			threadPostNumber = "2"
-		);
+			threadPostNumber = "2");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1493,8 +1317,7 @@ definition {
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			threadPostNumber = "1",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@description = "This is a use case for LPS-65365."
@@ -1505,20 +1328,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1528,13 +1348,11 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>'''
-		);
+			threadSubject = '''<script>alert(123);</script>''');
 
 		MessageboardsThread.viewNoXSSPG(
 			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>'''
-		);
+			threadSubject = '''<script>alert(123);</script>''');
 
 		var actualScript = '''<script>alert(123);</script>''';
 
@@ -1550,20 +1368,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1574,14 +1389,12 @@ definition {
 		MessageboardsThread.addPG(
 			source = "true",
 			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewNoXSSPG(
 			sourceContent = "true",
 			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -1589,20 +1402,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1611,15 +1421,13 @@ definition {
 		MessageboardsCategory.addPG(
 			categoryName = "MB Category Name",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1632,12 +1440,13 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category Name"
-		);
+			value1 = "MB Category Name");
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		AssertTextEquals(locator1 = "Link#SUBSCRIBE", value1 = "Subscribe");
+		AssertTextEquals(
+			locator1 = "Link#SUBSCRIBE",
+			value1 = "Subscribe");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1647,8 +1456,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "MB Thread Message Subject"
-		);
+			value1 = "MB Thread Message Subject");
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -1656,15 +1464,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsPortlet.configureMessageAddedEmailCP(
-			messageAddedEmailEnabled = "false"
-		);
+		MessageboardsPortlet.configureMessageAddedEmailCP(messageAddedEmailEnabled = "false");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsPortlet.configureMessageUpdatedEmailCP(
-			messageUpdatedEmailEnabled = "false"
-		);
+		MessageboardsPortlet.configureMessageUpdatedEmailCP(messageUpdatedEmailEnabled = "false");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1674,8 +1478,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category Name"
-		);
+			value1 = "MB Category Name");
 
 		AssertElementNotPresent(locator1 = "Link#SUBSCRIBE");
 
@@ -1687,8 +1490,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "MB Thread Message Subject"
-		);
+			value1 = "MB Thread Message Subject");
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -1700,20 +1502,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1724,35 +1523,29 @@ definition {
 		MessageboardsThread.addPGAsQuestion(
 			breadcrumbName = "Home",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.viewMarkedAsQuestionPG(
-			threadSubject = "MB Thread Message Subject"
-		);
+		MessageboardsThread.viewMarkedAsQuestionPG(threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.replyPG(
 			threadReplyBody = "MB Thread Split Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "1",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.splitThreadPG(
 			threadReplyBody = "MB Thread Split Reply Body",
 			threadSplitReplyBody = "Split Reply Thread Body",
 			threadSplitReplySubject = "Split Reply Thread Subject",
 			threadSplitSubject = "MB Thread Split Subject",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1763,14 +1556,11 @@ definition {
 			threadSplitReplyBody = "Split Reply Thread Body",
 			threadSplitReplySubject = "Split Reply Thread Subject",
 			threadSplitSubject = "MB Thread Split Subject",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.viewMarkedAsQuestionPG(
-			threadSubject = "MB Thread Message Subject"
-		);
+		MessageboardsThread.viewMarkedAsQuestionPG(threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "3"
@@ -1778,20 +1568,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1802,33 +1589,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
-		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(
-			threadSubject = "Thread Subject"
-		);
+		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(threadSubject = "Thread Subject");
 
-		MessageboardsPortlet.configureGeneralCP(
-			threadAsQuestionByDefaultEnabled = "true"
-		);
+		MessageboardsPortlet.configureGeneralCP(threadAsQuestionByDefaultEnabled = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
-		MessageboardsThread.viewMarkAsQuestionCheckedCP(
-			threadSubject = "Thread Subject"
-		);
+		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
 
 		MessageboardsThread.addCP(
 			threadBody = "Thread Body",
-			threadSubject = "Thread Subject"
-		);
+			threadSubject = "Thread Subject");
 
 		Navigator.openURL();
 
@@ -1838,8 +1616,7 @@ definition {
 			markAsAnswer = "true",
 			markAsQuestion = "true",
 			threadReplyBody = "Thread Reply Body",
-			threadSubject = "Thread Subject"
-		);
+			threadSubject = "Thread Subject");
 
 		Navigator.openURL();
 

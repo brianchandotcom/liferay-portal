@@ -20,8 +20,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			User.tearDownCP();
 
@@ -40,56 +39,47 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
@@ -98,25 +88,21 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 	}
@@ -130,81 +116,68 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Regrole1 Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 	}
@@ -218,56 +191,47 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -276,25 +240,21 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ROLE",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 	}

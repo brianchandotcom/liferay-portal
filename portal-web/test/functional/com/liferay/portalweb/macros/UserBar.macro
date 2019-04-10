@@ -8,16 +8,14 @@ definition {
 
 			AssertClick(
 				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-				value1 = "${dropdownItem}"
-			);
+				value1 = "${dropdownItem}");
 		}
 		else {
 			var key_dropdownItem = "${dropdownItem}";
 
 			AssertClick(
 				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-				value1 = "${dropdownItem}"
-			);
+				value1 = "${dropdownItem}");
 		}
 	}
 
@@ -25,9 +23,7 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-			AssertVisible(
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN"
-			);
+			AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 
 			ScrollWebElementIntoView(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
 

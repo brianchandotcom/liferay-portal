@@ -16,8 +16,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Staging Blogs Page");
 	}
@@ -42,7 +41,9 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
@@ -50,22 +51,21 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Staging.gotoPublishToLive();
 
@@ -75,17 +75,17 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Remote Site");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a use case for LPS-74206."
@@ -99,41 +99,42 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		NavItem.gotoConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry"
-		);
+			workflowResourceValue = "Blogs Entry");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 
@@ -141,8 +142,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-			value1 = "Test Test sent you a Blogs Entry for review in the workflow."
-		);
+			value1 = "Test Test sent you a Blogs Entry for review in the workflow.");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -153,10 +153,11 @@ definition {
 			workflowActivityComment = "Process is approved",
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -166,16 +167,16 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
-		Navigator.gotoSitePage(pageName = "Staging Blogs Page", siteName = "Remote Site");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 	}
 }

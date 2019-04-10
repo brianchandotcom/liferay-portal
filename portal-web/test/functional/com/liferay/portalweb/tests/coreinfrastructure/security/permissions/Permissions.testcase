@@ -33,8 +33,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Page");
 
@@ -65,8 +64,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "testxxx");
 
@@ -74,15 +72,12 @@ definition {
 
 		Navigator.openSpecificURL(url = "${url1}");
 
-		Alert.viewErrorMessage(
-			errorMessage = "You do not have the required permissions."
-		);
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 
 		Navigator.openSpecificURL(url = "${url2}");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "You do not have the roles required to access this portlet."
-		);
+			value1 = "You do not have the roles required to access this portlet.");
 	}
 }

@@ -18,9 +18,7 @@ definition {
 		task ("Import test fragments from dependencies folder") {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			FragmentsAdmin.importCollectionFromDependenciesFolder(
-				collectionZipFile = "fragment-collection.zip"
-			);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
 		task ("Add a display page") {
@@ -51,9 +49,7 @@ definition {
 		}
 
 		task ("View the display page") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
-				displayPageName = "Display Page Name"
-			);
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
 		}
 	}
 
@@ -65,15 +61,13 @@ definition {
 		task ("Add a fragment") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title"
-			);
+				fragmentName = "Title");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 
 		task ("Assert the display page autosaves") {
@@ -89,15 +83,13 @@ definition {
 		task ("Assert the fragment was added to the display page") {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
-				item = "Edit"
-			);
+				item = "Edit");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 	}
 
@@ -107,8 +99,7 @@ definition {
 		task ("Map the display page to Basic Web Content") {
 			PageEditorMapping.selectContentType(
 				contentType = "Web Content Article",
-				subType = "Basic Web Content"
-			);
+				subType = "Basic Web Content");
 		}
 
 		task ("Assert the select button to select asset type no longer appears") {
@@ -122,31 +113,26 @@ definition {
 		task ("Add the Title, Rich Text, Button, and Content fragments") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title"
-			);
+				fragmentName = "Title");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text"
-			);
+				fragmentName = "Rich Text");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button"
-			);
+				fragmentName = "Button");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content"
-			);
+				fragmentName = "Content");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {
 			PageEditor.editFragmentText(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				text = "Editing Finished"
-			);
+				text = "Editing Finished");
 		}
 
 		task ("Remove the Button fragment") {
@@ -157,40 +143,35 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Editing Finished",
 				fragmentName = "Rich Text",
-				id = "rich-text"
-			);
+				id = "rich-text");
 		}
 
 		task ("Assert the Button fragment was removed, but all other fragments are present") {
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Editing Finished",
 				key_fragmentClass = "rich-text",
-				key_position = "2"
-			);
+				key_position = "2",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertElementNotPresent(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "3"
-			);
+				key_position = "3",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			Button.viewNotPresent(button = "Submit");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3"
-			);
+				key_position = "3",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 	}
 
@@ -198,25 +179,21 @@ definition {
 	@priority = "5"
 	test ConfigureDraftStatusDisplayPage {
 		task ("Navigate back to Display Pages Admin without publishing") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(
-				siteURLKey = "test-site-name"
-			);
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Configure the draft status display page") {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
-				item = "Configure"
-			);
+				item = "Configure");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 
 			Uncheck.uncheckToggleSwitch(
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Show Footer"
-			);
+				key_toggleSwitchLabel = "Show Footer",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			Button.clickSave();
 		}
@@ -224,15 +201,13 @@ definition {
 		task ("Assert the configuration saved properly") {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
-				item = "Configure"
-			);
+				item = "Configure");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Show Footer"
-			);
+				key_toggleSwitchLabel = "Show Footer",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 
@@ -244,15 +219,11 @@ definition {
 		task ("Delete the display page") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.deleteDisplayPage(
-				displayPageName = "Display Page Name"
-			);
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Assert the display page was deleted") {
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(
-				displayPageName = "DisplayPage Name"
-			);
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
 		}
 	}
 
@@ -262,18 +233,15 @@ definition {
 		task ("Add the Title, Rich Text, and Button fragments") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title"
-			);
+				fragmentName = "Title");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text"
-			);
+				fragmentName = "Rich Text");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button"
-			);
+				fragmentName = "Button");
 		}
 
 		task ("Publish the display page") {
@@ -283,24 +251,20 @@ definition {
 		}
 
 		task ("Navigate back to the display page") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(
-				displayPageName = "Display Page Name"
-			);
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a Content fragment") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content"
-			);
+				fragmentName = "Content");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {
 			PageEditor.editFragmentText(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				text = "Editing Finished"
-			);
+				text = "Editing Finished");
 		}
 
 		task ("Remove the Button fragment") {
@@ -316,48 +280,42 @@ definition {
 		task ("Navigate back to the display page") {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
-				item = "Edit"
-			);
+				item = "Edit");
 		}
 
 		task ("Assert the Rich Text fragment's new editable text displays") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Editing Finished",
 				fragmentName = "Rich Text",
-				id = "rich-text"
-			);
+				id = "rich-text");
 		}
 
 		task ("Assert the Button fragment was removed, but all other fragments are present") {
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Editing Finished",
 				key_fragmentClass = "rich-text",
-				key_position = "2"
-			);
+				key_position = "2",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertElementNotPresent(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "3"
-			);
+				key_position = "3",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			Button.viewNotPresent(button = "Submit");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3"
-			);
+				key_position = "3",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 	}
 
@@ -369,14 +327,11 @@ definition {
 
 			DisplayPageTemplatesAdmin.renameDisplayPage(
 				displayPageName = "Display Page Name",
-				newDisplayPageName = "Display Page Name New"
-			);
+				newDisplayPageName = "Display Page Name New");
 		}
 
 		task ("Assert the display page was renamed") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
-				displayPageName = "Display Page Name New"
-			);
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
 		}
 	}
 
@@ -386,8 +341,7 @@ definition {
 		task ("Map the display page to Basic Web Content") {
 			PageEditorMapping.selectContentType(
 				contentType = "Web Content Article",
-				subType = "Basic Web Content"
-			);
+				subType = "Basic Web Content");
 		}
 
 		task ("Publish the display page") {
@@ -401,15 +355,13 @@ definition {
 
 			WebContent.addArticleCP(
 				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title"
-			);
+				webContentTitle = "Webcontent Title");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
-				pageType = "Display Page Templates"
-			);
+				pageType = "Display Page Templates");
 
 			PortletEntry.publish();
 		}
@@ -417,23 +369,17 @@ definition {
 		task ("Assert the display page cannot be deleted") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.deleteDisplayPage(
-				displayPageName = "Display Page Name"
-			);
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR",
-				value1 = "Error:One or more entries could not be deleted."
-			);
+				value1 = "Error:One or more entries could not be deleted.");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_2",
-				value1 = "Error:You cannot delete asset display pages that are used by one or more assets."
-			);
+				value1 = "Error:You cannot delete asset display pages that are used by one or more assets.");
 
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(
-				displayPageName = "Display Page Name"
-			);
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
 		}
 	}
 }

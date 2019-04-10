@@ -15,8 +15,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 	}
@@ -46,57 +45,49 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -109,15 +100,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -125,43 +114,37 @@ definition {
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.withdrawTaskByDetails(
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -174,49 +157,42 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -229,50 +205,43 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.withdrawTaskByDetails(
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -285,46 +254,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.viewCannotWithdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Approved"
-		);
+			workflowTask = "Approved");
 	}
 
 	@priority = "3"
@@ -337,15 +300,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -353,8 +314,7 @@ definition {
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -362,23 +322,20 @@ definition {
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.withdrawTaskCompletedNoByDetails(
 			workflowAssetContent = "WC WebContent Content",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Approved"
-		);
+			workflowTask = "Approved");
 	}
 }

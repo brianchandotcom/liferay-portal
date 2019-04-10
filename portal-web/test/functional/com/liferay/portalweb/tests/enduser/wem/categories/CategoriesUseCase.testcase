@@ -29,8 +29,7 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -38,8 +37,7 @@ definition {
 			categoryName = "Category Name",
 			locale = "de_DE",
 			localizationName = "Kategorienamen",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
@@ -47,55 +45,47 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Site Administrator",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.editDisplaySettingsCP(
 			languageName = "Deutsch (Deutschland)",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Category Page Name"
-		);
+			layoutName = "Category Page Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Category Page Name",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Category Page Name",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
 
@@ -107,39 +97,33 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Category Page Name",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Category Page Name",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		SearchPortlets.searchWidget(searchTerm = "Kategorienamen");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Web Content Title",
-			searchAssetType = "Webcontent"
-		);
+			searchAssetType = "Webcontent");
 	}
 
 	@priority = "4"
@@ -148,8 +132,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 
 		User.openUsersAdmin();
 
@@ -157,24 +140,21 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Role.openRolesAdmin();
 
@@ -190,8 +170,7 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
 			permissionNavigationValue = "Categories",
 			roleTitle = "Category Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		Role.openRolesAdmin();
 
@@ -201,8 +180,7 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
 			permissionNavigationValue = "Categories",
 			roleTitle = "Category Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		Role.openRolesAdmin();
 
@@ -212,8 +190,7 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
 			permissionNavigationValue = "Categories",
 			roleTitle = "Category Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		Role.openRolesAdmin();
 
@@ -223,8 +200,7 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
 			permissionNavigationValue = "Categories",
 			roleTitle = "Category Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		Role.openRolesAdmin();
 
@@ -234,36 +210,30 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
 			permissionNavigationValue = "Categories",
 			roleTitle = "Category Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		User.openUsersAdmin();
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Category Role Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -275,28 +245,26 @@ definition {
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Page",
 			required = "true",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Test Page Name");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
 
 		Page.addCategory(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		PortletEntry.save();
 
@@ -312,29 +280,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Assets",
 			configurationName = "Asset Categories Web",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Topic"
-		);
+			vocabularyName = "Topic");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Topic"
-		);
+			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -342,13 +306,11 @@ definition {
 
 		Category.viewPath(
 			categoryName = "Category Name",
-			path = "Topic &gt; Category Name"
-		);
+			path = "Topic &gt; Category Name");
 
 		Category.viewPath(
 			categoryName = "Subcategory Name",
-			path = "Topic &gt; Category Name &gt; Subcategory Name"
-		);
+			path = "Topic &gt; Category Name &gt; Subcategory Name");
 	}
 
 	@priority = "3"
@@ -357,35 +319,30 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.viewCP(
 			categoryName = "Category Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Subcategory.addPropertyCP(
 			propertiesKeyField = "Subcategory Key",
 			propertiesValueField = "Subcategory Value",
-			subcategoryName = "Subcategory Name"
-		);
+			subcategoryName = "Subcategory Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -394,8 +351,7 @@ definition {
 			propertiesKeyField = "Subcategory Key",
 			propertiesValueField = "Subcategory Value",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "3"
@@ -411,33 +367,27 @@ definition {
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.gotoManageTemplatesViaStructures(
-			structureName = "WC Structure Name"
-		);
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 		WebContentTemplates.addCP(
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetSubtype = "Basic Web Content",
 			assetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -449,8 +399,7 @@ definition {
 
 		AssetCategorization.addCategory(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		PortletEntry.publish();
 
@@ -471,23 +420,23 @@ definition {
 
 		PortletEntry.inputName(name = "Vocabulary Name");
 
-		Vocabulary.addAssociatedAssetType(assetType = "Blogs Entry", required = "true");
+		Vocabulary.addAssociatedAssetType(
+			assetType = "Blogs Entry",
+			required = "true");
 
 		Button.clickAddRow();
 
 		Vocabulary.addAssociatedAssetType(
 			assetType = "Web Content Article",
 			required = "true",
-			rowNumber = "2"
-		);
+			rowNumber = "2");
 
 		Button.clickSave();
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -497,26 +446,24 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Page Name"
-		);
+			layoutName = "Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Page Name");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Page Name");
 
 		Page.viewNoSelectCategory(
 			pageName = "Page Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "3"
@@ -528,22 +475,18 @@ definition {
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Web Content Article",
 			required = "true",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addFailWithoutRequiredCategoryAssetTypeCP(
-			vocabularyName = "Vocabulary Name"
-		);
+		WebContent.addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -553,15 +496,13 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "3"
@@ -573,14 +514,12 @@ definition {
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -590,23 +529,20 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Bookmarks"
-		);
+			portlet = "Bookmarks");
 
 		Bookmark.viewNoCategoryCP(vocabularyName = "Vocabulary Name");
 	}
@@ -617,14 +553,12 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		User.openUsersAdmin();
 
@@ -632,53 +566,46 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONRole.addSiteRole(
 			roleKey = "Category Role Name",
-			roleTitle = "Category Role Name"
-		);
+			roleTitle = "Category Role Name");
 
 		for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com.liferay.asset.categories",
 				roleTitle = "Category Role Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Category Role Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		for (var resourceActionIndex : list "VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 				roleTitle = "Category Role Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		for (var resourceActionIndex : list "ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW") {
@@ -686,62 +613,53 @@ definition {
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet",
 				roleTitle = "Category Role Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Category Role Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.asset.kernel.model.AssetCategory",
 			roleTitle = "Category Role Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.asset.kernel.model.AssetVocabulary",
 			roleTitle = "Category Role Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Category Role Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name 2",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.deletePartialCategoryCP(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.viewCP(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "4"
@@ -752,16 +670,14 @@ definition {
 
 		Vocabulary.addCP(
 			allowMultipleCategories = "false",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		for (var categoryName : list "Category Name 1,Category Name 2") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "${categoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -772,8 +688,7 @@ definition {
 			categoryNameList = "Category Name 1,Category Name 2",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -781,8 +696,7 @@ definition {
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name 2",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -790,15 +704,13 @@ definition {
 
 		WebContent.viewCategorizationCategoryNotVisibleCP(
 			categoryName = "Category Name 1",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.editCP(
 			allowMultipleCategories = "true",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -808,19 +720,15 @@ definition {
 			categoryNameList = "Category Name 1,Category Name 2",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title Multiple Categories"
-		);
+			webContentTitle = "Web Content Title Multiple Categories");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoEditCP(
-			webContentTitle = "Web Content Title Multiple Categories"
-		);
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Multiple Categories");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name 1,Category Name 2",
-			webContentTitle = "Web Content Title Multiple Categories"
-		);
+			webContentTitle = "Web Content Title Multiple Categories");
 	}
 
 	@priority = "3"
@@ -829,14 +737,12 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -846,14 +752,11 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.viewCategorizationVocabularyCP(
-			vocabularyNameList = "Vocabulary Name"
-		);
+		WebContent.viewCategorizationVocabularyCP(vocabularyNameList = "Vocabulary Name");
 
 		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
 
@@ -861,18 +764,13 @@ definition {
 
 		WebContent.copyCP(webContentTitle = "Web Content Title");
 
-		WebContentNavigator.gotoEditCP(
-			webContentTitle = "Web Content Title Duplicate 1"
-		);
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Duplicate 1");
 
 		WebContent.viewCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title Duplicate 1"
-		);
+			webContentTitle = "Web Content Title Duplicate 1");
 
-		WebContent.viewCategorizationVocabularyCP(
-			vocabularyNameList = "Vocabulary Name"
-		);
+		WebContent.viewCategorizationVocabularyCP(vocabularyNameList = "Vocabulary Name");
 
 		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
 	}
@@ -883,26 +781,22 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -912,15 +806,13 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -930,21 +822,23 @@ definition {
 			categoryName = "Subcategory Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Subcategory WC Title"
-		);
+			webContentTitle = "Subcategory WC Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Subcategory WC Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Categories Navigation");
 
@@ -954,8 +848,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful"
-		);
+			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
 
@@ -963,31 +856,29 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Import Site Name");
 
-		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Import Site Name");
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Import Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
-			siteName = "Import Site Name"
-		);
+			siteName = "Import Site Name");
 
 		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title"
-		);
+			assetTitle = "Web Content Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
-			siteName = "Import Site Name"
-		);
+			siteName = "Import Site Name");
 
 		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Subcategory Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Subcategory WC Title"
-		);
+			assetTitle = "Subcategory WC Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
 
@@ -995,8 +886,7 @@ definition {
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Category Name",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
 
@@ -1004,8 +894,7 @@ definition {
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Subcategory Name",
-			webContentTitle = "Subcategory WC Title"
-		);
+			webContentTitle = "Subcategory WC Title");
 	}
 
 	@priority = "5"
@@ -1016,8 +905,7 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "Moon-Rocks-Unit-Category-Hierarchy.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 	}
 
 	@priority = "3"
@@ -1026,16 +914,14 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		for (var categoryName : list "dog,cat") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
 				categoryName = "${categoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 		}
 
 		for (var subcategoryName : list "bone,milk") {
@@ -1044,8 +930,7 @@ definition {
 			Subcategory.addCP(
 				categoryName = "dog",
 				subcategoryName = "${subcategoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 		}
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1054,16 +939,14 @@ definition {
 			categoryName = "dog",
 			categoryNameMove = "cat",
 			subcategoryName = "milk",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.viewCP(
 			categoryName = "cat",
 			subcategoryName = "milk",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "4"
@@ -1072,32 +955,28 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.addCP(
 			categoryDescription = "black and white",
 			categoryName = "panda",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.addCP(
 			categoryDescription = "brown or white",
 			categoryName = "llama",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		for (var categoryName : list "llama,panda") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.searchCP(
 				categorySearchEntry = "${categoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 
 			Category.viewSearchResultsCP(categoryNameList = "${categoryName}");
 		}
@@ -1107,8 +986,7 @@ definition {
 
 			Category.searchCP(
 				categorySearchEntry = "${categoryDescription}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 
 			Category.viewSearchResultsCP(categoryDefinitionList = "${categoryDescription}");
 		}
@@ -1117,13 +995,11 @@ definition {
 
 		Category.searchCP(
 			categorySearchEntry = "white",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.viewSearchResultsCP(
 			categoryDefinitionList = "brown or white,black and white",
-			categoryNameList = "llama,panda"
-		);
+			categoryNameList = "llama,panda");
 	}
 
 	@priority = "3"
@@ -1132,21 +1008,18 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.searchCP(
 			categorySearchEntry = "Null",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.viewSearchResultsCP(nullResult = "true");
 	}
@@ -1157,36 +1030,36 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.addCP(categoryName = "Category Name", vocabularyName = "Topic");
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Topic");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Search Page"
-		);
+			layoutName = "Search Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			categoryNameList = "Category Name",
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title",
-			vocabularyName = "Topic"
-		);
+			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.editCP(
 			categoryName = "Category Name",
 			categoryNameEdit = "Edited",
-			vocabularyName = "Topic"
-		);
+			vocabularyName = "Topic");
 
-		Navigator.gotoSitePage(pageName = "Search Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Test Site Name");
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
 
@@ -1194,8 +1067,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"
@@ -1204,14 +1076,12 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -1219,8 +1089,7 @@ definition {
 			categoryName = "Category Name",
 			subcategoryDescription = "friendly chops",
 			subcategoryName = "beard hair",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -1228,8 +1097,7 @@ definition {
 			categoryName = "Category Name",
 			subcategoryDescription = "handlebar",
 			subcategoryName = "mustache hair",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		for (var categoryName : list "beard,mustache") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1237,8 +1105,7 @@ definition {
 			Subcategory.searchCP(
 				categoryName = "Category Name",
 				subcategorySearchEntry = "${subcategoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 
 			Subcategory.viewSearchResultsCP(categoryNameList = "${categoryName}");
 		}
@@ -1249,12 +1116,9 @@ definition {
 			Subcategory.searchCP(
 				categoryName = "Category Name",
 				categorySearchEntry = "${subcategoryDescription}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 
-			Subcategory.viewSearchResultsCP(
-				subcategoryDefinitionList = "${subcategoryDescription}"
-			);
+			Subcategory.viewSearchResultsCP(subcategoryDefinitionList = "${subcategoryDescription}");
 		}
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1262,13 +1126,11 @@ definition {
 		Subcategory.searchCP(
 			categoryName = "Category Name",
 			categorySearchEntry = "hair",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Subcategory.viewSearchResultsCP(
 			subcategoryDefinitionList = "friendly chops,handlebar",
-			subcategoryNameList = "mustache,beard"
-		);
+			subcategoryNameList = "mustache,beard");
 	}
 
 	@priority = "3"
@@ -1277,29 +1139,25 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.searchCP(
 			categoryName = "Category Name",
 			subCategorySearchEntry = "Null",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Subcategory.viewSearchResultsCP(nullResult = "true");
 	}
@@ -1310,14 +1168,15 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Vocabulary.addCP(vocabularyDescription = "Sushi", vocabularyName = "Food Vocab");
+		Vocabulary.addCP(
+			vocabularyDescription = "Sushi",
+			vocabularyName = "Food Vocab");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.addCP(
 			vocabularyDescription = "Futbol",
-			vocabularyName = "Sport Vocab"
-		);
+			vocabularyName = "Sport Vocab");
 
 		for (var vocabularyName : list "Food,Sport") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1332,9 +1191,7 @@ definition {
 
 			Search.searchCP(searchTerm = "${vocabularyDescription}");
 
-			Vocabulary.viewSearchResultsCP(
-				vocabularyDefinitionList = "${vocabularyDescription}"
-			);
+			Vocabulary.viewSearchResultsCP(vocabularyDefinitionList = "${vocabularyDescription}");
 		}
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1343,8 +1200,7 @@ definition {
 
 		Vocabulary.viewSearchResultsCP(
 			vocabularyDefinitionList = "Sushi,Futbol",
-			vocabularyNameList = "Food Vocab,Sport Vocab"
-		);
+			vocabularyNameList = "Food Vocab,Sport Vocab");
 	}
 
 	@priority = "3"
@@ -1355,8 +1211,7 @@ definition {
 
 		Vocabulary.addCP(
 			vocabularyDescription = "Vocabulary Description",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -1373,21 +1228,18 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Site.openSitesAdmin(siteURLKey = "test-site-name");
 
 		Site.addBlankCP(
 			parentSiteName = "${parentSiteName}",
-			siteName = "Child SiteName"
-		);
+			siteName = "Child SiteName");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1397,8 +1249,7 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "WC Content Body",
-			webContentTitle = "WC Content Title"
-		);
+			webContentTitle = "WC Content Title");
 
 		Navigator.openSiteURL(siteNameURL = "Child SiteName");
 
@@ -1415,29 +1266,25 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.addDuplicateCP(
 			categoryName = "Category Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "3"
@@ -1447,28 +1294,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Assets",
 			configurationName = "Asset Categories Web",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.addCP(categoryName = "Category Name", vocabularyName = "Topic");
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.addCP(
 			categoryName = "Category Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Topic"
-		);
+			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -1476,13 +1322,11 @@ definition {
 
 		Category.viewPath(
 			categoryName = "Category Name",
-			path = "Topic &gt; Category Name"
-		);
+			path = "Topic &gt; Category Name");
 
 		Category.viewPath(
 			categoryName = "Subcategory Name",
-			path = "Topic &gt; Category Name &gt; Subcategory Name"
-		);
+			path = "Topic &gt; Category Name &gt; Subcategory Name");
 	}
 
 	@priority = "3"
@@ -1491,27 +1335,23 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
-			title = "Vocabulary Name"
-		);
+			title = "Vocabulary Name");
 
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
 			categoryName = "Category Name",
 			groupName = "Test Site Name",
 			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Category.viewNavigationCP(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 	}
 }

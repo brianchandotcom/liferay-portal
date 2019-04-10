@@ -190,8 +190,7 @@ definition {
 		JSONCategory._addCategory(
 			groupId = "${groupId}",
 			title = "${title}",
-			vocabularyId = "${vocabularyId}"
-		);
+			vocabularyId = "${vocabularyId}");
 	}
 
 	@summary = "Add a basic subcategory"
@@ -229,8 +228,7 @@ definition {
 			categoryId = "${categoryId}",
 			groupId = "${groupId}",
 			subcategoryName = "${subcategoryName}",
-			vocabularyId = "${vocabularyId}"
-		);
+			vocabularyId = "${vocabularyId}");
 	}
 
 	@summary = "Add a basic vocabulary"
@@ -245,7 +243,9 @@ definition {
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
-		JSONCategory._addVocabulary(groupId = "${groupId}", title = "${title}");
+		JSONCategory._addVocabulary(
+			groupId = "${groupId}",
+			title = "${title}");
 	}
 
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"

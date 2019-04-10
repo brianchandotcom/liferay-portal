@@ -1,5 +1,7 @@
 definition {
 	macro click {
-		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM", key_menuItem = "${menuItem}");
+		Click(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 }

@@ -22,8 +22,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Polls"
-			);
+				portlet = "Polls");
 
 			Polls.tearDownCP();
 
@@ -41,8 +40,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.addPollCPWithExpirationDate(
 			expirationDate = "01/02/3000",
@@ -52,8 +50,7 @@ definition {
 			pollsQuestionChoiceC = '''"2x"''',
 			pollsQuestionChoiceD = '''"e^(2) "''',
 			pollsQuestionChoiceE = '''"None of the previous"''',
-			pollsQuestionTitle = '''"Derivative"'''
-		);
+			pollsQuestionTitle = '''"Derivative"''');
 
 		var key_pollsQuestionTitle = "${pollsQuestionTitle}";
 
@@ -61,9 +58,13 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertNotChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
-		AssertTextEquals(locator1 = "TextInput#EXPIRATION_DATE", value1 = "01/02/3000");
+		AssertTextEquals(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "01/02/3000");
 	}
 
 	@priority = "4"
@@ -87,8 +88,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.addPollCP(
 			pollsQuestion = '''"What is your hair color? Frank & John want to know."''',
@@ -97,23 +97,20 @@ definition {
 			pollsQuestionChoiceC = '''"Blonde"''',
 			pollsQuestionChoiceD = '''"Red"''',
 			pollsQuestionChoiceE = '''"Other"''',
-			pollsQuestionTitle = '''"Hair Color"'''
-		);
+			pollsQuestionTitle = '''"Hair Color"''');
 
 		var key_pollsQuestionTitle = "${pollsQuestionTitle}";
 
 		AssertTextEquals(
 			locator1 = "Polls#POLLS_TABLE_TITLE",
-			value1 = "${pollsQuestionTitle}"
-		);
+			value1 = "${pollsQuestionTitle}");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Polls Page");
 
@@ -127,8 +124,7 @@ definition {
 
 		Polls.viewPollPG(
 			pollsQuestion = '''"What is your hair color? Frank & John want to know."''',
-			pollsQuestionChoiceList = "${pollsQuestionChoiceList}"
-		);
+			pollsQuestionChoiceList = "${pollsQuestionChoiceList}");
 
 		Polls.votePollPG(pollsQuestionChoice = '''"Blonde"''');
 
@@ -138,8 +134,7 @@ definition {
 			pollsQuestionChoice = '''"Blonde"''',
 			pollsQuestionTotalVotes = "1",
 			pollsQuestionVoteCount = "1",
-			pollsQuestionVotePercent = "100%"
-		);
+			pollsQuestionVotePercent = "100%");
 	}
 
 	@description = "This is a use case for LPS-66544."
@@ -150,21 +145,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.addPollCP(
 			pollsQuestion = "Test Poll Question",
 			pollsQuestionChoiceA = "",
 			pollsQuestionChoiceB = "",
-			pollsQuestionTitle = "Test Poll Title"
-		);
+			pollsQuestionTitle = "Test Poll Title");
 
 		Alert.viewErrorMessage(errorMessage = "Please enter valid choices.");
 
-		Polls.addPollChoice(choiceField = "a", pollsQuestionChoice = "Choice A");
+		Polls.addPollChoice(
+			choiceField = "a",
+			pollsQuestionChoice = "Choice A");
 
-		Polls.addPollChoice(choiceField = "b", pollsQuestionChoice = "Choice B");
+		Polls.addPollChoice(
+			choiceField = "b",
+			pollsQuestionChoice = "Choice B");
 
 		PortletEntry.save();
 	}
@@ -177,21 +174,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Polls Page");
 
 		Navigator.gotoPage(pageName = "Polls Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Polls Display");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Polls Display");
 
 		Polls.addPollPG(
 			pollsQuestion = "Test Poll Display",
 			pollsQuestionChoiceA = "Yes",
 			pollsQuestionChoiceB = "No",
-			pollsQuestionTitle = "Polls Name"
-		);
+			pollsQuestionTitle = "Polls Name");
 
 		Navigator.gotoPage(pageName = "Polls Page");
 
@@ -201,8 +198,7 @@ definition {
 
 		Polls.viewPollPG(
 			pollsQuestion = "Test Poll Display",
-			pollsQuestionChoiceList = "Yes,No"
-		);
+			pollsQuestionChoiceList = "Yes,No");
 
 		Polls.votePollPG(pollsQuestionChoice = "Yes");
 
@@ -210,8 +206,7 @@ definition {
 			pollsQuestionChoice = "Yes",
 			pollsQuestionTotalVotes = "1",
 			pollsQuestionVoteCount = "1",
-			pollsQuestionVotePercent = "100%"
-		);
+			pollsQuestionVotePercent = "100%");
 	}
 
 	@priority = "4"
@@ -221,8 +216,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.addPollCP(
 			pollsQuestion = "What is your favorite color?",
@@ -231,20 +225,20 @@ definition {
 			pollsQuestionChoiceC = "Red",
 			pollsQuestionChoiceD = "Yellow",
 			pollsQuestionChoiceE = "Other",
-			pollsQuestionTitle = "Color"
-		);
+			pollsQuestionTitle = "Color");
 
 		var key_pollsQuestionTitle = "Color";
 
-		AssertTextEquals(locator1 = "Polls#POLLS_TABLE_TITLE", value1 = "Color");
+		AssertTextEquals(
+			locator1 = "Polls#POLLS_TABLE_TITLE",
+			value1 = "Color");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Polls Page");
 
@@ -258,8 +252,7 @@ definition {
 
 		Polls.viewPollPG(
 			pollsQuestion = "What is your favorite color?",
-			pollsQuestionChoiceList = "Blue,Green,Red,Yellow,Other"
-		);
+			pollsQuestionChoiceList = "Blue,Green,Red,Yellow,Other");
 
 		Polls.votePollPG(pollsQuestionChoice = "Red");
 
@@ -268,8 +261,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.viewPollChartArea(pollsQuestionTitle = "Color");
 	}
@@ -281,8 +273,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Polls.addPollCP(
 			permissions = "true",
@@ -291,23 +282,20 @@ definition {
 			pollsQuestionChoiceA = "Blogs",
 			pollsQuestionChoiceB = "Wiki",
 			pollsQuestionChoiceC = "Message Boards",
-			pollsQuestionTitle = "Favorite Liferay Portlet"
-		);
+			pollsQuestionTitle = "Favorite Liferay Portlet");
 
 		var key_pollsQuestionTitle = "Favorite Liferay Portlet";
 
 		AssertTextEquals(
 			locator1 = "Polls#POLLS_TABLE_TITLE",
-			value1 = "Favorite Liferay Portlet"
-		);
+			value1 = "Favorite Liferay Portlet");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Polls Page");
 
@@ -324,33 +312,36 @@ definition {
 		Polls.viewPollAsGuestPG(
 			pollsQuestion = "What is your favorite Liferay portlet?",
 			pollsQuestionChoiceList = "Blogs,Wiki,Message Boards",
-			pollsQuestionTitle = "Favorite Liferay Portlet"
-		);
+			pollsQuestionTitle = "Favorite Liferay Portlet");
 
-		AssertClick(locator1 = "Message#INFO_LINK", value1 = "Please sign in to vote.");
+		AssertClick(
+			locator1 = "Message#INFO_LINK",
+			value1 = "Please sign in to vote.");
 
-		Type(locator1 = "TextInput#EMAIL_ADDRESS", value1 = "test@liferay.com");
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "test@liferay.com");
 
-		Type(locator1 = "TextInput#PASSWORD", value1 = "test");
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "test");
 
-		Click(locator1 = "Button#SIGN_IN", value1 = "Sign In");
+		Click(
+			locator1 = "Button#SIGN_IN",
+			value1 = "Sign In");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
-		PermissionsInline.gotoPollPermissionsCP(
-			pollsQuestionTitle = "Favorite Liferay Portlet"
-		);
+		PermissionsInline.gotoPollPermissionsCP(pollsQuestionTitle = "Favorite Liferay Portlet");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -366,8 +357,7 @@ definition {
 			pollsQuestionChoice = "Blogs",
 			pollsQuestionTotalVotes = "1",
 			pollsQuestionVoteCount = "1",
-			pollsQuestionVotePercent = "100%"
-		);
+			pollsQuestionVotePercent = "100%");
 
 		User.loginPG();
 	}

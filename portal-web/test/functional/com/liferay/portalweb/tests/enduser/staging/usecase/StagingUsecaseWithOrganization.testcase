@@ -20,14 +20,12 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.deactivateCP(userFirstName = "userfn");
 
@@ -46,59 +44,52 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		Organization.addCP(
 			orgName = "Staging Organization Name",
-			orgType = "Organization"
-		);
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
 			organizationSite = "Community Site",
-			orgName = "Staging Organization Name"
-		);
+			orgName = "Staging Organization Name");
 
 		JSONUser.addUser(
 			allowManualMembershipManagement = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -107,51 +98,44 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoSite(site = "Staging Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
 		Staging.addSitePagesVariationPG(
 			copySitePagesVariationName = "All Site Pages Variations",
-			sitePagesVariationName = "Site Pages Variation Name"
-		);
+			sitePagesVariationName = "Site Pages Variation Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
-		Staging.viewSitePagesVariationPG(
-			sitePagesVariationName = "Site Pages Variation Name"
-		);
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
 		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
 		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
 	}

@@ -26,44 +26,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 AssetContent",
-			entryTitle = "Blogs Entry1 Title"
-		);
+			entryTitle = "Blogs Entry1 Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title"
-		);
+			entryTitle = "Blogs Entry2 Title");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent1 Content",
 			groupName = "Guest",
-			title = "WC WebContent1 Title"
-		);
+			title = "WC WebContent1 Title");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent2 AssetContent",
 			groupName = "Guest",
-			title = "WC WebContent2 Title"
-		);
+			title = "WC WebContent2 Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -71,16 +64,14 @@ definition {
 
 		WikiPage.addCP(
 			wikiPageContent = "Wiki Page1 Content",
-			wikiPageTitle = "Wiki Page1 Title"
-		);
+			wikiPageTitle = "Wiki Page1 Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -88,23 +79,20 @@ definition {
 
 		WikiPage.addCP(
 			wikiPageContent = "Wiki Page2 AssetContent",
-			wikiPageTitle = "Wiki Page2 Title"
-		);
+			wikiPageTitle = "Wiki Page2 Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document AssetContent Description ",
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentSize = "22k",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
@@ -115,8 +103,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-				value1 = "${searchAssetTitle}"
-			);
+				value1 = "${searchAssetTitle}");
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
@@ -128,8 +115,7 @@ definition {
 		ClassicSearch.viewAssetTypeFacetPG(
 			facetFrequency = "1",
 			searchAssetTitle = "Wiki Page2 Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		ClassicSearch.unscopeAssetFacetPG();
 
@@ -140,8 +126,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-				value1 = "${searchAssetTitle}"
-			);
+				value1 = "${searchAssetTitle}");
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
@@ -156,48 +141,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC Content",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.addAllMembersCP();
 
@@ -205,15 +183,13 @@ definition {
 
 		User.loginUserPG(
 			password = "test",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		ClassicSearch.search(searchTerm = "WC Title");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 	}
 
 	@priority = "4"
@@ -221,43 +197,39 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Page");
 
@@ -267,19 +239,19 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Super Admin Entry Content",
-			entryTitle = "Blogs Super Admin Entry Title"
-		);
+			entryTitle = "Blogs Super Admin Entry Title");
 
 		User.logoutPG();
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs User Entry Content",
-			entryTitle = "Blogs User Entry Title"
-		);
+			entryTitle = "Blogs User Entry Title");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -290,28 +262,26 @@ definition {
 			searchAssetSummary = "Blogs Super Admin Entry Content",
 			searchAssetTitle = "Blogs Super Admin Entry Title",
 			searchAssetType = "Blogs Entry",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ClassicSearch.viewSearchNoPG(
 			searchAssetSummary = "Blogs User Entry Content",
-			searchAssetTitle = "Blogs User Entry Title"
-		);
+			searchAssetTitle = "Blogs User Entry Title");
 
-		AssertClick(locator1 = "SearchResults#USER_FACET_ANY_USER", value1 = "Any User");
+		AssertClick(
+			locator1 = "SearchResults#USER_FACET_ANY_USER",
+			value1 = "Any User");
 
 		ClassicSearch.viewUserFacetPG(
 			facetFrequency = "1",
 			searchAssetSummary = "Blogs User Entry Content",
 			searchAssetTitle = "Blogs User Entry Title",
 			searchAssetType = "Blogs Entry",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ClassicSearch.viewSearchNoPG(
 			searchAssetSummary = "Blogs Super Admin Entry Content",
-			searchAssetTitle = "Blogs Super Admin Entry Title"
-		);
+			searchAssetTitle = "Blogs Super Admin Entry Title");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -329,40 +299,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Navigator.openURL();
 
@@ -372,25 +336,21 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn2 userln2",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.search(searchTerm = "usersn");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn2 userln2",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 	}
 
 	@priority = "5"
@@ -398,40 +358,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Navigator.openURL();
 
@@ -443,8 +397,7 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 
@@ -452,8 +405,7 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 
@@ -465,25 +417,21 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn2 userln2",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.search(searchTerm = "usersn");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn2 userln2",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 	}
 
 	@priority = "5"
@@ -491,40 +439,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Navigator.openURL();
 
@@ -534,8 +476,7 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 
@@ -543,8 +484,7 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "userfn1 userln1",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 	}
@@ -557,13 +497,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description 1",
-			dmDocumentTitle = "DM Document Title 1"
-		);
+			dmDocumentTitle = "DM Document Title 1");
 
 		Navigator.openURL();
 
@@ -571,13 +509,10 @@ definition {
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "DM Document Title 1",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		ClassicSearch.gotoSearchResultPG(searchAssetTitle = "DM Document Title 1");
 
-		ClassicSearch.viewSearchAssetDetailPage(
-			searchAssetTitle = "DM Document Title 1"
-		);
+		ClassicSearch.viewSearchAssetDetailPage(searchAssetTitle = "DM Document Title 1");
 	}
 }

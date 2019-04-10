@@ -36,15 +36,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LAR.exportPortlet(larFileName = "DMExport");
 
 		LAR.deleteCurrentAndPreviousProcess(
 			deleteFromPortlet = "true",
-			larFileName = "DMExport"
-		);
+			larFileName = "DMExport");
 
 		AssertElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS");
 	}

@@ -14,13 +14,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 	}
 
 	tearDown {
@@ -39,31 +37,31 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#MoveCurrentLanguagesToAvailable";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		LanguagePortlet.moveLanguagesToAvailable();
 
-		LanguagePortlet.moveLanguagesToCurrent(
-			currentLanguages = "English (United States),German (Germany),Spanish (Spain)"
-		);
+		LanguagePortlet.moveLanguagesToCurrent(currentLanguages = "English (United States),German (Germany),Spanish (Spain)");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
 
-		LanguagePortlet.viewLanguagesAbsent(
-			missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland"
-		);
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
 
-		LanguagePortlet.viewLanguagesPresent(
-			currentLocales = "Deutsch-Deutschland,español-España"
-		);
+		LanguagePortlet.viewLanguagesPresent(currentLocales = "Deutsch-Deutschland,español-España");
 	}
 
 	@priority = "4"
@@ -71,27 +69,37 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewDisplayOptionsViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Icon Menu");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Long Text");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewDisplayTemplateLongText(language = "suomi");
 
@@ -99,7 +107,9 @@ definition {
 
 		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Select Box");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewDisplayTemplateSelectBox(language = "English");
 
@@ -107,7 +117,9 @@ definition {
 
 		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Short Text");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewDisplayTemplateShortText(languageKey = "HU");
 	}
@@ -117,31 +129,29 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
 		PortalSettings.gotoPortalSettings();
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "Chinese (China),English (United States),French (France)"
-		);
+		PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "Chinese (China),English (United States),French (France)");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
 
-		LanguagePortlet.viewLanguagesAbsent(
-			missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland,Deutsch-Deutschland,español-España"
-		);
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland,Deutsch-Deutschland,español-España");
 
 		LanguagePortlet.viewLanguagesPresent(currentLocales = "français-France,中文-中国");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		LanguagePortlet.configureViewCurrentLanguages(
-			currentLanguages = "Chinese (China),French (France),English (United States)"
-		);
+		LanguagePortlet.configureViewCurrentLanguages(currentLanguages = "Chinese (China),French (France),English (United States)");
 	}
 
 	@priority = "4"
@@ -149,7 +159,9 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
@@ -158,31 +170,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
 			defaultSiteLanguage = "English (United States)",
-			displaySettings = "Display Settings"
-		);
+			displaySettings = "Display Settings");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
 
-		LanguagePortlet.viewLanguagesAbsent(
-			missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland"
-		);
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
 
-		LanguagePortlet.viewLanguagesPresent(
-			currentLocales = "Deutsch-Deutschland,español-España"
-		);
+		LanguagePortlet.viewLanguagesPresent(currentLocales = "Deutsch-Deutschland,español-España");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		LanguagePortlet.configureViewCurrentLanguages(
-			currentLanguages = "English (United States),German (Germany),Spanish (Spain)"
-		);
+		LanguagePortlet.configureViewCurrentLanguages(currentLanguages = "English (United States),German (Germany),Spanish (Spain)");
 	}
 }

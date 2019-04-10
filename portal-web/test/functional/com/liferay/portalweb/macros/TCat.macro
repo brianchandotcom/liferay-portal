@@ -2,11 +2,17 @@ definition {
 	macro deployLiferayPortalWar {
 		echo("Deploying liferay-portal.war to TCat...");
 
-		Type(locator1 = "TCat#USER_NAME_FIELD", value1 = "admin");
+		Type(
+			locator1 = "TCat#USER_NAME_FIELD",
+			value1 = "admin");
 
-		Type(locator1 = "TCat#PASSWORD_FIELD", value1 = "admin");
+		Type(
+			locator1 = "TCat#PASSWORD_FIELD",
+			value1 = "admin");
 
-		Click(locator1 = "TCat#LOG_IN_BUTTON", value1 = "Login");
+		Click(
+			locator1 = "TCat#LOG_IN_BUTTON",
+			value1 = "Login");
 
 		Click(locator1 = "TCat#SERVER_TAB");
 
@@ -22,7 +28,9 @@ definition {
 
 		Click(locator1 = "TCat#NEW_WORKSPACE_BUTTON");
 
-		SikuliType(locator1 = "TCat#NEW_WORKSPACE_NAME_FIELD", value1 = "Liferay");
+		SikuliType(
+			locator1 = "TCat#NEW_WORKSPACE_NAME_FIELD",
+			value1 = "Liferay");
 
 		SikuliClick(locator1 = "TCat#NEW_WORKSPACE_ADD_BUTTON");
 
@@ -38,8 +46,7 @@ definition {
 
 		SikuliUploadTCatFile(
 			locator1 = "TCat#FILE_DIALOG_BOX_FILE_NAME_FIELD",
-			value1 = "ROOT.war"
-		);
+			value1 = "ROOT.war");
 
 		SikuliClick(locator1 = "TCat#NEW_ARTIFACT_ADD_BUTTON");
 
@@ -49,7 +56,9 @@ definition {
 
 		Click(locator1 = "TCat#NEW_DEPLOYMENT_BUTTON");
 
-		Type(locator1 = "TCat#NEW_DEPLOYMENT_NAME_FIELD", value1 = "Liferay");
+		Type(
+			locator1 = "TCat#NEW_DEPLOYMENT_NAME_FIELD",
+			value1 = "Liferay");
 
 		Click(locator1 = "TCat#ADD_FROM_REPOSITORY_BUTTON");
 

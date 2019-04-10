@@ -12,16 +12,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 	}
@@ -44,8 +42,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		RecycleBin.disableRecycleBinViaSiteSettings();
 
@@ -54,15 +51,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -71,92 +66,91 @@ definition {
 
 	@priority = "3"
 	test RecycleBinBlogs {
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title",
 			assetType = "Blogs Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "Blogs Entry Title",
 			assetRestoreLocation = "Blogs",
-			assetType = "Blogs Entry"
-		);
+			assetType = "Blogs Entry");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@priority = "3"
 	test RecycleBinBookmarks {
 		property portal.release = "false";
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Bookmarks");
 
 		BookmarksFolder.addPG(
 			folderDescription = "Folder Description",
-			folderName = "Folder Name"
-		);
+			folderName = "Folder Name");
 
 		BookmarksFolder.gotoPG(folderName = "Folder Name");
 
 		BookmarksFolder.addSubfolderPG(
 			folderDescription = "Subfolder Description",
-			folderName = "Subfolder Name"
-		);
+			folderName = "Subfolder Name");
 
 		BookmarksFolder.gotoSubfolderPG(
 			folderName = "Folder Name",
 			pageName = "Test Page",
 			siteName = "Site Name",
-			subfolderName = "Subfolder Name"
-		);
+			subfolderName = "Subfolder Name");
 
 		Bookmark.addPG(
 			bookmarkDescription = "Bookmark Description",
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		User.firstLoginPG();
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BookmarksFolder.gotoPG(folderName = "Folder Name");
 
@@ -167,39 +161,33 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Subfolder Name",
 			assetType = "Bookmarks Folder",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "Subfolder Name",
 			assetRestoreLocation = "Folder Name",
-			assetType = "Bookmarks Folder"
-		);
+			assetType = "Bookmarks Folder");
 
 		BookmarksFolder.gotoSubfolderPG(
 			folderName = "Folder Name",
 			pageName = "Test Page",
 			siteName = "Site Name",
-			subfolderName = "Subfolder Name"
-		);
+			subfolderName = "Subfolder Name");
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		BookmarksFolder.gotoSubfolderPG(
 			folderName = "Folder Name",
 			pageName = "Test Page",
 			siteName = "Site Name",
-			subfolderName = "Subfolder Name"
-		);
+			subfolderName = "Subfolder Name");
 
 		Bookmark.moveToRecycleBinPG(bookmarkName = "Bookmark Name");
 
@@ -208,32 +196,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Bookmark Name",
 			assetType = "Bookmarks Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "Bookmark Name",
 			assetRestoreLocation = "Subfolder Name",
-			assetType = "Bookmarks Entry"
-		);
+			assetType = "Bookmarks Entry");
 
 		BookmarksFolder.gotoSubfolderPG(
 			folderName = "Folder Name",
 			pageName = "Test Page",
 			siteName = "Site Name",
-			subfolderName = "Subfolder Name"
-		);
+			subfolderName = "Subfolder Name");
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 	}
 
 	@priority = "3"
@@ -243,45 +226,39 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCPWithAttachment(
 			mbAttachmentFile = "Document_1.doc",
 			threadBody = "MB Body",
-			threadSubject = "MB Subject"
-		);
+			threadSubject = "MB Subject");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Subject");
 
 		MessageboardsThread.editCP(
 			mbAttachmentFile = "Document_1.doc",
 			threadAttachmentRemove = "true",
-			threadBodyEdit = "MB Body Edit"
-		);
+			threadBodyEdit = "MB Body Edit");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Body Edit",
 			threadSubject = "MB Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		PortletEntry.clickEditFromEllipsis();
 
@@ -292,53 +269,51 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			mbAttachmentFile = "Document_1.doc",
 			replyCount = "0",
 			threadBody = "MB Body Edit",
 			threadSubject = "MB Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "3"
 	test RecycleBinScheduledCleanup {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title",
 			assetType = "Blogs Entry",
 			customMaxAge = "1 minute",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		Pause(locator1 = "120000");
 
@@ -349,142 +324,145 @@ definition {
 
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1"
-		);
+			entryTitle = "Blogs Entry Title 1");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2"
-		);
+			entryTitle = "Blogs Entry Title 2");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3"
-		);
+			entryTitle = "Blogs Entry Title 3");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3"
-		);
+			entryTitle = "Blogs Entry Title 3");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2"
-		);
+			entryTitle = "Blogs Entry Title 2");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1"
-		);
+			entryTitle = "Blogs Entry Title 1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		Search.searchCP(searchTerm = "1");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title 1",
 			assetType = "Blogs Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		Search.searchCP(searchTerm = "2");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title 2",
 			assetType = "Blogs Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		Search.searchCP(searchTerm = "3");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title 3",
 			assetType = "Blogs Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 	}
 
 	@priority = "3"
 	test RecycleBinSearchDMEntriesInFolder {
 		property custom.properties = "default.layout.template.id=1_column";
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description 1",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title 1"
-		);
+			dmDocumentTitle = "DM Document Title 1");
 
 		Navigator.openURL();
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description 2",
 			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title 2"
-		);
+			dmDocumentTitle = "DM Document Title 2");
 
 		Navigator.openURL();
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
 
@@ -493,44 +471,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		Search.searchCP(searchTerm = "1");
 
 		RecycleBin.viewCP(
 			assetName = "DM Document Title 1",
 			assetType = "Document",
-			deleteUser = "test test"
-		);
+			deleteUser = "test test");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		Search.searchCP(searchTerm = "2");
 
 		RecycleBin.viewCP(
 			assetName = "DM Document Title 2",
 			assetType = "Document",
-			deleteUser = "test test"
-		);
+			deleteUser = "test test");
 	}
 
 	@priority = "3"
 	test RecycleBinStaging {
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC Content",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Content");
 
@@ -539,43 +514,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(
 			siteName = "Site Name",
-			uncheckContent = "Web Content"
-		);
+			uncheckContent = "Web Content");
 
-		Navigator.gotoStagedSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
-		Navigator.gotoStagedSitePage(pageName = "Test Page", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -584,28 +557,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Blogs Entry Title",
 			assetType = "Blogs Entry",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		ProductMenu.gotoLiveSite();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "WC Title",
 			assetType = "Web Content Article",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 	}
 
 	@priority = "3"
@@ -615,21 +584,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -638,8 +604,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
@@ -647,23 +612,20 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -674,73 +636,65 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "WC WebContent Title",
 			assetType = "Web Content Article",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "WC WebContent Title",
 			assetRestoreLocation = "Home",
-			assetType = "Web Content Article"
-		);
+			assetType = "Web Content Article");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
-		DynamicDataMapping.viewField(fieldFieldLabel = "Text", fieldName = "Text");
+		DynamicDataMapping.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -748,8 +702,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 	}
 
 	@priority = "3"
@@ -759,8 +712,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
@@ -769,8 +721,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNode.addCP(wikiNodeName = "Wiki2 Node2 Name2");
 
@@ -779,8 +730,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
 
@@ -788,16 +738,14 @@ definition {
 
 		WikiPage.addCP(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
 
@@ -806,53 +754,48 @@ definition {
 		WikiPage.deleteCP(
 			assetType = "Wiki Page",
 			wikiNodeName = "Wiki Node Name",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
-		WikiNode.deleteCP(assetType = "Wiki Node", wikiNodeName = "Wiki Node Name");
+		WikiNode.deleteCP(
+			assetType = "Wiki Node",
+			wikiNodeName = "Wiki Node Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Wiki Page Title",
 			assetType = "Wiki Page",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.viewCP(
 			assetName = "Wiki Node Name",
 			assetType = "Wiki Node",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "Wiki Node Name",
 			assetRestoreLocation = "Wiki",
 			assetType = "Wiki Node",
-			multipleAssets = "true"
-		);
+			multipleAssets = "true");
 
 		Refresh();
 
 		RecycleBin.restoreCP(
 			assetName = "Wiki Page Title",
 			assetRestoreLocation = "Wiki Node",
-			assetType = "Wiki Page"
-		);
+			assetType = "Wiki Page");
 
 		Refresh();
 
@@ -861,10 +804,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
-		WikiNode.viewCP(numberOfWikiPages = "2", wikiNodeName = "Wiki Node Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "2",
+			wikiNodeName = "Wiki Node Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -872,8 +816,7 @@ definition {
 
 		WikiPage.viewCP(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 	@priority = "5"
@@ -885,8 +828,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
@@ -895,82 +837,71 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description 1",
-			dmDocumentTitle = "DM Document Title 1"
-		);
+			dmDocumentTitle = "DM Document Title 1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description 2",
-			dmDocumentTitle = "DM Document Title 2"
-		);
+			dmDocumentTitle = "DM Document Title 2");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description 3",
-			dmDocumentTitle = "DM Document Title 3"
-		);
+			dmDocumentTitle = "DM Document Title 3");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.restoreContentFromFolderCP(
 			assetName = "DM Folder Name",
 			assetRestoreLocation = "Home",
 			assetType = "Documents Folder",
 			assetType2 = "Document",
-			documentName = "DM Document Title 2"
-		);
+			documentName = "DM Document Title 2");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
@@ -984,84 +915,74 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
 		MessageboardsCategory.gotoCP(
 			categoryName = "MB Category Name",
-			siteScopeName = "Site Name"
-		);
+			siteScopeName = "Site Name");
 
-		MessageboardsThread.addCP(threadBody = "MB Body", threadSubject = "MB Subject");
+		MessageboardsThread.addCP(
+			threadBody = "MB Body",
+			threadSubject = "MB Subject");
 
 		MessageboardsThread.replyCP(
 			threadReplyBody = "MB Body Reply",
-			threadSubject = "MB Subject"
-		);
+			threadSubject = "MB Subject");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsCategory.deleteCP(
 			assetType = "Message Boards Category",
 			categoryName = "MB Category Name",
-			siteScopeName = "Site Name"
-		);
+			siteScopeName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "MB Category Name",
 			assetType = "Message Boards Category",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
 			assetName = "MB Category Name",
 			assetRestoreLocation = "Home",
-			assetType = "Message Boards Category"
-		);
+			assetType = "Message Boards Category");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsCategory.viewCP(
 			categoryName = "MB Category Name",
 			replyCount = "1",
 			subcategoriesNumber = "0",
-			threadsNumber = "1"
-		);
+			threadsNumber = "1");
 
 		MessageboardsThread.viewCP(
 			replyCount = "1",
 			threadBody = "MB Body",
 			threadSubject = "MB Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		MessageboardsThread.viewReplyCP(
 			threadBody = "MB Body Reply",
 			threadSubject = "MB Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "3"
@@ -1071,33 +992,28 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -1108,44 +1024,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.restoreContentFromFolderCP(
 			assetName = "WC Folder Name",
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Folder",
 			assetType2 = "Web Content Article",
-			documentName = "Web Content Title"
-		);
+			documentName = "Web Content Title");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 	}
 
 	@priority = "3"
@@ -1155,33 +1065,28 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -1192,94 +1097,80 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			webContentContentEdit = "Web Content Content Edit 1",
 			webContentTitle = "Web Content Title",
-			webContentTitleEdit = "Web Content Title Edit 1"
-		);
+			webContentTitleEdit = "Web Content Title Edit 1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
 
 		WebContent.editCP(
 			webContentContentEdit = "Web Content Content Edit 2",
 			webContentTitle = "Web Content Title Edit 1",
-			webContentTitleEdit = "Web Content Title Edit 2"
-		);
+			webContentTitleEdit = "Web Content Title Edit 2");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 2");
 
 		WebContent.editCP(
 			webContentContentEdit = "Web Content Content Edit 3",
 			webContentTitle = "Web Content Title Edit 2",
-			webContentTitleEdit = "Web Content Title Edit 3"
-		);
+			webContentTitleEdit = "Web Content Title Edit 3");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContent.expireSpecificVersionCP(
 			webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
-			webContentTitle = "Web Content Title Edit 3"
-		);
+			webContentTitle = "Web Content Title Edit 3");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
 
@@ -1287,77 +1178,64 @@ definition {
 			saveAsDraft = "true",
 			webContentContentEdit = "Web Content Content Edit Draft",
 			webContentTitle = "Web Content Title Edit 3",
-			webContentTitleEdit = "Web Content Title Edit Draft"
-		);
+			webContentTitleEdit = "Web Content Title Edit Draft");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.restoreCP(
 			assetName = "WC Folder Name",
 			assetRestoreLocation = "Home",
-			assetType = "Web Content Folder"
-		);
+			assetType = "Web Content Folder");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name"
-		);
+			webContentTitle = "WC Folder Name");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View History",
-			rowEntry = "Web Content Title Edit Draft"
-		);
+			rowEntry = "Web Content Title Edit Draft");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "APPROVED",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "EXPIRED",
-			webContentTitle = "Web Content Title Edit 1"
-		);
+			webContentTitle = "Web Content Title Edit 1");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "EXPIRED",
-			webContentTitle = "Web Content Title Edit 2"
-		);
+			webContentTitle = "Web Content Title Edit 2");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "APPROVED",
-			webContentTitle = "Web Content Title Edit 3"
-		);
+			webContentTitle = "Web Content Title Edit 3");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "DRAFT",
-			webContentTitle = "Web Content Title Edit Draft"
-		);
+			webContentTitle = "Web Content Title Edit Draft");
 	}
 }

@@ -9,7 +9,9 @@ definition {
 		if (isSet(customField)) {
 			Panel.expandPanel(panel = "Custom Fields");
 
-			Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customField}");
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customField}");
 		}
 
 		Button.clickSave();
@@ -19,8 +21,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_ENTER_A_UNIQUE_FOLDER",
-				value1 = "Please enter a unique folder name."
-			);
+				value1 = "Please enter a unique folder name.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -30,18 +31,17 @@ definition {
 	macro deleteCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${kbFolderName}"
-		);
+			rowEntry = "${kbFolderName}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${kbFolderName}");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${kbFolderName}");
 
 		PortletEntry.inputName(name = "${kbFolderEditedName}");
 
@@ -55,14 +55,12 @@ definition {
 
 		AssertClick(
 			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
-			value1 = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 
 		AssertTextEquals(
+			key_breadcrumbName = "${kbFolderName}",
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "${kbFolderName}",
-			key_breadcrumbName = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 	}
 
 	macro gotoViaKBDisplayPG {
@@ -70,13 +68,11 @@ definition {
 
 		Select(
 			locator1 = "KnowledgeBase#FOLDER_SELECT_DROPDOWN",
-			value1 = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 
 		AssertClick(
 			locator1 = "KnowledgeBase#FOLDER_SELECT_OPTION",
-			value1 = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 	}
 
 	macro selectParentCP {
@@ -89,19 +85,19 @@ definition {
 
 			AssertClick(
 				locator1 = "Button#CHOOSE_THIS_FOLDER",
-				value1 = "Choose This Folder"
-			);
+				value1 = "Choose This Folder");
 		}
 		else {
-			Click(locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON", value1 = "Choose");
+			Click(
+				locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON",
+				value1 = "Choose");
 		}
 
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD",
-			value1 = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 
 		Click(locator1 = "Button#MOVE");
 
@@ -114,17 +110,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base"
-		);
+			portlet = "Knowledge Base");
 
 		while (IsElementPresent(locator1 = "KnowledgeBase#FOLDER_TABLE_HEADER")) {
 			Check.checkAll(locator1 = "KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX");
 
 			Click(locator1 = "Icon#DELETE");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
@@ -135,7 +128,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
-			value1 = "${kbFolderName}"
-		);
+			value1 = "${kbFolderName}");
 	}
 }

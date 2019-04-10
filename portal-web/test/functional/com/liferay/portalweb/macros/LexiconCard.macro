@@ -1,85 +1,72 @@
 definition {
 	macro checkCardCheckbox {
 		Click.clickNoWaitForVisible(
-			locator1 = "LexiconCard#CARD_CHECKBOX",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_CHECKBOX");
 
 		AssertChecked.assertCheckedNotVisible(
-			locator1 = "LexiconCard#CARD_CHECKBOX",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_CHECKBOX");
 	}
 
 	macro clickCard {
 		Click(
-			locator1 = "LexiconCard#CARD",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD");
 	}
 
 	macro clickCardTitle {
 		Click(
-			locator1 = "LexiconCard#CARD_TITLE",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_TITLE");
 	}
 
 	macro clickEllipsisItem {
 		Click(
-			locator1 = "LexiconCard#CARD_ELLIPSIS",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
 
-		MenuItem.clickNoError(
-			menuItem = "${item}"
-		);
+		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
 	macro delete {
 		LexiconCard.clickEllipsisItem(
 			card = "${card}",
-			item = "Delete"
-		);
+			item = "Delete");
 
 		Confirm();
 	}
 
 	macro viewCardLabel {
 		AssertTextEquals(
+			key_card = "${card}",
 			locator1 = "LexiconCard#CARD_LABEL",
-			value1 = "${cardLabel}",
-			key_card = "${card}"
-		);
+			value1 = "${cardLabel}");
 	}
 
 	macro viewCardNotPresent {
 		AssertElementNotPresent(
-			locator1 = "LexiconCard#CARD",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD");
 	}
 
 	macro viewCardPresent {
 		AssertVisible(
-			locator1 = "LexiconCard#CARD",
-			key_card = "${card}"
-		);
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD");
 	}
 
 	macro viewCardSubtitle {
 		AssertTextEquals(
+			key_card = "${card}",
 			locator1 = "LexiconCard#CARD_SUBTITLE",
-			value1 = "${cardSubtitle}",
-			key_card = "${card}"
-		);
+			value1 = "${cardSubtitle}");
 	}
 
 	macro viewCardTitle {
 		AssertTextEquals(
+			key_card = "${card}",
 			locator1 = "LexiconCard#CARD_TITLE",
-			value1 = "${card}",
-			key_card = "${card}"
-		);
+			value1 = "${card}");
 	}
 }

@@ -34,13 +34,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 	}
 
 	@priority = "4"
@@ -52,15 +50,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -70,8 +66,7 @@ definition {
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -83,15 +78,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content 1",
-			webContentTitle = "WC WebContent Title 1"
-		);
+			webContentTitle = "WC WebContent Title 1");
 
 		PortletEntry.publish();
 
@@ -102,15 +95,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content 2",
-			webContentTitle = "WC WebContent Title 2"
-		);
+			webContentTitle = "WC WebContent Title 2");
 
 		PortletEntry.publish();
 
@@ -121,15 +112,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content 3",
-			webContentTitle = "WC WebContent Title 3"
-		);
+			webContentTitle = "WC WebContent Title 3");
 
 		PortletEntry.publish();
 
@@ -140,44 +129,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 1");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content 1",
-			webContentTitle = "WC WebContent Title 1"
-		);
+			webContentTitle = "WC WebContent Title 1");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 2");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content 2",
-			webContentTitle = "WC WebContent Title 2"
-		);
+			webContentTitle = "WC WebContent Title 2");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 3");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content 3",
-			webContentTitle = "WC WebContent Title 3"
-		);
+			webContentTitle = "WC WebContent Title 3");
 	}
 }

@@ -16,6 +16,8 @@ definition {
 		var appName = "Japanese Localization";
 		var portletName = "localization-ja-hook";
 
-		OSGiSmoke.Smoke(appName = "${portletName}", portletName = "${portletName}");
+		OSGiSmoke.Smoke(
+			appName = "${portletName}",
+			portletName = "${portletName}");
 	}
 }

@@ -10,17 +10,17 @@ definition {
 		else {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
 				kfProgressName = "Fields",
-				kfProgressStep = "2"
-			);
+				kfProgressStep = "2");
 
 			AssertClick(
 				locator1 = "KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON",
-				value1 = "Add Field Set"
-			);
+				value1 = "Add Field Set");
 
 			var key_iframeTitle = "Field Set";
 
-			AssertTextEquals(locator1 = "IFrame#IFRAME_TITLE", value1 = "New Field Set");
+			AssertTextEquals(
+				locator1 = "IFrame#IFRAME_TITLE",
+				value1 = "New Field Set");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -43,7 +43,9 @@ definition {
 	}
 
 	macro addProcess {
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Kaleo Forms Admin");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Kaleo Forms Admin");
 
 		LexiconEntry.gotoAdd();
 	}
@@ -51,34 +53,31 @@ definition {
 	macro addProcessDetails {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
-			kfProgressStep = "1"
-		);
+			kfProgressStep = "1");
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE",
-			value1 = "Next"
-		);
+			value1 = "Next");
 
 		var key_fieldName = "name";
 
-		Type(locator1 = "FormFields#TEXT_FIELD", value1 = "${kfProcessName}");
+		Type(
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${kfProcessName}");
 
 		FormFields.editTextMultiline(
 			fieldName = "description",
-			fieldValue = "${kfProcessDescription}"
-		);
+			fieldValue = "${kfProcessDescription}");
 	}
 
 	macro addWorkflow {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
-			kfProgressStep = "3"
-		);
+			kfProgressStep = "3");
 
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#ADD_WORKFLOW_BUTTON",
-			value1 = "Add Workflow"
-		);
+			value1 = "Add Workflow");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -88,20 +87,17 @@ definition {
 	macro assignForm {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
-			kfProgressStep = "4"
-		);
+			kfProgressStep = "4");
 
 		if ("${kfPendingForm}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "Updating the field set or workflow will cause loss of data."
-			);
+				value1 = "Updating the field set or workflow will cause loss of data.");
 		}
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Form",
-			rowEntry = "${workflowTask}"
-		);
+			rowEntry = "${workflowTask}");
 	}
 
 	macro assignNewForm {
@@ -123,33 +119,31 @@ definition {
 	}
 
 	macro cancelProcessRecordDetailsView {
-		AssertClick(locator1 = "Button#CANCEL", value1 = "Cancel");
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
 	}
 
 	macro chooseFieldSet {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Fields",
-			kfProgressStep = "2"
-		);
+			kfProgressStep = "2");
 
 		var key_kfFieldSetName = "${kfFieldSetName}";
 
 		if ("${kfPendingForm}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "Updating the field set or workflow will cause loss of data."
-			);
+				value1 = "Updating the field set or workflow will cause loss of data.");
 		}
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Choose",
-			rowEntry = "${kfFieldSetName}"
-		);
+			rowEntry = "${kfFieldSetName}");
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
-			value1 = "${kfFieldSetName}"
-		);
+			value1 = "${kfFieldSetName}");
 	}
 
 	macro chooseForm {
@@ -159,8 +153,7 @@ definition {
 
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK",
-			value1 = "${kfFormName}"
-		);
+			value1 = "${kfFormName}");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -168,14 +161,12 @@ definition {
 	macro chooseWorkflow {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
-			kfProgressStep = "3"
-		);
+			kfProgressStep = "3");
 
 		if ("${kfPendingForm}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "Updating the field set or workflow will cause loss of data."
-			);
+				value1 = "Updating the field set or workflow will cause loss of data.");
 		}
 
 		if (isSet(workflowDefinitionTitleEdit)) {
@@ -183,34 +174,29 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE",
-				value1 = "${workflowDefinitionTitleEdit}"
-			);
+				value1 = "${workflowDefinitionTitleEdit}");
 		}
 		else {
 			var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
 
 			AssertTextEquals(
 				locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE",
-				value1 = "${workflowDefinitionTitle}"
-			);
+				value1 = "${workflowDefinitionTitle}");
 		}
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Choose",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 
 		KaleoFormsAdmin.viewSelectedWorkflow(
 			edit = "${edit}",
-			workflowDefinitionTitle = "${workflowDefinitionTitle}"
-		);
+			workflowDefinitionTitle = "${workflowDefinitionTitle}");
 	}
 
 	macro deactivateWorkflow {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 
 		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 
@@ -225,17 +211,14 @@ definition {
 
 			ClickNoError(locator1 = "Icon#TIMES");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			if ("${kfProcessExists}" == "true") {
 				Alert.viewRequestFailedToComplete();
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_2",
-					value1 = "The structure cannot be deleted because it is required by one or more structure links."
-				);
+					value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 			}
 			else {
 				Alert.viewSuccessMessage();
@@ -250,12 +233,9 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${kfFormName}"
-		);
+			rowEntry = "${kfFormName}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}
@@ -272,21 +252,17 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		if (IsElementNotPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No processes were found."
-			);
+				value1 = "No processes were found.");
 		}
 		else {
 			AssertTextNotPresent(
 				locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME",
-				value1 = "${kfProcessName}"
-			);
+				value1 = "${kfProcessName}");
 		}
 	}
 
@@ -297,26 +273,19 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
-		KaleoFormsAdmin.viewProcessRecordTableRecordNotPresent(
-			kfProcessFieldData = "${kfProcessFieldData}"
-		);
+		KaleoFormsAdmin.viewProcessRecordTableRecordNotPresent(kfProcessFieldData = "${kfProcessFieldData}");
 	}
 
 	macro deleteWorkflowDraft {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}
@@ -325,17 +294,17 @@ definition {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfFieldSetName = "${kfFieldSetName}",
 			kfProgressName = "Fields",
-			kfProgressStep = "2"
-		);
+			kfProgressStep = "2");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${kfFieldSetName}"
-		);
+			rowEntry = "${kfFieldSetName}");
 
 		var key_iframeTitle = "Field Set";
 
-		AssertTextEquals(locator1 = "IFrame#IFRAME_TITLE", value1 = "Edit Field Set");
+		AssertTextEquals(
+			locator1 = "IFrame#IFRAME_TITLE",
+			value1 = "Edit Field Set");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -343,9 +312,7 @@ definition {
 	}
 
 	macro editFieldSetPagination {
-		Click(
-			locator1 = "KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON"
-		);
+		Click(locator1 = "KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON");
 
 		var key_paginationNumber = "${paginationNumber}";
 
@@ -353,8 +320,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON",
-			value1 = "${paginationNumber} Entries"
-		);
+			value1 = "${paginationNumber} Entries");
 	}
 
 	macro editForm {
@@ -362,13 +328,11 @@ definition {
 
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME",
-			value1 = "${kfFormName}"
-		);
+			value1 = "${kfFormName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Form",
-			rowEntry = "${kfFormName}"
-		);
+			rowEntry = "${kfFormName}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -380,46 +344,45 @@ definition {
 	}
 
 	macro editProcess {
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${kfProcessName}");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${kfProcessName}");
 	}
 
 	macro editProcessDetails {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
-			kfProgressStep = "1"
-		);
+			kfProgressStep = "1");
 
 		if (isSet(kfProcessNameEdit)) {
 			var key_fieldName = "name";
 
-			Type(locator1 = "FormFields#TEXT_FIELD", value1 = "${kfProcessNameEdit}");
+			Type(
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${kfProcessNameEdit}");
 		}
 
 		if (isSet(kfProcessDescriptionEdit)) {
 			FormFields.editTextMultiline(
 				fieldName = "description",
-				fieldValue = "${kfProcessDescriptionEdit}"
-			);
+				fieldValue = "${kfProcessDescriptionEdit}");
 		}
 
 		if ("${kfPendingForm}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "Updating the field set or workflow will cause loss of data."
-			);
+				value1 = "Updating the field set or workflow will cause loss of data.");
 		}
 	}
 
 	macro editWorkflow {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
-			kfProgressStep = "3"
-		);
+			kfProgressStep = "3");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -431,36 +394,29 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE",
-			value1 = "${workflowDefinitionTitle}"
-		);
+			value1 = "${workflowDefinitionTitle}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 	}
 
 	macro exportRecords {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Export",
-			rowEntry = "${kfProcessName}"
-		);
+			rowEntry = "${kfProcessName}");
 
 		Select(
 			locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT",
-			value1 = "${fileExtension}"
-		);
+			value1 = "${fileExtension}");
 
 		if ("${approvedOnly}" == "true") {
-			Check(
-				locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_APPROVED_SUBMISSIONS_CHECKBOX"
-			);
+			Check(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_APPROVED_SUBMISSIONS_CHECKBOX");
 		}
 
 		AssertClick(
 			locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_OK_BUTTON",
-			value1 = "OK"
-		);
+			value1 = "OK");
 
 		DownloadTempFile();
 	}
@@ -473,17 +429,19 @@ definition {
 	}
 
 	macro next {
-		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE"
-		);
+		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
 
-		AssertClick(locator1 = "Button#NEXT", value1 = "Next");
+		AssertClick(
+			locator1 = "Button#NEXT",
+			value1 = "Next");
 	}
 
 	macro populateFieldDate {
 		var key_fieldName = "${fieldName}";
 
-		Type(locator1 = "TextInput#DDM", value1 = "${kfProcessFieldData}");
+		Type(
+			locator1 = "TextInput#DDM",
+			value1 = "${kfProcessFieldData}");
 
 		Click(locator1 = "TextInput#DDM");
 	}
@@ -491,13 +449,17 @@ definition {
 	macro populateFieldSelect {
 		var key_fieldName = "${fieldName}";
 
-		Select(locator1 = "DDMField#SELECT", value1 = "${kfProcessFieldData}");
+		Select(
+			locator1 = "DDMField#SELECT",
+			value1 = "${kfProcessFieldData}");
 	}
 
 	macro populateFieldText {
 		var key_fieldName = "${fieldName}";
 
-		Type(locator1 = "TextInput#DDM", value1 = "${kfProcessFieldData}");
+		Type(
+			locator1 = "TextInput#DDM",
+			value1 = "${kfProcessFieldData}");
 	}
 
 	macro populateFieldTextBox {
@@ -506,8 +468,7 @@ definition {
 
 		Type(
 			locator1 = "DDLEditRecord#TEXT_BOX_FIELD",
-			value1 = "${kfProcessFieldData}"
-		);
+			value1 = "${kfProcessFieldData}");
 	}
 
 	macro publishWorkflow {
@@ -521,8 +482,7 @@ definition {
 	macro reactivateInactiveWorkflowDefinition {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
-			rowEntry = "${workflowDefinitionTitle}"
-		);
+			rowEntry = "${workflowDefinitionTitle}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -532,7 +492,9 @@ definition {
 	macro saveAndContinueForm {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
-		AssertClick(locator1 = "Button#SAVE_AND_CONTINUE", value1 = "Save and Continue");
+		AssertClick(
+			locator1 = "Button#SAVE_AND_CONTINUE",
+			value1 = "Save and Continue");
 
 		Alert.viewSuccessMessage();
 	}
@@ -566,15 +528,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME",
-			value1 = "${kfFormName}"
-		);
+			value1 = "${kfFormName}");
 	}
 
 	macro saveProcess {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
-			kfProgressStep = "4"
-		);
+			kfProgressStep = "4");
 
 		AssertElementNotPresent(locator1 = "Button#SAVE_INACTIVE");
 
@@ -597,8 +557,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Kaleo Forms Admin"
-		);
+			portlet = "Kaleo Forms Admin");
 
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			KaleoFormsAdmin.deleteProcess();
@@ -606,8 +565,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No processes were found."
-		);
+			value1 = "No processes were found.");
 	}
 
 	macro unassignForm {
@@ -615,8 +573,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Unassign Form",
-			rowEntry = "${workflowTask}"
-		);
+			rowEntry = "${workflowTask}");
 	}
 
 	macro updateWorkflow {
@@ -630,15 +587,13 @@ definition {
 	macro viewFormEdit {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Form",
-			rowEntry = "${kfFormNameEdit}"
-		);
+			rowEntry = "${kfFormNameEdit}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#NAME_FIELD",
-			value1 = "${kfFormNameEdit}"
-		);
+			value1 = "${kfFormNameEdit}");
 	}
 
 	macro viewFormsNotPresent {
@@ -646,9 +601,7 @@ definition {
 
 		var key_workflowTask = "${workflowTask}";
 
-		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK"
-		);
+		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK");
 
 		PortletEntry.viewEmptyMessage(entity = "Results");
 
@@ -660,8 +613,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "Please add at least one field."
-		);
+			value1 = "Please add at least one field.");
 	}
 
 	macro viewNewProcessProgressBar {
@@ -670,13 +622,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_STEP",
-			value1 = "${kfProgressStep}"
-		);
+			value1 = "${kfProgressStep}");
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME",
-			value1 = "${kfProgressName}"
-		);
+			value1 = "${kfProgressName}");
 	}
 
 	macro viewNextFieldSetPage {
@@ -688,12 +638,9 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME",
-			value1 = "${kfFormName}"
-		);
+			value1 = "${kfFormName}");
 
-		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_2"
-		);
+		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_2");
 	}
 
 	macro viewNoPublishedWorkflowDefinitions {
@@ -715,8 +662,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME",
-			value1 = "${kfProcessName}"
-		);
+			value1 = "${kfProcessName}");
 
 		var key_rowEntry = "${kfProcessName}";
 
@@ -728,22 +674,19 @@ definition {
 
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
-			kfProgressStep = "1"
-		);
+			kfProgressStep = "1");
 
 		var key_fieldName = "name";
 
 		AssertTextEquals(
 			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "${kfProcessName}"
-		);
+			value1 = "${kfProcessName}");
 
 		var key_fieldName = "description";
 
 		AssertTextEquals(
 			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-			value1 = "${kfProcessDescription}"
-		);
+			value1 = "${kfProcessDescription}");
 
 		KaleoFormsAdmin.next();
 	}
@@ -751,15 +694,13 @@ definition {
 	macro viewProcessFieldSet {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Fields",
-			kfProgressStep = "2"
-		);
+			kfProgressStep = "2");
 
 		var key_kfFieldSetName = "${kfFieldSetName}";
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
-			value1 = "${kfFieldSetName}"
-		);
+			value1 = "${kfFieldSetName}");
 
 		KaleoFormsAdmin.next();
 	}
@@ -767,15 +708,13 @@ definition {
 	macro viewProcessForms {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
-			kfProgressStep = "4"
-		);
+			kfProgressStep = "4");
 
 		var key_kfFormName = "${kfFormName}";
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME",
-			value1 = "${kfFormName}"
-		);
+			value1 = "${kfFormName}");
 
 		AssertElementNotPresent(locator1 = "Button#SAVE_INACTIVE");
 
@@ -785,42 +724,38 @@ definition {
 	macro viewProcessFormsDeleted {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
-			kfProgressStep = "4"
-		);
+			kfProgressStep = "4");
 
 		KaleoFormsAdmin.assignForm(
 			kfPendingForm = "${kfPendingForm}",
 			kfProcessName = "${kfProcessName}",
-			workflowTask = "${workflowTask}"
-		);
+			workflowTask = "${workflowTask}");
 
 		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK",
-			key_kfFormName = "${kfFormName}"
-		);
+			key_kfFormName = "${kfFormName}",
+			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK");
 	}
 
 	macro viewProcessNoRecords {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No ${kfProcessName} records were found"
-		);
+			value1 = "No ${kfProcessName} records were found");
 	}
 
 	macro viewProcessRecord {
-		LexiconEntry.gotoEntryMenuItem(menuItem = "View", rowEntry = "${kfProcessName}");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "${kfProcessName}");
 	}
 
 	macro viewProcessRecordDetails {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
-			rowEntry = "${kfProcessFieldData}"
-		);
+			rowEntry = "${kfProcessFieldData}");
 
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "${kfStatus}"
-		);
+			value1 = "${kfStatus}");
 	}
 
 	macro viewProcessRecordDetailsField {
@@ -829,8 +764,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KaleoFormsAdminViewProcessRecordsDetails#CURRENT_RECORD_FIELD",
-			value1 = "${kfProcessFieldData}"
-		);
+			value1 = "${kfProcessFieldData}");
 	}
 
 	macro viewProcessRecordTable {
@@ -838,42 +772,35 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_AUTHOR",
-			value1 = "${kfAuthor}"
-		);
+			value1 = "${kfAuthor}");
 
 		var key_kfProcessFieldData = "${kfProcessFieldData}";
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD",
-			value1 = "${kfProcessFieldData}"
-		);
+			value1 = "${kfProcessFieldData}");
 
 		var key_kfStatus = "${kfStatus}";
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_STATUS",
-			value1 = "${kfStatus}"
-		);
+			value1 = "${kfStatus}");
 	}
 
 	macro viewProcessRecordTableRecordNotPresent {
 		var key_kfProcessFieldData = "${kfProcessFieldData}";
 
-		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD"
-		);
+		AssertElementNotPresent(locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD");
 	}
 
 	macro viewProcessWorkflow {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
-			kfProgressStep = "3"
-		);
+			kfProgressStep = "3");
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
-			value1 = "${workflowDefinitionTitle}"
-		);
+			value1 = "${workflowDefinitionTitle}");
 
 		KaleoFormsAdmin.next();
 	}
@@ -881,8 +808,7 @@ definition {
 	macro viewPublishedWorkflowDefinitions {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_PUBLISHED_TAB",
-			value1 = "Published"
-		);
+			value1 = "Published");
 	}
 
 	macro viewSelectedFieldSet {
@@ -890,31 +816,26 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
-			value1 = "${kfFieldSetName}"
-		);
+			value1 = "${kfFieldSetName}");
 	}
 
 	macro viewSelectedWorkflow {
 		if ("${edit}" == "true") {
 			AssertTextEquals(
 				locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
-				value1 = "${workflowDefinitionTitle}"
-			);
+				value1 = "${workflowDefinitionTitle}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
-				value1 = "${workflowDefinitionTitle}"
-			);
+				value1 = "${workflowDefinitionTitle}");
 		}
 	}
 
 	macro viewTaskNotPresent {
 		var key_workflowTask = "${workflowTask}";
 
-		AssertElementNotPresent(
-			locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK"
-		);
+		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK");
 	}
 
 	macro viewTaskPresent {
@@ -926,7 +847,6 @@ definition {
 	macro viewUnpublishedWorkflowDefinitions {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
-			value1 = "Unpublished"
-		);
+			value1 = "Unpublished");
 	}
 }

@@ -21,8 +21,7 @@ definition {
 
 			Blogs.tearDownConfigurationDisplaySettingsPG(
 				pageName = "Blogs Page",
-				portletName = "Blogs"
-			);
+				portletName = "Blogs");
 
 			KBArticle.tearDownCP();
 
@@ -37,20 +36,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Knowledge Base Display Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -61,47 +57,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base"
-		);
+			portlet = "Knowledge Base");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SocialBookmarks.viewBookmarkMenuItems(
-			socialBookmarks = "Twitter,Facebook,LinkedIn,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
-		);
+		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Twitter,Facebook,LinkedIn,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.configureKBSocialBookmarkSites(
-			disableSocialBookmarkSites = "Twitter,Reddit,Slashdot"
-		);
+		KBArticle.configureKBSocialBookmarkSites(disableSocialBookmarkSites = "Twitter,Reddit,Slashdot");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SocialBookmarks.viewBookmarkMenuItems(
-			socialBookmarks = "Facebook,AddThis,LinkedIn,Delicious,Digg,Evernote"
-		);
+		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Facebook,AddThis,LinkedIn,Delicious,Digg,Evernote");
 
-		SocialBookmarks.viewBookmarksNotPresent(
-			socialBookmarks = "Twitter,Reddit,Slashdot"
-		);
+		SocialBookmarks.viewBookmarksNotPresent(socialBookmarks = "Twitter,Reddit,Slashdot");
 	}
 
 	@priority = "3"
@@ -112,17 +96,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "Blogs Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Blogs Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -133,40 +117,31 @@ definition {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		SocialBookmarks.viewDefaultSharableBookmarks();
 
-		Blogs.disableSocialBookmarkSites(
-			disableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
-		);
+		Blogs.disableSocialBookmarkSites(disableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		SocialBookmarks.viewShareIconNotPresent();
 
-		Blogs.enableSocialBookmarkSites(
-			enableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
-		);
+		Blogs.enableSocialBookmarkSites(enableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
-		SocialBookmarks.viewBookmarkMenuItems(
-			socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
-		);
+		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 	}
 
 	@priority = "3"
@@ -176,20 +151,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Knowledge Base Display Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -200,25 +172,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base"
-		);
+			portlet = "Knowledge Base");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SocialBookmarks.viewBookmarkMenuItems(
-			socialBookmarks = "Twitter,Facebook,LinkedIn,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
-		);
+		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Twitter,Facebook,LinkedIn,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 	}
 }

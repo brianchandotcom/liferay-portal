@@ -4,15 +4,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-			value1 = "${reportsFileName}"
-		);
+			value1 = "${reportsFileName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${reportsFileName}");
 
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD",
-			value1 = "Download"
-		);
+			value1 = "Download");
 
 		Pause(locator1 = "2000");
 
@@ -31,8 +29,7 @@ definition {
 
 		AssertClick(
 			locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME",
-			value1 = "${reportsDefinitionName}"
-		);
+			value1 = "${reportsDefinitionName}");
 	}
 
 	macro viewReportEntryFields {
@@ -40,48 +37,41 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DEFINITION_NAME_FIELD",
-			value1 = "Definition Name ${reportsDefinitionName}"
-		);
+			value1 = "Definition Name ${reportsDefinitionName}");
 
 		var key_reportsDefinitionDescription = "${reportsDefinitionDescription}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DESCRIPTION_FIELD",
-			value1 = "Description ${reportsDefinitionDescription}"
-		);
+			value1 = "Description ${reportsDefinitionDescription}");
 
 		var key_dataSource = "${dataSource}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DATA_SOURCE_NAME_FIELD",
-			value1 = "Data Source Name ${dataSource}"
-		);
+			value1 = "Data Source Name ${dataSource}");
 
 		if (isSet(reportParameters)) {
 			AssertTextEquals(
 				locator1 = "ReportsAdminViewReportEntry#REPORT_PARAMETERS_FIELD",
-				value1 = "Report Parameters [${reportParameterse}]"
-			);
+				value1 = "Report Parameters [${reportParameterse}]");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Panel#ENTRY_REPORT_PARAMETERS",
-				value1 = "Report Parameters"
-			);
+				value1 = "Report Parameters");
 		}
 
 		var key_userName = "${userName}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#REQUESTED_BY_FIELD",
-			value1 = "Requested By ${userName}"
-		);
+			value1 = "Requested By ${userName}");
 
 		var key_reportsFileName = "${reportsFileName}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-			value1 = "${reportsFileName}"
-		);
+			value1 = "${reportsFileName}");
 	}
 }

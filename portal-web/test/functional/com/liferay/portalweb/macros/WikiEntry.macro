@@ -8,17 +8,19 @@ definition {
 	}
 
 	macro cancel {
-		AssertClick(locator1 = "Button#CANCEL", value1 = "Cancel");
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
 	}
 
 	macro confirmHTML {
-		AssertConfirm(
-			value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?"
-		);
+		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 	}
 
 	macro saveAsDraft {
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save as Draft");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save as Draft");
 
 		Alert.viewSuccessMessage();
 	}
@@ -29,18 +31,18 @@ definition {
 
 			SelectNoError(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${pageFormat}"
-			);
+				value1 = "${pageFormat}");
 		}
 		else if (IsVisible(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN")) {
 			SelectNoError(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${pageFormat}"
-			);
+				value1 = "${pageFormat}");
 		}
 	}
 
 	macro viewPageContentBody {
-		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+		AssertTextEquals(
+			locator1 = "WikiEntry#BODY",
+			value1 = "${wikiPageContent}");
 	}
 }

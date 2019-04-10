@@ -15,20 +15,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Message Boards Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -81,14 +78,12 @@ definition {
 		MessageboardsCategory.addPG(
 			categoryDescription = "MB Category Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name"
-		);
+			categoryName = "MB Category Name");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Category Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name"
-		);
+			categoryName = "MB Category Name");
 	}
 
 	@priority = "4"
@@ -111,8 +106,7 @@ definition {
 		MessageboardsCategory.addSubcategoryPG(
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name"
-		);
+			subCategoryName = "MB Subcategory Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -120,8 +114,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 	}
 
 	@priority = "4"
@@ -135,16 +128,14 @@ definition {
 		MessageboardsCategory.addSubcategoryNullPG(
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
-			subCategoryNullName = " "
-		);
+			subCategoryNullName = " ");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewCategoryDefaultPG(
 			categoryName = "MB Category Name",
 			subcategoriesNumber = "0",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 	}
 
 	@priority = "5"
@@ -160,41 +151,35 @@ definition {
 		MessageboardsCategory.addSubcategoryPG(
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name"
-		);
+			subCategoryName = "MB Subcategory Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryName = "MB Category Name",
 			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name"
-		);
+			subCategoryName = "MB Subcategory Name");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.gotoPG(
 			categoryName = "MB Category Name",
 			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name"
-		);
+			subCategoryName = "MB Subcategory Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -210,8 +195,7 @@ definition {
 		MessageboardsThread.addPGAsQuestion(
 			breadcrumbName = "MB Category Name",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -221,13 +205,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -242,8 +224,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct"
-		);
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -253,13 +234,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct"
-		);
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct"
-		);
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
 	}
 
 	@priority = "5"
@@ -268,8 +247,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -277,13 +255,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -292,8 +268,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -301,20 +276,16 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsPermissions.checkReplyToMessageForGuestPG(
-			threadSubject = "MB Thread Message Subject"
-		);
+		MessageboardsPermissions.checkReplyToMessageForGuestPG(threadSubject = "MB Thread Message Subject");
 
 		User.logoutPG();
 
@@ -323,8 +294,7 @@ definition {
 		MessageboardsThread.replyPG(
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body As Guest",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -335,8 +305,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body As Guest",
 			threadSubject = "MB Thread Message Subject",
-			userName = "Anonymous"
-		);
+			userName = "Anonymous");
 	}
 
 	@priority = "4"
@@ -345,8 +314,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -354,13 +322,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Subject",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -369,16 +335,14 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.replyPG(
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -386,8 +350,7 @@ definition {
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -399,18 +362,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Upload Servlet Request",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(
-			maxFileSize = "10000"
-		);
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "10000");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -419,19 +378,24 @@ definition {
 			maxAttachmentFileSize = "10",
 			mbThreadAttachment = "Document_1.jpg",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
 	test AddMBThreadWithMultipleAttachments {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		AssertClick(locator1 = "Button#NEW_THREAD", value1 = "New Thread");
+		AssertClick(
+			locator1 = "Button#NEW_THREAD",
+			value1 = "New Thread");
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "MB Thread Message Subject");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "MB Thread Message Subject");
 
-		AlloyEditor.typeEditor(content = "MB Thread Message Body", editor = "body");
+		AlloyEditor.typeEditor(
+			content = "MB Thread Message Body",
+			editor = "body");
 
 		Panel.expandPanel(panel = "Attachments");
 
@@ -440,37 +404,32 @@ definition {
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
-				value1 = "${mbThreadAttachment}"
-			);
+				value1 = "${mbThreadAttachment}");
 
 			AssertTextEquals(
+				key_attachmentName = "${mbThreadAttachment}",
 				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_SELECTED_FILE",
-				value1 = "${mbThreadAttachment}",
-				key_attachmentName = "${mbThreadAttachment}"
-			);
+				value1 = "${mbThreadAttachment}");
 		}
 
 		PortletEntry.publish();
 
 		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
 			AssertTextEquals.assertPartialText(
+				key_mbThreadAttachment = "${mbThreadAttachment}",
 				locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE",
-				value1 = "${mbThreadAttachment}",
-				key_mbThreadAttachment = "${mbThreadAttachment}"
-			);
+				value1 = "${mbThreadAttachment}");
 		}
 
 		MessageboardsThread.editPG(
 			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit"
-		);
+			threadSubjectEdit = "MB Thread Message Subject Edit");
 
 		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
 			AssertTextEquals.assertPartialText(
+				key_mbThreadAttachment = "${mbThreadAttachment}",
 				locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE",
-				value1 = "${mbThreadAttachment}",
-				key_mbThreadAttachment = "${mbThreadAttachment}"
-			);
+				value1 = "${mbThreadAttachment}");
 		}
 	}
 
@@ -480,8 +439,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -489,20 +447,17 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		MessageboardsThread.cancelEdit(
 			threadBodyEdit = "Message Boards Thread Body Edit",
 			threadSubject = "Message Boards Thread Subject",
-			threadSubjectEdit = "Message Boards Thread Subject Edit"
-		);
+			threadSubjectEdit = "Message Boards Thread Subject Edit");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Thread Body",
 			threadSubject = "Message Boards Thread Subject",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "5"
@@ -511,8 +466,7 @@ definition {
 
 		MessageboardsThread.cancelAdd(
 			threadBody = "Thread Body",
-			threadSubject = "Thread Subject"
-		);
+			threadSubject = "Thread Subject");
 
 		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
 	}
@@ -540,8 +494,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -558,8 +511,7 @@ definition {
 
 		MessageboardsCategory.editPG(
 			categoryName = "MB Category Name",
-			categoryNameEdit = "MB Category Name Edit"
-		);
+			categoryNameEdit = "MB Category Name Edit");
 
 		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
 	}
@@ -570,8 +522,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -579,18 +530,15 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.editPG(
 			threadBodyEdit = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -599,8 +547,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -608,18 +555,15 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.editPG(
 			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit"
-		);
+			threadSubjectEdit = "MB Thread Message Subject Edit");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject Edit"
-		);
+			threadSubject = "MB Thread Message Subject Edit");
 	}
 
 	@priority = "5"
@@ -630,8 +574,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -639,20 +582,17 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.editPG(
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit"
-		);
+			threadSubjectEdit = "MB Thread Message Subject Edit");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject Edit",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@description = "This is a test case for UC-6."
@@ -662,8 +602,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -671,9 +610,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.viewLockedPG(
-			threadSubject = "Message Boards Thread Subject"
-		);
+		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -684,8 +621,7 @@ definition {
 		MessageboardsThread.replyPG(
 			threadBody = "Message Boards Thread Body",
 			threadReplyBody = "Message Boards Thread Reply Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -693,8 +629,7 @@ definition {
 			replyCount = "1",
 			threadBody = "Message Boards Thread Body",
 			threadReplyBody = "Message Boards Thread Reply Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 	}
 
 	@priority = "4"
@@ -709,8 +644,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -723,8 +657,7 @@ definition {
 			categoryName1 = "MB Category1 Name",
 			categoryName2 = "MB Category2 Name",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -734,13 +667,11 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "3"
@@ -755,8 +686,7 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -772,8 +702,7 @@ definition {
 			explanationPost = "true",
 			explanationSubject = "MB Explanation Post Subject",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -783,15 +712,13 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
 			threadBody2 = "MB Explanation Post Body",
 			threadSubject = "MB Thread Message Subject",
-			threadSubject2 = "MB Explanation Post Subject"
-		);
+			threadSubject2 = "MB Explanation Post Subject");
 	}
 
 	@description = "This is a use case for LPS-67722."
@@ -802,8 +729,7 @@ definition {
 		MessageboardsThread.addPGWithAttachment(
 			mbThreadAttachment = "Document_1.jpg",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -816,14 +742,12 @@ definition {
 		MessageboardsThread.downloadAttachmentPG();
 
 		Click(
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
-			key_breadcrumbName = "Home"
-		);
+			key_breadcrumbName = "Home",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 
 		MessageboardsThread.replyPG(
 			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -832,8 +756,7 @@ definition {
 
 		MessageboardsThread.saveNewThreadAsDraft(
 			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Draft"
-		);
+			threadSubject = "Message Boards Thread Draft");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -842,25 +765,23 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "Message Boards Thread Draft"
-		);
+			value1 = "Message Boards Thread Draft");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#THREAD_LIST_STATUS",
-			value1 = "Draft"
-		);
+			value1 = "Draft");
 
-		AssertClick(locator1 = "MessageBoards#NAVIGATION_MY_POSTS", value1 = "My Posts");
+		AssertClick(
+			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
+			value1 = "My Posts");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "Message Boards Thread Draft"
-		);
+			value1 = "Message Boards Thread Draft");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#THREAD_LIST_STATUS",
-			value1 = "Draft"
-		);
+			value1 = "Draft");
 	}
 
 	@priority = "4"
@@ -874,27 +795,25 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		MessageboardsPortlet.viewDefaultEmailFromCP();
 
@@ -904,7 +823,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -914,7 +835,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -922,24 +845,21 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		MockMock.viewMail(
 			asset = "MB Category Name",
 			content = "MB Category Name",
 			recipient = "Test Test",
 			sender = "Test Test",
-			subject = "MB Category Name"
-		);
+			subject = "MB Category Name");
 
 		MockMock.viewMail(
 			asset = "MB Category Name",
 			content = "MB Category Name",
 			recipient = "userfn userln",
 			sender = "Test Test",
-			subject = "MB Category Name"
-		);
+			subject = "MB Category Name");
 	}
 
 	@priority = "4"
@@ -950,16 +870,14 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		for (var replyCount : list "1,2,3,4,5,6,7") {
 			MessageboardsThread.replyPG(
 				threadReplyBody = "Message Boards Thread Reply ${replyCount}",
-				threadSubject = "Message Boards Thread Subject"
-			);
+				threadSubject = "Message Boards Thread Subject");
 
 			Navigator.gotoPage(pageName = "Message Boards Page");
 		}
@@ -967,16 +885,14 @@ definition {
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "7",
-			threadSubject = "Message Boards Thread Subject"
-		);
+			threadSubject = "Message Boards Thread Subject");
 
 		for (var replyCount : list "1,2,3,4") {
 			var key_threadBody = "Message Boards Thread Reply ${replyCount}";
 
 			AssertTextEquals(
 				locator1 = "MessageBoardsThread#THREAD_BODY",
-				value1 = "Message Boards Thread Reply ${replyCount}"
-			);
+				value1 = "Message Boards Thread Reply ${replyCount}");
 		}
 
 		AssertVisible(locator1 = "Button#MORE_MESSAGES");
@@ -987,15 +903,16 @@ definition {
 			AssertElementNotPresent(locator1 = "MessageBoardsThread#THREAD_BODY");
 		}
 
-		AssertClick(locator1 = "Button#MORE_MESSAGES", value1 = "More Messages");
+		AssertClick(
+			locator1 = "Button#MORE_MESSAGES",
+			value1 = "More Messages");
 
 		for (var replyCount : list "1,2,3,4,5,6,7") {
 			var key_threadBody = "Message Boards Thread Reply ${replyCount}";
 
 			AssertTextEquals(
 				locator1 = "MessageBoardsThread#THREAD_BODY",
-				value1 = "Message Boards Thread Reply ${replyCount}"
-			);
+				value1 = "Message Boards Thread Reply ${replyCount}");
 		}
 	}
 
@@ -1008,8 +925,7 @@ definition {
 		MessageboardsCategory.addSubcategoryPG(
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name"
-		);
+			subCategoryName = "MB Subcategory Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1018,8 +934,7 @@ definition {
 		MessageboardsCategory.addSubcategoryPG(
 			categoryName = "MB Subcategory Name",
 			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name 2"
-		);
+			subCategoryName = "MB Subcategory Name 2");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1027,8 +942,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1038,8 +952,7 @@ definition {
 			categoryName = "MB Subcategory Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name 2",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -1054,8 +967,7 @@ definition {
 		MessageboardsCategory.viewMySubscriptionsPG(
 			parentcategory1 = "MB Category Name",
 			parentcategory2 = "MB Subcategory Name",
-			subscribedThread = "MB Subcategory Name 2"
-		);
+			subscribedThread = "MB Subcategory Name 2");
 	}
 
 	@description = "This is a use case for LPS-77263."
@@ -1065,67 +977,55 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject 1"
-		);
+			threadSubject = "MB Thread Message Subject 1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject 2"
-		);
+			threadSubject = "MB Thread Message Subject 2");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject 1");
 
 		Click(
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
-			key_breadcrumbName = "Home"
-		);
+			key_breadcrumbName = "Home",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 
-		MessageboardsThread.viewMBThreadVisualStatePG(
-			threadSubject = "MB Thread Message Subject 1"
-		);
+		MessageboardsThread.viewMBThreadVisualStatePG(threadSubject = "MB Thread Message Subject 1");
 
 		MessageboardsThread.viewMBThreadVisualStatePG(
 			threadSubject = "MB Thread Message Subject 2",
-			unReadMBthread = "true"
-		);
+			unReadMBthread = "true");
 	}
 }

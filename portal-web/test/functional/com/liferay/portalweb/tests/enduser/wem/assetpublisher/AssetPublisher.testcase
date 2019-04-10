@@ -13,13 +13,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page"
-		);
+			layoutName = "Asset Publisher Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 	}
@@ -48,7 +46,6 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
-			value1 = "View in Context"
-		);
+			value1 = "View in Context");
 	}
 }

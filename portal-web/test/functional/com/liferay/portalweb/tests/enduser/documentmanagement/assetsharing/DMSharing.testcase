@@ -13,37 +13,31 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -77,19 +71,19 @@ definition {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -98,26 +92,28 @@ definition {
 		Notifications.viewNewSharedDocument(
 			assetSharingPermission = "viewing",
 			dmDocumentTitle = "DM Document Title",
-			ownerName = "Test Test"
-		);
+			ownerName = "Test Test");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test"
-		);
+			dmDocumentUploader = "Test Test");
 
 		DMDocumentSharing.removeCollaborator(collaboratorList = "userfn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -126,8 +122,7 @@ definition {
 		Notifications.viewNewSharedDocument(
 			assetSharingPermission = "viewing",
 			dmDocumentTitle = "DM Document Title",
-			ownerName = "Test Test"
-		);
+			ownerName = "Test Test");
 	}
 
 	@description = "This test asserts only one entry displays in a user's Shared Assets app when multiple users share the same document to him."
@@ -136,47 +131,45 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2"
-		);
+			userName = "userfn2 userln2");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -184,12 +177,13 @@ definition {
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2"
-		);
+			userName = "userfn2 userln2");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "2");
 
@@ -199,8 +193,7 @@ definition {
 			assetSharingPermission = "viewing",
 			dmDocumentTitle = "DM Document Title",
 			openNotification = "true",
-			ownerName = "Test Test"
-		);
+			ownerName = "Test Test");
 
 		Navigator.openURL();
 
@@ -212,20 +205,20 @@ definition {
 			assetSharingPermission = "viewing",
 			dmDocumentTitle = "DM Document Title",
 			openNotification = "true",
-			ownerName = "userfn userln"
-		);
+			ownerName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
-		);
+			portlet = "Shared Assets");
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		AssertTextEquals(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_TITLE", value1 = "DM Document Title");
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_TITLE",
+			value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
 
@@ -237,14 +230,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
 			configurationName = "Virtual Instance Sharing",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
@@ -256,20 +247,22 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document with sharing disabled"
-		);
+			dmDocumentTitle = "Document with sharing disabled");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
 
-		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			key_dmDocumentTitle = "Document with sharing disabled",
-			value1 = "Document with sharing disabled"
-		);
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled");
 
-		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
+		AssertElementNotPresent(
+			key_text = "Share",
+			locator1 = "Button#ANY");
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the system level."
@@ -280,14 +273,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
 			configurationName = "Sharing",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
@@ -299,20 +290,22 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document with sharing disabled"
-		);
+			dmDocumentTitle = "Document with sharing disabled");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
 
-		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			key_dmDocumentTitle = "Document with sharing disabled",
-			value1 = "Document with sharing disabled"
-		);
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled");
 
-		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
+		AssertElementNotPresent(
+			key_text = "Share",
+			locator1 = "Button#ANY");
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
@@ -321,47 +314,46 @@ definition {
 
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
-			viewableBy = "Owner"
-		);
+			viewableBy = "Owner");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
-		);
+			portlet = "Shared Assets");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_MODAL_TITLE",
-			value1 = "Select Asset Type"
-		);
+			value1 = "Select Asset Type");
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		var key_assetType = "Documents";
 
 		AssertClick(
-			locator1="DocumentsAndMediaShare#SHARED_ASSETS_ASSET_TYPE",
-			value1="Documents"
-		);
+			locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_ASSET_TYPE",
+			value1 = "Documents");
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 	}
 
 	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Assets app."
@@ -377,92 +369,85 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.configureMailServerSettings(
 			needsReply = "true",
 			userName = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Virtual Instances"
-		);
+			portlet = "Virtual Instances");
 
-		PortalInstances.editCP(mailDomain = "gmail.com", virtualHost = "localhost");
+		PortalInstances.editCP(
+			mailDomain = "gmail.com",
+			virtualHost = "localhost");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		JSONUser.addUser(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = PropsUtil.get("email.address.3"),
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = PropsUtil.get("email.address.3"),
-			userName = "userfn1 userln1"
-		);
+			userName = "userfn1 userln1");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = PropsUtil.get("email.address.3"));
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = PropsUtil.get("email.address.3"));
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 
 		Gmail.viewMail(
-			gmailAssetType = "DM Document Title",
 			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "DM Document Title",
 			gmailMessageBody = "Test Test has shared DM Document Title with you for viewing.",
-			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing."
-		);
+			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing.");
 
-		AssertClick(locator1 = "DocumentsAndMediaShare#EMAIL_VIEW_DOCUMENT_BUTTON", value1="View Document");
+		AssertClick(
+			locator1 = "DocumentsAndMediaShare#EMAIL_VIEW_DOCUMENT_BUTTON",
+			value1 = "View Document");
 
 		SelectWindow(locator1 = "title=- Liferay");
 
 		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title (Version 1.0)"
-		);
+			dmDocumentTitle = "DM Document Title (Version 1.0)");
 	}
 
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Assets app."
@@ -471,19 +456,19 @@ definition {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -493,13 +478,11 @@ definition {
 			assetSharingPermission = "viewing",
 			dmDocumentTitle = "DM Document Title",
 			openNotification = "true",
-			ownerName = "Test Test"
-		);
+			ownerName = "Test Test");
 
 		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title (Version 1.0)"
-		);
+			dmDocumentTitle = "DM Document Title (Version 1.0)");
 	}
 
 	@description = "This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. "
@@ -508,26 +491,25 @@ definition {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
 
@@ -535,7 +517,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -543,25 +527,27 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			selectPermission = "Can Comment",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentComment.addPG(
 			commentBody = "DM Document Comment Body",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		AssertElementNotPresent(locator1 = "Button#EDIT");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -569,27 +555,26 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			selectPermission = "Can Update",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.editPG(
 			dmDocumentDescriptionEdit = "DM Document Description Edited",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edited"
-		);
+			dmDocumentTitleEdit = "DM Document Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title Edited"
-		);
+			dmDocumentTitle = "DM Document Title Edited");
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
@@ -597,15 +582,13 @@ definition {
 	test OrderBySharedDate {
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
-			viewableBy = "Owner"
-		);
+			viewableBy = "Owner");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -613,20 +596,20 @@ definition {
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
-		);
+			portlet = "Shared Assets");
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
@@ -640,67 +623,63 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			shareable = "true",
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
-		);
+			portlet = "Shared Assets");
 
 		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			shareable = "true",
 			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2"
-		);
+			userName = "userfn2 userln2");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test"
-		);
+			dmDocumentUploader = "Test Test");
 	}
 
 	@description = "This test share an asset to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this asset."
@@ -710,44 +689,40 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
-		);
+			portlet = "Shared Assets");
 
 		var key_dmDocumentTitle = "DM Document Title";
 
@@ -767,34 +742,29 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln"
-		);
+			userName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -802,58 +772,55 @@ definition {
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2"
-		);
+			userName = "userfn2 userln2");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test"
-		);
+			dmDocumentUploader = "Test Test");
 
 		var key_collaborator = "userfn";
 		var key_text = "Manage Collaborators";
 
 		AssertElementNotPresent(
 			locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
-			value1 = "userfn"
-		);
+			value1 = "userfn");
 
 		AssertElementNotPresent(
 			locator1 = "Button#ANY",
-			value1 = "Manage Collaborators"
-		);
+			value1 = "Manage Collaborators");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test"
-		);
+			dmDocumentUploader = "Test Test");
 
 		DMDocumentSharing.removeCollaborator(
 			collaboratorList = "userfn,userfn2",
-			emptyStateMessage = "true"
-		);
+			emptyStateMessage = "true");
 	}
 }

@@ -13,13 +13,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
 			workflowDefinitionFile = "workflow_definition_xss.xml",
-			workflowDefinitionTitle = '''<script>alert(123);</script>'''
-		);
+			workflowDefinitionTitle = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();
 
@@ -28,8 +26,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Kaleo Forms Admin"
-		);
+			portlet = "Kaleo Forms Admin");
 	}
 
 	tearDown {
@@ -57,28 +54,24 @@ definition {
 
 		KaleoFormsAdmin.addProcessDetails(
 			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
 
@@ -92,14 +85,15 @@ definition {
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Choose", rowEntry = "alert");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Choose",
+			rowEntry = "alert");
 
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.assignForm(
 			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "StartNode"
-		);
+			workflowTask = "StartNode");
 
 		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
 

@@ -16,14 +16,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		Portlet.addPG(pageName = "${pageName}", portletName = "${portletName}");
+		Portlet.addPG(
+			pageName = "${pageName}",
+			portletName = "${portletName}");
 	}
 
 	tearDown {
@@ -43,73 +44,59 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextNotPresent(value1 = "FAILED");
 	}
@@ -120,73 +107,59 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextNotPresent(value1 = "FAILED");
 	}
@@ -197,73 +170,59 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextEquals(
 			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
-			value1 = "PASSED"
-		);
+			value1 = "PASSED");
 
 		AssertTextNotPresent(value1 = "FAILED");
 	}

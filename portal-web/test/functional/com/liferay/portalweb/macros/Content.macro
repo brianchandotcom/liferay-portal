@@ -2,21 +2,17 @@ definition {
 	macro addNewPG {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		AssertElementPresent(
-			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE"
-		);
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE");
 
 		AssertVisible(
 			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
-			value1 = "Content"
-		);
+			value1 = "Content");
 
 		Panel.expandSidebarContentPanel();
 
 		AssertClick(
 			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
-			value1 = "Add New"
-		);
+			value1 = "Add New");
 
 		MenuItem.click(menuItem = "${assetType}");
 	}
@@ -24,30 +20,27 @@ definition {
 	macro addPG {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		AssertElementPresent(
-			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE"
-		);
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE");
 
 		AssertVisible(
 			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
-			value1 = "Content"
-		);
+			value1 = "Content");
 
 		Panel.expandSidebarContentPanel();
 
 		var key_assetTitle = "${assetTitle}";
 
-		Type(locator1 = "NavBar#CONTENT_SEARCH_FIELD", value1 = "${assetTitle}");
+		Type(
+			locator1 = "NavBar#CONTENT_SEARCH_FIELD",
+			value1 = "${assetTitle}");
 
 		AssertTextEquals(
 			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		DragAndDrop(
 			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
 			locator2 = "Home#PAGE_COLUMN_1",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 	}
 }

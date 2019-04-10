@@ -14,22 +14,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "Akismet"
-		);
+			portlet = "Akismet");
 
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.uninstallAppCP(appName = "${appName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.viewUninstallAppCP(appName = "${appName}");
 	}

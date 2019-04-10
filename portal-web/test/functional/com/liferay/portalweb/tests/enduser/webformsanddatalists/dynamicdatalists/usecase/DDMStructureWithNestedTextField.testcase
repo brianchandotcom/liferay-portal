@@ -14,22 +14,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLDataDefinition.addCP();
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text Parent",
-			fieldName = "textParent"
-		);
+			fieldName = "textParent");
 
 		DynamicDataMapping.addFieldNested(
 			field = "Text",
 			fieldFieldLabel = "Text Child",
-			fieldName = "textChild"
-		);
+			fieldName = "textChild");
 
 		DDLDataDefinition.save();
 
@@ -38,8 +35,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLList.addCP();
 
@@ -52,8 +48,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 	}
 
 	tearDown {
@@ -78,26 +73,22 @@ definition {
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "en-US Parent",
-			fieldName = "textParent"
-		);
+			fieldName = "textParent");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "en-US Child",
-			fieldName = "textChild"
-		);
+			fieldName = "textChild");
 
 		for (var language : list "es-ES,pt-BR") {
 			PortletEntry.changeLocale(locale = "${language}");
 
 			DDLRecord.populateFieldText(
 				ddlRecordFieldData = "${language} Parent",
-				fieldName = "textParent"
-			);
+				fieldName = "textParent");
 
 			DDLRecord.populateFieldText(
 				ddlRecordFieldData = "${language} Child",
-				fieldName = "textChild"
-			);
+				fieldName = "textChild");
 		}
 
 		for (var language : list "en-US,es-ES,pt-BR") {
@@ -105,13 +96,11 @@ definition {
 
 			FormFields.viewTextValue(
 				fieldName = "textParent",
-				fieldValue = "${language} Parent"
-			);
+				fieldValue = "${language} Parent");
 
 			FormFields.viewTextValue(
 				fieldName = "textChild",
-				fieldValue = "${language} Child"
-			);
+				fieldValue = "${language} Child");
 		}
 	}
 }

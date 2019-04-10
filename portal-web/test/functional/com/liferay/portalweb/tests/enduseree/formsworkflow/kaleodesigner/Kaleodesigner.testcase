@@ -18,9 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Workflow.tearDownSpecificWorkflowDefinition(
-				workflowDefinitionTitle = "Edited Workflow Definition"
-			);
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
 			Workflow.tearDownWorkflowDefinitions();
 		}
@@ -31,21 +29,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Condition Node Description",
 			nodeName = "Condition",
 			nodeNodeLabel = "Condition",
-			nodeType = "condition"
-		);
+			nodeType = "condition");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Condition", nodeType = "condition");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Condition",
+			nodeType = "condition");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Condition");
 	}
@@ -55,21 +51,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "TestEndNode Node Description",
 			nodeName = "TestEndNode",
 			nodeNodeLabel = "TestEndNode",
-			nodeType = "end"
-		);
+			nodeType = "end");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "TestEndNode", nodeType = "end");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "TestEndNode",
+			nodeType = "end");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "TestEndNode");
 	}
@@ -79,21 +73,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Fork Node Description",
 			nodeName = "Fork",
 			nodeNodeLabel = "Fork",
-			nodeType = "fork"
-		);
+			nodeType = "fork");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Fork", nodeType = "fork");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Fork",
+			nodeType = "fork");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Fork");
 	}
@@ -103,21 +95,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Join Node Description",
 			nodeName = "Join",
 			nodeNodeLabel = "Join",
-			nodeType = "join"
-		);
+			nodeType = "join");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Join", nodeType = "join");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Join",
+			nodeType = "join");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Join");
 	}
@@ -127,21 +117,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Join XOR Node Description",
 			nodeName = "Join XOR",
 			nodeNodeLabel = "Join XOR",
-			nodeType = "join-xor"
-		);
+			nodeType = "join-xor");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Join XOR", nodeType = "join-xor");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Join XOR",
+			nodeType = "join-xor");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Join XOR");
 	}
@@ -154,21 +142,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "Workflows"
-		);
+			key_navItem = "Workflows",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Workflow");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Workflow");
 
 		ProductMenuHelper.closeProductMenu();
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -182,8 +168,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "SubmitToFork",
@@ -191,8 +176,7 @@ definition {
 			newNodeDescription = "Fork Description",
 			newNodeName = "Fork",
 			newNodeType = "fork",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "SendToTask",
@@ -200,8 +184,7 @@ definition {
 			newNodeDescription = "Task Description",
 			newNodeName = "Task",
 			newNodeType = "task",
-			nodeType = "fork"
-		);
+			nodeType = "fork");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Join1",
@@ -209,8 +192,7 @@ definition {
 			newNodeDescription = "JoinXOR Description",
 			newNodeName = "JoinXOR",
 			newNodeType = "join-xor",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "SendToState",
@@ -219,14 +201,12 @@ definition {
 			newNodeDescription = "State Description",
 			newNodeName = "State",
 			newNodeType = "state",
-			nodeType = "fork"
-		);
+			nodeType = "fork");
 
 		KaleoDesigner.addConnectorViaViewTab(
 			connectorName = "Join2",
 			nodeType = "state2",
-			nodeTypeDestination = "join-xor"
-		);
+			nodeTypeDestination = "join-xor");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Finish",
@@ -234,8 +214,7 @@ definition {
 			newNodeDescription = "End Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "join-xor"
-		);
+			nodeType = "join-xor");
 
 		ScrollBy(value1 = "0, 60");
 
@@ -247,12 +226,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -266,8 +242,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -275,8 +250,7 @@ definition {
 			newNodeDescription = "Task Node Description",
 			newNodeName = "Task",
 			newNodeType = "task",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -284,20 +258,16 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.gotoEditWorkflowDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.viewNodePresent(nodeNodeLabel = "Start");
 
@@ -315,23 +285,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "TestStartNode Node Description",
 			nodeName = "TestStartNode",
 			nodeNodeLabel = "TestStartNode",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "TestStartNode");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "TestStartNode", nodeType = "start");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "TestStartNode",
+			nodeType = "start");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "TestStartNode");
 	}
@@ -341,23 +309,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "State Node Description",
 			nodeName = "State",
 			nodeNodeLabel = "State",
-			nodeType = "state"
-		);
+			nodeType = "state");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "State");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "State", nodeType = "state");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "State",
+			nodeType = "state");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "State");
 	}
@@ -372,23 +338,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Task Node Description",
 			nodeName = "Task",
 			nodeNodeLabel = "Task",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Task", nodeType = "task");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Task",
+			nodeType = "task");
 
 		KaleoDesigner.editNodeNotifications(
 			nodeNotificationsDescription = "Update Notification Description",
@@ -398,8 +362,7 @@ definition {
 			nodeNotificationsTemplateLanguage = "Text",
 			nodeNotificationsType = "User Notification",
 			roleTitle = "Administrator",
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
 
@@ -409,8 +372,7 @@ definition {
 			nodeNotificationsTemplateLanguage = "Text",
 			nodeNotificationsType = "User Notification",
 			roleTitle = "Administrator",
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Task");
 	}
@@ -420,12 +382,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaSourceXML(nodeType = "task");
 
@@ -435,7 +394,9 @@ definition {
 
 		KaleoDesigner.editNodeDescription(nodeDescription = "Task Node Description");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Task", nodeType = "task");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Task",
+			nodeType = "task");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Task");
 	}
@@ -448,12 +409,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaSourceXML(sourceXML = "${fileContent}");
 
@@ -464,8 +422,7 @@ definition {
 			blocking = "false",
 			durationTime1 = "1",
 			durationTime2 = "2",
-			timerName = "timer 1"
-		);
+			timerName = "timer 1");
 	}
 
 	@description = "This is a use case for LPS-37209."
@@ -474,12 +431,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -493,8 +447,7 @@ definition {
 			nodeDescription = "Task Node Description",
 			nodeName = "Task",
 			nodeNodeLabel = "Task",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
 
@@ -507,52 +460,47 @@ definition {
 			durationTime1 = "5",
 			durationTime2 = "6",
 			timerDescription = "Timer Description",
-			timerName = "Timer Name"
-		);
+			timerName = "Timer Name");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "17"
-		);
+			line = "17");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<duration>5</duration>''',
-			line = "20"
-		);
+			line = "20");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<scale>hour</scale>''',
-			line = "21"
-		);
+			line = "21");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<duration>6</duration>''',
-			line = "24"
-		);
+			line = "24");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<scale>hour</scale>''',
-			line = "25"
-		);
+			line = "25");
 
-		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''<timer-action>''', line = "29");
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<timer-action>''',
+			line = "29");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Blocker Name</name>''',
-			line = "30"
-		);
+			line = "30");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<description>Blocker Description</description>''',
-			line = "31"
-		);
+			line = "31");
 
-		KaleoDesigner.viewSourceXMLLine(kdSourceXML = '''Test Script''', line = "33");
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''Test Script''',
+			line = "33");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<blocking>true</blocking>''',
-			line = "27"
-		);
+			line = "27");
 	}
 
 	@priority = "5"
@@ -564,12 +512,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -583,8 +528,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -592,8 +536,7 @@ definition {
 			newNodeDescription = "Task Node Description",
 			newNodeName = "Task",
 			newNodeType = "task",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -601,8 +544,7 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		KaleoDesigner.deleteConnector(connectorLabel = "Submit");
 
@@ -619,12 +561,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.gotoEditWorkflowDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.viewNodePresent(nodeNodeLabel = "Start");
 
@@ -642,8 +581,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
@@ -654,20 +592,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.viewDefinitionUnpublished(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition");
 
-		Workflow.deleteWorkflowDefinition(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		Workflow.viewDefinitionNotPresent(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@priority = "5"
@@ -679,30 +610,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Task Node Description",
 			nodeName = "Task",
 			nodeNodeLabel = "Task",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
 
-		KaleoDesigner.viewNodeType(nodeNodeLabel = "Task", nodeType = "task");
+		KaleoDesigner.viewNodeType(
+			nodeNodeLabel = "Task",
+			nodeType = "task");
 
 		KaleoDesigner.editNodeAssignments(
 			autoCreate = "true",
 			nodeAssignmentType = "Role Type",
 			roleName = "Board Member",
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 
 		KaleoDesigner.viewNodeAssignments(nodeAssignmentType = "Role Type");
 	}
@@ -713,17 +641,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<script-language>groovy</script-language>''',
-			line = "32"
-		);
+			line = "32");
 
 		PortletEntry.publish();
 	}
@@ -734,32 +658,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Test Definition");
 
-		KaleoDesigner.editSourceXML(kdSourceXML = '''<name>NAME EDIT''', line = "5");
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = '''<name>NAME EDIT''',
+			line = "5");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.viewDefinitionPublished(
 			workflowDefinitionName = "NAME EDIT",
-			workflowDefinitionTitle = "Test Definition"
-		);
+			workflowDefinitionTitle = "Test Definition");
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Test Definition");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>NAME EDIT</name>''',
-			line = "5"
-		);
+			line = "5");
 	}
 
 	@priority = "3"
@@ -767,12 +689,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -786,8 +705,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -795,20 +713,16 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "task",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.deleteConnector(connectorLabel = "Approve");
 
 		KaleoDesigner.addConnectorViaViewTab(
 			connectorName = "Reverse",
 			nodeType = "task",
-			nodeTypeDestination = "start2"
-		);
+			nodeTypeDestination = "start2");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The StartNode node cannot have an incoming transition."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node cannot have an incoming transition.");
 	}
 
 	@priority = "3"
@@ -816,12 +730,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -835,8 +746,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -844,8 +754,7 @@ definition {
 			newNodeDescription = "Condition Node Description",
 			newNodeName = "Condition",
 			newNodeType = "condition",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -853,12 +762,9 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "condition"
-		);
+			nodeType = "condition");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The Condition node must have at least two outgoing transitions."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
 	}
 
 	@priority = "3"
@@ -903,12 +809,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -922,8 +825,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -931,8 +833,7 @@ definition {
 			newNodeDescription = "Condition Node Description",
 			newNodeName = "Condition",
 			newNodeType = "condition",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
 
@@ -944,12 +845,9 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "condition"
-		);
+			nodeType = "condition");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The Condition node must have at least two outgoing transitions."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
 	}
 
 	@priority = "3"
@@ -957,12 +855,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -976,8 +871,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -985,8 +879,7 @@ definition {
 			newNodeDescription = "Fork Node Description",
 			newNodeName = "Fork",
 			newNodeType = "fork",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -994,12 +887,9 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "fork"
-		);
+			nodeType = "fork");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
 	@priority = "3"
@@ -1007,12 +897,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -1026,8 +913,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -1035,8 +921,7 @@ definition {
 			newNodeDescription = "Join Node Description",
 			newNodeName = "Join",
 			newNodeType = "join",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -1044,12 +929,9 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "join"
-		);
+			nodeType = "join");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
 	@priority = "3"
@@ -1057,12 +939,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -1076,8 +955,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Submit",
@@ -1085,8 +963,7 @@ definition {
 			newNodeDescription = "JoinXOR Description",
 			newNodeName = "JoinXOR",
 			newNodeType = "join-xor",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Approve",
@@ -1094,12 +971,9 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "join-xor"
-		);
+			nodeType = "join-xor");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
 	@priority = "4"
@@ -1107,23 +981,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "TestStartNode Node Description",
 			nodeName = "TestStartNode",
 			nodeNodeLabel = "TestStartNode",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The workflow has too many start nodes (state nodes StartNode and TestStartNode)."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The workflow has too many start nodes (state nodes StartNode and TestStartNode).");
 	}
 
 	@priority = "4"
@@ -1131,18 +999,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.deleteConnector(connectorLabel = "connector");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The StartNode node must have an outgoing transition."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node must have an outgoing transition.");
 	}
 
 	@priority = "4"
@@ -1150,20 +1013,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The StartNode node must have an outgoing transition."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node must have an outgoing transition.");
 	}
 
 	@priority = "4"
@@ -1171,20 +1029,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
 
-		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "You must define a start node."
-		);
+		Workflow.publishInvalidWorkflowDefinition(errorMessage = "You must define a start node.");
 	}
 
 	@priority = "3"
@@ -1192,12 +1045,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
 
@@ -1211,12 +1061,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
 
@@ -1230,8 +1077,7 @@ definition {
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		Workflow.saveDefinition();
 
@@ -1241,8 +1087,7 @@ definition {
 			newNodeDescription = "Task Node Description",
 			newNodeName = "Task",
 			newNodeType = "task",
-			nodeType = "start"
-		);
+			nodeType = "start");
 
 		Workflow.saveDefinition();
 
@@ -1252,8 +1097,7 @@ definition {
 			newNodeDescription = "End Node Description",
 			newNodeName = "End",
 			newNodeType = "end",
-			nodeType = "task"
-		);
+			nodeType = "task");
 
 		Workflow.saveDefinition();
 
@@ -1280,12 +1124,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.gotoEditWorkflowDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.showRevisionHistory();
 
@@ -1315,8 +1156,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
@@ -1327,24 +1167,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.viewDefinitionUnpublished(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.gotoEditWorkflowDefinition(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		PortletEntry.publish();
 
@@ -1353,12 +1187,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.viewDefinitionPublished(
-			workflowDefinitionTitle = "New Workflow Definition"
-		);
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "This is a use case for LPS-48590."
@@ -1369,14 +1200,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.editSourceXML(kdSourceXML = " ", line = "18");
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "18");
 
 		KaleoDesigner.viewViewTab();
 
@@ -1384,8 +1214,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = '''</transitions></state>''',
-			line = "18"
-		);
+			line = "18");
 
 		KaleoDesigner.viewViewTab();
 
@@ -1400,12 +1229,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(
-			workflowDefinitionTitle = "New Workflow Definition Title"
-		);
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.viewButtons();
 	}
@@ -1418,42 +1244,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Kaleo Forms Admin"
-		);
+			portlet = "Kaleo Forms Admin");
 
 		KaleoFormsAdmin.addProcess();
 
 		KaleoFormsAdmin.addProcessDetails(
 			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "Field Set Data Definition",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "Field Set Data Definition",
-			kfProcessName = "Kaleo Forms Process"
-		);
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.addWorkflow(
 			kfProcessName = "Kaleo Forms Process",
-			workflowDefinitionTitle = "Workflow Definition Title"
-		);
+			workflowDefinitionTitle = "Workflow Definition Title");
 
 		KaleoDesigner.viewButtons(cancelButton = "true");
 

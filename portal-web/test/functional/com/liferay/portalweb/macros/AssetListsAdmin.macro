@@ -4,8 +4,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
-		);
+			text = "${title}");
 
 		Button.clickSave();
 
@@ -17,8 +16,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
-		);
+			text = "${title}");
 
 		Button.clickSave();
 
@@ -26,21 +24,17 @@ definition {
 	}
 
 	macro openAssetListsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
 	macro renameAssetList {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Rename",
-			rowEntry = "${assetListName}"
-		);
+			rowEntry = "${assetListName}");
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
-		);
+			text = "${title}");
 
 		Button.clickSave();
 	}
@@ -72,32 +66,27 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
-			value1 = "${title}"
-		);
+			value1 = "${title}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
-			value1 = "${type}"
-		);
+			value1 = "${type}");
 	}
 
 	macro viewContent {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View Content",
-			rowEntry = "${assetListName}"
-		);
+			rowEntry = "${assetListName}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
 			locator1 = "AssetLists#ASSET_TITLE_ROW",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		AssertTextEquals(
 			locator1 = "AssetLists#ASSET_TYPE_ROW",
-			value1 = "${assetType}"
-		);
+			value1 = "${assetType}");
 
 		SelectFrameTop();
 
@@ -107,14 +96,11 @@ definition {
 	macro viewUsages {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View Usages",
-			rowEntry = "${assetListName}"
-		);
+			rowEntry = "${assetListName}");
 
 		var usageAmount = "${usageAmount}";
 		var usageType = "${usageType}";
 
-		AssertElementPresent(
-			locator1 = "AssetLists#ASSET_LIST_USAGES"
-		);
+		AssertElementPresent(locator1 = "AssetLists#ASSET_LIST_USAGES");
 	}
 }

@@ -5,19 +5,27 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB", value1 = "URL");
+		AssertClick(
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "URL");
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
 
-		Type.typeAceEditor(locator1 = "TextInput#URL", value1 = "${imageSourceURL}");
+		Type.typeAceEditor(
+			locator1 = "TextInput#URL",
+			value1 = "${imageSourceURL}");
 
-		AssertClick(locator1 = "Button#ENTER", value1 = "Enter");
+		AssertClick(
+			locator1 = "Button#ENTER",
+			value1 = "Enter");
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
 	}
 
 	macro gotoItemSelectorViaAlloyEditor {
@@ -41,8 +49,7 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media"
-		);
+			value1 = "Documents and Media");
 
 		AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
 
@@ -50,17 +57,19 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Blog Images"
-		);
+			value1 = "Blog Images");
 
-		Type(locator1 = "TextInput#SEARCH", value1 = "${imageFileName}");
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${imageFileName}");
 
-		KeyPress(locator1 = "TextInput#SEARCH", value1 = "\RETURN");
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for ${imageFileName}"
-		);
+			value1 = "1 Results for ${imageFileName}");
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
 
@@ -77,32 +86,29 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Blog Images"
-		);
+			value1 = "Blog Images");
 
-		LexiconCard.viewCardNotPresent(
-			card = "${imageFileName}"
-		);
+		LexiconCard.viewCardNotPresent(card = "${imageFileName}");
 
 		var key_navTab = "Documents and Media";
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media"
-		);
+			value1 = "Documents and Media");
 
-		Type(locator1 = "TextInput#SEARCH", value1 = "${imageFileName}");
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${imageFileName}");
 
-		KeyPress(locator1 = "TextInput#SEARCH", value1 = "\RETURN");
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for ${imageFileName}"
-		);
+			value1 = "1 Results for ${imageFileName}");
 
-		LexiconCard.viewCardPresent(
-			card = "${imageFileName}"
-		);
+		LexiconCard.viewCardPresent(card = "${imageFileName}");
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -116,16 +122,19 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Blog Images"
-		);
+			value1 = "Blog Images");
 
 		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
 
-		AssertTextEquals(locator1 = "ItemSelector#CAPTION", value1 = "${imageFileName}");
+		AssertTextEquals(
+			locator1 = "ItemSelector#CAPTION",
+			value1 = "${imageFileName}");
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
 	}
 
 	macro selectDMImage {
@@ -136,16 +145,14 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media"
-		);
+			value1 = "Documents and Media");
 
 		if (isSet(dmFolderName)) {
 			var key_dmFolderName = "${dmFolderName}";
 
 			AssertClick(
 				locator1 = "DocumentsAndMedia#ICON_FOLDER_TITLE",
-				value1 = "${dmFolderName}"
-			);
+				value1 = "${dmFolderName}");
 		}
 
 		if (isSet(dmSubFolderName)) {
@@ -153,20 +160,16 @@ definition {
 
 			AssertClick(
 				locator1 = "DocumentsAndMedia#ICON_FOLDER_TITLE",
-				value1 = "${dmSubFolderName}"
-			);
+				value1 = "${dmSubFolderName}");
 		}
 
 		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 
-		LexiconCard.clickCard(
-			card = "${imageFileName}"
-		);
+		LexiconCard.clickCard(card = "${imageFileName}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ItemSelector#CAPTION",
-			value1 = "${imageFileName}"
-		);
+			value1 = "${imageFileName}");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -181,26 +184,23 @@ definition {
 
 		AssertClick(
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "${navTab}"
-		);
+			value1 = "${navTab}");
 
-		AssertElementPresent(
-			locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE"
-		);
+		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${uploadFileName}"
-		);
+			value1 = "${uploadFileName}");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#CAPTION",
-			value1 = "${uploadFileName}"
-		);
+			value1 = "${uploadFileName}");
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
 
-		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -213,49 +213,41 @@ definition {
 
 		Click(
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW",
-			value1 = "${imageFileName}"
-		);
+			value1 = "${imageFileName}");
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#CAPTION",
-			value1 = "${uploadFileName}"
-		);
+			value1 = "${uploadFileName}");
 
 		Click(locator1 = "ItemSelector#FILE_INFO_ICON");
 
 		AssertElementPresent(
-			locator1 = "NavTab#TAB_LINK",
-			key_tab = "File Info"
-		);
+			key_tab = "File Info",
+			locator1 = "NavTab#TAB_LINK");
 
 		AssertElementPresent(
-			locator1 = "NavTab#TAB_LINK",
-			key_tab = "Version"
-		);
+			key_tab = "Version",
+			locator1 = "NavTab#TAB_LINK");
 
 		Navigator.gotoNavTab(navTab = "File Info");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_FORMAT",
-			value1 = "${imageFormat}"
-		);
+			value1 = "${imageFormat}");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_SIZE",
-			value1 = "${imageSize}"
-		);
+			value1 = "${imageSize}");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_NAME",
-			value1 = "${uploadFileName}"
-		);
+			value1 = "${uploadFileName}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_MODIFIED",
-			value1 = "${lastModifiedBy}"
-		);
+			value1 = "${lastModifiedBy}");
 
 		var key_tab = "Version";
 
@@ -265,13 +257,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_VERSION_VERSION",
-			value1 = "${versionNumber}"
-		);
+			value1 = "${versionNumber}");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_VERSION_STATUS",
-			value1 = "${imageStatus}"
-		);
+			value1 = "${imageStatus}");
 
 		SelectFrameTop(value1 = "relative=top");
 	}

@@ -36,19 +36,16 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "JDBC_PING",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "JDBC_PING",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		echo("Successfully logged in to both nodes on JDBC_PING");
 	}

@@ -7,8 +7,7 @@ definition {
 		if (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Data Definitions")) {
 			AssertTextEquals(
 				locator1 = "Portlet#H3_MODAL_TITLE",
-				value1 = "Data Definitions"
-			);
+				value1 = "Data Definitions");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 		}
@@ -22,8 +21,7 @@ definition {
 		if (isSet(ddlDataDefinitionDescription)) {
 			Type.clickAtType(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${ddlDataDefinitionDescription}"
-			);
+				value1 = "${ddlDataDefinitionDescription}");
 		}
 	}
 
@@ -34,8 +32,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 	}
 
 	macro _showDetails {
@@ -55,15 +52,13 @@ definition {
 
 		DDLDataDefinition._add(
 			ddlDataDefinitionDescription = "${ddlDataDefinitionDescription}",
-			ddlDataDefinitionName = "${ddlDataDefinitionName}"
-		);
+			ddlDataDefinitionName = "${ddlDataDefinitionName}");
 	}
 
 	macro addViaDDLDisplayPG {
 		DDLDataDefinition._add(
 			ddlDataDefinitionDescription = "${ddlDataDefinitionDescription}",
-			ddlDataDefinitionName = "${ddlDataDefinitionName}"
-		);
+			ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -71,7 +66,9 @@ definition {
 	}
 
 	macro clickSave {
-		AssertClick(locator1 = "DDMEditStructure#SAVE_BUTTON", value1 = "Save");
+		AssertClick(
+			locator1 = "DDMEditStructure#SAVE_BUTTON",
+			value1 = "Save");
 	}
 
 	macro copyCP {
@@ -79,9 +76,7 @@ definition {
 
 		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS"
-		);
+		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Copy");
 
@@ -95,13 +90,13 @@ definition {
 			Check(locator1 = "DDMSelectTemplate#COPY_DISPLAY_TEMPLATES_CHECKBOX");
 		}
 
-		AssertClick(locator1 = "Button#COPY", value1 = "Copy");
+		AssertClick(
+			locator1 = "Button#COPY",
+			value1 = "Copy");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		DDLDataDefinition.viewName(
-			ddlDataDefinitionName = "${ddlDataDefinitionCopyName}"
-		);
+		DDLDataDefinition.viewName(ddlDataDefinitionName = "${ddlDataDefinitionCopyName}");
 	}
 
 	macro deleteCP {
@@ -109,15 +104,11 @@ definition {
 
 		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS"
-		);
+		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
@@ -126,15 +117,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLNavigator.gotoManageDataDefinitions();
 
 		AssertElementNotPresent(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS",
-			key_ddlDataDefinitionName = "${ddlDataDefinitionName}"
-		);
+			key_ddlDataDefinitionName = "${ddlDataDefinitionName}",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 	}
 
 	macro deleteNoCP {
@@ -142,20 +131,15 @@ definition {
 
 		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1"
-		);
+		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "The structure cannot be deleted because it is required by one or more structure links."
-		);
+			value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 	}
 
 	macro editCP {
@@ -163,30 +147,25 @@ definition {
 
 		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1"
-		);
+		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Edit");
 
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlDataDefinitionNameEdit}"
-		);
+			value1 = "${ddlDataDefinitionNameEdit}");
 
 		DDLDataDefinition._showDetails();
 
 		Type.clickAtType(
 			locator1 = "TextInput#DESCRIPTION",
-			value1 = "${ddlDataDefinitionDescriptionEdit}"
-		);
+			value1 = "${ddlDataDefinitionDescriptionEdit}");
 	}
 
 	macro editName {
 		Type.clickAtType(
 			locator1 = "DDMEditStructure#NAME_FIELD",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 	}
 
 	macro editPermissionsCP {
@@ -194,8 +173,7 @@ definition {
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
-			roleList = "${roleList}"
-		);
+			roleList = "${roleList}");
 	}
 
 	macro save {
@@ -219,8 +197,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#DATA_DEFINITION",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 	}
 
 	macro selectViaDDLDisplayPG {
@@ -232,14 +209,15 @@ definition {
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#DATA_DEFINITION",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 	}
 
 	macro setInputFieldLocalization {
 		var key_languageValue = "${languageValue}";
 
-		PortletEntry.changeLocale(fieldName = "Name", locale = "${languageValue}");
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "${languageValue}");
 	}
 
 	macro tearDownCP {
@@ -248,8 +226,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLNavigator.gotoManageDataDefinitions();
 
@@ -259,8 +236,7 @@ definition {
 
 		AssertTextNotEquals(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1",
-			value1 = "Contacts"
-		);
+			value1 = "Contacts");
 
 		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
@@ -269,17 +245,14 @@ definition {
 
 			ClickNoError(locator1 = "Icon#TIMES");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			if ("${kfProcessExists}" == "true") {
 				Alert.viewRequestFailedToComplete();
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_2",
-					value1 = "The structure cannot be deleted because it is required by one or more structure links."
-				);
+					value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 			}
 			else {
 				Alert.viewSuccessMessage();
@@ -294,33 +267,28 @@ definition {
 
 		Click(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Edit ${ddlDataDefinitionName}"
-		);
+			value1 = "Edit ${ddlDataDefinitionName}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 
 		if (isSet(ddlDataDefinitionDescription)) {
 			DDLDataDefinition._showDetails();
 
 			AssertTextEquals(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${ddlDataDefinitionDescription}"
-			);
+				value1 = "${ddlDataDefinitionDescription}");
 		}
 
 		if (isSet(fieldFieldLabel)) {
 			AssertElementPresent(
-				locator1 = "DDMEditStructure#FORM_FIELD",
-				key_fieldFieldLabel = "${fieldFieldLabel}"
-			);
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD");
 		}
 	}
 
@@ -329,19 +297,22 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
-			value1 = "${ddlDataDefinitionName}"
-		);
+			value1 = "${ddlDataDefinitionName}");
 	}
 
 	macro viewParentStructureHeader {
 		Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		var key_assetTitle = "${assetTitle}";
 
-		AssertTextEquals(locator1 = "NavBar#ASSET_TITLE", value1 = "${assetTitle}");
+		AssertTextEquals(
+			locator1 = "NavBar#ASSET_TITLE",
+			value1 = "${assetTitle}");
 	}
 }

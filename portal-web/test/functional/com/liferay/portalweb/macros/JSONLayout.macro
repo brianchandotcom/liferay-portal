@@ -97,8 +97,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "true",
-			type = "${type}"
-		);
+			type = "${type}");
 	}
 
 	@summary = "Add a private site page or private child site page to an existing site via groupName"
@@ -122,8 +121,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "true",
-			type = "${type}"
-		);
+			type = "${type}");
 	}
 
 	@summary = "Add a public site page  or public child site page to an existing site or child site via groupKey"
@@ -147,8 +145,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "false",
-			type = "${type}"
-		);
+			type = "${type}");
 	}
 
 	@summary = "Add a public site page or public child site page to an existing site via groupName"
@@ -172,7 +169,6 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "false",
-			type = "${type}"
-		);
+			type = "${type}");
 	}
 }

@@ -24,21 +24,21 @@ definition {
 		var key_panel = StringUtil.replace("${key_panel}", " ", "_");
 
 		if (IsElementPresent(locator1 = "ProductMenu#PANEL_COLLAPSED", key_panel = "${key_panel}")) {
-			Click(locator1 = "ProductMenu#PANEL_COLLAPSED", key_panel = "${key_panel}");
+			Click(
+				key_panel = "${key_panel}",
+				locator1 = "ProductMenu#PANEL_COLLAPSED");
 		}
 
 		AssertElementPresent(
-			locator1 = "ProductMenu#PANEL_EXPANDED",
-			key_panel = "${key_panel}"
-		);
+			key_panel = "${key_panel}",
+			locator1 = "ProductMenu#PANEL_EXPANDED");
 	}
 
 	macro gotoPortlet {
 		AssertClick.assertPartialTextClickAt(
+			key_portlet = "${portlet}",
 			locator1 = "ProductMenu#PORTLET",
-			value1 = "${portlet}",
-			key_portlet = "${portlet}"
-		);
+			value1 = "${portlet}");
 	}
 
 	macro openProductMenu {

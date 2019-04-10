@@ -16,44 +16,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addCP(siteName = "Site Name", siteType = "Blank");
+		Site.addCP(
+			siteName = "Site Name",
+			siteType = "Blank");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Page Revision"
-		);
+			workflowResourceValue = "Page Revision");
 	}
 
 	tearDown {
@@ -77,77 +73,80 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Staging.submitForPublicationPageRevision();
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Pending (Review)"
-		);
+			workflowStatus = "Pending (Review)");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "${pageName}",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Pending (Review)"
-		);
+			workflowStatus = "Pending (Review)");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "${pageName}",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewRejectedTask(
 			workflowAssetTitle = "${pageName}",
-			workflowAssetType = "${workflowAssetType}"
-		);
+			workflowAssetType = "${workflowAssetType}");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Pending (Update)"
-		);
+			workflowStatus = "Pending (Update)");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Pending (Update)"
-		);
+			workflowStatus = "Pending (Update)");
 	}
 
 	@description = "This is a use case for LPS-65319."
@@ -158,50 +157,52 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Staging.submitForPublicationPageRevision();
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Pending (Review)"
-		);
+			workflowStatus = "Pending (Review)");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "${pageName}",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "${pageName}",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Page.viewWithWorkflowPG(
 			pageName = "${pageName}",
-			workflowStatus = "Ready for Publication"
-		);
+			workflowStatus = "Ready for Publication");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		Staging.gotoPublishToLive();
 
@@ -212,8 +213,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.deactivateStagingCP(siteName = "${siteName}");
 
@@ -223,8 +223,7 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to Me"
-		);
+			value1 = "Assigned to Me");
 
 		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "${pageName}");
 
@@ -233,8 +232,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.deletePage(pageName = "${pageName}");
 	}
@@ -245,55 +243,48 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "user@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Site Administrator",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
@@ -301,41 +292,35 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userScreenName = "Test Test"
-		);
+			userScreenName = "Test Test");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Site Page Name",
 			workflowAssetType = "Page Revision",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "Site Page Name",
 			workflowAssetType = "Page Revision",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "No Workflow",
-			workflowResourceValue = "Page Revision"
-		);
+			workflowResourceValue = "Page Revision");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.deactivateCP(userFirstName = "userfn");
 
@@ -344,15 +329,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Submissions"
-		);
+			portlet = "Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "Site Page Name",
 			workflowAssetType = "Page Revision",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Update"
-		);
+			workflowTask = "Update");
 
 		Workflow.viewDefaultWorkflowSubmissions();
 	}

@@ -111,8 +111,7 @@ definition {
 			roleDescription = "${roleDescription}",
 			roleKey = "${roleKey}",
 			roleTitle = "${roleTitle}",
-			roleType = "organization"
-		);
+			roleType = "organization");
 	}
 
 	macro addRegularRole {
@@ -124,8 +123,7 @@ definition {
 			roleDescription = "${roleDescription}",
 			roleKey = "${roleKey}",
 			roleTitle = "${roleTitle}",
-			roleType = "regular"
-		);
+			roleType = "regular");
 	}
 
 	macro addSiteRole {
@@ -137,8 +135,7 @@ definition {
 			roleDescription = "${roleDescription}",
 			roleKey = "${roleKey}",
 			roleTitle = "${roleTitle}",
-			roleType = "site"
-		);
+			roleType = "site");
 	}
 
 	macro assignRoleToUser {
@@ -154,7 +151,9 @@ definition {
 
 		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
-		JSONRole._assignRoleToUser(roleId = "${roleId}", userId = "${userId}");
+		JSONRole._assignRoleToUser(
+			roleId = "${roleId}",
+			userId = "${userId}");
 	}
 
 	macro getRoleIdByName {

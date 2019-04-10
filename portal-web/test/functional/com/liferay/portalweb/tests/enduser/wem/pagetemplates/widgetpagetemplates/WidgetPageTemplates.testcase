@@ -31,13 +31,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 	}
 
 	@priority = "5"
@@ -50,65 +48,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Site Page",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.viewPageTemplate(
 			page = "Site Page",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(
-			pageTemplateName = "Page Template Name"
-		);
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
 
 		Portlet.viewPG(portletName = "Blogs");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Site Page");
 
 		Page.togglePageTemplateInheritChanges(toggleValue = "disable");
 
@@ -121,16 +113,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(
-			pageTemplateName = "Page Template Name"
-		);
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
 
 		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 	}
@@ -144,31 +135,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.deactivateAndActivate(
 			pageTemplateName = "Page Template Name",
-			pageTemplateStatus = "Not Active"
-		);
+			pageTemplateStatus = "Not Active");
 
 		PageTemplatesAdminGlobalSite.viewStatus(
 			pageTemplateName = "Page Template Name",
-			pageTemplateStatus = "Not Active"
-		);
+			pageTemplateStatus = "Not Active");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		LexiconEntry.gotoAdd();
 
@@ -181,26 +167,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.deactivateAndActivate(
 			pageTemplateName = "Page Template Name",
-			pageTemplateStatus = "Active"
-		);
+			pageTemplateStatus = "Active");
 
 		PageTemplatesAdminGlobalSite.viewStatus(
 			pageTemplateName = "Page Template Name",
-			pageTemplateStatus = "Active"
-		);
+			pageTemplateStatus = "Active");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		LexiconEntry.gotoAdd();
 
@@ -218,13 +200,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Page Template Name");
 
@@ -240,18 +220,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.editCP(
 			pageTemplateActive = "Not Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 	}
 
 	@priority = "4"
@@ -261,23 +238,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.editDescription(
 			pageTemplateDescription = "This is a page template description",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.viewDescription(
 			pageTemplateDescription = "This is a page template description edit",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 	}
 
 	@priority = "5"
@@ -288,34 +261,28 @@ definition {
 
 		LAR.importSiteCP(
 			larFileName = "college-and-department-page-templates.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");
 
-		PageTemplatesAdminGlobalSite.viewCP(
-			pageTemplateName = "Department Landing Page"
-		);
+		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "Department Landing Page");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PageTemplatesAdminGlobalSite.viewPG(
 			pageTemplateName = "College Landing Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Portlet.viewSpecificPG(portletName = "Media Gallery");
 
 		Portlet.viewDuplicatePG(
 			portletName = "Web Content Display",
-			totalPortletCount = "3"
-		);
+			totalPortletCount = "3");
 
 		Portlet.viewSpecificPG(portletName = "Asset Publisher");
 
@@ -326,20 +293,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.viewPG(
 			pageTemplateName = "Department Landing Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Portlet.viewSpecificPG(portletName = "Media Gallery");
 
 		Portlet.viewDuplicatePG(
 			portletName = "Web Content Display",
-			totalPortletCount = "2"
-		);
+			totalPortletCount = "2");
 
 		Portlet.viewSpecificPG(portletName = "Members");
 
@@ -355,55 +319,47 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		MyAccount.changeUserLanguage(
 			languageName = "español (España)",
 			saveButton = "Save",
-			successMessage = "Su petición ha terminado con éxito."
-		);
+			successMessage = "Su petición ha terminado con éxito.");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoLocalizedSite(
 			displayStyle = "tabla",
 			navItem = "Mis Sitios",
-			site = "Global"
-		);
+			site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Compilación",
 			panel = "Site Administration",
-			portlet = "Páginas del sitio web"
-		);
+			portlet = "Páginas del sitio web");
 
 		PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
 			pageTemplateNameList = "Blog,Búsqueda,Wiki",
-			portletTitle = "Páginas del sitio web"
-		);
+			portletTitle = "Páginas del sitio web");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Mi cuenta",
 			panel = "User",
-			portlet = "Mi cuenta"
-		);
+			portlet = "Mi cuenta");
 
 		MyAccount.changeUserLanguage(
 			languageName = "English (United States)",
 			saveButton = "Guardar",
-			successMessage = "Your request completed successfully."
-		);
+			successMessage = "Your request completed successfully.");
 
 		Navigator.openURL();
 
@@ -412,8 +368,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 	}
@@ -427,37 +382,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PageTemplatesAdminGlobalSite.viewPG(
 			pageTemplateName = "Page Template Name",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.editCP(
 			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name"
-		);
+			pageTemplateName = "Page Template Name");
 
 		PageTemplatesAdminGlobalSite.viewPG(
 			pageTemplateName = "Page Template Name Edit",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 	}
 }

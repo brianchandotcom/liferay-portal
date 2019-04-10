@@ -34,26 +34,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 	}
 
 	@priority = "4"
@@ -63,65 +59,58 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
-		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn");
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewMemberCP(
 			membershipType = "User",
 			teamName = "Site Team Name",
 			userFirstName = "userfn",
-			userLastName = "userln"
-		);
+			userLastName = "userln");
 	}
 
 	@priority = "4"
@@ -131,40 +120,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "User Group Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
@@ -173,27 +156,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name"
-		);
+			userGroupName = "User Group Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewMemberCP(
 			membershipType = "User Group",
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name"
-		);
+			userGroupName = "User Group Name");
 	}
 
 	@priority = "5"
@@ -203,16 +182,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page");
 
@@ -221,38 +198,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team1 Description",
-			teamName = "Site Team1 Name"
-		);
+			teamName = "Site Team1 Name");
 
 		Team.addCP(
 			teamDescription = "Site Team2 Description",
-			teamName = "Site Team2 Name"
-		);
+			teamName = "Site Team2 Name");
 
 		Team.addCP(
 			teamDescription = "Site Team3 Description",
-			teamName = "Site Team3 Name"
-		);
+			teamName = "Site Team3 Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team1 Description",
-			teamName = "Site Team1 Name"
-		);
+			teamName = "Site Team1 Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team2 Description",
-			teamName = "Site Team2 Name"
-		);
+			teamName = "Site Team2 Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team3 Description",
-			teamName = "Site Team3 Name"
-		);
+			teamName = "Site Team3 Name");
 	}
 
 	@priority = "5"
@@ -263,84 +233,74 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
-		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn");
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewMemberCP(
 			membershipType = "User",
 			teamName = "Site Team Name",
 			userFirstName = "userfn",
-			userLastName = "userln"
-		);
+			userLastName = "userln");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.removeMemberCP(
 			membershipType = "User",
 			teamName = "Site Team Name",
 			userFirstName = "userfn",
-			userLastName = "userln"
-		);
+			userLastName = "userln");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
@@ -352,40 +312,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.viewCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "User Group Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
@@ -394,45 +348,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name"
-		);
+			userGroupName = "User Group Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewMemberCP(
 			membershipType = "User Group",
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name"
-		);
+			userGroupName = "User Group Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.removeMemberCP(
 			membershipType = "User Group",
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name"
-		);
+			userGroupName = "User Group Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
@@ -443,8 +390,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -452,8 +398,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "User Groups"
-			);
+				portlet = "User Groups");
 
 			UserGroup.addCP(userGroupName = "User Group Name ${n}");
 
@@ -462,8 +407,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				panel = "Site Administration",
-				portlet = "Memberships"
-			);
+				portlet = "Memberships");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name ${n}");
 		}
@@ -473,43 +417,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
-			userGroupName = "User Group Name 1"
-		);
+			userGroupName = "User Group Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
 		Team.searchCP(
 			membershipType = "User Group",
-			searchTerm = "&quot;User Group Name 1&quot;"
-		);
+			searchTerm = "&quot;User Group Name 1&quot;");
 
 		Team.searchCP(
 			isEmpty = "true",
 			membershipType = "User Group",
-			searchTerm = "&quot;User Group Name 2&quot;"
-		);
+			searchTerm = "&quot;User Group Name 2&quot;");
 	}
 
 	test AddSiteTeamSearchUsers {
@@ -518,8 +455,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -527,29 +463,25 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.addCP(
 				userEmailAddress = "userea${n}@liferay.com",
 				userFirstName = "userfn${n}",
 				userLastName = "userln${n}",
-				userScreenName = "usersn${n}"
-			);
+				userScreenName = "usersn${n}");
 
 			ProductMenu.gotoSite(site = "Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
 				panel = "Site Administration",
-				portlet = "Memberships"
-			);
+				portlet = "Memberships");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn${n}",
 				userLastName = "userln${n}",
-				userScreenName = "usersn${n}"
-			);
+				userScreenName = "usersn${n}");
 		}
 
 		ProductMenu.gotoSite(site = "Site Name");
@@ -557,36 +489,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
-		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
 		for (var searchTerm : list "userfn1,userln1,usersn1") {
-			Team.searchCP(membershipType = "User", searchTerm = "${searchTerm}");
+			Team.searchCP(
+				membershipType = "User",
+				searchTerm = "${searchTerm}");
 		}
 
 		for (var searchTerm : list "userfn2,userln2,usersn2") {
 			Team.searchCP(
 				isEmpty = "true",
 				membershipType = "User",
-				searchTerm = "${searchTerm}"
-			);
+				searchTerm = "${searchTerm}");
 		}
 	}
 
@@ -597,26 +529,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.deleteCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.viewDefaultCP(teamName = "Site Team Name");
 	}
@@ -629,31 +557,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.editCP(
 			teamDescriptionEdit = "Site Team Description Edit",
 			teamName = "Site Team Name",
-			teamNameEdit = "Site Team Name Edit"
-		);
+			teamNameEdit = "Site Team Name Edit");
 
 		Team.viewCP(
 			teamDescription = "Site Team Description Edit",
-			teamName = "Site Team Name Edit"
-		);
+			teamName = "Site Team Name Edit");
 	}
 }

@@ -2,9 +2,7 @@ definition {
 	macro addBehaviorContentVisitedRuleCP {
 		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Content Visited");
 
-		Click(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON"
-		);
+		Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON");
 
 		MenuItem.click(menuItem = "${contentVisitedContent}");
 
@@ -20,28 +18,21 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD",
-			value1 = "${friendlyURL}"
-		);
+			value1 = "${friendlyURL}");
 	}
 
 	macro addBehaviorPreviouslyVisitedSiteRuleCP {
-		ContentTargetingUserSegment.addRuleCmdCP(
-			userSegmentRule = "Previously Visited Site"
-		);
+		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Previously Visited Site");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_CONDITION_SELECT",
-			value1 = "${condition}"
-		);
+			value1 = "${condition}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_VALUE_FIELD",
-			value1 = "${conditionValue}"
-		);
+			value1 = "${conditionValue}");
 
-		Click(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_ADD_BUTTON"
-		);
+		Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_ADD_BUTTON");
 	}
 
 	macro addBehaviorScorePointsRuleCP {
@@ -49,8 +40,7 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD",
-			value1 = "${scorePoints}"
-		);
+			value1 = "${scorePoints}");
 	}
 
 	macro addCP {
@@ -66,8 +56,7 @@ definition {
 	macro addRuleCmdCP {
 		Type(
 			locator1 = "ContentTargeting#FORM_SEARCH_FIELD",
-			value1 = "${userSegmentRule}"
-		);
+			value1 = "${userSegmentRule}");
 
 		ContentTargetingUserSegment.expandCategory();
 
@@ -76,8 +65,7 @@ definition {
 		DragAndDrop(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULES_RULE",
 			locator2 = "ContentTargeting#FORM_BUILDER",
-			value1 = "${userSegmentRule}"
-		);
+			value1 = "${userSegmentRule}");
 	}
 
 	macro addSocialFacebookAgeRuleCP {
@@ -85,13 +73,11 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD",
-			value1 = "${facebookOlderThanAge}"
-		);
+			value1 = "${facebookOlderThanAge}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD",
-			value1 = "${facebookYoungerThanAge}"
-		);
+			value1 = "${facebookYoungerThanAge}");
 	}
 
 	macro addSocialFacebookCityRuleCP {
@@ -99,8 +85,7 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD",
-			value1 = "${facebookCity}"
-		);
+			value1 = "${facebookCity}");
 	}
 
 	macro addSocialFacebookEducationRuleCP {
@@ -108,13 +93,11 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT",
-			value1 = "${facebookEducationLevel}"
-		);
+			value1 = "${facebookEducationLevel}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD",
-			value1 = "${facebookCollegeHighSchoolName}"
-		);
+			value1 = "${facebookCollegeHighSchoolName}");
 	}
 
 	macro addSocialFacebookFriendsRuleCP {
@@ -122,32 +105,24 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT",
-			value1 = "${moreLessThan}"
-		);
+			value1 = "${moreLessThan}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD",
-			value1 = "${numberOfFriends}"
-		);
+			value1 = "${numberOfFriends}");
 	}
 
 	macro addSocialFacebookGenderRuleCP {
 		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Facebook Gender");
 
 		if ("${facebookGenderRadio}" == "Male") {
-			Click(
-				locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO"
-			);
+			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO");
 		}
 		else if ("${facebookGenderRadio}" == "Female") {
-			Click(
-				locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO"
-			);
+			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO");
 		}
 		else if ("${facebookGenderRadio}" == "Custom") {
-			Click(
-				locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO"
-			);
+			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO");
 		}
 	}
 
@@ -156,8 +131,7 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD",
-			value1 = "${facebookURL}"
-		);
+			value1 = "${facebookURL}");
 	}
 
 	macro addSystemAttributesBrowserRuleCP {
@@ -165,8 +139,7 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT",
-			value1 = "${browserName}"
-		);
+			value1 = "${browserName}");
 	}
 
 	macro addSystemAttributesDeviceRuleCP {
@@ -174,8 +147,7 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT",
-			value1 = "${deviceFamilyName}"
-		);
+			value1 = "${deviceFamilyName}");
 	}
 
 	macro addSystemAttributesLocationRuleCP {
@@ -183,13 +155,11 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT",
-			value1 = "${countryName}"
-		);
+			value1 = "${countryName}");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT",
-			value1 = "${regionName}"
-		);
+			value1 = "${regionName}");
 	}
 
 	macro addSystemAttributesOperatingSystemRuleCP {
@@ -197,8 +167,7 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT",
-			value1 = "${operatingSystemName}"
-		);
+			value1 = "${operatingSystemName}");
 	}
 
 	macro addSystemAttributesTimeRuleCP {
@@ -206,13 +175,11 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD",
-			value1 = "${startTime}"
-		);
+			value1 = "${startTime}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD",
-			value1 = "${endTime}"
-		);
+			value1 = "${endTime}");
 	}
 
 	macro addUserAttributesAgeRuleCP {
@@ -220,30 +187,27 @@ definition {
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD",
-			value1 = "${olderThanAge}"
-		);
+			value1 = "${olderThanAge}");
 
 		Type(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD",
-			value1 = "${youngerThanAge}"
-		);
+			value1 = "${youngerThanAge}");
 	}
 
 	macro addUserAttributesCustomFieldCP {
 		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Custom Field");
 
-		Click(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT_BUTTON"
-		);
+		Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT",
-			value1 = "${customFieldKey}"
-		);
+			value1 = "${customFieldKey}");
 
-		Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customFieldValue}");
+		Type(
+			locator1 = "TextInput#CUSTOM_FIELD",
+			value1 = "${customFieldValue}");
 
 		Button.clickDone();
 
@@ -254,26 +218,19 @@ definition {
 		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Gender");
 
 		if ("${genderRadio}" == "Male") {
-			Click(
-				locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO"
-			);
+			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO");
 		}
 		else if ("${genderRadio}" == "Female") {
-			Click(
-				locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO"
-			);
+			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO");
 		}
 	}
 
 	macro addUserAttributesOrganizationMemberRuleCP {
-		ContentTargetingUserSegment.addRuleCmdCP(
-			userSegmentRule = "Organization Member"
-		);
+		ContentTargetingUserSegment.addRuleCmdCP(userSegmentRule = "Organization Member");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT",
-			value1 = "${organizationName}"
-		);
+			value1 = "${organizationName}");
 	}
 
 	macro addUserAttributesOrganizationRoleRuleCP {
@@ -281,13 +238,11 @@ definition {
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT",
-			value1 = "${organizationName}"
-		);
+			value1 = "${organizationName}");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT",
-			value1 = "${organizationRole}"
-		);
+			value1 = "${organizationRole}");
 	}
 
 	macro addUserAttributesRegularRoleRuleCP {
@@ -297,13 +252,11 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_DEFAULT_REGULAR_ROLE",
-			value1 = "Administrator"
-		);
+			value1 = "Administrator");
 
 		Select(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT",
-			value1 = "${regularRole}"
-		);
+			value1 = "${regularRole}");
 	}
 
 	macro addUserAttributesSiteMemberRuleCP {
@@ -311,15 +264,13 @@ definition {
 
 		AssertClick(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Click(
-			locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK",
-			key_siteName = "${selectSiteMemberSite}"
-		);
+			key_siteName = "${selectSiteMemberSite}",
+			locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -329,29 +280,25 @@ definition {
 
 		AssertClick(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITE_ROLE");
 
 		if (IsElementPresent(locator1 = "Message#INFO")) {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "Please select a site to which you will assign a site role."
-			);
+				value1 = "Please select a site to which you will assign a site role.");
 
 			AssertClick(
+				key_siteRoleSite = "${siteRoleSite}",
 				locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_CHOOSE_BUTTON",
-				value1 = "Choose",
-				key_siteRoleSite = "${siteRoleSite}"
-			);
+				value1 = "Choose");
 		}
 
 		AssertClick(
+			key_siteRole = "${siteRole}",
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON",
-			value1 = "Choose",
-			key_siteRole = "${siteRole}"
-		);
+			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -361,16 +308,14 @@ definition {
 
 		AssertClick(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertClick(
+			key_userGroupName = "${userGroupName}",
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_USER_GROUP_CHOOSE_BUTTON",
-			value1 = "Choose",
-			key_userGroupName = "${userGroupName}"
-		);
+			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -380,8 +325,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE",
-			value1 = "This rule will be matched if the user is signed in."
-		);
+			value1 = "This rule will be matched if the user is signed in.");
 	}
 
 	macro deleteAllCP {
@@ -389,9 +333,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}
@@ -399,39 +341,31 @@ definition {
 	macro deleteUserSegmentCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${userSegmentName}"
-		);
+			rowEntry = "${userSegmentName}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No User Segments were found"
-		);
+			value1 = "No User Segments were found");
 	}
 
 	macro editGenderRule {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${userSegmentName}"
-		);
+			rowEntry = "${userSegmentName}");
 
 		ContentTargetingUserSegment.openFormField(usersegmentRuleName = "Gender");
 
-		Click(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_${genderRadioPath}_RADIO"
-		);
+		Click(locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_${genderRadioPath}_RADIO");
 	}
 
 	macro editUserSegmentCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${userSegmentName}"
-		);
+			rowEntry = "${userSegmentName}");
 
 		PortletEntry.inputName(name = "${userSegmentNameEdit}");
 
@@ -461,9 +395,7 @@ definition {
 			Click(locator1 = "EditUserSegment#USER_SEGMENT_RULES_CATEGORY_COLLAPSED");
 		}
 
-		AssertElementPresent(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULES_CATEGORY_EXPANDED"
-		);
+		AssertElementPresent(locator1 = "EditUserSegment#USER_SEGMENT_RULES_CATEGORY_EXPANDED");
 	}
 
 	macro gotoViewReport {
@@ -472,10 +404,9 @@ definition {
 		Navigator.gotoNavItem(navItem = "Reports");
 
 		AssertTextEquals(
+			key_rowEntry = "${userSegmentName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3",
-			value1 = "Displays the number of times that content has been viewed by a user who belongs to the current user segment.",
-			key_rowEntry = "${userSegmentName}"
-		);
+			value1 = "Displays the number of times that content has been viewed by a user who belongs to the current user segment.");
 
 		LexiconEntry.gotoEntry(rowEntry = "${reportName}");
 
@@ -497,9 +428,7 @@ definition {
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Edit");
 
-		AssertElementNotPresent(
-			locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE"
-		);
+		AssertElementNotPresent(locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE");
 	}
 
 	macro viewCP {
@@ -508,10 +437,9 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "${userSegmentName}");
 
 		AssertTextEquals(
+			key_rowEntry = "${userSegmentName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3",
-			value1 = "${userSegmentDescription}",
-			key_rowEntry = "${userSegmentName}"
-		);
+			value1 = "${userSegmentDescription}");
 	}
 
 	macro viewNotPresentCP {
@@ -529,8 +457,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentTargeting#REPORT_TABLE_CONTENT",
-				value1 = "${contentReports}"
-			);
+				value1 = "${contentReports}");
 		}
 	}
 
@@ -544,234 +471,187 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "EditUserSegment#USER_SEGMENT_RULE_APPLIED",
-				value1 = "${usersegmentRuleName}"
-			);
+				value1 = "${usersegmentRuleName}");
 
 			if (!("${ruleInstance}" == "1")) {
-				ContentTargetingUserSegment.openFormField(
-					usersegmentRuleName = "${usersegmentRuleName}"
-				);
+				ContentTargetingUserSegment.openFormField(usersegmentRuleName = "${usersegmentRuleName}");
 			}
 
 			if ("${usersegmentRuleName}" == "Content Visited") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE",
-					value1 = "${webContentTitle}"
-				);
+					value1 = "${webContentTitle}");
 			}
 			else if ("${usersegmentRuleName}" == "Score Points") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD",
-					value1 = "${scorePoints}"
-				);
+					value1 = "${scorePoints}");
 			}
 			else if ("${usersegmentRuleName}" == "Page Visited") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD",
-					value1 = "${friendlyURL}"
-				);
+					value1 = "${friendlyURL}");
 			}
 			else if ("${usersegmentRuleName}" == "Previously Visited Site") {
 				AssertTextPresent(
 					locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-					value1 = "${condition}"
-				);
+					value1 = "${condition}");
 
 				AssertTextPresent(
 					locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-					value1 = "${conditionValue}"
-				);
+					value1 = "${conditionValue}");
 			}
 			else if ("${usersegmentRuleName}" == "Facebook Education") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT",
-					value1 = "${facebookEducationLevel}"
-				);
+					value1 = "${facebookEducationLevel}");
 
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD",
-					value1 = "${facebookCollegeHighSchoolName}"
-				);
+					value1 = "${facebookCollegeHighSchoolName}");
 			}
 			else if ("${usersegmentRuleName}" == "Facebook City") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD",
-					value1 = "${facebookCity}"
-				);
+					value1 = "${facebookCity}");
 			}
 			else if ("${usersegmentRuleName}" == "Facebook Page Like") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD",
-					value1 = "${facebookURL}"
-				);
+					value1 = "${facebookURL}");
 			}
 			else if ("${usersegmentRuleName}" == "Facebook Gender") {
 				if ("${facebookGenderRadio}" == "Male") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO");
 				}
 				else if ("${facebookGenderRadio}" == "Female") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO");
 				}
 				else if ("${facebookGenderRadio}" == "Custom") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO");
 				}
 			}
 			else if ("${usersegmentRuleName}" == "Facebook Friends") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT",
-					value1 = "${moreLessThan}"
-				);
+					value1 = "${moreLessThan}");
 
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD",
-					value1 = "${numberOfFriends}"
-				);
+					value1 = "${numberOfFriends}");
 			}
 			else if ("${usersegmentRuleName}" == "Facebook Age") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD",
-					value1 = "${facebookOlderThanAge}"
-				);
+					value1 = "${facebookOlderThanAge}");
 
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD",
-					value1 = "${facebookYoungerThanAge}"
-				);
+					value1 = "${facebookYoungerThanAge}");
 			}
 			else if ("${usersegmentRuleName}" == "Site Member") {
 				AssertTextEquals(
+					key_selectSiteMemberSite = "${selectSiteMemberSite}",
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT",
-					value1 = "${selectSiteMemberSite}",
-					key_selectSiteMemberSite = "${selectSiteMemberSite}"
-				);
+					value1 = "${selectSiteMemberSite}");
 			}
 			else if ("${userSegmentRuleName}" == "Custom Field") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_ATTRIBUTE_CONTAINER",
-					value1 = "${customFieldKey}: ${customFieldValue}"
-				);
+					value1 = "${customFieldKey}: ${customFieldValue}");
 			}
 			else if ("${usersegmentRuleName}" == "Gender") {
 				if ("${facebookGenderRadio}" == "Male") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO");
 				}
 				else if ("${facebookGenderRadio}" == "Female") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO");
 				}
 				else if ("${facebookGenderRadio}" == "Custom") {
-					AssertChecked(
-						locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO"
-					);
+					AssertChecked(locator1 = "EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO");
 				}
 			}
 			else if ("${usersegmentRuleName}" == "Site Role") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT",
-					value1 = "${siteRole}"
-				);
+					value1 = "${siteRole}");
 
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT",
-					value1 = "${siteRoleSite}"
-				);
+					value1 = "${siteRoleSite}");
 			}
 			else if ("${usersegmentRuleName}" == "User Group Member") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT",
-					value1 = "${userGroupName}"
-				);
+					value1 = "${userGroupName}");
 			}
 			else if ("${usersegmentRuleName}" == "User Signed In") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE",
-					value1 = "This rule will be matched if the user is signed in."
-				);
+					value1 = "This rule will be matched if the user is signed in.");
 			}
 			else if ("${usersegmentRuleName}" == "Organization Role") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT",
-					value1 = "${organizationName}"
-				);
+					value1 = "${organizationName}");
 
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT",
-					value1 = "${organizationRole}"
-				);
+					value1 = "${organizationRole}");
 			}
 			else if ("${usersegmentRuleName}" == "Organization Member") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT",
-					value1 = "${organizationName}"
-				);
+					value1 = "${organizationName}");
 			}
 			else if ("${usersegmentRuleName}" == "Regular Role") {
 				var key_regularRole = "${regularRole}";
 
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT",
-					value1 = "${regularRole}"
-				);
+					value1 = "${regularRole}");
 			}
 			else if ("${usersegmentRuleName}" == "Age") {
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD",
-					value1 = "${olderThanAge}"
-				);
+					value1 = "${olderThanAge}");
 
 				AssertTextEquals(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD",
-					value1 = "${youngerThanAge}"
-				);
+					value1 = "${youngerThanAge}");
 			}
 			else if ("${usersegmentRuleName}" == "Location") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT",
-					value1 = "${countryName}"
-				);
+					value1 = "${countryName}");
 
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT",
-					value1 = "${regionName}"
-				);
+					value1 = "${regionName}");
 			}
 			else if ("${usersegmentRuleName}" == "Browser") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT",
-					value1 = "${browserName}"
-				);
+					value1 = "${browserName}");
 			}
 			else if ("${usersegmentRuleName}" == "Operating System") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT",
-					value1 = "${operatingSystemName}"
-				);
+					value1 = "${operatingSystemName}");
 			}
 			else if ("${usersegmentRuleName}" == "Time") {
 				Type(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD",
-					value1 = "${startTime}"
-				);
+					value1 = "${startTime}");
 
 				Type(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD",
-					value1 = "${endTime}"
-				);
+					value1 = "${endTime}");
 			}
 			else if ("${usersegmentRuleName}" == "Device") {
 				AssertSelectedLabel(
 					locator1 = "EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT",
-					value1 = "${deviceFamilyName}"
-				);
+					value1 = "${deviceFamilyName}");
 			}
 		}
 	}

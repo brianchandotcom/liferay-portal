@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -80,7 +79,9 @@ definition {
 
 		CalendarResource.add(calendarResourceName = "Truck");
 
-		Search.searchPG(portletName = "Calendar", searchTerm = "Room Car ");
+		Search.searchPG(
+			portletName = "Calendar",
+			searchTerm = "Room Car ");
 
 		CalendarResource.viewResourceName(calendarResourceName = "Room 1");
 
@@ -88,7 +89,9 @@ definition {
 
 		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Truck");
 
-		Search.searchPG(portletName = "Calendar", searchTerm = "Room");
+		Search.searchPG(
+			portletName = "Calendar",
+			searchTerm = "Room");
 
 		CalendarResource.viewResourceName(calendarResourceName = "Room 1");
 
@@ -108,13 +111,17 @@ definition {
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
-		CalendarEvent.selectTimes(endDateTime = "11:00 AM", startDateTime = "08:00 AM");
+		CalendarEvent.selectTimes(
+			endDateTime = "11:00 AM",
+			startDateTime = "08:00 AM");
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
 		CalendarEvent.setEndDateTomorrow();
 
-		CalendarEvent.selectTimes(endDateTime = "07:00 AM", startDateTime = "08:00 AM");
+		CalendarEvent.selectTimes(
+			endDateTime = "07:00 AM",
+			startDateTime = "08:00 AM");
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
@@ -127,34 +134,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Calendar");
 
-		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		CalendarNavigator.gotoAddResource();
 
@@ -166,19 +173,17 @@ definition {
 
 		CalendarResource.viewDefault();
 
-		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		Calendar.searchOtherCalendars(searchValue = "resource");
 
-		Calendar.viewOtherCalendarsSearchResultNotPresent(
-			calendarName = "Calendar Resource"
-		);
+		Calendar.viewOtherCalendarsSearchResultNotPresent(calendarName = "Calendar Resource");
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.viewInvitationResourceNotPresent(
-			resourceNameList = "Calendar Resource"
-		);
+		CalendarEvent.viewInvitationResourceNotPresent(resourceNameList = "Calendar Resource");
 	}
 
 	@priority = "3"
@@ -188,44 +193,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -239,8 +240,7 @@ definition {
 
 		Calendar.add(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -254,14 +254,12 @@ definition {
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
 			resourcesAvailability = "true",
-			specificOptionSetValue = "Test Test,Calendar Resource Name"
-		);
+			specificOptionSetValue = "Test Test,Calendar Resource Name");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventNumber = "2",
-			eventTitle = "Calendar Event All Day Title"
-		);
+			eventTitle = "Calendar Event All Day Title");
 	}
 }

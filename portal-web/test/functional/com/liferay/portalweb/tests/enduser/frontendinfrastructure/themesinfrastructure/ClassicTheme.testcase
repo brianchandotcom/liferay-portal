@@ -24,15 +24,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Classic Theme Page");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Classic Theme Page"
-		);
+			pageName = "Classic Theme Page");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
@@ -46,8 +44,7 @@ definition {
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Classic Theme Page"
-		);
+			pageName = "Classic Theme Page");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 

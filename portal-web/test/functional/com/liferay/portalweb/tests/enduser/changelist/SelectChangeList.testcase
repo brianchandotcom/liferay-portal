@@ -12,23 +12,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
-		ChangeList.enableChangeList(
-			gotoOverview = "true"
-		);
+		ChangeList.enableChangeList(gotoOverview = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 	}
 
 	tearDown {
@@ -41,8 +36,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Control Panel",
-				portlet = "Settings"
-			);
+				portlet = "Settings");
 
 			ChangeList.disableChangeList();
 		}
@@ -50,9 +44,7 @@ definition {
 
 	@priority = "4"
 	test AssertOnActiveStatus {
-		ChangeList.selectChangeList(
-			changeListName = "Select Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Select Change List");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -60,7 +52,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_STATUS",
-			value1 = "Active"
-		);
+			value1 = "Active");
 	}
 }

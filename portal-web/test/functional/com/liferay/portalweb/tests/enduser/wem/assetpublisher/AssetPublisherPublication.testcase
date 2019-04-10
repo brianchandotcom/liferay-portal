@@ -13,13 +13,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
-			layoutName = "Staging Test Page"
-		);
+			layoutName = "Staging Test Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 	}
@@ -45,36 +43,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		WebContent.addArticleCP(
 			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			webContentTitle = "Webcontent Title");
 
 		WebContent.moveArticlesToFolderCP(
 			folderName = "WC Folder Name",
-			webContentArticlesList = "Webcontent Title"
-		);
+			webContentArticlesList = "Webcontent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -83,18 +75,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 
@@ -102,18 +91,15 @@ definition {
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "WC Folder Description",
-			assetTitle = "WC Folder Name"
-		);
+			assetTitle = "WC Folder Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Webcontent Content",
-			assetTitle = "Webcontent Title"
-		);
+			assetTitle = "Webcontent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -130,45 +116,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Categories"
-		);
+			portlet = "Categories");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
 		Category.addCP(
 			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		AssetPublisherPortlet.configureCategoriesFilterPG(
-			categoryName = "Category Name 1"
-		);
+		AssetPublisherPortlet.configureCategoriesFilterPG(categoryName = "Category Name 1");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -176,25 +154,21 @@ definition {
 			categoryName = "Category Name 1",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content With One Category",
-			webContentTitle = "Web Content Title 1"
-		);
+			webContentTitle = "Web Content Title 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Categories"
-		);
+			portlet = "Categories");
 
 		Category.addCP(
 			categoryName = "Category Name 2",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -202,64 +176,55 @@ definition {
 			categoryNameList = "Category Name 1,Category Name 2",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content With Two Categories",
-			webContentTitle = "Web Content Title 2"
-		);
+			webContentTitle = "Web Content Title 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content With One Category",
-			assetTitle = "Web Content Title 1"
-		);
+			assetTitle = "Web Content Title 1");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content With Two Categories",
-			assetTitle = "Web Content Title 2"
-		);
+			assetTitle = "Web Content Title 2");
 
 		AssetPublisherPortlet.editConfigureCategoriesFilterPG(
 			categoryNames = "Category Name 1,Category Name 2",
-			queryContains = "Does not Contain"
-		);
+			queryContains = "Does not Contain");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content With One Category",
-			assetTitle = "Web Content Title 1"
-		);
+			assetTitle = "Web Content Title 1");
 
 		AssetPublisherPortlet.viewAssetNotPresentPG(
 			assetContent = "Web Content With Two Categories",
-			assetTitle = "Web Content Title 2"
-		);
+			assetTitle = "Web Content Title 2");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content With One Category",
-			assetTitle = "Web Content Title 1"
-		);
+			assetTitle = "Web Content Title 1");
 
 		AssetPublisherPortlet.viewAssetNotPresentPG(
 			assetContent = "Web Content With Two Categories",
-			assetTitle = "Web Content Title 2"
-		);
+			assetTitle = "Web Content Title 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 

@@ -26,62 +26,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Collaboration",
 			configurationName = "Sharepoint OAuth2",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		Click(locator1 = "Button#ADD");
 
 		Type(
+			key_text = "name",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationName}",
-			key_text = "name"
-		);
+			value1 = "${configurationName}");
 
 		Type(
+			key_text = "authorizationGrantEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationGrantEndpoint}",
-			key_text = "authorizationGrantEndpoint"
-		);
+			value1 = "${authorizationGrantEndpoint}");
 
 		Type(
+			key_text = "authorizationTokenEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationTokenEndpoint}",
-			key_text = "authorizationTokenEndpoint"
-		);
-
-		Type(locator1 = "TextArea#ANY", value1 = "${clientId}", key_text = "clientId");
+			value1 = "${authorizationTokenEndpoint}");
 
 		Type(
+			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${clientSecret}",
-			key_text = "clientSecret"
-		);
+			value1 = "${clientId}");
 
 		Type(
+			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationScope}",
-			key_text = "scope"
-		);
-
-		Type(locator1 = "TextArea#ANY", value1 = "${tenantId}", key_text = "tenantId");
+			value1 = "${clientSecret}");
 
 		Type(
+			key_text = "scope",
 			locator1 = "TextArea#ANY",
-			value1 = "${siteDomain}",
-			key_text = "siteDomain"
-		);
+			value1 = "${configurationScope}");
 
 		Type(
+			key_text = "tenantId",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationResource}",
-			key_text = "resource"
-		);
+			value1 = "${tenantId}");
+
+		Type(
+			key_text = "siteDomain",
+			locator1 = "TextArea#ANY",
+			value1 = "${siteDomain}");
+
+		Type(
+			key_text = "resource",
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationResource}");
 
 		Button.clickSave();
 
@@ -90,24 +87,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoAddRepositoryCP();
 
 		Type(
+			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${configurationName}",
-			key_fieldLabel = "Name"
-		);
+			value1 = "${configurationName}");
 
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryPath = "Documentos compartidos",
 			dmRepositoryName = "Sharepoint (${configurationName})",
-			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com"
-		);
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com");
 
 		PortletEntry.save();
 
@@ -116,21 +110,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
+			key_dmRepositoryName = "${configurationName}",
 			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
-			value1 = "${configurationName}",
-			key_dmRepositoryName = "${configurationName}"
-		);
+			value1 = "${configurationName}");
 
 		MicrosoftLogin.accountSignIn(
 			userEmail = "${userName}",
-			userPassword = "${userPassword}"
-		);
+			userPassword = "${userPassword}");
 
 		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "${configurationName}");
 
@@ -139,8 +130,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 	}
 
 	tearDown {
@@ -157,23 +147,20 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "Document_3.txt"
-		);
+			dmDocumentTitle = "Document_3.txt");
 
 		Pause(locator1 = "5000");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_3.txt",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -192,23 +179,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		var key_dmDocumentTitle = "Document_3.txt";
 
-		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED"
-		);
+		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
 
 		DMDocument.viewCheckedinCP(
 			dmDocumentVersionNumber = "2.0",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 	}
 
 	@priority = "4"
@@ -221,16 +204,14 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc"
-		);
+			dmDocumentTitle = "Document_2.doc");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -245,8 +226,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -254,16 +234,14 @@ definition {
 
 		DMDocument.deleteCP(
 			dmDocumentTitle = "Document_2.doc",
-			recycleBinDisabled = "true"
-		);
+			recycleBinDisabled = "true");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -280,15 +258,16 @@ definition {
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
-		DMFolder.deleteCP(dmFolderName = "DM Folder Name", recycleBinDisabled = "true");
+		DMFolder.deleteCP(
+			dmFolderName = "DM Folder Name",
+			recycleBinDisabled = "true");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -301,49 +280,47 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.doc",
-			dmDocumentTitle = "Document_3.doc"
-		);
+			dmDocumentTitle = "Document_3.doc");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "34KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(
+			dmDocumentSize = "34KB",
+			dmDocumentTitle = "Document_3.doc");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentTitle = "Document_3.doc"
-		);
+			dmDocumentTitle = "Document_3.doc");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "30KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(
+			dmDocumentSize = "30KB",
+			dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "image/jpeg",
-			metadataLabel = "Content Type"
-		);
+			metadataLabel = "Content Type");
 
 		DMDocument.cannotViewDocumentMetadataCP(
 			metadataData = "ISO-8859-1",
-			metadataLabel = "Content Encoding"
-		);
+			metadataLabel = "Content Encoding");
 	}
 
 	@priority = "4"
@@ -359,28 +336,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Document_1.txt"
-		);
+			dmDocumentTitle = "Document_1.txt");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_1.txt",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -395,8 +368,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -405,13 +377,11 @@ definition {
 		DMDocument.moveToSubFolderCP(
 			dmDocumentTitle = "Document_1.txt",
 			dmFolderName = "Collaboration Test Application",
-			dmSubFolderName = "Sharepoint Subfolder"
-		);
+			dmSubFolderName = "Sharepoint Subfolder");
 
 		DMDocument.viewMovedToFolderCP(
 			dmDocumentTitle = "Document_1.txt",
-			dmFolderName = "Sharepoint Subfolder"
-		);
+			dmFolderName = "Sharepoint Subfolder");
 
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
 
@@ -426,21 +396,18 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "Document_1.odt"
-		);
+			dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "Document_1.odt",
-			dmFolderName = "Home"
-		);
+			dmFolderName = "Home");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
 
@@ -451,8 +418,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -465,23 +431,20 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.odt",
-			dmDocumentTitle = "Document_3.odt"
-		);
+			dmDocumentTitle = "Document_3.odt");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		Search.searchCP(searchTerm = "Document_3.odt");
 
 		DMDocument.viewSearchResultsCP(
 			dmDocumentTitle = "Document_3.odt",
-			dmRepositoryName = "Collaboration Test Application"
-		);
+			dmRepositoryName = "Collaboration Test Application");
 	}
 
 	@priority = "4"
@@ -489,20 +452,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -514,14 +474,12 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		User.logoutPG();
 
@@ -533,8 +491,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "Collaboration Test Application"
-		);
+			value1 = "Collaboration Test Application");
 
 		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
 	}
@@ -545,29 +502,30 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.xls",
-			dmDocumentTitle = "Document_1.xls"
-		);
+			dmDocumentTitle = "Document_1.xls");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_1.xls",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.xls");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.xls");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1_Edit.xls");
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 
@@ -576,8 +534,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -594,10 +551,11 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "Document_1.docx"
-		);
+			dmDocumentTitle = "Document_1.docx");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.docx");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.docx");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1.jpg");
 
@@ -607,16 +565,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "The source file does not have the same extension as the original file."
-		);
+			value1 = "The source file does not have the same extension as the original file.");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -631,10 +587,11 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.docx",
-			dmDocumentTitle = "Document_3.docx"
-		);
+			dmDocumentTitle = "Document_3.docx");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_3.docx");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_3.docx");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_3");
 
@@ -644,16 +601,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "The source file does not have the same extension as the original file."
-		);
+			value1 = "The source file does not have the same extension as the original file.");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 

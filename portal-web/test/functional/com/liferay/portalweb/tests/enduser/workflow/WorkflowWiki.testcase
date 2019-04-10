@@ -18,19 +18,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Wiki Page"
-		);
+			workflowResourceValue = "Wiki Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Wiki Page");
 
@@ -65,45 +62,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -115,40 +105,34 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
 		WikiPage.viewFrontPagePG(
 			wikiNodeName = "FrontPage",
 			wikiPageContent = "Front Page Wiki Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
@@ -156,13 +140,11 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Approved"
-		);
+			workflowTask = "Approved");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -170,45 +152,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -220,32 +195,27 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -257,13 +227,11 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Update"
-		);
+			workflowTask = "Update");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -275,8 +243,7 @@ definition {
 		WikiPage.addPageWithWorkflowPG(
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title",
-			wikiPageUsername = "Test Test"
-		);
+			wikiPageUsername = "Test Test");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -285,31 +252,27 @@ definition {
 		WikiPage.viewPageWithWorkflowPG(
 			wikiPageStatus = "PENDING",
 			wikiPageTitle = "Wiki Page Title",
-			wikiPageUsername = "Test Test"
-		);
+			wikiPageUsername = "Test Test");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Wiki Page Title",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "Wiki Page Title",
 			workflowAssetType = "Wiki Page",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewRejectedTask(
 			workflowAssetTitle = "Wiki Page Title",
-			workflowAssetType = "Wiki Page"
-		);
+			workflowAssetType = "Wiki Page");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -318,7 +281,6 @@ definition {
 		WikiPage.viewPageWithWorkflowPG(
 			wikiPageStatus = "Pending",
 			wikiPageTitle = "Wiki Page Title",
-			wikiPageUsername = "Test Test"
-		);
+			wikiPageUsername = "Test Test");
 	}
 }

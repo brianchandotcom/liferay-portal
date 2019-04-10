@@ -5,23 +5,22 @@ definition {
 		if (isSet(allowedServiceSignature)) {
 			Click(
 				locator1 = "ServiceAccessPolicy#SWITCH_TO_ADVANCED_MODE",
-				value1 = "Switch to Advanced Mode"
-			);
+				value1 = "Switch to Advanced Mode");
 
 			Type(
 				locator1 = "ServiceAccessPolicy#ALLOWED_SERVICE_SIGNATURES_FIELD",
-				value1 = "${allowedServiceSignature}"
-			);
+				value1 = "${allowedServiceSignature}");
 		}
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro gotoServiceAccessPolicy {
 		AssertClick(
+			key_policyName = "${policyName}",
 			locator1 = "ServiceAccessPolicy#POLICY_NAME",
-			value1 = "${policyName}",
-			key_policyName = "${policyName}"
-		);
+			value1 = "${policyName}");
 	}
 }

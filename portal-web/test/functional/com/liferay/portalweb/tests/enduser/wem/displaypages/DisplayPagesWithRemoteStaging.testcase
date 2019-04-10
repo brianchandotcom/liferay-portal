@@ -55,36 +55,30 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			webContentTitle = "Webcontent Title");
 
 		PortletEntry.publish();
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.publishCustomPublication(remoteStaging= "true");
+		Staging.publishCustomPublication(remoteStaging = "true");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "Display Page Name",
-			item = "Edit"
-		);
+			item = "Edit");
 
 		PageEditorMapping.selectContentType(
 			contentType = "Web Content Article",
-			subType = "Basic Web Content"
-		);
+			subType = "Basic Web Content");
 
-		PageEditor.addWidget(
-			portletName = "Asset Publisher"
-		);
+		PageEditor.addWidget(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(
 			displayPage = "true",
 			displaySettings = "Set as the Default Asset Publisher for This Page",
-			portletName = "Asset Publisher"
-		);
+			portletName = "Asset Publisher");
 
 		Refresh();
 
@@ -96,26 +90,20 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Display Page Name",
-			pageType = "Display Pages"
-		);
+			pageType = "Display Pages");
 
 		PortletEntry.publish();
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.publishCustomPublication(remoteStaging= "true");
+		Staging.publishCustomPublication(remoteStaging = "true");
 
-		AssertConsoleTextNotPresent(
-			value1 = "com.liferay.exportimport.kernel.lar.PortletDataException"
-		);
+		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/remote-site/-/webcontent-title"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/remote-site/-/webcontent-title");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Webcontent Content",
-			assetTitle = "Webcontent Title"
-		);
+			assetTitle = "Webcontent Title");
 	}
 }

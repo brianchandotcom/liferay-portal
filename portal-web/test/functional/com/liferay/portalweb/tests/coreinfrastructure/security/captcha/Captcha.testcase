@@ -46,14 +46,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Security Tools",
 			configurationName = "CAPTCHA",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		// LPS-84310
 
@@ -62,14 +60,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Security Tools",
 			configurationName = "CAPTCHA",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		if (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			SystemSettings.resetConfiguration();
@@ -77,23 +73,19 @@ definition {
 
 		SystemSettings.editTextSetting(
 			settingName = "Maximum Challenges",
-			settingValue = "0"
-		);
+			settingValue = "0");
 
 		SystemSettings.selectOptionSetting(
 			fieldName = "CAPTCHA Engine",
-			selectOption = "reCAPTCHA"
-		);
+			selectOption = "reCAPTCHA");
 
 		SystemSettings.editTextAreaSetting(
 			settingName = "reCAPTCHA Private Key",
-			settingValue = "${recaptchaPrivateKey}"
-		);
+			settingValue = "${recaptchaPrivateKey}");
 
 		SystemSettings.editTextAreaSetting(
 			settingName = "reCAPTCHA Public Key",
-			settingValue = "${recaptchaPublicKey}"
-		);
+			settingValue = "${recaptchaPublicKey}");
 
 		SystemSettings.saveConfiguration();
 

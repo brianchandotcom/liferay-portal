@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
@@ -22,13 +21,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 	}
 
 	tearDown {
@@ -41,8 +38,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Control Panel",
-				portlet = "Settings"
-			);
+				portlet = "Settings");
 
 			ChangeList.disableChangeList();
 		}
@@ -53,43 +49,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
-		ChangeList.publishChangeList(
-			changeListName = "Change List Name"
-		);
+		ChangeList.publishChangeList(changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "New Change List Name"
-		);
+			changeListName = "New Change List Name");
 
 		ChangeList.viewPublishedChangeListDetails(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name",
-			changeListPublishedBy = "Test Test"
-		);
+			changeListPublishedBy = "Test Test");
 	}
 }

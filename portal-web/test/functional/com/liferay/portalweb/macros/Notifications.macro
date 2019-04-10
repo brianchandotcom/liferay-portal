@@ -4,10 +4,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${requestsTitle}"
-		);
+			value1 = "${requestsTitle}");
 
-		AssertClick(locator1 = "Button#CONFIRM", value1 = "Confirm");
+		AssertClick(
+			locator1 = "Button#CONFIRM",
+			value1 = "Confirm");
 	}
 
 	macro deleteNotification {
@@ -53,21 +54,21 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-			value1 = "${contentBody}"
-		);
+			value1 = "${contentBody}");
 	}
 
 	macro tearDownUnreadNotifications {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Notifications"
-		);
+			portlet = "Notifications");
 
 		var key_contentBody = "${contentBody}";
 
 		if (IsElementPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT")) {
-			AssertClick(locator1 = "Notifications#MARK_AS_READ", value1 = "Mark as Read");
+			AssertClick(
+				locator1 = "Notifications#MARK_AS_READ",
+				value1 = "Mark as Read");
 		}
 	}
 
@@ -75,46 +76,40 @@ definition {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#USER_BAR_BADGE_COUNT",
-				value1 = "${notificationCount}"
-			);
+				value1 = "${notificationCount}");
 		}
 
 		if (IsElementPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#PROFILE_BADGE_COUNT",
-				value1 = "${notificationCount}"
-			);
+				value1 = "${notificationCount}");
 		}
 
 		if (IsElementPresent(locator1 = "Notifications#MY_ACCOUNT_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#MY_ACCOUNT_BADGE_COUNT",
-				value1 = "${notificationCount}"
-			);
+				value1 = "${notificationCount}");
 		}
 
 		if (IsElementPresent(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT")) {
 			if (IsElementPresent.isVisible(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT")) {
 				AssertTextEquals(
 					locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT",
-					value1 = "${notificationCount}"
-				);
+					value1 = "${notificationCount}");
 			}
 		}
 
 		if (IsElementPresent(locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT",
-				value1 = "${notificationCount}"
-			);
+				value1 = "${notificationCount}");
 		}
 	}
 
 	macro viewDefaultContent {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "You do not have any notifications."
-		);
+			value1 = "You do not have any notifications.");
 	}
 
 	macro viewNewComment {
@@ -123,13 +118,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user} added a new ${assetType} to ${content}."
-		);
+			value1 = "${user} added a new ${assetType} to ${content}.");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-			value1 = "${contentBody}"
-		);
+			value1 = "${contentBody}");
 	}
 
 	macro viewNewContent {
@@ -138,13 +131,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user} added a new ${assetType}."
-		);
+			value1 = "${user} added a new ${assetType}.");
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-			value1 = "${contentBody}"
-		);
+			value1 = "${contentBody}");
 	}
 
 	macro viewNewSharedDocument {
@@ -154,23 +145,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaShare#NOTIFICATIONS_TITLE",
-			value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}."
-		);
+			value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}.");
 
 		if (isSet(openNotification)) {
 			AssertClick(
 				locator1 = "DocumentsAndMediaShare#NOTIFICATIONS_TITLE",
-				value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}."
-			);
+				value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}.");
 		}
 	}
 
 	macro viewNoNotificationEntry {
 		AssertElementNotPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 
-		AssertElementNotPresent(
-			locator1 = "Notifications#NOTIFICATIONS_CONTENT_GENERIC"
-		);
+		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT_GENERIC");
 
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_TITLE");
 	}
@@ -202,8 +189,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${requestsTitle}"
-		);
+			value1 = "${requestsTitle}");
 	}
 
 	macro viewSuccessfulPublication {
@@ -213,8 +199,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${portletName} ${publicationType} ${contentBody}"
-		);
+			value1 = "${portletName} ${publicationType} ${contentBody}");
 	}
 
 	macro viewUpdatedContent {
@@ -223,12 +208,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user} updated a ${assetType}."
-		);
+			value1 = "${user} updated a ${assetType}.");
 
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-			value1 = "${contentBody}"
-		);
+			value1 = "${contentBody}");
 	}
 }

@@ -15,8 +15,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 	}
 
 	tearDown {
@@ -40,32 +39,27 @@ definition {
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",
 			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow"
-		);
+			workflowRestriction = "Default Workflow");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",
-			workflowRestriction = "Parent Folder"
-		);
+			workflowRestriction = "Parent Folder");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",
 			structureName = "Basic Web Content",
 			workflowDefinition = "Single Approver",
-			workflowRestriction = "Specific Restrictions"
-		);
+			workflowRestriction = "Specific Restrictions");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",
 			workflowDefinition = "No Workflow",
-			workflowRestriction = "Default Workflow"
-		);
+			workflowRestriction = "Default Workflow");
 	}
 
 	@priority = "5"
@@ -77,14 +71,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "Image"
-		);
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -93,8 +85,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -102,36 +93,30 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Image",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureAndWorkflowCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.viewStructureWithWorkflowPendingCP(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContent.viewStructureWithWorkflowPendingCP(webContentTitle = "WC WebContent Title");
 
 		Navigator.openURL();
 
@@ -140,8 +125,7 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.gotoTaskDetails(workflowAssetTitle = "WC WebContent Title");
 
@@ -149,24 +133,21 @@ definition {
 
 		WebContent.editInReview(
 			webContentImage = "Document_2.jpeg",
-			webContentTitleEdit = "WC WebContent Title Edit"
-		);
+			webContentTitleEdit = "WC WebContent Title Edit");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WC WebContent Title Edit",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title Edit");
 
@@ -175,16 +156,14 @@ definition {
 		WebContent.viewCPWithoutContentField(
 			field = "Image",
 			webContentImage = "Document_2.jpeg",
-			webContentTitle = "WC WebContent Title Edit"
-		);
+			webContentTitle = "WC WebContent Title Edit");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
@@ -192,9 +171,7 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title Edit"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title Edit");
 
 		Navigator.gotoPage(pageName = "Test Page");
 

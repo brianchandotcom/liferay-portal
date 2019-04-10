@@ -41,24 +41,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
-		MessageboardsThread.addCP(threadBody = "Orange", threadSubject = "Apple");
+		MessageboardsThread.addCP(
+			threadBody = "Orange",
+			threadSubject = "Apple");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Orange",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple"
-		);
+			dmDocumentTitle = "Apple");
 
 		Navigator.openURL();
 
@@ -66,13 +65,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 
 		Navigator.openURL();
 
@@ -80,21 +77,20 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Clustering.shutdownSpecificServer(nodePort = "8");
 
@@ -102,13 +98,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 
 		Navigator.openSpecificURL(url = "http://localhost:9080");
 
@@ -116,13 +110,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 	}
 
 	@priority = "5"
@@ -135,20 +127,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "X-Pack Monitoring Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "X-Pack Monitoring Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "X-Pack Monitoring Page");
 

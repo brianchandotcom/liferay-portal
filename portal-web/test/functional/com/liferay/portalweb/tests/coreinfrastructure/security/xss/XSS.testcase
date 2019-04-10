@@ -47,13 +47,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-			value1 = "The requested resource could not be found."
-		);
+			value1 = "The requested resource could not be found.");
 
 		AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
 
@@ -61,13 +59,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-			value1 = "The requested resource could not be found."
-		);
+			value1 = "The requested resource could not be found.");
 
 		AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
 
@@ -75,13 +71,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-			value1 = "The requested resource could not be found."
-		);
+			value1 = "The requested resource could not be found.");
 
 		AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
 
@@ -89,13 +83,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-			value1 = "The requested resource could not be found."
-		);
+			value1 = "The requested resource could not be found.");
 
 		AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
 	}
@@ -109,25 +101,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
-		User.editDetailsViaMyAccount(
-			userLastNameEdit = '''<script>alert(123);</script>'''
-		);
+		User.editDetailsViaMyAccount(userLastNameEdit = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Bookmarks"
-		);
+			portlet = "Bookmarks");
 
 		Bookmark.addCP(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.openURL();
 
@@ -154,21 +141,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Custom Fields"
-		);
+			portlet = "Custom Fields");
 
 		CustomFields.addCP(
 			customFieldName = '''<script>alert(123);</script>''',
 			customFieldType = "Input Field",
 			localization = "true",
-			resourceName = "Documents Folder"
-		);
+			resourceName = "Documents Folder");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Folder");
 
@@ -187,16 +171,19 @@ definition {
 		Panel.expandPanel(panel = "Custom Fields");
 
 		AssertTextEquals(
+			key_customFieldName = "${actualScript}",
 			locator1 = "DocumentsAndMedia#CUSTOM_FIELD_NAME",
-			value1 = "${actualScript}",
-			key_customFieldName = "${actualScript}"
-		);
+			value1 = "${actualScript}");
 
-		PortletEntry.changeLocale(fieldName = "${actualScript}", locale = "zh_CN");
+		PortletEntry.changeLocale(
+			fieldName = "${actualScript}",
+			locale = "zh_CN");
 
 		Click(locator1 = "DocumentsAndMedia#CUSTOM_FIELD");
 
-		Type(locator1 = "DocumentsAndMedia#CUSTOM_FIELD", value1 = "测试");
+		Type(
+			locator1 = "DocumentsAndMedia#CUSTOM_FIELD",
+			value1 = "测试");
 
 		PortletEntry.save();
 
@@ -205,10 +192,9 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals(
+			key_dmDocumentTitle = "DM Folder Name",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "DM Folder Name",
-			key_dmDocumentTitle = "DM Folder Name"
-		);
+			value1 = "DM Folder Name");
 	}
 
 	@priority = "3"
@@ -218,12 +204,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
-		Site.editGoogleAnalyticsIDCP(
-			googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//'''
-		);
+		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
 
 		Navigator.openURL();
 
@@ -234,9 +217,7 @@ definition {
 	test ViewJSONWS {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
 
 		AssertAlertNotPresent();
 	}
@@ -248,9 +229,7 @@ definition {
 
 		PortalSettingsNavigator.gotoLDAP();
 
-		PortalSettings.addLDAPServer(
-			LDAPServerName = '''<script>alert(123);</script>'''
-		);
+		PortalSettings.addLDAPServer(LDAPServerName = '''<script>alert(123);</script>''');
 
 		AssertAlertNotPresent();
 
@@ -270,8 +249,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Asset Publisher Page");
 
@@ -279,9 +257,7 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx");
 
 		AssertAlertNotPresent();
 
@@ -299,8 +275,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = '''<script>alert(123);</script>''');
 
@@ -310,8 +285,7 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		AssertElementNotPresent(locator1 = "//body[.='123']");
 
@@ -330,8 +304,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Mobile Device Families"
-		);
+			portlet = "Mobile Device Families");
 
 		MobileDevice.addDeviceFamilyCP(deviceFamilyName = '''<script>alert(123);</script>''');
 
@@ -340,13 +313,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Welcome"
-		);
+			pageName = "Welcome");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -377,16 +348,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoAddEntry();
 
 		Type.typeAceEditor(
+			key_editor = "title",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${entryTitle}",
-			key_editor = "title"
-		);
+			value1 = "${entryTitle}");
 
 		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
 
@@ -397,8 +366,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.moveToRecycleBinCP(entryTitle = "${entryTitle}");
 
@@ -407,14 +375,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.restoreCP(
 			assetName = "${entryTitle}",
 			assetRestoreLocation = "Blogs",
-			assetType = "Blogs Entry"
-		);
+			assetType = "Blogs Entry");
 
 		AssertElementNotPresent(locator1 = "//body[.='123']");
 
@@ -432,21 +398,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = '''<script>alert(123);</script>''');
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.viewCP(
 			roleTitle = '''<script>alert(123);</script>''',
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 
 		Navigator.openURL();
 
@@ -473,24 +436,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Search.searchCP(searchTerm = "${siteName}");
 
 		AssertClick(
+			key_rowEntry = "${siteName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${siteName}",
-			key_rowEntry = "${siteName}"
-		);
+			value1 = "${siteName}");
 
 		AssertElementNotPresent(locator1 = "//body[.='XSS']");
 
@@ -540,8 +500,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		Navigator.openSpecificURL(url = "${maliciousURL3}");
 
@@ -564,22 +523,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = '''<script>alert(123);</script>'''
-		);
+			webContentTitle = '''<script>alert(123);</script>''');
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(
 			webContentTitle = '''<script>alert(123);</script>''',
-			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;'''
-		);
+			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 
 		Navigator.openURL();
 
@@ -587,15 +543,13 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertClick(
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -606,8 +560,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Link#WEB_CONTENT_ARTICLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertAlertNotPresent();
 
@@ -626,21 +579,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(
 			webContentTitle = '''<script>alert(123);</script>''',
-			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;'''
-		);
+			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 
 		WebContent.editCP(
 			webContentTitle = '''<script>alert(123);</script>''',
-			webContentTitleEdit = "WC WebContent Title"
-		);
+			webContentTitleEdit = "WC WebContent Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title");
-
 
 		WebContent.addFeaturedImageFromURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
 
@@ -658,29 +607,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		User.editDetailsViaMyAccount(
 			userFirstNameEdit = '''<script>alert(123);</script>''',
 			userLastNameEdit = '''<script>alert(123);</script>''',
-			userMiddleNameEdit = '''<script>alert(123);</script>'''
-		);
+			userMiddleNameEdit = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
 		WikiPage.addCP(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
 

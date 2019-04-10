@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -89,7 +88,9 @@ definition {
 
 		CalendarEvent.setDatesToday();
 
-		CalendarEvent.setTimes(endDateTime = "03:00 PM", startDateTime = "02:00 PM");
+		CalendarEvent.setTimes(
+			endDateTime = "03:00 PM",
+			startDateTime = "02:00 PM");
 
 		CalendarEvent.publish();
 
@@ -99,21 +100,21 @@ definition {
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
 			endDateTime = "3:00pm",
-			startDateTime = "2:00pm"
-		);
+			startDateTime = "2:00pm");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "03:00 PM",
-			startDateTime = "02:00 PM"
-		);
+			startDateTime = "02:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		CalendarEvent.viewTimes(endDateTime = "03:00 PM", startDateTime = "02:00 PM");
+		CalendarEvent.viewTimes(
+			endDateTime = "03:00 PM",
+			startDateTime = "02:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -129,12 +130,13 @@ definition {
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
 			endDateTime = "am",
-			startDateTime = "am"
-		);
+			startDateTime = "am");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
-		CalendarEvent.viewTimesViaDetails(endDateTime = "AM", startDateTime = "AM");
+		CalendarEvent.viewTimesViaDetails(
+			endDateTime = "AM",
+			startDateTime = "AM");
 	}
 
 	@priority = "4"
@@ -145,8 +147,7 @@ definition {
 			CalendarEvent.add(
 				eventTitle = "Calendar Event ${eventNumber}",
 				eventType = "All Day",
-				pageName = "Calendar Page"
-			);
+				pageName = "Calendar Page");
 		}
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -188,7 +189,9 @@ definition {
 
 		CalendarEvent.setDatesToday();
 
-		CalendarEvent.setTimes(endDateTime = "11:00 PM", startDateTime = "09:00 PM");
+		CalendarEvent.setTimes(
+			endDateTime = "11:00 PM",
+			startDateTime = "09:00 PM");
 
 		CalendarEvent.publish();
 
@@ -210,21 +213,21 @@ definition {
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
 			endDateTime = "23:00",
-			startDateTime = "21:00"
-		);
+			startDateTime = "21:00");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "23:00",
-			startDateTime = "21:00"
-		);
+			startDateTime = "21:00");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		CalendarEvent.viewTimes24Hour(endDateTime = "23:00", startDateTime = "21:00");
+		CalendarEvent.viewTimes24Hour(
+			endDateTime = "23:00",
+			startDateTime = "21:00");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -244,21 +247,21 @@ definition {
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
 			endDateTime = "11:00pm",
-			startDateTime = "9:00pm"
-		);
+			startDateTime = "9:00pm");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "11:00 PM",
-			startDateTime = "09:00 PM"
-		);
+			startDateTime = "09:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		CalendarEvent.viewTimes(endDateTime = "11:00 PM", startDateTime = "09:00 PM");
+		CalendarEvent.viewTimes(
+			endDateTime = "11:00 PM",
+			startDateTime = "09:00 PM");
 	}
 
 	@priority = "5"
@@ -267,9 +270,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		User.editUserDisplaySettingsTimeZonePacific(
-			displaySettingsGreeting = "Welcome Test Test!"
-		);
+		User.editUserDisplaySettingsTimeZonePacific(displaySettingsGreeting = "Welcome Test Test!");
 
 		PortalSettings.gotoPortalSettings();
 
@@ -295,9 +296,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		User.editUserDisplaySettingsTimeZonePacific(
-			displaySettingsGreeting = "Welcome Test Test!"
-		);
+		User.editUserDisplaySettingsTimeZonePacific(displaySettingsGreeting = "Welcome Test Test!");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -314,13 +313,11 @@ definition {
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
 			eventTitle = "Calendar Event All Day Title",
-			eventType = "All Day"
-		);
+			eventType = "All Day");
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "11:59 PM",
-			startDateTime = "12:00 AM"
-		);
+			startDateTime = "12:00 AM");
 	}
 
 	@description = "This is a use case for LPS-51127."

@@ -17,19 +17,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Message Boards Message"
-		);
+			workflowResourceValue = "Message Boards Message");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Message Boards Page");
 
@@ -65,24 +62,21 @@ definition {
 
 		MessageboardsThread.addWithWorkflowPG(
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewWithWorkflowPG(
 			threadBody = "MB Thread Body",
 			threadSubject = "MB Thread Subject",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "MB Thread Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -90,16 +84,14 @@ definition {
 			pageName = "Message Boards Page",
 			threadBody = "MB Thread Body",
 			threadSubject = "MB Thread Subject",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "MB Thread Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -107,37 +99,30 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
-		Workflow.gotoViewCompletedAssetViaMySubmissions(
-			workflowAssetTitle = "MB Thread Subject"
-		);
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "MB Thread Subject");
 
 		MessageboardsThread.viewAsWorkflowAsset(
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 
 		MessageboardsThread.gotoViewInContext();
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 	}
 
 	@priority = "4"
@@ -149,31 +134,27 @@ definition {
 		MessageboardsThread.addWithWorkflowPG(
 			pageName = "Message Boards Page",
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject"
-		);
+			threadSubject = "MB Thread Subject");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "MB Thread Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "MB Thread Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewRejectedTask(
 			workflowAssetTitle = "MB Thread Subject",
-			workflowAssetType = "Message Boards Message"
-		);
+			workflowAssetType = "Message Boards Message");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -181,7 +162,6 @@ definition {
 			pageName = "Message Boards Page",
 			threadBody = "MB Thread Body",
 			threadSubject = "MB Thread Subject",
-			workflowTask = "Update"
-		);
+			workflowTask = "Update");
 	}
 }

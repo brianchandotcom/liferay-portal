@@ -14,20 +14,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Portal Directory Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Portal Directory Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -52,16 +49,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userMiddleName = "usermn",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -70,8 +65,7 @@ definition {
 			searchTerm = "userfn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -81,8 +75,7 @@ definition {
 			searchTerm = "userfn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -91,8 +84,7 @@ definition {
 			searchTerm = "usermn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -102,8 +94,7 @@ definition {
 			searchTerm = "usermn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -112,8 +103,7 @@ definition {
 			searchTerm = "userln",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -123,8 +113,7 @@ definition {
 			searchTerm = "userln1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -133,8 +122,7 @@ definition {
 			searchTerm = "usersn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -144,8 +132,7 @@ definition {
 			searchTerm = "usersn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -154,8 +141,7 @@ definition {
 			searchTerm = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Portal Directory Page");
 
@@ -165,7 +151,6 @@ definition {
 			searchTerm = "userea@liferay.com1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 }

@@ -37,28 +37,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addCP(siteName = "Site Name", siteType = "Blank");
+		Site.addCP(
+			siteName = "Site Name",
+			siteType = "Blank");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -69,18 +67,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test ensures that a user can check in a document without changing versions."
@@ -89,15 +87,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Check in as current version"
-		);
+			dmDocumentTitle = "Check in as current version");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as current version");
 
@@ -105,25 +101,20 @@ definition {
 
 		DMDocument.checkinCP(
 			dmDocumentTitle = "Check in as current version",
-			revision = "Current"
-		);
+			revision = "Current");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
-			key_dmDocumentTitle = "Check in as current version"
-		);
+			key_dmDocumentTitle = "Check in as current version",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 
-		DMDocument.checkDocumentCheckboxCP(
-			dmDocumentTitle = "Check in as current version"
-		);
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Check in as current version");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
 	}
@@ -134,15 +125,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Check in as major version"
-		);
+			dmDocumentTitle = "Check in as major version");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as major version");
 
@@ -150,25 +139,20 @@ definition {
 
 		DMDocument.checkinCP(
 			dmDocumentTitle = "Check in as major version",
-			revision = "Major"
-		);
+			revision = "Major");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
-			key_dmDocumentTitle = "Check in as major version"
-		);
+			key_dmDocumentTitle = "Check in as major version",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 
-		DMDocument.checkDocumentCheckboxCP(
-			dmDocumentTitle = "Check in as major version"
-		);
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Check in as major version");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 	}
@@ -179,15 +163,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Check in as minor version"
-		);
+			dmDocumentTitle = "Check in as minor version");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as minor version");
 
@@ -195,25 +177,20 @@ definition {
 
 		DMDocument.checkinCP(
 			dmDocumentTitle = "Check in as minor version",
-			revision = "Minor"
-		);
+			revision = "Minor");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
-			key_dmDocumentTitle = "Check in as minor version"
-		);
+			key_dmDocumentTitle = "Check in as minor version",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 
-		DMDocument.checkDocumentCheckboxCP(
-			dmDocumentTitle = "Check in as minor version"
-		);
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Check in as minor version");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
@@ -224,26 +201,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description1",
@@ -251,13 +227,11 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			revision = "Major",
-			versioning = "true"
-		);
+			versioning = "true");
 
 		DMDocument.viewEditCP(
 			dmDocumentTitleEdit = "DM Document Title Edit",
-			dmDocumentVersionNumber = "2.0"
-		);
+			dmDocumentVersionNumber = "2.0");
 	}
 
 	@description = "This test asserts that minor version increment will occur even if the actual file was changed if version increment was selected manually."
@@ -266,38 +240,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.doc",
 			dmDocumentTitle = "DM Document Title",
 			revision = "Minor",
-			versioning = "true"
-		);
+			versioning = "true");
 
 		DMDocument.viewEditCP(
 			dmDocumentTitleEdit = "DM Document Title",
-			dmDocumentVersionNumber = "1.1"
-		);
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
@@ -313,38 +284,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description1",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit"
-		);
+			dmDocumentTitleEdit = "DM Document Title Edit");
 
 		DMDocument.viewEditCP(
 			dmDocumentTitleEdit = "DM Document Title Edit",
-			dmDocumentVersionNumber = "1.1"
-		);
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@priority = "5"
@@ -357,13 +325,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
@@ -372,19 +338,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.editCP(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderDescriptionEdit = "DM Folder Description Edit",
 			dmFolderName = "DM Folder Name",
-			dmFolderNameEdit = "DM Folder Name Name"
-		);
+			dmFolderNameEdit = "DM Folder Name Name");
 
-		DMFolder.viewCP(
-			dmFolderName = "DM Folder Name Name"
-		);
+		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
 	}
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
@@ -395,79 +357,69 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Service",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		Type(
+			key_fieldLabel = "Maximum Number Of Versions",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "2",
-			key_fieldLabel = "Maximum Number Of Versions"
-		);
+			value1 = "2");
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Edit this document two times"
-		);
+			dmDocumentTitle = "Edit this document two times");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Edit this document two times",
-			dmDocumentTitleEdit = "First edit"
-		);
+			dmDocumentTitleEdit = "First edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "First edit",
-			dmDocumentTitleEdit = "Second edit"
-		);
+			dmDocumentTitleEdit = "Second edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Second edit");
 
 		for (var versionNumber : list "1.2,1.1") {
 			AssertElementPresent(
-				locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY",
-				key_dmDocumentVersionNumber = "${versionNumber}"
-			);
+				key_dmDocumentVersionNumber = "${versionNumber}",
+				locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 		}
 
 		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY",
-			key_dmDocumentVersionNumber = "1.0"
-		);
+			key_dmDocumentVersionNumber = "1.0",
+			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 	}
 
 	@priority = "5"
@@ -477,31 +429,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description1",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
@@ -510,18 +460,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMDocument.viewMovedToFolderCP(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 	}
 
 	@description = "This is a use case for LPS-60405."
@@ -532,31 +479,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "Home"
-		);
+			dmFolderName = "Home");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewCP(dmDocumentSize = "259B", dmDocumentTitle = "DM Document Title");
+		DMDocument.viewCP(
+			dmDocumentSize = "259B",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "4"
@@ -566,24 +511,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name"
-		);
+			dmFolderName = "DM Folder1 Name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name"
-		);
+			dmFolderName = "DM Folder2 Name");
 
 		DMFolder.moveToFolderCP(
 			dmFolderName = "DM Folder2 Name",
 			dmFolderName1 = "DM Folder1 Name",
-			dmFolderName2 = "DM Folder2 Name"
-		);
+			dmFolderName2 = "DM Folder2 Name");
 	}
 
 	@priority = "5"
@@ -595,25 +536,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description1",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.moveToRecycleBinCP(
 			assetType = "Document",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "5"
@@ -625,13 +562,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
@@ -640,13 +575,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 	}
 
 	@description = "This is a use case for LPS-88785."
@@ -657,23 +590,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "large_file.pdf",
-			dmDocumentTitle = "large_file.pdf"
-		);
+			dmDocumentTitle = "large_file.pdf");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "large_file.pdf");
 
-		AssertTextEquals.assertPartialText(locator1="Message#INFO", value1="Generating preview will take a few minutes.");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO",
+			value1 = "Generating preview will take a few minutes.");
 
 		Pause(locator1 = "60000");
 
 		Refresh();
 
-		AssertVisible(locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
 	@priority = "4"
@@ -683,24 +616,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg"
-		);
+			dmDocumentTitle = "Document_2.jpg");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		AssertVisible(locator1 = "Portlet#HEADER", value1 = "Documents and Media");
+		AssertVisible(
+			locator1 = "Portlet#HEADER",
+			value1 = "Documents and Media");
 
 		ImageEditor.gotoImageEditorViaDM(dmDocumentTitle = "Document_2.jpg");
 
@@ -715,8 +647,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
 
@@ -730,22 +661,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		Search.searchCP(searchTerm = "DM Document Title");
 
@@ -760,12 +688,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMDocument.addMultipleCP(
-			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc"
-		);
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");
 
 		Pagination.changePagination(itemsPerPage = "5");
 
@@ -773,7 +698,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		AssertClick(locator1 = "Button#SELECT_ALL", value1 = "Select All");
+		AssertClick(
+			locator1 = "Button#SELECT_ALL",
+			value1 = "Select All");
 
 		Click(locator1 = "Icon#DELETE");
 
@@ -791,22 +718,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		ImageEditor.gotoImageEditorViaDM(dmDocumentTitle = "Document_1.jpg");
 

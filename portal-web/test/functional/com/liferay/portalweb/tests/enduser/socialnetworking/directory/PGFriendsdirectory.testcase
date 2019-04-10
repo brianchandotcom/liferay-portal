@@ -16,20 +16,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Friends Directory Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Friends Directory Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -47,7 +44,9 @@ definition {
 
 			Page.tearDownCP();
 
-			Page.tearDownCP(site = "test", siteURL = "true");
+			Page.tearDownCP(
+				site = "test",
+				siteURL = "true");
 		}
 	}
 
@@ -63,27 +62,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userMiddleName = "usermn",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenuHelper.openProductMenu();
 
@@ -92,20 +87,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Friends Request Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Friends Request Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -115,7 +107,9 @@ definition {
 
 		var key_pageName = "Friends Request Page";
 
-		AssertClick(locator1 = "Home#PAGE", value1 = "Friends Request Page");
+		AssertClick(
+			locator1 = "Home#PAGE",
+			value1 = "Friends Request Page");
 
 		Portlet.addPG(portletName = "Requests");
 
@@ -124,32 +118,34 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Friends Request Page", siteName = "test");
+		Navigator.gotoSitePage(
+			pageName = "Friends Request Page",
+			siteName = "test");
 
 		AssertClick(
 			locator1 = "//div[@class='add-as-friend']/button[contains(.,'Add as Friend')]",
-			value1 = "ADD AS FRIEND"
-		);
+			value1 = "ADD AS FRIEND");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'alert') and contains(@class,'alert-info')]",
-			value1 = "Friend Requested"
-		);
+			value1 = "Friend Requested");
 
 		User.logoutPG();
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Friends Request Page", siteName = "test");
+		Navigator.gotoSitePage(
+			pageName = "Friends Request Page",
+			siteName = "test");
 
-		AssertClick(locator1 = "Link#CONFIRM", value1 = "Confirm");
+		AssertClick(
+			locator1 = "Link#CONFIRM",
+			value1 = "Confirm");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -158,8 +154,7 @@ definition {
 			searchTerm = "userfn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -169,8 +164,7 @@ definition {
 			searchTerm = "userfn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -179,8 +173,7 @@ definition {
 			searchTerm = "usermn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -190,8 +183,7 @@ definition {
 			searchTerm = "usermn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -200,8 +192,7 @@ definition {
 			searchTerm = "userln",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -211,8 +202,7 @@ definition {
 			searchTerm = "userln1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -221,8 +211,7 @@ definition {
 			searchTerm = "usersn",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -232,8 +221,7 @@ definition {
 			searchTerm = "usersn1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -242,8 +230,7 @@ definition {
 			searchTerm = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Friends Directory Page");
 
@@ -253,7 +240,6 @@ definition {
 			searchTerm = "userea@liferay.com1",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 }

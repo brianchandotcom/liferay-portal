@@ -4,15 +4,13 @@ definition {
 
 		AssertClick(
 			locator1 = "MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK",
-			value1 = "${mobileDeviceFamilyName}"
-		);
+			value1 = "${mobileDeviceFamilyName}");
 
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",
-			value1 = "New Classification Rule"
-		);
+			value1 = "New Classification Rule");
 
 		PortletEntry.inputName(name = "${classificationName}");
 
@@ -36,8 +34,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",
-			value1 = "New Device Family"
-		);
+			value1 = "New Device Family");
 
 		PortletEntry.inputName(name = "${deviceFamilyName}");
 
@@ -49,7 +46,9 @@ definition {
 	macro assertRedirectActionPG {
 		var key_pageName = "${pageName}";
 
-		AssertClick(locator1 = "Home#PAGE", value1 = "${pageName}");
+		AssertClick(
+			locator1 = "Home#PAGE",
+			value1 = "${pageName}");
 
 		var key_pageName = "${redirectPageName}";
 
@@ -88,26 +87,21 @@ definition {
 		else if ("${deviceType}" == "desktop") {
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-			AssertElementPresent(
-				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME"
-			);
+			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
 			takeScreenshot();
 		}
 		else if ("${deviceType}" == "custom") {
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-			AssertElementPresent(
-				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME"
-			);
+			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
 			takeScreenshot();
 
 			if (isSet(height)) {
 				Type(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD",
-					value1 = "${height}"
-				);
+					value1 = "${height}");
 			}
 			else {
 				var height = "400";
@@ -116,8 +110,7 @@ definition {
 			if (isSet(width)) {
 				Type(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD",
-					value1 = "${width}"
-				);
+					value1 = "${width}");
 			}
 			else {
 				var width = "400";

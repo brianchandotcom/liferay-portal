@@ -2,8 +2,7 @@ definition {
 	macro _backtoInbox {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MockMock#MOCKMOCK_HOME_LINK",
-			value1 = "Home"
-		);
+			value1 = "Home");
 	}
 
 	macro _gotoMail {
@@ -11,8 +10,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_HEADER_LINK",
-			value1 = "MockMock"
-		);
+			value1 = "MockMock");
 	}
 
 	macro _gotoMailMessage {
@@ -23,14 +21,12 @@ definition {
 
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "MockMock#MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK",
-				value1 = "${asset}"
-			);
+				value1 = "${asset}");
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK",
-				value1 = "${asset}"
-			);
+				value1 = "${asset}");
 		}
 	}
 
@@ -41,23 +37,19 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_HAVE_EMAILS_MESSAGE",
-			value1 = "You have"
-		);
+			value1 = "You have");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_FROM_FIELD",
-			value1 = "${sender}"
-		);
+			value1 = "${sender}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_TO_FIELD",
-			value1 = "${recipient}"
-		);
+			value1 = "${recipient}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD",
-			value1 = "${asset}"
-		);
+			value1 = "${asset}");
 	}
 
 	macro _viewMailMessage {
@@ -65,13 +57,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
-			value1 = "${subject}"
-		);
+			value1 = "${subject}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
-			value1 = "${content}"
-		);
+			value1 = "${content}");
 	}
 
 	macro clickBodyLink {
@@ -81,8 +71,7 @@ definition {
 
 		AssertClick(
 			locator1 = "MockMock#MOCKMOCK_HTML_BODY_LINK",
-			value1 = "${bodyLink}"
-		);
+			value1 = "${bodyLink}");
 	}
 
 	macro viewMail {
@@ -91,12 +80,15 @@ definition {
 		MockMock._viewMailFromInbox(
 			asset = "${asset}",
 			recipient = "${recipient}",
-			sender = "${sender}"
-		);
+			sender = "${sender}");
 
-		MockMock._gotoMailMessage(asset = "${asset}", recipient = "${recipient}");
+		MockMock._gotoMailMessage(
+			asset = "${asset}",
+			recipient = "${recipient}");
 
-		MockMock._viewMailMessage(content = "${content}", subject = "${subject}");
+		MockMock._viewMailMessage(
+			content = "${content}",
+			subject = "${subject}");
 
 		MockMock._backtoInbox();
 	}

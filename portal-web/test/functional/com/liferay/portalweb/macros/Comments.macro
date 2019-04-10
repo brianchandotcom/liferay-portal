@@ -1,16 +1,24 @@
 definition {
 	macro addComment {
-		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "postReply");
+		Click(
+			key_editor = "postReply",
+			locator1 = "AlloyEditor#EDITOR");
 
-		AlloyEditor.typeEditor(content = "${entryComment}", editor = "postReply");
+		AlloyEditor.typeEditor(
+			content = "${entryComment}",
+			editor = "postReply");
 
-		AssertClick(locator1 = "Button#REPLY", value1 = "Reply");
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro subscribePG {
-		AssertClick(locator1 = "Button#SUBSCRIBE", value1 = "Subscribe");
+		AssertClick(
+			locator1 = "Button#SUBSCRIBE",
+			value1 = "Subscribe");
 
 		Alert.viewSuccessMessage();
 	}

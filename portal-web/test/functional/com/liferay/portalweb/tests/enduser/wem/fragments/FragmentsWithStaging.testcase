@@ -18,8 +18,7 @@ definition {
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Staging Test Page"
-			);
+				layoutName = "Staging Test Page");
 		}
 
 		task ("Activate local live staging") {
@@ -47,8 +46,7 @@ definition {
 			JSONFragment.addFragmentCollection(
 				groupKey = "Test Site Name-staging",
 				name = "Collection Name",
-				site = "false"
-			);
+				site = "false");
 		}
 
 		task ("Add a section fragment to the staging site via JSON") {
@@ -56,15 +54,13 @@ definition {
 				collectionName = "Collection Name",
 				groupKey = "Test Site Name-staging",
 				name = "Fragment Name",
-				site = "false"
-			);
+				site = "false");
 		}
 
 		task ("Assert the fragment collection is not present in the live site via JSON)") {
 			JSONFragment.assertFragmentCollectionNotInGroup(
 				collectionName = "Collection Name",
-				groupName = "Test Site Name"
-			);
+				groupName = "Test Site Name");
 		}
 
 		task ("Publish the site to live") {
@@ -76,16 +72,14 @@ definition {
 		task ("Assert the fragment collection is present in the live site via JSON") {
 			JSONFragment.assertFragmentCollectionInGroup(
 				collectionName = "Collection Name",
-				groupName = "Test Site Name"
-			);
+				groupName = "Test Site Name");
 		}
 
 		task ("Assert the section fragment is present in the live site via JSON") {
 			JSONFragment.assertFragmentInGroup(
 				collectionName = "Collection Name",
 				fragmentName = "Fragment Name",
-				groupName = "Test Site Name"
-			);
+				groupName = "Test Site Name");
 		}
 	}
 
@@ -97,7 +91,9 @@ definition {
 
 			ProductMenuHelper.expandCategory(category = "Site Builder");
 
-			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Page Fragments");
+			AssertVisible(
+				key_portlet = "Page Fragments",
+				locator1 = "ProductMenu#PORTLET");
 		}
 
 		task ("Navigate to the live site") {
@@ -110,9 +106,8 @@ definition {
 			ProductMenuHelper.expandCategory(category = "Site Builder");
 
 			AssertElementNotPresent(
-				locator1 = "ProductMenu#PORTLET",
-				key_portlet = "Page Fragments"
-			);
+				key_portlet = "Page Fragments",
+				locator1 = "ProductMenu#PORTLET");
 		}
 	}
 }

@@ -24,48 +24,47 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		for (var n : list "1,2") {
 			SitePages.addPublicPage(pageName = "Test Page ${n}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Most Viewed Assets");
 
 		AssetPublisherPortlet.configureShowMetadataFieldsPG(
 			addMetadata = "true",
 			metadataFieldList = "View Count",
-			portletName = "Most Viewed Assets"
-		);
+			portletName = "Most Viewed Assets");
 
-		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		for (var n : list "1,2") {
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title ${n}"
-			);
+				webContentTitle = "Web Content Title ${n}");
 
 			PortletEntry.publish();
 		}
@@ -73,51 +72,53 @@ definition {
 		var count = "0";
 
 		while (!("${count}" == "3")) {
-			Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page 2",
+				siteName = "Site Name");
 
 			AssetPublisherPortlet.viewAssetDetailsPG(
 				assetContent = "Web Content Content",
-				assetTitle = "Web Content Title 1"
-			);
+				assetTitle = "Web Content Title 1");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetViewCount(
 			assetTitle = "Web Content Title 1",
-			viewCount = "3 View"
-		);
+			viewCount = "3 View");
 
 		AssetPublisherPortlet.viewAssetViewCount(
 			assetTitle = "Web Content Title 2",
-			viewCount = "0 View"
-		);
+			viewCount = "0 View");
 
 		var count = "0";
 
 		while (!("${count}" == "5")) {
-			Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page 2",
+				siteName = "Site Name");
 
 			AssetPublisherPortlet.viewAssetDetailsPG(
 				assetContent = "Web Content Content",
-				assetTitle = "Web Content Title 2"
-			);
+				assetTitle = "Web Content Title 2");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetViewCount(
 			assetTitle = "Web Content Title 2",
-			viewCount = "5 View"
-		);
+			viewCount = "5 View");
 
 		AssetPublisherPortlet.viewAssetViewCount(
 			assetTitle = "Web Content Title 1",
-			viewCount = "3 View"
-		);
+			viewCount = "3 View");
 	}
 }

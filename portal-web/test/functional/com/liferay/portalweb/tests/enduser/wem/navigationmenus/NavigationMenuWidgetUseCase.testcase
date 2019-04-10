@@ -37,8 +37,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				panel = "Site Administration",
-				portlet = "Pages"
-			);
+				portlet = "Pages");
 
 			SitePages.addPublicPage(pageName = "Navigation Display Test Page");
 		}
@@ -56,8 +55,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Navigation#BREADCRUMB_ENTRY",
-				value1 = "Navigation Display Test Page"
-			);
+				value1 = "Navigation Display Test Page");
 		}
 	}
 
@@ -68,8 +66,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				panel = "Site Administration",
-				portlet = "Pages"
-			);
+				portlet = "Pages");
 
 			SitePages.addPublicPage(pageName = "Navigation Test Page1");
 		}
@@ -85,8 +82,7 @@ definition {
 		task ("Configure the Navigation Menu widget to use the 'Split Button Dropdowns display template") {
 			ApplicationDisplayTemplates.selectPortletADT(
 				portletName = "Navigation",
-				templateName = "Split Button Dropdowns"
-			);
+				templateName = "Split Button Dropdowns");
 		}
 
 		task ("Navigate to the page") {
@@ -96,8 +92,7 @@ definition {
 		task ("Assert user can choose a different display template by configuring the Navigation Menu widget to use the 'Bar minimally styled' display template") {
 			ApplicationDisplayTemplates.selectPortletADT(
 				portletName = "Navigation",
-				templateName = "Bar minimally styled"
-			);
+				templateName = "Bar minimally styled");
 		}
 
 		task ("Navigate to pages admin") {
@@ -106,8 +101,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				panel = "Site Administration",
-				portlet = "Pages"
-			);
+				portlet = "Pages");
 		}
 
 		task ("Assert user can add new pages to the site by adding a second page to the site") {
@@ -121,7 +115,9 @@ definition {
 
 			Page.editName(pageNameEdit = "Navigation Test Page2 Edit");
 
-			Page.view(pageName = "Navigation Test Page2 Edit", privacy = "Public Pages");
+			Page.view(
+				pageName = "Navigation Test Page2 Edit",
+				privacy = "Public Pages");
 		}
 
 		task ("Assert user can add new widgets to a page by adding the Blogs widget to the second page") {
@@ -140,30 +136,26 @@ definition {
 			Navigator.gotoPage(pageName = "Navigation Test Page1");
 
 			AssertClick(
+				key_pageName = "Navigation Test Page2 Edit",
 				locator1 = "Navigation#BREADCRUMB_ENTRY",
-				value1 = "Navigation Test Page2 Edit",
-				key_pageName = "Navigation Test Page2 Edit"
-			);
+				value1 = "Navigation Test Page2 Edit");
 
 			AssertVisible(
-				locator1 = "Home#PAGE_ACTIVE",
-				key_pageName = "Navigation Test Page2 Edit"
-			);
+				key_pageName = "Navigation Test Page2 Edit",
+				locator1 = "Home#PAGE_ACTIVE");
 		}
 
 		task ("Assert user can sign in after signing out") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 		}
 
 		task ("Assert user can reorder pages in the Navigation Menu widget") {
 			DragAndDrop.dragAndDropToObject(
 				locator1 = "Home#PAGE_1",
 				locator2 = "Home#PAGE_2",
-				value1 = "Welcome"
-			);
+				value1 = "Welcome");
 		}
 	}
 
@@ -177,8 +169,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				panel = "Site Administration",
-				portlet = "Pages"
-			);
+				portlet = "Pages");
 
 			SitePages.addPublicPage(pageName = "Navigation Display Test Page");
 		}
@@ -200,15 +191,13 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Navigation#BREADCRUMB_ENTRY",
-				value1 = "Navigation Display Test Page"
-			);
+				value1 = "Navigation Display Test Page");
 		}
 
 		task ("Configure Navigation Menu widget to use the default 'Bar minimally styled' display template") {
 			ApplicationDisplayTemplates.selectPortletADT(
 				portletName = "Navigation Menu",
-				templateName = "Bar minimally styled"
-			);
+				templateName = "Bar minimally styled");
 		}
 
 		task ("Assert the Navigation Menu widget has the page") {
@@ -216,8 +205,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Navigation#BREADCRUMB_ENTRY",
-				value1 = "Navigation Display Test Page"
-			);
+				value1 = "Navigation Display Test Page");
 		}
 	}
 
@@ -229,8 +217,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				panel = "Site Administration",
-				portlet = "Pages"
-			);
+				portlet = "Pages");
 
 			SitePages.addPublicPage(pageName = "Navigation Page");
 		}
@@ -240,8 +227,7 @@ definition {
 
 			Role.definePermissionPG(
 				permissionsList = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX,CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "Power User"
-			);
+				roleTitle = "Power User");
 
 			IFrame.selectTopFrame();
 		}
@@ -252,34 +238,31 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.addCP(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
-				userScreenName = "usersn"
-			);
+				userScreenName = "usersn");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.editPasswordCP(
 				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn"
-			);
+				userScreenName = "usersn");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Roles"
-			);
+				portlet = "Roles");
 
-			Role.assignRegRoleCP(roleTitle = "Power User", userScreenName = "usersn");
+			Role.assignRegRoleCP(
+				roleTitle = "Power User",
+				userScreenName = "usersn");
 		}
 
 		task ("Sign in as the created user") {

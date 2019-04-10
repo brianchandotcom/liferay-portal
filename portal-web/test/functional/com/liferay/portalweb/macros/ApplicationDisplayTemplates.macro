@@ -14,15 +14,13 @@ definition {
 
 		UploadCommonFile(
 			locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
-			value1 = "${adtFile}"
-		);
+			value1 = "${adtFile}");
 
 		PortletEntry.save();
 
 		AssertTextEquals(
 			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${adtType} Test ADT"
-		);
+			value1 = "${adtType} Test ADT");
 	}
 
 	macro addManualViaRSS {
@@ -33,14 +31,12 @@ definition {
 		if (IsElementPresent(locator1 = "Configuration#SETUP_DISPLAY_SETTINGS")) {
 			AssertClick(
 				locator1 = "Configuration#SETUP_DISPLAY_SETTINGS",
-				value1 = "Display Settings"
-			);
+				value1 = "Display Settings");
 		}
 
 		AssertClick(
 			locator1 = "ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK",
-			value1 = "Manage Templates"
-		);
+			value1 = "Manage Templates");
 
 		var key_adtType = "RSS";
 
@@ -64,8 +60,7 @@ definition {
 	macro addPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -80,8 +75,7 @@ definition {
 
 		AssertClick(
 			locator1 = "ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK",
-			value1 = "Manage Templates"
-		);
+			value1 = "Manage Templates");
 
 		var key_adtType = "${adtType}";
 
@@ -95,23 +89,19 @@ definition {
 
 		AssertVisible(locator1 = "ApplicationDisplayTemplates#PORTLET_PREFERENCES");
 
-		AssertElementPresent(
-			locator1 = "ApplicationDisplayTemplates#PORTLET_PREFERENCES"
-		);
+		AssertElementPresent(locator1 = "ApplicationDisplayTemplates#PORTLET_PREFERENCES");
 
 		PortletEntry.inputName(name = "${adtType} Test ADT");
 
 		UploadCommonFile(
 			locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
-			value1 = "${adtFile}"
-		);
+			value1 = "${adtFile}");
 
 		PortletEntry.save();
 
 		AssertTextEquals(
 			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${adtType} Test ADT"
-		);
+			value1 = "${adtType} Test ADT");
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -119,8 +109,7 @@ definition {
 	macro addPortletADTWithFieldEntry {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -128,8 +117,7 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK",
-			value1 = "Manage Templates"
-		);
+			value1 = "Manage Templates");
 
 		SelectFrameTop();
 
@@ -139,7 +127,9 @@ definition {
 
 		PortletEntry.inputName(name = "${portletName} Test ADT");
 
-		Click(locator1 = "DDMEditTemplate#SCRIPT_FIELD", key_fieldName = "${fieldName}");
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
 
 		PortletEntry.save();
 
@@ -149,8 +139,7 @@ definition {
 	macro selectPortletADT {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -160,7 +149,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Display Settings");
 		}
 
-		Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${templateName}");
+		Select(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "${templateName}");
 
 		PortletEntry.save();
 

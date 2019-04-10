@@ -7,8 +7,7 @@ definition {
 		for (var currentLanguage : list "${currentLanguages}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentLanguage}"
-			);
+				value1 = "${currentLanguage}");
 		}
 
 		SelectFrame(value1 = "relative=top");
@@ -32,15 +31,13 @@ definition {
 
 			Select(
 				locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-				value1 = "${currentLanguage}"
-			);
+				value1 = "${currentLanguage}");
 
 			Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentLanguage}"
-			);
+				value1 = "${currentLanguage}");
 		}
 
 		PortletEntry.save();
@@ -56,7 +53,9 @@ definition {
 		}
 
 		if (IsTextNotEqual(locator1 = "Language#DROPDOWN_LANGUAGE", value1 = "${locale}", key_portletName = "${portletName}")) {
-			Click(locator1 = "Language#DROPDOWN", key_portletName = "${portletName}");
+			Click(
+				key_portletName = "${portletName}",
+				locator1 = "Language#DROPDOWN");
 
 			MenuItem.click(menuItem = "${textIcon}");
 		}
@@ -65,8 +64,7 @@ definition {
 	macro tearDownLanguagePG {
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 	}
 
 	macro toggleDisplayTemplate {
@@ -74,7 +72,9 @@ definition {
 
 		Panel.expandPanel(panel = "Languages");
 
-		Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${displayStyle}");
+		Select(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "${displayStyle}");
 
 		Button.clickSave();
 
@@ -86,15 +86,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Language#LONG_TEXT_LINK",
-			value1 = "${language}"
-		);
+			value1 = "${language}");
 	}
 
 	macro viewDisplayTemplateSelectBox {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Language#LANGUAGE_MENU_SELECT",
-			value1 = "${language}"
-		);
+			value1 = "${language}");
 	}
 
 	macro viewDisplayTemplateShortText {
@@ -102,34 +100,40 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Language#SHORT_TEXT_LINK",
-			value1 = "${languageKey}"
-		);
+			value1 = "${languageKey}");
 	}
 
 	macro viewLanguageCurrent {
 		AssertElementPresent(
-			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE",
-			key_locale = "${locale}"
-		);
+			key_locale = "${locale}",
+			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE");
 	}
 
 	macro viewLanguagesAbsent {
-		Click(locator1 = "Language#DROPDOWN", key_portletName = "LanguagePortlet");
+		Click(
+			key_portletName = "LanguagePortlet",
+			locator1 = "Language#DROPDOWN");
 
 		for (var missingLocale : list "${missingLocales}") {
 			MenuItem.viewNotPresent(menuItem = "${missingLocale}");
 		}
 
-		Click(locator1 = "Language#DROPDOWN", key_portletName = "LanguagePortlet");
+		Click(
+			key_portletName = "LanguagePortlet",
+			locator1 = "Language#DROPDOWN");
 	}
 
 	macro viewLanguagesPresent {
-		Click(locator1 = "Language#DROPDOWN", key_portletName = "LanguagePortlet");
+		Click(
+			key_portletName = "LanguagePortlet",
+			locator1 = "Language#DROPDOWN");
 
 		for (var currentLocale : list "${currentLocales}") {
 			MenuItem.viewPresent(menuItem = "${currentLocale}");
 		}
 
-		Click(locator1 = "Language#DROPDOWN", key_portletName = "LanguagePortlet");
+		Click(
+			key_portletName = "LanguagePortlet",
+			locator1 = "Language#DROPDOWN");
 	}
 }

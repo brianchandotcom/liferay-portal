@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -93,8 +92,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event All Day Title",
 			eventType = "All Day",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -108,15 +106,13 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event All Day Title",
 			eventType = "All Day",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewApprovedRSVP(
 			eventTitle = "Calendar Event All Day Title",
-			rsvp = "Yes"
-		);
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -137,8 +133,7 @@ definition {
 			number1 = "5",
 			number2 = "10",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -157,16 +152,14 @@ definition {
 			optionSet = "true",
 			optionSetValue = "tag",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "tag1"
-		);
+			specificOptionSetValue = "tag1");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
 			eventTitle = "Calendar Event All Day Title",
-			eventType = "All Day"
-		);
+			eventType = "All Day");
 
 		CalendarEvent.viewDetailsTags(tagText = "tag1");
 	}
@@ -178,44 +171,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -226,12 +215,13 @@ definition {
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
 			specificOptionSetValue = "userfn userln",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event All Day Title", rsvp = "Yes");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event All Day Title",
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -246,40 +236,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -287,13 +271,11 @@ definition {
 			calendarName = "${siteName}",
 			calendarType = "Current Site Calendars",
 			roleTitle = "Site Member",
-			site = "${siteName}"
-		);
+			site = "${siteName}");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -303,9 +285,7 @@ definition {
 
 		CalendarEvent.viewAvailableCalendars(availableCalendarList = "userfn userln");
 
-		CalendarEvent.viewUnavailableCalendarsNotPresent(
-			unavailableCalendarList = "Test Test,Liferay"
-		);
+		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Test Test,Liferay");
 
 		CalendarEvent.publish();
 
@@ -315,8 +295,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@description = "This is a use case for LPS-44540."
@@ -337,8 +316,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event Title2",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -380,8 +358,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -395,15 +372,13 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewApprovedRSVP(
 			eventTitle = "Calendar Event Regular Title",
-			rsvp = "Yes"
-		);
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -422,14 +397,11 @@ definition {
 			number1 = "5",
 			number2 = "10",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarScheduler.viewEventWithReminders(
-			eventTitle = "Calendar Event Regular Title"
-		);
+		CalendarScheduler.viewEventWithReminders(eventTitle = "Calendar Event Regular Title");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Regular Title");
 	}
@@ -446,16 +418,14 @@ definition {
 			optionSet = "true",
 			optionSetValue = "tag",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "tag1"
-		);
+			specificOptionSetValue = "tag1");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
 			eventTitle = "Calendar Event Regular Title",
-			eventType = "Regular"
-		);
+			eventType = "Regular");
 
 		CalendarEvent.viewDetailsTags(tagText = "tag1");
 	}
@@ -470,8 +440,7 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "Test Test"
-		);
+			specificOptionSetValue = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -485,44 +454,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -535,12 +500,13 @@ definition {
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
 			specificOptionSetValue = "userfn userln",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Regular Title", rsvp = "Yes");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Regular Title",
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -556,8 +522,7 @@ definition {
 			eventType = "Repeating",
 			frequency = "Daily",
 			numberOfOccurrences = "1",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -565,15 +530,13 @@ definition {
 
 		CalendarNavigator.gotoEventDetails(
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		CalendarEvent.viewRepeatingEventViaViewDetails(
 			eventTitle = "Calendar Event Repeating Title",
 			eventType = "Repeating",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@priority = "5"
@@ -585,15 +548,13 @@ definition {
 			eventType = "Repeating",
 			frequency = "Monthly",
 			numberOfOccurrences = "2",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title",
-			numberOfOccurrences = "2"
-		);
+			numberOfOccurrences = "2");
 	}
 
 	@priority = "3"
@@ -605,23 +566,20 @@ definition {
 			eventType = "Repeating",
 			frequency = "Daily",
 			numberOfOccurrences = "1",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewApprovedRSVP(
 			eventTitle = "Calendar Event Repeating Title",
-			rsvp = "Yes"
-		);
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@priority = "4"
@@ -641,28 +599,24 @@ definition {
 			eventType = "Repeating",
 			frequency = "Weekly",
 			numberOfOccurrences = "2",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title",
 			frequency = "Weekly",
-			numberOfOccurrences = "2"
-		);
+			numberOfOccurrences = "2");
 
 		CalendarNavigator.gotoEventDetails(
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		CalendarEvent.viewRepeatingEventViaViewDetails(
 			eventTitle = "Calendar Event Repeating Title",
 			eventType = "Repeating",
 			frequency = "Weekly",
-			numberOfOccurrences = "2"
-		);
+			numberOfOccurrences = "2");
 	}
 
 	@description = "This is a use case for LPS-56337."
@@ -675,8 +629,7 @@ definition {
 		CalendarEvent.setRepeating(
 			endOnDate = "10/01/2015",
 			endOnDateSummary = "October 1, 2015",
-			frequency = "Daily"
-		);
+			frequency = "Daily");
 
 		CalendarEvent.viewRepeatingEventErrorMessage();
 	}
@@ -695,20 +648,16 @@ definition {
 			number2 = "10",
 			numberOfOccurrences = "1",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarScheduler.viewEventWithReminders(
-			eventTitle = "Calendar Event Repeating Title"
-		);
+		CalendarScheduler.viewEventWithReminders(eventTitle = "Calendar Event Repeating Title");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@priority = "3"
@@ -725,16 +674,14 @@ definition {
 			optionSet = "true",
 			optionSetValue = "tag",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "tag1"
-		);
+			specificOptionSetValue = "tag1");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		CalendarEvent.viewDetailsTags(tagText = "tag1");
 	}
@@ -746,44 +693,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -798,23 +741,20 @@ definition {
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
 			specificOptionSetValue = "userfn userln",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.addRSVP(
 			eventTitle = "Calendar Event Repeating Title",
-			rsvp = "Yes"
-		);
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@description = "This is a use case for LPS-51402."
@@ -826,15 +766,18 @@ definition {
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Repeating Title");
 
-		CalendarEvent.setDates(endDate = "02/21/2016", startDate = "02/21/2016");
+		CalendarEvent.setDates(
+			endDate = "02/21/2016",
+			startDate = "02/21/2016");
 
-		CalendarEvent.setTimes(endDateTime = "02:00 AM", startDateTime = "01:00 AM");
+		CalendarEvent.setTimes(
+			endDateTime = "02:00 AM",
+			startDateTime = "01:00 AM");
 
 		CalendarEvent.setRepeatingYearly(
 			frequency = "Yearly",
 			yearlyRecurrenceSummary = "Yearly, On The Third Sunday Of February",
-			yearlyRecurrenceSummaryPreviousDay = "Yearly, On The Third Saturday Of February"
-		);
+			yearlyRecurrenceSummaryPreviousDay = "Yearly, On The Third Saturday Of February");
 
 		CalendarEvent.publish();
 
@@ -850,8 +793,7 @@ definition {
 
 		CalendarScheduler.selectSpecificEvent(
 			eventTitle = "Calendar Event Repeating Title",
-			eventToday = "false"
-		);
+			eventToday = "false");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
@@ -859,8 +801,7 @@ definition {
 			eventTitle = "Calendar Event Repeating Title",
 			eventType = "Repeating",
 			frequency = "Yearly",
-			yearlyRecurrenceSummary = "Yearly, on the Third Sunday of February"
-		);
+			yearlyRecurrenceSummary = "Yearly, on the Third Sunday of February");
 	}
 
 	@priority = "4"
@@ -869,8 +810,7 @@ definition {
 
 		CalendarScheduler.addEventToday(
 			eventTitle = "Calendar Event Today Day",
-			viewType = "Day"
-		);
+			viewType = "Day");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Today Day");
 
@@ -882,8 +822,7 @@ definition {
 
 		CalendarScheduler.addEventToday(
 			eventTitle = "Calendar Event Today Week",
-			viewType = "Week"
-		);
+			viewType = "Week");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Today Week");
 
@@ -895,8 +834,7 @@ definition {
 
 		CalendarScheduler.addEventToday(
 			eventTitle = "Calendar Event Today Month",
-			viewType = "Month"
-		);
+			viewType = "Month");
 
 		CalendarEvent.viewAllDay(eventTitle = "Calendar Event Today Month");
 	}
@@ -908,17 +846,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "AP Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "AP Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "AP Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "AP Page");
 
@@ -930,8 +868,7 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		AssetPublisherPortlet.addAsset(assetType = "Calendar Event");
 
@@ -941,8 +878,7 @@ definition {
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry"
-		);
+			assetType = "Blogs Entry");
 
 		CalendarEvent.selectEventIframe();
 
@@ -964,30 +900,26 @@ definition {
 
 		CalendarEvent.viewViaAssetPublisher(
 			calendarName = "${siteName}",
-			eventTitle = "Calendar Event Title"
-		);
+			eventTitle = "Calendar Event Title");
 
 		AssetPublisherPortlet.viewPG(
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
-			relatedAssetTitle = "Calendar Event Title"
-		);
+			relatedAssetTitle = "Calendar Event Title");
 
 		Navigator.gotoPage(pageName = "AP Page");
 
 		AssetPublisherPortlet.viewPG(
 			assetContent = "Starts",
 			assetTitle = "Calendar Event Title",
-			relatedAssetTitle = "Blogs Entry Title"
-		);
+			relatedAssetTitle = "Blogs Entry Title");
 
 		AssetPublisherPortlet.gotoViewInContext();
 
 		CalendarEvent.viewDetailsInPortlet(
 			calendarName = "${siteName}",
 			eventTitle = "Calendar Event Title",
-			relatedAssetTitle = "Blogs Entry Title"
-		);
+			relatedAssetTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a use case for LPS-45616."
@@ -1003,8 +935,7 @@ definition {
 
 		KeyPress(
 			locator1 = "CalendarEditEvent#REPEAT_ENDS_NEVER_RADIO",
-			value1 = "\ESCAPE"
-		);
+			value1 = "\ESCAPE");
 
 		CalendarEvent.viewNoRepeating();
 
@@ -1026,8 +957,7 @@ definition {
 
 		KeyPress(
 			locator1 = "CalendarEditEvent#REPEAT_ENDS_NEVER_RADIO",
-			value1 = "\ESCAPE"
-		);
+			value1 = "\ESCAPE");
 
 		CalendarEvent.viewNoRepeating();
 
@@ -1060,15 +990,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -1080,8 +1008,7 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "userfn userln,Test Test"
-		);
+			specificOptionSetValue = "userfn userln,Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -1090,8 +1017,7 @@ definition {
 		CalendarEvent.viewUsers(
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			usersList = "userfn userln,Test Test"
-		);
+			usersList = "userfn userln,Test Test");
 	}
 
 	@priority = "4"
@@ -1101,53 +1027,45 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "usersn1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "usersn2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "usersn3@liferay.com",
 			userFirstName = "userfn3",
 			userLastName = "userln3",
-			userScreenName = "usersn3"
-		);
+			userScreenName = "usersn3");
 
 		for (var userScreenName : list "usersn1,usersn2,usersn3") {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.editPasswordCP(
 				userEmailAddress = "${userScreenName}@liferay.com",
-				userScreenName = "${userScreenName}"
-			);
+				userScreenName = "${userScreenName}");
 		}
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -1160,40 +1078,41 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "userfn1 userln1,userfn2 userln2,userfn3 userln3"
-		);
+			specificOptionSetValue = "userfn1 userln1,userfn2 userln2,userfn3 userln3");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn1@liferay.com",
-			userLoginFullName = "userfn1 userln1"
-		);
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Maybe");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Maybe");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn2@liferay.com",
-			userLoginFullName = "userfn2 userln2"
-		);
+			userLoginFullName = "userfn2 userln2");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "No");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "No");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn3@liferay.com",
-			userLoginFullName = "userfn3 userln3"
-		);
+			userLoginFullName = "userfn3 userln3");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

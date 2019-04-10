@@ -16,7 +16,9 @@ definition {
 		}
 
 		task ("Add a destination page for the Search Bar widget") {
-			JSONLayout.addPublicLayout(groupName = "Test Site Name", layoutName = "Search");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 
@@ -30,9 +32,7 @@ definition {
 		task ("Import test fragments from dependencies folder") {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			FragmentsAdmin.importCollectionFromDependenciesFolder(
-				collectionZipFile = "fragment-collection.zip"
-			);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
 		task ("Add a content page") {
@@ -61,8 +61,7 @@ definition {
 		task ("Add a Static Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Static Text"
-			);
+				fragmentName = "Static Text");
 		}
 
 		task ("Publish the content page") {
@@ -73,14 +72,11 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "This is static text",
 				groupName = "Test Site Name",
-				title = "Web Content Title"
-			);
+				title = "Web Content Title");
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 		}
 
 		task ("Search by text that appears in both the content page and web content article") {
@@ -95,10 +91,9 @@ definition {
 
 		task ("Flag the Page facet in the search results to filter results to only show pages") {
 			Check(
-				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
 				key_checkboxName = "Page",
-				key_facetClass = "Type"
-			);
+				key_facetClass = "Type",
+				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
 		}
 
 		task ("Assert the content page appears in the search results") {
@@ -118,8 +113,7 @@ definition {
 		task ("Add a Rich Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text"
-			);
+				fragmentName = "Rich Text");
 		}
 
 		task ("Publish the content page") {
@@ -127,9 +121,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 		}
 
 		task ("Search by text that appears in the editable text field in the Rich Text fragment") {
@@ -141,17 +133,14 @@ definition {
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {
 			PageEditor.editFragmentText(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				text = "New editable fragment text"
-			);
+				text = "New editable fragment text");
 		}
 
 		task ("Publish the content page") {
@@ -159,9 +148,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 		}
 
 		task ("Search by the new text that appears in the editable text field in the Rich Text fragment") {
@@ -189,8 +176,7 @@ definition {
 		task ("Add a Static Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Static Text"
-			);
+				fragmentName = "Static Text");
 		}
 
 		task ("Publish the content page") {
@@ -198,9 +184,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 		}
 
 		task ("Search by the static text in the Static Text fragment") {

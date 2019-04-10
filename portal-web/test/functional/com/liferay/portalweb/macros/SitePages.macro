@@ -2,15 +2,13 @@ definition {
 	macro _addPage {
 		SitePages._selectPageType(
 			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		SitePages._addPageToNavigationMenu(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}"
-		);
+			navigationMenus = "${navigationMenus}");
 
 		PortletEntry.inputName(name = "${pageName}");
 
@@ -21,8 +19,7 @@ definition {
 		if ("${sitePageType}" == "Embedded") {
 			Type(
 				locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
-				value1 = "${pageTypeURL}"
-			);
+				value1 = "${pageTypeURL}");
 		}
 
 		if (isSet(inheritChanges)) {
@@ -40,17 +37,17 @@ definition {
 			for (var navigationMenu : list "${navigationMenus}") {
 				if ("${assertCheckboxMissing}" == "true") {
 					AssertElementNotPresent(
-						locator1 = "Checkbox#ANY_CHECKBOX",
-						checkboxName = "${navigationMenu}"
-					);
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 				else {
-					Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${navigationMenu}");
+					Check(
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
 
 					AssertChecked(
-						locator1 = "Checkbox#ANY_CHECKBOX",
-						checkboxName = "${navigationMenu}"
-					);
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 			}
 		}
@@ -71,8 +68,7 @@ definition {
 		else if ("${sitePageType}" == "Content Page") {
 			Select(
 				locator1 = "SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT",
-				value1 = "${layoutPageTemplateName}"
-			);
+				value1 = "${layoutPageTemplateName}");
 		}
 		else if ("${sitePageType}" == "Full Page Application") {
 			Page._addPageTypeFullPageApplication(portlet = "${portlet}");
@@ -92,29 +88,24 @@ definition {
 			var sitePageType = "Widget Page";
 		}
 
-		LexiconCard.clickCard(
-			card = "${sitePageType}"
-		);
+		LexiconCard.clickCard(card = "${sitePageType}");
 	}
 
 	macro addChildPage {
 		MouseOver(
-			locator1 = "SitePages#LIST_GROUP_ITEM",
-			key_itemName = "${parentPageName}"
-		);
+			key_itemName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON",
-			key_pageName = "${parentPageName}"
-		);
+			key_pageName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
 
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			navigationMenus = "${navigationMenus}",
 			pageName = "${childPageName}",
 			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 	}
 
 	macro addPrivateChildPage {
@@ -126,8 +117,7 @@ definition {
 			navigationMenus = "${navigationMenus}",
 			pageTemplateName = "${pageTemplateName}",
 			parentPageName = "${parentPageName}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 	}
 
 	macro addPrivatePage {
@@ -137,14 +127,11 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(
-				pageType = "Private Page"
-			);
+			SitePages.gotoAddFirstPage(pageType = "Private Page");
 		} else {
 			AssertClick(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1="Pages"
-			);
+				value1 = "Pages");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
 		}
@@ -154,8 +141,7 @@ definition {
 			navigationMenus = "${navigationMenus}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 	}
 
 	macro addPublicChildPage {
@@ -167,28 +153,26 @@ definition {
 			navigationMenus = "${navigationMenus}",
 			pageTemplateName = "${pageTemplateName}",
 			parentPageName = "${parentPageName}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 	}
 
 	macro addPublicPage {
 		var key_breadcrumbName="Pages";
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(
-				pageType = "Public Page"
-			);
+			SitePages.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else if (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "Public Pages")) {
-			Click(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "Public Pages");
+			Click(
+				key_itemName = "Public Pages",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
 
 			LexiconEntry.gotoAdd();
 		}
 		else {
 			AssertClick(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1="Pages"
-			);
+				value1 = "Pages");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
@@ -200,16 +184,14 @@ definition {
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 	}
 
 	macro configureChildPage {
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "${pageName}",
-			parentPagesHierarchy = "${parentPagesHierarchy}"
-		);
+			parentPagesHierarchy = "${parentPagesHierarchy}");
 
 		SitePages._configurePage(
 			columnName = "${columnName}",
@@ -217,8 +199,7 @@ definition {
 			layoutPageTemplateName = "${layoutPageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 
 		PortletEntry.save();
 	}
@@ -227,12 +208,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.togglePrivacy(privacy = "${privacy}");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "${pageName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
 
 		SitePages._configurePage(
 			columnName = "${columnName}",
@@ -240,8 +222,7 @@ definition {
 			layoutPageTemplateName = "${layoutPageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
-			sitePageType = "${sitePageType}"
-		);
+			sitePageType = "${sitePageType}");
 
 		PortletEntry.save();
 	}
@@ -254,24 +235,25 @@ definition {
 		}
 
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON",
-			key_pageName = "${pageName}"
-		);
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		if (isSet(failure)) {
 			if (IsElementPresent(locator1 = "Message#ERROR_2")) {
 				Alert.viewRequestFailedToComplete();
 
-				AssertTextEquals(locator1 = "Message#ERROR_2", value1 = "${failure}");
+				AssertTextEquals(
+					locator1 = "Message#ERROR_2",
+					value1 = "${failure}");
 			}
 			else {
-				AssertTextEquals(locator1 = "Message#ERROR", value1 = "${failure}");
+				AssertTextEquals(
+					locator1 = "Message#ERROR",
+					value1 = "${failure}");
 			}
 		}
 		else {
@@ -289,7 +271,9 @@ definition {
 		while (!("${count}" == "${depth}")) {
 			var index = MathUtil.sum("${count}", "1");
 
-			Click(locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH", key_depth = "${index}");
+			Click(
+				key_depth = "${index}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
@@ -299,13 +283,9 @@ definition {
 	macro gotoAddFirstPage {
 		var key_menuItem = "${pageType}";
 
-		Click(
-			locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN"
-		);
+		Click(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
-		Click(
-			locator1 = "MenuItem#DROPDOWN_MENU_ITEM"
-		);
+		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 	@summary = "Go to the pageMenuItem of a Site Page. Parent pages hierarchy is required to navigate to child pages."
@@ -318,22 +298,21 @@ definition {
 
 		if (isSet(parentPagesHierarchy)) {
 			for (var parentPage : list "${parentPagesHierarchy}") {
-				Click(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "${parentPage}");
+				Click(
+					key_itemName = "${parentPage}",
+					locator1 = "SitePages#LIST_GROUP_ITEM");
 			}
 		}
 
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON",
-			key_pageName = "${pageName}"
-		);
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
 	macro openPagesAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
 	macro togglePrivacy {
@@ -344,8 +323,7 @@ definition {
 		}
 
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM",
-			key_itemName = "${privacy}"
-		);
+			key_itemName = "${privacy}",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 	}
 }

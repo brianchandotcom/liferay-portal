@@ -3,7 +3,9 @@ definition {
 		var key_menuBar = "${menuBar}";
 
 		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK")) {
-			AssertClick(locator1 = "MenuBar#NAV_LINK", value1 = "${menuBar}");
+			AssertClick(
+				locator1 = "MenuBar#NAV_LINK",
+				value1 = "${menuBar}");
 		}
 
 		MenuBar.viewActive(menuBar = "${menuBar}");
@@ -35,8 +37,7 @@ definition {
 
 	macro viewActive {
 		AssertElementPresent(
-			locator1 = "MenuBar#ACTIVE_NAV_LINK",
-			key_menuBar = "${menuBar}"
-		);
+			key_menuBar = "${menuBar}",
+			locator1 = "MenuBar#ACTIVE_NAV_LINK");
 	}
 }

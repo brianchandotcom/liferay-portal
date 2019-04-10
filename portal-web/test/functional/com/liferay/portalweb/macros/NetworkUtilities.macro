@@ -2,19 +2,16 @@ definition {
 	macro searchPG {
 		Type.typeAceEditor(
 			locator1 = "NetworkUtilities#DNS_LOOKUP_FIELD",
-			value1 = "${dnsDomain}"
-		);
+			value1 = "${dnsDomain}");
 
 		AssertClick(
+			key_text = "Search",
 			locator1 = "Button#ANY",
-			value1 = "Search",
-			key_text = "Search"
-		);
+			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
+			key_networkDomain = "${networkDomain}",
 			locator1 = "NetworkUtilities#NETWORK_DOMAIN",
-			value1 = "${networkDomain}",
-			key_networkDomain = "${networkDomain}"
-		);
+			value1 = "${networkDomain}");
 	}
 }

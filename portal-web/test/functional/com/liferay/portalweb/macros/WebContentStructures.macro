@@ -14,28 +14,35 @@ definition {
 	macro addFavoriteStructure {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#INFO",
-			value1 = "You can add as many as 7 favorites in your quick menu."
-		);
+			value1 = "You can add as many as 7 favorites in your quick menu.");
 
-		Click(locator1 = "Icon#ADD_FAVORITE", key_rowEntry = "${structureName}");
+		Click(
+			key_rowEntry = "${structureName}",
+			locator1 = "Icon#ADD_FAVORITE");
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro addLocalization {
-		PortletEntry.changeLocale(fieldName = "Name", locale = "${locale}");
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "${locale}");
 
 		WebContentStructures.addName(structureName = "${localization1Name}");
 
 		if (isSet(locale2)) {
-			PortletEntry.changeLocale(fieldName = "Name", locale = "${locale2}");
+			PortletEntry.changeLocale(
+				fieldName = "Name",
+				locale = "${locale2}");
 
 			WebContentStructures.addName(structureName = "${localization2Name}");
 		}
 	}
 
 	macro addName {
-		Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${structureName}");
+		Type.clickAtType(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureName}");
 	}
 
 	macro addNullCP {
@@ -51,7 +58,9 @@ definition {
 	}
 
 	macro addSubstructure {
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -61,8 +70,7 @@ definition {
 
 		AssertClickNoError(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${parentStructureName}"
-		);
+			value1 = "${parentStructureName}");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -76,17 +84,14 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		if ("${webContentHasReference}" == "true") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "The structure cannot be deleted because it is required by one or more templates."
-			);
+				value1 = "The structure cannot be deleted because it is required by one or more templates.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -100,8 +105,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Default Values",
-			rowEntry = "${substructureName}"
-		);
+			rowEntry = "${substructureName}");
 
 		for (var structureFieldName : list "${editSubstructureFieldNames}") {
 			var key_fieldDefaultValue = "${structureFieldName}";
@@ -109,8 +113,7 @@ definition {
 
 			Type(
 				locator1 = "DDMField#DDM_INPUT",
-				value1 = "Edited ${structureFieldName} Field"
-			);
+				value1 = "Edited ${structureFieldName} Field");
 		}
 
 		Button.clickSave();
@@ -118,8 +121,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
@@ -127,16 +129,14 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Default Values",
-			rowEntry = "${substructureName}"
-		);
+			rowEntry = "${substructureName}");
 
 		for (var structureFieldName : list "${editSubstructureFieldNames}") {
 			var key_fieldDefaultValue = "${structureFieldName}";
 
 			AssertTextEquals(
 				locator1 = "DDMField#DDM_INPUT",
-				value1 = "Edited ${structureFieldName} Field"
-			);
+				value1 = "Edited ${structureFieldName} Field");
 		}
 
 		SelectFrameTop();
@@ -148,15 +148,13 @@ definition {
 		if (isSet(addRoleViewPermissions)) {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Permissions",
-				rowEntry = "${structureName}"
-			);
+				rowEntry = "${structureName}");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
 			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 				addOrRemoveViewPermission = "Add",
-				roleList = "${addRoleViewPermissions}"
-			);
+				roleList = "${addRoleViewPermissions}");
 
 			IFrame.selectTopFrame();
 		}
@@ -168,8 +166,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
@@ -180,9 +177,7 @@ definition {
 
 			ClickNoError(locator1 = "Icon#DELETE");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
@@ -194,9 +189,7 @@ definition {
 
 			ClickNoError(locator1 = "Icon#DELETE");
 
-			AssertConfirm.assertConfirmationNoWait(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm.assertConfirmationNoWait(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
@@ -210,15 +203,13 @@ definition {
 		if (isSet(structureName)) {
 			AssertTextEquals(
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
-				value1 = "${structureName}"
-			);
+				value1 = "${structureName}");
 		}
 
 		if (isSet(structureDescription)) {
 			AssertTextEquals(
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION",
-				value1 = "${structureDescription}"
-			);
+				value1 = "${structureDescription}");
 		}
 
 		SelectFrame(value1 = "relative=top");
@@ -227,15 +218,13 @@ definition {
 	macro viewFavoriteStructureViaIFrame {
 		AssertTextEquals(
 			locator1 = "WC#ADD_TO_FAVORITES",
-			value1 = "Add to Favorites (${indexNumber})"
-		);
+			value1 = "Add to Favorites (${indexNumber})");
 
 		ScrollBy(value1 = "0, 50");
 
 		AssertElementPresent(
-			locator1 = "Icon#REMOVE_FAVORITE",
-			key_rowEntry = "${structureName}"
-		);
+			key_rowEntry = "${structureName}",
+			locator1 = "Icon#REMOVE_FAVORITE");
 	}
 
 	macro viewFavoriteStructureViaPlusButton {
@@ -251,16 +240,14 @@ definition {
 	macro viewNoFavoriteStructure {
 		AssertTextEquals(
 			locator1 = "WC#ADD_TO_FAVORITES",
-			value1 = "Add to Favorites (0)"
-		);
+			value1 = "Add to Favorites (0)");
 	}
 
 	macro viewStructuresViaMoreIFrame {
 		AssertTextEquals(
+			key_rowEntry = "${structureName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${structureName}",
-			key_rowEntry = "${structureName}"
-		);
+			value1 = "${structureName}");
 	}
 
 	macro viewTableEntryCP {
@@ -268,12 +255,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
-			value1 = "${structureName}"
-		);
+			value1 = "${structureName}");
 
 		AssertTextEquals(
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION",
-			value1 = "${structureDescription}"
-		);
+			value1 = "${structureDescription}");
 	}
 }

@@ -19,8 +19,7 @@ definition {
 			databaseType = "Hypersonic",
 			databaseUserName = PropsUtil.get("database.hypersonic.username"),
 			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
-			jdbcURL = PropsUtil.get("database.hypersonic.url")
-		);
+			jdbcURL = PropsUtil.get("database.hypersonic.url"));
 
 		Smoke.viewWelcomePage();
 
@@ -41,8 +40,7 @@ definition {
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url")
-		);
+			jdbcURL = PropsUtil.get("database.mysql.url"));
 
 		Smoke.viewWelcomePage();
 
@@ -60,8 +58,7 @@ definition {
 		SetupWizard.configureAdministratorUserPG(
 			administratorEmail = "",
 			administratorFirstName = "",
-			administratorLastName = ""
-		);
+			administratorLastName = "");
 
 		Click(locator1 = "TextInput#PORTAL_NAME");
 
@@ -70,28 +67,24 @@ definition {
 			databaseType = "Hypersonic",
 			databaseUserName = "",
 			jdbcDriverClassName = "",
-			jdbcURL = ""
-		);
+			jdbcURL = "");
 
 		SetupWizard.finishConfigurationPG();
 
 		for (var filedName : list "Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name") {
 			AssertTextEquals.assertPartialText(
+				key_filedName = "${filedName}",
 				locator1 = "TextInput#REQUIRED_ALERT",
-				value1 = "This field is required.",
-				key_filedName = "${filedName}"
-			);
+				value1 = "This field is required.");
 		}
 
 		AssertTextEquals(
 			locator1 = "SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		AssertTextEquals(
 			locator1 = "SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		Refresh();
 
@@ -100,30 +93,25 @@ definition {
 		SetupWizard.configureAdministratorUserPG(
 			administratorEmail = "1234567890!@#$%^&amp;*()~`",
 			administratorFirstName = "1234567890!@#$%^&amp;*()~`",
-			administratorLastName = "1234567890!@#$%^&amp;*()~`"
-		);
+			administratorLastName = "1234567890!@#$%^&amp;*()~`");
 
 		Click(locator1 = "TextInput#PORTAL_NAME");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#FIRST_NAME",
-			value1 = "1234567890!@#$%^&*()~`"
-		);
+			value1 = "1234567890!@#$%^&*()~`");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#LAST_NAME",
-			value1 = "1234567890!@#$%^&*()~`"
-		);
+			value1 = "1234567890!@#$%^&*()~`");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#PORTAL_NAME",
-			value1 = "1234567890!@#$%^&*()~`"
-		);
+			value1 = "1234567890!@#$%^&*()~`");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
-			value1 = "Please enter a valid email address."
-		);
+			value1 = "Please enter a valid email address.");
 	}
 
 	@priority = "5"
@@ -140,16 +128,14 @@ definition {
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
 			jdbcURL = PropsUtil.get("database.mysql.url"),
-			portalName = '''<script>alert("xss")</script>'''
-		);
+			portalName = '''<script>alert("xss"));
 
 		AssertAlertNotPresent();
 
 		var actualScript = '''<script>alert("xss")</script>''';
 
-		var escapedScript = '''\x3cscript\x3ealert("xss")\x3c/script\x3e''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+		var escapedScript = '''\x3cscript\x3ealert("xss"),
+			value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
@@ -164,16 +150,13 @@ definition {
 		SetupWizard.configureAdministratorUserPG(
 			administratorEmail = "user@liferay.com",
 			administratorFirstName = "User",
-			administratorLastName = "User"
-		);
+			administratorLastName = "User");
 
-		SetupWizard.configureDatabasePG(
-			databasePassword = PropsUtil.get("database.mysql.password"),
+		SetupWizard.configureDatabasePG(databasePassword = PropsUtil.get("database.mysql.password"),
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url")
-		);
+			jdbcURL = PropsUtil.get("database.mysql.url"));
 
 		SetupWizard.finishConfigurationPG();
 
@@ -181,11 +164,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(base_branch = "${base_branch}", deleteLiferayHome = "false");
+		Portlet.startServer(
+			base_branch = "${base_branch}",
+			deleteLiferayHome = "false");
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "user@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "user@liferay.com");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/portal-setup-wizard.properties");

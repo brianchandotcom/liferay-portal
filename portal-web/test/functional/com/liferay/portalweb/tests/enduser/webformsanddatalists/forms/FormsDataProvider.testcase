@@ -29,8 +29,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -48,8 +47,7 @@ definition {
 			outputParameterType2 = "List",
 			password = "test",
 			url = "${portalURL}/api/jsonws/country/get-countries",
-			username = "test@liferay.com"
-		);
+			username = "test@liferay.com");
 
 		FormsAdmin.saveDataProvider();
 
@@ -58,8 +56,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -77,8 +74,7 @@ definition {
 
 		Form.editFieldDataProvider(
 			dataProvider = "Country Names",
-			dataProviderOutput = "Countries A2"
-		);
+			dataProviderOutput = "Countries A2");
 
 		Form.closeSidebar();
 
@@ -89,13 +85,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "Created Form Name"
-		);
+			rowEntry = "Created Form Name");
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
@@ -103,8 +97,7 @@ definition {
 
 		Form.editFieldDataProvider(
 			dataProvider = "Country Names",
-			dataProviderOutput = "Countries Full Name"
-		);
+			dataProviderOutput = "Countries Full Name");
 
 		Form.closeSidebar();
 
@@ -113,14 +106,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -130,7 +124,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.editText(fieldName = "TextFieldWithAutocomplete", fieldValue = "Un");
+		FormFields.editText(
+			fieldName = "TextFieldWithAutocomplete",
+			fieldValue = "Un");
 
 		FormFields.selectAutoCompleteOption(autocompleteOption = "United States");
 
@@ -141,23 +137,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Text Field With Autocomplete",
-			fieldValue = "United States"
-		);
+			fieldValue = "United States");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
 
@@ -166,18 +159,16 @@ definition {
 		Form.gotoAdvancedTab();
 
 		AssertVisible(
-			locator1 = "FormFields#RADIO_OPTION_LABEL",
 			key_fieldName = "dataSourceType",
-			key_radioOption = "From Data Provider"
-		);
+			key_radioOption = "From Data Provider",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
 
 		Form.disableAutocompleteConfiguration();
 
 		AssertNotVisible(
-			locator1 = "FormFields#RADIO_OPTION_LABEL",
 			key_fieldName = "dataSourceType",
-			key_radioOption = "From Data Provider"
-		);
+			key_radioOption = "From Data Provider",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
 
 		Form.closeSidebar();
 
@@ -185,12 +176,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.editText(fieldName = "TextFieldWithAutocomplete", fieldValue = "Un");
+		FormFields.editText(
+			fieldName = "TextFieldWithAutocomplete",
+			fieldValue = "Un");
 
 		AssertElementNotPresent(
-			locator1 = "FormFields#AUTOCOMPLETE_OPTION",
-			key_autocompleteOption = "United States"
-		);
+			key_autocompleteOption = "United States",
+			locator1 = "FormFields#AUTOCOMPLETE_OPTION");
 	}
 
 	@priority = "5"
@@ -203,8 +195,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -218,8 +209,7 @@ definition {
 			outputParameterType = "List",
 			password = "test",
 			url = "${portalURL}/api/jsonws/country/get-countries",
-			username = "test@liferay.com"
-		);
+			username = "test@liferay.com");
 
 		FormsAdmin.saveDataProvider();
 
@@ -228,8 +218,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -243,8 +232,7 @@ definition {
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",
-			dataProviderOutput = "Country Names"
-		);
+			dataProviderOutput = "Country Names");
 
 		Form.closeSidebar();
 
@@ -253,14 +241,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -272,13 +261,11 @@ definition {
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Data Provider Select Field",
-			fieldName = "DataProviderSelectField"
-		);
+			fieldName = "DataProviderSelectField");
 
 		FormFields.selectSelectOption(
 			fieldName = "Select Field",
-			selectOption = "United States"
-		);
+			selectOption = "United States");
 
 		FormPortlet.submitSuccessfully();
 
@@ -287,15 +274,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Data Provider Select Field",
-			fieldValue = "United States"
-		);
+			fieldValue = "United States");
 	}
 
 	@description = "This is a use case for LPS-75682."
@@ -309,8 +294,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -324,8 +308,7 @@ definition {
 			outputParameterType = "List",
 			password = "test",
 			url = "${portalURL}/api/jsonws/country/get-countries",
-			username = "test@liferay.com"
-		);
+			username = "test@liferay.com");
 
 		FormFields.selectDataProviderPermission(selectOption = "Anyone (Guest Role)");
 
@@ -336,8 +319,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -351,8 +333,7 @@ definition {
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",
-			dataProviderOutput = "Countries Full Name"
-		);
+			dataProviderOutput = "Countries Full Name");
 
 		Form.closeSidebar();
 
@@ -372,8 +353,7 @@ definition {
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
-			selectOption = "Afghanistan"
-		);
+			selectOption = "Afghanistan");
 
 		User.logoutPG();
 
@@ -381,7 +361,6 @@ definition {
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
-			selectOption = "Afghanistan"
-		);
+			selectOption = "Afghanistan");
 	}
 }

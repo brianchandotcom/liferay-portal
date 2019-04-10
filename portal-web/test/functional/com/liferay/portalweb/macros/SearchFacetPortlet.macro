@@ -1,11 +1,12 @@
 definition {
 	macro checkFacet {
-		Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${facetValueName}");
+		Check(
+			checkboxName = "${facetValueName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		AssertChecked(
-			locator1 = "Checkbox#ANY_CHECKBOX",
-			checkboxName = "${facetValueName}"
-		);
+			checkboxName = "${facetValueName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro checkFacetAndViewURL {
@@ -44,16 +45,14 @@ definition {
 			var key_facetClass = "${facetClass}_facet";
 
 			AssertClick.assertPartialTextClickAt(
+				key_facetClass = "${key_facetClass}",
 				locator1 = "SearchResults#FACET_PORTLET_CLEAR_SPECIFIC",
-				value1 = "Clear",
-				key_facetClass = "${key_facetClass}"
-			);
+				value1 = "Clear");
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "SearchResults#FACET_PORTLET_CLEAR_GENERIC",
-				value1 = "Clear"
-			);
+				value1 = "Clear");
 		}
 	}
 
@@ -78,16 +77,14 @@ definition {
 	macro configureCustomFacet {
 		Portlet.gotoPortletOptions(
 			portletName = "Custom Facet",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(aggregationField)) {
 			Type(
 				locator1 = "SearchResults#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD",
-				value1 = "${aggregationField}"
-			);
+				value1 = "${aggregationField}");
 		}
 
 		PortletEntry.save();
@@ -207,12 +204,13 @@ definition {
 	}
 
 	macro uncheckFacet {
-		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${facetValueName}");
+		Uncheck(
+			checkboxName = "${facetValueName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		AssertNotChecked(
-			locator1 = "Checkbox#ANY_CHECKBOX",
-			checkboxName = "${facetValueName}"
-		);
+			checkboxName = "${facetValueName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro uncheckFacetAndViewURL {

@@ -35,29 +35,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -66,18 +64,18 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.gotoCP(orgName = "Organization Name", searchToken = "Organization");
+		Organization.gotoCP(
+			orgName = "Organization Name",
+			searchToken = "Organization");
 
 		Organization.viewAssignMemberCP(userName = "userfn userln");
 	}
@@ -89,25 +87,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name",
-			searchTerm = "Organization Name"
-		);
+			searchTerm = "Organization Name");
 
-		Organization.viewCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 	}
 
 	@priority = "3"
@@ -115,16 +114,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		Organization.addCommentCP(
 			orgComment = "This is a test comment!",
 			orgName = "Organization Name",
-			orgType = "Organization"
-		);
+			orgType = "Organization");
 	}
 
 	@priority = "3"
@@ -132,37 +131,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name",
-			searchTerm = "Organization Name"
-		);
+			searchTerm = "Organization Name");
 
-		Organization.viewCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		Organization.addCP(
 			organizationName = "Duplicate",
 			orgName = "Organization Name",
-			orgType = "Organization"
-		);
+			orgType = "Organization");
 	}
 
 	@priority = "4"
@@ -170,71 +168,74 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name 1", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name 1",
-			searchTerm = "Organization Name 1"
-		);
+			searchTerm = "Organization Name 1");
 
-		Organization.viewCP(orgName = "Organization Name 1", orgType = "Organization");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
-
-		Organization.addCP(orgName = "Organization Name 2", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name 2",
+			orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name 2",
-			searchTerm = "Organization Name 2"
-		);
+			searchTerm = "Organization Name 2");
 
-		Organization.viewCP(orgName = "Organization Name 2", orgType = "Organization");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
-
-		Organization.addCP(orgName = "Organization Name 3", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name 2",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name 3",
+			orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name 3",
-			searchTerm = "Organization Name 3"
-		);
+			searchTerm = "Organization Name 3");
 
-		Organization.viewCP(orgName = "Organization Name 3", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name 3",
+			orgType = "Organization");
 	}
 
 	@priority = "5"
@@ -244,16 +245,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -262,14 +263,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.viewCP(
 			siteMember = "Organization",
 			siteName = "Organization Name",
-			siteType = "Private"
-		);
+			siteType = "Private");
 	}
 
 	@priority = "3"
@@ -279,16 +278,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -299,17 +298,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Private Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Private Page",
-			url = "${portalURL}/group/organization-name/private-page"
-		);
+			url = "${portalURL}/group/organization-name/private-page");
 
-		Page.view(pageName = "Private Page", privacy = "Private Pages");
+		Page.view(
+			pageName = "Private Page",
+			privacy = "Private Pages");
 	}
 
 	@priority = "3"
@@ -319,16 +318,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -339,17 +338,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Public Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Public Page",
-			url = "${portalURL}/web/organization-name/public-page"
-		);
+			url = "${portalURL}/web/organization-name/public-page");
 
-		Page.view(pageName = "Public Page", privacy = "Public Pages");
+		Page.view(
+			pageName = "Public Page",
+			privacy = "Public Pages");
 	}
 
 	@priority = "5"
@@ -361,26 +360,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -389,21 +385,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.manageMembershipOptionsInSites(
 			allowManualMembershipManagement = "true",
-			orgName = "Organization Name"
-		);
+			orgName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -412,16 +405,14 @@ definition {
 			userFirstName = "Test",
 			userLastName = "Test",
 			userName = "Test Test",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		ProductMenu.gotoSite(site = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Organization Public Page");
 
@@ -430,14 +421,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			siteName = "Organization Name",
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 	}
 
 	@priority = "5"
@@ -448,44 +437,42 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name",
-			searchTerm = "Organization Name"
-		);
+			searchTerm = "Organization Name");
 
-		Organization.viewCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Suborganization.addCP(
 			orgName = "Organization Name",
-			suborgName = "Suborganization Name"
-		);
+			suborgName = "Suborganization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -493,8 +480,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization",
 			suborgName = "Suborganization Name",
-			suborgType = "Organization"
-		);
+			suborgType = "Organization");
 	}
 
 	@priority = "5"
@@ -504,28 +490,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -533,26 +515,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editUserDisplaySettingsCP(
 			displaySettingsGreeting = "Welcome Selenium01!",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -560,16 +538,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoBack();
 
@@ -578,8 +554,7 @@ definition {
 			userEmailAddressVariation = "At",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -587,16 +562,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea\@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -604,15 +577,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea`@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -620,15 +591,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea^@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -636,16 +605,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea]@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -653,15 +620,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea}@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -669,16 +634,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea)@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -686,16 +649,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea:@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -703,15 +664,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea-@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -719,28 +678,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea=@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "userea=@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -748,16 +703,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea&gt;@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -765,15 +718,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea-@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -781,16 +732,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "",
 			userEmailAddressVariation = "Null",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -798,16 +747,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea[@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -815,15 +762,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea{@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -831,16 +776,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea(@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -848,16 +791,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea.@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoBack();
 
@@ -866,8 +807,7 @@ definition {
 			userEmailAddressVariation = "Period",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -875,16 +815,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "root@liferay.com",
 			userEmailAddressVariation = "Root",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -892,16 +830,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea;@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "3"
@@ -909,28 +845,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea_@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "userea_@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -941,15 +873,13 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.addCP(
 				userEmailAddress = "userea${count}@liferay.com",
 				userFirstName = "userfn${count}",
 				userLastName = "userln${count}",
-				userScreenName = "usersn${count}"
-			);
+				userScreenName = "usersn${count}");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
@@ -960,15 +890,13 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.viewCP(
 				userEmailAddress = "userea${count}@liferay.com",
 				userFirstName = "userfn${count}",
 				userLastName = "userln${count}",
-				userScreenName = "usersn${count}"
-			);
+				userScreenName = "usersn${count}");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
@@ -979,16 +907,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "!@#$",
-			userScreenNameVariation = "Invalid"
-		);
+			userScreenNameVariation = "Invalid");
 
 		Navigator.gotoBack();
 
@@ -997,8 +923,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "!@#$",
-			userScreenNameVariation = "Invalid"
-		);
+			userScreenNameVariation = "Invalid");
 	}
 
 	@priority = "3"
@@ -1008,28 +933,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "11111"
-		);
+			userScreenName = "11111");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "11111"
-		);
+			userScreenName = "11111");
 	}
 
 	@priority = "4"
@@ -1037,26 +958,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -1067,8 +984,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		User.changePasswordCP(userEmailAddress = "userea@liferay.com");
 	}
@@ -1078,26 +994,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -1108,13 +1020,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		User.changePasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "Invalid"
-		);
+			userPassword = "Invalid");
 	}
 
 	@priority = "5"
@@ -1124,16 +1034,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1142,8 +1052,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1155,16 +1064,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1173,20 +1082,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.viewCP(
 			siteMember = "Organization",
 			siteName = "Organization Name",
-			siteType = "Private"
-		);
+			siteType = "Private");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.deleteCP(siteName = "Organization Name");
 	}
@@ -1198,29 +1104,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.deactivateCP(deactivateType = "Actions", userFirstName = "userfn");
+		User.deactivateCP(
+			deactivateType = "Actions",
+			userFirstName = "userfn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.searchCP(searchTerm = "usersn");
 
@@ -1229,16 +1133,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.deleteCP(userFirstName = "userfn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -1257,16 +1159,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1275,45 +1177,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.viewCP(
 			siteMember = "Organization",
 			siteName = "Organization Name",
-			siteType = "Private"
-		);
+			siteType = "Private");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.editSiteCP(
 			orgName = "Organization Name",
-			orgNameEdit = "Organization Name Edit"
-		);
+			orgNameEdit = "Organization Name Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name Edit",
-			searchTerm = "Organization Name Edit"
-		);
+			searchTerm = "Organization Name Edit");
 
 		Organization.viewCP(
 			orgName = "Organization Name Edit",
-			orgType = "Organization"
-		);
+			orgType = "Organization");
 	}
 
 	@priority = "3"
@@ -1321,29 +1216,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1352,21 +1245,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.manageMembershipOptionsInSites(
 			allowManualMembershipManagement = "true",
-			orgName = "Organization Name"
-		);
+			orgName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1375,16 +1265,14 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoSite(site = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Public Page");
 
@@ -1393,27 +1281,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			siteName = "Organization Name",
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Team.editCP(
 			siteName = "Organization Name",
 			teamDescriptionEdit = "Site Team Description Edit",
 			teamName = "Site Team Name",
-			teamNameEdit = "Site Team Name Edit"
-		);
+			teamNameEdit = "Site Team Name Edit");
 
 		Team.viewCP(
 			siteName = "Organization Name",
 			teamDescription = "Site Team Description Edit",
-			teamName = "Site Team Name Edit"
-		);
+			teamName = "Site Team Name Edit");
 	}
 
 	@priority = "5"
@@ -1426,37 +1310,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.gotoEditCP(userScreenName = "usersn");
 
@@ -1470,34 +1351,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		var siteID = "siteID";
 
-		Copy(locator1 = "SitesEditSite#SITE_ID", value1 = "siteID");
+		Copy(
+			locator1 = "SitesEditSite#SITE_ID",
+			value1 = "siteID");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addScreenNameNumberSiteIdCP(
 			siteID = "${siteID}",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "${SiteID}"
-		);
+			userScreenName = "${SiteID}");
 	}
 
 	@priority = "4"
@@ -1505,26 +1384,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -1535,8 +1410,7 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -1544,62 +1418,55 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addMemberCP(
 			orgName = "Organization Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.removeMemberCP(
 			orgName = "Organization Name",
-			userFullName = "userfn userln"
-		);
+			userFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.viewRemoveMemberCP(
 			orgName = "Organization Name",
-			userFirstName = "userfn"
-		);
+			userFirstName = "userfn");
 	}
 
 	@priority = "3"
@@ -1607,23 +1474,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization Name",
-			searchTerm = "Organization Name"
-		);
+			searchTerm = "Organization Name");
 	}
 
 	@priority = "4"
@@ -1631,28 +1497,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.basicSearchCP(
 			userBasicSearch = "Basic",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -1660,21 +1522,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.basicSearchCP(
 			userBasicSearch = "Full Name",
@@ -1682,8 +1541,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -1691,73 +1549,61 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		var key_userScreenName = "usersn1";
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizations#USER_TABLE_NAME",
-			value1 = "userfn1 userln1"
-		);
+			value1 = "userfn1 userln1");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "usersn1"
-		);
+			value1 = "usersn1");
 
 		var key_userScreenName = "usersn2";
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizations#USER_TABLE_NAME",
-			value1 = "userfn2 userln2"
-		);
+			value1 = "userfn2 userln2");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "usersn2"
-		);
+			value1 = "usersn2");
 
 		User.basicSearchCP(
 			userBasicSearch = "Quotes",
 			userEmailAddress = "userea1@liferay.com",
 			userName = "userfn1 userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		var key_userScreenName = "usersn2";
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_NAME");
 
-		AssertElementNotPresent(
-			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME"
-		);
+		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME");
 	}
 
 	@priority = "4"
@@ -1765,29 +1611,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1796,28 +1640,24 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.gotoCP(
 			orgName = "Organization Name",
-			searchToken = "Organization Name"
-		);
+			searchToken = "Organization Name");
 
 		User.searchCP(searchTerm = "usersn");
 
 		Organization.viewAssignMemberCP(
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.searchCP(searchTerm = "test");
 
@@ -1829,10 +1669,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		AssertElementPresent(locator1 = "Icon#BACK");
 
@@ -1844,41 +1685,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.deactivateCP(deactivateType = "Actions", userFirstName = "userfn");
+		User.deactivateCP(
+			deactivateType = "Actions",
+			userFirstName = "userfn");
 
 		User.logoutPG();
 
 		User.loginUserInvalidPG(
 			password = "test",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		User.loginUserPG();
 	}
@@ -1891,40 +1728,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.deactivateCP(deactivateType = "Actions", userFirstName = "userfn");
+		User.deactivateCP(
+			deactivateType = "Actions",
+			userFirstName = "userfn");
 
-		User.activateCP(userName = "userfn userln", userScreenName = "usersn");
+		User.activateCP(
+			userName = "userfn userln",
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
@@ -1938,32 +1776,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.deactivateCP(userFirstName = "userfn");
 
@@ -1971,14 +1804,12 @@ definition {
 
 		User.loginUserInvalidPG(
 			password = "test",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -1986,8 +1817,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Sites Directory Page");
 
@@ -1998,16 +1828,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name 1", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -2018,18 +1848,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name 2", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name 2",
+			orgType = "Organization");
 
 		Navigator.gotoPage(pageName = "Sites Directory Page");
 
@@ -2040,23 +1870,19 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitesDirectory#SITE_ENTRY",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#ORG_SITE_ENTRY",
-			value1 = "Organization Name 1"
-		);
+			value1 = "Organization Name 1");
 
 		AssertElementNotPresent(
-			locator1 = "SitesDirectory#ORG_SITE_ENTRY",
-			key_orgName = "Organization Name 2"
-		);
+			key_orgName = "Organization Name 2",
+			locator1 = "SitesDirectory#ORG_SITE_ENTRY");
 
 		AssertClick(
 			locator1 = "SitesDirectory#ORG_SITE_ENTRY",
-			value1 = "Organization Name 1"
-		);
+			value1 = "Organization Name 1");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
@@ -2066,16 +1892,16 @@ definition {
 
 		AssertClick(
 			locator1 = "SitesDirectory#ORG_SITE_ENTRY",
-			value1 = "Organization Name 1"
-		);
+			value1 = "Organization Name 1");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "${siteName}",
 			breadcrumbListVisible = "Organization Name 1",
-			pathLocator = "CURRENT_LOCATION"
-		);
+			pathLocator = "CURRENT_LOCATION");
 
-		Breadcrumb.viewPG(breadcrumbListVisible = "Test Page", pathLocator = "PAGE");
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Test Page",
+			pathLocator = "PAGE");
 	}
 
 	@priority = "4"
@@ -2085,25 +1911,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		var key_userScreenName = "test";
 
 		AssertClick(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "test"
-		);
+			value1 = "test");
 
 		Pause(locator1 = "5000");
 
@@ -2122,52 +1943,43 @@ definition {
 			userLastName = "test1",
 			userPrefixId = "0",
 			userScreenName = "test1",
-			userSuffixId = "0"
-		);
+			userSuffixId = "0");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		var key_userScreenName = "test1";
 
 		AssertClick(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "test1"
-		);
+			value1 = "test1");
 
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD",
-			value1 = "${userId}"
-		);
+			value1 = "${userId}");
 
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "test1"
-		);
+			value1 = "test1");
 
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "test1"
-		);
+			value1 = "test1");
 
 		AssertValue(
 			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
-			value1 = "test1@liferay.com"
-		);
+			value1 = "test1@liferay.com");
 
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "test1"
-		);
+			value1 = "test1");
 
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
-			value1 = "11/24/1984"
-		);
+			value1 = "11/24/1984");
 	}
 }

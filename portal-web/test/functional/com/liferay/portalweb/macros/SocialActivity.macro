@@ -7,46 +7,42 @@ definition {
 		if (isSet(participationIncrement)) {
 			Select(
 				locator1 = "SocialActivity#PARTICIPATION_INCREMENT_SELECT",
-				value1 = "${participationIncrement}"
-			);
+				value1 = "${participationIncrement}");
 		}
 
 		if (isSet(contributionIncrement)) {
 			Select(
 				locator1 = "SocialActivity#CONTRIBUTION_INCREMENT_SELECT",
-				value1 = "${contributionIncrement}"
-			);
+				value1 = "${contributionIncrement}");
 		}
 
 		if ((isSet(contributionLimitValue)) || (isSet(contributionLimitPeriod)) || (isSet(participationLimitValue)) || (isSet(participationLimitPeriod))) {
-			AssertClick(locator1 = "SocialActivity#LIMIT_LINK", value1 = "Limit");
+			AssertClick(
+				locator1 = "SocialActivity#LIMIT_LINK",
+				value1 = "Limit");
 
 			if (isSet(contributionLimitValue)) {
 				Select(
 					locator1 = "SocialActivity#CONTRIBUTION_LIMIT_VALUE_SELECT",
-					value1 = "${contributionLimitValue}"
-				);
+					value1 = "${contributionLimitValue}");
 			}
 
 			if (isSet(contributionLimitPeriod)) {
 				Select(
 					locator1 = "SocialActivity#CONTRIBUTION_LIMIT_PERIOD_SELECT",
-					value1 = "${contributionLimitPeriod}"
-				);
+					value1 = "${contributionLimitPeriod}");
 			}
 
 			if (isSet(participationLimitValue)) {
 				Select(
 					locator1 = "SocialActivity#PARTICIPATION_LIMIT_VALUE_SELECT",
-					value1 = "${participationLimitValue}"
-				);
+					value1 = "${participationLimitValue}");
 			}
 
 			if (isSet(participationLimitPeriod)) {
 				Select(
 					locator1 = "SocialActivity#PARTICIPATION_LIMIT_PERIOD_SELECT",
-					value1 = "${participationLimitPeriod}"
-				);
+					value1 = "${participationLimitPeriod}");
 			}
 		}
 
@@ -66,8 +62,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SocialActivity#POSSIBLE_USER_ACTIONS_BUTTON",
-			value1 = "${userAction}"
-		);
+			value1 = "${userAction}");
 
 		Button.clickSave();
 	}
@@ -75,8 +70,7 @@ definition {
 	macro updateGroupStatisticsConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Group Statistics",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "GroupStatisticsConfiguration#CONFIGURATION_IFRAME");
 
@@ -87,23 +81,19 @@ definition {
 
 		Select(
 			locator1 = "GroupStatisticsConfiguration#SETUP_COUNTERS_DISPLAY_ACTIVITY_COUNTER_NAME_DROPDOWN",
-			value1 = "${displayActivityCounterName}"
-		);
+			value1 = "${displayActivityCounterName}");
 
 		Select(
 			locator1 = "GroupStatisticsConfiguration#SETUP_COUNTERS_CHART_TYPE_DROPDOWN",
-			value1 = "${chartType}"
-		);
+			value1 = "${chartType}");
 
 		Select(
 			locator1 = "GroupStatisticsConfiguration#SETUP_COUNTERS_CHART_WIDTH_DROPDOWN",
-			value1 = "${chartWidth}"
-		);
+			value1 = "${chartWidth}");
 
 		Select(
 			locator1 = "GroupStatisticsConfiguration#SETUP_COUNTERS_DATA_RANGE_DROPDOWN",
-			value1 = "${dataRange}"
-		);
+			value1 = "${dataRange}");
 
 		PortletEntry.save();
 
@@ -115,15 +105,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "GroupStatistics#SITE_STATISTICS_PANEL",
-			value1 = "${siteStatistics}"
-		);
+			value1 = "${siteStatistics}");
 
 		var key_currentValue = "${currentValue}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "GroupStatistics#GROUP_STATISTICS_BODY_INFO",
-			value1 = "${currentValue}"
-		);
+			value1 = "${currentValue}");
 
 		AssertElementPresent(locator1 = "GroupStatistics#GROUP_STATISTICS_BODY_CHART");
 	}
@@ -133,28 +121,24 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserStatistics#RANKING_TABLE_USER_NAME",
-			value1 = "${userName}"
-		);
+			value1 = "${userName}");
 
 		var key_userRank = "${userRank}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "UserStatistics#RANKING_TABLE_RANK",
-			value1 = "${userRank}"
-		);
+			value1 = "${userRank}");
 
 		var key_userContributionScore = "${contributionScore}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "UserStatistics#RANKING_TABLE_CONTRIBUTION_SCORE",
-			value1 = "${contributionScore}"
-		);
+			value1 = "${contributionScore}");
 
 		var key_userParticipationScore = "${participationScore}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "UserStatistics#RANKING_TABLE_PARTICIPATION_SCORE",
-			value1 = "${participationScore}"
-		);
+			value1 = "${participationScore}");
 	}
 }

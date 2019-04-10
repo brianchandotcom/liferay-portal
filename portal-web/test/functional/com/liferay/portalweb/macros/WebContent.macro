@@ -4,16 +4,13 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		PortletEntry.publish();
 	}
 
 	macro addCP {
-		AssertVisible(
-			locator1 = "WCEditWebContent#SIDEBAR"
-		);
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		if (isSet(webContentTitle)) {
 			Click(locator1 = "TextInput#TITLE");
@@ -28,19 +25,22 @@ definition {
 		if (isSet(viewableBy)) {
 			Panel.expandPanel(panel = "Permissions");
 
-			Select(locator1 = "Select#PERMISSIONS", value1 = "${viewableBy}");
+			Select(
+				locator1 = "Select#PERMISSIONS",
+				value1 = "${viewableBy}");
 		}
 
 		if (isSet(webContentId)) {
-			Type(locator1 = "WCEditWebContent#WEB_CONTENT_ID", value1 = "${webContentId}");
+			Type(
+				locator1 = "WCEditWebContent#WEB_CONTENT_ID",
+				value1 = "${webContentId}");
 		}
 	}
 
 	macro addDraft {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Button.clickSaveAsDraft();
 	}
@@ -50,8 +50,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		WebContent.saveAsDraftViaAP();
 	}
@@ -61,8 +60,7 @@ definition {
 
 		WebContent.addDraft(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 	}
 
 	macro addExistingRelatedAssetCP {
@@ -71,8 +69,7 @@ definition {
 		RelatedAssets.selectAsset(
 			assetTitle = "${assetTitle}",
 			assetType = "${assetType}",
-			scopeSite = "${scopeSite}"
-		);
+			scopeSite = "${scopeSite}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -80,22 +77,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE",
-			value1 = "${assetType}"
-		);
+			value1 = "${assetType}");
 
 		AssertTextEquals(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_SCOPE",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 
-		AssertElementPresent(
-			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK"
-		);
+		AssertElementPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
 
 		PortletEntry.publish();
 	}
@@ -103,14 +95,17 @@ definition {
 	macro addExpirationDateCP {
 		Panel.expandPanel(panel = "Schedule");
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
-		Uncheck(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		Uncheck(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		Type.clickAtType(
 			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = "${expirationDate}"
-		);
+			value1 = "${expirationDate}");
 	}
 
 	macro addFailWithoutRequiredCategoryAssetTypeCP {
@@ -118,7 +113,9 @@ definition {
 
 		AlloyEditor.addContent(content = "Web Content Content");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
@@ -128,30 +125,27 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "Please select at least one category for ${vocabularyName}."
-		);
+			value1 = "Please select at least one category for ${vocabularyName}.");
 	}
 
 	macro addFeaturedImageFromURL {
 		Panel.expandPanel(panel = "Featured Image");
 
-		Select(locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE", value1 = "From URL");
+		Select(
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+			value1 = "From URL");
 
 		Type(
 			locator1 = "WCEditWebContent#FEATURED_IMAGE_URL_INPUT",
-			value1 = "${imageSourceURL}"
-		);
+			value1 = "${imageSourceURL}");
 	}
 
 	macro addLocalizedPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(
-			structureName = "${localizedBasicWebContent}"
-		);
+		WebContentNavigator.gotoAddPGViaWCD(structureName = "${localizedBasicWebContent}");
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Click(locator1 = "Button#PUBLISH_LOCALIZED");
 
@@ -165,8 +159,7 @@ definition {
 		while (!("${count}" == "${articleCount}")) {
 			WebContent.addArticleCP(
 				webContentContent = "WC Content ${count}",
-				webContentTitle = "WC Title ${count}"
-			);
+				webContentTitle = "WC Title ${count}");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
@@ -177,16 +170,17 @@ definition {
 			AlloyEditor.addContent(content = "${webContentContent}");
 		}
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewRequiredField();
 
 		if (isSet(webContentContent)) {
 			AssertTextEquals(
+				key_editor = "content",
 				locator1 = "AlloyEditor#EDITOR",
-				value1 = "${webContentContent}",
-				key_editor = "content"
-			);
+				value1 = "${webContentContent}");
 		}
 	}
 
@@ -195,10 +189,11 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
-		AssertClickNoError(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClickNoError(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Pause(locator1 = "5000");
 
@@ -206,13 +201,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 
 	macro addPGViaWCD {
@@ -220,8 +213,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Button.clickPublish();
 	}
@@ -229,7 +221,9 @@ definition {
 	macro addPriority {
 		Panel.expandPanel(panel = "Metadata");
 
-		Type(locator1 = "WC#PRIORITY", value1 = "${priority}");
+		Type(
+			locator1 = "WC#PRIORITY",
+			value1 = "${priority}");
 	}
 
 	macro addStructuredPGViaWCD {
@@ -239,18 +233,16 @@ definition {
 
 		if (isSet(webContentText)) {
 			Type(
+				key_fieldName = "${structureFieldName}",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "${structureFieldName}"
-			);
+				value1 = "${webContentText}");
 		}
 
 		if (isSet(webContentTextBox)) {
 			Type(
+				key_fieldName = "${textBoxFieldName}",
 				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox}",
-				key_fieldName = "${textBoxFieldName}"
-			);
+				value1 = "${webContentTextBox}");
 		}
 
 		Click(locator1 = "Button#PUBLISH");
@@ -261,17 +253,22 @@ definition {
 	macro addTagPGViaWCD {
 		Panel.expandPanel(panel = "Metadata");
 
-		Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
+		Type(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = "${tagName}");
 
-		KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = ",");
+		KeyPress(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = ",");
 
 		AssertTextEquals(
+			key_tagName = "${tagName}",
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}",
-			key_tagName = "${tagName}"
-		);
+			value1 = "${tagName}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -281,21 +278,18 @@ definition {
 
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 
 	macro addWithCategoryCP {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		WebContent.selectCategory(
 			categoryName = "${categoryName}",
 			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "${vocabularyName}"
-		);
+			vocabularyName = "${vocabularyName}");
 
 		PortletEntry.publish();
 	}
@@ -303,8 +297,7 @@ definition {
 	macro addWithDocumentCP {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
@@ -319,19 +312,18 @@ definition {
 			Click(locator1 = "ItemSelector#SITES_NAVIGATION");
 
 			AssertClick(
+				key_siteName = "${siteName}",
 				locator1 = "ItemSelector#SITE_SELECTOR",
-				value1 = "${siteName}",
-				key_siteName = "${siteName}"
-			);
+				value1 = "${siteName}");
 		}
 
-		LexiconCard.clickCard(
-			card = "${dmDocumentTitle}"
-		);
+		LexiconCard.clickCard(card = "${dmDocumentTitle}");
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
 
 		PortletEntry.publish();
 	}
@@ -339,12 +331,13 @@ definition {
 	macro addWithFriendlyURL {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Friendly URL");
 
-		Type(locator1 = "TextInput#FRIENDLY_URL", value1 = "${friendlyUrl}");
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "${friendlyUrl}");
 
 		PortletEntry.publish();
 	}
@@ -356,23 +349,20 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
-			value1 = "${structureName}"
-		);
+			value1 = "${structureName}");
 
 		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
-			value1 = "${templateName}"
-		);
+			value1 = "${templateName}");
 
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		Type(
+			key_fieldName = "${fieldName}",
 			locator1 = "TextInput#DDM",
-			value1 = "${webContentContent}",
-			key_fieldName = "${fieldName}"
-		);
+			value1 = "${webContentContent}");
 
 		Click(locator1 = "Button#PUBLISH");
 
@@ -381,29 +371,25 @@ definition {
 		if ("${webContentJavascript}" == "true") {
 			AssertTextEquals(
 				locator1 = "//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]",
-				value1 = "${embeddedPortletTitle}"
-			);
+				value1 = "${embeddedPortletTitle}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContent}"
-			);
+				value1 = "${webContentContent}");
 		}
 	}
 
 	macro addWithMultipleCategories {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Metadata");
 
 		AssetCategorization.addMultipleCategories(
 			categoryNameList = "${categoryNameList}",
-			vocabularyName = "${vocabularyName}"
-		);
+			vocabularyName = "${vocabularyName}");
 
 		PortletEntry.publish();
 	}
@@ -413,16 +399,14 @@ definition {
 
 		if (isSet(webContentText)) {
 			Type(
+				key_fieldName = "Text",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "Text"
-			);
+				value1 = "${webContentText}");
 		}
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		Alert.viewSuccessMessage();
 	}
@@ -437,39 +421,39 @@ definition {
 		}
 
 		if (isSet(webContentColor)) {
-			Click(locator1 = "TextInput#DDM", key_fieldName = "Color");
+			Click(
+				key_fieldName = "Color",
+				locator1 = "TextInput#DDM");
 
 			Click(
-				locator1 = "DDMField#COLOR_PICKER_COLOR",
-				key_colorCode = "${webContentColor}"
-			);
+				key_colorCode = "${webContentColor}",
+				locator1 = "DDMField#COLOR_PICKER_COLOR");
 		}
 
 		if (isSet(webContentDate)) {
-			Type(locator1 = "TextInput#DDM", value1 = "${webContentDate}");
+			Type(
+				locator1 = "TextInput#DDM",
+				value1 = "${webContentDate}");
 		}
 
 		if (isSet(webContentDecimal)) {
 			Type(
+				key_fieldName = "Decimal",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentDecimal}",
-				key_fieldName = "Decimal"
-			);
+				value1 = "${webContentDecimal}");
 		}
 
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertClick(
 				locator1 = "Button#DOCUMENTS_AND_MEDIA",
-				value1 = "${webContentDocumentsAndMedia}"
-			);
+				value1 = "${webContentDocumentsAndMedia}");
 		}
 
 		if (isSet(webContentHTML)) {
 			Type.typeEditor(
+				key_fieldName = "HTML",
 				locator1 = "DDMField#HTML",
-				value1 = "${webContentHTML}",
-				key_fieldName = "HTML"
-			);
+				value1 = "${webContentHTML}");
 		}
 
 		if (isSet(webContentImage)) {
@@ -477,94 +461,88 @@ definition {
 
 			ItemSelector.uploadFile(
 				navTab = "Web Content Images",
-				uploadFileName = "${webContentImage}"
-			);
+				uploadFileName = "${webContentImage}");
 		}
 
 		if (isSet(webContentInteger)) {
 			Type(
+				key_fieldName = "Integer",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentInteger}",
-				key_fieldName = "Integer"
-			);
+				value1 = "${webContentInteger}");
 		}
 
 		if (isSet(linkedPageName)) {
 			Click(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_BUTTON");
 
 			Click(
-				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO",
-				key_pageName = "${linkedPageName}"
-			);
+				key_pageName = "${linkedPageName}",
+				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
 
 			ClickNoError(locator1 = "Button#SELECT");
 		}
 
 		if (isSet(webContentNumber)) {
 			Type(
+				key_fieldName = "Number",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentNumber}",
-				key_fieldName = "Number"
-			);
+				value1 = "${webContentNumber}");
 		}
 
 		if (isSet(webContentRadio)) {
-			Select(locator1 = "DDMField#RADIO", value1 = "${webContentRadio}");
+			Select(
+				locator1 = "DDMField#RADIO",
+				value1 = "${webContentRadio}");
 		}
 
 		if (isSet(webContentSelect)) {
-			Select(locator1 = "DDMField#SELECT", value1 = "${webContentSelect}");
+			Select(
+				locator1 = "DDMField#SELECT",
+				value1 = "${webContentSelect}");
 		}
 
 		if (isSet(webContentSelectWCFile)) {
 			AssertClick(
+				key_fieldName = "${fieldName}",
 				locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE",
-				value1 = "Select",
-				key_fieldName = "${fieldName}"
-			);
+				value1 = "Select");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
 			AssertClick(
+				key_webContentTitle = "${webContentSelectWCFile}",
 				locator1 = "Link#WEB_CONTENT_ARTICLE",
-				value1 = "${webContentSelectWCFile}",
-				key_webContentTitle = "${webContentSelectWCFile}"
-			);
+				value1 = "${webContentSelectWCFile}");
 
 			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(webContentText)) {
 			Type(
+				key_fieldName = "Text",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "Text"
-			);
+				value1 = "${webContentText}");
 		}
 
 		if (isSet(webContentTextBox)) {
 			if (isSet(fieldName)) {
 				Type(
+					key_fieldName = "${fieldName}",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "${fieldName}"
-				);
+					value1 = "${webContentTextBox}");
 			}
 			else {
 				Type(
+					key_fieldName = "TextBox",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "TextBox"
-				);
+					value1 = "${webContentTextBox}");
 			}
 		}
 
 		if (isSet(webContentTextBox2)) {
 			Type(
+				key_fieldName = "${fieldName2}",
 				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox2}",
-				key_fieldName = "${fieldName2}"
-			);
+				value1 = "${webContentTextBox2}");
 		}
 
 		if (isSet(webContentTextBoxList)) {
@@ -572,10 +550,9 @@ definition {
 
 			for (var webContentTextBox : list "${webContentTextBoxList}") {
 				Type(
+					key_fieldName = "heading${count}",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "heading${count}"
-				);
+					value1 = "${webContentTextBox}");
 
 				var count = MathUtil.sum("${count}", "1");
 			}
@@ -589,18 +566,16 @@ definition {
 			PortletEntry.saveAsDraft();
 
 			AssertTextEquals(
+				key_status = "Draft",
 				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-				value1 = "Draft",
-				key_status = "Draft"
-			);
+				value1 = "Draft");
 		}
 	}
 
 	macro addWithTagCP {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Metadata");
 
@@ -614,8 +589,7 @@ definition {
 	macro addWithWorkflowCP {
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		Button.clickSubmitForPublication();
 
@@ -627,19 +601,19 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		Pause(locator1 = "5000");
 
 		SelectFrame();
 
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "There are no results.");
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "There are no results.");
 	}
 
 	macro addWithWorkflowPGViaWCD {
@@ -647,27 +621,23 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
-			value1 = "${webContentTitle} is not approved."
-		);
+			value1 = "${webContentTitle} is not approved.");
 	}
 
 	macro copyCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",
-			menuItem = "Copy"
-		);
+			menuItem = "Copy");
 
 		Alert.viewSuccessMessage();
 	}
@@ -686,8 +656,7 @@ definition {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "${siteURLKey}");
 
@@ -696,8 +665,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}
@@ -706,26 +674,27 @@ definition {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 
-		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		Navigator.gotoStagedSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}
@@ -733,12 +702,9 @@ definition {
 	macro deleteWithDisabledRB {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${entryTitle}",
-			menuItem = "Delete"
-		);
+			menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 	}
@@ -754,10 +720,9 @@ definition {
 			PortletEntry.saveAsDraft();
 
 			AssertTextEquals.assertPartialText(
+				key_status = "Draft",
 				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-				value1 = "Draft",
-				key_status = "Draft"
-			);
+				value1 = "Draft");
 		}
 		else {
 			PortletEntry.publish();
@@ -770,8 +735,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE",
-				value1 = "${webContentTitleEdit}"
-			);
+				value1 = "${webContentTitleEdit}");
 		}
 	}
 
@@ -780,8 +744,7 @@ definition {
 
 		Type.clickAtType(
 			locator1 = "TextInput#DISPLAY_DATE",
-			value1 = "${displayDate}"
-		);
+			value1 = "${displayDate}");
 	}
 
 	macro editDisplayPage {
@@ -789,12 +752,9 @@ definition {
 
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-			value1 = "Specific Display Page Template"
-		);
+			value1 = "Specific Display Page Template");
 
-		Click(
-			locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON"
-		);
+		Click(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 
 		Pause(locator1 = "5000");
 
@@ -812,9 +772,7 @@ definition {
 		else {
 			Navigator.gotoNavItem(navItem = "${pageType}");
 
-			LexiconCard.clickCard(
-				card = "${pageName}"
-			);
+			LexiconCard.clickCard(card = "${pageName}");
 		}
 
 		SelectFrameTop();
@@ -826,14 +784,12 @@ definition {
 		if ("${pageType}" == "Public Pages") {
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
-				value1 = "Public Pages > ${pageName}"
-			);
+				value1 = "Public Pages > ${pageName}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
-				value1 = "${pageName}"
-			);
+				value1 = "${pageName}");
 		}
 	}
 
@@ -842,8 +798,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "${displayPageName}",
-			pageType = "${pageType}"
-		);
+			pageType = "${pageType}");
 
 		Pause(locator1 = "3000");
 
@@ -860,8 +815,7 @@ definition {
 
 			ItemSelector.uploadFile(
 				navTab = "Web Content Images",
-				uploadFileName = "${webContentImage}"
-			);
+				uploadFileName = "${webContentImage}");
 		}
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
@@ -876,7 +830,9 @@ definition {
 			AlloyEditor.addContent(content = "${webContentContent}");
 		}
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Alert.viewRequiredField();
 	}
@@ -886,39 +842,37 @@ definition {
 
 		if (isSet(webContentText)) {
 			Type(
+				key_fieldName = "Text",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "Text"
-			);
+				value1 = "${webContentText}");
 		}
 		else {
 			AlloyEditor.addContent(content = "${webContentContentEdit}");
 		}
 
-		Click(locator1 = "Button#PUBLISH", value1 = "Publish");
+		Click(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		SelectFrame(value1 = "relative=top");
 
 		if ("${webContentJavascript}" == "true") {
 			AssertTextEquals(
 				locator1 = "//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]",
-				value1 = "${embeddedPortletTitle}"
-			);
+				value1 = "${embeddedPortletTitle}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContentEdit}"
-			);
+				value1 = "${webContentContentEdit}");
 		}
 	}
 
 	macro expireCP {
 		for (var webContentTitle : list "${webContentTitleList}") {
 			Check(
-				locator1 = "WC#ENTRY_LIST_CHECKBOX",
-				key_webContentTitle = "${webContentTitle}"
-			);
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WC#ENTRY_LIST_CHECKBOX");
 		}
 
 		Click(locator1 = "Icon#EXPIRE");
@@ -929,22 +883,19 @@ definition {
 	macro expireSpecificVersionCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",
-			menuItem = "View History"
-		);
+			menuItem = "View History");
 
 		if (isSet(webContentList)) {
 			for (var webContentTitle : list "${webContentList}") {
 				Check(
-					locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX",
-					key_webContentTitle = "${webContentTitle}"
-				);
+					key_webContentTitle = "${webContentTitle}",
+					locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX");
 			}
 		}
 		else {
 			Check(
-				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX",
-				key_webContentTitle = "${webContentTitle}"
-			);
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX");
 		}
 
 		ClickNoError(locator1 = "Icon#EXPIRE");
@@ -969,14 +920,15 @@ definition {
 	macro moveArticlesToFolderCP {
 		for (var webContentTitle : list "${webContentArticlesList}") {
 			Check(
-				locator1 = "WC#ENTRY_LIST_CHECKBOX",
-				key_webContentTitle = "${webContentTitle}"
-			);
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WC#ENTRY_LIST_CHECKBOX");
 		}
 
 		Click(locator1 = "Icon#MOVE");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Move Web Content");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Move Web Content");
 
 		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
 
@@ -990,7 +942,9 @@ definition {
 
 		Button.clickDone();
 
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
+		AssertClick(
+			locator1 = "Button#MOVE",
+			value1 = "Move");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1000,14 +954,15 @@ definition {
 
 		for (var rowEntry : list "${rowEntryCheckList}") {
 			Check(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
-				key_rowEntry = "${rowEntry}"
-			);
+				key_rowEntry = "${rowEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 		}
 
 		Click(locator1 = "Icon#MOVE");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -1021,7 +976,9 @@ definition {
 
 		Button.clickDone();
 
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
+		AssertClick(
+			locator1 = "Button#MOVE",
+			value1 = "Move");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1029,16 +986,16 @@ definition {
 	macro moveToFolderCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",
-			menuItem = "Move"
-		);
+			menuItem = "Move");
 
 		AssertTextEquals(
+			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#MOVE_WEB_CONTENT_ARTICLE",
-			value1 = "${webContentTitle}",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -1052,7 +1009,9 @@ definition {
 
 		Button.clickDone();
 
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
+		AssertClick(
+			locator1 = "Button#MOVE",
+			value1 = "Move");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1060,22 +1019,19 @@ definition {
 	macro moveToRecycleBinCP {
 		WebContent.viewTitle(
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
 		if (!(contains("${webContentTitleEscapeCharacter}", "{webContentTitleEscapeCharacter}"))) {
 			var key_webContentTitle = "${webContentTitleEscapeCharacter}";
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "${webContentTitleEscapeCharacter}",
-				menuItem = "Move to Recycle Bin"
-			);
+				menuItem = "Move to Recycle Bin");
 		}
 		else {
 			var key_webContentTitle = "${webContentTitle}";
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "${webContentTitle}",
-				menuItem = "Move to Recycle Bin"
-			);
+				menuItem = "Move to Recycle Bin");
 		}
 
 		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
@@ -1094,9 +1050,7 @@ definition {
 	}
 
 	macro openWebContentAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
 	macro paginateRelatedAssets {
@@ -1106,21 +1060,18 @@ definition {
 
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		AssertClick(
+			key_assetType = "${assetType}",
 			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
-			value1 = "${assetType}",
-			key_assetType = "${assetType}"
-		);
+			value1 = "${assetType}");
 
 		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries"
-		);
+			value1 = "20 Entries");
 
 		MenuItem.click(menuItem = "${itemsPerPage}");
 	}
@@ -1128,8 +1079,7 @@ definition {
 	macro preview {
 		AssertTextEquals(
 			locator1 = "WCPreview#PREVIEW_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		SelectFrame(locator1 = "WCPreview#PREVIEW_IFRAME");
 
@@ -1139,8 +1089,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCPreview#BODY_FIELD",
-			value1 = "${webContentText}"
-		);
+			value1 = "${webContentText}");
 	}
 
 	macro publishViaWCD {
@@ -1163,10 +1112,9 @@ definition {
 		Search.searchCP(searchTerm = "${webContentTitle}");
 
 		AssertTextEquals(
+			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 	}
 
 	macro searchNoResultsCP {
@@ -1174,22 +1122,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No web content was found."
-		);
+			value1 = "No web content was found.");
 
 		AssertTextNotPresent(
+			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		Search.searchCP(searchTerm = "");
 
 		AssertTextPresent(
+			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 	}
 
 	macro selectCategory {
@@ -1197,16 +1142,14 @@ definition {
 
 		if (isSet(userSegmentDetailTitle)) {
 			AssertTextEquals(
+				key_userSegmentDetailTitle = "${userSegmentDetailTitle}",
 				locator1 = "WCEditWebContent#USER_SEGMENT_DETAIL_TITLE",
-				value1 = "${userSegmentDetailTitle}",
-				key_userSegmentDetailTitle = "${userSegmentDetailTitle}"
-			);
+				value1 = "${userSegmentDetailTitle}");
 		}
 
 		AssetCategorization.addCategory(
 			categoryName = "${categoryName}",
-			vocabularyName = "${vocabularyName}"
-		);
+			vocabularyName = "${vocabularyName}");
 	}
 
 	macro selectTemplateCP {
@@ -1214,26 +1157,24 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
-			value1 = "${structureName}"
-		);
+			value1 = "${structureName}");
 
 		Panel.expandPanel(panel = "Default Template");
 
-		AssertClick(locator1 = "WCEditWebContent#SELECT_TEMPLATE", value1 = "Select");
+		AssertClick(
+			locator1 = "WCEditWebContent#SELECT_TEMPLATE",
+			value1 = "Select");
 
 		IFrame.selectTopFrame();
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertClickNoError(
+			key_rowEntry = "${templateName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${templateName}",
-			key_rowEntry = "${templateName}"
-		);
+			value1 = "${templateName}");
 
-		AssertConfirm.assertConfirmationNoWait(
-			value1 = "Editing the current template deletes all unsaved content."
-		);
+		AssertConfirm.assertConfirmationNoWait(value1 = "Editing the current template deletes all unsaved content.");
 
 		IFrame.selectTopFrame();
 
@@ -1241,8 +1182,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
-			value1 = "${templateName}"
-		);
+			value1 = "${templateName}");
 	}
 
 	macro subscribeToCurrentFolderCP {
@@ -1258,8 +1198,7 @@ definition {
 	macro subscribeToSpecificArticle {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",
-			menuItem = "Subscribe"
-		);
+			menuItem = "Subscribe");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1270,8 +1209,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -1288,8 +1226,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 	}
@@ -1299,8 +1236,7 @@ definition {
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "${dmDocumentURL}",
-			navTab = "${navTab}"
-		);
+			navTab = "${navTab}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1314,8 +1250,7 @@ definition {
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "${dmDocumentURL}",
-			navTab = "${navTab}"
-		);
+			navTab = "${navTab}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1331,8 +1266,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WC#ENTRY_TABLE_WORKFLOW_STATUS",
-			value1 = "APPROVED"
-		);
+			value1 = "APPROVED");
 	}
 
 	macro viewAudioViaWCD {
@@ -1340,17 +1274,17 @@ definition {
 	}
 
 	macro viewAvailableLanguagesPGViaWCD {
-		Click(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION");
 
 		AssertElementPresent(
-			locator1 = "Translation#LOCALIZATION_NAME",
-			key_locale = StringUtil.replace("${locale1}", "-", "_")
-		);
+			key_locale = StringUtil.replace("${locale1}", "-", "_"),
+			locator1 = "Translation#LOCALIZATION_NAME");
 
 		AssertElementNotPresent(
-			locator1 = "Translation#LOCALIZATION_NAME",
-			key_locale = StringUtil.replace("${locale2}", "-", "_")
-		);
+			key_locale = StringUtil.replace("${locale2}", "-", "_"),
+			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
 	macro viewCategorizationCategoryCP {
@@ -1358,10 +1292,9 @@ definition {
 
 		for (var categoryName : list "${categoryNameList}") {
 			AssertTextEquals(
+				key_categoryName = "${categoryName}",
 				locator1 = "AssetCategorization#CATEGORY",
-				value1 = "${categoryName}",
-				key_categoryName = "${categoryName}"
-			);
+				value1 = "${categoryName}");
 		}
 	}
 
@@ -1369,9 +1302,8 @@ definition {
 		Panel.expandPanel(panel = "Metadata");
 
 		AssertElementNotPresent(
-			locator1 = "AssetCategorization#CATEGORY",
-			key_categoryName = "${categoryName}"
-		);
+			key_categoryName = "${categoryName}",
+			locator1 = "AssetCategorization#CATEGORY");
 	}
 
 	macro viewCategorizationVocabularyCP {
@@ -1381,10 +1313,9 @@ definition {
 
 		for (var vocabularyName : list "${vocabularyNameList}") {
 			AssertTextEquals(
+				key_count = "${count}",
 				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "${vocabularyName}",
-				key_count = "${count}"
-			);
+				value1 = "${vocabularyName}");
 
 			var count = MathUtil.sum("${count}", "1");
 		}
@@ -1399,16 +1330,14 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCViewHistory#VIEW_COMPARE_VERSIONS_CONTENT",
-			value1 = "${newContent}"
-		);
+			value1 = "${newContent}");
 	}
 
 	macro viewConversionLinksPGViaAP {
 		WebContent.viewPGViaAP(
 			author = "${author}",
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		for (var documentType : list "${documentTypes}") {
 			var documentTypeUppercase = StringUtil.upperCase("${documentType}");
@@ -1416,8 +1345,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "APAsset#DOCUMENT_CONVERSION_NAME",
-				value1 = "${documentTypeUppercase}"
-			);
+				value1 = "${documentTypeUppercase}");
 
 			AssertElementPresent(locator1 = "APAsset#DOCUMENT_CONVERSION_NAME_ICON");
 		}
@@ -1431,28 +1359,30 @@ definition {
 			var key_webContentTitle = "${webContentTitle}";
 		}
 
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
 
 		if (isSet(webContentText)) {
 			AssertTextEquals(
+				key_fieldName = "Text",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "Text"
-			);
+				value1 = "${webContentText}");
 		}
 		else {
 			AssertTextEquals(
+				key_editor = "content",
 				locator1 = "AlloyEditor#EDITOR",
-				value1 = "${webContentContent}",
-				key_editor = "content"
-			);
+				value1 = "${webContentContent}");
 
 			SelectFrame(value1 = "relative=top");
 		}
 	}
 
 	macro viewCPWithoutContentField {
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
 
 		if ("${field}" == "Web Content") {
 			var key_fieldData = "${fieldData}";
@@ -1461,29 +1391,25 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "DDMField#WEB_CONTENT",
-				value1 = "${fieldFieldLabel}"
-			);
+				value1 = "${fieldFieldLabel}");
 
 			AssertTextEquals(
 				locator1 = "DDMField#WEB_CONTENT_TITLE_SELECTED",
-				value1 = "${fieldData}"
-			);
+				value1 = "${fieldData}");
 		}
 
 		if ("${field}" == "Geolocation") {
 			AssertTextEquals(
-				locator1 = "DDMField#GEOLOCATION",
-				value1 = "${fieldFieldLabel}",
 				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldName = "${fieldName}"
-			);
+				key_fieldName = "${fieldName}",
+				locator1 = "DDMField#GEOLOCATION",
+				value1 = "${fieldFieldLabel}");
 		}
 
 		if ("${field}" == "Image") {
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#SELECTED_IMAGE",
-				value1 = "${webContentImage}"
-			);
+				value1 = "${webContentImage}");
 		}
 	}
 
@@ -1492,8 +1418,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No web content was found."
-		);
+			value1 = "No web content was found.");
 
 		var key_webContentTitle = "${webContentTitle}";
 
@@ -1506,37 +1431,31 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		AssertElementPresent.pauseAssertVisible(
-			locator1 = "WC#ENTRY_CARDS_THUMBNAIL",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_CARDS_THUMBNAIL");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertElementPresent.pauseAssertVisible(
-			locator1 = "WC#ENTRY_LIST_THUMBNAIL",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertElementPresent(
-			locator1 = "WC#ENTRY_TABLE_TITLE",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_TABLE_TITLE");
 	}
 
 	macro viewEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
-		WebContentNavigator.gotoArticleMenuPGViaWCD(
-			webContentTitle = "${webContentTitle}"
-		);
+		WebContentNavigator.gotoArticleMenuPGViaWCD(webContentTitle = "${webContentTitle}");
 
 		AssertTextEquals(
+			key_menuItem = "Edit Web Content",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Edit Web Content",
-			key_menuItem = "Edit Web Content"
-		);
+			value1 = "Edit Web Content");
 	}
 
 	macro viewEmailConfigurationCP {
@@ -1546,47 +1465,35 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL",
-			value1 = "Web Content Added Email"
-		);
+			value1 = "Web Content Added Email");
 
 		AssertTextEquals(
 			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REVIEW_EMAIL",
-			value1 = "Web Content Review Email"
-		);
+			value1 = "Web Content Review Email");
 
 		AssertTextEquals(
 			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_UPDATED_EMAIL",
-			value1 = "Web Content Updated Email"
-		);
+			value1 = "Web Content Updated Email");
 
 		if ("${webContentWorkflowEnabled}" == "true") {
 			AssertTextEquals(
 				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL",
-				value1 = "Web Content Denied Email"
-			);
+				value1 = "Web Content Denied Email");
 
 			AssertTextEquals(
 				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL",
-				value1 = "Web Content Granted Email"
-			);
+				value1 = "Web Content Granted Email");
 
 			AssertTextEquals(
 				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL",
-				value1 = "Web Content Requested Email"
-			);
+				value1 = "Web Content Requested Email");
 		}
 		else {
-			AssertElementNotPresent(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL"
-			);
+			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL");
 
-			AssertElementNotPresent(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL"
-			);
+			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL");
 
-			AssertElementNotPresent(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL"
-			);
+			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL");
 		}
 	}
 
@@ -1594,41 +1501,38 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "${webContentTitle}");
 
 		AssertTextEquals(
+			key_webContentContent = "${webContentContent}",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
-			value1 = "${webContentContent}",
-			key_webContentContent = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 
 	macro viewExpirationDateCP {
 		Panel.expandPanel(panel = "Schedule");
 
-		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertNotChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = "${expirationDate}"
-		);
+			value1 = "${expirationDate}");
 	}
 
 	macro viewFieldRepeated {
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-			value1 = "${ddlRecordFieldData}"
-		);
+			value1 = "${ddlRecordFieldData}");
 
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-			value1 = "${ddlRecordFieldData} 2"
-		);
+			value1 = "${ddlRecordFieldData} 2");
 
 		var i = "3";
 
 		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'])[${i}]")) {
 			AssertTextEquals(
 				locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-				value1 = "${ddlRecordFieldData} ${i}"
-			);
+				value1 = "${ddlRecordFieldData} ${i}");
 
 			var i = MathUtil.sum("${i}", "1");
 		}
@@ -1636,68 +1540,61 @@ definition {
 
 	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
+			key_assetTitle = "${webContentTitle}",
 			locator1 = "APAsset#ASSET_TITLE",
-			value1 = "${webContentTitle}",
-			key_assetTitle = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
+			key_assetContent = "${webContentContent}",
 			locator1 = "APAsset#ASSET_CONTENT",
-			value1 = "${webContentContent}",
-			key_assetContent = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 
 	macro viewNestedField {
 		AssertTextEquals(
-			locator1 = "DDMField#NESTED",
-			value1 = "${nestedFieldData}",
 			key_fieldName = "${fieldName}",
-			key_nestedFieldName = "${nestedField}"
-		);
+			key_nestedFieldName = "${nestedField}",
+			locator1 = "DDMField#NESTED",
+			value1 = "${nestedFieldData}");
 	}
 
 	macro viewNoContentAsGuestPGViaWCD {
 		AssertTextNotPresent(
 			locator1 = "Message#ERROR",
-			value1 = "The selected web content no longer exists."
-		);
+			value1 = "The selected web content no longer exists.");
 
 		AssertElementNotPresent(
-			locator1 = "Portlet#BODY",
-			key_portletName = "Web Content Display"
-		);
+			key_portletName = "Web Content Display",
+			locator1 = "Portlet#BODY");
 	}
 
 	macro viewNoConversionLinksPGViaAP {
 		WebContent.viewPGViaAP(
 			author = "${author}",
 			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		for (var documentType : list "${documentTypes}") {
 			var documentTypeUppercase = StringUtil.upperCase("${documentType}");
 
 			AssertElementNotPresent(
-				locator1 = "APAsset#DOCUMENT_CONVERSION_NAME",
-				key_documentType = "${documentTypeUppercase}"
-			);
+				key_documentType = "${documentTypeUppercase}",
+				locator1 = "APAsset#DOCUMENT_CONVERSION_NAME");
 		}
 	}
 
 	macro viewNoEditWCViaAP {
-		AssertElementPresent(locator1 = "APAsset#ASSET_TITLE", key_assetTitle = "${assetTitle}");
+		AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "APAsset#ASSET_TITLE");
 
 		AssertElementNotPresent(
-			locator1 = "AP#ASSET_ELLIPSIS_ICON",
-			key_assetTitle = "${assetTitle}"
-		);
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AP#ASSET_ELLIPSIS_ICON");
 	}
 
 	macro viewNoEditWCCP {
@@ -1708,18 +1605,16 @@ definition {
 		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
 		AssertElementNotPresent(
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			key_menuItem = "Edit"
-		);
+			key_menuItem = "Edit",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewNoEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
 		AssertElementNotPresent(
-			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON",
-			key_portletName = "Web Content Display"
-		);
+			key_portletName = "Web Content Display",
+			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 	}
 
 	macro viewNoPermissionCP {
@@ -1729,8 +1624,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No web content was found."
-		);
+			value1 = "No web content was found.");
 	}
 
 	macro viewNotPresentCP {
@@ -1740,20 +1634,17 @@ definition {
 	macro viewPageBreak {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#PAGES",
-			value1 = "Pages"
-		);
+			value1 = "Pages");
 	}
 
 	macro viewPaginateRelatedAssets {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage}"
-		);
+			value1 = "${itemsPerPage}");
 
 		AssertTextEquals(
 			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "${numberOfPages}"
-		);
+			value1 = "${numberOfPages}");
 	}
 
 	macro viewPGViaAP {
@@ -1762,49 +1653,40 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 
 		if (isSet(author)) {
 			AssertTextEquals.assertPartialText(
+				key_author = "${author}",
 				locator1 = "AP#METADATA_AUTHOR",
-				value1 = "${author}",
-				key_author = "${author}"
-			);
+				value1 = "${author}");
 		}
 
-		AssetPublisherPortlet.clickAssetTitle(
-			assetTitle = "${webContentTitle}"
-		);
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_VIEW_CONTENT",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 
 	macro viewPGViaWCD {
 		if ("${draft}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "${webContentTitle} is not approved."
-			);
+				value1 = "${webContentTitle} is not approved.");
 		}
 		else if ("${expiredContent}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3_ALT",
-				value1 = "${webContentTitle} is expired."
-			);
+				value1 = "${webContentTitle} is expired.");
 		}
 		else if ("${image}" == "true") {
 			AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
@@ -1815,24 +1697,21 @@ definition {
 		else {
 			AssertTextEquals(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContent}"
-			);
+				value1 = "${webContentContent}");
 		}
 	}
 
 	macro viewRelatedAssetsPGViaWCD {
 		AssertTextEquals(
 			locator1 = "Relatedassets#ASSET_TITLE_1",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 	}
 
 	macro viewRTLLayout {
 		AssertCssValue(
 			locator1 = "TextInput#TITLE",
 			locator2 = "direction",
-			value1 = "rtl"
-		);
+			value1 = "rtl");
 	}
 
 	macro viewSelectedTemplateCP {
@@ -1840,8 +1719,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
-			value1 = "${templateName}"
-		);
+			value1 = "${templateName}");
 	}
 
 	macro viewSpecificVersionHistoryCP {
@@ -1849,29 +1727,27 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals(
 			locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_STATUS",
-			value1 = "${webContentStatus}"
-		);
+			value1 = "${webContentStatus}");
 	}
 
 	macro viewStatus {
 		AssertTextEquals(
+			key_status = "${webContentStatus}",
 			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-			value1 = "${webContentStatus}",
-			key_status = "${webContentStatus}"
-		);
-
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+			value1 = "${webContentStatus}");
 
 		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${webContentContent}",
-			key_editor = "content"
-		);
+			value1 = "${webContentContent}");
 
 		SelectFrameTop();
 	}
@@ -1880,8 +1756,7 @@ definition {
 		if (isSet(structureLocalizationName)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
-				value1 = "${structureLocalizationName}"
-			);
+				value1 = "${structureLocalizationName}");
 		}
 
 		if (isSet(templateLocalizationName)) {
@@ -1889,8 +1764,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
-				value1 = "${templateLocalizationName}"
-			);
+				value1 = "${templateLocalizationName}");
 		}
 	}
 
@@ -1898,24 +1772,23 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
+			key_menuItem = "${structureName}",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "${structureName}",
-			key_menuItem = "${structureName}"
-		);
+			value1 = "${structureName}");
 	}
 
 	macro viewStructureWithWorkflowPendingCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		AssertElementPresent(
-			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-			key_status = "Pending"
-		);
+			key_status = "Pending",
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS");
 
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
 	}
 
 	macro viewTitle {
@@ -1929,45 +1802,50 @@ definition {
 		if ("${onLive}" == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
-				value1 = "${webContentTitle}"
-			);
+				value1 = "${webContentTitle}");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE",
-				value1 = "${webContentTitle}"
-			);
+				value1 = "${webContentTitle}");
 		}
 	}
 
 	macro viewUnlocalizableTextBox {
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
 
 		FormFields.viewTextMultilineValue(
 			fieldName = "TextBox",
-			fieldValue = "${webContentTextBox}"
-		);
+			fieldValue = "${webContentTextBox}");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${localizedTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${localizedTitle}");
 
-		FormFields.viewTextValue(fieldName = "Text", fieldValue = "${localizedText}");
+		FormFields.viewTextValue(
+			fieldName = "Text",
+			fieldValue = "${localizedText}");
 
 		FormFields.viewTextMultilineValue(
 			fieldName = "TextBox",
-			fieldValue = "${localizedTextBox}"
-		);
+			fieldValue = "${localizedTextBox}");
 	}
 
 	macro viewUserEditCP {
 		AssertTextEquals.assertPartialText(
+			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_LIST_LAST_MODIFIED",
-			value1 = "${userFirstLast}",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			value1 = "${userFirstLast}");
 
-		WebContent.viewVersion(version = "1.1", webContentTitle = "${webContentTitle}");
+		WebContent.viewVersion(
+			version = "1.1",
+			webContentTitle = "${webContentTitle}");
 	}
 
 	macro viewVersion {
@@ -1975,8 +1853,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#VERSION",
-			value1 = "${version}"
-		);
+			value1 = "${version}");
 	}
 
 	macro viewVideoViaWCD {
@@ -1988,7 +1865,9 @@ definition {
 
 		Panel.expandPanel(panel = "Permissions");
 
-		AssertSelectedLabel(locator1 = "Select#PERMISSIONS", value1 = "Site Members");
+		AssertSelectedLabel(
+			locator1 = "Select#PERMISSIONS",
+			value1 = "Site Members");
 	}
 
 	macro viewWithStructureCP {
@@ -1996,17 +1875,17 @@ definition {
 
 		WebContentNavigator.gotoEditCP(
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
 
 		if (isSet(description)) {
 			AssertTextEquals(
+				key_editor = "description",
 				locator1 = "AlloyEditor#EDITOR",
-				value1 = "${description}",
-				key_editor = "description"
-			);
+				value1 = "${description}");
 		}
 
 		if (isSet(webContentImage)) {
@@ -2019,26 +1898,23 @@ definition {
 
 		if (isSet(webContentText)) {
 			AssertTextEquals(
+				key_fieldName = "Text",
 				locator1 = "TextInput#DDM",
-				value1 = "${webContentText}",
-				key_fieldName = "Text"
-			);
+				value1 = "${webContentText}");
 		}
 
 		if (isSet(webContentTextBox)) {
 			if (isSet(fieldName)) {
 				AssertTextEquals(
+					key_fieldName = "${fieldName}",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "${fieldName}"
-				);
+					value1 = "${webContentTextBox}");
 			}
 			else {
 				AssertTextEquals(
+					key_fieldName = "TextBox",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "TextBox"
-				);
+					value1 = "${webContentTextBox}");
 			}
 		}
 
@@ -2047,8 +1923,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox2}"
-			);
+				value1 = "${webContentTextBox2}");
 		}
 
 		if (isSet(webContentTextBoxList)) {
@@ -2056,10 +1931,9 @@ definition {
 
 			for (var webContentTextBox : list "${webContentTextBoxList}") {
 				AssertTextEquals(
+					key_fieldName = "heading${count}",
 					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}",
-					key_fieldName = "heading${count}"
-				);
+					value1 = "${webContentTextBox}");
 
 				var count = MathUtil.sum("${count}", "1");
 			}
@@ -2069,22 +1943,21 @@ definition {
 	macro viewWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
-			webContentTitle = "${webContentTitle}"
-		);
+			webContentTitle = "${webContentTitle}");
 
 		AssertTextEquals(
+			key_status = "Pending",
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending",
-			key_status = "Pending"
-		);
-
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+			value1 = "Pending");
 
 		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${webContentContent}",
-			key_editor = "content"
-		);
+			value1 = "${webContentContent}");
 
 		SelectFrameTop();
 	}
@@ -2096,26 +1969,24 @@ definition {
 	macro viewWithWorkflowPGViaWCD {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
-			value1 = "${webContentTitle} is not approved."
-		);
+			value1 = "${webContentTitle} is not approved.");
 
 		AssertClick(
 			locator1 = "Message#ERROR_3_LINK",
-			value1 = "${webContentTitle} is not approved."
-		);
+			value1 = "${webContentTitle} is not approved.");
 
 		AssertTextEquals(
+			key_status = "Pending",
 			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-			value1 = "Pending",
-			key_status = "Pending"
-		);
-
-		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
+			value1 = "Pending");
 
 		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${webContentContent}",
-			key_editor = "content"
-		);
+			value1 = "${webContentContent}");
 	}
 }

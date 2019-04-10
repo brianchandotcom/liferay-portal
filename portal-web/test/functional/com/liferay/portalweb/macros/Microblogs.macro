@@ -7,8 +7,7 @@ definition {
 
 		AssertClickNoError(
 			locator1 = "Microblogs#TIMELINE_ENTRY_ACTION",
-			value1 = "Delete"
-		);
+			value1 = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this post?");
 
@@ -21,37 +20,47 @@ definition {
 
 		MouseOver(locator1 = "Microblogs#FOOTER");
 
-		AssertClick(locator1 = "Microblogs#TIMELINE_ENTRY_ACTION", value1 = "Edit");
+		AssertClick(
+			locator1 = "Microblogs#TIMELINE_ENTRY_ACTION",
+			value1 = "Edit");
 
 		Type.clickAtType(
 			locator1 = "TextArea#FIELD_INPUT",
-			value1 = "${entryContentEdit}"
-		);
+			value1 = "${entryContentEdit}");
 
-		AssertClick(locator1 = "Button#POST", value1 = "Post");
+		AssertClick(
+			locator1 = "Button#POST",
+			value1 = "Post");
 	}
 
 	macro gotoTimelineTab {
 		Navigator.gotoNavTab(navTab = "Timeline");
 
-		AssertTextEquals(locator1 = "Microblogs#ACTIVE_TAB", value1 = "Timeline");
+		AssertTextEquals(
+			locator1 = "Microblogs#ACTIVE_TAB",
+			value1 = "Timeline");
 	}
 
 	macro updateStatus {
-		AssertTextEquals(locator1 = "Microblogs#COUNTDOWN_HOLDER", value1 = "150");
+		AssertTextEquals(
+			locator1 = "Microblogs#COUNTDOWN_HOLDER",
+			value1 = "150");
 
 		var key_status = "Update your status";
 
 		AssertClick(
 			locator1 = "Microblogs#STATUS_FIELD",
-			value1 = "Update your status..."
-		);
+			value1 = "Update your status...");
 
 		var key_entryContent = "${entryContent}";
 
-		Type.clickAtType(locator1 = "TextArea#FIELD_INPUT", value1 = "${entryContent}");
+		Type.clickAtType(
+			locator1 = "TextArea#FIELD_INPUT",
+			value1 = "${entryContent}");
 
-		AssertClick(locator1 = "Button#POST", value1 = "Post");
+		AssertClick(
+			locator1 = "Button#POST",
+			value1 = "Post");
 
 		AssertElementNotPresent(locator1 = "Button#POST");
 	}
@@ -61,12 +70,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Microblogs#TIMELINE_ENTRY_CONTENT",
-			value1 = "${entryContent}"
-		);
+			value1 = "${entryContent}");
 
 		AssertTextEquals(
 			locator1 = "Microblogs#TIMELINE_ENTRY_USER_NAME",
-			value1 = "${userName}"
-		);
+			value1 = "${userName}");
 	}
 }

@@ -8,10 +8,9 @@ definition {
 		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
 		Type.sendKeys(
+			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${entryContent} @${mentionsUserScreenName}",
-			key_editor = "content"
-		);
+			value1 = "${entryContent} @${mentionsUserScreenName}");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
@@ -24,12 +23,13 @@ definition {
 
 		Type.sendKeys(
 			locator1 = "Comments#COMMENT_FIELD",
-			value1 = "${entryComment} @${mentionsUserScreenName}"
-		);
+			value1 = "${entryComment} @${mentionsUserScreenName}");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
-		AssertClick(locator1 = "Button#REPLY", value1 = "Reply");
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
 
 		Alert.viewSuccessMessage();
 	}
@@ -40,20 +40,17 @@ definition {
 
 		AssertClick(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "${threadSubject}"
-		);
+			value1 = "${threadSubject}");
 
 		AssertElementPresent(locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON");
 
 		AssertClick(
 			locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON",
-			value1 = "Reply"
-		);
+			value1 = "Reply");
 
 		Type.sendKeys(
 			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
-			value1 = "${threadBody} @${mentionsUserScreenName}"
-		);
+			value1 = "${threadBody} @${mentionsUserScreenName}");
 
 		SelectFrame.selectFrameTop();
 
@@ -71,14 +68,12 @@ definition {
 
 		Type.typeWaitForCKEditorScript(
 			locator1 = "TextInput#SUBJECT",
-			value1 = "${threadSubject}"
-		);
+			value1 = "${threadSubject}");
 
 		Type.sendKeys(
+			key_editor = "body",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "@${mentionsUserScreenName}",
-			key_editor = "body"
-		);
+			value1 = "@${mentionsUserScreenName}");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
@@ -90,17 +85,20 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "${threadSubject}");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "${threadSubject}");
 
-		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "body");
+		Click(
+			key_editor = "body",
+			locator1 = "AlloyEditor#EDITOR");
 
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
 
 		Type.sendKeys(
+			key_editor = "body",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = " @${mentionsUserScreenName}",
-			key_editor = "body"
-		);
+			value1 = " @${mentionsUserScreenName}");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
@@ -114,15 +112,13 @@ definition {
 
 		AssertClick(
 			locator1 = "Mentions#MENTIONS_COMMENT_TAG_LINK",
-			value1 = "@${mentionsUserScreenName}"
-		);
+			value1 = "@${mentionsUserScreenName}");
 
 		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${mentionsUserFullName}"
-		);
+			value1 = "${mentionsUserFullName}");
 	}
 
 	macro viewMentionTagLink {
@@ -131,14 +127,12 @@ definition {
 
 		AssertClick(
 			locator1 = "Mentions#MENTIONS_TAG_LINK",
-			value1 = "@${mentionsUserScreenName}"
-		);
+			value1 = "@${mentionsUserScreenName}");
 
 		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${mentionsUserFullName}"
-		);
+			value1 = "${mentionsUserFullName}");
 	}
 }

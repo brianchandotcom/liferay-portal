@@ -32,16 +32,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
 		MessageboardsCategory.viewCP(
 			categoryName = "MB Category Name",
 			subcategoriesNumber = "0",
-			threadsNumber = "0"
-		);
+			threadsNumber = "0");
 	}
 
 	@priority = "4"
@@ -51,8 +49,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
@@ -61,8 +58,7 @@ definition {
 		MessageboardsCategory.addCP(
 			categoryDescription = "MB Subcategory Description",
 			categoryDescriptionEnabled = "true",
-			categoryName = "MB Subcategory Name"
-		);
+			categoryName = "MB Subcategory Name");
 	}
 
 	@priority = "5"
@@ -76,27 +72,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -108,14 +100,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Thread");
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "CKEditor Entry Subject");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "CKEditor Entry Subject");
 
 		CKEditor.assertEditorPresent();
 
@@ -128,14 +121,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "CKEditor Entry Body",
-			threadSubject = "CKEditor Entry Subject"
-		);
+			threadSubject = "CKEditor Entry Subject");
 	}
 
 	@priority = "4"
@@ -146,8 +137,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Message Boards"
-			);
+				portlet = "Message Boards");
 
 			MessageboardsCategory.addCP(categoryName = "${categoryName}");
 		}
@@ -157,13 +147,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		AssertTextEquals.assertText(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no threads or categories."
-		);
+			value1 = "There are no threads or categories.");
 	}
 
 	@priority = "3"
@@ -173,30 +161,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCPWithAttachment(
 			mbAttachmentFile = "Document_1.doc",
 			threadBody = "MB Body",
-			threadSubject = "MB Subject"
-		);
+			threadSubject = "MB Subject");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Subject");
 
@@ -204,20 +188,16 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "MessageListenerException");
 
-		AssertConsoleTextNotPresent(
-			value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException"
-		);
+		AssertConsoleTextNotPresent(value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "The Recycle Bin is empty."
-		);
+			value1 = "The Recycle Bin is empty.");
 	}
 
 	@priority = "5"
@@ -227,21 +207,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
 
@@ -252,14 +229,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
@@ -269,21 +244,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
 
@@ -294,14 +266,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject Edit"
-		);
+			threadSubject = "MB Thread Message Subject Edit");
 	}
 
 	@priority = "5"
@@ -311,42 +281,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.editCP(
 			threadBodyEdit = "MB Thread Message Body Edit",
-			threadSubjectEdit = "MB Thread Message Subject Edit"
-		);
+			threadSubjectEdit = "MB Thread Message Subject Edit");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject Edit"
-		);
+			threadSubject = "MB Thread Message Subject Edit");
 	}
 
 	@priority = "5"
@@ -356,33 +320,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
-		MessageboardsThread.moveToRecycleBinCP(
-			threadSubject = "MB Thread Message Subject"
-		);
+		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Thread Message Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
@@ -394,36 +352,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewAnonymousPostingCheckboxCP();
 
-		MessageboardsPortlet.configureAnonymousPostingCP(
-			anonymousPostingEnabled = "false"
-		);
+		MessageboardsPortlet.configureAnonymousPostingCP(anonymousPostingEnabled = "false");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(
-			anonymousPostingEnabled = "false"
-		);
+		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(anonymousPostingEnabled = "false");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewNoAnonymousPostingCheckboxCP();
 	}
@@ -435,27 +386,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsPortlet.configureGeneralCP(
 			messageFormat = "BBCode",
-			messageFormatBBCodeEnabled = "true"
-		);
+			messageFormatBBCodeEnabled = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			source = "true",
 			threadBody = "[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]",
-			threadSubject = "New Thread Subject"
-		);
+			threadSubject = "New Thread Subject");
 
 		MessageboardsThread.assertAlertNotPresent();
 
@@ -464,43 +411,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "",
-			threadSubject = "New Thread Subject"
-		);
+			threadSubject = "New Thread Subject");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
 			fontSize = "24",
 			source = "true",
 			threadBody = "[size=5]Thread Body[/size]",
-			threadSubject = "New Thread Subject 2"
-		);
+			threadSubject = "New Thread Subject 2");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(
 			fontSize = "24",
 			replyCount = "0",
 			threadBody = "Thread Body",
-			threadSubject = "New Thread Subject 2"
-		);
+			threadSubject = "New Thread Subject 2");
 	}
 }

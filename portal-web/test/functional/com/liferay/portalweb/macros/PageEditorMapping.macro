@@ -9,52 +9,42 @@ definition {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		MouseOver.mouseOverNotVisible(
-			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",
-			key_id = "${id}"
-		);
+			key_id = "${id}",
+			locator1 = "Fragment#EDITABLE_FIELD");
 
 		Click(
-			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",
-			key_id = "${id}"
-		);
+			key_id = "${id}",
+			locator1 = "Fragment#EDITABLE_FIELD");
 
 		Button.clickMap();
 
 		AssertClick(
+			key_itemName = "${itemName}",
 			locator1 = "PageEditor#LIST_GROUP_ITEM",
-			value1 = "${itemName}",
-			key_itemName = "${itemName}"
-		);
+			value1 = "${itemName}");
 	}
 
 	macro mapEditableTextToField {
-		Click(
-			locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER"
-		);
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 		Click(
-			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",
-			key_id = "${id}"
-		);
+			key_id = "${id}",
+			locator1 = "Fragment#EDITABLE_FIELD");
 
-		Click(
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON"
-		);
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
 
 		Select(
+			key_fieldLabel = "Source",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${source}",
-			key_fieldLabel = "Source"
-		);
+			value1 = "${source}");
 
 		Select(
+			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${field}",
-			key_fieldLabel = "Field"
-		);
+			value1 = "${field}");
 	}
 
 	macro selectAssetType {
@@ -71,16 +61,14 @@ definition {
 		}
 
 		Select(
+			key_fieldLabel = "Asset Type",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${assetType}",
-			key_fieldLabel = "Asset Type"
-		);
+			value1 = "${assetType}");
 
 		Select(
+			key_fieldLabel = "Subtype",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${subType}",
-			key_fieldLabel = "Subtype"
-		);
+			value1 = "${subType}");
 
 		Button.clickSave();
 	}
@@ -89,16 +77,14 @@ definition {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		Select(
+			key_fieldLabel = "Content Type",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${contentType}",
-			key_fieldLabel = "Content Type"
-		);
+			value1 = "${contentType}");
 
 		Select(
+			key_fieldLabel = "Subtype",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${subType}",
-			key_fieldLabel = "Subtype"
-		);
+			value1 = "${subType}");
 
 		Button.clickSave();
 	}

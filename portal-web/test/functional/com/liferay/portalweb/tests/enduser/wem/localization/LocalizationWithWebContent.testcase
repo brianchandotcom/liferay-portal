@@ -14,13 +14,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 	}
 
 	tearDown {
@@ -42,22 +40,27 @@ definition {
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,es_ES:WC Contenido,de_DE:WC Inhalt,fi_FI:WC Pitoisuus",
 			groupName = "Test Site Name",
-			titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko"
-		);
+			titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
 		Refresh();
 
-		LanguagePortlet.selectLanguagePG(locale = "es_ES", textIcon = "español-España");
+		LanguagePortlet.selectLanguagePG(
+			locale = "es_ES",
+			textIcon = "español-España");
 
 		Refresh();
 
@@ -65,24 +68,25 @@ definition {
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Editar contenido web",
-			webContentTitle = "WC Titulo"
-		);
+			webContentTitle = "WC Titulo");
 
-		PortletEntry.changeLocale(fieldName = "Título", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Título",
+			locale = "es-ES");
 
 		WebContent.viewCP(
 			webContentContent = "WC Contenido",
-			webContentTitle = "WC Titulo"
-		);
+			webContentTitle = "WC Titulo");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Refresh();
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
-			textIcon = "Deutsch-Deutschland"
-		);
+			textIcon = "Deutsch-Deutschland");
 
 		Refresh();
 
@@ -90,18 +94,25 @@ definition {
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Webcontent bearbeiten",
-			webContentTitle = "WC Titel"
-		);
+			webContentTitle = "WC Titel");
 
-		PortletEntry.changeLocale(fieldName = "Titel", locale = "de-DE");
+		PortletEntry.changeLocale(
+			fieldName = "Titel",
+			locale = "de-DE");
 
-		WebContent.viewCP(webContentContent = "WC Inhalt", webContentTitle = "WC Titel");
+		WebContent.viewCP(
+			webContentContent = "WC Inhalt",
+			webContentTitle = "WC Titel");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Refresh();
 
-		LanguagePortlet.selectLanguagePG(locale = "fi-FI", textIcon = "suomi-Suomi");
+		LanguagePortlet.selectLanguagePG(
+			locale = "fi-FI",
+			textIcon = "suomi-Suomi");
 
 		Refresh();
 
@@ -109,15 +120,15 @@ definition {
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Muokkaa web-sisältöä",
-			webContentTitle = "WC Otsikko"
-		);
+			webContentTitle = "WC Otsikko");
 
-		PortletEntry.changeLocale(fieldName = "Otsikko", locale = "fi-FI");
+		PortletEntry.changeLocale(
+			fieldName = "Otsikko",
+			locale = "fi-FI");
 
 		WebContent.viewCP(
 			webContentContent = "WC Pitoisuus",
-			webContentTitle = "WC Otsikko"
-		);
+			webContentTitle = "WC Otsikko");
 	}
 
 	@priority = "4"
@@ -127,9 +138,7 @@ definition {
 
 		PortalSettings.gotoPortalSettings();
 
-		PortalSettings.configureCurrentLanguagesCP(
-			defaultPortalLanguage = "Spanish (Spain)"
-		);
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 

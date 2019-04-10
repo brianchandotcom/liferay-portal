@@ -1,61 +1,52 @@
 definition {
 	macro clickEllipsisItem {
 		Click(
-			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS",
-			key_tableEntry = "${tableEntry}"
-		);
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		MenuItem.clickNoError(
-			menuItem = "${item}"
-		);
+		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
 	macro clickTableEntryTitle {
 		Click(
-			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
-			key_tableEntry = "${tableEntry}"
-		);
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 	macro delete {
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
-			tableEntry = "${tableEntry}"
-		);
+			tableEntry = "${tableEntry}");
 
 		Confirm();
 	}
 
 	macro viewTableEntryNotPresent {
 		AssertElementNotPresent(
-			locator1 = "LexiconTable#TABLE_ENTRY",
-			key_tableEntry = "${tableEntry}"
-		);
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
 	macro viewTableEntryPartialText {
 		AssertTextEquals.assertPartialText(
-			locator1 = "LexiconTable#TABLE_ENTRY_PARTIAL_TEXT",
-			value1 = "${tableEntryPartialText}",
 			key_tableEntry = "${tableEntry}",
-			key_tableEntryPartialText = "${tableEntryPartialText}"
-		);
+			key_tableEntryPartialText = "${tableEntryPartialText}",
+			locator1 = "LexiconTable#TABLE_ENTRY_PARTIAL_TEXT",
+			value1 = "${tableEntryPartialText}");
 	}
 
 	macro viewTableEntryText {
 		AssertTextEquals(
-			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
-			value1 = "${tableEntryText}",
 			key_tableEntry = "${tableEntry}",
-			key_tableEntryText = "${tableEntryText}"
-		);
+			key_tableEntryText = "${tableEntryText}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+			value1 = "${tableEntryText}");
 	}
 
 	macro viewTableEntryTitle {
 		AssertTextEquals(
+			key_tableEntry = "${tableEntry}",
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
-			value1 = "${tableEntry}",
-			key_tableEntry = "${tableEntry}"
-		);
+			value1 = "${tableEntry}");
 	}
 }

@@ -8,8 +8,7 @@ definition {
 	macro inputPageSearch {
 		Type(
 			locator1 = "PagesFinder#INPUT_FIELD",
-			value1 = "${keyword}"
-		);
+			value1 = "${keyword}");
 	}
 
 	macro viewInPagesAdministration {

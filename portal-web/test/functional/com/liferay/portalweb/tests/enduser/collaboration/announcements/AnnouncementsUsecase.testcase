@@ -15,20 +15,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Announcements Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Announcements Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -62,68 +59,60 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.google.com"
-		);
+			entryURL = "http://www.google.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addCP(siteName = "Community Site Name", siteType = "Community");
+		Site.addCP(
+			siteName = "Community Site Name",
+			siteType = "Community");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Site Page Name",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Site Page Name",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Community Site Name"
-		);
+			siteName = "Community Site Name");
 
 		Portlet.addPG(portletName = "Announcements");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.addPG(
 			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title",
-			entryURL = "http://www.yahoo.com"
-		);
+			entryURL = "http://www.yahoo.com");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
-			entryTitle = "Announcements Entry2 Scoped Title"
-		);
+			entryTitle = "Announcements Entry2 Scoped Title");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -133,50 +122,45 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewViaEntriesPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Community Site Name"
-		);
+			siteName = "Community Site Name");
 
 		AnnouncementsEntry.viewViaEntriesPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewViaEntriesPG(
 			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
-			entryTitle = "Announcements Entry2 Scoped Title"
-		);
+			entryTitle = "Announcements Entry2 Scoped Title");
 	}
 
 	@priority = "3"
@@ -188,8 +172,7 @@ definition {
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${entryCount}",
 				entryTitle = "Announcements Entry Title ${entryCount}",
-				entryURL = "http://www.liferay.com"
-			);
+				entryURL = "http://www.liferay.com");
 		}
 
 		Navigator.gotoPage(pageName = "Announcements Page");
@@ -203,73 +186,68 @@ definition {
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com"
-			);
+				entryURL = "http://www.liferay.com");
 		}
 
 		for (var viewEntryCount : list "1,2") {
 			AssertElementNotPresent(
-				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
-		AssertClick(locator1 = "Pagination#NEXT_LINK", value1 = "Next");
+		AssertClick(
+			locator1 = "Pagination#NEXT_LINK",
+			value1 = "Next");
 
 		for (var viewEntryCount : list "1,2") {
 			AnnouncementsEntry.viewViaEntriesPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com"
-			);
+				entryURL = "http://www.liferay.com");
 		}
 
 		for (var viewEntryCount : list "3,4,5,6,7") {
 			AssertElementNotPresent(
-				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
-		AssertClick(locator1 = "Pagination#PREVIOUS_LINK", value1 = "Previous");
+		AssertClick(
+			locator1 = "Pagination#PREVIOUS_LINK",
+			value1 = "Previous");
 
 		for (var viewEntryCount : list "3,4,5,6,7") {
 			AnnouncementsEntry.viewViaEntriesPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com"
-			);
+				entryURL = "http://www.liferay.com");
 		}
 
 		for (var viewEntryCount : list "1,2") {
 			AssertElementNotPresent(
-				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Announcements and Alerts"
-		);
+			portlet = "Announcements and Alerts");
 
 		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5");
 
 		for (var viewEntryCount : list "1,2,3,4,5") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "6,7") {
 			AssertElementNotPresent(
-				locator1 = "Blogs#ENTRY_TABLE_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Blogs#ENTRY_TABLE_TITLE");
 		}
 
 		Click(locator1 = "Pagination#NEXT_LINK");
@@ -277,15 +255,13 @@ definition {
 		for (var viewEntryCount : list "6,7") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "1,2,3,4,5") {
 			AssertElementNotPresent(
-				locator1 = "Blogs#ENTRY_TABLE_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Blogs#ENTRY_TABLE_TITLE");
 		}
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
@@ -293,15 +269,13 @@ definition {
 		for (var viewEntryCount : list "1,2,3,4,5") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "6,7") {
 			AssertElementNotPresent(
-				locator1 = "Blogs#ENTRY_TABLE_TITLE",
-				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
-			);
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				locator1 = "Blogs#ENTRY_TABLE_TITLE");
 		}
 	}
 }

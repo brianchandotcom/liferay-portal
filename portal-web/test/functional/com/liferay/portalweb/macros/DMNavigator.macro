@@ -28,8 +28,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmCheckedOutDocumentTitle}"
-		);
+			value1 = "${dmCheckedOutDocumentTitle}");
 	}
 
 	macro gotoDocumentCP {
@@ -39,14 +38,15 @@ definition {
 	macro gotoDocumentDetails {
 		DMDocument.expandInfo();
 
-		AssertClick(locator1 = "NavBar#DETAILS", value1 = "Details");
+		AssertClick(
+			locator1 = "NavBar#DETAILS",
+			value1 = "Details");
 	}
 
 	macro gotoDocumentPermissionsCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${dmDocumentTitle}"
-		);
+			rowEntry = "${dmDocumentTitle}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
@@ -56,8 +56,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 	}
 
 	macro gotoDocumentType {
@@ -69,7 +68,9 @@ definition {
 
 		var key_tab = "Versions";
 
-		AssertClick(locator1 = "NavTab#TAB_LINK", value1 = "Versions");
+		AssertClick(
+			locator1 = "NavTab#TAB_LINK",
+			value1 = "Versions");
 	}
 
 	macro gotoFolder {
@@ -77,8 +78,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${dmFolderName}"
-		);
+			value1 = "${dmFolderName}");
 
 		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 	}
@@ -96,16 +96,13 @@ definition {
 	macro gotoFolderViaBreadcrumb {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertClick.assertTextClickAt(
-			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME"
-		);
+		AssertClick.assertTextClickAt(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 	}
 
 	macro gotoHomeCP {
 		AssertClick.assertTextClickAt(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_HOME",
-			value1 = "Home"
-		);
+			value1 = "Home");
 	}
 
 	macro gotoMetadataSets {
@@ -117,30 +114,25 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 
 		var key_assetTitle = "${key_assetTitle}";
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-			value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_HEADER",
-			value1 = "Related Assets:"
-		);
+			value1 = "Related Assets:");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		AssertClick(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 	}
 
 	macro gotoRepository {
@@ -148,8 +140,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${dmRepositoryName}"
-		);
+			value1 = "${dmRepositoryName}");
 
 		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 	}
@@ -159,14 +150,15 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
 		var key_text = "Share";
 
-		AssertClick(locator1 = "Button#ANY", value1 = "Share");
+		AssertClick(
+			locator1 = "Button#ANY",
+			value1 = "Share");
 	}
 
 	macro gotoShareViaSharedAssets {
@@ -174,8 +166,7 @@ definition {
 
 		Click(
 			locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_OPTIONS",
-			value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 
 		MenuItem.click(menuItem = "Share");
 	}

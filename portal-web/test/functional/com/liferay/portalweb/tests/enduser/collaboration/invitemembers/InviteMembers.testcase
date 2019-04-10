@@ -13,20 +13,17 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	tearDown {
@@ -52,38 +49,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page 1");
 
-		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page 1",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Invite Members");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		AssertElementNotPresent(locator1 = "Card#SPECIFIC_TEXT");
 
-		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page 1",
+			siteName = "Site Name");
 
 		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Pause(locator1 = "1000");
 
@@ -93,13 +93,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewRequest(
-			requestsTitle = "Test Test invited you to join Site Name."
-		);
+		Notifications.viewRequest(requestsTitle = "Test Test invited you to join Site Name.");
 
-		Notifications.acceptRequest(
-			requestsTitle = "Test Test invited you to join Site Name."
-		);
+		Notifications.acceptRequest(requestsTitle = "Test Test invited you to join Site Name.");
 
 		Refresh();
 
@@ -107,20 +103,22 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page 1",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.viewMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 }

@@ -15,30 +15,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Current Day Event");
 
-		CalendarEvent.setTimes(endDateTime = "11:59 PM", startDateTime = "11:58 PM");
+		CalendarEvent.setTimes(
+			endDateTime = "11:59 PM",
+			startDateTime = "11:58 PM");
 
 		CalendarEvent.setDatesToday();
 
@@ -76,16 +77,14 @@ definition {
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "RSS",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Current Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Navigator.closeWindow();
 
@@ -96,16 +95,14 @@ definition {
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "RSS",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventNotPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Current Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Navigator.closeWindow();
 	}
@@ -118,16 +115,14 @@ definition {
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "RSS",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Current Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var rssURL = selenium.getLocation();
 
@@ -146,8 +141,7 @@ definition {
 		Calendar.viewSiteCalendarNoMenulistOption(
 			menuListOption = "RSS",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewNoRSS(rssURL = "${rssURL}");
 	}
@@ -172,32 +166,28 @@ definition {
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "RSS",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventNotPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Past Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Current Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Calendar.viewRSSFeedEventPresent(
 			calendarName = "${siteName}",
 			eventTitle = "Future Day Event",
 			pageName = "Calendar Page",
 			siteCalendarName = "${siteName}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		Navigator.closeWindow();
 	}

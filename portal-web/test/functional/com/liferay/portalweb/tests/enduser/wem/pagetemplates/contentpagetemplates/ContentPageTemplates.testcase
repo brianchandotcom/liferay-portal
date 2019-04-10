@@ -17,9 +17,7 @@ definition {
 
 		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdmin.importCollectionFromDependenciesFolder(
-			collectionZipFile = "fragment-collection.zip"
-		);
+		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 	}
@@ -51,25 +49,22 @@ definition {
 		task ("Add an Image fragment to the content page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Image"
-			);
+				fragmentName = "Image");
 		}
 
 		task ("Edit the Image fragment's image") {
 			PageEditor.editFragmentImage(
 				fileName = "Document_1.png",
 				fragmentName = "Image",
-				id = "image"
-			);
+				id = "image");
 		}
 
 		task ("Assert the Image fragment's image was changed") {
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE",
 				key_fragmentClass = "image",
 				key_image = "Document_1.png",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 		}
 	}
 
@@ -87,24 +82,21 @@ definition {
 		task ("Add a Content fragment to the content page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content"
-			);
+				fragmentName = "Content");
 		}
 
 		task ("Edit the Content fragment's editable text") {
 			PageEditor.editFragmentText(
 				fragmentName = "Content",
 				id = "content",
-				text = "Editing Finished"
-			);
+				text = "Editing Finished");
 		}
 
 		task ("Assert the Content fragment's editable text was changed") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Editing Finished",
 				fragmentName = "Content",
-				id = "content"
-			);
+				id = "content");
 		}
 	}
 
@@ -142,15 +134,11 @@ definition {
 		}
 
 		task ("Delete the content page template") {
-			PageTemplatesAdmin.deletePageTemplate(
-				pageTemplateName = "Page Template Name"
-			);
+			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Assert the content page template was deleted") {
-			PageTemplatesAdmin.viewPageTemplateNotPresent(
-				pageTemplateName = "Page Template Name"
-			);
+			PageTemplatesAdmin.viewPageTemplateNotPresent(pageTemplateName = "Page Template Name");
 		}
 	}
 
@@ -160,16 +148,14 @@ definition {
 		task ("Add a page template collection") {
 			PageTemplatesAdmin.addCollection(
 				collectionDescription = "Collection Description Original",
-				collectionName = "Collection Name Original"
-			);
+				collectionName = "Collection Name Original");
 		}
 
 		task ("Rename the collection") {
 			Collection.renameCollection(
 				collectionDescription = "Collection Description New",
 				collectionName = "Collection Name Original",
-				collectionNameEdit = "Collection Name New"
-			);
+				collectionNameEdit = "Collection Name New");
 		}
 
 		task ("Assert the collection was renamed") {
@@ -194,15 +180,12 @@ definition {
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
 			PageTemplatesAdmin.renamePageTemplate(
-				pageTemplateName = "Page Template Name",
-				newPageTemplateName = "Page Template Name New"
-			);
+				newPageTemplateName = "Page Template Name New",
+				pageTemplateName = "Page Template Name");
 		}
 
 		task ("Assert the content page template was renamed") {
-			PageTemplatesAdmin.viewPageTemplatePresent(
-				pageTemplateName = "Page Template Name New"
-			);
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name New");
 		}
 	}
 
@@ -214,8 +197,7 @@ definition {
 
 			FragmentsAdmin.addCollection(
 				collectionDescription = "Collection Description",
-				collectionName = "New Collection"
-			);
+				collectionName = "New Collection");
 
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 		}

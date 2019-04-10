@@ -47,32 +47,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "This is a blog about Potatoes",
-			entryTitle = "Potato Blog"
-		);
+			entryTitle = "Potato Blog");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(
-			searchPortletList = "Type Facet,Search Results,Search Bar"
-		);
+		SearchPortlets.addWidgets(searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureWidgetParameterNames(
 			keywordsParameterName = "keywordparameter",
-			scopeParameterName = "scopeparameter"
-		);
+			scopeParameterName = "scopeparameter");
 
 		SearchPortlets.configureWidgetScope(searchScope = "Let the User Choose");
 
@@ -84,9 +78,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation(
-			value1 = "${portalURL}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry"
-		);
+		AssertLocation(value1 = "${portalURL}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry");
 
 		var searchURL = selenium.getCurrentUrl();
 
@@ -94,14 +86,17 @@ definition {
 
 		Navigator.openSpecificURL(url = "${searchURL}");
 
-		AssertTextEquals(locator1 = "Search#SEARCH_BAR_WIDGET", value1 = "Potato");
+		AssertTextEquals(
+			locator1 = "Search#SEARCH_BAR_WIDGET",
+			value1 = "Potato");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Potato Blog",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
-		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Blogs Entry");
+		AssertChecked(
+			checkboxName = "Blogs Entry",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	@priority = "4"
@@ -111,13 +106,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openURL();
 
@@ -126,64 +119,56 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Entry");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs1");
 
@@ -209,30 +194,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Categories"
-		);
+			portlet = "Categories");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
 		Category.addCP(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithCategory(
 			categoryName = "Category Name",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openURL();
 
@@ -241,24 +222,21 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Name");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category1");
 
@@ -276,30 +254,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Categories"
-		);
+			portlet = "Categories");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
 		Category.addCP(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithCategory(
 			categoryName = "Category Name",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			vocabularyName = "Vocabulary Name"
-		);
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openURL();
 
@@ -308,30 +282,25 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Category&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Name&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Category Name1&quot;");
 
-		SearchResultPortlet.viewNoSearchResults(
-			searchTerm = "&quot;Category Name1&quot;"
-		);
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Category Name1&quot;");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Category1&quot;");
 
@@ -349,13 +318,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openURL();
 
@@ -364,78 +331,67 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Entry Title&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Title&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Content&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Entry Content&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Entry&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Content&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Content&quot;");
 
-		SearchResultPortlet.viewNoSearchResults(
-			searchTerm = "&quot;Blogs Content&quot;"
-		);
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Content&quot;");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs1&quot;");
 
@@ -455,15 +411,11 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title1&quot;");
 
-		SearchResultPortlet.viewNoSearchResults(
-			searchTerm = "&quot;Blogs Entry Title1&quot;"
-		);
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Entry Title1&quot;");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Content1&quot;");
 
-		SearchResultPortlet.viewNoSearchResults(
-			searchTerm = "&quot;Blogs Entry Content1&quot;"
-		);
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Entry Content1&quot;");
 	}
 
 	@priority = "4"
@@ -473,14 +425,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			tagName = "tag name"
-		);
+			tagName = "tag name");
 
 		Navigator.openURL();
 
@@ -489,24 +439,21 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "tag");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "name");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "tag1");
 
@@ -524,14 +471,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			tagName = "tag name"
-		);
+			tagName = "tag name");
 
 		Navigator.openURL();
 
@@ -540,24 +485,21 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;tag&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;name&quot;");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blogs Entry Content",
 			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "&quot;tag name1&quot;");
 
@@ -577,25 +519,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+		WebContent.addCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		Navigator.openURL();
 
@@ -603,8 +544,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found that matched the keywords"
-		);
+			value1 = "No results were found that matched the keywords");
 	}
 
 	@description = "This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites"
@@ -613,81 +553,77 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Apple"
-		);
+			webContentTitle = "Apple");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Apple"
-		);
+			dmDocumentTitle = "Apple");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name 3");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
-		Blogs.addEntry(entryContent = "Blogs Entry Content", entryTitle = "Apple");
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Apple");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site 3 Home Page");
 
 		SitePages.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "Search Page",
-			pageTemplateName = "Search"
-		);
+			pageTemplateName = "Search");
 
 		// Workaround for LPS-80521
 
-		Navigator.gotoSitePage(pageName = "Search Page", siteName = "Site Name 3");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name 3");
 
-		Navigator.gotoSitePage(pageName = "Site 3 Home Page", siteName = "Site Name 3");
+		Navigator.gotoSitePage(
+			pageName = "Site 3 Home Page",
+			siteName = "Site Name 3");
 
 		SearchPortlets.configureDestination(destinationPage = "Search Page");
 
@@ -699,8 +635,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
-			searchTerm = "Apple"
-		);
+			searchTerm = "Apple");
 
 		SearchPortlets.selectEmbeddedScopeInput(searchScope = "This Site");
 
@@ -709,12 +644,9 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Blogs Entry",
-			searchTerm = "Apple"
-		);
+			searchTerm = "Apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "Apple/Web Content Article,Apple/Document"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Apple/Web Content Article,Apple/Document");
 	}
 
 	@description = "This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar"
@@ -723,19 +655,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Potato Document"
-		);
+			dmDocumentTitle = "Potato Document");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Test Site");
 
@@ -744,13 +673,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "This is a blog about Potatoes",
-			entryTitle = "Potato Blog"
-		);
+			entryTitle = "Potato Blog");
 
 		var currentDate = DateUtil.getFormattedDate("0", "MMM d, YYYY");
 		var portalURL = PropsUtil.get("portal.url");
@@ -766,15 +693,13 @@ definition {
 			searchAssetSummary = "This is a blog about Potatoes",
 			searchAssetTitle = "Potato Blog",
 			searchAssetType = "Blogs Entry",
-			searchTerm = "Potato"
-		);
+			searchTerm = "Potato");
 
 		SearchResultPortlet.viewSearchResults(
 			entryDate = "${currentDate}",
 			searchAssetTitle = "Potato Document",
 			searchAssetType = "Document",
-			searchTerm = "Potato"
-		);
+			searchTerm = "Potato");
 
 		SearchPortlets.configureEmbeddedScope(searchScope = "This Site");
 
@@ -784,13 +709,11 @@ definition {
 			entryDate = "${currentDate}",
 			searchAssetTitle = "Potato Document",
 			searchAssetType = "Document",
-			searchTerm = "Potato"
-		);
+			searchTerm = "Potato");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "Potato Blog",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 	}
 
 	@priority = "5"
@@ -802,16 +725,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentSize = "0k",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "moon rocks"
-		);
+			tagNameList = "moon rocks");
 
 		Navigator.openURL();
 
@@ -819,64 +740,55 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Document Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchFacetPortlet.checkFacet(facetValueName = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM1");
 
@@ -897,64 +809,61 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry 1 Content",
-			entryTitle = "Blogs Entry 1 Title"
-		);
+			entryTitle = "Blogs Entry 1 Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Home");
 
 		SitePages.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "Search Global Template Page",
-			pageTemplateName = "Search"
-		);
+			pageTemplateName = "Search");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Global Template Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
-		SearchPortlets.configureDestination(
-			destinationPage = "Search Global Template Page"
-		);
+		SearchPortlets.configureDestination(destinationPage = "Search Global Template Page");
 
 		for (var portlet : list "Category Facet,Folder Facet,Modified Facet,Search Bar,Search Options,Search Results,Tag Facet,Type Facet,User Facet") {
-			AssertElementPresent(locator1 = "Portlet#BODY", key_portletName = "${portlet}");
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
 		}
 
 		Portlet.deletePG(portletName = "Search Options");
 
 		for (var portlet : list "Category Facet,Folder Facet,Modified Facet,Search Bar,Search Results,Tag Facet,Type Facet,User Facet") {
-			AssertElementPresent(locator1 = "Portlet#BODY", key_portletName = "${portlet}");
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
 		}
 
-		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Blogs Entry 1 Title",
 			searchAssetType = "Blogs Entry",
-			searchTerm = "Blogs"
-		);
+			searchTerm = "Blogs");
 	}
 
 	@priority = "4"
@@ -964,23 +873,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
@@ -988,29 +896,25 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.searchEmbedded(searchTerm = "userfn");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.searchEmbedded(searchTerm = "userln");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.searchEmbedded(searchTerm = "usersn");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.searchEmbedded(searchTerm = "userfn1");
 
@@ -1032,23 +936,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
@@ -1056,23 +959,20 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.searchEmbedded(searchTerm = "userf*");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "userfn userln",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 	}
 
 	test SearchUsingCustomFacet {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1080,7 +980,9 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.viewVersion(version = "1.0", webContentTitle = "WebContent Title 1");
+		WebContent.viewVersion(
+			version = "1.0",
+			webContentTitle = "WebContent Title 1");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1095,32 +997,27 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
 			searchAssetType = "Web Content Article",
-			searchTerm = "WebContent"
-		);
+			searchTerm = "WebContent");
 
 		AssertElementPresent(
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC",
 			key_checkboxName = "1.0",
-			key_facetClass = "Custom Facet"
-		);
+			key_facetClass = "Custom Facet",
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		Check(
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
 			key_checkboxName = "1.0",
-			key_facetClass = "Custom Facet"
-		);
+			key_facetClass = "Custom Facet",
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
 			searchAssetType = "Web Content Article",
-			searchTerm = "WebContent"
-		);
+			searchTerm = "WebContent");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title 1");
 
@@ -1130,8 +1027,7 @@ definition {
 
 		WebContent.viewVersion(
 			version = "1.1",
-			webContentTitle = "WebContent Title 1.1"
-		);
+			webContentTitle = "WebContent Title 1.1");
 
 		Navigator.openURL();
 
@@ -1140,26 +1036,22 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
 			searchAssetType = "Web Content Article",
-			searchTerm = "WebContent"
-		);
+			searchTerm = "WebContent");
 
 		AssertElementPresent(
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC",
 			key_checkboxName = "1.1",
-			key_facetClass = "Custom Facet"
-		);
+			key_facetClass = "Custom Facet",
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		Check(
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
 			key_checkboxName = "1.1",
-			key_facetClass = "Custom Facet"
-		);
+			key_facetClass = "Custom Facet",
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
 			searchAssetType = "Web Content Article",
-			searchTerm = "WebContent"
-		);
+			searchTerm = "WebContent");
 	}
 
 	@priority = "4"
@@ -1169,15 +1061,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -1190,48 +1080,42 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "WC WebContent Content",
 			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC1");
 
@@ -1255,8 +1139,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 
@@ -1271,8 +1154,7 @@ definition {
 		WikiPage.addPG(
 			pageName = "Wiki Test Page",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Navigator.openURL();
 
@@ -1281,48 +1163,42 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki Page Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Page");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page"
-		);
+			searchAssetType = "Wiki Page");
 	}
 
 	@priority = "4"
@@ -1330,8 +1206,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Message Boards Page");
 
@@ -1343,16 +1218,14 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = "Thread Subject"
-		);
+			threadSubject = "Thread Subject");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Liferay Alert");
 
 		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = '''<script>alert(123);</script>''',
 			searchAssetTitle = "Thread Subject",
-			searchAssetType = "Message Boards Message",
-			searchAssetSummary = '''<script>alert(123);</script>'''
-		);
+			searchAssetType = "Message Boards Message");
 
 		var actualScript = '''<script>alert(123);</script>''';
 
@@ -1371,28 +1244,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(
-			searchPortletList = "Site Facet,Search Results,Search Bar"
-		);
+		SearchPortlets.addWidgets(searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureWidgetScope(searchScope = "Everything");
 
@@ -1400,8 +1267,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		var siteName = TestCase.getSiteName();
 
@@ -1411,10 +1277,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
-		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${siteName}");
+		AssertChecked(
+			checkboxName = "${siteName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	@priority = "5"
@@ -1423,13 +1290,14 @@ definition {
 		property portal.suite.search.engine = "disable";
 		var searchPage = "Search Page";
 
-		JSONCategory.addVocabulary(groupName = "Guest", title = "Fruit Vocabulary");
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Fruit Vocabulary");
 
 		JSONCategory.addCategory(
 			groupName = "Guest",
 			title = "organic",
-			vocabularyName = "Fruit Vocabulary"
-		);
+			vocabularyName = "Fruit Vocabulary");
 
 		var organicCategoryId = JSONCategory.getCategoryId(
 			categoryName = "organic",
@@ -1459,8 +1327,7 @@ definition {
 			folderId = "${webContentFolderId1}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
-			title = "apple"
-		);
+			title = "apple");
 
 		var webContentFolderName2 = "WC Folder Name 2";
 		var portalURL = PropsUtil.get("portal.url");
@@ -1484,8 +1351,7 @@ definition {
 			folderId = "${webContentFolderId2}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
-			title = "orange"
-		);
+			title = "orange");
 
 		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
 
@@ -1498,14 +1364,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Apple Blog Entry Content",
 			entryTitle = "apple",
-			tagName = "sweet"
-		);
+			tagName = "sweet");
 
 		Navigator.openURL();
 
@@ -1513,91 +1377,80 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Bookmarks"
-		);
+			portlet = "Bookmarks");
 
 		Bookmark.addWithTagCP(
 			bookmarkName = "banana",
 			bookmarkURL = "https://www.liferay.com",
 			skipViewBookmark = "true",
-			tagNameList = "fresh,ripe,test"
-		);
+			tagNameList = "fresh,ripe,test");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Bookmarks"
-		);
+			portlet = "Bookmarks");
 
 		Bookmark.addCategoryCP(
 			bookmarkName = "banana",
 			categoryName = "organic",
-			vocabularyName = "Fruit Vocabulary"
-		);
+			vocabularyName = "Fruit Vocabulary");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${searchPage}");
 
 		Navigator.gotoPage(pageName = "${searchPage}");
 
-		SearchPortlets.addWidgets(
-			searchPortletList = "Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar"
-		);
+		SearchPortlets.addWidgets(searchPortletList = "Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureWidgetScope(searchScope = "Everything");
 
 		SearchPortlets.configureSearchOptions(
 			allowEmptySearches = "true",
-			basicFacetSelection = "true"
-		);
+			basicFacetSelection = "true");
 
 		SearchPortlets.searchWidget(searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -1608,12 +1461,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -1623,12 +1473,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "type",
@@ -1638,12 +1485,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article,banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -1658,8 +1502,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "category",
@@ -1670,12 +1513,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "user",
@@ -1685,12 +1525,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "user",
@@ -1700,12 +1537,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -1730,12 +1564,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
 		var siteName = TestCase.getSiteName();
 
@@ -1755,12 +1586,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "site",
@@ -1771,12 +1599,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
@@ -1787,12 +1612,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
@@ -1802,12 +1624,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "folder",
@@ -1824,12 +1643,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -1881,8 +1697,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
-			searchTerm = "organic"
-		);
+			searchTerm = "organic");
 	}
 
 	@priority = "5"
@@ -1893,12 +1708,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		Navigator.openURL();
 
@@ -1906,15 +1718,13 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
-			searchAssetType = "User"
-		);
+			searchAssetType = "User");
 
 		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Test");
 
 		SearchPortlets.viewUserResultDetails(
 			pageName = "Welcome",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1924,50 +1734,45 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "search",
-			pageTemplateName = "Search"
-		);
+			pageTemplateName = "Search");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.addArticleCP(
 			webContentContent = "WebContent Content",
-			webContentTitle = "WebContent Title"
-		);
+			webContentTitle = "WebContent Title");
 
-		Navigator.gotoStagedSitePage(pageName = "search", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "search",
+			siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		ProductMenu.gotoLiveSite();
 
@@ -1975,8 +1780,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		// LPS-83060
 
@@ -2006,23 +1810,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.deleteStagedCP(
 			pageName = "search",
 			siteName = "Site Name",
-			webContentTitle = "WebContent Title"
-		);
+			webContentTitle = "WebContent Title");
 
-		Navigator.gotoStagedSitePage(pageName = "search", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "search",
+			siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 
 		ProductMenu.gotoLiveSite();
 
@@ -2030,7 +1833,6 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title",
-			searchAssetType = "Web Content Article"
-		);
+			searchAssetType = "Web Content Article");
 	}
 }

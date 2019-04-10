@@ -26,9 +26,8 @@ definition {
 		SiteSelector._searchSite(site = "${site}");
 
 		AssertElementPresent(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			key_rowEntry = "${site}"
-		);
+			key_rowEntry = "${site}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
 		SelectFrameTop();
 	}

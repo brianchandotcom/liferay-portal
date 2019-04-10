@@ -5,8 +5,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		BlogsEntry.saveAsDraft();
 	}
@@ -17,8 +16,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		BlogsEntry.autoSaveDraft();
 	}
@@ -31,16 +29,14 @@ definition {
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}",
-			videoService = "${videoService}"
-		);
+			videoService = "${videoService}");
 
 		if (isSet(readingTime)) {
 			var key_readingTime = "${readingTime}";
 
 			AssertTextEquals(
 				locator1 = "BlogsEditEntry#STATUS_READING_TIME",
-				value1 = "${readingTime}"
-			);
+				value1 = "${readingTime}");
 		}
 
 		PortletEntry.publish();
@@ -52,15 +48,13 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addCategory(
 			categoryName = "${categoryName}",
-			vocabularyName = "${vocabularyName}"
-		);
+			vocabularyName = "${vocabularyName}");
 
 		PortletEntry.publish();
 	}
@@ -73,8 +67,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -82,8 +75,7 @@ definition {
 			dmFolderName = "${dmFolderName}",
 			dmSubFolderName = "${dmSubFolderName}",
 			imageFileName = "${imageFileName}",
-			navTab = "${navTab}"
-		);
+			navTab = "${navTab}");
 
 		Pause(locator1 = "1000");
 
@@ -108,8 +100,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Permissions");
 
@@ -124,8 +115,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -142,8 +132,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -163,8 +152,7 @@ definition {
 
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}"
-		);
+			uploadFileName = "${uploadFileName}");
 
 		Pause(locator1 = "5000");
 
@@ -173,13 +161,11 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		AssertVisible(
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED",
-			key_coverImageName = "${coverImageName}"
-		);
+			key_coverImageName = "${coverImageName}",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
 	}
 
 	macro addViaAP {
@@ -187,10 +173,11 @@ definition {
 
 		AlloyEditor.addTitleAndContent(
 			content = "${entryContent}",
-			title = "${entryTitle}"
-		);
+			title = "${entryTitle}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -198,12 +185,13 @@ definition {
 
 		var key_assetTitle = "${entryTitle}";
 
-		AssertTextEquals(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${entryTitle}");
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${entryTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${entryContent}"
-		);
+			value1 = "${entryContent}");
 	}
 
 	macro addViaAPSelectScope {
@@ -217,16 +205,21 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		Select(locator1 = "Select#TYPE", value1 = "Blogs Entry");
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "Blogs Entry");
 
-		AssertClick(locator1 = "Button#ADD", value1 = "Add");
+		AssertClick(
+			locator1 = "Button#ADD",
+			value1 = "Add");
 
 		AlloyEditor.addTitleAndContent(
 			content = "${entryContent}",
-			title = "${entryTitle}"
-		);
+			title = "${entryTitle}");
 
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -234,12 +227,13 @@ definition {
 
 		var key_assetTitle = "${entryTitle}";
 
-		AssertTextEquals(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${entryTitle}");
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${entryTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${entryContent}"
-		);
+			value1 = "${entryContent}");
 	}
 
 	macro addWithCustomAbstract {
@@ -248,14 +242,11 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomAbstract(
-			entryAbstractDescription = "${entryAbstractDescription}"
-		);
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "${entryAbstractDescription}");
 
 		PortletEntry.publish();
 	}
@@ -266,15 +257,13 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Configuration");
 
 		AssertChecked(
 			locator1 = "Radio#FIRST_400_ABSTRACT",
-			value1 = "Use the first 400 characters of the entry content."
-		);
+			value1 = "Use the first 400 characters of the entry content.");
 
 		PortletEntry.publish();
 	}
@@ -285,8 +274,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryInvalidContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		BlogsEntry.publishWithInvalidContent();
 	}
@@ -297,8 +285,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryInvalidTitle}"
-		);
+			entryTitle = "${entryInvalidTitle}");
 
 		BlogsEntry.publishWithInvalidTitle();
 	}
@@ -309,8 +296,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryInvalidTitleLength}"
-		);
+			entryTitle = "${entryInvalidTitleLength}");
 
 		BlogsEntry.publishWithInvalidTitleLength();
 	}
@@ -321,8 +307,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		BlogsEntry.publishWithWorkflow();
 	}
@@ -332,13 +317,11 @@ definition {
 
 		AlloyEditor.addTitleAndContent(
 			content = "${entryContent}",
-			title = "${entryTitle}"
-		);
+			title = "${entryTitle}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication"
-		);
+			value1 = "Submit for Publication");
 
 		Pause(locator1 = "5000");
 
@@ -353,9 +336,8 @@ definition {
 		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 
 		Click(
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
-			key_listEntry = "${entryTitle}"
-		);
+			key_listEntry = "${entryTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		MenuItem.viewNotPresent(menuItem = "Publish to Live");
 	}
@@ -363,19 +345,15 @@ definition {
 	macro clickEllipsisItemCP {
 		LexiconCard.clickEllipsisItem(
 			card = "${entryTitle}",
-			item = "${item}"
-		);
+			item = "${item}");
 	}
 
 	macro clickEllipsisItemPG {
 		Click(
-			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS",
-			key_entryTitle = "${entryTitle}"
-		);
+			key_entryTitle = "${entryTitle}",
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS");
 
-		MenuItem.clickNoError(
-			menuItem = "${item}"
-		);
+		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
 	macro disableSocialBookmarkSites {
@@ -383,23 +361,20 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		BlogsConfiguration.selectConfigurationIFrame();
 
 		for (var socialBookmarkSite : list "${disableSocialBookmarkSites}") {
 			AddSelection(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT",
-				value1 = "${socialBookmarkSite}"
-			);
+				value1 = "${socialBookmarkSite}");
 
 			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",
-				value1 = "${socialBookmarkSite}"
-			);
+				value1 = "${socialBookmarkSite}");
 		}
 
 		IFrame.saveConfiguration();
@@ -414,10 +389,11 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entrySubtitleEdit = "${entrySubtitleEdit}",
 			entryTitle = "${entryTitle}",
-			entryTitleEdit = "${entryTitleEdit}"
-		);
+			entryTitleEdit = "${entryTitleEdit}");
 
-		AssertClick(locator1 = "Button#SAVE_AS_DRAFT", value1 = "Save as Draft");
+		AssertClick(
+			locator1 = "Button#SAVE_AS_DRAFT",
+			value1 = "Save as Draft");
 
 		Alert.viewSuccessMessage();
 	}
@@ -431,16 +407,14 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entrySubtitleEdit = "${entrySubtitleEdit}",
 			entryTitle = "${entryTitle}",
-			entryTitleEdit = "${entryTitleEdit}"
-		);
+			entryTitleEdit = "${entryTitleEdit}");
 
 		if ("${sendEmailEntryUpdated}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			Check.checkToggleSwitch(
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Send Email Entry Updated"
-			);
+				key_toggleSwitchLabel = "Send Email Entry Updated",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
 		PortletEntry.publish();
@@ -451,16 +425,14 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		BlogsConfiguration.selectConfigurationIFrame();
 
 		for (var socialBookmarkSite : list "${socialBookmarkSites}") {
 			BlogsConfiguration.enableSocialBookmarkSites(
 				enableSocialBookmarkSites = "${enableSocialBookmarkSites}",
-				socialBookmarkSite = "${socialBookmarkSite}"
-			);
+				socialBookmarkSite = "${socialBookmarkSite}");
 		}
 
 		IFrame.saveConfiguration();
@@ -472,8 +444,7 @@ definition {
 		BlogsEntry.viewEntry(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		PortletEntry.publish();
 	}
@@ -481,16 +452,19 @@ definition {
 	macro publishViaSAP {
 		Blogs.clickEllipsisItemCP(
 			entryTitle = "${entryTitle}",
-			item = "Publish to Live"
-		);
+			item = "Publish to Live");
 
 		AssertConfirm(value1 = "${confirmMessage}");
 
-		AssertTextEquals(locator1 = "Staging#PROCESS_SUCCESSFUL", value1 = "Successful");
+		AssertTextEquals(
+			locator1 = "Staging#PROCESS_SUCCESSFUL",
+			value1 = "Successful");
 	}
 
 	macro subscribePG {
-		AssertClick(locator1 = "Blogs#SUBSCRIBE_LINK", value1 = "Subscribe");
+		AssertClick(
+			locator1 = "Blogs#SUBSCRIBE_LINK",
+			value1 = "Subscribe");
 
 		Alert.viewSuccessMessage();
 	}
@@ -521,16 +495,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
 			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
 
 			AssertClick(
 				locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-				value1 = "Move to Recycle Bin"
-			);
+				value1 = "Move to Recycle Bin");
 
 			AssertElementPresent(locator1 = "Message#SUCCESS");
 		}
@@ -540,8 +512,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 	}
@@ -549,7 +520,9 @@ definition {
 	macro tearDownSubscribePG {
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		AssertClick(locator1 = "Blogs#UNSUBSCRIBE_LINK", value1 = "Unsubscribe");
+		AssertClick(
+			locator1 = "Blogs#UNSUBSCRIBE_LINK",
+			value1 = "Unsubscribe");
 
 		Alert.viewSuccessMessage();
 	}
@@ -557,38 +530,37 @@ definition {
 	macro viewControlsPG {
 		var key_text = "New Entry";
 
-		AssertTextEquals(locator1 = "Button#ANY", value1 = "New Entry");
+		AssertTextEquals(
+			locator1 = "Button#ANY",
+			value1 = "New Entry");
 
-		AssertTextEquals(locator1 = "Blogs#SUBSCRIBE_LINK", value1 = "Subscribe");
+		AssertTextEquals(
+			locator1 = "Blogs#SUBSCRIBE_LINK",
+			value1 = "Subscribe");
 
 		var key_text = "RSS";
 
-		AssertTextEquals(locator1 = "Button#ANY", value1 = "RSS");
+		AssertTextEquals(
+			locator1 = "Button#ANY",
+			value1 = "RSS");
 	}
 
 	macro viewEntryNotPresent {
-		LexiconList.viewListEntryNotPresent(
-			listEntry = "${entryTitle}"
-		);
+		LexiconList.viewListEntryNotPresent(listEntry = "${entryTitle}");
 	}
 
 	macro viewEntryPresent {
-		LexiconCard.viewCardPresent(
-			card = "${entryTitle}"
-		);
+		LexiconCard.viewCardPresent(card = "${entryTitle}");
 	}
 
 	macro viewEntryTitle
 	{
-		LexiconList.viewListEntryTitle(
-			listEntry = "${entryTitle}"
-		);
+		LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
 	}
 
 	macro viewNoEntryCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No entries were found."
-		);
+			value1 = "No entries were found.");
 	}
 }

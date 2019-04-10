@@ -8,17 +8,13 @@ definition {
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON",
-			value1 = "Add"
-		);
+			value1 = "Add");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME",
-			value1 = "${LDAPServerName}"
-		);
+			value1 = "${LDAPServerName}");
 
-		Click(
-			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO"
-		);
+		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO");
 
 		Button.clickSave();
 	}
@@ -29,18 +25,16 @@ definition {
 		if (isSet(enableAnalyticsList)) {
 			for (var enableAnalytics : list "${enableAnalyticsList}") {
 				Check.checkToggleSwitch(
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-					key_toggleSwitchLabel = "${enableAnalytics}"
-				);
+					key_toggleSwitchLabel = "${enableAnalytics}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
 
 		if (isSet(disableAnalyticsList)) {
 			for (var disableAnalytics : list "${disableAnalyticsList}") {
 				Uncheck.uncheckToggleSwitch(
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-					key_toggleSwitchLabel = "${disableAnalytics}"
-				);
+					key_toggleSwitchLabel = "${disableAnalytics}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
 
@@ -48,15 +42,19 @@ definition {
 	}
 
 	macro configureBlogsRatingType {
-		Select(locator1 = "Select#BLOGS_RATING", value1 = "${ratingType}");
+		Select(
+			locator1 = "Select#BLOGS_RATING",
+			value1 = "${ratingType}");
 
-		AssertClickNoError(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
-		AssertConfirm(
-			value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?"
-		);
+		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
 
-		AssertSelectedLabel(locator1 = "Select#BLOGS_RATING", value1 = "${ratingType}");
+		AssertSelectedLabel(
+			locator1 = "Select#BLOGS_RATING",
+			value1 = "${ratingType}");
 	}
 
 	macro configureContentSharingAcrossSitesCP {
@@ -69,9 +67,7 @@ definition {
 
 			Panel.expandPanel(panel = "Content Sharing");
 
-			AssertChecked(
-				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX"
-			);
+			AssertChecked(locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX");
 		}
 		else if ("${enableAcrossSite}" == "false") {
 			Uncheck(locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX");
@@ -80,9 +76,7 @@ definition {
 
 			Panel.expandPanel(panel = "Content Sharing");
 
-			AssertNotChecked(
-				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX"
-			);
+			AssertNotChecked(locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX");
 		}
 	}
 
@@ -92,8 +86,7 @@ definition {
 		if ("${subSites}" == "enabledByDefault") {
 			Select(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Enabled by Default"
-			);
+				value1 = "Enabled by Default");
 
 			PortletEntry.save();
 
@@ -101,14 +94,12 @@ definition {
 
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Enabled by Default"
-			);
+				value1 = "Enabled by Default");
 		}
 		else if ("${subSites}" == "disabledByDefault") {
 			Select(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Disabled by Default"
-			);
+				value1 = "Disabled by Default");
 
 			PortletEntry.save();
 
@@ -116,14 +107,12 @@ definition {
 
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Disabled by Default"
-			);
+				value1 = "Disabled by Default");
 		}
 		else if ("${subSites}" == "disabled") {
 			Select(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Disabled"
-			);
+				value1 = "Disabled");
 
 			PortletEntry.save();
 
@@ -131,8 +120,7 @@ definition {
 
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
-				value1 = "Disabled"
-			);
+				value1 = "Disabled");
 		}
 	}
 
@@ -144,16 +132,14 @@ definition {
 
 			Select(
 				locator1 = "Select#DEFAULT_LANGUAGE",
-				value1 = "${defaultPortalLanguage}"
-			);
+				value1 = "${defaultPortalLanguage}");
 		}
 
 		if (isSet(currentPortalLanguages)) {
 			while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
 				AddSelection(
 					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-					value1 = "index=0"
-				);
+					value1 = "index=0");
 
 				Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
 			}
@@ -163,15 +149,13 @@ definition {
 
 				AddSelection(
 					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-					value1 = "${currentPortalLanguage}"
-				);
+					value1 = "${currentPortalLanguage}");
 
 				Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-					value1 = "${currentPortalLanguage}"
-				);
+					value1 = "${currentPortalLanguage}");
 			}
 		}
 
@@ -188,9 +172,13 @@ definition {
 	macro configureGoogleApps {
 		Panel.expandPanel(panel = "Google Apps");
 
-		Type(locator1 = "TextInput#GOOGLE_APPS_API_KEY", value1 = "${googleAppsAPIKey}");
+		Type(
+			locator1 = "TextInput#GOOGLE_APPS_API_KEY",
+			value1 = "${googleAppsAPIKey}");
 
-		Type(locator1 = "TextInput#GOOGLE_CLIENT_ID", value1 = "${googleClientID}");
+		Type(
+			locator1 = "TextInput#GOOGLE_CLIENT_ID",
+			value1 = "${googleClientID}");
 
 		PortletEntry.save();
 	}
@@ -208,24 +196,19 @@ definition {
 	}
 
 	macro configureOpenSSO {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX");
 
 		FormFields.editText(
 			fieldName = "loginURL",
-			fieldValue = "${OpenSSOLoginURL}"
-		);
+			fieldValue = "${OpenSSOLoginURL}");
 
 		FormFields.editText(
 			fieldName = "logoutURL",
-			fieldValue = "${OpenSSOLogoutURL}"
-		);
+			fieldValue = "${OpenSSOLogoutURL}");
 
 		FormFields.editText(
 			fieldName = "serviceURL",
-			fieldValue = "${OpenSSOServiceURL}"
-		);
+			fieldValue = "${OpenSSOServiceURL}");
 
 		PortletEntry.save();
 	}
@@ -233,7 +216,9 @@ definition {
 	macro configureTimeZone {
 		Navigator.gotoNavTab(navTab = "Miscellaneous");
 
-		Select(locator1 = "Select#TIME_ZONE", value1 = "${timeZone}");
+		Select(
+			locator1 = "Select#TIME_ZONE",
+			value1 = "${timeZone}");
 
 		PortalSettings._saveDisplaySettings();
 	}
@@ -241,40 +226,35 @@ definition {
 	macro configureWikiService {
 		var key_counter = "${counter}";
 
-		Type(locator1 = "TextArea#CONFIGURATION", value1 = "${editor}");
+		Type(
+			locator1 = "TextArea#CONFIGURATION",
+			value1 = "${editor}");
 	}
 
 	macro editConfigurationAuthenticationCAS {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
 
 		FormFields.editText(
 			fieldName = "loginURL",
-			fieldValue = "${casLoginURL}"
-		);
+			fieldValue = "${casLoginURL}");
 
 		FormFields.editText(
 			fieldName = "logoutURL",
-			fieldValue = "${casLogoutURL}"
-		);
+			fieldValue = "${casLogoutURL}");
 
 		FormFields.editText(
 			fieldName = "ServerURL",
-			fieldValue = "${casServerURL}"
-		);
+			fieldValue = "${casServerURL}");
 
 		FormFields.editTextMultiline(
 			fieldName = "serviceURL",
-			fieldValue = "${casServiceURL}"
-		);
+			fieldValue = "${casServiceURL}");
 
 		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON",
-			value1 = "Test CAS Configuration"
-		);
+			value1 = "Test CAS Configuration");
 
 		AssertElementNotPresent(locator1 = "//span[.='Unreachable']");
 
@@ -284,39 +264,31 @@ definition {
 	}
 
 	macro editConfigurationAuthenticationFacebook {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_ID",
-			value1 = "${facebookApplicationID}"
-		);
+			value1 = "${facebookApplicationID}");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_SECRET",
-			value1 = "${facebookApplicationSecret}"
-		);
+			value1 = "${facebookApplicationSecret}");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_GRAPH_URL",
-			value1 = "https://graph.facebook.com"
-		);
+			value1 = "https://graph.facebook.com");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_OAUTH_AUTHENTICATION_URL",
-			value1 = "https://graph.facebook.com/oauth/authorize"
-		);
+			value1 = "https://graph.facebook.com/oauth/authorize");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_OAUTH_TOKEN_URL",
-			value1 = "https://graph.facebook.com/oauth/access_token"
-		);
+			value1 = "https://graph.facebook.com/oauth/access_token");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_REDIRECT_URL",
-			value1 = "http://localhost:8080/c/portal/facebook_connect_oauth"
-		);
+			value1 = "http://localhost:8080/c/portal/facebook_connect_oauth");
 
 		PortletEntry.save();
 	}
@@ -325,15 +297,12 @@ definition {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
 		if ("${enableRequireStrangers}" == "true") {
-			Check(
-				locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX"
-			);
+			Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 		}
 		else {
 			Select(
 				locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",
-				value1 = "${authenticationMethod}"
-			);
+				value1 = "${authenticationMethod}");
 		}
 
 		PortletEntry.save();
@@ -346,13 +315,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-			value1 = "Organization Sites"
-		);
+			value1 = "Organization Sites");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}"
-		);
+			value1 = "${orgName}");
 
 		PortletEntry.save();
 
@@ -362,8 +329,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}"
-		);
+			value1 = "${orgName}");
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsRolesCP {
@@ -373,13 +339,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
-			value1 = "Roles"
-		);
+			value1 = "Roles");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}"
-		);
+			value1 = "${roleTitle}");
 
 		PortletEntry.save();
 
@@ -389,8 +353,7 @@ definition {
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}"
-		);
+			value1 = "${roleTitle}");
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsSitesCP {
@@ -400,13 +363,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
-			value1 = "Sites"
-		);
+			value1 = "Sites");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 
 		PortletEntry.save();
 
@@ -416,8 +377,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsUserGroupsCP {
@@ -427,13 +387,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
-			value1 = "User Groups"
-		);
+			value1 = "User Groups");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		PortletEntry.save();
 
@@ -443,8 +401,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 	}
 
 	macro editConfigurationUsersEmailNotificationsCP {
@@ -454,8 +411,7 @@ definition {
 
 		Type.typeCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "[$USER_PASSWORD$]"
-		);
+			value1 = "[$USER_PASSWORD$]");
 
 		PortletEntry.save();
 	}
@@ -468,14 +424,12 @@ definition {
 		if ("${emailVerificationURL}" == "true") {
 			Type.typeEditor(
 				locator1 = "PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY",
-				value1 = "[$EMAIL_VERIFICATION_URL$]"
-			);
+				value1 = "[$EMAIL_VERIFICATION_URL$]");
 		}
 		else {
 			Type.typeEditor(
 				locator1 = "PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY",
-				value1 = "[$EMAIL_VERIFICATION_CODE$]"
-			);
+				value1 = "[$EMAIL_VERIFICATION_CODE$]");
 		}
 
 		PortletEntry.save();
@@ -484,8 +438,7 @@ definition {
 	macro editDefaultLandingPageCP {
 		Type(
 			locator1 = "PortalSettings#DEFAULT_LANDING_PAGE_FIELD",
-			value1 = "${defaultLandingPage}"
-		);
+			value1 = "${defaultLandingPage}");
 
 		PortletEntry.save();
 	}
@@ -501,61 +454,47 @@ definition {
 	macro editVirtualHostCP {
 		Type(
 			locator1 = "PortalSettings#VIRTUAL_HOST_FIELD",
-			value1 = "${virtualHostName}"
-		);
+			value1 = "${virtualHostName}");
 
 		PortletEntry.save();
 
 		AssertTextEquals(
 			locator1 = "PortalSettings#VIRTUAL_HOST_FIELD",
-			value1 = "${virtualHostName}"
-		);
+			value1 = "${virtualHostName}");
 	}
 
 	macro enableGoogleSSOCP {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX");
 
 		FormFields.editText(
 			fieldName = "clientId",
-			fieldValue = "${googleClientID}"
-		);
+			fieldValue = "${googleClientID}");
 
 		FormFields.editText(
 			fieldName = "clientSecret",
-			fieldValue = "${googleClientSecret}"
-		);
+			fieldValue = "${googleClientSecret}");
 
 		PortletEntry.save();
 	}
 
 	macro enableOpenIDConnectCP {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX");
 
 		PortletEntry.save();
 
 		PortalSettingsNavigator.gotoOpenIDConnect();
 
-		AssertChecked(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX"
-		);
+		AssertChecked(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX");
 	}
 
 	macro enableOpenIDCP {
-		Check(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX"
-		);
+		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX");
 
 		PortletEntry.save();
 
 		PortalSettingsNavigator.gotoOpenID();
 
-		AssertChecked(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX"
-		);
+		AssertChecked(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX");
 	}
 
 	macro enterReservedEmailAddressCP {
@@ -565,13 +504,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
-			value1 = "Email Addresses"
-		);
+			value1 = "Email Addresses");
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
-			value1 = "${userEmailAddress}"
-		);
+			value1 = "${userEmailAddress}");
 
 		PortletEntry.save();
 
@@ -581,8 +518,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
-			value1 = "${userEmailAddress}"
-		);
+			value1 = "${userEmailAddress}");
 	}
 
 	macro enterReservedScreenNameCP {
@@ -592,13 +528,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
-			value1 = "Screen Names"
-		);
+			value1 = "Screen Names");
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
-			value1 = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 
 		PortletEntry.save();
 
@@ -608,36 +542,31 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
-			value1 = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 	}
 
 	macro gotoConfiguration {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+			portlet = "Instance Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "${configurationCategory}",
 			configurationName = "${configurationName}",
-			configurationScope = "${configurationScope}"
-		);
+			configurationScope = "${configurationScope}");
 	}
 
 	macro gotoPortalSettings {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+			portlet = "Instance Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Portal Settings",
 			configurationName = "Portal Settings",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 	}
 
 	macro tearDownAuthenticationCP {
@@ -647,35 +576,28 @@ definition {
 
 		Select(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",
-			value1 = "By Email Address"
-		);
+			value1 = "By Email Address");
 
 		PortletEntry.save();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "CAS Server",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
-		Uncheck(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
-		);
+		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/login"
-		);
+			value1 = "https://localhost:8443/cas-web/login");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/logout"
-		);
+			value1 = "https://localhost:8443/cas-web/logout");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web"
-		);
+			value1 = "https://localhost:8443/cas-web");
 
 		PortletEntry.save();
 	}
@@ -689,35 +611,29 @@ definition {
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "Power User\nUser"
-		);
+			value1 = "Power User\nUser");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		PortletEntry.save();
 
@@ -727,13 +643,11 @@ definition {
 	macro testLDAPConnection {
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON",
-			value1 = "Test LDAP Connection"
-		);
+			value1 = "Test LDAP Connection");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
-			value1 = "Liferay has successfully connected to the LDAP server."
-		);
+			value1 = "Liferay has successfully connected to the LDAP server.");
 
 		var key_modalTitle = "LDAP";
 
@@ -741,25 +655,21 @@ definition {
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON",
-			value1 = "Test LDAP Users"
-		);
+			value1 = "Test LDAP Users");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "A subset of users has been displayed for you to review."
-		);
+			value1 = "A subset of users has been displayed for you to review.");
 
 		Click(locator1 = "Button#CLOSE_MODAL");
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON",
-			value1 = "Test LDAP Groups"
-		);
+			value1 = "Test LDAP Groups");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "A subset of groups has been displayed for you to review."
-		);
+			value1 = "A subset of groups has been displayed for you to review.");
 
 		Click(locator1 = "Button#CLOSE_MODAL");
 	}
@@ -767,13 +677,11 @@ definition {
 	macro testOpenSSOConnection {
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON",
-			value1 = "Test OpenSSO Configuration"
-		);
+			value1 = "Test OpenSSO Configuration");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
-			value1 = "Liferay has successfully connected to the OpenSSO server."
-		);
+			value1 = "Liferay has successfully connected to the OpenSSO server.");
 
 		var key_modalTitle = "OpenSSO";
 
@@ -784,82 +692,63 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "CAS Server",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_HEADER",
-			value1 = "Login URL"
-		);
+			value1 = "Login URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/login"
-		);
+			value1 = "https://localhost:8443/cas-web/login");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_HEADER",
-			value1 = "Logout URL"
-		);
+			value1 = "Logout URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/logout"
-		);
+			value1 = "https://localhost:8443/cas-web/logout");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_HEADER",
-			value1 = "Server Name"
-		);
+			value1 = "Server Name");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_FIELD",
-			value1 = "http://localhost:8080"
-		);
+			value1 = "http://localhost:8080");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_HEADER",
-			value1 = "Server URL"
-		);
+			value1 = "Server URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web"
-		);
+			value1 = "https://localhost:8443/cas-web");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_HEADER",
-			value1 = "Service URL"
-		);
+			value1 = "Service URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER",
-			value1 = "No Such User Redirect URL"
-		);
+			value1 = "No Such User Redirect URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD",
-			value1 = "http://localhost:8080"
-		);
+			value1 = "http://localhost:8080");
 
 		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON");
 	}
 
 	macro viewAuthenticationGeneralCP {
@@ -867,32 +756,19 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",
-			value1 = "By Email Address"
-		);
+			value1 = "By Email Address");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 	}
 
 	macro viewAuthenticationLDAPCP {
@@ -906,220 +782,168 @@ definition {
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON",
-			value1 = "Add"
-		);
+			value1 = "Add");
 
-		Click(
-			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO"
-		);
+		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER",
-			value1 = "Base Provider URL"
-		);
+			value1 = "Base Provider URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD",
-			value1 = "ldap://localhost:389"
-		);
+			value1 = "ldap://localhost:389");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_HEADER",
-			value1 = "Base DN"
-		);
+			value1 = "Base DN");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_FIELD",
-			value1 = "dc=example,dc=com"
-		);
+			value1 = "dc=example,dc=com");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_HEADER",
-			value1 = "Principal"
-		);
+			value1 = "Principal");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD",
-			value1 = "admin"
-		);
+			value1 = "admin");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER",
-			value1 = "Credentials"
-		);
+			value1 = "Credentials");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD",
-			value1 = "secret"
-		);
+			value1 = "secret");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON");
 	}
 
 	macro viewAuthenticationNTLMCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "NTLM",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER",
-			value1 = "Domain Controller"
-		);
+			value1 = "Domain Controller");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD",
-			value1 = "127.0.0.1"
-		);
+			value1 = "127.0.0.1");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER",
-			value1 = "Domain Controller Name"
-		);
+			value1 = "Domain Controller Name");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD",
-			value1 = "EXAMPLE"
-		);
+			value1 = "EXAMPLE");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_HEADER",
-			value1 = "Domain"
-		);
+			value1 = "Domain");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_FIELD",
-			value1 = "EXAMPLE"
-		);
+			value1 = "EXAMPLE");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER",
-			value1 = "Service Account"
-		);
+			value1 = "Service Account");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD",
-			value1 = "LIFERAY$@EXAMPLE.COM"
-		);
+			value1 = "LIFERAY$@EXAMPLE.COM");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER",
-			value1 = "Service Password"
-		);
+			value1 = "Service Password");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD",
-			value1 = "TEMP_OBFUSCATION_VALUE"
-		);
+			value1 = "TEMP_OBFUSCATION_VALUE");
 	}
 
 	macro viewAuthenticationOpenIDCP {
 		PortalSettingsNavigator.gotoOpenID();
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX");
 	}
 
 	macro viewAuthenticationOpenSSOCP {
 		PortalSettingsNavigator.gotoOpenSSO();
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER",
-			value1 = "Login URL"
-		);
+			value1 = "Login URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login"
-		);
+			value1 = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER",
-			value1 = "Logout URL"
-		);
+			value1 = "Logout URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home"
-		);
+			value1 = "http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER",
-			value1 = "Service URL"
-		);
+			value1 = "Service URL");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso"
-		);
+			value1 = "http://openssohost.example.com:8080/opensso");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER",
-			value1 = "Screen Name Attribute"
-		);
+			value1 = "Screen Name Attribute");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD",
-			value1 = "uid"
-		);
+			value1 = "uid");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER",
-			value1 = "Email Address Attribute"
-		);
+			value1 = "Email Address Attribute");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD",
-			value1 = "mail"
-		);
+			value1 = "mail");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER",
-			value1 = "First Name Attribute"
-		);
+			value1 = "First Name Attribute");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD",
-			value1 = "givenName"
-		);
+			value1 = "givenName");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER",
-			value1 = "Last Name Attribute"
-		);
+			value1 = "Last Name Attribute");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD",
-			value1 = "sn"
-		);
+			value1 = "sn");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON");
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
@@ -1129,8 +953,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}"
-		);
+			value1 = "${orgName}");
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsRolesCP {
@@ -1140,8 +963,7 @@ definition {
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}"
-		);
+			value1 = "${roleTitle}");
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsSitesCP {
@@ -1151,8 +973,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsUserGroupsCP {
@@ -1162,8 +983,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 	}
 
 	macro viewCurrentDefaultPortalLanguageCP {
@@ -1177,8 +997,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "Select#DEFAULT_LANGUAGE",
-			value1 = "${defaultPortalLanguage}"
-		);
+			value1 = "${defaultPortalLanguage}");
 	}
 
 	macro viewDefaultLanguageCP {
@@ -1186,8 +1005,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "Select#DEFAULT_LANGUAGE",
-			value1 = "${defaultPortalLanguage}"
-		);
+			value1 = "${defaultPortalLanguage}");
 	}
 
 	macro viewDefaultUserAssociationsCP {
@@ -1195,49 +1013,39 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Default User Associations");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
-			value1 = "Sites"
-		);
+			value1 = "Sites");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-			value1 = "Organization Sites"
-		);
+			value1 = "Organization Sites");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
-			value1 = "Roles"
-		);
+			value1 = "Roles");
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "Power User\nUser"
-		);
+			value1 = "Power User\nUser");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
-			value1 = "User Groups"
-		);
+			value1 = "User Groups");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 	}
 
 	macro viewEmailNotificationsAccountCreatedNotificationCP {
@@ -1245,37 +1053,27 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Account Created Notification");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER",
-			value1 = "Subject"
-		);
+			value1 = "Subject");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD",
-			value1 = "[$PORTAL_URL$]: Your New Account"
-		);
+			value1 = "[$PORTAL_URL$]: Your New Account");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER",
-			value1 = "Body with Password"
-		);
+			value1 = "Body with Password");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER",
-			value1 = "Body without Password"
-		);
+			value1 = "Body without Password");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD");
 	}
 
 	macro viewEmailNotificationsPasswordChangedNotificationCP {
@@ -1283,23 +1081,17 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Password Changed Notification");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD",
-			value1 = "[$PORTAL_URL$]: Your New Password"
-		);
+			value1 = "[$PORTAL_URL$]: Your New Password");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER",
-			value1 = "Body"
-		);
+			value1 = "Body");
 
-		AssertElementPresent(
-			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD"
-		);
+		AssertElementPresent(locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD");
 	}
 
 	macro viewEmailNotificationsSenderCP {
@@ -1309,23 +1101,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER",
-			value1 = "Name"
-		);
+			value1 = "Name");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD",
-			value1 = "Joe Bloggs"
-		);
+			value1 = "Joe Bloggs");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER",
-			value1 = "Address"
-		);
+			value1 = "Address");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD",
-			value1 = "test@liferay.com"
-		);
+			value1 = "test@liferay.com");
 	}
 
 	macro viewEnabledLDAPSetting {
@@ -1345,22 +1133,18 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
-			value1 = "Screen Names"
-		);
+			value1 = "Screen Names");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
-			value1 = "Email Addresses"
-		);
+			value1 = "Email Addresses");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
-			value1 = ""
-		);
+			value1 = "");
 	}
 }

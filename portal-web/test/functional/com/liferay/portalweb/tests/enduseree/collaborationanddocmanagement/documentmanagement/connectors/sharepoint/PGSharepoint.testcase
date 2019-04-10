@@ -16,18 +16,18 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-sharepoint.xml",
-			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}"
-		);
+			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}");
 
-		User.loginPG(authenticationMethod = "By Screen Name", userScreenName = "test");
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			userScreenName = "test");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		User.editDetailsViaMyAccount(userScreenNameEdit = "administrator");
 
@@ -36,39 +36,33 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		User.editPasswordViaMyAccount(
 			currentPassword = "test",
-			newPassword = "password"
-		);
+			newPassword = "password");
 
 		User.logoutPG();
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			password = "password",
-			userScreenName = "administrator"
-		);
+			userScreenName = "administrator");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -81,8 +75,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteURL = "http://${sharepointVMHostName}"
-		);
+			dmRepositorySiteURL = "http://${sharepointVMHostName}");
 
 		PortletEntry.save();
 
@@ -109,8 +102,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "My Account",
 				panel = "User",
-				portlet = "Account Settings"
-			);
+				portlet = "Account Settings");
 
 			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
 
@@ -119,21 +111,18 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "My Account",
 				panel = "User",
-				portlet = "Account Settings"
-			);
+				portlet = "Account Settings");
 
 			User.editPasswordViaMyAccount(
 				currentPassword = "password",
-				newPassword = "test"
-			);
+				newPassword = "test");
 
 			User.logoutPG();
 
 			User.loginPG(
 				authenticationMethod = "By Screen Name",
 				password = "test",
-				userScreenName = "test"
-			);
+				userScreenName = "test");
 		}
 	}
 
@@ -147,14 +136,12 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		User.logoutPG();
 
@@ -167,13 +154,11 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			password = "password",
-			userScreenName = "administrator"
-		);
+			userScreenName = "administrator");
 	}
 }

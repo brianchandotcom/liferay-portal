@@ -31,113 +31,91 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Parent Page Name");
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Parent Page Name"
-		);
+			parentPageName = "Parent Page Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
-			pageName = "Parent Page Name"
-		);
+			pageName = "Parent Page Name");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name"
-		);
+		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name");
 
 		Breadcrumb.viewConfigurationCheckboxes(
 			checkSetupName = "Show Current Site,Show Page,Show Parent Sites,Show Application Breadcrumb",
-			uncheckSetupName = "Show Guest Site"
-		);
+			uncheckSetupName = "Show Guest Site");
 
 		Breadcrumb.configureBreadcrumb(
 			checkSetupName = "Show Guest Site,Show Application Breadcrumb",
-			uncheckSetupName = "Show Current Site,Show Page,Show Parent Sites"
-		);
+			uncheckSetupName = "Show Current Site,Show Page,Show Parent Sites");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Breadcrumb.viewConfigurationPreview(
 			breadcrumbListNotVisible = "Site Name,Parent Page Name,Child Page Name",
-			breadcrumbListVisible = "${siteName}"
-		);
+			breadcrumbListVisible = "${siteName}");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
-			pageName = "Parent Page Name"
-		);
+			pageName = "Parent Page Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Site Name,Parent Page Name,Child Page Name",
 			breadcrumbListVisible = "${siteName}",
-			pathLocator = "PAGE"
-		);
+			pathLocator = "PAGE");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		Breadcrumb.configureBreadcrumb(
 			checkSetupName = "Show Current Site,Show Application Breadcrumb",
-			uncheckSetupName = "Show Guest Site,Show Page,Show Parent Sites"
-		);
+			uncheckSetupName = "Show Guest Site,Show Page,Show Parent Sites");
 
-		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListNotVisible = "Parent Page Name,Child Page Name"
-		);
+		Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = "Parent Page Name,Child Page Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
-			pageName = "Parent Page Name"
-		);
+			pageName = "Parent Page Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Parent Page Name,Child Page Name",
-			pathLocator = "PAGE"
-		);
+			pathLocator = "PAGE");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		Breadcrumb.configureBreadcrumb(
-			checkSetupName = "Show Current Site,Show Application Breadcrumb,Show Guest Site,Show Page"
-		);
+		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Current Site,Show Application Breadcrumb,Show Guest Site,Show Page");
 
-		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name"
-		);
+		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
-			pageName = "Parent Page Name"
-		);
+			pageName = "Parent Page Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name",
-			pathLocator = "PAGE"
-		);
+			pathLocator = "PAGE");
 	}
 
 	@priority = "4"
@@ -148,23 +126,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Site Page Name",
-			url = "${portalURL}/web/site-name"
-		);
+			url = "${portalURL}/web/site-name");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
@@ -174,8 +149,7 @@ definition {
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Site Page Name",
-			url = "http://127.0.0.1:8080/web/site-name"
-		);
+			url = "http://127.0.0.1:8080/web/site-name");
 
 		AssertLocation(value1 = "http://127.0.0.1:8080/web/site-name");
 
@@ -183,8 +157,7 @@ definition {
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "${siteName},Site Name,Site Page Name",
-			pathLocator = "PAGE"
-		);
+			pathLocator = "PAGE");
 
 		var key_URL = "${portalURL}";
 
@@ -194,7 +167,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE_LINK",
-			value1 = "${siteName}"
-		);
+			value1 = "${siteName}");
 	}
 }

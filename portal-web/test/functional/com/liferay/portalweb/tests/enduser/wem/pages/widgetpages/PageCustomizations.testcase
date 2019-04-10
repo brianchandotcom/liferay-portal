@@ -21,8 +21,7 @@ definition {
 			User.logoutAndLoginPG(
 				password = "test",
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			User.tearDownCP();
 
@@ -37,89 +36,82 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageCustomizations.enableSectionCustomizableCP(
 			columnId = "1",
-			pageName = "Site Page Name"
-		);
+			pageName = "Site Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "CUSTOMIZE",
 			resourceName = "com.liferay.portal.kernel.model.Layout",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			password = "test",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Navigation Menu");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.viewSpecificPG(portletName = "Navigation Menu");
 	}
@@ -129,40 +121,39 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageCustomizations.enableSectionCustomizableCP(
 			columnId = "1",
-			pageName = "Site Page Name"
-		);
+			pageName = "Site Page Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		PageCustomizations.viewCustomizablePagePG();
 
 		AssertClick(
 			locator1 = "Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE",
-			value1 = "View Page without my customizations"
-		);
+			value1 = "View Page without my customizations");
 
 		Portlet.addPG(portletName = "Wiki");
 
@@ -171,58 +162,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Wiki",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		WikiPortlet.configureSharingAllowUsersToAddWikiToAnyWebsite(enabled = "true");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Wiki",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
-		WikiPortlet.viewConfigureSharingAllowUsersToAddWikiToAnyWebsite(
-			enabled = "false"
-		);
+		WikiPortlet.viewConfigureSharingAllowUsersToAddWikiToAnyWebsite(enabled = "false");
 	}
 
 	@priority = "4"
@@ -230,65 +222,62 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PageCustomizations.enableSectionCustomizableCP(
 			columnId = "1",
-			pageName = "Site Page Name"
-		);
+			pageName = "Site Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		PageCustomizations.gotoCustomizedPageInfo(viewDefaultPage = "true");
 
@@ -298,9 +287,13 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
@@ -318,7 +311,9 @@ definition {
 
 		Portlet.viewSpecificPG(portletName = "Language Selector");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -330,42 +325,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.executeServerResourcesActions(
-			actionsDescription = "Clean up permissions"
-		);
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean up permissions");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Regular");
 
@@ -374,46 +361,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX",
 			permissionDefinitionValue = "Customize",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Site.assignUserSitesCP(siteName = "${siteName}", userScreenName = "usersn");
+		Site.assignUserSitesCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
 		PageCustomizations.enableSectionCustomizableCP(
 			columnId = "1",
-			pageName = "Site Page Name"
-		);
+			pageName = "Site Page Name");
 
 		Navigator.gotoPage(pageName = "Site Page Name");
 
@@ -425,7 +407,9 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Site Page Name");
 
@@ -443,33 +427,33 @@ definition {
 
 		Portlet.viewNoSpecificPG(portletName = "Message Boards");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX",
 			permissionDefinitionValue = "Add to Page",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX",
 			permissionDefinitionValue = "Add to Page",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Site Page Name");
 
@@ -479,6 +463,8 @@ definition {
 
 		Portlet.viewSpecificPG(portletName = "Message Boards");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 }

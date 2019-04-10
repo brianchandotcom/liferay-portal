@@ -25,34 +25,29 @@ definition {
 		SAML.configureLiferaySAMLAsSP(
 			attributes = "siteRoles",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG"
-		);
+			categoryPriority = "DEBUG");
 
 		JSONRole.addSiteRole(
 			roleKey = "TestSiteRole",
-			roleTitle = "TestSiteRole"
-		);
+			roleTitle = "TestSiteRole");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -61,8 +56,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
@@ -73,13 +67,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(
 			siteName = "Site Name",
-			userGroupName = "UG UserGroup Name"
-		);
+			userGroupName = "UG UserGroup Name");
 
 		Navigator.openURL();
 
@@ -88,41 +80,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleToUserGroup(
 			roleName = "TestSiteRole",
-			userGroupName = "UG UserGroup Name"
-		);
+			userGroupName = "UG UserGroup Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.gotoEditCP(userScreenName = "test");
 
 		User.viewUserInfomationRolesCP(
 			roleTitle = "TestSiteRole",
-			roleType = "Inherited Site Roles"
-		);
+			roleType = "Inherited Site Roles");
 
 		User.logoutPG();
 
@@ -135,8 +121,7 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			password = "test",
 			specificURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -158,8 +143,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -178,13 +162,11 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(
 			idpSessionIdleTimeout = "480",
 			idpSessionMaximumAge = "0",
-			samlEntityID = "samlidp"
-		);
+			samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -197,8 +179,7 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openURL();
 
@@ -206,8 +187,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
-		);
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 
 		Refresh();
 
@@ -216,15 +196,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
 		SAMLRole.configureIdentityProvider(
 			idpSessionIdleTimeout = "60",
-			idpSessionMaximumAge = "0"
-		);
+			idpSessionMaximumAge = "0");
 
 		User.logoutPG();
 
@@ -235,8 +213,7 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openURL();
 
@@ -244,8 +221,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
-		);
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 
 		Refresh();
 
@@ -261,8 +237,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -274,8 +249,7 @@ definition {
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -283,12 +257,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
-		);
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 
 		Refresh();
 
-		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
 
 		User.viewLoggedInPG();
 	}
@@ -301,13 +276,11 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(
 			idpSessionIdleTimeout = "0",
 			idpSessionMaximumAge = "180",
-			samlEntityID = "samlidp"
-		);
+			samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -320,8 +293,7 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openURL();
 
@@ -329,8 +301,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
-		);
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 
 		Refresh();
 
@@ -340,8 +311,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
-		);
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 
 		Refresh();
 
@@ -353,22 +323,18 @@ definition {
 	test AssertSSOWithEncryptionAndDecryption {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
 
-		SAML.configureLiferaySAMLAsIdP(
-			samlEntityID = "samlidp"
-		);
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
 			encryptionCertificate = "true",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
 		SAMLPortlet.configureServiceProviderConnection(
 			forceEncryption = "enable",
-			samlEntityID = "samlsp"
-		);
+			samlEntityID = "samlsp");
 
 		User.logoutPG();
 
@@ -378,8 +344,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -396,8 +361,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLRole.deleteCertificate();
 
@@ -409,13 +373,11 @@ definition {
 
 		User._login(
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		AssertTextEquals(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Unable to process SAML request."
-		);
+			value1 = "Unable to process SAML request.");
 
 		AssertConsoleTextPresent(value1 = "Data encryption key was null");
 	}
@@ -424,15 +386,12 @@ definition {
 	test AssertSSOWithSignAuthnRequests {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
 
-		SAML.configureLiferaySAMLAsIdP(
-			samlEntityID = "samlidp"
-		);
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -440,8 +399,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -453,8 +411,7 @@ definition {
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -465,8 +422,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -480,8 +436,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -492,8 +447,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -504,8 +458,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoServiceProvider();
 
@@ -519,8 +472,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -533,19 +485,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "SAML Configuration",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		SystemSettings.editTextSetting(
 			settingName = "Runtime Metadata Refresh Interval",
-			settingValue = "9999"
-		);
+			settingValue = "9999");
 
 		SystemSettings.saveConfiguration();
 
@@ -554,8 +503,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -581,14 +529,12 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080"
-		);
+			spURL = "http://www.able.com:9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+			portlet = "Instance Settings");
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -603,8 +549,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+			portlet = "Instance Settings");
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -617,16 +562,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+			portlet = "Instance Settings");
 
 		var enableSettingList = "enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup";
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 
-		PortalSettings.viewEnabledLDAPSetting(
-			enableSettingList = "${enableSettingList}"
-		);
+		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
 
 		Portlet.shutdownServer();
 
@@ -635,32 +577,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 
 		Navigator.gotoBack();
 
 		User.editPasswordCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
@@ -669,43 +605,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoServiceProvider();
 
-		SAMLPortlet.configureServiceProvider(
-			enbleLDAPImport = "true"
-		);
+		SAMLPortlet.configureServiceProvider(enbleLDAPImport = "true");
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
 		User.loginPG(
 			password = "test",
 			specificURL = "http://www.able.com:9080",
-			userEmailAddress = "ldapuseremail@liferay.com"
-		);
+			userEmailAddress = "ldapuseremail@liferay.com");
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
 		User.loginPG(
 			password = "test",
 			specificURL = "http://www.able.com:9080",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 	}
 
 	@priority = "4"
@@ -718,19 +647,16 @@ definition {
 			nameIdentifierAttributeName = "screenName",
 			nameIdentifierFormat = "Unspecified",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080"
-		);
+			spURL = "http://www.able.com:9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG"
-		);
+			categoryPriority = "DEBUG");
 
 		User.logoutPG();
 
@@ -740,8 +666,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -757,8 +682,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -768,16 +692,14 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -791,8 +713,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -803,8 +724,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -814,8 +734,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "Web Content Content 2",
-			webContentTitle = "Web Content Title 2"
-		);
+			webContentTitle = "Web Content Title 2");
 
 		PortletEntry.publish();
 	}
@@ -830,8 +749,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -845,8 +763,7 @@ definition {
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -878,8 +795,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -894,8 +810,7 @@ definition {
 			password = "test",
 			rememberMeChecked = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -927,19 +842,16 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG"
-		);
+			categoryPriority = "DEBUG");
 
 		User.logoutPG();
 
@@ -952,16 +864,13 @@ definition {
 			password = "test",
 			rememberMeChecked = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
 		User.viewLoggedOutPG();
 
-		AssertConsoleTextPresent(
-			value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-		);
+		AssertConsoleTextPresent(value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
 	}
 
 	@priority = "4"
@@ -974,13 +883,11 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp2",
-			spURL = "http://www.baker.com:10080"
-		);
+			spURL = "http://www.baker.com:10080");
 
 		User.logoutPG();
 
@@ -990,8 +897,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -1026,23 +932,20 @@ definition {
 		User.viewLoggedOutPG();
 
 		User.loginPG(
-			specificURL = "http://www.able.com:9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.configureIdentityProviderConnection(
 			forceAuthn = "enable",
-			samlEntityID = "samlidp"
-		);
+			samlEntityID = "samlidp");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
@@ -1051,25 +954,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.configureIdentityProviderConnection(
 			forceAuthn = "enable",
-			samlEntityID = "samlidp"
-		);
+			samlEntityID = "samlidp");
 
 		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
 		User.viewLoggedOutPG();
 
 		User.loginPG(
-			specificURL = "http://www.able.com:9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -1090,8 +990,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
-		);
+			spURL = "http://www.able.com:9080/");
 
 		User.logoutPG();
 
@@ -1103,8 +1002,7 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.viewLoggedInPG();
 
@@ -1137,13 +1035,11 @@ definition {
 
 		SAML.configureLiferaySAMLAsIdP(
 			idpURL = "http://www.able.com:9080",
-			samlEntityID = "samlidp2"
-		);
+			samlEntityID = "samlidp2");
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.baker.com:10080"
-		);
+			spURL = "http://www.baker.com:10080");
 
 		User.logoutPG();
 
@@ -1153,8 +1049,7 @@ definition {
 			idpEntityID = "samlidp2",
 			idpURL = "http://www.able.com:9080",
 			spEntityID = "samlsp",
-			spURL = "http://www.baker.com:10080"
-		);
+			spURL = "http://www.baker.com:10080");
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
@@ -1165,8 +1060,7 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			idpName = "samlidp",
 			samlMultiIdPs = "true",
-			specificURL = "http://www.baker.com:10080"
-		);
+			specificURL = "http://www.baker.com:10080");
 
 		User.viewLoggedInPG();
 
@@ -1193,8 +1087,7 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			idpName = "samlidp2",
 			samlMultiIdPs = "true",
-			specificURL = "http://www.baker.com:10080"
-		);
+			specificURL = "http://www.baker.com:10080");
 
 		User.viewLoggedInPG();
 
@@ -1218,17 +1111,15 @@ definition {
 
 		User.loginPG(
 			idpName = "samlidp",
+			password = "test",
 			samlMultiIdPs = "true",
 			specificURL = "http://www.baker.com:10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -1242,24 +1133,21 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#INFO_MESSAGE",
-			value1 = "You must configure at least one identity provider connection for SAML to function."
-		);
+			value1 = "You must configure at least one identity provider connection for SAML to function.");
 
 		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
 		User.viewLoggedOutPG();
 
 		User.loginPG(
-			specificURL = "http://www.baker.com:10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			specificURL = "http://www.baker.com:10080",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin"
-		);
+			portlet = "SAML Admin");
 
 		SAMLNavigation.gotoServiceProvider();
 
@@ -1273,7 +1161,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "No identity provider is available to sign you in."
-		);
+			value1 = "No identity provider is available to sign you in.");
 	}
 }

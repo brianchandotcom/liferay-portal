@@ -27,8 +27,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
@@ -44,8 +43,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			navTab = "Upload Image",
-			uploadFileName = "Document_1.jpg"
-		);
+			uploadFileName = "Document_1.jpg");
 
 		Pause(locator1 = "1000");
 
@@ -53,7 +51,9 @@ definition {
 
 		Click(locator1 = "BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON");
 
-		Click.pauseClickAt(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		Click.pauseClickAt(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
@@ -61,15 +61,13 @@ definition {
 
 		ItemSelector.selectBlogImage(
 			imageFileName = "Document_1.jpg",
-			navTab = "Blog Images"
-		);
+			navTab = "Blog Images");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
 	}
@@ -81,14 +79,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Click.pauseClickAt(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		Click.pauseClickAt(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
@@ -96,8 +95,7 @@ definition {
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
-			navTab = "URL"
-		);
+			navTab = "URL");
 
 		PortletEntry.publish();
 
@@ -116,8 +114,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -137,8 +134,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
@@ -151,14 +147,11 @@ definition {
 		WikiPage.addLocalizedFrontPagePG(
 			emptyPageMessage = "This page is empty. Edit it to add some text.",
 			successMessage = "Your request completed successfully.",
-			wikiPageContent = "Wiki Left to Right Content"
-		);
+			wikiPageContent = "Wiki Left to Right Content");
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		WikiPage.viewLocalizedFrontPagePG(
-			wikiPageContent = "Wiki Left to Right Content"
-		);
+		WikiPage.viewLocalizedFrontPagePG(wikiPageContent = "Wiki Left to Right Content");
 	}
 
 	@priority = "4"
@@ -168,8 +161,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${pageName}");
 
@@ -181,25 +173,24 @@ definition {
 
 		Portlet.addPG(portletName = "Wiki");
 
-		LanguagePortlet.selectLanguagePG(locale = "ar_SA", textIcon = "العربية-السعودية");
+		LanguagePortlet.selectLanguagePG(
+			locale = "ar_SA",
+			textIcon = "العربية-السعودية");
 
 		WikiPage.addLocalizedFrontPagePG(
 			emptyPageMessage = "هذه الصفحة فارغة. قم بتحريرها لإضافة نص.",
 			rtl = "true",
 			successMessage = "نجاح:تم تنفيذ طلبك بنجاح",
-			wikiPageContent = "Wiki Right to Left يحتوى"
-		);
+			wikiPageContent = "Wiki Right to Left يحتوى");
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
 		WikiPage.viewLocalizedFrontPagePG(
 			rightToLeft = "true",
-			wikiPageContent = "Wiki Right to Left يحتوى"
-		);
+			wikiPageContent = "Wiki Right to Left يحتوى");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 	}
 }

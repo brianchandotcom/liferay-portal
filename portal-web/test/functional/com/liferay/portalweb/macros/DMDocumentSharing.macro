@@ -4,7 +4,9 @@ definition {
 
 		var key_text = "Manage Collaborators";
 
-		AssertClick(locator1 = "Button#ANY", value1 = "Manage Collaborators");
+		AssertClick(
+			locator1 = "Button#ANY",
+			value1 = "Manage Collaborators");
 	}
 
 	macro addDocumentWithOnlyOwnerPermissions {
@@ -12,15 +14,13 @@ definition {
 			dmDocumentDescription = "${dmDocumentDescription}",
 			dmDocumentFile = "${dmDocumentFile}",
 			dmDocumentTitle = "${dmDocumentTitle}",
-			viewableBy = "Owner"
-		);
+			viewableBy = "Owner");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		IFrame.closeFrame();
 
@@ -30,8 +30,7 @@ definition {
 	macro changePermission {
 		DMDocument.viewPG(
 			dmDocumentDescription = "${dmDocumentDescription}",
-			dmDocumentTitle = "${dmDocumentTitle}"
-		);
+			dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocumentSharing._manageCollaborators();
 
@@ -41,18 +40,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_NAME",
-			value1 = "${userName}"
-		);
+			value1 = "${userName}");
 
 		Select(
 			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}"
-		);
+			value1 = "${selectPermission}");
 
 		AssertSelectedLabel(
 			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}"
-		);
+			value1 = "${selectPermission}");
 
 		Button.clickSave();
 
@@ -73,9 +69,7 @@ definition {
 		}
 
 		if (isSet(emptyStateMessage)) {
-			AssertElementPresent(
-				locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE"
-			);
+			AssertElementPresent(locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE");
 		}
 
 		Button.clickSave();
@@ -93,16 +87,14 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
-				value1 = "${collaborator}"
-			);
+				value1 = "${collaborator}");
 		}
 	}
 
 	macro viewDocumentViaSharedAssets {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Shared Assets"
-		);
+			value1 = "Shared Assets");
 
 		if ("${assetSharingPermission}" == "View") {
 			AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");

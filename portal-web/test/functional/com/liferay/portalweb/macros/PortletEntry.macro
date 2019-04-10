@@ -2,12 +2,13 @@ definition {
 	macro changeLocale {
 		Portlet.waitForForm();
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
+		Click.clickNoMouseOver(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION");
 
 		Click(
-			locator1 = "Translation#LOCALIZATION_NAME",
-			key_locale = StringUtil.replace("${locale}", "-", "_")
-		);
+			key_locale = StringUtil.replace("${locale}", "-", "_"),
+			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
 	macro clickEditFromEllipsis {
@@ -23,12 +24,9 @@ definition {
 	macro deleteViaMenuItem {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${rowEntry}"
-		);
+			rowEntry = "${rowEntry}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
 	macro deleteViaToolbar {
@@ -38,25 +36,29 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
 	macro inputDescription {
 		Click(locator1 = "TextArea#DESCRIPTION");
 
-		Type(locator1 = "TextArea#DESCRIPTION", value1 = "${description}");
+		Type(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${description}");
 	}
 
 	macro inputDescriptionTextInput {
 		Click(locator1 = "TextInput#DESCRIPTION");
 
-		Type(locator1 = "TextInput#DESCRIPTION", value1 = "${description}");
+		Type(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "${description}");
 	}
 
 	macro inputLocalizedName {
-		PortletEntry.changeLocale(fieldName = "Name", locale = "${language}");
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "${language}");
 
 		PortletEntry.inputName(name = "${localizedName}");
 	}
@@ -64,36 +66,39 @@ definition {
 	macro inputName {
 		Click(locator1 = "TextInput#NAME");
 
-		Type(locator1 = "TextInput#NAME", value1 = "${name}");
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${name}");
 	}
 
 	macro inputText {
 		Click(
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			key_fieldLabel = "${fieldLabel}"
-		);
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
 
 		Type(
+			key_fieldLabel = "${fieldLabel}",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${text}",
-			key_fieldLabel = "${fieldLabel}"
-		);
+			value1 = "${text}");
 	}
 
 	macro inputTextArea {
-		Click(locator1 = "TextArea#ANY", key_text = "${fieldId}");
+		Click(
+			key_text = "${fieldId}",
+			locator1 = "TextArea#ANY");
 
 		Type(
+			key_text = "${fieldId}",
 			locator1 = "TextArea#ANY",
-			value1 = "${text}",
-			key_text = "${fieldId}"
-		);
+			value1 = "${text}");
 	}
 
 	macro inputTitle {
 		Click(locator1 = "TextInput#TITLE");
 
-		Type(locator1 = "TextInput#TITLE", value1 = "${title}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${title}");
 	}
 
 	macro publish {
@@ -130,9 +135,7 @@ definition {
 			Click(locator1 = "Checkbox#SELECT_ALL");
 		}
 
-		AssertChecked.assertCheckedNotVisible(
-			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT"
-		);
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
 	macro submitForPublication {
@@ -152,15 +155,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no ${entity}."
-		);
+			value1 = "There are no ${entity}.");
 	}
 
 	macro viewLocale {
 		AssertElementPresent(
-			locator1 = "Translation#CURRENT_LOCALE",
-			key_locale = "${locale}"
-		);
+			key_locale = "${locale}",
+			locator1 = "Translation#CURRENT_LOCALE");
 	}
 
 	macro viewNoNavItemLink {
@@ -169,9 +170,8 @@ definition {
 
 	macro viewWorkflowStatus {
 		AssertTextEquals(
+			key_rowEntry = "${rowEntry}",
 			locator1 = "Card#GENERIC_SMALL_TEXT",
-			value1 = "${workflowStatus}",
-			key_rowEntry = "${rowEntry}"
-		);
+			value1 = "${workflowStatus}");
 	}
 }

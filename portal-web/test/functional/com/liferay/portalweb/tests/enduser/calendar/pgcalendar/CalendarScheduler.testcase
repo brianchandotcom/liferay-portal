@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -78,8 +77,7 @@ definition {
 
 		CalendarEvent.viewTimes(
 			endDateTime = "${endDateTime}",
-			startDateTime = "${startDateTime}"
-		);
+			startDateTime = "${startDateTime}");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event");
 
@@ -97,9 +95,7 @@ definition {
 
 			CalendarNavigator.gotoConfiguration();
 
-			CalendarConfiguration.selectDefaultDuration(
-				defaultDuration = "${minutes} Minutes"
-			);
+			CalendarConfiguration.selectDefaultDuration(defaultDuration = "${minutes} Minutes");
 
 			CalendarConfiguration.save();
 
@@ -107,14 +103,11 @@ definition {
 
 			CalendarNavigator.gotoView(viewType = "Day");
 
-			CalendarEvent.addViaDayView(
-				eventTitle = "Calendar Event ${minutes} Minutes Title"
-			);
+			CalendarEvent.addViaDayView(eventTitle = "Calendar Event ${minutes} Minutes Title");
 
 			CalendarScheduler.viewEventDuration(
 				eventTitle = "Calendar Event ${minutes} Minutes Title",
-				minutes = "${minutes}"
-			);
+				minutes = "${minutes}");
 
 			CalendarEvent.tearDown();
 		}
@@ -131,7 +124,9 @@ definition {
 
 		CalendarEvent.editTitle(eventTitle = "Liferay Calendar Event Title");
 
-		CalendarEvent.setTimes(endDateTime = "04:00 AM", startDateTime = "03:00 AM");
+		CalendarEvent.setTimes(
+			endDateTime = "04:00 AM",
+			startDateTime = "03:00 AM");
 
 		CalendarEvent.selectCalendar(calendarName = "${siteName}");
 
@@ -143,7 +138,9 @@ definition {
 
 		CalendarEvent.editTitle(eventTitle = "Test Test Calendar Event Title");
 
-		CalendarEvent.setTimes(endDateTime = "09:00 PM", startDateTime = "08:00 PM");
+		CalendarEvent.setTimes(
+			endDateTime = "09:00 PM",
+			startDateTime = "08:00 PM");
 
 		CalendarEvent.selectCalendar(calendarName = "Test Test");
 
@@ -168,32 +165,27 @@ definition {
 			endDateTime = "04:00 AM",
 			eventTitle = "Liferay Calendar Event Title",
 			siteName = "${siteName}",
-			startDateTime = "03:00 AM"
-		);
+			startDateTime = "03:00 AM");
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
 			endDateTime = "09:00 PM",
 			siteName = "Test Test",
-			startDateTime = "08:00 PM"
-		);
+			startDateTime = "08:00 PM");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Welcome",
-			url = "localhost:8080/web/test"
-		);
+			url = "localhost:8080/web/test");
 
 		CalendarEvent.viewSiteCalendarEventWithDefaultPermissions(
 			calendarName = "Test Test",
 			endDateTime = "09:00 PM",
 			eventTitle = "Test Test Calendar Event Title",
 			siteName = "Test Test",
-			startDateTime = "08:00 PM"
-		);
+			startDateTime = "08:00 PM");
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
 			endDateTime = "04:00 AM",
 			siteName = "${siteName}",
-			startDateTime = "03:00 AM"
-		);
+			startDateTime = "03:00 AM");
 	}
 }

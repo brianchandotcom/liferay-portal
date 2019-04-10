@@ -4,9 +4,8 @@ definition {
 
 		for (var analytic : list "${analyticsList}") {
 			Check.checkToggleSwitch(
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "${analytic}"
-			);
+				key_toggleSwitchLabel = "${analytic}",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 
@@ -14,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -55,8 +53,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ContentTargeting#VIEW_ENTRY_CONTENT",
-			value1 = "${entryContentText}"
-		);
+			value1 = "${entryContentText}");
 
 		for (var previewEntry : list "${previewContentList}") {
 			ContentTargeting.expandPreviewOnStagingLiveMode(portletName = "${portletName}");
@@ -68,8 +65,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentTargeting#PREVIEW",
-				value1 = "${previewEntry}"
-			);
+				value1 = "${previewEntry}");
 		}
 	}
 }

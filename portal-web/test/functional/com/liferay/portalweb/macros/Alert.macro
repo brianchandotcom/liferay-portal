@@ -14,51 +14,46 @@ definition {
 	macro viewErrorMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "${errorMessage}"
-		);
+			value1 = "${errorMessage}");
 	}
 
 	macro viewExpireContentFailedMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "Please enter a valid expiration date."
-		);
+			value1 = "Please enter a valid expiration date.");
 	}
 
 	macro viewInfoMessage {
-		AssertTextEquals(locator1 = "Message#INFO_2", value1 = "${infoMessage}");
+		AssertTextEquals(
+			locator1 = "Message#INFO_2",
+			value1 = "${infoMessage}");
 	}
 
 	macro viewInfoMessageSpecific {
 		AssertElementPresent(
-			locator1 = "Message#INFO_SPECIFIC",
-			key_infoMessage = "${infoMessage}"
-		);
+			key_infoMessage = "${infoMessage}",
+			locator1 = "Message#INFO_SPECIFIC");
 	}
 
 	macro viewLengthValidationField {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Please enter no more than"
-		);
+			value1 = "Please enter no more than");
 	}
 
 	macro viewLocalizationMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE",
-			value1 = "${translationLanguageLocalizationMessage}"
-		);
+			value1 = "${translationLanguageLocalizationMessage}");
 
 		AssertTextEquals(
+			key_pageLocale = "${defaultLanguageLocalizationMessage}",
 			locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE",
-			value1 = "${defaultLanguageLocalizationMessage}",
-			key_pageLocale = "${defaultLanguageLocalizationMessage}"
-		);
+			value1 = "${defaultLanguageLocalizationMessage}");
 
 		AssertTextEquals(
 			locator1 = "Home#PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE",
-			value1 = "${preferredLanguageLocalizationMessage}"
-		);
+			value1 = "${preferredLanguageLocalizationMessage}");
 	}
 
 	macro viewRequestFailedToComplete {
@@ -72,8 +67,7 @@ definition {
 	macro viewRequiredField {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "This field is required."
-		);
+			value1 = "This field is required.");
 	}
 
 	macro viewSuccessMessage {
@@ -89,14 +83,12 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "${successMessage}"
-		);
+			value1 = "${successMessage}");
 	}
 
 	macro viewWarningSpecific {
 		AssertElementPresent(
-			locator1 = "Message#WARNING_SPECIFIC",
-			key_warningMessage = "${warningMessage}"
-		);
+			key_warningMessage = "${warningMessage}",
+			locator1 = "Message#WARNING_SPECIFIC");
 	}
 }

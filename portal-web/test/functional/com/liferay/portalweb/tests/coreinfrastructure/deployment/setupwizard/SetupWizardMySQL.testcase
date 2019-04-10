@@ -24,8 +24,7 @@ definition {
 		SetupWizard.configureAdministratorUserPG(
 			administratorEmail = "testsetupwizard@liferay.com",
 			administratorFirstName = "TestSetupWizardFN",
-			administratorLastName = "TestSetupWizardLN"
-		);
+			administratorLastName = "TestSetupWizardLN");
 
 		SetupWizard.configureDatabasePG(
 			databaseName = "lportal",
@@ -33,8 +32,7 @@ definition {
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url")
-		);
+			jdbcURL = PropsUtil.get("database.mysql.url"));
 
 		SetupWizard.finishConfigurationPG();
 
@@ -42,7 +40,9 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(base_branch = "${base_branch}", deleteLiferayHome = "false");
+		Portlet.startServer(
+			base_branch = "${base_branch}",
+			deleteLiferayHome = "false");
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
@@ -58,8 +58,7 @@ definition {
 		User.resetPassword(
 			resetPassword = "${resetPassword}",
 			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}"
-		);
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
 
 		User.answerPasswordReminder();
 
@@ -72,22 +71,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "testsetupwizard@liferay.com"
-		);
+			value1 = "testsetupwizard@liferay.com");
 
 		AssertTextEquals(
 			locator1 = "TextInput#FIRST_NAME",
-			value1 = "TestSetupWizardFN"
-		);
+			value1 = "TestSetupWizardFN");
 
-		AssertTextEquals(locator1 = "TextInput#LAST_NAME", value1 = "TestSetupWizardLN");
+		AssertTextEquals(
+			locator1 = "TextInput#LAST_NAME",
+			value1 = "TestSetupWizardLN");
 
-		AssertTextEquals(locator1 = "TextInput#SCREEN_NAME", value1 = "testsetupwizard");
+		AssertTextEquals(
+			locator1 = "TextInput#SCREEN_NAME",
+			value1 = "testsetupwizard");
 	}
 
 	@priority = "5"
@@ -105,10 +105,11 @@ definition {
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url")
-		);
+			jdbcURL = PropsUtil.get("database.mysql.url"));
 
-		Smoke.viewWelcomePage(userFirstName = "Joe", userLastName = "Bloggs");
+		Smoke.viewWelcomePage(
+			userFirstName = "Joe",
+			userLastName = "Bloggs");
 
 		Smoke.runSmoke();
 	}
@@ -130,8 +131,7 @@ definition {
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url")
-		);
+			jdbcURL = PropsUtil.get("database.mysql.url"));
 
 		Smoke.viewWelcomePage();
 

@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -75,8 +74,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -86,8 +84,7 @@ definition {
 
 		CalendarScheduler.viewDefault(
 			eventTitle = "Calendar Event Regular Title",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 	}
 
 	@priority = "4"
@@ -99,21 +96,18 @@ definition {
 			eventType = "Repeating",
 			frequency = "Daily",
 			numberOfOccurrences = "2",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.deleteRepeatingEventViaAgendaView(
 			deleteOptionSet = "Entire Series",
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		CalendarScheduler.viewDefault(
 			eventTitle = "Calendar Event Repeating Title",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 	}
 
 	@priority = "5"
@@ -128,16 +122,14 @@ definition {
 			eventType = "Repeating",
 			frequency = "Daily",
 			numberOfOccurrences = "2",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.deleteRepeatingEventViaAgendaView(
 			deleteOptionSet = "Following Events",
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title");
 	}
@@ -148,11 +140,17 @@ definition {
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Repeating Title");
 
-		CalendarEvent.setDates(endDate = "02/2/2016", startDate = "02/2/2016");
+		CalendarEvent.setDates(
+			endDate = "02/2/2016",
+			startDate = "02/2/2016");
 
-		CalendarEvent.setTimes(endDateTime = "02:00 AM", startDateTime = "01:00 AM");
+		CalendarEvent.setTimes(
+			endDateTime = "02:00 AM",
+			startDateTime = "01:00 AM");
 
-		CalendarEvent.setRepeating(frequency = "Daily", numberOfOccurrences = "2");
+		CalendarEvent.setRepeating(
+			frequency = "Daily",
+			numberOfOccurrences = "2");
 
 		CalendarEvent.publish();
 
@@ -164,14 +162,12 @@ definition {
 
 		CalendarEvent.viewEventNotToday(
 			eventTitle = "Calendar Event Repeating Title",
-			numberOfOccurrences = "2"
-		);
+			numberOfOccurrences = "2");
 
 		CalendarEvent.deleteRepeatingEventViaAgendaView(
 			deleteOptionSet = "Single Event",
 			eventTitle = "Calendar Event Repeating Title",
-			eventType = "Repeating"
-		);
+			eventType = "Repeating");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -189,8 +185,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event All Day Title",
 			eventType = "All Day",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -198,8 +193,7 @@ definition {
 			eventTitle = "Calendar Event All Day Title",
 			eventTitleEdit = "Calendar Event All Day Title Edit",
 			eventType = "All Day",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
 	}
@@ -216,8 +210,7 @@ definition {
 			number1 = "5",
 			number2 = "10",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -230,12 +223,9 @@ definition {
 			number1 = "2",
 			number2 = "4",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
-		CalendarScheduler.viewEventWithReminders(
-			eventTitle = "Calendar Event All Day Title Edit"
-		);
+		CalendarScheduler.viewEventWithReminders(eventTitle = "Calendar Event All Day Title Edit");
 
 		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
 	}
@@ -250,8 +240,7 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "Test Test"
-		);
+			specificOptionSetValue = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -261,8 +250,7 @@ definition {
 			eventTitleEdit = "Calendar Event All Day Title Edit",
 			eventType = "All Day",
 			optionSetValue = "inviteResource",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
 	}
@@ -277,16 +265,19 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "Test Test"
-		);
+			specificOptionSetValue = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Calendar.hideCurrentSiteCalendar();
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes");
 
-		CalendarScheduler.viewRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+		CalendarScheduler.viewRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -296,10 +287,11 @@ definition {
 
 		CalendarNavigator.gotoEditEvent(
 			eventTitle = "Calendar Event Title",
-			eventType = "Regular"
-		);
+			eventType = "Regular");
 
-		CalendarEvent.setTimes(endDateTime = "10:00 AM", startDateTime = "06:00 AM");
+		CalendarEvent.setTimes(
+			endDateTime = "10:00 AM",
+			startDateTime = "06:00 AM");
 
 		CalendarEvent.publishWithUserNotification();
 
@@ -313,7 +305,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+		CalendarEvent.addRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -333,7 +327,9 @@ definition {
 
 		Calendar.hideCurrentSiteCalendar();
 
-		CalendarScheduler.viewRSVP(eventTitle = "Edited Event Title", rsvp = "Yes");
+		CalendarScheduler.viewRSVP(
+			eventTitle = "Edited Event Title",
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -343,7 +339,9 @@ definition {
 
 		CalendarScheduler.gotoEditSpecific(eventTitle = "Edited Event Title");
 
-		CalendarEvent.setDates(endDate = "3/29/2016", startDate = "3/29/2016");
+		CalendarEvent.setDates(
+			endDate = "3/29/2016",
+			startDate = "3/29/2016");
 
 		CalendarEvent.publishWithUserNotification();
 
@@ -359,8 +357,7 @@ definition {
 
 		CalendarScheduler.viewNoRSVP(
 			eventTitle = "Edited Event Title",
-			eventToday = "false"
-		);
+			eventToday = "false");
 	}
 
 	@priority = "4"
@@ -370,8 +367,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -379,8 +375,7 @@ definition {
 			eventTitle = "Calendar Event Regular Title",
 			eventTitleEdit = "Calendar Event Regular Title Edit",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Regular Title Edit");
 	}
@@ -397,8 +392,7 @@ definition {
 			number1 = "5",
 			number2 = "10",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -411,18 +405,14 @@ definition {
 			number1 = "2",
 			number2 = "4",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
-		CalendarScheduler.viewEventWithReminders(
-			eventTitle = "Calendar Event Regular Title Edit"
-		);
+		CalendarScheduler.viewEventWithReminders(eventTitle = "Calendar Event Regular Title Edit");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Regular Title Edit",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@description = "This is a use case for LPS-50026."
@@ -436,8 +426,7 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "Test Test"
-		);
+			specificOptionSetValue = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -445,9 +434,7 @@ definition {
 
 		Calendar.hideMyCalendarsCalendar();
 
-		CalendarScheduler.selectSpecificEvent(
-			eventTitle = "Calendar Event Regular Title"
-		);
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Regular Title");
 
 		CalendarScheduler.editTitle(eventTitle = "Edited Title");
 
@@ -483,8 +470,7 @@ definition {
 			eventType = "Repeating",
 			frequency = "Daily",
 			numberOfOccurrences = "1",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -492,14 +478,12 @@ definition {
 			eventTitle = "Calendar Event Repeating Title",
 			eventTitleEdit = "Calendar Event Repeating Title Edit",
 			eventType = "Repeating",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title Edit",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@description = "This is a use case for LPS-50016."
@@ -523,8 +507,7 @@ definition {
 
 		CalendarScheduler.selectSpecificEvent(
 			eventTitle = "Original Event Title",
-			eventToday = "false"
-		);
+			eventToday = "false");
 
 		CalendarScheduler.editTitle(eventTitle = "Edited Title");
 
@@ -560,8 +543,7 @@ definition {
 
 		CalendarScheduler.selectSpecificEvent(
 			eventTitle = "Original Event Title",
-			eventToday = "false"
-		);
+			eventToday = "false");
 
 		CalendarScheduler.gotoEditViaDialogBox();
 
@@ -586,8 +568,7 @@ definition {
 			number2 = "10",
 			numberOfOccurrences = "1",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -600,18 +581,14 @@ definition {
 			number1 = "2",
 			number2 = "4",
 			pageName = "Calendar Page",
-			reminders = "true"
-		);
+			reminders = "true");
 
-		CalendarScheduler.viewEventWithReminders(
-			eventTitle = "Calendar Event Repeating Title Edit"
-		);
+		CalendarScheduler.viewEventWithReminders(eventTitle = "Calendar Event Repeating Title Edit");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Repeating Title Edit",
 			frequency = "Daily",
-			numberOfOccurrences = "1"
-		);
+			numberOfOccurrences = "1");
 	}
 
 	@priority = "4"
@@ -626,8 +603,7 @@ definition {
 			optionSet = "true",
 			optionSetValue = "inviteResource",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "Test Test"
-		);
+			specificOptionSetValue = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -637,8 +613,7 @@ definition {
 			eventTitleEdit = "Calendar Event Repeating Title Edit",
 			eventType = "Repeating",
 			optionSetValue = "inviteResource",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title Edit");
 	}
@@ -654,15 +629,13 @@ definition {
 			optionSet = "true",
 			optionSetValue = "tag",
 			pageName = "Calendar Page",
-			specificOptionSetValue = "tag1"
-		);
+			specificOptionSetValue = "tag1");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewApprovedRSVP(
 			eventTitle = "Calendar Event Title",
-			rsvp = "Yes"
-		);
+			rsvp = "Yes");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -674,8 +647,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Calendar Event Title",
-			searchAssetType = "Calendar Event"
-		);
+			searchAssetType = "Calendar Event");
 	}
 
 	@priority = "4"
@@ -683,40 +655,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -734,24 +700,23 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarScheduler.viewDefault(
 			eventTitle = "Calendar Event",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event");
 
@@ -763,18 +728,15 @@ definition {
 
 		Calendar.chooseOtherCalendarMenulistOption(
 			calendarName = "userfn userln",
-			menuListOption = "Hide Calendar"
-		);
+			menuListOption = "Hide Calendar");
 
 		CalendarScheduler.viewDefault(
 			eventTitle = "Calendar Event",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -782,8 +744,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@description = "This is a use case for LPS-51222."
@@ -813,8 +774,7 @@ definition {
 
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
-			eventTitle = "Site Event"
-		);
+			eventTitle = "Site Event");
 
 		CalendarEvent.viewDetailsResources(calendarName = "${siteName}");
 
@@ -822,8 +782,7 @@ definition {
 
 		CalendarEvent.viewDetails(
 			calendarName = "Test Test",
-			eventTitle = "Personal Event"
-		);
+			eventTitle = "Personal Event");
 
 		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
 
@@ -831,8 +790,7 @@ definition {
 
 		CalendarEvent.viewDetails(
 			calendarName = "${siteName}",
-			eventTitle = "Site Event"
-		);
+			eventTitle = "Site Event");
 
 		CalendarEvent.viewDetailsResources(calendarName = "${siteName}");
 
@@ -840,8 +798,7 @@ definition {
 
 		CalendarEvent.viewDetails(
 			calendarName = "Test Test",
-			eventTitle = "Personal Event"
-		);
+			eventTitle = "Personal Event");
 
 		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
 	}

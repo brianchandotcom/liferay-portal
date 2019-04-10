@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -64,8 +63,7 @@ definition {
 
 		Calendar.add(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -75,7 +73,6 @@ definition {
 
 		Calendar.view(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 	}
 }

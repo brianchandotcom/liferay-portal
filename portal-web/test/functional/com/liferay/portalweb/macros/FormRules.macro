@@ -20,45 +20,38 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_OPERATOR",
-			value1 = "${calculateOperator}"
-		);
+			value1 = "${calculateOperator}");
 	}
 
 	macro configureActionOptions {
 		FormRules.selectAction(
 			action = "${action}",
-			actionRowNumber = "${actionRowNumber}"
-		);
+			actionRowNumber = "${actionRowNumber}");
 
 		FormRules.selectActionTarget(
 			action = "${action}",
 			actionRowNumber = "${actionRowNumber}",
-			actionTarget = "${actionTarget}"
-		);
+			actionTarget = "${actionTarget}");
 	}
 
 	macro configureConditionOptions {
 		FormRules.selectConditionField(
 			conditionField = "${conditionField}",
-			conditionRowNumber = "${conditionRowNumber}"
-		);
+			conditionRowNumber = "${conditionRowNumber}");
 
 		FormRules.selectConditionOperator(
 			conditionOperator = "${conditionOperator}",
-			conditionRowNumber = "${conditionRowNumber}"
-		);
+			conditionRowNumber = "${conditionRowNumber}");
 
 		FormRules.selectConditionValue(
 			conditionRowNumber = "${conditionRowNumber}",
-			conditionValueType = "${conditionValueType}"
-		);
+			conditionValueType = "${conditionValueType}");
 
 		FormRules.defineConditionValue(
 			conditionFieldValue = "${conditionFieldValue}",
 			conditionRowNumber = "${conditionRowNumber}",
 			conditionValueField = "${conditionValueField}",
-			conditionValueType = "${conditionValueType}"
-		);
+			conditionValueType = "${conditionValueType}");
 	}
 
 	macro defineConditionValue {
@@ -67,8 +60,7 @@ definition {
 
 			Type(
 				locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD",
-				value1 = "${conditionFieldValue}"
-			);
+				value1 = "${conditionFieldValue}");
 		}
 
 		if (isSet(conditionValueField)) {
@@ -79,23 +71,22 @@ definition {
 
 			AssertClick(
 				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD",
-				value1 = "${conditionValueField}"
-			);
+				value1 = "${conditionValueField}");
 		}
 	}
 
 	macro gotoEdit {
 		var key_ruleNumber = "${ruleNumber}";
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS"
-		);
+		Click.waitForMenuToggleJSClick(locator1 = "FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 	}
 
 	macro save {
-		AssertClick(locator1 = "FormRules#RULE_BUILDER_SAVE_BUTTON", value1 = "Save");
+		AssertClick(
+			locator1 = "FormRules#RULE_BUILDER_SAVE_BUTTON",
+			value1 = "Save");
 	}
 
 	macro selectAction {
@@ -106,8 +97,7 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_SELECT_ACTION",
-			value1 = "${action}"
-		);
+			value1 = "${action}");
 	}
 
 	macro selectActionTarget {
@@ -123,8 +113,7 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_SELECT_ACTION_TARGET",
-			value1 = "${actionTarget}"
-		);
+			value1 = "${actionTarget}");
 	}
 
 	macro selectAutofillOutput {
@@ -134,21 +123,17 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD",
-			value1 = "${dataProviderOutput}"
-		);
+			value1 = "${dataProviderOutput}");
 	}
 
 	macro selectCalculateField {
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON",
-			value1 = "Add Field"
-		);
+			value1 = "Add Field");
 
 		var key_calculateFieldOption = "${calculateFieldOption}";
 
-		Click(
-			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST"
-		);
+		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
 	}
 
 	macro selectCalculateResultField {
@@ -158,8 +143,7 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST",
-			value1 = "${calculateResultField}"
-		);
+			value1 = "${calculateResultField}");
 	}
 
 	macro selectConditionField {
@@ -170,8 +154,7 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_FIELD",
-			value1 = "${conditionField}"
-		);
+			value1 = "${conditionField}");
 	}
 
 	macro selectConditionOperator {
@@ -182,8 +165,7 @@ definition {
 
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR",
-			value1 = "${conditionOperator}"
-		);
+			value1 = "${conditionOperator}");
 	}
 
 	macro selectConditionValue {
@@ -196,8 +178,7 @@ definition {
 
 			AssertClick(
 				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE",
-				value1 = "${conditionValueType}"
-			);
+				value1 = "${conditionValueType}");
 		}
 	}
 
@@ -212,68 +193,60 @@ definition {
 
 	macro viewActionSummary {
 		AssertTextEquals.assertPartialText(
-			locator1 = "FormRules#RULE_BUILDER_SUMMARY_ACTION",
-			value1 = "${action}",
 			key_action = "${action}",
-			key_ruleNumber = "${ruleNumber}"
-		);
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_SUMMARY_ACTION",
+			value1 = "${action}");
 	}
 
 	macro viewActionTargetSummary {
 		AssertTextEquals(
-			locator1 = "FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET",
-			value1 = "${actionTarget}",
 			key_action = "${action}",
 			key_actionTarget = "${actionTarget}",
-			key_ruleNumber = "${ruleNumber}"
-		);
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET",
+			value1 = "${actionTarget}");
 	}
 
 	macro viewConditionFieldConstantSummary {
 		AssertTextEquals(
-			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT",
-			value1 = "${conditionFieldConstant}",
 			key_conditionFieldConstant = "${conditionFieldConstant}",
-			key_ruleNumber = "${ruleNumber}"
-		);
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT",
+			value1 = "${conditionFieldConstant}");
 	}
 
 	macro viewConditionFieldSummary {
 		AssertTextEquals(
-			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD",
-			value1 = "${conditionField}",
 			key_conditionField = "${conditionField}",
-			key_ruleNumber = "${ruleNumber}"
-		);
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD",
+			value1 = "${conditionField}");
 	}
 
 	macro viewConditionOperatorOptionsIsPresent {
 		Click(
-			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD",
-			key_conditionRowNumber = "${conditionRowNumber}"
-		);
+			key_conditionRowNumber = "${conditionRowNumber}",
+			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD");
 
 		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does not contain") {
 			AssertElementPresent(
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR",
 				key_conditionOperator = "${conditionOperator}",
-				key_conditionRowNumber = "${conditionRowNumber}"
-			);
+				key_conditionRowNumber = "${conditionRowNumber}",
+				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR");
 		}
 	}
 
 	macro viewConditionOperatorOptionsNotPresent {
 		Click(
-			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD",
-			key_conditionRowNumber = "${conditionRowNumber}"
-		);
+			key_conditionRowNumber = "${conditionRowNumber}",
+			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD");
 
 		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does not contain") {
 			AssertElementNotPresent(
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR",
 				key_conditionOperator = "${conditionOperator}",
-				key_conditionRowNumber = "${conditionRowNumber}"
-			);
+				key_conditionRowNumber = "${conditionRowNumber}",
+				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR");
 		}
 	}
 
@@ -281,11 +254,10 @@ definition {
 		var conditionOperatorLowerCase = StringUtil.lowerCase("${conditionOperator}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR",
-			value1 = "${conditionOperatorLowerCase}",
 			key_conditionOperator = "${conditionOperator}",
-			key_ruleNumber = "${ruleNumber}"
-		);
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR",
+			value1 = "${conditionOperatorLowerCase}");
 	}
 
 	macro viewInactiveSaveButton {
@@ -295,17 +267,15 @@ definition {
 	macro viewNoRules {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no rules yet. Click on plus icon below to add the first."
-		);
+			value1 = "There are no rules yet. Click on plus icon below to add the first.");
 	}
 
 	macro viewRuleCondition {
 		AssertTextEquals(
-			locator1 = "FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION",
-			value1 = "${condition}",
 			key_condition = "${condition}",
-			key_conditonRowNumber = "${conditonRowNumber}"
-		);
+			key_conditonRowNumber = "${conditonRowNumber}",
+			locator1 = "FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION",
+			value1 = "${condition}");
 	}
 
 	macro viewRuleConditionDropdownDisabled {
@@ -319,25 +289,23 @@ definition {
 	macro viewSummary {
 		FormRules.viewConditionFieldSummary(
 			conditionField = "${conditionField}",
-			ruleNumber = "${ruleNumber}"
-		);
+			ruleNumber = "${ruleNumber}");
 
 		FormRules.viewConditionOperatorSummary(
 			conditionOperator = "${conditionOperator}",
-			ruleNumber = "${ruleNumber}"
-		);
+			ruleNumber = "${ruleNumber}");
 
 		FormRules.viewConditionFieldConstantSummary(
 			conditionFieldConstant = "${conditionFieldConstant}",
-			ruleNumber = "${ruleNumber}"
-		);
+			ruleNumber = "${ruleNumber}");
 
-		FormRules.viewActionSummary(action = "${action}", ruleNumber = "${ruleNumber}");
+		FormRules.viewActionSummary(
+			action = "${action}",
+			ruleNumber = "${ruleNumber}");
 
 		FormRules.viewActionTargetSummary(
 			action = "${action}",
 			actionTarget = "${actionTarget}",
-			ruleNumber = "${ruleNumber}"
-		);
+			ruleNumber = "${ruleNumber}");
 	}
 }

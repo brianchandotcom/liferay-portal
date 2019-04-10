@@ -21,16 +21,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 	}
@@ -44,8 +42,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			Site.tearDownCP();
 		}
@@ -60,13 +57,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(genderRadio = "Male");
 
@@ -77,8 +72,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -86,17 +80,17 @@ definition {
 			categoryName = "Male Users",
 			vocabularyName = "User Segment",
 			webContentContent = "Web Content targeted to a User Segment",
-			webContentTitle = "Targeted Web Content Title"
-		);
+			webContentTitle = "Targeted Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Targeted Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Male Users",
-			vocabularyName = "User Segment"
-		);
+			vocabularyName = "User Segment");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "User Segment Content Display");
 
@@ -109,17 +103,17 @@ definition {
 			rowNumber = "1",
 			siteScope = "Global",
 			toAll = "true",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		UserSegmentContentDisplayPortlet.savePG();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name");
 
 		UserSegmentContentDisplayPortlet.viewEntryPG(
 			belongsTo = "true",
-			viewUserSegmentSelected = "Male Users"
-		);
+			viewUserSegmentSelected = "Male Users");
 	}
 
 	@priority = "5"
@@ -129,16 +123,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName");
+		Site.addBlankCP(
+			parentSiteName = "Site Name",
+			siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 
@@ -147,13 +141,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(genderRadio = "Male");
 
@@ -164,13 +156,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "Male Non Users"
-		);
+			userSegmentName = "Male Non Users");
 
 		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(genderRadio = "Male");
 
@@ -181,8 +171,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -190,21 +179,23 @@ definition {
 			categoryName = "Male Non Users",
 			vocabularyName = "User Segment",
 			webContentContent = "Targeted Web Content Content",
-			webContentTitle = "Targeted Web Content Title"
-		);
+			webContentTitle = "Targeted Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Targeted Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Male Non Users",
-			vocabularyName = "User Segment"
-		);
+			vocabularyName = "User Segment");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Child SiteName");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Child SiteName");
 
 		Portlet.addPG(portletName = "User Segment Content Display");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Child SiteName");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Child SiteName");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -215,17 +206,17 @@ definition {
 			rowNumber = "1",
 			siteScope = "Site Name",
 			toAll = "true",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		UserSegmentContentDisplayPortlet.savePG();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Child SiteName");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Child SiteName");
 
 		UserSegmentContentDisplayPortlet.viewEntryPG(
 			belongsTo = "true",
-			viewUserSegmentSelected = "Male Users"
-		);
+			viewUserSegmentSelected = "Male Users");
 	}
 
 	@priority = "5"
@@ -237,13 +228,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "User Segment Name"
-		);
+			userSegmentName = "User Segment Name");
 
 		PortletEntry.save();
 
@@ -252,12 +241,9 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
-		ContentTargetingUserSegment.deleteUserSegmentCP(
-			userSegmentName = "User Segment Name"
-		);
+		ContentTargetingUserSegment.deleteUserSegmentCP(userSegmentName = "User Segment Name");
 	}
 
 	@priority = "5"
@@ -269,13 +255,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "User Segment Name"
-		);
+			userSegmentName = "User Segment Name");
 
 		PortletEntry.save();
 
@@ -284,14 +268,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.editUserSegmentCP(
 			userSegmentDescriptionEdit = "User Segment Description Edit",
 			userSegmentName = "User Segment Name",
-			userSegmentNameEdit = "User Segment Name Edit"
-		);
+			userSegmentNameEdit = "User Segment Name Edit");
 
 		PortletEntry.save();
 
@@ -300,15 +282,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		ContentTargetingUserSegment.viewCP(
 			userSegmentDescription = "User Segment Description Edit",
-			userSegmentName = "User Segment Name Edit"
-		);
+			userSegmentName = "User Segment Name Edit");
 	}
 
 	@priority = "5"
@@ -320,13 +300,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(genderRadio = "Male");
 
@@ -337,15 +315,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC Male Content View",
-			webContentTitle = "WC Male View Title"
-		);
+			webContentTitle = "WC Male View Title");
 
 		PortletEntry.publish();
 
@@ -363,39 +339,32 @@ definition {
 			contentType = "Basic Web Content",
 			rowNumber = "1",
 			toAny = "true",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		UserSegmentContentDisplayPortlet.savePG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		UserSegmentContentDisplayPortlet.viewEntryPG(
-			entryContentText = "WC Male Content View"
-		);
+		UserSegmentContentDisplayPortlet.viewEntryPG(entryContentText = "WC Male Content View");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.gotoViewReport(
 			reportName = "Content Views",
-			userSegmentName = "Male Users"
-		);
+			userSegmentName = "Male Users");
 
 		ContentTargetingUserSegment.viewReportContentViews(
 			reportsContentTableList = "Test Page Name,Page,View,10",
-			reportTitle = "Test Page Name"
-		);
+			reportTitle = "Test Page Name");
 
 		ContentTargetingUserSegment.viewReportContentViews(
 			reportsContentTableList = "WC Male View Title,Web Content Article,View,6",
-			reportTitle = "WC Male View Title"
-		);
+			reportTitle = "WC Male View Title");
 	}
 
 	@priority = "5"
@@ -407,17 +376,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "Female Users"
-		);
+			userSegmentName = "Female Users");
 
-		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(
-			genderRadio = "Female"
-		);
+		ContentTargetingUserSegment.addUserAttributesGenderRuleCP(genderRadio = "Female");
 
 		PortletEntry.save();
 
@@ -426,8 +391,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -435,23 +399,20 @@ definition {
 			categoryName = "Female Users",
 			vocabularyName = "User Segment",
 			webContentContent = "Web Content targeted to a User Segment",
-			webContentTitle = "Targeted Web Content Title"
-		);
+			webContentTitle = "Targeted Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Targeted Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Female Users",
-			vocabularyName = "User Segment"
-		);
+			vocabularyName = "User Segment");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -459,21 +420,23 @@ definition {
 			categoryName = "Female Users",
 			vocabularyName = "User Segment",
 			webContentContent = "Second Web Content targeted to a User Segment",
-			webContentTitle = "Targeted Web Content Title 2"
-		);
+			webContentTitle = "Targeted Web Content Title 2");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Targeted Web Content Title 2");
 
 		WebContent.viewCategorizationCategoryCP(
 			categoryNameList = "Female Users",
-			vocabularyName = "User Segment"
-		);
+			vocabularyName = "User Segment");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "User Segment Content Display");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -484,17 +447,17 @@ definition {
 			rowNumber = "1",
 			toAny = "true",
 			userSegmentName = "Female Users",
-			viewEntryPG = "Female Users"
-		);
+			viewEntryPG = "Female Users");
 
 		UserSegmentContentDisplayPortlet.configureOtherwiseContentDisplayRule(
 			otherwiseContentTitle = "Targeted Web Content Title 2",
-			otherwiseContentType = "Basic Web Content"
-		);
+			otherwiseContentType = "Basic Web Content");
 
 		UserSegmentContentDisplayPortlet.savePG();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name");
 
 		UserSegmentContentDisplayPortlet.viewConfiguredDisplayContent(
 			contentTitle = "Targeted Web Content Title",
@@ -505,7 +468,6 @@ definition {
 			rowNumber = "1",
 			toAny = "true",
 			userSegmentName = "Female Users",
-			viewEntryPG = "Female Users"
-		);
+			viewEntryPG = "Female Users");
 	}
 }

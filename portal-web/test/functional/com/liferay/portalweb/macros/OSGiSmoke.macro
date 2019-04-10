@@ -3,18 +3,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AssertElementNotPresent(
-			locator1 = "AppManager#BREADCRUMB_2_LINK",
-			key_breadCrumb = "Independent Modules"
-		);
+			key_breadCrumb = "Independent Modules",
+			locator1 = "AppManager#BREADCRUMB_2_LINK");
 
 		AssertClick(
 			locator1 = "ListGroupItem#INDEPENDENT_MODULES_LINK",
-			value1 = "Independent Modules"
-		);
+			value1 = "Independent Modules");
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "Independent Modules");
 
@@ -28,7 +25,6 @@ definition {
 
 		AntCommand.antCommand(
 			locator1 = "build-test.xml",
-			value1 = "remove-plugin -Dplugin.name=${portletName}"
-		);
+			value1 = "remove-plugin -Dplugin.name=${portletName}");
 	}
 }

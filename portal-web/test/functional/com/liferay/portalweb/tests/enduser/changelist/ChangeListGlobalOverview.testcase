@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
@@ -30,8 +29,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Control Panel",
-				portlet = "Settings"
-			);
+				portlet = "Settings");
 
 			ChangeList.disableChangeList();
 		}
@@ -42,81 +40,67 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "First Web Content"
-		);
+			webContentTitle = "First Web Content");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "ChangeLists"
-		);
+			portlet = "ChangeLists");
 
 		ChangeList.viewChangeOnOverview(
+			contentChangeType = "Added",
 			contentTitle = "First Web Content",
-			contentType = "Web Content",
-			contentChangeType = "Added"
-		);
+			contentType = "Web Content");
 
-		ChangeList.selectChangeList(
-			changeListName = "Select Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Select Change List");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Second Change List Name"
-		);
+			changeListName = "Second Change List Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Second Change List Name"
-		);
+			value1 = "Second Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Second Web Content"
-		);
+			webContentTitle = "Second Web Content");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewChangeOnOverview(
+			contentChangeType = "Added",
 			contentTitle = "Second Web Content",
-			contentType = "Web Content",
-			contentChangeType = "Added"
-		);
+			contentType = "Web Content");
 	}
 
 	@priority = "5"
@@ -124,89 +108,75 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewChangeOnOverview(
+			contentChangeType = "Added",
 			contentTitle = "Web Content Title",
-			contentType = "Web Content",
-			contentChangeType = "Added"
-		);
+			contentType = "Web Content");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			webContentContentEdit = "WC WebContent Content Edit",
 			webContentTitle = "Web Content Title",
-			webContentTitleEdit = "Web Content Title Edit"
-		);
+			webContentTitleEdit = "Web Content Title Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewChangeOnOverview(
+			contentChangeType = "Modified",
 			contentTitle = "Web Content Title Edit",
-			contentType = "Web Content",
-			contentChangeType = "Modified"
-		);
+			contentType = "Web Content");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
-			webContentTitle = "Web Content Title Edit"
-		);
+			webContentTitle = "Web Content Title Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewChangeOnOverview(
+			contentChangeType = "Deleted",
 			contentTitle = "Web Content Title Edit",
-			contentType = "Web Content",
-			contentChangeType = "Deleted"
-		);
+			contentType = "Web Content");
 	}
 
 	@priority = "4"
@@ -214,45 +184,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
 		WebContentStructures.addCP(
 			structureDescription = "Structure Description",
-			structureName = "My Structure"
-		);
+			structureName = "My Structure");
 
 		DynamicDataMapping.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent"
-		);
+			fieldName = "WebContent");
 
 		WebContentStructures.saveCP(structureName = "My Structure");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewContentTypeOnOverview(
 			contentTitle = "My Structure",
-			contentType = "Dynamic Data Mapping Structure"
-		);
+			contentType = "Dynamic Data Mapping Structure");
 	}
 
 	@priority = "4"
@@ -260,38 +223,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.addCP(
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewContentTypeOnOverview(
 			contentTitle = "WC Template Name",
-			contentType = "Dynamic Data Mapping Template"
-		);
+			contentType = "Dynamic Data Mapping Template");
 	}
 
 	@priority = "3"
@@ -299,8 +256,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.cancelChangeListCreation();
 	}
@@ -313,59 +269,47 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
-		ChangeList.selectChangeList(
-			changeListName = "Select Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Select Change List");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Second Change List Name"
-		);
+			changeListName = "Second Change List Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Second Change List Name"
-		);
+			value1 = "Second Change List Name");
 
 		AssertTextPresent(
 			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
-			value1 = "No change list has been published yet."
-		);
+			value1 = "No change list has been published yet.");
 
-		ChangeList.selectChangeList(
-			changeListName = "Select Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Select Change List");
 
 		ChangeList.searchForChangeList(changeListName = "Change List Name");
 
-		Click(locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW", key_changeListName = "Change List Name");
+		Click(
+			key_changeListName = "Change List Name",
+			locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Change List Name"
-		);
+			value1 = "Change List Name");
 
-		ChangeList.selectChangeList(
-			changeListName = "Second Change List Name"
-		);
+		ChangeList.selectChangeList(changeListName = "Second Change List Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Second Change List Name"
-		);
+			value1 = "Second Change List Name");
 
 		AssertTextPresent(
 			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
-			value1 = "No change list has been published yet."
-		);
+			value1 = "No change list has been published yet.");
 	}
 
 	@description = "Try to create new change list with too long name"
@@ -374,13 +318,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon"
-		);
+			changeListName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
 	}
@@ -391,13 +333,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = " "
-		);
+			changeListName = " ");
 
 		Alert.viewRequiredField();
 	}
@@ -408,17 +348,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = " ",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Change List Name"
-		);
+			value1 = "Change List Name");
 	}
 }

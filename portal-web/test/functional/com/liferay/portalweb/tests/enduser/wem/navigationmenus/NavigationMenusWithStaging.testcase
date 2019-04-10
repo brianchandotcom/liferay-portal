@@ -18,18 +18,15 @@ definition {
 		task ("Add three pages to the site via JSON") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page 1"
-			);
+				layoutName = "Test Page 1");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page 2"
-			);
+				layoutName = "Test Page 2");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page 3"
-			);
+				layoutName = "Test Page 3");
 		}
 
 		task ("Activate local live staging") {
@@ -39,9 +36,7 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 		}
@@ -68,20 +63,19 @@ definition {
 		}
 
 		task ("Navigate to navigation menus admin in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Assert the navigation menu is editable in the staging site") {
 			AssertVisible(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Test Navigation Menu Name");
 
-			AssertVisible(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "Edit");
+			AssertVisible(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
 		task ("Navigate to navigation menus admin in the live site") {
@@ -90,21 +84,18 @@ definition {
 
 		task ("Assert the navigation menu is not editable in the live site") {
 			AssertVisible(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			AssertElementNotPresent(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Test Navigation Menu Name");
 
 			AssertElementNotPresent(
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				key_menuItem = "Edit"
-			);
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 
@@ -112,15 +103,16 @@ definition {
 	@priority = "5"
 	test PublishEditedNavigationMenu {
 		task ("Add the first page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 1");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 1");
 		}
 
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -142,15 +134,15 @@ definition {
 		}
 
 		task ("Navigate to edit the navigation menu in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 
 		task ("Add the third page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 3");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 3");
 		}
 
 		task ("Delete the first page from the navigation menu") {
@@ -162,11 +154,17 @@ definition {
 		}
 
 		task ("Assert the changes are applied in the staging site - the Navigation Menu widget has the URL item and third page but does not have the first page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -174,11 +172,17 @@ definition {
 		}
 
 		task ("Assert the changes are not applied in the live site - the Navigation Menu widget has the first page and URL item but does not have the third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Publish the site to live and flag the 'Replicate Individual Deletions' checkbox while publishing") {
@@ -186,18 +190,17 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Check(
-				locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX"
-			);
+			Check(locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live"
-			);
+				value1 = "Publish to Live");
 
 			Pause(locator1 = "30000");
 
-			AssertTextEquals(locator1 = "Staging#PROCESS_RESULT", value1 = "SUCCESSFUL");
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_RESULT",
+				value1 = "SUCCESSFUL");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -205,19 +208,29 @@ definition {
 		}
 
 		task ("Assert the changes are applied in the live site - the Navigation Menu widget has the URL item and third page but does not have the first page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			Click(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-page-3");
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
 		}
@@ -227,26 +240,24 @@ definition {
 	@priority = "5"
 	test PublishEditedPrimaryNavigationMenu {
 		task ("Add the first page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 1");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 1");
 		}
 
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
-				navigationMenu = "Test Navigation Menu Name"
-			);
+				navigationMenu = "Test Navigation Menu Name");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -268,15 +279,15 @@ definition {
 		}
 
 		task ("Navigate to edit the navigation menu in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 
 		task ("Add the third page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 3");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 3");
 		}
 
 		task ("Delete the first page from the navigation menu") {
@@ -288,11 +299,17 @@ definition {
 		}
 
 		task ("Assert the changes are applied in the staging site - the Navigation Menu widget has the URL item and third page but does not have the first page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -300,11 +317,17 @@ definition {
 		}
 
 		task ("Assert the changes are not applied in the live site - the Navigation Menu widget has the first page and URL item but does not have the third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Publish the site to live and flag the 'Replicate Individual Deletions' checkbox while publishing") {
@@ -312,18 +335,17 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Check(
-				locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX"
-			);
+			Check(locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live"
-			);
+				value1 = "Publish to Live");
 
 			Pause(locator1 = "30000");
 
-			AssertTextEquals(locator1 = "Staging#PROCESS_RESULT", value1 = "SUCCESSFUL");
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_RESULT",
+				value1 = "SUCCESSFUL");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -331,19 +353,29 @@ definition {
 		}
 
 		task ("Assert the changes are applied in the live site - the Navigation Menu widget has the URL item and third page but does not have the first page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			Click(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-page-3");
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
 		}
@@ -353,15 +385,16 @@ definition {
 	@priority = "5"
 	test PublishNavigationMenu {
 		task ("Add the first page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 1");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 1");
 		}
 
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -377,27 +410,34 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget has the first page and the URL item but does not have any other pages") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			Click(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertLocation.assertPartialLocation(
-				value1 = "web/test-site-name-staging/test-page-1"
-			);
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name-staging/test-page-1");
 
 			AssertVisible(
-				locator1 = "Home#PAGE_HREF",
 				key_href = "https://www.liferay.com/",
-				key_pageName = "Liferay"
-			);
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE_HREF");
 		}
 
 		task ("Navigate to navigation menus admin in the live site") {
@@ -406,9 +446,8 @@ definition {
 
 		task ("Assert the navigation menu does not exist in the live site") {
 			AssertElementNotPresent(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -416,13 +455,21 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget is still using the site page hierarchy") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertElementNotPresent(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Publish the site to live") {
@@ -437,9 +484,8 @@ definition {
 
 		task ("Assert the navigation menu now exists in the live site") {
 			AssertVisible(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -447,21 +493,33 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget is display the navigation menu and not the site hierarchy - the navigation menu has the first page and the URL item but does not have the second page or third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			Click(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-page-1");
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
 		}
@@ -473,8 +531,7 @@ definition {
 		task ("Add the first page, second page, and third page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Page 1,Test Page 2,Test Page 3"
-			);
+				pageNames = "Test Page 1,Test Page 2,Test Page 3");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -504,24 +561,23 @@ definition {
 
 			if (IsElementPresent(locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED", key_entryName = "Test Page 3")) {
 				Click(
-					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED",
-					key_entryName = "Test Page 3"
-				);
+					key_entryName = "Test Page 3",
+					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED");
 			}
 
 			AssertVisible(
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED",
-				key_entryName = "Test Page 3"
-			);
+				key_entryName = "Test Page 3",
+				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live"
-			);
+				value1 = "Publish to Live");
 
 			Pause(locator1 = "30000");
 
-			AssertTextEquals(locator1 = "Staging#PROCESS_RESULT", value1 = "SUCCESSFUL");
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_RESULT",
+				value1 = "SUCCESSFUL");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -529,11 +585,17 @@ definition {
 		}
 
 		task ("Assert the third page was not published - the Navigation Menu widget has the first page and second page but does not have the third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 	}
 
@@ -541,26 +603,24 @@ definition {
 	@priority = "5"
 	test PublishPrimaryNavigationMenu {
 		task ("Add the first page to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page 1");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 1");
 		}
 
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
-				navigationMenu = "Test Navigation Menu Name"
-			);
+				navigationMenu = "Test Navigation Menu Name");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -576,27 +636,34 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget has the first page and the URL item but does not have any other pages") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			Click(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertLocation.assertPartialLocation(
-				value1 = "web/test-site-name-staging/test-page-1"
-			);
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name-staging/test-page-1");
 
 			AssertVisible(
-				locator1 = "Home#PAGE_HREF",
 				key_href = "https://www.liferay.com/",
-				key_pageName = "Liferay"
-			);
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE_HREF");
 		}
 
 		task ("Navigate to navigation menus admin in the live site") {
@@ -605,9 +672,8 @@ definition {
 
 		task ("Assert the navigation menu does not exist in the live site") {
 			AssertElementNotPresent(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -615,13 +681,21 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget is still using the site page hierarchy") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertVisible(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertElementNotPresent(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Publish the site to live") {
@@ -636,9 +710,8 @@ definition {
 
 		task ("Assert the navigation menu now exists in the live site") {
 			AssertVisible(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -646,21 +719,33 @@ definition {
 		}
 
 		task ("Assert the Navigation Menu widget is display the navigation menu and not the site hierarchy - the navigation menu has the first page and the URL item but does not have the second page or third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 
 		task ("Assert the links in the Navigation Menu widget work properly") {
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			Click(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-page-1");
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
 		}
@@ -672,21 +757,17 @@ definition {
 		task ("Add the first page, second page, and third page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Page 1,Test Page 2,Test Page 3"
-			);
+				pageNames = "Test Page 1,Test Page 2,Test Page 3");
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Configure the Navigation Menu widget to use Primary Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
-				navigationMenu = "Test Navigation Menu Name"
-			);
+				navigationMenu = "Test Navigation Menu Name");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {
@@ -716,24 +797,23 @@ definition {
 
 			if (IsElementPresent(locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED", key_entryName = "Test Page 3")) {
 				Click(
-					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED",
-					key_entryName = "Test Page 3"
-				);
+					key_entryName = "Test Page 3",
+					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED");
 			}
 
 			AssertVisible(
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED",
-				key_entryName = "Test Page 3"
-			);
+				key_entryName = "Test Page 3",
+				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live"
-			);
+				value1 = "Publish to Live");
 
 			Pause(locator1 = "30000");
 
-			AssertTextEquals(locator1 = "Staging#PROCESS_RESULT", value1 = "SUCCESSFUL");
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_RESULT",
+				value1 = "SUCCESSFUL");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -741,11 +821,17 @@ definition {
 		}
 
 		task ("Assert the third page was not published - the Navigation Menu widget has the first page and second page but does not have the third page") {
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 1");
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
 
-			AssertVisible(locator1 = "Home#PAGE", key_pageName = "Test Page 2");
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
 
-			AssertElementNotPresent(locator1 = "Home#PAGE", key_pageName = "Test Page 3");
+			AssertElementNotPresent(
+				key_pageName = "Test Page 3",
+				locator1 = "Home#PAGE");
 		}
 	}
 }

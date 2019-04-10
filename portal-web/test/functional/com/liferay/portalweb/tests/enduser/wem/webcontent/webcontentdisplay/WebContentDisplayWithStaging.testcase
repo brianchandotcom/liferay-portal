@@ -31,20 +31,17 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Staging Test Page"
-		);
+			layoutName = "Staging Test Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
@@ -54,8 +51,7 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Staging.viewStagingLocalLivePG();
 
@@ -67,8 +63,7 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Staging.viewStagingLocalLivePG();
 
@@ -78,13 +73,11 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(
 			expiredContent = "true",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
@@ -92,14 +85,12 @@ definition {
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Expired",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This is a use case for LPS-77769."
@@ -108,29 +99,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "Image"
-		);
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
@@ -138,14 +125,12 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Image",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -153,26 +138,21 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentImage = "Document_2.jpeg",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 
@@ -180,40 +160,40 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		FormFields.editTextAlt(
 			fieldName = "Image",
-			fieldValue = "Web Content Image Description"
-		);
+			fieldValue = "Web Content Image Description");
 
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		AssertHTMLSourceTextPresent(value1 = "Web Content Image Description");
 

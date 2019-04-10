@@ -22,36 +22,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			addHighDensityDisplay = "true",
 			description = "Low resolution variant",
 			imageName = "Low Resolution",
 			maxHeight = "480",
-			maxWidth = "320"
-		);
+			maxWidth = "320");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
 			maxHeight = "480",
 			maxWidth = "320",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution-2x",
 			maxHeight = "960",
 			maxWidth = "640",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Low Resolution");
 
-		AdaptiveMedia.viewImageVariantDescription(
-			description = "Low resolution variant"
-		);
+		AdaptiveMedia.viewImageVariantDescription(description = "Low resolution variant");
 	}
 
 	@priority = "5"
@@ -59,21 +53,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Zero Resolution",
 			maxHeight = "0",
 			maxWidth = "0",
-			zero = "true"
-		);
+			zero = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution(imageName = "Zero Resolution");
 	}
@@ -83,37 +74,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			description = "1234567890!@#$%^&amp;*()~`",
 			imageName = "abcdefghijklmnopqrstuvwxyz",
 			maxHeight = "25",
-			maxWidth = "25"
-		);
+			maxWidth = "25");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "abcdefghijklmnopqrstuvwxyz",
-			imageNameEdit = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		);
+			imageNameEdit = "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "1234567890!@#$%^&amp;*()~`",
 			maxHeight = "75",
-			maxWidth = "75"
-		);
+			maxWidth = "75");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "1234567890!@#$%^&amp;*()~`",
-			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?"
-		);
+			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-		AdaptiveMedia.viewImageVariantDescription(
-			description = "1234567890!@#$%^&amp;*()~`"
-		);
+		AdaptiveMedia.viewImageVariantDescription(description = "1234567890!@#$%^&amp;*()~`");
 	}
 
 	@priority = "5"
@@ -121,57 +105,48 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Low Resolution",
 			maxHeight = "480",
-			maxWidth = "320"
-		);
+			maxWidth = "320");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
 			maxHeight = "480",
 			maxWidth = "320",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.adaptRemainingImages(
 			imageName = "Low Resolution",
-			percentAdapted = "100"
-		);
+			percentAdapted = "100");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "High Resolution",
 			maxHeight = "1280",
-			maxWidth = "1440"
-		);
+			maxWidth = "1440");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "High Resolution",
 			maxHeight = "1280",
 			maxWidth = "1440",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution");
 
@@ -181,8 +156,7 @@ definition {
 			imageName = "High Resolution",
 			imageNameEdit = "High Resolution Edited",
 			maxHeightEdit = "1080",
-			maxWidthEdit = "1920"
-		);
+			maxWidthEdit = "1920");
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution Edited");
 
@@ -194,39 +168,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			customID = "custom-id",
 			imageName = "Image Variant With Custom ID",
 			maxHeight = "350",
-			maxWidth = "450"
-		);
+			maxWidth = "450");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			customID = "custom-id",
 			duplicate = "true",
 			imageName = "Image Variant With Duplicate Custom ID",
 			maxHeight = "350",
-			maxWidth = "450"
-		);
+			maxWidth = "450");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution();
 	}
@@ -236,21 +205,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolutionNoDimensions",
 			maxHeight = "",
 			maxWidth = "",
-			noDimensions = "true"
-		);
+			noDimensions = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionNoDimensions");
 	}
@@ -260,34 +226,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			description = "Image Resolution Width",
 			imageName = "testResolutionWidth",
 			maxHeight = "",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionWidth",
 			maxHeight = "Auto",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.addImageResolution(
 			description = "Image Resolution Height",
 			imageName = "testResolutionHeight",
 			maxHeight = "1000",
-			maxWidth = ""
-		);
+			maxWidth = "");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionHeight",
 			maxHeight = "1000",
-			maxWidth = "Auto"
-		);
+			maxWidth = "Auto");
 	}
 
 	@priority = "5"
@@ -295,22 +256,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Adaptive Media Image Description",
 			dmDocumentFile = "high_resolution_photo.jpg",
-			dmDocumentTitle = "high_resolution_photo.jpg"
-		);
+			dmDocumentTitle = "high_resolution_photo.jpg");
 
 		Pause(locator1 = "3000");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -320,8 +278,7 @@ definition {
 
 		ItemSelector.selectDMImage(
 			imageFileName = "high_resolution_photo.jpg",
-			navTab = "Documents and Media"
-		);
+			navTab = "Documents and Media");
 
 		Pause(locator1 = "2000");
 
@@ -335,41 +292,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Adaptive Media Image Description",
 			dmDocumentFile = "high_resolution_photo.jpg",
-			dmDocumentTitle = "high_resolution_photo.jpg"
-		);
+			dmDocumentTitle = "high_resolution_photo.jpg");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithDocumentCP(
 			dmDocumentTitle = "high_resolution_photo.jpg",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCP(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
 
@@ -381,20 +332,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addNonNumericImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "notallowed",
-			maxWidth = "notallowed"
-		);
+			maxWidth = "notallowed");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution(imageName = "Small Image Variant");
 	}
@@ -404,43 +352,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Small Image Variant",
 			imageState = "Enabled",
 			maxHeight = "100",
 			maxWidth = "100",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Small Image Variant",
 			imageState = "Disabled",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "Small Image Variant",
 			imageNameEdit = "Large Image Variant",
 			maxHeightEdit = "1000",
-			maxWidthEdit = "1000"
-		);
+			maxWidthEdit = "1000");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Large Image Variant",
 			imageState = "Disabled",
 			maxHeight = "1000",
 			maxWidth = "1000",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.deleteImageResolution(imageName = "Large Image Variant");
 	}
@@ -450,52 +392,44 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Small Image Variant",
 			imageState = "Enabled",
 			maxHeight = "100",
 			maxWidth = "100",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "Small Image Variant",
-			imageNameEdit = "Small Image Variant Edited"
-		);
+			imageNameEdit = "Small Image Variant Edited");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Small Image Variant Edited",
 			imageState = "Enabled",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 	}
 
 	@priority = "4"
@@ -503,34 +437,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolution",
 			maxHeight = "1000",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolution",
 			maxHeight = "1000",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "testResolution",
 			imageNameEdit = "testResolutionEdit",
 			maxHeightEdit = "",
 			maxWidthEdit = "",
-			noDimensions = "true"
-		);
+			noDimensions = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionEdit");
 	}
@@ -540,38 +469,33 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Small Image Variant",
 			imageState = "Enabled",
 			maxHeight = "100",
 			maxWidth = "100",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		AdaptiveMedia.editImageResolution(
 			imageIDEdit = "large-image",
 			imageName = "Small Image Variant",
 			imageNameEdit = "Large Image Variant",
 			maxHeightEdit = "1000",
-			maxWidthEdit = "1000"
-		);
+			maxWidthEdit = "1000");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Large Image Variant",
 			imageState = "Enabled",
 			maxHeight = "1000",
 			maxWidth = "1000",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 	}
 
 	@priority = "4"
@@ -579,44 +503,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolutionWidth",
 			maxHeight = "1000",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "testResolutionWidth",
 			imageNameEdit = "testResolutionWidthEdit",
-			maxHeightEdit = ""
-		);
+			maxHeightEdit = "");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionWidthEdit",
 			maxHeight = "Auto",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolutionHeight",
 			maxHeight = "1000",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "testResolutionHeight",
 			imageNameEdit = "testResolutionHeightEdit",
-			maxWidthEdit = ""
-		);
+			maxWidthEdit = "");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionHeightEdit",
 			maxHeight = "1000",
-			maxWidth = "Auto"
-		);
+			maxWidth = "Auto");
 	}
 
 	@priority = "4"
@@ -624,38 +541,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Medium Image Variant",
 			maxHeight = "500",
-			maxWidth = "500"
-		);
+			maxWidth = "500");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Large Image Variant",
 			maxHeight = "1000",
-			maxWidth = "1000"
-		);
+			maxWidth = "1000");
 
 		AdaptiveMedia.adaptAllImages();
 	}
@@ -665,14 +576,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
 			maxHeight = "100",
-			maxWidth = "100"
-		);
+			maxWidth = "100");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Small Image Variant");
 
@@ -681,13 +590,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "Small Image Variant",
-			imageNameEdit = "Edited Small Image Variant"
-		);
+			imageNameEdit = "Edited Small Image Variant");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Edited Small Image Variant");
 
@@ -696,15 +603,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			customID = "custom-id",
 			imageName = "Image Variant With Custom ID",
 			maxHeight = "200",
-			maxWidth = "200"
-		);
+			maxWidth = "200");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Image Variant With Custom ID");
 
@@ -713,13 +618,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "Image Variant With Custom ID",
-			imageNameEdit = "Custom ID Should Not Change"
-		);
+			imageNameEdit = "Custom ID Should Not Change");
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Custom ID Should Not Change");
 
@@ -733,46 +636,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Virtual Instances"
-		);
+			portlet = "Virtual Instances");
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",
 			virtualHost = "www.able.com",
-			webId = "www.able.com"
-		);
+			webId = "www.able.com");
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "This should not appear on new virtual instance",
 			maxHeight = "300",
-			maxWidth = "300"
-		);
+			maxWidth = "300");
 
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080"
-		);
+			virtualHostsURL = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
-		AdaptiveMedia.viewNoImageResolution(
-			imageName = "This should not appear on new virtual instance"
-		);
+		AdaptiveMedia.viewNoImageResolution(imageName = "This should not appear on new virtual instance");
 	}
 
 	@priority = "5"
@@ -780,8 +675,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -790,58 +684,49 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Low Resolution",
 			maxHeight = "480",
-			maxWidth = "320"
-		);
+			maxWidth = "320");
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
 			maxHeight = "480",
 			maxWidth = "320",
-			percentAdapted = "0"
-		);
+			percentAdapted = "0");
 
 		for (var entryCount : list "1,2") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Documents and Media"
-			);
+				portlet = "Documents and Media");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentFile = "Document_${entryCount}.jpg",
-				dmDocumentTitle = "Document_${entryCount}.jpg"
-			);
+				dmDocumentTitle = "Document_${entryCount}.jpg");
 		}
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.adaptRemainingImages(
 			imageName = "Low Resolution",
-			percentAdapted = "100"
-		);
+			percentAdapted = "100");
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Low Resolution",
 			imageState = "Disabled",
-			percentAdapted = "100"
-		);
+			percentAdapted = "100");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Another Site Name");
 
@@ -849,14 +734,12 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Documents and Media"
-			);
+				portlet = "Documents and Media");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentFile = "Document_${entryCount}.jpg",
-				dmDocumentTitle = "Document_${entryCount}.jpg"
-			);
+				dmDocumentTitle = "Document_${entryCount}.jpg");
 		}
 
 		ProductMenu.gotoSite(site = "Site Name");
@@ -864,8 +747,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Adaptive Media"
-		);
+			portlet = "Adaptive Media");
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
 
@@ -873,13 +755,11 @@ definition {
 
 		AdaptiveMedia.enableImageResolution(
 			imageName = "Low Resolution",
-			imageState = "Enabled"
-		);
+			imageState = "Enabled");
 
 		AdaptiveMedia.adaptRemainingImages(
 			imageName = "Low Resolution",
-			percentAdapted = "100"
-		);
+			percentAdapted = "100");
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
 

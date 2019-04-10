@@ -9,8 +9,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 	}
@@ -62,16 +61,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.uninstallAppCP(appName = "Social Networking");
 
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.viewUninstallAppCP(appName = "Social Networking");
 	}

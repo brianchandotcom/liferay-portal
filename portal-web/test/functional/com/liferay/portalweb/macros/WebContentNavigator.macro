@@ -11,8 +11,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 	}
@@ -36,9 +35,7 @@ definition {
 	}
 
 	macro gotoAddPGViaWCD {
-		Portlet.clickPortletPlusIconPG(
-			portletName = "Web Content Display"
-		);
+		Portlet.clickPortletPlusIconPG(portletName = "Web Content Display");
 
 		if (!(contains("${structureName}", "{structureName}"))) {
 			var structureName = "${structureName}";
@@ -51,8 +48,7 @@ definition {
 
 		AssertClick(
 			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
-			value1 = "${structureName}"
-		);
+			value1 = "${structureName}");
 
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}
@@ -78,21 +74,18 @@ definition {
 		MouseOver(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
 		MouseOver.mouseOverNotVisible(
-			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 
 		Click(
-			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON",
-			key_webContentTitle = "${webContentTitle}"
-		);
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 	}
 
 	macro gotoEditCP {
 		WebContentNavigator._openDescriptiveMenulistCP(
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -102,13 +95,13 @@ definition {
 	macro gotoEditFeed {
 		Navigator.gotoNavItem(navItem = "Feeds");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${feedName}");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${feedName}");
 	}
 
 	macro gotoEditPGViaWCD {
-		WebContentNavigator.gotoArticleMenuPGViaWCD(
-			webContentTitle = "${webContentTitle}"
-		);
+		WebContentNavigator.gotoArticleMenuPGViaWCD(webContentTitle = "${webContentTitle}");
 
 		MenuItem.click(menuItem = "${menuItem}");
 
@@ -117,34 +110,27 @@ definition {
 
 	macro gotoEditStructure {
 		AssertClick(
+			key_ddlDataDefinitionName = "${structureName}",
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${structureName}",
-			key_ddlDataDefinitionName = "${structureName}"
-		);
+			value1 = "${structureName}");
 
 		SelectFrame(value1 = "relative=top");
 	}
 
 	macro gotoEntryMenuItem {
 		Click(
-			locator1 = "WC#ENTRY_LIST_MENULIST_ICON",
-			key_webContentTitle = "${entry}"
-		);
+			key_webContentTitle = "${entry}",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-		MenuItem.clickNoError(
-			menuItem = "${menuItem}"
-		);
+		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
 	macro gotoManageTemplatesViaStructures {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Templates",
-			rowEntry = "${structureName}"
-		);
+			rowEntry = "${structureName}");
 
-		SiteAdmin.viewPortletTitle(
-			portletTitle = "Templates for Structure: ${structureName}"
-		);
+		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: ${structureName}");
 	}
 
 	macro gotoMoreStructuresViaPlusButton {
@@ -162,8 +148,7 @@ definition {
 	macro gotoPreviewEntryCP {
 		WebContentNavigator._openDescriptiveMenulistCP(
 			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}"
-		);
+			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
 		MenuItem.click(menuItem = "Preview");
 	}
@@ -183,17 +168,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
-			value1 = "${webContentStatus}"
-		);
+			value1 = "${webContentStatus}");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 	}
 
 	macro gotoViewTemplate {
 		AssertClick(
+			key_ddlTemplateName = "${templateName}",
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
-			value1 = "${templateName}",
-			key_ddlTemplateName = "${templateName}"
-		);
+			value1 = "${templateName}");
 	}
 }

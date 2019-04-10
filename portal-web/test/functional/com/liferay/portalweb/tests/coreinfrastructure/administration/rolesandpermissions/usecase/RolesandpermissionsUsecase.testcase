@@ -48,21 +48,18 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "User"
-		);
+			roleTitle = "User");
 
 		JSONRole.addSiteRole(
 			roleKey = "Roles Siterole Name",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet",
 				roleTitle = "Roles Siterole Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		for (var resourceActionIndex : list "ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
@@ -70,8 +67,7 @@ definition {
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Roles Siterole Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW") {
@@ -79,8 +75,7 @@ definition {
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com.liferay.portal.kernel.model.Team",
 				roleTitle = "Roles Siterole Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		for (var resourceActionIndex : list "ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
@@ -88,89 +83,83 @@ definition {
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				roleTitle = "Roles Siterole Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Portlet.addPG(pageName = "Site Page Name", portletName = "Web Content Display");
+		Portlet.addPG(
+			pageName = "Site Page Name",
+			portletName = "Web Content Display");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
 
@@ -178,12 +167,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
-			value1 = "Regular Role Site Team Name"
-		);
+			value1 = "Regular Role Site Team Name");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -193,46 +183,42 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
-			value1 = "Regular Role Site Team Name"
-		);
+			value1 = "Regular Role Site Team Name");
 
 		Navigator.openURL();
 
 		PermissionsInline.gotoSiteTeamsCP(
 			portletName = "Teams",
 			siteScopeName = "Site Name",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		for (var permissionDefinitionKey : list "ACTION_ASSIGN_MEMBERS,ACTION_DELETE,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_VIEW") {
 			Team.definePermissionPG(
 				permissionDefinitionKey = "${permissionDefinitionKey}",
-				teamName = "Site Team Name"
-			);
+				teamName = "Site Team Name");
 		}
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.editCP(
 			teamDescriptionEdit = "Site Team Description Edit",
 			teamName = "Site Team Name",
-			teamNameEdit = "Site Team Name Edit"
-		);
+			teamNameEdit = "Site Team Name Edit");
 
 		Team.assignMembersCP(
 			teamName = "Site Team Name Edit",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@priority = "4"
@@ -245,29 +231,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Group Scope Role Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Group Scope Role Name",
-			siteNameScope = "Liferay"
-		);
+			siteNameScope = "Liferay");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 
@@ -280,130 +262,121 @@ definition {
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark1 Name",
 			bookmarkURL = "https://www.liferay.com",
-			bookmarkViewableBy = "Owner"
-		);
+			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addCP(siteName = "google.com Name", siteType = "Blank");
+		Site.addCP(
+			siteName = "google.com Name",
+			siteType = "Blank");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
-			siteName = "google.com Name"
-		);
+			siteName = "google.com Name");
 
 		Portlet.addPG(portletName = "Bookmarks");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
-			siteName = "google.com Name"
-		);
+			siteName = "google.com Name");
 
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark2 Name",
 			bookmarkURL = "https://www.google.com",
-			bookmarkViewableBy = "Owner"
-		);
+			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
-			siteName = "google.com Name"
-		);
+			siteName = "google.com Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
-
-		User.editUserSiteCP(siteName = "google.com Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
+
+		User.editUserSiteCP(
+			siteName = "google.com Name",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Group Scope Role Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		Bookmark.gotoPG(
 			bookmarkName = "Test Bookmark1 Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Bookmark.viewEntry(
 			bookmarkName = "Test Bookmark1 Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
-			siteName = "google.com Name"
-		);
+			siteName = "google.com Name");
 
 		Bookmark.viewNoPG(
 			bookmarkName = "Test Bookmark2 Name",
-			bookmarkURL = "https://www.google.com"
-		);
+			bookmarkURL = "https://www.google.com");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "3"
@@ -413,42 +386,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Private Blogs Page");
 
 		PermissionsInline.gotoSitepageCP(
 			pageName = "Private Blogs Page",
-			privacy = "Private Pages"
-		);
+			privacy = "Private Pages");
 
 		AssertElementNotPresent(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
-			key_roleTitle = "Guest"
-		);
+			key_roleTitle = "Guest",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME");
 
 		Navigator.openPrivateSitePageURL(
 			pageName = "Private Blogs Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
 
 		AssertElementNotPresent(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
-			key_roleTitle = "Guest"
-		);
+			key_roleTitle = "Guest",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME");
 	}
 
 	@priority = "4"
@@ -459,8 +426,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
@@ -469,117 +435,100 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization"
-		);
+			roleType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
 			organizationSite = "Community Site",
-			orgName = "Organization Name"
-		);
+			orgName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editUserOrganizationCP(
 			orgName = "Organization Name",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editUserOrganizationCP(
 			orgName = "Organization Name",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignOrgRoleCP(
 			roleTitle = "Roles Orgrole Name",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.openSiteURL(siteName = "Organization Name");
 
@@ -588,126 +537,114 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Organization Name"
-		);
+			siteName = "Organization Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Organization Name"
-		);
+			siteName = "Organization Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Test Document");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Owner,Site Member,Organization User"
-		);
+			roleList = "Guest,Owner,Site Member,Organization User");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Organization Name"
-		);
+			siteName = "Organization Name");
 
 		ClassicSearch.search(searchTerm = "Test Document");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "Test Document",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document"
-		);
+			value1 = "Test Document");
 
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Organization Name"
-		);
+			siteName = "Organization Name");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder."
-		);
+			value1 = "There are no documents or media files in this folder.");
 
 		ClassicSearch.search(searchTerm = "Test Document");
 
 		ClassicSearch.viewSearchNoPG(
 			searchAssetTitle = "Test Document",
 			searchNoResults = "true",
-			searchTerm = "Test Document"
-		);
+			searchTerm = "Test Document");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Organization Name"
-		);
+			siteName = "Organization Name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "This is a test document.",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		ClassicSearch.search(searchTerm = "Test Document");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "Test Document",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document"
-		);
+			value1 = "Test Document");
 
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -716,133 +653,116 @@ definition {
 
 		JSONRole.addSiteRole(
 			roleKey = "Data Recorder Name",
-			roleTitle = "Data Recorder Name"
-		);
+			roleTitle = "Data Recorder Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_RECORD",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			roleTitle = "Data Recorder Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "View",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			roleTitle = "Data REcorder Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		JSONRole.addSiteRole(
 			roleKey = "Records Manager Name",
-			roleTitle = "Records Manager Name"
-		);
+			roleTitle = "Records Manager Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			roleTitle = "Records Manager Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			roleTitle = "Records Manager Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn1");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Data Recorder Name",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn2");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Records Manager Name",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
 
@@ -852,175 +772,148 @@ definition {
 
 		DDLList.addViaDDLDisplayPG(
 			ddlListDescription = "Liferay Employee Profiles",
-			ddlListName = "Employees"
-		);
+			ddlListName = "Employees");
 
 		DDLDataDefinition.addViaDDLDisplayPG(
 			ddlDataDefinitionDescription = "Data Definition Description",
-			ddlDataDefinitionName = "Employee Profile Data Definition"
-		);
+			ddlDataDefinitionName = "Employee Profile Data Definition");
 
 		DynamicDataMapping.addField(
 			field = "Boolean",
 			fieldFieldLabel = "Employee",
-			fieldName = "Employee"
-		);
+			fieldName = "Employee");
 
 		DynamicDataMapping.addField(
 			field = "Date",
 			fieldFieldLabel = "Start Date",
-			fieldName = "StartDate"
-		);
+			fieldName = "StartDate");
 
 		DynamicDataMapping.addField(
 			field = "Decimal",
 			fieldFieldLabel = "Salary",
-			fieldName = "Salary"
-		);
+			fieldName = "Salary");
 
 		DynamicDataMapping.addField(
 			field = "Documents and Media",
 			fieldFieldLabel = "Profile Picture",
-			fieldName = "ProfilePicture"
-		);
+			fieldName = "ProfilePicture");
 
 		DynamicDataMapping.addField(
 			field = "Documents and Media",
 			fieldFieldLabel = "Resume",
-			fieldName = "Resume"
-		);
+			fieldName = "Resume");
 
 		DynamicDataMapping.addField(
 			field = "Integer",
 			fieldFieldLabel = "Age",
-			fieldName = "Age"
-		);
+			fieldName = "Age");
 
 		DynamicDataMapping.addField(
 			field = "Number",
 			fieldFieldLabel = "Weekly Hours",
-			fieldName = "WeeklyHours"
-		);
+			fieldName = "WeeklyHours");
 
 		DynamicDataMapping.addField(
 			field = "Radio",
 			fieldFieldLabel = "Department",
-			fieldName = "Department"
-		);
+			fieldName = "Department");
 
 		DynamicDataMapping.editFieldOptions(
 			field = "Radio",
 			fieldFieldLabel = "Department",
 			fieldName = "Department",
 			fieldOptionsNames = "Core Engineer,QA Engineer,Support Engineer",
-			fieldOptionsValues = "1,2,3"
-		);
+			fieldOptionsValues = "1,2,3");
 
 		DynamicDataMapping.addField(
 			field = "Select",
 			fieldFieldLabel = "Years Worked",
-			fieldName = "YearsWorked"
-		);
+			fieldName = "YearsWorked");
 
 		DynamicDataMapping.editFieldOptions(
 			field = "Select",
 			fieldFieldLabel = "Years Worked",
 			fieldName = "YearsWorked",
 			fieldOptionsNames = "1-2,3-5,5+",
-			fieldOptionsValues = "1,2,3"
-		);
+			fieldOptionsValues = "1,2,3");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Name",
-			fieldName = "Name"
-		);
+			fieldName = "Name");
 
 		DynamicDataMapping.addField(
 			field = "Text Box",
 			fieldFieldLabel = "Description",
-			fieldName = "Description"
-		);
+			fieldName = "Description");
 
 		DDLDataDefinition.saveViaDDLDisplayPG();
 
-		DDLDataDefinition.selectViaDDLDisplayPG(
-			ddlDataDefinitionName = "Employee Profile Data Definition"
-		);
+		DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
 
 		DDLList.saveViaDDLDisplayPG();
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
-		DDLRecord.addViaDDLDisplayPG(
-			ddlDataDefinitionName = "Employee Profile Data Definition"
-		);
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
 
 		DDLRecord.populateFieldBoolean(
 			ddlRecordFieldData = "Yes",
 			fieldFieldLabel = "Employee",
-			fieldName = "Employee"
-		);
+			fieldName = "Employee");
 
 		DDLRecord.populateFieldDate(
 			ddlRecordFieldData = "04/01/2015",
 			fieldFieldLabel = "Start Date",
-			fieldName = "StartDate"
-		);
+			fieldName = "StartDate");
 
 		DDLRecord.populateFieldDecimal(
 			ddlRecordFieldData = "35000",
 			fieldFieldLabel = "Salary",
-			fieldName = "Salary"
-		);
+			fieldName = "Salary");
 
 		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
 			document = "Document_1.txt",
 			fieldFieldLabel = "Resume",
-			fieldName = "Resume"
-		);
+			fieldName = "Resume");
 
 		DDLRecord.populateFieldInteger(
 			ddlRecordFieldData = "30",
 			fieldFieldLabel = "Age",
-			fieldName = "Age"
-		);
+			fieldName = "Age");
 
 		DDLRecord.populateFieldNumber(
 			ddlRecordFieldData = "40",
 			fieldFieldLabel = "Weekly Hours",
-			fieldName = "WeeklyHours"
-		);
+			fieldName = "WeeklyHours");
 
 		DDLRecord.populateFieldRadio(
 			ddlRecordFieldData = "QA Engineer",
 			fieldFieldLabel = "Department",
-			fieldName = "Department"
-		);
+			fieldName = "Department");
 
 		DDLRecord.populateFieldSelect(
 			ddlRecordFieldData = "5+",
 			fieldFieldLabel = "Years Worked",
-			fieldName = "YearsWorked"
-		);
+			fieldName = "YearsWorked");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Joe Engineer",
 			fieldFieldLabel = "Name",
-			fieldName = "Name"
-		);
+			fieldName = "Name");
 
 		DDLRecord.populateFieldTextBox(
 			ddlRecordFieldData = "Joe Engineer works in QA",
 			fieldFieldLabel = "Description",
-			fieldName = "Description"
-		);
+			fieldName = "Description");
 
 		PortletEntry.publish();
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -1032,7 +925,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -1042,7 +937,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 	}
 
 	@priority = "4"
@@ -1052,8 +949,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -1062,96 +958,85 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn1");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn2");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
@@ -1164,21 +1049,18 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Test Document");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Owner,Site Member"
-		);
+			roleList = "Guest,Owner,Site Member");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1186,32 +1068,30 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Document",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document"
-		);
+			value1 = "Test Document");
 
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder."
-		);
+			value1 = "There are no documents or media files in this folder.");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Document");
 
@@ -1219,38 +1099,38 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "This is a test document.",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Document",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document"
-		);
+			value1 = "Test Document");
 
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"
-		);
+			dmDocumentTitle = "Test Document");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -1258,117 +1138,105 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea3@liferay.com",
 			userFirstName = "userfn3",
 			userLastName = "userln3",
-			userScreenName = "usersn3"
-		);
+			userScreenName = "usersn3");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea3@liferay.com",
-			userScreenName = "usersn3"
-		);
+			userScreenName = "usersn3");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name 1", orgType = "Organization");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
-
-		Organization.addCP(orgName = "Organization Name 2", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name 2",
+			orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
 			organizationSite = "Community Site",
-			orgName = "Organization Name 2"
-		);
+			orgName = "Organization Name 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name 3", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name 3",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1377,14 +1245,12 @@ definition {
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userName = "userfn1 userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1393,14 +1259,12 @@ definition {
 			userFirstName = "userfn2",
 			userLastName = "userln2",
 			userName = "userfn2 userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1409,14 +1273,12 @@ definition {
 			roleTitle = "Organization Administrator",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -1425,14 +1287,12 @@ definition {
 			userFirstName = "userfn3",
 			userLastName = "userln3",
 			userName = "userfn3 userln3",
-			userScreenName = "usersn3"
-		);
+			userScreenName = "usersn3");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup1 Name");
 
@@ -1443,155 +1303,134 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup1 Name",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup2 Name",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup3 Name",
-			userScreenName = "usersn3"
-		);
+			userScreenName = "usersn3");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Asset Publisher Page");
 
 		JSONRole.addSiteRole(
 			roleKey = "Movie Blogger Name",
-			roleTitle = "Movie Blogger Name"
-		);
+			roleTitle = "Movie Blogger Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ENTRY",
 			resourceName = "com.liferay.blogs",
 			roleTitle = "Movie Blogger Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
 			roleTitle = "Movie Blogger Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_TO_PAGE",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Movie Blogger Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Movie Blogger Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
-		JSONRole.addSiteRole(roleKey = "Music Fan Name", roleTitle = "Music Fan Name");
+		JSONRole.addSiteRole(
+			roleKey = "Music Fan Name",
+			roleTitle = "Music Fan Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.message.boards",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_CATEGORY",
 			resourceName = "com.liferay.message.boards",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_MESSAGE",
 			resourceName = "com.liferay.message.boards",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_MESSAGE",
 			resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.message.boards.kernel.model.MBMessage",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_TO_PAGE",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Music Fan Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		JSONRole.addSiteRole(
 			roleKey = "Sports Journalist Name",
-			roleTitle = "Sports Journalist Name"
-		);
+			roleTitle = "Sports Journalist Name");
 
 		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com.liferay.journal.model.JournalArticle",
 				roleTitle = "Sports Journalist Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
@@ -1599,45 +1438,39 @@ definition {
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com.liferay.journal",
 				roleTitle = "Sports Journalist Name",
-				roleType = "site"
-			);
+				roleType = "site");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Sports Journalist Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_TO_PAGE",
 			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			roleTitle = "Sports Journalist Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
 
@@ -1646,8 +1479,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup3 Name");
 
@@ -1656,41 +1488,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn1 userln1",
-			roleTitle = "Music Fan Name"
-		);
+			roleTitle = "Music Fan Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn2 userln2",
-			roleTitle = "Movie Blogger Name"
-		);
+			roleTitle = "Movie Blogger Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		Site.assignSiteRoleCP(
 			resourceName = "UG UserGroup3 Name",
-			roleTitle = "Sports Journalist Name"
-		);
+			roleTitle = "Sports Journalist Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1702,54 +1528,51 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		var key_portletTitleName = "Message Boards";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Message Boards"
-		);
+			value1 = "Message Boards");
 
 		var key_portletTitleName = "Asset Publisher";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Asset Publisher"
-		);
+			value1 = "Asset Publisher");
 
 		MessageboardsThread.addPG(
 			threadBody = "This is a thread by usersn1",
-			threadSubject = "Music Thread 1"
-		);
+			threadSubject = "Music Thread 1");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		var key_portletTitleName = "Message Boards";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Message Boards"
-		);
+			value1 = "Message Boards");
 
 		var key_portletTitleName = "Asset Publisher";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Asset Publisher"
-		);
+			value1 = "Asset Publisher");
 
 		AssertElementNotPresent(locator1 = "MessageBoards#ADD_CATEGORY_BUTTON");
 
@@ -1757,8 +1580,7 @@ definition {
 
 		Blogs.addViaAP(
 			entryContent = "This is a movie blog by usersn2",
-			entryTitle = "Movie Blog"
-		);
+			entryTitle = "Movie Blog");
 
 		Navigator.openSiteURL(siteName = "Organization Name 2");
 
@@ -1766,46 +1588,49 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Message Boards"
-		);
+			value1 = "Message Boards");
 
-		AssertTextEquals(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+		AssertTextEquals(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
 
-		AssertTextEquals(locator1 = "Button#NEW_THREAD", value1 = "New Thread");
+		AssertTextEquals(
+			locator1 = "Button#NEW_THREAD",
+			value1 = "New Thread");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea3@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea3@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		var key_portletTitleName = "Message Boards";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Message Boards"
-		);
+			value1 = "Message Boards");
 
 		var key_portletTitleName = "Asset Publisher";
 
 		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Asset Publisher"
-		);
+			value1 = "Asset Publisher");
 
 		AssertElementNotPresent(locator1 = "Button#ADD_CATEGORY");
 
 		WebContent.addPGViaAP(
 			webContentContent = "This article is by usersn3, a member of user group 3 but not site name 1",
-			webContentTitle = "User Group Article"
-		);
+			webContentTitle = "User Group Article");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -1817,8 +1642,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -1827,21 +1651,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 
@@ -1854,83 +1675,83 @@ definition {
 		Bookmark.addPG(
 			bookmarkName = "Test Bookmark Name",
 			bookmarkURL = "https://www.liferay.com",
-			bookmarkViewableBy = "Owner"
-		);
+			bookmarkViewableBy = "Owner");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Bookmark.viewNoPG(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
 			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -1938,8 +1759,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -1947,37 +1767,31 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.addCP(
 				userEmailAddress = "userea${userNumber}@liferay.com",
 				userFirstName = "userfn${userNumber}",
 				userLastName = "userln${userNumber}",
-				userScreenName = "usersn${userNumber}"
-			);
+				userScreenName = "usersn${userNumber}");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.editPasswordCP(
 				userEmailAddress = "userea${userNumber}@liferay.com",
-				userScreenName = "usersn${userNumber}"
-			);
+				userScreenName = "usersn${userNumber}");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
 			User.editUserSiteCP(
 				siteName = "Site Name",
-				userScreenName = "usersn${userNumber}"
-			);
+				userScreenName = "usersn${userNumber}");
 		}
 
 		Navigator.openURL();
@@ -1987,91 +1801,87 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		PortletEntry.viewEmptyMessage(entity = "Teams");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
-		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "USA Ice Hockey Team Blog",
-			pageTemplateName = "Blog"
-		);
+			pageTemplateName = "Blog");
 
 		PermissionsInline.gotoPagePG(pageName = "USA Ice Hockey Team Blog");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "guest"
-		);
+			roleTitle = "guest");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "site-member"
-		);
+			roleTitle = "site-member");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "site-member"
-		);
+			roleTitle = "site-member");
 
 		for (var permissionDefinitionKey : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
 			Team.definePermissionPG(
 				permissionDefinitionKey = "${permissionDefinitionKey}",
-				teamName = "Site Team Name"
-			);
+				teamName = "Site Team Name");
 		}
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "USA Ice Hockey Team Blog",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		for (var portletTitleName : list "Blogs,Tag Cloud,Recent Bloggers") {
 			var key_portletTitleName = "${portletTitleName}";
 
 			AssertTextEquals(
 				locator1 = "Portlet#SPECIFIC_TITLE",
-				value1 = "${portletTitleName}"
-			);
+				value1 = "${portletTitleName}");
 		}
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
 
 		AssertElementNotPresent(
-			locator1 = "Home#PAGE",
-			key_pageName = "USA Ice Hockey Team Blog"
-		);
+			key_pageName = "USA Ice Hockey Team Blog",
+			locator1 = "Home#PAGE");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -2079,44 +1889,37 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "Access in Control Panel",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Control Panel Menu",
-			permissionNavigationValue = "Portal"
-		);
+			permissionNavigationValue = "Portal");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
 			permissionDefinitionValue = "Access in Site Administration",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Site Administration Menu",
-			permissionNavigationValue = "Settings &gt; Site"
-		);
+			permissionNavigationValue = "Settings &gt; Site");
 	}
 
 	@priority = "4"
@@ -2124,30 +1927,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
 			permissionDefinitionValue = "Add Repository",
 			roleTitle = "Site Member",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		AssertTextNotPresent(value1 = "action.ADD_REPOSITORY");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.removePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
 			permissionDefinitionValue = "Add Repository",
 			roleTitle = "Site Member",
-			roleType = "Site"
-		);
+			roleType = "Site");
 	}
 
 	@priority = "4"
@@ -2159,34 +1958,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Portlet.addPG(portletName = "Currency Converter");
 
@@ -2194,35 +1990,37 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Currency Converter",
-			portletOption = "Preferences"
-		);
+			portletOption = "Preferences");
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(
+			key_pageName = "Welcome",
+			locator1 = "Home#PAGE");
 
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World"
-		);
+			value1 = "Hello World");
 
 		AssertElementPresent(locator1 = "HelloWorld#PORTLET_CONTENT");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -2230,65 +2028,58 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Private Page");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openPrivateURL(pageName = "Private Page");
 
@@ -2299,58 +2090,49 @@ definition {
 	test ViewRegRolePermissionsDefaultView {
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ARTICLE",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
@@ -2359,63 +2141,58 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		AssertVisible(locator1 = "Button#PLUS");
 

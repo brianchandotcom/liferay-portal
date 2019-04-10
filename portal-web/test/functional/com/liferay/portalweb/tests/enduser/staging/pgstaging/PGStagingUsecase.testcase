@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 	}
 
 	tearDown {
@@ -36,8 +35,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
@@ -45,14 +43,12 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
 			permissionNavigationValue = "Blogs",
 			roleTitle = "Organization User",
-			roleType = "Organization"
-		);
+			roleType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX",
@@ -60,25 +56,21 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
 			permissionNavigationValue = "Site Pages",
 			roleTitle = "Organization User",
-			roleType = "Organization"
-		);
+			roleType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		Organization.addCP(
 			orgName = "Staging Organization Name",
-			orgType = "Organization"
-		);
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -89,8 +81,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Staging Test Page");
 
@@ -98,26 +89,22 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -126,34 +113,29 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONUser.addUser(
 			userEmailAddress = "usereacr@liferay.com",
 			userFirstName = "userfncr",
 			userLastName = "userlncr",
 			userName = "userfncr userlncr",
-			userScreenName = "usersncr"
-		);
+			userScreenName = "usersncr");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "usereacr@liferay.com",
-			userScreenName = "usersncr"
-		);
+			userScreenName = "usersncr");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -162,14 +144,12 @@ definition {
 			userFirstName = "userfncr",
 			userLastName = "userlncr",
 			userName = "userfncr userlncr",
-			userScreenName = "usersncr"
-		);
+			userScreenName = "usersncr");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -178,33 +158,28 @@ definition {
 			roleTitle = "Organization Content Reviewer",
 			userFirstName = "userfncr",
 			userLastName = "userlncr",
-			userScreenName = "usersncr"
-		);
+			userScreenName = "usersncr");
 
 		JSONUser.addUser(
 			userEmailAddress = "usereaoa@liferay.com",
 			userFirstName = "userfnoa",
 			userLastName = "userlnoa",
-			userScreenName = "usersnoa"
-		);
+			userScreenName = "usersnoa");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "usereaoa@liferay.com",
-			userScreenName = "usersnoa"
-		);
+			userScreenName = "usersnoa");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -212,14 +187,12 @@ definition {
 			orgName = "Staging Organization Name",
 			userFirstName = "userfnoa",
 			userLastName = "userlnoa",
-			userScreenName = "usersnoa"
-		);
+			userScreenName = "usersnoa");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -228,16 +201,14 @@ definition {
 			roleTitle = "Organization Administrator",
 			userFirstName = "userfnoa",
 			userLastName = "userlnoa",
-			userScreenName = "usersnoa"
-		);
+			userScreenName = "usersnoa");
 
 		Navigator.openSiteURL(siteName = "Staging Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Staging Organization Name");
 
@@ -248,101 +219,39 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry"
-		);
+			workflowResourceValue = "Blogs Entry");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
-		Portlet.addPG(pageName = "Staging Test Page", portletName = "Blogs");
-
-		User.logoutUserPG();
-
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
-
-		AssertElementNotPresent(locator1 = "Portlet#TITLE", key_portletName = "Blogs");
-
-		User.loginPG(password = "test", userEmailAddress = "usereaoa@liferay.com");
-
-		Navigator.gotoStagedSitePage(
+		Portlet.addPG(
 			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name"
-		);
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		User.logoutUserPG();
-
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
-
-		AssertElementPresent(locator1 = "Portlet#TITLE", key_portletName = "Blogs");
-
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name"
-		);
-
-		BlogsEntry.addWithWorkflowPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			portletName = "Blogs");
 
 		User.logoutUserPG();
 
 		Navigator.openSiteURL(siteName = "Staging Organization Name");
 
 		AssertElementNotPresent(
-			locator1 = "BlogsEntry#TITLE",
-			key_entryTitle = "Blogs Entry Title"
-		);
+			key_portletName = "Blogs",
+			locator1 = "Portlet#TITLE");
 
-		User.loginPG(password = "test", userEmailAddress = "usereacr@liferay.com");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
-
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
-
-		User.logoutUserPG();
-
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
-
-		AssertElementNotPresent(
-			locator1 = "BlogsEntry#TITLE",
-			key_entryTitle = "Blogs Entry Title"
-		);
-
-		User.loginPG(password = "test", userEmailAddress = "usereaoa@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "usereaoa@liferay.com");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name"
-		);
+			siteName = "Staging Organization Name");
 
 		Staging.gotoPublishToLive();
 
@@ -353,17 +262,81 @@ definition {
 		Navigator.openSiteURL(siteName = "Staging Organization Name");
 
 		AssertElementPresent(
-			locator1 = "BlogsEntry#TITLE",
-			key_entryTitle = "Blogs Entry Title"
-		);
+			key_portletName = "Blogs",
+			locator1 = "Portlet#TITLE");
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name");
+
+		BlogsEntry.addWithWorkflowPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementNotPresent(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "usereacr@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementNotPresent(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "usereaoa@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementPresent(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.removePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
@@ -371,7 +344,6 @@ definition {
 			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
 			permissionNavigationValue = "Blogs",
 			roleTitle = "Organization User",
-			roleType = "Organization"
-		);
+			roleType = "Organization");
 	}
 }

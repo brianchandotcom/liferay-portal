@@ -34,15 +34,11 @@ definition {
 		task ("Import test fragments from dependencies folder to the first site") {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-1-staging");
 
-			FragmentsAdmin.importCollectionFromDependenciesFolder(
-				collectionZipFile = "fragment-collection.zip"
-			);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
 		task ("Add a page template collection and content page template to the first site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(
-				siteURLKey = "test-site-name-1-staging"
-			);
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-1-staging");
 
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
@@ -52,8 +48,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button"
-			);
+				fragmentName = "Button");
 
 			Button.clickPublish();
 		}
@@ -64,8 +59,7 @@ definition {
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
 				pageName = "Test Template Content Page",
-				pageTemplateName = "Page Template Name"
-			);
+				pageTemplateName = "Page Template Name");
 		}
 
 		task ("Publish the content page") {
@@ -79,8 +73,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title"
-			);
+				fragmentName = "Title");
 		}
 
 		task ("Publish the content page") {
@@ -88,9 +81,7 @@ definition {
 		}
 
 		task ("Add a navigation menu to the first site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-1-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-1-staging");
 
 			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 		}
@@ -98,16 +89,14 @@ definition {
 		task ("Add both content pages to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Template Content Page,Test Regular Content Page"
-			);
+				pageNames = "Test Template Content Page,Test Regular Content Page");
 		}
 
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Navigate to the Navigation Menu widget for the first site") {
@@ -131,22 +120,19 @@ definition {
 		task ("Add a Title Fragment to the display page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title"
-			);
+				fragmentName = "Title");
 		}
 
 		task ("Add a Rich Text fragment to the display page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text"
-			);
+				fragmentName = "Rich Text");
 		}
 
 		task ("Map the display page to Basic Web Content") {
 			PageEditorMapping.selectContentType(
 				contentType = "Web Content Article",
-				subType = "Basic Web Content"
-			);
+				subType = "Basic Web Content");
 		}
 
 		task ("Map the Title fragment to the Title field") {
@@ -154,8 +140,7 @@ definition {
 				field = "Title",
 				fragmentName = "Title",
 				id = "title",
-				source = "Basic Web Content (Default)"
-			);
+				source = "Basic Web Content (Default)");
 		}
 
 		task ("Map the Rich Text fragment to the Content field") {
@@ -163,8 +148,7 @@ definition {
 				field = "Content",
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				source = "Basic Web Content (Default)"
-			);
+				source = "Basic Web Content (Default)");
 		}
 
 		task ("Publish the display page") {
@@ -178,13 +162,11 @@ definition {
 
 			WebContent.addCP(
 				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title"
-			);
+				webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
-				pageType = "Display Page Templates"
-			);
+				pageType = "Display Page Templates");
 
 			PortletEntry.publish();
 		}
@@ -233,22 +215,33 @@ definition {
 		task ("Assert the fragments from the first site survived the import") {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
 
-			AssertVisible(locator1 = "Card#SPECIFIC_LARGE_TEXT", key_cardText = "Content");
-
-			AssertVisible(locator1 = "Card#SPECIFIC_LARGE_TEXT", key_cardText = "Image");
-
-			AssertVisible(locator1 = "Card#SPECIFIC_LARGE_TEXT", key_cardText = "Button");
+			AssertVisible(
+				key_cardText = "Content",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
 
 			AssertVisible(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				key_cardText = "Multiple Editables"
-			);
+				key_cardText = "Image",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
 
-			AssertVisible(locator1 = "Card#SPECIFIC_LARGE_TEXT", key_cardText = "Rich Text");
+			AssertVisible(
+				key_cardText = "Button",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
 
-			AssertVisible(locator1 = "Card#SPECIFIC_LARGE_TEXT", key_cardText = "Title");
+			AssertVisible(
+				key_cardText = "Multiple Editables",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
 
-			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Button");
+			AssertVisible(
+				key_cardText = "Rich Text",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
+
+			AssertVisible(
+				key_cardText = "Title",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Button");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
@@ -256,7 +249,9 @@ definition {
 
 			AssertElementPresent(locator1 = "Button#CANCEL");
 
-			AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
 
 			AssertConfirm(value1 = "Form submitted");
 
@@ -264,21 +259,17 @@ definition {
 		}
 
 		task ("Assert the content page template survived the import") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(
-				siteURLKey = "test-site-name-2-staging"
-			);
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-2-staging");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "Page Template Name"
-			);
+				rowEntry = "Page Template Name");
 
 			AssertVisible(
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
 				Button.viewPresent(button = "${button}");
@@ -288,73 +279,66 @@ definition {
 		task ("Assert the content pages and Navigation Menu widget configuration survived the import") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging");
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Template Content Page");
+			Click(
+				key_pageName = "Test Template Content Page",
+				locator1 = "Home#PAGE");
 
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
 				Button.viewPresent(button = "${button}");
 			}
 
-			Click(locator1 = "Home#PAGE", key_pageName = "Test Regular Content Page");
+			Click(
+				key_pageName = "Test Regular Content Page",
+				locator1 = "Home#PAGE");
 
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
-				locator1 = "Home#PAGE_HREF",
 				key_href = "https://www.liferay.com/",
-				key_pageName = "Liferay"
-			);
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE_HREF");
 		}
 
 		task ("Assert the navigation menu survived the import") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(
-				siteURLKey = "test-site-name-2-staging"
-			);
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-2-staging");
 
 			AssertVisible(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-				key_rowEntry = "Test Navigation Menu Name"
-			);
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
 
 		task ("Assert the display page survived the import") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
 
 			AssertVisible(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				key_cardText = "Display Page Name"
-			);
+				key_cardText = "Display Page Name",
+				locator1 = "Card#SPECIFIC_LARGE_TEXT");
 		}
 
 		task ("Assert the web content article and its reference to its display page survived the import") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-2-staging/-/webcontent-title"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging/-/webcontent-title");
 
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2"
-			);
+				key_position = "2",
+				locator1 = "Fragment#FRAGMENT");
 		}
 	}
 }

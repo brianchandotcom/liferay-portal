@@ -17,14 +17,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Sharing");
 
 		if ("${enabled}" == "true") {
-			Check.checkToggleSwitch(
-				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
-			);
+			Check.checkToggleSwitch(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
 		}
 		else {
-			Uncheck.uncheckToggleSwitch(
-				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
-			);
+			Uncheck.uncheckToggleSwitch(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
 		}
 
 		Button.clickSave();
@@ -50,8 +46,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Main");
 
@@ -82,14 +77,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Sharing");
 
 		if ("${enabled}" == "true") {
-			AssertChecked.assertCheckedNotVisible(
-				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
-			);
+			AssertChecked.assertCheckedNotVisible(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
 		}
 		else {
-			AssertNotChecked.assertNotCheckedNotVisible(
-				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
-			);
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
 		}
 
 		SelectFrame(value1 = "relative=top");

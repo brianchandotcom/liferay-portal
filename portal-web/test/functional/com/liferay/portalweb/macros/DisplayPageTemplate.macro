@@ -1,15 +1,11 @@
 definition {
 	macro clickPencil {
-		Click(
-			locator1 = "Button#PENCIL"
-		);
+		Click(locator1 = "Button#PENCIL");
 	}
 
 	macro clickPencilItem {
 		DisplayPageTemplate.clickPencil();
 
-		MenuItem.clickNoError(
-			menuItem = "${item}"
-		);
+		MenuItem.clickNoError(menuItem = "${item}");
 	}
 }

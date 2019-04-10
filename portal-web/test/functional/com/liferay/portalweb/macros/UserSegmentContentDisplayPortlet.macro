@@ -28,18 +28,14 @@ definition {
 			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO");
 		}
 
-		Click(
-			locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON"
-		);
+		Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON");
 
 		SelectFrame(value1 = "relative=top");
 
 		for (var userSegmentName : list "${userSegmentName}") {
 			var key_userSegmentName = "${userSegmentName}";
 
-			Click(
-				locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX"
-			);
+			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX");
 		}
 
 		if (isSet(siteScope)) {
@@ -47,8 +43,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE",
-				value1 = "User Segment (${siteScope})"
-			);
+				value1 = "User Segment (${siteScope})");
 		}
 
 		Click(locator1 = "Icon#CLOSE");
@@ -82,9 +77,7 @@ definition {
 		if (isSet(otherwiseContentType)) {
 			ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-			ScrollWebElementIntoView(
-				locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
-			);
+			ScrollWebElementIntoView(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
 			Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
@@ -124,8 +117,7 @@ definition {
 	macro viewConfiguredDisplayContent {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -136,9 +128,7 @@ definition {
 		}
 
 		if ("${doesNotBelong}" == "true") {
-			AssertChecked(
-				locator1 = "UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO"
-			);
+			AssertChecked(locator1 = "UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO");
 		}
 
 		if ("${toAll}" == "true") {
@@ -153,51 +143,43 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserSegmentContentDisplay#RULE_PANEL_SELECTED_USER_SEGMENT",
-			value1 = "${userSegmentName}"
-		);
+			value1 = "${userSegmentName}");
 
 		var key_contentTitle = "${contentTitle}";
 
 		AssertTextEquals(
 			locator1 = "ContentTargeting#CARD_CONTENT_TITLE",
-			value1 = "${contentTitle}"
-		);
+			value1 = "${contentTitle}");
 
 		var key_contentType = "${contentType}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ContentTargeting#CARD_CONTENT_TYPE",
-			value1 = "${contentType}"
-		);
+			value1 = "${contentType}");
 
 		if (isSet(otherwiseContentType)) {
 			Click(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-			AssertChecked(
-				locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
-			);
+			AssertChecked(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
 			var key_contentType = "${otherwiseContentType}";
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE",
-				value1 = "${otherwiseContentType}"
-			);
+				value1 = "${otherwiseContentType}");
 
 			var key_contentTitle = "${otherwiseContentTitle}";
 
 			AssertTextEquals(
 				locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE",
-				value1 = "${otherwiseContentTitle}"
-			);
+				value1 = "${otherwiseContentTitle}");
 		}
 	}
 
 	macro viewContentOnly {
 		AssertTextEquals(
 			locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
-			value1 = "${entryContentText}"
-		);
+			value1 = "${entryContentText}");
 	}
 
 	macro viewEntryPG {
@@ -218,15 +200,13 @@ definition {
 				if ((isSet(entryContentText)) && (!("${previewEntry}" == "default"))) {
 					AssertTextEquals(
 						locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
-						value1 = "${entryContentText}"
-					);
+						value1 = "${entryContentText}");
 				}
 
 				if (("viewDontDisplay" == "true") && ("${previewEntry}" == "default")) {
 					AssertTextEquals(
 						locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
-						value1 = "There are no matching rules"
-					);
+						value1 = "There are no matching rules");
 				}
 			}
 		}
@@ -235,7 +215,6 @@ definition {
 	macro viewNoContentPG {
 		AssertTextEquals(
 			locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
-			value1 = "The selected content no longer exists"
-		);
+			value1 = "The selected content no longer exists");
 	}
 }

@@ -2,14 +2,17 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Add Organization",
-			rowEntry = "${orgName}"
-		);
+			rowEntry = "${orgName}");
 
-		Type(locator1 = "TextInput#NAME", value1 = "${suborgName}");
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${suborgName}");
 
 		PortletEntry.save();
 
-		AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${suborgName}");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${suborgName}");
 	}
 
 	macro tearDownCP {
@@ -21,8 +24,7 @@ definition {
 			orgName = "${orgName}",
 			orgType = "${orgType}",
 			suborgName = "${suborgName}",
-			suborgType = "${suborgType}"
-		);
+			suborgType = "${suborgType}");
 
 		var key_suborgName = "${suborgName}";
 
@@ -32,23 +34,24 @@ definition {
 
 		var key_orgType = "${orgType}";
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Edit ${suborgName}");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit ${suborgName}");
 
-		AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${suborgName}");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${suborgName}");
 
 		AssertTextEquals.assertValue(
 			locator1 = "UsersAndOrganizationsEditOrganization#DETAILS_TYPE",
-			value1 = "${orgType}"
-		);
+			value1 = "${orgType}");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}"
-		);
+			value1 = "${orgName}");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE",
-			value1 = "${orgType}"
-		);
+			value1 = "${orgType}");
 	}
 }

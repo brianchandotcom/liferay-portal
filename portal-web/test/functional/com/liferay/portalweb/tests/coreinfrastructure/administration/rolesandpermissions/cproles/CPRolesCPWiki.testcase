@@ -44,35 +44,30 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiPortlet.viewNoPermissionCP();
 	}
@@ -91,37 +86,34 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Wiki Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Wiki Page",
+			siteName = "Site Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiPortlet.viewNoPermissionCP();
 	}

@@ -19,8 +19,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test"
-			);
+				userLoginFullName = "test test");
 
 			Site.tearDownCP();
 
@@ -47,8 +46,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page 1");
 
@@ -62,8 +60,7 @@ definition {
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
@@ -71,7 +68,9 @@ definition {
 
 		var key_pageName = "${sitePage3Name}";
 
-		AssertTextEquals(locator1 = "Home#PAGE", value1 = "${sitePage3Name}");
+		AssertTextEquals(
+			locator1 = "Home#PAGE",
+			value1 = "${sitePage3Name}");
 
 		AssertAlertNotPresent();
 
@@ -91,8 +90,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.deletePage(pageName = "Search");
 
@@ -106,16 +104,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page1 Name");
 
@@ -123,37 +119,32 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Site Page2 Name"
-		);
+			parentPageName = "Site Page2 Name");
 
 		SitePages.configurePage(
 			pageLinkName = "Site Page1 Name",
 			pageName = "Site Page2 Name",
 			privacy = "Public Pages",
-			sitePageType = "Link to a Page of This Site"
-		);
+			sitePageType = "Link to a Page of This Site");
 
-		Navigator.gotoSitePage(pageName = "Site Page1 Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Site Page1 Name",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.togglePrivacy(
-			privacy = "Public Pages"
-		);
+		SitePages.togglePrivacy(privacy = "Public Pages");
 
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM",
-			key_itemName = "Site Page2 Name"
-		);
+			key_itemName = "Site Page2 Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 
 		AssertVisible(
-			locator1 = "SitePages#LIST_GROUP_ITEM",
-			key_itemName = "Child Page Name"
-		);
+			key_itemName = "Child Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 	}
 
 	@priority = "3"
@@ -163,33 +154,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Page Name");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Page Name");
 
 		Page.addFriendlyURLLocalizedPG(
 			friendlyUrlLocalized = "de_DE",
-			localizedFriendlyURL = "/german"
-		);
+			localizedFriendlyURL = "/german");
 
 		Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en_US");
 
 		Navigator.gotoPage(pageName = "Page Name");
 
-		AssertConsoleTextNotPresent(
-			value1 = "java.lang.StringIndexOutOfBoundsException: String index out of range: -1"
-		);
+		AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException: String index out of range: -1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Page Name");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Page Name");
 
 		Page.viewPageFriendlyURLPG(pageName = "page-name");
 	}
@@ -202,8 +192,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page");
 
@@ -215,7 +204,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Site Page Edit");
 
-		Page.view(pageName = "Site Page Edit", privacy = "Public Pages");
+		Page.view(
+			pageName = "Site Page Edit",
+			privacy = "Public Pages");
 
 		Navigator.gotoPage(pageName = "Site Page Edit");
 
@@ -226,8 +217,7 @@ definition {
 		Page.editPageMetadata(
 			HTMLTitle = "S.P.A.C.E.Home",
 			metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
-			metaTagsKeywords = "space, education, space travel, graduateschool"
-		);
+			metaTagsKeywords = "space, education, space travel, graduateschool");
 
 		Navigator.gotoPage(pageName = "Site Page Edit");
 
@@ -238,8 +228,7 @@ definition {
 		Page.viewPageMetadata(
 			HTMLTitle = "S.P.A.C.E.Home",
 			metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
-			metaTagsKeywords = "space, education, space travel, graduateschool"
-		);
+			metaTagsKeywords = "space, education, space travel, graduateschool");
 	}
 
 	@priority = "3"
@@ -250,57 +239,54 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Power User", userScreenName = "usersn");
+		Role.assignRegRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "usersn");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.openSpecificURL(
-			url = "${portalURL}/web/usersn/page-name?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&amp;p_p_state=maximized"
-		);
+		Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&amp;p_p_state=maximized");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "You do not have the roles required to access this portlet."
-		);
+			value1 = "You do not have the roles required to access this portlet.");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "5"
@@ -312,96 +298,90 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
-		Site.addCommunityCP(membershipType = "Private", siteName = "Site Name");
+		Site.addCommunityCP(
+			membershipType = "Private",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Site Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PermissionsInline.gotoSitepageCP(
 			pageName = "Site Page",
-			privacy = "Private Pages"
-		);
+			privacy = "Private Pages");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openPrivateSitePageURL(pageName = "Site Page", siteName = "Site Name");
+		Navigator.openPrivateSitePageURL(
+			pageName = "Site Page",
+			siteName = "Site Name");
 
 		if (IsElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR")) {
 			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
@@ -409,44 +389,49 @@ definition {
 		else {
 			AssertTextNotEquals.assertNotPartialText(
 				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found"
-			);
+				value1 = "Not Found");
 		}
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		PermissionsInline.gotoSitepageCP(
 			pageName = "Site Page",
-			privacy = "Private Pages"
-		);
+			privacy = "Private Pages");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Roles Regrole Name"
-		);
+			roleTitle = "Roles Regrole Name");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openPrivateSitePageURL(pageName = "Site Page", siteName = "Site Name");
+		Navigator.openPrivateSitePageURL(
+			pageName = "Site Page",
+			siteName = "Site Name");
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		if (IsElementPresent(locator1 = "Home#BREADCRUMB_2")) {
-			AssertTextNotEquals(locator1 = "Home#BREADCRUMB_2", value1 = "Site Page");
+			AssertTextNotEquals(
+				locator1 = "Home#BREADCRUMB_2",
+				value1 = "Site Page");
 		}
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@ignore = "true"
@@ -460,63 +445,53 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn1");
+		Role.assignRegRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Test Private Page");
 
@@ -534,8 +509,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1"
-		);
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -545,33 +519,28 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test"
-		);
+			userLoginFullName = "test test");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Blogs.addEntryWithPermissions(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title GMB1",
-			viewableBy = "Site Members"
-		);
+			viewableBy = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		MessageboardsThread.addPGWithPermissions(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject GMMB2",
-			viewableBySelection = "Site Members"
-		);
+			viewableBySelection = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Gmail.gotoHtmlMode();
 
@@ -579,14 +548,12 @@ definition {
 			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "GMB1",
 			gmailMessageBody = "Blogs Entry Title GMB1",
-			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs"
-		);
+			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs");
 
 		Gmail.openMessageContinueReadingButton(
 			contentTitle = "Blogs Entry Title GMB1",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var blogEntryURL = selenium.getLocation();
 
@@ -602,15 +569,13 @@ definition {
 			emailFromUserName = "Test Test",
 			gmailAssetType = "GMMB2",
 			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB2"
-		);
+			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB2");
 
 		Gmail.openMessageLink(
 			contentTitle = "MB Thread Message Subject GMMB2",
 			gmailAssetType = "Message Boards",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var messageBoardsThreadURL = selenium.getLocation();
 
@@ -622,9 +587,7 @@ definition {
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB2,Your New Account,Your New Password,GMB1,GMMB2"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB2,Your New Account,Your New Password,GMB1,GMMB2");
 
 		User.logoutPG();
 
@@ -642,8 +605,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
-			value1 = "You do not have the required permissions."
-		);
+			value1 = "You do not have the required permissions.");
 
 		Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
 
@@ -651,8 +613,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
-			value1 = "You do not have the required permissions."
-		);
+			value1 = "You do not have the required permissions.");
 	}
 
 	@ignore = "true"
@@ -666,85 +627,75 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn1");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
-
-		Site.assignUserSitesCP(siteName = "${siteName}", userScreenName = "usersn2");
+		Role.assignRegRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
+
+		Site.assignUserSitesCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Test Private Page");
 
@@ -762,8 +713,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1"
-		);
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -773,33 +723,28 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test"
-		);
+			userLoginFullName = "test test");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Blogs.addEntryWithPermissions(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title GMB2",
-			viewableBy = "Site Members"
-		);
+			viewableBy = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		MessageboardsThread.addPGWithPermissions(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject GMMB3",
-			viewableBySelection = "Site Members"
-		);
+			viewableBySelection = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Gmail.gotoHtmlMode();
 
@@ -807,14 +752,12 @@ definition {
 			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "GMB2",
 			gmailMessageBody = "Blogs Entry Title GMB2",
-			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs"
-		);
+			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs");
 
 		Gmail.openMessageContinueReadingButton(
 			contentTitle = "Blogs Entry Title GMB2",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var blogEntryURL = selenium.getLocation();
 
@@ -830,15 +773,13 @@ definition {
 			emailFromUserName = "Test Test",
 			gmailAssetType = "GMMB3",
 			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3"
-		);
+			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3");
 
 		Gmail.openMessageLink(
 			contentTitle = "MB Thread Message Subject GMMB3",
 			gmailAssetType = "Message Boards",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var messageBoardsThreadURL = selenium.getLocation();
 
@@ -850,14 +791,11 @@ definition {
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3,Your New Account,Your New Password,GMB2,GMMB3"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3,Your New Account,Your New Password,GMB2,GMMB3");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2"
-		);
+			userLoginFullName = "userfn2 userln2");
 
 		Navigator.openPrivateURL();
 
@@ -872,8 +810,7 @@ definition {
 		BlogsNavigator.gotoPG(
 			blogEntryURL = "${blogEntryURL}",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title GMB2"
-		);
+			entryTitle = "Blogs Entry Title GMB2");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -884,13 +821,11 @@ definition {
 			messageBoardsThreadURL = "${messageBoardsThreadURL}",
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB3"
-		);
+			threadSubject = "MB Thread Message Subject GMMB3");
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB3"
-		);
+			threadSubject = "MB Thread Message Subject GMMB3");
 	}
 
 	@ignore = "true"
@@ -904,77 +839,66 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
-		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn1");
+		Role.assignRegRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = PropsUtil.get("email.address.2"),
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2"
-		);
+			userScreenName = "usersn2");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Test Private Page");
 
@@ -992,8 +916,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1"
-		);
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -1003,33 +926,28 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test"
-		);
+			userLoginFullName = "test test");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Blogs.addEntryWithPermissions(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title GMB3",
-			viewableBy = "Site Members"
-		);
+			viewableBy = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		MessageboardsThread.addPGWithPermissions(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject GMMB4",
-			viewableBySelection = "Site Members"
-		);
+			viewableBySelection = "Site Members");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Gmail.gotoHtmlMode();
 
@@ -1037,14 +955,12 @@ definition {
 			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "GMB3",
 			gmailMessageBody = "Blogs Entry Title GMB3",
-			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs"
-		);
+			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs");
 
 		Gmail.openMessageContinueReadingButton(
 			contentTitle = "Blogs Entry Title GMB3",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var blogEntryURL = selenium.getLocation();
 
@@ -1060,15 +976,13 @@ definition {
 			emailFromUserName = "Test Test",
 			gmailAssetType = "GMMB4",
 			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4"
-		);
+			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4");
 
 		Gmail.openMessageLink(
 			contentTitle = "MB Thread Message Subject GMMB4",
 			gmailAssetType = "Message Boards",
 			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		var messageBoardsThreadURL = selenium.getLocation();
 
@@ -1080,21 +994,17 @@ definition {
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4,Your New Account,Your New Password,GMB3,GMMB4"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4,Your New Account,Your New Password,GMB3,GMMB4");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2"
-		);
+			userLoginFullName = "userfn2 userln2");
 
 		Navigator.openPrivateURL();
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found"
-		);
+			value1 = "Not Found");
 
 		Navigator.openSpecificURL(url = "${blogEntryURL}");
 
@@ -1102,8 +1012,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
-			value1 = "You do not have the required permissions."
-		);
+			value1 = "You do not have the required permissions.");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -1113,8 +1022,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
-			value1 = "You do not have the required permissions."
-		);
+			value1 = "You do not have the required permissions.");
 	}
 
 	@priority = "3"
@@ -1124,36 +1032,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			componentName = "Collaboration",
 			pageName = "Panel Test Page",
-			sitePageType = "Panel"
-		);
+			sitePageType = "Panel");
 
 		SitePages.configurePage(
 			componentName = "Collaboration",
 			pageName = "Panel Test Page",
 			privacy = "Public Pages",
-			sitePageType = "Panel"
-		);
+			sitePageType = "Panel");
 
 		Navigator.gotoPage(pageName = "Panel Test Page");
 
 		Page.viewPanelPortletListPG(
 			componentName = "Collaboration",
 			pageName = "Panel Test Page",
-			portletNameList = "Blogs,Message Boards"
-		);
+			portletNameList = "Blogs,Message Boards");
 
 		Page.gotoPagePanelPortlet(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "This is Blog Post 1 Content",
-			entryTitle = "Blog Post 1"
-		);
+			entryTitle = "Blog Post 1");
 
 		Navigator.gotoPage(pageName = "Panel Test Page");
 
@@ -1161,15 +1064,13 @@ definition {
 
 		BlogsEntry.viewPG(
 			entryContent = "This is Blog Post 1 Content",
-			entryTitle = "Blog Post 1"
-		);
+			entryTitle = "Blog Post 1");
 
 		Page.gotoPagePanelPortlet(portletName = "Message Boards");
 
 		MessageboardsThread.addPG(
 			threadBody = "This is Message Boards Thread 1",
-			threadSubject = "Thread 1"
-		);
+			threadSubject = "Thread 1");
 
 		Navigator.gotoPage(pageName = "Panel Test Page");
 
@@ -1179,15 +1080,13 @@ definition {
 			lastPostUserName = "Test Test",
 			replyCount = "0",
 			threadBody = "This is Message Boards Thread 1",
-			threadSubject = "Thread 1"
-		);
+			threadSubject = "Thread 1");
 
 		MessageboardsThread.viewPG(
 			replyCount = "0",
 			threadBody = "This is Message Boards Thread 1",
 			threadSubject = "Thread 1",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "5"
@@ -1199,90 +1098,77 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Page Type Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blank Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Blank Page",
-			siteName = "Page Type Test Site Name"
-		);
+			siteName = "Page Type Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Embedded Page",
 			pageTypeURL = "https://www.google.com",
-			sitePageType = "Embedded"
-		);
+			sitePageType = "Embedded");
 
 		SitePages.configurePage(
 			pageName = "Embedded Page",
 			pageTypeURL = "http://iscaliforniaonfire.com/",
 			privacy = "Public Pages",
-			sitePageType = "Embedded"
-		);
+			sitePageType = "Embedded");
 
-		SitePages.addPublicPage(pageName = "Panel Page", sitePageType = "Panel");
+		SitePages.addPublicPage(
+			pageName = "Panel Page",
+			sitePageType = "Panel");
 
 		SitePages.configurePage(
 			componentName = "Community",
 			pageName = "Panel Page",
 			privacy = "Public Pages",
-			sitePageType = "Panel"
-		);
+			sitePageType = "Panel");
 
 		Page.viewPanelPortletListCP(
 			componentName = "Community",
 			pageName = "Panel Page",
-			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory"
-		);
+			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory");
 
 		Navigator.gotoSitePage(
 			pageName = "Embedded Page",
-			siteName = "Page Type Test Site Name"
-		);
+			siteName = "Page Type Test Site Name");
 
-		AssertLocation(
-			value1 = "${portalURL}/web/page-type-test-site-name/embedded-page"
-		);
+		AssertLocation(value1 = "${portalURL}/web/page-type-test-site-name/embedded-page");
 
 		SelectFrame(locator1 = "IFrame#EMBEDDED_IFRAME");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Embedded#EMBEDDED_TEXT_YES",
-			value1 = "Yes"
-		);
+			value1 = "Yes");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",
-			value1 = "updated"
-		);
+			value1 = "updated");
 
 		SelectFrameTop(value1 = "relative=top");
 
 		Navigator.gotoSitePage(
 			pageName = "Panel Page",
-			siteName = "Page Type Test Site Name"
-		);
+			siteName = "Page Type Test Site Name");
 
 		Page.viewPanelPortletListPG(
 			componentName = "Community",
 			pageName = "Panel Page",
-			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory"
-		);
+			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory");
 	}
 }

@@ -30,16 +30,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
@@ -49,34 +47,34 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Tag.addAutoAssertionTagViaBlogsPG(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagName = "tag name 3"
-		);
+			tagName = "tag name 3");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Entry Content",
-			entryTitle = "Entry Title"
-		);
+			entryTitle = "Entry Title");
 
 		BlogsEntry.viewTagPG(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagName = "tag name 3"
-		);
+			tagName = "tag name 3");
 	}
 
 	@priority = "4"
@@ -86,28 +84,27 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Wiki");
 
 		WikiPage.addFrontPagePG(
 			pageAddTag = "true",
 			tagNameList = "wiki tag name",
-			wikiPageContent = "Wiki FrontPage Content"
-		);
+			wikiPageContent = "Wiki FrontPage Content");
 	}
 
 	@priority = "4"
@@ -117,42 +114,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagNameList = "tag name 1,tag name 2,tag name 3"
-		);
+			tagNameList = "tag name 1,tag name 2,tag name 3");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
-			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
 
 			BlogsNavigator.gotoEntryPG(
 				entryContent = "Entry Content",
-				entryTitle = "Entry Title"
-			);
+				entryTitle = "Entry Title");
 
 			BlogsEntry.viewTagPG(
 				entryContent = "Entry Content",
 				entryTitle = "Entry Title",
-				tagName = "${tagName}"
-			);
+				tagName = "${tagName}");
 		}
 	}
 
@@ -164,16 +160,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
@@ -183,32 +177,40 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagNameList = "tag1,tag3"
-		);
+			tagNameList = "tag1,tag3");
 
 		for (var tagName : list "tag1,tag3") {
-			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
 
 			var key_entryTitle = "Entry Title";
 
-			AssertClick(locator1 = "BlogsEntry#TITLE_LINK", value1 = "Entry Title");
+			AssertClick(
+				locator1 = "BlogsEntry#TITLE_LINK",
+				value1 = "Entry Title");
 
-			BlogsEntry.viewTagPG(entryTitle = "Entry Title", tagName = "${tagName}");
+			BlogsEntry.viewTagPG(
+				entryTitle = "Entry Title",
+				tagName = "${tagName}");
 		}
 	}
 
@@ -220,20 +222,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
@@ -242,17 +244,19 @@ definition {
 		Blogs.addEntryWithTag(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagName = "tag name"
-		);
+			tagName = "tag name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Entry Content",
-			entryTitle = "Entry Title"
-		);
+			entryTitle = "Entry Title");
 
-		BlogsEntry.viewTagPG(entryTitle = "Entry Title", tagName = "tag name");
+		BlogsEntry.viewTagPG(
+			entryTitle = "Entry Title",
+			tagName = "tag name");
 	}
 
 	@priority = "5"
@@ -262,8 +266,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Tags Navigation Page");
 
@@ -273,8 +276,7 @@ definition {
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(
 			showAssetCount = "true",
-			showUnusedTags = "true"
-		);
+			showUnusedTags = "true");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -290,8 +292,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
@@ -301,47 +302,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
 			tagNameList = "first tag,second tag",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag"
-		);
+			tagNameList = "first tag");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "first tag (2)",
-			tagPopularityLevel = "6"
-		);
+			tagPopularityLevel = "6");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "second tag (1)",
-			tagPopularityLevel = "3"
-		);
+			tagPopularityLevel = "3");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "third tag (0)",
-			tagPopularityLevel = "1"
-		);
+			tagPopularityLevel = "1");
 	}
 
 	@priority = "3"
@@ -351,8 +345,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Tags Navigation Page");
 
@@ -376,8 +369,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
@@ -387,44 +379,38 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
 			tagNameList = "first tag,second tag",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag"
-		);
+			tagNameList = "first tag");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
 		TagsNavigationPortlet.clickTagView(
 			tagAssetCount = "first tag (2)",
-			tagName = "first tag"
-		);
+			tagName = "first tag");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
 		TagsNavigationPortlet.clickTagView(
 			tagAssetCount = "second tag (1)",
-			tagName = "second tag"
-		);
+			tagName = "second tag");
 	}
 
 	@priority = "3"
@@ -434,8 +420,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Tags Navigation Page");
 
@@ -449,8 +434,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
@@ -461,9 +445,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
-		TagsNavigationPortlet.viewDefaultPG(
-			tagNameList = "tag name 1,tag name 2,tag name 3"
-		);
+		TagsNavigationPortlet.viewDefaultPG(tagNameList = "tag name 1,tag name 2,tag name 3");
 	}
 
 	@priority = "3"
@@ -473,47 +455,50 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagNameList = "tag name 1,tag name 2,tag name 3"
-		);
+			tagNameList = "tag name 1,tag name 2,tag name 3");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
-			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
 
 			BlogsNavigator.gotoEntryPG(
 				entryContent = "Entry Content",
-				entryTitle = "Entry Title"
-			);
+				entryTitle = "Entry Title");
 
 			BlogsEntry.viewTagPG(
 				entryContent = "Entry Content",
 				entryTitle = "Entry Title",
-				tagName = "${tagName}"
-			);
+				tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Entry Title");
 
@@ -525,12 +510,13 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Entry Content",
-			entryTitle = "Entry Title"
-		);
+			entryTitle = "Entry Title");
 
 		AssertTextNotPresent(value1 = "tag name 1");
 
@@ -545,45 +531,46 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagNameList = "tag name 1,tag name 2,tag name 3"
-		);
+			tagNameList = "tag name 1,tag name 2,tag name 3");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
-			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
 
 			BlogsNavigator.gotoEntryPG(
 				entryContent = "Entry Content",
-				entryTitle = "Entry Title"
-			);
+				entryTitle = "Entry Title");
 
 			BlogsEntry.viewTagPG(
 				entryContent = "Entry Content",
 				entryTitle = "Entry Title",
-				tagName = "${tagName}"
-			);
+				tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Entry Title");
 
@@ -593,12 +580,13 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Entry Content",
-			entryTitle = "Entry Title"
-		);
+			entryTitle = "Entry Title");
 
 		AssertTextNotPresent(value1 = "tag name 1");
 	}
@@ -610,64 +598,69 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Page Name");
 
-		SitePages.addPublicPage(pageName = "search", pageTemplateName = "Search");
+		SitePages.addPublicPage(
+			pageName = "search",
+			pageTemplateName = "Search");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Entry Content 1",
 			entryTitle = "Entry Title 1",
-			tagName = "blue"
-		);
+			tagName = "blue");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Entry Content 2",
 			entryTitle = "Entry Title 2",
-			tagName = "blue green"
-		);
+			tagName = "blue green");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Entry Content 3",
 			entryTitle = "Entry Title 3",
-			tagName = "yellow"
-		);
+			tagName = "yellow");
 
-		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "blue");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Entry Title 1",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 
 		SearchPortlets.searchEmbedded(searchTerm = "yellow");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Entry Title 3",
-			searchAssetType = "Blogs Entry"
-		);
+			searchAssetType = "Blogs Entry");
 	}
 
 	@priority = "3"
@@ -677,12 +670,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+		WebContent.addCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
 
 		Panel.expandPanel(panel = "Metadata");
 
@@ -698,8 +692,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Tag Cloud Page");
 
@@ -720,8 +713,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Tags Navigation Page");
 
@@ -731,8 +723,7 @@ definition {
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(
 			showAssetCount = "true",
-			showUnusedTags = "true"
-		);
+			showUnusedTags = "true");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -748,8 +739,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Tags"
-			);
+				portlet = "Tags");
 
 			Tag.addCP(tagName = "${tagName}");
 		}
@@ -759,69 +749,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
 			tagNameList = "first tag,second tag",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag"
-		);
+			tagNameList = "first tag");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "first tag (2)",
-			tagPopularityLevel = "6"
-		);
+			tagPopularityLevel = "6");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "second tag (1)",
-			tagPopularityLevel = "3"
-		);
+			tagPopularityLevel = "3");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
 			tagNameList = "first tag,second tag",
 			webContentContent = "Web Content2 Content",
-			webContentTitle = "Web Content2 Title"
-		);
+			webContentTitle = "Web Content2 Title");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "first tag (3)",
-			tagPopularityLevel = "6"
-		);
+			tagPopularityLevel = "6");
 
 		TagsNavigationPortlet.viewTagCloud(
 			tagName = "second tag (2)",
-			tagPopularityLevel = "4"
-		);
+			tagPopularityLevel = "4");
 	}
 }

@@ -35,8 +35,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -44,8 +43,7 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		var key_reportsDefinitionName = "Reports Definition Name";
 
@@ -53,43 +51,43 @@ definition {
 
 		AssertClick(
 			locator1 = "ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT",
-			value1 = "Add Report"
-		);
+			value1 = "Add Report");
 
-		Select(locator1 = "Select#REPORT_FORMAT", value1 = "csv");
-
-		Type(locator1 = "TextInput#EMAIL_NOTIFICATIONS", value1 = "InvalidEmail");
-
-		AssertClick(
-			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
-			value1 = "Generate"
-		);
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
-			value1 = "Please enter a valid email address."
-		);
+		Select(
+			locator1 = "Select#REPORT_FORMAT",
+			value1 = "csv");
 
 		Type(
 			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
-			value1 = "liferay.qa1@gmail.com"
-		);
-
-		Type(locator1 = "TextInput#EMAIL_RECIPIENT", value1 = "InvalidEmail");
+			value1 = "InvalidEmail");
 
 		AssertClick(
 			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
-			value1 = "Generate"
-		);
+			value1 = "Generate");
 
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
-			value1 = "Please enter a valid email address."
-		);
+			value1 = "Please enter a valid email address.");
+
+		Type(
+			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
+			value1 = "liferay.qa1@gmail.com");
+
+		Type(
+			locator1 = "TextInput#EMAIL_RECIPIENT",
+			value1 = "InvalidEmail");
+
+		AssertClick(
+			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
+			value1 = "Generate");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+			value1 = "Please enter a valid email address.");
 	}
 
 	@priority = "4"
@@ -99,8 +97,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -108,26 +105,21 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addScheduleEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
-		ReportsAdmin.viewNoReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name"
-		);
+		ReportsAdmin.viewNoReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name");
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE",
-			value1 = "Processing report. This may take several minutes."
-		);
+			value1 = "Processing report. This may take several minutes.");
 
 		Pause(locator1 = "180000");
 
@@ -136,8 +128,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -147,8 +138,7 @@ definition {
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name",
 			scheduled = "true",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "4"
@@ -158,8 +148,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -167,16 +156,14 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "csv",
 			reportName = "Custom Name",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -185,12 +172,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "Custom Name.csv",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.viewNoReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name"
-		);
+		ReportsAdmin.viewNoReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name");
 	}
 
 	@priority = "4"
@@ -200,8 +184,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -209,15 +192,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "csv",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -226,26 +207,20 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.csv",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.deleteReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
-		);
+		ReportsAdmin.deleteReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.csv");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
-		ReportsAdmin.viewNoReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
-		);
+		ReportsAdmin.viewNoReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.csv");
 	}
 
 	@priority = "4"
@@ -259,8 +234,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -268,15 +242,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -285,21 +257,18 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.pdf",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		ReportsAdmin.deliverReportEntryFile(
 			emailRecipientAddress = "user1@liferay.com",
-			reportsFileName = "reports_admin_template_source_sample_class_name.pdf"
-		);
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf");
 
 		MockMock.viewMail(
 			asset = "New Report: reports_admin_template_source_sample_class_name.pdf",
 			content = "New Report: reports_admin_template_source_sample_class_name.pdf",
 			recipient = "user1@liferay.com",
 			sender = "Joe Bloggs",
-			subject = "New Report: reports_admin_template_source_sample_class_name.pdf"
-		);
+			subject = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
 		Navigator.openSpecificURL(url = "${portalURL}");
 	}
@@ -311,8 +280,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -320,15 +288,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "csv",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -337,12 +303,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.csv",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.csv");
 	}
 
 	@priority = "4"
@@ -352,8 +315,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -361,15 +323,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "HTML",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -378,12 +338,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.html",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.html"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.html");
 	}
 
 	@priority = "4"
@@ -393,8 +350,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -402,15 +358,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -419,13 +373,11 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.pdf",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		ReportsAdmin.downloadReportEntryFile(
 			reportFormat = "pdf",
-			reportsFileName = "reports_admin_template_source_sample_class_name.pdf"
-		);
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf");
 	}
 
 	@priority = "4"
@@ -435,8 +387,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -444,15 +395,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "rtf",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -461,12 +410,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.rtf",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.rtf"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.rtf");
 	}
 
 	@priority = "4"
@@ -476,8 +422,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -485,15 +430,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "txt",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -502,12 +445,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.txt",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.txt"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.txt");
 	}
 
 	@priority = "4"
@@ -517,8 +457,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -526,15 +465,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "xls",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -543,12 +480,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.xls",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.xls"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.xls");
 	}
 
 	@priority = "4"
@@ -558,8 +492,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -567,15 +500,13 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "XML",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
 
@@ -584,12 +515,9 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "reports_admin_template_source_sample_class_name.xml",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
-		ReportsAdmin.downloadReportEntryFile(
-			reportsFileName = "reports_admin_template_source_sample_class_name.xml"
-		);
+		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.xml");
 	}
 
 	@description = "This is a use case for LPS-43525."
@@ -604,8 +532,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoSources();
 
@@ -614,8 +541,7 @@ definition {
 			reportsDataSourceName = "Reports Data Source Name",
 			reportsDataSourcePassword = "${databasePassword}",
 			reportsDataSourceURL = "${databaseURL}",
-			reportsDataSourceUser = "${databaseUsername}"
-		);
+			reportsDataSourceUser = "${databaseUsername}");
 
 		ReportsAdmin.testDatabaseConnection();
 
@@ -634,21 +560,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -656,23 +578,19 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = PropsUtil.get("email.address.2"),
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
 			reportName = "Custom Report Name",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Gmail.gotoHtmlMode();
 
@@ -680,16 +598,14 @@ definition {
 			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "New Report: Custom Report Name.pdf",
 			gmailMessageBody = "You have a new report.",
-			gmailMessageTitle = "New Report: Custom Report Name.pdf"
-		);
+			gmailMessageTitle = "New Report: Custom Report Name.pdf");
 
 		var key_gmailAssetType = "New Report: Custom Report Name.pdf";
 		var key_pageNameURL = "report";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
-			value1 = "report"
-		);
+			value1 = "report");
 
 		Pause(locator1 = "30000");
 
@@ -700,14 +616,11 @@ definition {
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
 			reportsFileName = "Custom Report Name.pdf",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "New Report: Custom Report Name.pdf,Your New Account,Your New Password"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: Custom Report Name.pdf,Your New Account,Your New Password");
 
 		Navigator.openSpecificURL(url = "${portalURL}");
 	}
@@ -722,21 +635,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
+			portlet = "Server Administration");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1")
-		);
+		ServerAdministration.configureMailServerSettings(userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -744,22 +653,18 @@ definition {
 			dataSource = "Portal",
 			reportsDefinitionDescription = "Reports Definition Description",
 			reportsDefinitionName = "Reports Definition Name",
-			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
-		);
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = PropsUtil.get("email.address.4"),
 			reportFormat = "pdf",
-			reportsDefinitionName = "Reports Definition Name"
-		);
+			reportsDefinitionName = "Reports Definition Name");
 
 		Pause(locator1 = "30000");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4")
-		);
+		Gmail.login(userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 
@@ -768,8 +673,7 @@ definition {
 			gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageBody = "You have a new report.",
-			gmailMessageTitle = "New Report: reports_admin_template_source_sample_class_name.pdf"
-		);
+			gmailMessageTitle = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
 		var key_gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf";
 		var key_pageNameURL = "report";
@@ -778,9 +682,7 @@ definition {
 
 		Gmail.gotoHtmlMode();
 
-		Gmail.deleteSpecificMail(
-			gmailMessageTitleList = "New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password"
-		);
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password");
 
 		Navigator.openSpecificURL(url = "${portalURL}");
 	}
@@ -792,8 +694,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 

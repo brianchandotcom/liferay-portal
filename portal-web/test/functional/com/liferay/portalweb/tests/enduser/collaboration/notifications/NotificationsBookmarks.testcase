@@ -15,20 +15,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Bookmarks Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Bookmarks Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -38,28 +35,26 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 	}
 
 	tearDown {
@@ -85,21 +80,21 @@ definition {
 
 		BookmarksFolder.addPG(
 			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name"
-		);
+			folderName = "Bookmarks Folder Name");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.subscribePG(
 			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name"
-		);
+			folderName = "Bookmarks Folder Name");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -107,8 +102,7 @@ definition {
 
 		Bookmark.addPG(
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -116,7 +110,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -127,8 +123,7 @@ definition {
 		Notifications.viewNewContent(
 			assetType = "bookmarks entry",
 			contentBody = "Bookmark Name",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Bookmark Name");
 
@@ -136,8 +131,7 @@ definition {
 
 		Bookmark.viewEntry(
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
@@ -148,13 +142,11 @@ definition {
 
 		BookmarksFolder.addPG(
 			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name"
-		);
+			folderName = "Bookmarks Folder Name");
 
 		BookmarksFolder.subscribePG(
 			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name"
-		);
+			folderName = "Bookmarks Folder Name");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -162,8 +154,7 @@ definition {
 
 		Bookmark.addPG(
 			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -171,7 +162,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -181,14 +174,15 @@ definition {
 			bookmarkName = "Bookmark Name",
 			bookmarkNameEdit = "Bookmark Name Edit",
 			bookmarkURL = "https://www.liferay.com",
-			bookmarkURLEdit = "https://www.liferay.com"
-		);
+			bookmarkURLEdit = "https://www.liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -199,8 +193,7 @@ definition {
 		Notifications.viewUpdatedContent(
 			assetType = "bookmarks entry",
 			contentBody = "Bookmark Name Edit",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Bookmark Name Edit");
 
@@ -208,8 +201,7 @@ definition {
 
 		Bookmark.viewEntry(
 			bookmarkName = "Bookmark Name Edit",
-			bookmarkURL = "https://www.liferay.com"
-		);
+			bookmarkURL = "https://www.liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}

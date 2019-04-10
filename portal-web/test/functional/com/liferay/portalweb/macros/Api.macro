@@ -9,8 +9,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
-			value1 = "/user/update-user"
-		);
+			value1 = "/user/update-user");
 
 		AssertElementPresent(locator1 = "Button#INVOKE");
 	}
@@ -18,66 +17,59 @@ definition {
 	macro editJsonwsUserView {
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
-			value1 = "/user/update-user"
-		);
+			value1 = "/user/update-user");
 
-		Type(locator1 = "JSONWSUser#API_EXECUTE_USER_ID_FIELD", value1 = "${userId}");
+		Type(
+			locator1 = "JSONWSUser#API_EXECUTE_USER_ID_FIELD",
+			value1 = "${userId}");
 
 		Click(locator1 = "JSONWSUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_SCREEN_NAME_FIELD",
-			value1 = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}"
-		);
+			value1 = "${userEmailAddress}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_FACEBOOK_ID_FIELD",
-			value1 = "${userFacebookId}"
-		);
+			value1 = "${userFacebookId}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}"
-		);
+			value1 = "${userFirstName}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_LAST_NAME_FIELD",
-			value1 = "${userLastName}"
-		);
+			value1 = "${userLastName}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_PREFIX_ID_FIELD",
-			value1 = "${userPrefixId}"
-		);
+			value1 = "${userPrefixId}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_SUFFIX_ID_FIELD",
-			value1 = "${userSuffixId}"
-		);
+			value1 = "${userSuffixId}");
 
 		Click(locator1 = "JSONWSUser#API_EXECUTE_MALE_TRUE_RADIO");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD",
-			value1 = "${userBirthdayMonth}"
-		);
+			value1 = "${userBirthdayMonth}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_BIRTHDAY_DAY_FIELD",
-			value1 = "${userBirthdayDay}"
-		);
+			value1 = "${userBirthdayDay}");
 
 		Type(
 			locator1 = "JSONWSUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD",
-			value1 = "${userBirthdayYear}"
-		);
+			value1 = "${userBirthdayYear}");
 
-		AssertClick(locator1 = "Button#INVOKE", value1 = "Invoke");
+		AssertClick(
+			locator1 = "Button#INVOKE",
+			value1 = "Invoke");
 	}
 
 	macro getPAuth {
@@ -87,8 +79,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
-			value1 = "/address/add-address"
-		);
+			value1 = "/address/add-address");
 
 		var pAuth = selenium.getElementValue("JSONWSAddress#P_AUTH_FIELD");
 

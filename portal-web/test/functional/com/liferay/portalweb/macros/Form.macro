@@ -16,8 +16,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_ADD_NEW_PAGE",
-			value1 = "Add New Page"
-		);
+			value1 = "Add New Page");
 	}
 
 	macro addSuccessPage {
@@ -25,8 +24,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_ADD_SUCCESS_PAGE",
-			value1 = "Add Success Page"
-		);
+			value1 = "Add Success Page");
 	}
 
 	macro addTranslation {
@@ -36,8 +34,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Translation#ADD_MENULIST_LANGUAGE",
-			value1 = "${localizedLanguage}"
-		);
+			value1 = "${localizedLanguage}");
 	}
 
 	macro closeSidebar {
@@ -53,21 +50,25 @@ definition {
 	macro configureEmailNotifications {
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
-			value1 = "Email Notifications"
-		);
+			value1 = "Email Notifications");
 
 		FormFields.enableSwitcher(fieldName = "sendEmailNotification");
 
-		FormFields.editText(fieldName = "emailFromName", fieldValue = "${fromName}");
+		FormFields.editText(
+			fieldName = "emailFromName",
+			fieldValue = "${fromName}");
 
 		FormFields.editText(
 			fieldName = "emailFromAddress",
-			fieldValue = "${fromAddress}"
-		);
+			fieldValue = "${fromAddress}");
 
-		FormFields.editText(fieldName = "emailToAddress", fieldValue = "${toAddress}");
+		FormFields.editText(
+			fieldName = "emailToAddress",
+			fieldValue = "${toAddress}");
 
-		FormFields.editText(fieldName = "emailSubject", fieldValue = "${subject}");
+		FormFields.editText(
+			fieldName = "emailSubject",
+			fieldValue = "${subject}");
 
 		Button.clickDone();
 	}
@@ -85,8 +86,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_WORKFLOW_CONFIGURATION",
-			value1 = "${workflowDefinition}"
-		);
+			value1 = "${workflowDefinition}");
 
 		Button.clickDone();
 	}
@@ -100,8 +100,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_DELETE_CURRENT_PAGE",
-			value1 = "Delete Current Page"
-		);
+			value1 = "Delete Current Page");
 
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
@@ -111,7 +110,9 @@ definition {
 	}
 
 	macro duplicate {
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Duplicate", rowEntry = "${formName}");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Duplicate",
+			rowEntry = "${formName}");
 	}
 
 	macro editDescription {
@@ -119,31 +120,29 @@ definition {
 
 		Type.typeAceEditor(
 			locator1 = "Form#DESCRIPTION_FIELD",
-			value1 = "${formDescription}"
-		);
+			value1 = "${formDescription}");
 	}
 
 	macro editFieldDataProvider {
 		FormFields.selectRadioOption(
 			fieldName = "dataSourceType",
-			radioOption = "From Data Provider"
-		);
+			radioOption = "From Data Provider");
 
 		Pause(locator1 = "2000");
 
 		FormFields.selectSelectOption(
 			fieldName = "Data Provider",
-			selectOption = "${dataProvider}"
-		);
+			selectOption = "${dataProvider}");
 
 		FormFields.selectSelectOption(
 			fieldName = "Output Parameter",
-			selectOption = "${dataProviderOutput}"
-		);
+			selectOption = "${dataProviderOutput}");
 	}
 
 	macro editFieldLabel {
-		FormFields.editText(fieldName = "label", fieldValue = "${fieldValue}");
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "${fieldValue}");
 
 		if (!(isSet(fieldName))) {
 			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
@@ -153,11 +152,15 @@ definition {
 
 		var key_fieldName = "${fieldName}";
 
-		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${fieldValue}");
+		AssertTextEquals(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldValue}");
 	}
 
 	macro editFieldLabelMetal {
-		FormFields.editText(fieldName = "label", fieldValue = "${fieldValue}");
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "${fieldValue}");
 
 		var key_fieldName = "${fieldValue}";
 
@@ -170,7 +173,9 @@ definition {
 
 		FormFields.viewFieldName(fieldName = "${fieldName}");
 
-		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${fieldValue}");
+		AssertTextEquals(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldValue}");
 
 	}
 
@@ -183,7 +188,9 @@ definition {
 
 		Click(locator1 = "Form#NAME_FIELD");
 
-		AlloyEditor.typeEditor(content = "${formName}", editor = "name");
+		AlloyEditor.typeEditor(
+			content = "${formName}",
+			editor = "name");
 	}
 
 	macro editNameLocalized {
@@ -195,20 +202,25 @@ definition {
 
 		Click(locator1 = "Form#NAME_FIELD");
 
-		AlloyEditor.typeEditor(content = "${formName}", editor = "name");
+		AlloyEditor.typeEditor(
+			content = "${formName}",
+			editor = "name");
 	}
 
 	macro editPageTitle {
-		Type(locator1 = "Form#PAGE_TITLE_FIELD", value1 = "${formPageName}");
+		Type(
+			locator1 = "Form#PAGE_TITLE_FIELD",
+			value1 = "${formPageName}");
 	}
 
 	macro editSuccessPage {
-		Type(locator1 = "Form#SUCCESS_PAGE_TITLE_FIELD", value1 = "${successPageTitle}");
+		Type(
+			locator1 = "Form#SUCCESS_PAGE_TITLE_FIELD",
+			value1 = "${successPageTitle}");
 
 		Type(
 			locator1 = "Form#SUCCESS_PAGE_DESCRIPTION_FIELD",
-			value1 = "${successPageDescription}"
-		);
+			value1 = "${successPageDescription}");
 	}
 
 	macro enableAutocompleteConfiguration {
@@ -231,8 +243,7 @@ definition {
 		DragAndDrop(
 			locator1 = "Form#ADD_FIELD_TYPE",
 			locator2 = "Form#ADD_FIELD_POSITION",
-			value1 = "${elementSetTitle}"
-		);
+			value1 = "${elementSetTitle}");
 	}
 
 	macro gotoAddField {
@@ -245,28 +256,35 @@ definition {
 		DragAndDrop(
 			locator1 = "Form#ADD_FIELD_TYPE",
 			locator2 = "Form#ADD_FIELD_POSITION",
-			value1 = "${fieldType}"
-		);
+			value1 = "${fieldType}");
 
 		AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB");
 	}
 
 	macro gotoBasicTab {
-		AssertClick(locator1 = "Form#SIDEBAR_BASIC_TAB", value1 = "Basic");
+		AssertClick(
+			locator1 = "Form#SIDEBAR_BASIC_TAB",
+			value1 = "Basic");
 		Pause(locator1 = "1000");
 	}
 
 	macro gotoAdvancedTab {
-		AssertClick(locator1 = "Form#SIDEBAR_PROPERTIES_TAB", value1 = "Properties");
+		AssertClick(
+			locator1 = "Form#SIDEBAR_PROPERTIES_TAB",
+			value1 = "Properties");
 		Pause(locator1 = "1000");
 	}
 
 	macro gotoElementSetsTab {
-		AssertClick(locator1 = "Form#SIDEBAR_ELEMENT_SETS_TAB", value1 = "Element Sets");
+		AssertClick(
+			locator1 = "Form#SIDEBAR_ELEMENT_SETS_TAB",
+			value1 = "Element Sets");
 	}
 
 	macro gotoElementsTab {
-		AssertClick(locator1 = "Form#SIDEBAR_ELEMENTS_TAB", value1 = "Elements");
+		AssertClick(
+			locator1 = "Form#SIDEBAR_ELEMENTS_TAB",
+			value1 = "Elements");
 	}
 
 	macro gotoFormPage {
@@ -288,20 +306,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#PUBLISH_FORM_NAME_FIELD",
-			value1 = "${formName}"
-		);
+			value1 = "${formName}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}"
-		);
+			fieldName = "${fieldName}");
 
-		FormFields.editText(fieldName = "${fieldName}", fieldValue = "${fieldValue}");
+		FormFields.editText(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
 
 		FormFields.viewTextValue(
 			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}"
-		);
+			fieldValue = "${fieldValue}");
 
 		AssertElementNotPresent(locator1 = "Button#SUBMIT");
 	}
@@ -315,7 +332,9 @@ definition {
 	}
 
 	macro save {
-		AssertClick(locator1 = "Form#SAVE_FORM_BUTTON", value1 = "Save Form");
+		AssertClick(
+			locator1 = "Form#SAVE_FORM_BUTTON",
+			value1 = "Save Form");
 
 		Alert.viewSuccessMessage();
 	}
@@ -331,8 +350,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED",
-			value1 = "${saveButton}"
-		);
+			value1 = "${saveButton}");
 
 		Alert.viewSuccessMessage();
 	}
@@ -344,15 +362,18 @@ definition {
 	}
 
 	macro submitFormPublish {
-		Form.viewFormPublish(fieldLabel = "${fieldLabel}", fieldName = "${fieldName}");
+		Form.viewFormPublish(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
 
 		FormFields.editText(
 			fieldLabel = "${fieldLabel}",
 			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}"
-		);
+			fieldValue = "${fieldValue}");
 
-		AssertClick(locator1 = "Button#MAIN_CONTENT_SUBMIT", value1 = "Submit");
+		AssertClick(
+			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			value1 = "Submit");
 
 		Alert.viewSuccessMessage();
 	}
@@ -362,8 +383,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE",
-			value1 = "Switch Pagination"
-		);
+			value1 = "Switch Pagination");
 	}
 
 	macro switchPaginationModeToBottom {
@@ -371,8 +391,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE_TO_BOTTOM",
-			value1 = "Switch Pagination to Bottom"
-		);
+			value1 = "Switch Pagination to Bottom");
 	}
 
 	macro switchPaginationModeToTop {
@@ -380,8 +399,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE_TO_TOP",
-			value1 = "Switch Pagination to Top"
-		);
+			value1 = "Switch Pagination to Top");
 	}
 
 	macro unpublishForm {
@@ -405,7 +423,9 @@ definition {
 	}
 
 	macro viewFormName {
-		AssertTextEquals(locator1 = "Form#NAME_FIELD", value1 = "${formName}");
+		AssertTextEquals(
+			locator1 = "Form#NAME_FIELD",
+			value1 = "${formName}");
 	}
 
 	macro viewFormNotPublished {
@@ -419,8 +439,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3_ALT",
-			value1 = "This form is not available or it was not published."
-		);
+			value1 = "This form is not available or it was not published.");
 	}
 
 	macro viewFormPublish {
@@ -430,13 +449,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#PUBLISH_FORM_NAME_FIELD",
-			value1 = "${formName}"
-		);
+			value1 = "${formName}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}"
-		);
+			fieldName = "${fieldName}");
 	}
 
 	macro viewPublishFormSuccessMessage {
@@ -452,7 +469,6 @@ definition {
 	macro viewSaveNotification {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Form#SAVE_NOTIFICATION",
-			value1 = "Draft"
-		);
+			value1 = "Draft");
 	}
 }

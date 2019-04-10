@@ -35,8 +35,7 @@ definition {
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name"
-			);
+				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
@@ -52,7 +51,9 @@ definition {
 		}
 
 		task ("Add a page item") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page Name");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page Name");
 		}
 
 		task ("Assert the page item was added") {
@@ -60,7 +61,9 @@ definition {
 		}
 
 		task ("Add a submenu item") {
-			NavigationMenusAdmin.addItem(item = "Submenu", submenuName = "Submenu Name");
+			NavigationMenusAdmin.addItem(
+				item = "Submenu",
+				submenuName = "Submenu Name");
 		}
 
 		task ("Assert the submenu item was added") {
@@ -71,8 +74,7 @@ definition {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Assert the URL item was added") {
@@ -86,15 +88,13 @@ definition {
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name"
-			);
+				layoutName = "Test Page Name");
 		}
 
 		task ("Add a private page to the site") {
 			JSONLayout.addPrivateLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name"
-			);
+				layoutName = "Test Page Name");
 		}
 
 		task ("Assert that a navigation menu was not automatically created even if a page is created") {
@@ -102,8 +102,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no navigation menus."
-			);
+				value1 = "There are no navigation menus.");
 		}
 	}
 
@@ -129,30 +128,26 @@ definition {
 		task ("Mark the first navigation menu as Primary Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
-				navigationMenu = "Navigation Menu Name 1"
-			);
+				navigationMenu = "Navigation Menu Name 1");
 		}
 
 		task ("Assert the first navigation menu is marked as Primary Navigation") {
 			NavigationMenusAdmin.viewMenuType(
 				menuType = "Primary Navigation",
-				rowEntry = "Navigation Menu Name 1"
-			);
+				rowEntry = "Navigation Menu Name 1");
 		}
 
 		task ("Mark the second navigation menu as Primary Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
 				navigationMenu = "Navigation Menu Name 2",
-				oldPrimaryNavigationMenu = "Navigation Menu Name 1"
-			);
+				oldPrimaryNavigationMenu = "Navigation Menu Name 1");
 		}
 
 		task ("Assert the second navigation is now marked as Primary Navigation") {
 			NavigationMenusAdmin.viewMenuType(
 				menuType = "Primary Navigation",
-				rowEntry = "Navigation Menu Name 2"
-			);
+				rowEntry = "Navigation Menu Name 2");
 		}
 	}
 
@@ -178,15 +173,13 @@ definition {
 		task ("Mark the first navigation menu as Secondary Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Secondary Navigation",
-				navigationMenu = "Navigation Menu Name 2"
-			);
+				navigationMenu = "Navigation Menu Name 2");
 		}
 
 		task ("Assert the second navigation menu is now marked as Secondary Navigation") {
 			NavigationMenusAdmin.viewMenuType(
 				menuType = "Secondary Navigation",
-				rowEntry = "Navigation Menu Name 2"
-			);
+				rowEntry = "Navigation Menu Name 2");
 		}
 	}
 
@@ -212,15 +205,13 @@ definition {
 		task ("Mark the second navigation menu as Social Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Social Navigation",
-				navigationMenu = "Navigation Menu Name 2"
-			);
+				navigationMenu = "Navigation Menu Name 2");
 		}
 
 		task ("Assert the second navigation menu is now marked as Social Navigation") {
 			NavigationMenusAdmin.viewMenuType(
 				menuType = "Social Navigation",
-				rowEntry = "Navigation Menu Name 2"
-			);
+				rowEntry = "Navigation Menu Name 2");
 		}
 	}
 
@@ -238,7 +229,9 @@ definition {
 		task ("Delete the navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.delete(menuItem = "Delete", rowEntry = "Navigation Menu Name 1");
+			LexiconEntry.delete(
+				menuItem = "Delete",
+				rowEntry = "Navigation Menu Name 1");
 		}
 
 		task ("Assert the navigation menu was deleted") {
@@ -260,8 +253,7 @@ definition {
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Rename",
-				rowEntry = "Navigation Menu Name 1"
-			);
+				rowEntry = "Navigation Menu Name 1");
 
 			PortletEntry.inputName(name = "Navigation Menu Name 1 Edit");
 
@@ -281,9 +273,7 @@ definition {
 
 			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Single");
 
-			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
-				toggleValue = "enable"
-			);
+			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
 		}
 
 		task ("Add a second navigation menu with option to offer new pages flagged") {
@@ -291,9 +281,7 @@ definition {
 
 			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Both");
 
-			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
-				toggleValue = "enable"
-			);
+			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
 		}
 
 		task ("Navigate to pages admin") {
@@ -303,15 +291,13 @@ definition {
 		task ("Add a page and automatically add it to both navigation menus") {
 			SitePages.addPublicPage(
 				navigationMenus = "Navigation Menu Single,Navigation Menu Both",
-				pageName = "Page 1"
-			);
+				pageName = "Page 1");
 		}
 
 		task ("Add a second page and automatically add it to the second navigation menu") {
 			SitePages.addPublicPage(
 				navigationMenus = "Navigation Menu Both",
-				pageName = "Page 2"
-			);
+				pageName = "Page 2");
 		}
 
 		task ("Navigate to the first navigation menu") {
@@ -343,9 +329,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
 
-			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
-				toggleValue = "disable"
-			);
+			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "disable");
 		}
 
 		task ("Add a third page and assert that while adding the new page, the checkbox to add a new page to the first navigation menu is not present") {
@@ -354,8 +338,7 @@ definition {
 			SitePages.addPublicPage(
 				assertCheckboxMissing = "true",
 				navigationMenus = "Navigation Menu Single",
-				pageName = "Page 3"
-			);
+				pageName = "Page 3");
 		}
 
 		task ("Assert the third page was not added to the first navigation menu") {
@@ -386,8 +369,7 @@ definition {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Assert the URL item was added") {
@@ -423,7 +405,9 @@ definition {
 		}
 
 		task ("Add an item to the navigation menu") {
-			NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page Name");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page Name");
 		}
 
 		task ("Assert there is a success message after adding a navigation menu item") {

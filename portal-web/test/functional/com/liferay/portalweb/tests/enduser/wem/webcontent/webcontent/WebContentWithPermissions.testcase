@@ -27,77 +27,68 @@ definition {
 	test AddAndViewStructureAndTemplateWithPermissions {
 		property testray.component.names = "Permissions,Roles,Training,Web Content Administration";
 
-		JSONLayout.addPublicLayout(groupName = "Test Site Name", layoutName = "Home");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Home");
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role Name",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ARTICLE",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.journal",
 			roleTitle = "Site Member",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ARTICLE",
 			resourceName = "com.liferay.journal",
 			roleTitle = "Site Member",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Site Member",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 			roleTitle = "Site Member",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 			roleTitle = "Site Member",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -105,26 +96,22 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(
 			addRoleViewPermissions = "Regular Role Name",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Site Member"
-		);
+			roleList = "Guest,Site Member");
 
 		IFrame.closeFrame();
 
@@ -136,13 +123,11 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		Click(
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS",
-			key_rowEntry = "WC Template Name"
-		);
+			key_rowEntry = "WC Template Name",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Permissions");
 
@@ -150,13 +135,11 @@ definition {
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Add",
-			roleList = "Regular Role Name"
-		);
+			roleList = "Regular Role Name");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest,Site Member"
-		);
+			roleList = "Guest,Site Member");
 
 		SelectFrameTop();
 
@@ -169,35 +152,33 @@ definition {
 				userEmailAddress = "user${number}@liferay.com",
 				userFirstName = "userfn${number}",
 				userLastName = "userln${number}",
-				userScreenName = "usersn${number}"
-			);
+				userScreenName = "usersn${number}");
 
 			User.openUsersAdmin();
 
 			User.editPasswordCP(
 				userEmailAddress = "user${number}@liferay.com",
-				userScreenName = "usersn${number}"
-			);
+				userScreenName = "usersn${number}");
 
 			Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn${number}",
 				userLastName = "userln${number}",
-				userScreenName = "usersn${number}"
-			);
+				userScreenName = "usersn${number}");
 		}
 
 		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Regular Role Name",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "user1@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -205,8 +186,7 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -215,12 +195,13 @@ definition {
 		WebContentTemplates.viewCP(
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name",
-			userEditPermission = "noEditPermission"
-		);
+			userEditPermission = "noEditPermission");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "user2@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -236,15 +217,13 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Role.openRolesAdmin();
 
 		Role.definePermissionsCP(
 			permissionDefinitionKeys = "SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ADD_WEB_CONTENT_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_UPDATE_CHECKBOX",
-			roleTitle = "Regular Role Name"
-		);
+			roleTitle = "Regular Role Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -253,8 +232,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -262,19 +240,19 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name"
-		);
+			folderName = "WC Folder Name");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "user1@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -282,16 +260,14 @@ definition {
 
 		WebContent.editCP(
 			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit"
-		);
+			webContentTitleEdit = "WC WebContent Title Edit");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.addSubfolderCP(
 			folderName = "WC Folder Name",
 			subfolderDescription = "WC SubFolder Description",
-			subfolderName = "WC SubFolder Name"
-		);
+			subfolderName = "WC SubFolder Name");
 	}
 
 	@priority = "4"
@@ -304,8 +280,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Web Content",
 			configurationName = "Web Content",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		FormFields.enableCheckbox(fieldName = "articleViewPermissionsCheckEnabled");
 
@@ -317,8 +292,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -328,30 +302,29 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "WCD Page"
-		);
+			layoutName = "WCD Page");
 
-		Navigator.gotoSitePage(pageName = "WCD Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		Navigator.gotoSitePage(pageName = "WCD Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
 
 		PermissionsInline.gotoConfigurationPG();
 
 		AssertChecked(
-			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			key_roleTitle = "guest"
-		);
+			key_roleTitle = "guest",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -359,7 +332,9 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoSitePage(pageName = "WCD Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
 
 		AssertTextNotPresent(value1 = "Web Content Display");
 

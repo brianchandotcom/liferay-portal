@@ -19,8 +19,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AdaptiveMediaTable#PROGRESS",
-			value1 = "${percentAdapted}"
-		);
+			value1 = "${percentAdapted}");
 
 		Alert.closeMessage(messageType = "GENERIC");
 	}
@@ -34,9 +33,13 @@ definition {
 			PortletEntry.inputDescription(description = "${description}");
 		}
 
-		Type(locator1 = "TextInput#MAX_WIDTH", value1 = "${maxWidth}");
+		Type(
+			locator1 = "TextInput#MAX_WIDTH",
+			value1 = "${maxWidth}");
 
-		Type(locator1 = "TextInput#MAX_HEIGHT", value1 = "${maxHeight}");
+		Type(
+			locator1 = "TextInput#MAX_HEIGHT",
+			value1 = "${maxHeight}");
 
 		if (isSet(addHighDensityDisplay)) {
 			Check(locator1 = "Checkbox#ADD_HIGH_DENSITY_DISPLAY");
@@ -45,26 +48,25 @@ definition {
 		if (isSet(customID)) {
 			Click(locator1 = "Radio#CUSTOM_URL");
 
-			Type(locator1 = "TextInput#IMAGE_ID", value1 = "${customID}");
+			Type(
+				locator1 = "TextInput#IMAGE_ID",
+				value1 = "${customID}");
 		}
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		if (isSet(duplicate)) {
-			Alert.viewErrorMessage(
-				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
-			);
+			Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 		}
 		else if (isSet(zero)) {
-			Alert.viewErrorMessage(
-				errorMessage = "Please enter a max width or max height value larger than 0."
-			);
+			Alert.viewErrorMessage(errorMessage = "Please enter a max width or max height value larger than 0.");
 		}
 		else if (isSet(noDimensions)) {
 			AssertTextEquals(
 				locator1 = "Message#REQUIRED_INFO",
-				value1 = "At least one value is required."
-			);
+				value1 = "At least one value is required.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -76,18 +78,23 @@ definition {
 
 		PortletEntry.inputName(name = "${imageName}");
 
-		Type(locator1 = "TextInput#MAX_WIDTH", value1 = "${maxWidth}");
+		Type(
+			locator1 = "TextInput#MAX_WIDTH",
+			value1 = "${maxWidth}");
 
-		Type(locator1 = "TextInput#MAX_HEIGHT", value1 = "${maxHeight}");
+		Type(
+			locator1 = "TextInput#MAX_HEIGHT",
+			value1 = "${maxHeight}");
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals(
 			locator1 = "Message#REQUIRED_INFO",
-			value1 = "At least one value is required."
-		);
+			value1 = "At least one value is required.");
 	}
 
 	macro deleteImageResolution {
@@ -97,9 +104,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
@@ -115,7 +120,9 @@ definition {
 
 		var key_imageState = "${imageState}";
 
-		AssertTextEquals(locator1 = "AdaptiveMediaTable#STATE", value1 = "Disabled");
+		AssertTextEquals(
+			locator1 = "AdaptiveMediaTable#STATE",
+			value1 = "Disabled");
 
 		if (isSet(percentAdapted)) {
 			var key_percentAdapted = "${percentAdapted}";
@@ -123,8 +130,7 @@ definition {
 			AssertCssValue(
 				locator1 = "AdaptiveMediaTable#PROGRESS_BAR_COLOR",
 				locator2 = "opacity",
-				value1 = "0.5"
-			);
+				value1 = "0.5");
 		}
 	}
 
@@ -155,27 +161,34 @@ definition {
 		}
 		else {
 			if (!(contains("${maxHeightEdit}", "{maxHeightEdit}"))) {
-				Type(locator1 = "TextInput#MAX_HEIGHT", value1 = "${maxHeightEdit}");
+				Type(
+					locator1 = "TextInput#MAX_HEIGHT",
+					value1 = "${maxHeightEdit}");
 			}
 
 			if (!(contains("${maxWidthEdit}", "{maxWidthEdit}"))) {
-				Type(locator1 = "TextInput#MAX_WIDTH", value1 = "${maxWidthEdit}");
+				Type(
+					locator1 = "TextInput#MAX_WIDTH",
+					value1 = "${maxWidthEdit}");
 			}
 
 			if (!(contains("${imageIDEdit}", "{imageIDEdit}"))) {
 				Click(locator1 = "Radio#CUSTOM_URL");
 
-				Type(locator1 = "TextInput#IMAGE_ID", value1 = "${imageIDEdit}");
+				Type(
+					locator1 = "TextInput#IMAGE_ID",
+					value1 = "${imageIDEdit}");
 			}
 		}
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		if (isSet(noDimensions)) {
 			AssertTextEquals(
 				locator1 = "Message#REQUIRED_INFO",
-				value1 = "At least one value is required."
-			);
+				value1 = "At least one value is required.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -191,13 +204,17 @@ definition {
 
 		var key_imageState = "${imageState}";
 
-		AssertTextEquals(locator1 = "AdaptiveMediaTable#STATE", value1 = "Enabled");
+		AssertTextEquals(
+			locator1 = "AdaptiveMediaTable#STATE",
+			value1 = "Enabled");
 	}
 
 	macro gotoImageVariantEntry {
 		var key_imageName = "${imageName}";
 
-		AssertClick(locator1 = "AdaptiveMediaTable#NAME", value1 = "${imageName}");
+		AssertClick(
+			locator1 = "AdaptiveMediaTable#NAME",
+			value1 = "${imageName}");
 	}
 
 	macro selectAdaptiveMediaImage {
@@ -209,15 +226,16 @@ definition {
 	macro viewImageResolutionTableEntry {
 		var key_imageName = "${imageName}";
 
-		AssertTextEquals(locator1 = "AdaptiveMediaTable#NAME", value1 = "${imageName}");
+		AssertTextEquals(
+			locator1 = "AdaptiveMediaTable#NAME",
+			value1 = "${imageName}");
 
 		var key_imageState = "${imageState}";
 
 		if (isSet(imageState)) {
 			AssertTextEquals(
 				locator1 = "AdaptiveMediaTable#STATE",
-				value1 = "${imageState}"
-			);
+				value1 = "${imageState}");
 		}
 
 		var key_percentAdapted = "${percentAdapted}";
@@ -225,27 +243,28 @@ definition {
 		if (isSet(percentAdapted)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AdaptiveMediaTable#PROGRESS",
-				value1 = "${percentAdapted}"
-			);
+				value1 = "${percentAdapted}");
 		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AdaptiveMediaTable#MAX_WIDTH",
-			value1 = "${maxWidth}"
-		);
+			value1 = "${maxWidth}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AdaptiveMediaTable#MAX_HEIGHT",
-			value1 = "${maxHeight}"
-		);
+			value1 = "${maxHeight}");
 	}
 
 	macro viewImageVariantDescription {
-		AssertTextEquals(locator1 = "TextArea#DESCRIPTION", value1 = "${description}");
+		AssertTextEquals(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${description}");
 	}
 
 	macro viewImageVariantID {
-		AssertTextEquals(locator1 = "TextInput#IMAGE_ID", value1 = "${imageVariantID}");
+		AssertTextEquals(
+			locator1 = "TextInput#IMAGE_ID",
+			value1 = "${imageVariantID}");
 	}
 
 	macro viewImageVariantURL {
@@ -267,8 +286,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AdaptiveMediaTable#IMAGE_INFO_DETAILS_ADAPTED_IMAGES",
-			value1 = "${numberOfAdaptedImages}"
-		);
+			value1 = "${numberOfAdaptedImages}");
 
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");
 	}

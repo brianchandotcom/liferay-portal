@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -63,25 +62,26 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Language");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Language");
 
-		LanguagePortlet.selectLanguagePG(locale = "es_ES", textIcon = "español-España");
+		LanguagePortlet.selectLanguagePG(
+			locale = "es_ES",
+			textIcon = "español-España");
 
 		CalendarScheduler.addLocalizedEvent(
 			eventTitle = "Calendar Event Title",
 			saveButton = "Guardar",
-			viewType = "Week"
-		);
+			viewType = "Week");
 
 		CalendarScheduler.viewLocalizedEvent(
 			eventTitle = "Calendar Event Title",
-			viewTypeLocalized = "Semana"
-		);
+			viewTypeLocalized = "Semana");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 
 		CalendarScheduler.viewDay(eventTitle = "Calendar Event Title");
 	}
@@ -95,8 +95,7 @@ definition {
 			CalendarEvent.add(
 				eventTitle = "Calendar Event ${eventNumber}",
 				eventType = "All Day",
-				pageName = "Calendar Page"
-			);
+				pageName = "Calendar Page");
 		}
 
 		MyAccount.configureDisplaySettingsLanguage(languageName = "español (España)");
@@ -105,24 +104,20 @@ definition {
 
 		CalendarScheduler.viewShowMoreLocalizedViaDayView(
 			messageLocalized = "Mostrar 1 más",
-			viewTypeLocalized = "Día"
-		);
+			viewTypeLocalized = "Día");
 
 		CalendarScheduler.viewShowMoreLocalizedViaWeekView(
 			messageLocalized = "Mostrar 1 más",
-			viewTypeLocalized = "Semana"
-		);
+			viewTypeLocalized = "Semana");
 
 		CalendarScheduler.viewShowMoreLocalizedViaMonthView(
 			messageLocalized = "Mostrar 4 más",
-			viewTypeLocalized = "Mes"
-		);
+			viewTypeLocalized = "Mes");
 
 		MyAccount.configureDisplaySettingsLanguageLocalized(
 			category = "Mi cuenta",
 			languageName = "English (United States)",
 			portlet = "Mi cuenta",
-			saveButton = "Guardar"
-		);
+			saveButton = "Guardar");
 	}
 }

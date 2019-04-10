@@ -17,23 +17,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Sync Connector Admin"
-		);
+			portlet = "Sync Connector Admin");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Sync Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "Sync Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Sync Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
@@ -73,157 +72,135 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "Document_1.docx"
-		);
+			dmDocumentTitle = "Document_1.docx");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.docx",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpeg",
-			dmDocumentTitle = "Document_1.jpeg"
-		);
+			dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.jpeg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.jpg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Generated_by_adobe.jpg",
-			dmDocumentTitle = "Generated_by_adobe.jpg"
-		);
+			dmDocumentTitle = "Generated_by_adobe.jpg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Generated_by_adobe.jpg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_2.mp3",
-			dmDocumentTitle = "Document_2.mp3"
-		);
+			dmDocumentTitle = "Document_2.mp3");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.mp3",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "Document_1.odt"
-		);
+			dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.odt",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.pdf",
-			dmDocumentTitle = "Document_1.pdf"
-		);
+			dmDocumentTitle = "Document_1.pdf");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.pdf",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "Document_1.png"
-		);
+			dmDocumentTitle = "Document_1.png");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.png",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.xls",
-			dmDocumentTitle = "Document_1.xls"
-		);
+			dmDocumentTitle = "Document_1.xls");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.xls",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.xlsx",
-			dmDocumentTitle = "Document_1.xlsx"
-		);
+			dmDocumentTitle = "Document_1.xlsx");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.xlsx",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 	}
 }

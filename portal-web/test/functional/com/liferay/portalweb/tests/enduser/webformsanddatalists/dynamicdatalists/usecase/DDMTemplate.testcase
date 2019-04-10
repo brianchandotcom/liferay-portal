@@ -31,29 +31,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -61,27 +57,26 @@ definition {
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			structureName = "WC Structure Name",
-			templateFieldNames = "Text"
-		);
+			templateFieldNames = "Text");
 
 		DDLDataDefinition.save();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "WC Template Name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Template Name");
 
 		Panel.expandPanel(panel = "Details");
 
@@ -92,8 +87,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -101,8 +95,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "Test",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -111,8 +104,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
@@ -120,15 +112,11 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		WebContentDisplayPortlet.gotoEditTemplate(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = "WC WebContent Title");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

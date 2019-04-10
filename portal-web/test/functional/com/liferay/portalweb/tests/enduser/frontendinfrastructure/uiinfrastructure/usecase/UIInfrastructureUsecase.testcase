@@ -26,8 +26,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "RTL Test Page");
 
@@ -35,7 +34,9 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		LanguagePortlet.selectLanguagePG(locale = "ar_SA", textIcon = "العربية-السعودية");
+		LanguagePortlet.selectLanguagePG(
+			locale = "ar_SA",
+			textIcon = "العربية-السعودية");
 
 		ProductMenuHelper.openProductMenu();
 
@@ -43,20 +44,20 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		Navigator.ensureLocaleURL(locale = "ar");
 
-		PortletEntry.changeLocale(fieldName = "العنوان", locale = "ar_SA");
+		PortletEntry.changeLocale(
+			fieldName = "العنوان",
+			locale = "ar_SA");
 
 		WebContent.addCP(webContentTitle = "WC Title");
 
@@ -75,8 +76,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
@@ -91,16 +91,14 @@ definition {
 		task ("Assert the 'Configuration' iframe of the Hello World portlet") {
 			Portlet.gotoPortletOptions(
 				portletName = "Hello World",
-				portletOption = "Configuration"
-			);
+				portletOption = "Configuration");
 
 			IFrame.selectConfigurationFrame();
 
 			AssertTextEquals(
+				key_navItem = "Sharing",
 				locator1 = "NavBar#NAV_ITEM_LINK",
-				value1 = "Sharing",
-				key_navItem = "Sharing"
-			);
+				value1 = "Sharing");
 
 			IFrame.closeFrame();
 		}
@@ -110,8 +108,7 @@ definition {
 		task ("Assert the 'Look and Feel' iframe of the Hello World portlet") {
 			Portlet.gotoPortletOptions(
 				portletName = "Hello World",
-				portletOption = "Look and Feel Configuration"
-			);
+				portletOption = "Look and Feel Configuration");
 
 			IFrame.selectConfigurationFrame();
 
@@ -119,8 +116,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "NavTab#TAB_LINK",
-				value1 = "General"
-			);
+				value1 = "General");
 
 			IFrame.closeFrame();
 		}
@@ -128,14 +124,12 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Hello World"
-		);
+			portletName = "Hello World");
 
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "2",
 			columnNumberTo = "1",
-			portletName = "Hello World"
-		);
+			portletName = "Hello World");
 
 		task ("Removes Hello World Portlets on Test Page and Welcome Page") {
 			Navigator.gotoPage(pageName = "Test Page");
@@ -158,27 +152,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "skandi@liferay.com",
 			userFirstName = "Skändi",
 			userLastName = "Ääkkönen",
-			userScreenName = "uskandi"
-		);
+			userScreenName = "uskandi");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "skandi@liferay.com",
 			userFirstName = "Skändi",
 			userLastName = "Ääkkönen",
-			userScreenName = "uskandi"
-		);
+			userScreenName = "uskandi");
 	}
 }

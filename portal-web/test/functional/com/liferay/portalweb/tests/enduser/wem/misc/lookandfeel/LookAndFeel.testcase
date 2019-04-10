@@ -27,8 +27,7 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Sign In",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
@@ -44,14 +43,11 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureApplicationDecoratorViaLookandfeelPG(
-			applicationDecorator = "Decorate"
-		);
+		Portlet.configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = "Decorate");
 
 		Button.clickCancel();
 
@@ -61,8 +57,7 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
@@ -76,8 +71,7 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration"
-		);
+			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 

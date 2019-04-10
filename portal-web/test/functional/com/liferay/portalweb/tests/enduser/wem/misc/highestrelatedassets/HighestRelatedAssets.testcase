@@ -24,88 +24,93 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		for (var n : list "1,2") {
 			SitePages.addPublicPage(pageName = "Test Page ${n}");
 		}
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
 
-		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Highest Rated Assets");
 
 		AssetPublisherPortlet.configureDisplaySettings(
 			displaySettings = "Ratings",
-			portletName = "Highest Rated Assets"
-		);
+			portletName = "Highest Rated Assets");
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		for (var n : list "1,2") {
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title ${n}"
-			);
+				webContentTitle = "Web Content Title ${n}");
 
 			PortletEntry.publish();
 		}
 
-		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 1",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title 1"
-		);
+			assetTitle = "Web Content Title 1");
 
 		AssetPublisherPortlet.rateAssetPG(rating = "3");
 
-		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title 2"
-		);
+			assetTitle = "Web Content Title 2");
 
 		AssetPublisherPortlet.rateAssetPG(rating = "5");
 
-		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title 1"
-		);
+			assetTitle = "Web Content Title 1");
 
 		AssetPublisherPortlet.viewAssetRatingPG(rating = "3");
 
-		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title 2"
-		);
+			assetTitle = "Web Content Title 2");
 
 		AssetPublisherPortlet.viewAssetRatingPG(rating = "5");
 	}

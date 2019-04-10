@@ -2,8 +2,7 @@ definition {
 	macro configureUserProfile {
 		AssertClick(
 			locator1 = "Link#CONFIGURE_TWITTER",
-			value1 = "Please configure your Twitter screen name."
-		);
+			value1 = "Please configure your Twitter screen name.");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -11,7 +10,9 @@ definition {
 
 		Panel.expandPanel(panel = "Social Network");
 
-		Type(locator1 = "TextInput#TWITTER", value1 = "${twitterProfileName}");
+		Type(
+			locator1 = "TextInput#TWITTER",
+			value1 = "${twitterProfileName}");
 
 		PortletEntry.save();
 
@@ -23,14 +24,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#BODY",
-			value1 = "Your Twitter screen name is ${twitterProfileName}. Your tweets will appear as activities."
-		);
+			value1 = "Your Twitter screen name is ${twitterProfileName}. Your tweets will appear as activities.");
 	}
 
 	macro viewFeedEntry {
 		AssertTextEquals(
 			locator1 = "Activities#ENTRY_CONTENT",
-			value1 = "${entryContent}"
-		);
+			value1 = "${entryContent}");
 	}
 }

@@ -46,13 +46,11 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -70,42 +68,35 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_DOCUMENT",
 			resourceName = "com.liferay.document.library",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_DOCUMENT",
 			resourceName = "com.liferay.document.library",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -125,49 +116,40 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		DMDocument.tearDownCP(
 			pageName = "Documents and Media Page",
-			siteScopeName = "Site Name"
-		);
+			siteScopeName = "Site Name");
 
 		PermissionsInline.gotoDocumentsAndMediaHomeFolderPG(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name",
-			siteURLTemp = "true"
-		);
+			siteURLTemp = "true");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
@@ -175,34 +157,28 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		PermissionsInline.gotoDocumentsAndMediaHomeFolderPG(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name",
-			siteURLTemp = "true"
-		);
+			siteURLTemp = "true");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_2.doc"
-		);
+			dmDocumentTitle = "Document_2.doc");
 	}
 
 	@priority = "4"
@@ -219,29 +195,24 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		PermissionsInline.gotoDocumentsAndMediaHomeFolderPG(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name",
-			siteURLTemp = "true"
-		);
+			siteURLTemp = "true");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
@@ -249,52 +220,43 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_DOCUMENT",
 			resourceName = "com.liferay.document.library",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_DOCUMENT",
 			resourceName = "com.liferay.document.library",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
@@ -314,21 +276,18 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			pageName = "Documents and Media Page",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -336,28 +295,24 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
+			key_dmFolderName = "DM Folder Name",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder Name",
-			key_dmFolderName = "DM Folder Name"
-		);
+			value1 = "DM Folder Name");
 
 		Click(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS",
-			key_dmFolderName = "DM Folder Name"
-		);
+			key_dmFolderName = "DM Folder Name",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
 		MenuItem.viewNotPresent(menuItem = "Move to Recycle Bin");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -365,13 +320,11 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -379,8 +332,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -393,8 +345,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
@@ -408,18 +359,15 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		PermissionsInline.gotoDocumentsAndMediaDocumentPG(
 			dmDocumentTitle = "Document_1.doc",
-			pageName = "Documents and Media Page"
-		);
+			pageName = "Documents and Media Page");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		User.logoutPG();
 
@@ -435,8 +383,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
@@ -444,16 +391,14 @@ definition {
 
 		Portlet.addPG(
 			pageName = "Documents and Media Page",
-			portletName = "Documents and Media"
-		);
+			portletName = "Documents and Media");
 
 		Permissions.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			pageName = "Documents and Media Page",
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		User.logoutPG();
 
@@ -465,21 +410,18 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder Name"
-		);
+			value1 = "DM Folder Name");
 
 		var dmFolderNameUpperCase = StringUtil.upperCase("DM Folder Name");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmFolderNameUpperCase}"
-		);
+			value1 = "${dmFolderNameUpperCase}");
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -491,8 +433,7 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		User.logoutPG();
 
@@ -503,8 +444,7 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -512,8 +452,7 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		User.logoutPG();
 
@@ -525,14 +464,12 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder Name"
-		);
+			value1 = "DM Folder Name");
 
 		var dmFolderNameUpperCase = StringUtil.upperCase("DM Folder Name");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmFolderNameUpperCase}"
-		);
+			value1 = "${dmFolderNameUpperCase}");
 	}
 }

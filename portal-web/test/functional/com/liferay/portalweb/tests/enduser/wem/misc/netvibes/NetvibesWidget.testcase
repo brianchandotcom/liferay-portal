@@ -11,8 +11,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 	}
@@ -32,7 +31,6 @@ definition {
 
 		AntCommand.antCommand(
 			locator1 = "build-test.xml",
-			value1 = "remove-plugin -Dplugin.name=netvibes-widget-portlet"
-		);
+			value1 = "remove-plugin -Dplugin.name=netvibes-widget-portlet");
 	}
 }

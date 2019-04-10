@@ -6,17 +6,20 @@ definition {
 			if (IsElementPresent(locator1 = "GoogleLogin#HEADER")) {
 				AssertClick(
 					locator1 = "GoogleLogin#ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT",
-					value1 = "Use another account"
-				);
+					value1 = "Use another account");
 			}
 
-			Type(locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD", value1 = "${userEmailAddress}");
+			Type(
+				locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD",
+				value1 = "${userEmailAddress}");
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
 			AssertElementPresent(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
-			Type(locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD", value1 = "${userPassword}");
+			Type(
+				locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD",
+				value1 = "${userPassword}");
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
@@ -28,8 +31,7 @@ definition {
 		}
 
 		AssertElementPresent(
-			locator1 = "Button#ANY",
-			key_text = "Save and Return to Liferay"
-		);
+			key_text = "Save and Return to Liferay",
+			locator1 = "Button#ANY");
 	}
 }

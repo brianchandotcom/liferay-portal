@@ -27,16 +27,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(columnName = "1 Column", pageName = "Web Proxy Page");
+		SitePages.addPublicPage(
+			columnName = "1 Column",
+			pageName = "Web Proxy Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Web Proxy Page",
-			privacy = "Public Pages"
-		);
+			privacy = "Public Pages");
 
 		Navigator.gotoPage(pageName = "Web Proxy Page");
 
@@ -48,7 +48,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Proxy Page");
 
-		AssertTextPresent(locator1 = "Portlet#H2_HEADER", value1 = "Google Images");
+		AssertTextPresent(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Google Images");
 
 		takeScreenshot();
 

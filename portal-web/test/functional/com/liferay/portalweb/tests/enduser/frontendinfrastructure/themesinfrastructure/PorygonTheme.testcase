@@ -30,27 +30,23 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
-				portlet = "Sites"
-			);
+				portlet = "Sites");
 
 			Site.addSiteTemplateCP(
 				siteName = "Porygon Theme Site",
-				siteTemplateName = "Porygon Theme"
-			);
+				siteTemplateName = "Porygon Theme");
 
 			ProductMenu.gotoSite(site = "Porygon Theme Site");
 
 			AssertClick(
+				key_pageName = "home",
 				locator1 = "Home#PAGE",
-				value1 = "HOME",
-				key_pageName = "home"
-			);
+				value1 = "HOME");
 
 			AssertTextEquals(
+				key_title = "The Earth is all we have in common",
 				locator1 = "Header#H2_TITLE",
-				value1 = "The Earth is all we have in common",
-				key_title = "The Earth is all we have in common"
-			);
+				value1 = "The Earth is all we have in common");
 		}
 		else {
 			var appName = "porygon-theme";
@@ -58,8 +54,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Apps",
 				panel = "Control Panel",
-				portlet = "App Manager"
-			);
+				portlet = "App Manager");
 
 			AppManager.viewAppCP(appName = "porygon-theme");
 		}

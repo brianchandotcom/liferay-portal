@@ -143,7 +143,9 @@ definition {
 
 		echo("## * Group Id: ${groupId}");
 
-		JSONFragment._addFragmentCollection(groupId = "${groupId}", name = "${name}");
+		JSONFragment._addFragmentCollection(
+			groupId = "${groupId}",
+			name = "${name}");
 	}
 
 	@summary = "Add a section to a fragment collection."
@@ -201,8 +203,7 @@ definition {
 			collectionId = "${collectionId}",
 			groupId = "${groupId}",
 			name = "${name}",
-			status = "${status}"
-		);
+			status = "${status}");
 	}
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"

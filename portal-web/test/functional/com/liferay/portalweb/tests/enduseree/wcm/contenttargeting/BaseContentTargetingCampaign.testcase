@@ -21,16 +21,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 	}
@@ -44,8 +42,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			Site.tearDownCP();
 		}
@@ -60,13 +57,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingUserSegment.addCP(
 			userSegmentDescription = "User Segment Description",
-			userSegmentName = "User Segment Name"
-		);
+			userSegmentName = "User Segment Name");
 
 		PortletEntry.save();
 
@@ -75,8 +70,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingCampaign.addCP(
 			campaignDescription = "Campaign Description",
@@ -86,8 +80,7 @@ definition {
 			campaignPriorityField = "3",
 			campaignStartDate = "1/1/2015",
 			campaignStartTime = "12:00 AM",
-			userSegmentSelect = "User Segment Name"
-		);
+			userSegmentSelect = "User Segment Name");
 
 		PortletEntry.save();
 
@@ -96,14 +89,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Audience Targeting"
-		);
+			portlet = "Audience Targeting");
 
 		ContentTargetingCampaign.viewCampaignCP(
 			campaignDescription = "Campaign Description",
 			campaignName = "Campaign Name",
 			campaignPriority = "3",
-			campaignStatus = "Started"
-		);
+			campaignStatus = "Started");
 	}
 }

@@ -3,13 +3,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no lists."
-		);
+			value1 = "There are no lists.");
 
 		DDLNavigator.gotoManageDataDefinitions();
 
@@ -24,16 +22,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DDLDataDefinition.save();
 
@@ -42,13 +38,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists"
-		);
+			portlet = "Dynamic Data Lists");
 
 		DDLDataDefinition.viewCP(
 			ddlDataDefinitionName = "Data Definition",
-			fieldFieldLabel = "Text"
-		);
+			fieldFieldLabel = "Text");
 
 		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
 
@@ -59,13 +53,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no forms. Click on the plus button to add the first one."
-		);
+			value1 = "There are no forms. Click on the plus button to add the first one.");
 
 		FormsAdminNavigator.gotoAddForm();
 
@@ -84,25 +76,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdmin.viewForm(
 			formDescription = "Form Description",
-			formName = "Form Name"
-		);
+			formName = "Form Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
 		FormPortletNavigator.gotoSelectForm(formName = "Form Name");
 
@@ -112,7 +103,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.viewTextField(fieldLabel = "Text Field", fieldName = "TextField");
+		FormFields.viewTextField(
+			fieldLabel = "Text Field",
+			fieldName = "TextField");
 	}
 
 	macro addMessageBoards {
@@ -120,73 +113,67 @@ definition {
 
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject 3"
-		);
+			threadSubject = "Message Boards Subject 3");
 	}
 
 	macro addOrganization {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
 	}
 
 	macro addUserAndSuborganization {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		Organization.addCP(orgName = "Organization2", orgType = "Organization");
+		Organization.addCP(
+			orgName = "Organization2",
+			orgType = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Suborganization.addCP(
 			orgName = "Organization2",
-			suborgName = "Sub-organization2"
-		);
+			suborgName = "Sub-organization2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Suborganization.addCP(
 			orgName = "Organization1",
-			suborgName = "Sub-organization1"
-		);
+			suborgName = "Sub-organization1");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "user2@liferay.com",
 			userFirstName = "user2",
 			userLastName = "user2",
-			userScreenName = "user2"
-		);
+			userScreenName = "user2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -195,39 +182,36 @@ definition {
 			userFirstName = "user2",
 			userLastName = "user2",
 			userName = "user2 user2",
-			userScreenName = "user2"
-		);
+			userScreenName = "user2");
 
 		Organization.addMemberCP(
 			orgName = "Sub-organization1",
 			userFirstName = "user2",
 			userLastName = "user2",
 			userName = "user2 user2",
-			userScreenName = "user2"
-		);
+			userScreenName = "user2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.gotoCP(orgName = "Organization1", searchToken = "Organization1");
+		Organization.gotoCP(
+			orgName = "Organization1",
+			searchToken = "Organization1");
 
 		User.searchCP(searchTerm = "usersn");
 
 		Organization.viewAssignMemberCP(
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -235,50 +219,42 @@ definition {
 			orgName = "Organization1",
 			orgType = "Organization",
 			suborgName = "Sub-organization-Pre",
-			suborgType = "Organization"
-		);
+			suborgType = "Organization");
 
 		Organization.gotoCP(
 			orgName = "Sub-organization-Pre",
-			searchToken = "Sub-organization-Pre"
-		);
+			searchToken = "Sub-organization-Pre");
 
 		Organization.viewAssignMemberCP(
 			userName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.editSiteCP(
 			orgName = "Organization1",
-			orgNameEdit = "Organization1 Edit"
-		);
+			orgNameEdit = "Organization1 Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.editSiteCP(
 			orgName = "Sub-organization1",
-			orgNameEdit = "Sub-organization1 Edit"
-		);
+			orgNameEdit = "Sub-organization1 Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -287,8 +263,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -297,21 +272,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.removeMemberCP(
 			orgName = "Sub-organization1 Edit",
-			userFullName = "user2 user2"
-		);
+			userFullName = "user2 user2");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -320,17 +292,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.searchCP(
 			orgName = "Organization1 Edit",
-			searchTerm = "Organization1 Edit"
-		);
+			searchTerm = "Organization1 Edit");
 
-		Organization.viewCP(orgName = "Organization1 Edit", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Organization1 Edit",
+			orgType = "Organization");
 	}
 
 	macro addWCStructureAndTemplate {
@@ -339,8 +311,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");
 
@@ -348,14 +319,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -364,8 +333,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -373,24 +341,21 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -398,8 +363,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	macro approveWorkflow {
@@ -408,227 +372,193 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewWithWorkflowCP(
 			webContentContent = "WC Workflow Content",
 			webContentTitle = "WC Workflow Title",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.viewTaskAssignedToMyRoles(
 			workflowAssetTitle = "WC Workflow Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.viewMySubmissions(
 			workflowAssetTitle = "WC Workflow Title",
 			workflowAssetType = "Web Content Article",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC Workflow Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewWithWorkflowCP(
 			webContentContent = "WC Workflow Content",
 			webContentTitle = "WC Workflow Title",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WC Workflow Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC Workflow Content",
-			webContentTitle = "WC Workflow Title"
-		);
+			webContentTitle = "WC Workflow Title");
 
 		WebContent.viewStatus(
 			webContentContent = "WC Workflow Content",
 			webContentStatus = "Approved",
-			webContentTitle = "WC Workflow Title"
-		);
+			webContentTitle = "WC Workflow Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
-		Workflow.gotoViewCompletedAssetViaMySubmissions(
-			workflowAssetTitle = "WC Workflow Title"
-		);
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "WC Workflow Title");
 
 		WebContent.viewEntryAsWorkflowAsset(
 			webContentContent = "WC Workflow Content",
-			webContentTitle = "WC Workflow Title"
-		);
+			webContentTitle = "WC Workflow Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Workflow Content",
-			entryTitle = "Blogs Workflow Title"
-		);
+			entryTitle = "Blogs Workflow Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Workflow Content",
-			entryTitle = "Blogs Workflow Title"
-		);
+			entryTitle = "Blogs Workflow Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.viewTaskAssignedToMyRoles(
 			workflowAssetTitle = "Blogs Workflow Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
 		Workflow.viewMySubmissions(
 			workflowAssetTitle = "Blogs Workflow Title",
 			workflowAssetType = "Blogs Entry",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Workflow Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Workflow Content",
-			entryTitle = "Blogs Workflow Title"
-		);
+			entryTitle = "Blogs Workflow Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Workflow Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Workflow Title");
 
@@ -638,8 +568,7 @@ definition {
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Workflow Content",
-			entryTitle = "Blogs Workflow Title"
-		);
+			entryTitle = "Blogs Workflow Title");
 
 		BlogsEntry.viewStatus(entryStatus = "Approved");
 	}
@@ -653,8 +582,7 @@ definition {
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Staging.gotoPublishToLive();
 
@@ -664,8 +592,7 @@ definition {
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 	}
 
 	macro publishWCDraft {
@@ -674,36 +601,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
-			webContentTitle = "Web Content Draft Title"
-		);
+			webContentTitle = "Web Content Draft Title");
 
 		WebContent.viewStatus(
 			webContentContent = "Web Content Draft Content",
 			webContentStatus = "Draft",
-			webContentTitle = "Web Content Draft Title"
-		);
+			webContentTitle = "Web Content Draft Title");
 
 		WebContent.editCP(
 			webContentContentEdit = "Web Content Content",
 			webContentTitle = "Web Content Draft Title",
-			webContentTitleEdit = "Web Content Title"
-		);
+			webContentTitleEdit = "Web Content Title");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "APPROVED",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		WebContent.viewStatus(
 			webContentContent = "Web Content Content",
 			webContentStatus = "Approved",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 	}
 
 	macro publishWorkflowDefinition {
@@ -713,22 +634,15 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
-				portlet = "Workflow"
-			);
+				portlet = "Workflow");
 
-			Workflow.viewDefinitionUnpublished(
-				workflowDefinitionTitle = "New Workflow Definition Draft"
-			);
+			Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Draft");
 
-			Workflow.publishExistingWorkflowDefinition(
-				workflowDefinitionTitle = "New Workflow Definition Draft"
-			);
+			Workflow.publishExistingWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Draft");
 
 			Navigator.gotoBack();
 
-			Workflow.viewDefinitionPublished(
-				workflowDefinitionTitle = "New Workflow Definition Draft"
-			);
+			Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition Draft");
 		}
 	}
 
@@ -751,7 +665,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test2", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test2",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	macro searchForAssetsAfterUpgrade {
@@ -813,89 +729,76 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry"
-		);
+			workflowResourceValue = "Blogs Entry");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Subtitle",
-			entryTitle = "New Blog After Upgrade"
-		);
+			entryTitle = "New Blog After Upgrade");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "New Blog After Upgrade"
-		);
+			entryTitle = "New Blog After Upgrade");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "New Blog After Upgrade",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewWithWorkflowCP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "New Blog After Upgrade"
-		);
+			entryTitle = "New Blog After Upgrade");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
+			portlet = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "New Blog After Upgrade",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsEntry.viewEntryTable(entryTitle = "New Blog After Upgrade");
 
@@ -905,25 +808,20 @@ definition {
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "New Blog After Upgrade"
-		);
+			entryTitle = "New Blog After Upgrade");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
-		Workflow.gotoViewCompletedAssetViaMySubmissions(
-			workflowAssetTitle = "New Blog After Upgrade"
-		);
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "New Blog After Upgrade");
 
 		BlogsEntry.viewEntryAsWorkflowAsset(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "New Blog After Upgrade"
-		);
+			entryTitle = "New Blog After Upgrade");
 	}
 
 	macro viewAndDeleteFormEntry {
@@ -933,78 +831,73 @@ definition {
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
-			fieldValue = "Paragraph body text."
-		);
+			fieldValue = "Paragraph body text.");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
 
-		FormsAdmin.viewFormTableEntry(fieldLabel = "Status", fieldValue = "Approved");
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
 
-		FormsAdmin.viewFormTableEntry(fieldLabel = "Checkbox", fieldValue = "Yes");
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Checkbox",
+			fieldValue = "Yes");
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Multiple Selection",
-			fieldValue = "1, 2, 4"
-		);
+			fieldValue = "1, 2, 4");
 
 		FormsAdminNavigator.gotoView();
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
-			fieldValue = "Paragraph body text."
-		);
+			fieldValue = "Paragraph body text.");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "SingleLineText",
 			fieldName = "SingleLineText",
-			fieldValue = "Single Line Text"
-		);
+			fieldValue = "Single Line Text");
 
 		FormsAdmin.viewMultilineTextEntry(
 			fieldLabel = "MultilineText",
 			fieldName = "MultilineText",
-			fieldValue = "Multiline Text"
-		);
+			fieldValue = "Multiline Text");
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
 			fieldName = "Select",
-			selectOption = "Select 1"
-		);
+			selectOption = "Select 1");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
 			fieldName = "Radio",
-			fieldValue = "Option 1"
-		);
+			fieldValue = "Option 1");
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "Date",
 			fieldName = "Date",
-			fieldValue = "05/02/2016"
-		);
+			fieldValue = "05/02/2016");
 
-		FormsAdmin.viewCheckboxEntry(fieldLabel = "Checkbox", fieldName = "Checkbox");
+		FormsAdmin.viewCheckboxEntry(
+			fieldLabel = "Checkbox",
+			fieldName = "Checkbox");
 
 		FormPortlet.clickNextPage();
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "SingleLineText2",
 			fieldName = "SingleLineText2",
-			fieldValue = "SingleLineText2"
-		);
+			fieldValue = "SingleLineText2");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms"
-		);
+			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1016,26 +909,21 @@ definition {
 	macro viewAssetPublisher {
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
-			assetLinkBehavior = "Show Full Content"
-		);
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 
 		AssertTextEquals(
+			key_portletName = "Asset Publisher",
 			locator1 = "Portlet#TITLE",
-			value1 = "Asset Publisher",
-			key_portletName = "Asset Publisher"
-		);
+			value1 = "Asset Publisher");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title"
-		);
+			assetTitle = "Web Content Title");
 
 		if (isSet(categoryName)) {
 			AssetPublisherPortlet.viewAssetMetadataPG(
 				categoryName = "${categoryName}",
-				vocabularyName = "Vocabulary Name"
-			);
+				vocabularyName = "Vocabulary Name");
 		}
 	}
 
@@ -1065,8 +953,7 @@ definition {
 		CalendarEvent.add(
 			eventTitle = "Post Upgrade Calendar Event",
 			eventType = "Regular",
-			pageName = "Calendar"
-		);
+			pageName = "Calendar");
 
 		Navigator.gotoPage(pageName = "Calendar");
 
@@ -1086,40 +973,34 @@ definition {
 
 		DMDocument.viewAllPG(
 			commentBody = "Document Comment",
-			dmDocumentTitle = "Document1"
-		);
+			dmDocumentTitle = "Document1");
 
 		DMDocument.viewDocumentDetailsCmdPG(dmDocumentTitle = "Document1");
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "application/msword",
-			metadataLabel = "Content Type"
-		);
+			metadataLabel = "Content Type");
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "Liferay",
-			metadataLabel = "Creator"
-		);
+			metadataLabel = "Creator");
 	}
 
 	macro ViewDroolsAppManager {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.viewAppCP(
 			appName = "Liferay Drools",
 			appStatus = "Active",
-			searchTerm = "Drools"
-		);
+			searchTerm = "Drools");
 
 		AppManager.viewAppCP(
 			appName = "Liferay Portal Rules Engine Drools",
 			appStatus = "Active",
-			searchTerm = "Drools"
-		);
+			searchTerm = "Drools");
 	}
 
 	macro viewMessageBoards {
@@ -1132,20 +1013,17 @@ definition {
 		Navigator.gotoPage(pageName = "Nested Portlets");
 
 		AssertTextEquals(
+			key_portletName = "Nested Applications",
 			locator1 = "Portlet#TITLE",
-			value1 = "Nested Applications",
-			key_portletName = "Nested Applications"
-		);
+			value1 = "Nested Applications");
 
 		AssertTextNotEquals(
 			locator1 = "Message#INFO",
-			value1 = "Drag applications below to nest them."
-		);
+			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
 			portletColumnNumberTo = "1",
-			portletName = "Web Content Display"
-		);
+			portletName = "Web Content Display");
 	}
 
 	macro viewNotifications {
@@ -1156,55 +1034,47 @@ definition {
 		Notifications.viewNewContent(
 			assetType = "message boards message",
 			contentBody = "Message Boards Subject 1",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Notifications.navigateToContent(contentBody = "Message Boards Subject 1");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject 1"
-		);
+			threadSubject = "Message Boards Subject 1");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2"
-		);
+			notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "message boards message",
 			contentBody = "Message Boards Subject 2",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Notifications.navigateToContent(contentBody = "Message Boards Subject 2");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject 2"
-		);
+			threadSubject = "Message Boards Subject 2");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "1"
-		);
+			notificationCount = "1");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "message boards message",
 			contentBody = "Message Boards Subject 3",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Notifications.navigateToContent(contentBody = "Message Boards Subject 3");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject 3"
-		);
+			threadSubject = "Message Boards Subject 3");
 	}
 
 	macro viewPolls {
@@ -1216,8 +1086,7 @@ definition {
 
 		Polls.viewPollPG(
 			pollsQuestion = "Sample Polls Question",
-			pollsQuestionChoiceList = "Yes,No"
-		);
+			pollsQuestionChoiceList = "Yes,No");
 
 		Polls.votePollPG(pollsQuestionChoice = "Yes");
 
@@ -1227,77 +1096,74 @@ definition {
 			pollsQuestionChoice = "Yes",
 			pollsQuestionTotalVotes = "1",
 			pollsQuestionVoteCount = "1",
-			pollsQuestionVotePercent = "100%"
-		);
+			pollsQuestionVotePercent = "100%");
 	}
 
 	macro ViewPortletsPermissions {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
-			userLoginFullName = "userfn1 userln1"
-		);
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoSitePage(
 			pageName = "Message Boards Page",
-			siteName = "Site Name 1"
-		);
+			siteName = "Site Name 1");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		Navigator.gotoSitePage(
 			pageName = "Message Boards Page",
-			siteName = "Site Name 1"
-		);
+			siteName = "Site Name 1");
 
 		AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
 
-		Navigator.gotoSitePage(pageName = "Web Content Page", siteName = "Site Name 1");
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Site Name 1");
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 
-		Navigator.openSpecificURL(
-			url = "http://localhost:8080/web/site-name-2/blogs-page"
-		);
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/site-name-2/blogs-page");
 
 		Portlet.viewNoPermissionPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2"
-		);
+			userLoginFullName = "userfn2 userln2");
 
-		Navigator.gotoSitePage(pageName = "Wiki Page", siteName = "Site Name 2");
+		Navigator.gotoSitePage(
+			pageName = "Wiki Page",
+			siteName = "Site Name 2");
 
 		WikiPage.viewFrontPagePG(wikiPageContent = "Wiki Front Page Content");
 
-		Navigator.gotoSitePage(pageName = "Wiki Page", siteName = "Site Name 2");
+		Navigator.gotoSitePage(
+			pageName = "Wiki Page",
+			siteName = "Site Name 2");
 
 		Portlet.viewPortletOptions(OptionsName = "Configuration");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name 2"
-		);
+			siteName = "Site Name 2");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name 2"
-		);
+			siteName = "Site Name 2");
 
 		Portlet.viewPortletOptions(OptionsName = "Permissions");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name 2");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name 2");
 
 		Portlet.viewNoPermissionPG();
 	}
@@ -1305,26 +1171,24 @@ definition {
 	macro viewStagingNestedPortlets {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Staging Site"
-		);
+			siteName = "Staging Site");
 
 		AssertTextEquals(
+			key_portletName = "Nested Applications",
 			locator1 = "Portlet#TITLE",
-			value1 = "Nested Applications",
-			key_portletName = "Nested Applications"
-		);
+			value1 = "Nested Applications");
 
 		AssertTextNotEquals(
 			locator1 = "Message#INFO",
-			value1 = "Drag applications below to nest them."
-		);
+			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
 			portletColumnNumberTo = "1",
-			portletName = "Web Content Display"
-		);
+			portletName = "Web Content Display");
 
-		NestedPortlets.viewPG(portletColumnNumberTo = "1", portletName = "Blogs");
+		NestedPortlets.viewPG(
+			portletColumnNumberTo = "1",
+			portletName = "Blogs");
 	}
 
 	macro viewUpgrade {
@@ -1334,9 +1198,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		ManagementBar.changeDisplayStyle(
-			displayStyle = "List"
-		);
+		ManagementBar.changeDisplayStyle(displayStyle = "List");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
@@ -1347,37 +1209,37 @@ definition {
 			replyCount = "0",
 			startedByUserName = "Test Test",
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		Navigator.gotoPage(pageName = "Wiki");
 
 		WikiPage.viewFrontPagePG(
 			wikiPageContent = "Wiki Front Page Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Blogs");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertVisible(locator1 = "Home#PAGE_ACTIVE", key_pageName = "Site Page");
+		AssertVisible(
+			key_pageName = "Site Page",
+			locator1 = "Home#PAGE_ACTIVE");
 
 		SignOut.signOut();
 
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		Smoke.viewWelcomePage(userFirstName = "Userfn", userLastName = "Userln");
+		Smoke.viewWelcomePage(
+			userFirstName = "Userfn",
+			userLastName = "Userln");
 
 		Navigator.gotoPage(pageName = "Web Content");
 
@@ -1396,31 +1258,29 @@ definition {
 			replyCount = "0",
 			startedByUserName = "Test Test",
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		MessageboardsThread.viewPG(
 			threadBody = "Message Boards Body",
-			threadSubject = "Message Boards Subject"
-		);
+			threadSubject = "Message Boards Subject");
 
 		Navigator.gotoPage(pageName = "Wiki");
 
 		WikiPage.viewFrontPagePG(
 			wikiPageContent = "Wiki Front Page Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Blogs");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertVisible(locator1 = "Home#PAGE_ACTIVE", key_pageName = "Site Page");
+		AssertVisible(
+			key_pageName = "Site Page",
+			locator1 = "Home#PAGE_ACTIVE");
 
 		SignOut.signOut();
 

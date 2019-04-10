@@ -9,8 +9,7 @@ definition {
 		if ("${selectSiteTemplate}" == "true") {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${siteTemplateName}"
-			);
+				value1 = "${siteTemplateName}");
 		}
 
 		Button.clickSave();
@@ -20,21 +19,18 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "The User Group Name cannot be blank, numeric or a reserved word such as null."
-			);
+				value1 = "The User Group Name cannot be blank, numeric or a reserved word such as null.");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "The User Group Name cannot contain the following invalid characters: , *."
-			);
+				value1 = "The User Group Name cannot contain the following invalid characters: , *.");
 		}
 		else if ("${userGroupNameVariation}" == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "Please enter a unique name."
-			);
+				value1 = "Please enter a unique name.");
 		}
 		else if ("${userGroupNameVariation}" == "Null") {
 			Alert.viewRequiredField();
@@ -44,8 +40,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-				value1 = "${userGroupName}"
-			);
+				value1 = "${userGroupName}");
 		}
 	}
 
@@ -57,18 +52,13 @@ definition {
 		if (("${userGroupSite}" == "Community Site") || ("${userGroupSite}" == "Intranet Site")) {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${userGroupSite}"
-			);
+				value1 = "${userGroupSite}");
 
 			if ("${checkEnablePropagationCheckbox}" == "true") {
-				AssertChecked(
-					locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX"
-				);
+				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
 			}
 			else {
-				Uncheck(
-					locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX"
-				);
+				Uncheck(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
 			}
 		}
 
@@ -90,7 +80,9 @@ definition {
 
 		SelectFrameTop();
 
-		AssertClick(locator1 = "Button#ADD", value1 = "Add");
+		AssertClick(
+			locator1 = "Button#ADD",
+			value1 = "Add");
 
 		Alert.viewSuccessMessage();
 	}
@@ -106,8 +98,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}"
-		);
+			rowEntry = "${userGroupName}");
 
 		AssertVisible(locator1 = "NavBar#USERS");
 
@@ -129,15 +120,13 @@ definition {
 
 		AssertClick.assertTextClickAtWaitForLastScript(
 			locator1 = "Button#ADD",
-			value1 = "Add"
-		);
+			value1 = "Add");
 
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 	}
 
 	macro deleteCP {
@@ -149,17 +138,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${userGroupName}"
-		);
+			rowEntry = "${userGroupName}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
@@ -175,24 +160,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${userGroupName}"
-		);
+			rowEntry = "${userGroupName}");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
-			value1 = "You cannot delete user groups that have users."
-		);
+			value1 = "You cannot delete user groups that have users.");
 	}
 
 	macro editCP {
@@ -218,8 +198,7 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(
 			menuItem = "Manage Pages",
-			rowEntry = "${userGroupName}"
-		);
+			rowEntry = "${userGroupName}");
 	}
 
 	macro removeMemberCP {
@@ -254,24 +233,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();
 
 			ClickNoError(locator1 = "Icon#DELETE");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 
 			AssertTextEquals(
 				locator1 = "Message#INFO",
-				value1 = "No user groups were found."
-			);
+				value1 = "No user groups were found.");
 		}
 	}
 
@@ -282,19 +257,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}"
-		);
+			rowEntry = "${userGroupName}");
 
 		AssertTextEquals(
+			key_userScreenName = "${userScreenName}",
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}",
-			key_userScreenName = "${userScreenName}"
-		);
+			value1 = "${userScreenName}");
 	}
 
 	macro viewCP {
@@ -306,8 +278,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -325,8 +296,7 @@ definition {
 	macro viewDefault {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No user groups were found."
-		);
+			value1 = "No user groups were found.");
 	}
 
 	macro viewPG {
@@ -338,19 +308,19 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES",
-			value1 = "Open Pages"
-		);
+			value1 = "Open Pages");
 
 		SelectWindow(locator1 = "Home - ${userGroupName} - ${siteName}");
 
-		AssertTextEquals(locator1 = "Home#SITE_NAME", value1 = "${userGroupName}");
+		AssertTextEquals(
+			locator1 = "Home#SITE_NAME",
+			value1 = "${userGroupName}");
 
 		var key_portletName = "${portletName}";
 
 		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
-			value1 = "${portletName}"
-		);
+			value1 = "${portletName}");
 
 		Close(locator1 = "Home - ${userGroupName} - ${siteName}");
 	}
@@ -374,13 +344,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		AssertClick(
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK",
-			value1 = "${userGroupName}"
-		);
+			value1 = "${userGroupName}");
 
 		AssertTextNotPresent(value1 = "${userFirstName}");
 	}

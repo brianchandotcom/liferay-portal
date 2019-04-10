@@ -14,8 +14,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Import"
-		);
+			portlet = "Import");
 	}
 
 	tearDown {
@@ -36,7 +35,6 @@ definition {
 			import6210buildNumber = "true",
 			importFail = "true",
 			larFileName = "6210buildNumber.lar",
-			uploadFrom = "dependencies"
-		);
+			uploadFrom = "dependencies");
 	}
 }

@@ -46,9 +46,7 @@ definition {
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 
-		PortalSettings.viewEnabledLDAPSetting(
-			enableSettingList = "${enableSettingList}"
-		);
+		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
 
 		Portlet.shutdownServer();
 
@@ -61,25 +59,20 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 
 		AssertConsoleTextNotPresent(value1 = "Unable to encrypt blank password");
 	}
@@ -105,9 +98,7 @@ definition {
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 
-		PortalSettings.viewEnabledLDAPSetting(
-			enableSettingList = "${enableSettingList}"
-		);
+		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
 
 		Portlet.shutdownServer();
 
@@ -118,81 +109,67 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.viewCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 
 		Navigator.gotoBack();
 
 		User.editUserGenderCP(
 			userGender = "Female",
-			userName = "ldapusergivenname ldapusersn"
-		);
+			userName = "ldapusergivenname ldapusersn");
 
 		Navigator.gotoBack();
 
 		User.editUserJobTitleCP(
 			userJobTitle = "QA",
-			userName = "ldapusergivenname ldapusersn"
-		);
+			userName = "ldapusergivenname ldapusersn");
 
 		Navigator.gotoBack();
 
 		User.editUserSuffixCP(
 			userName = "ldapusergivenname ldapusersn",
-			userSuffix = "Phd"
-		);
+			userSuffix = "Phd");
 
 		Navigator.gotoBack();
 
 		User.editPasswordCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
-			userScreenName = "ldapusercn"
-		);
+			userScreenName = "ldapusercn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ldapuseremail@liferay.com",
-			userLoginFullName = "ldapusergivenname ldapusersn"
-		);
+			userLoginFullName = "ldapusergivenname ldapusersn");
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Account Settings"
-		);
+			portlet = "Account Settings");
 
 		AssertTextEquals(
+			key_userGender = "Female",
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED",
-			value1 = "Female",
-			key_userGender = "Female"
-		);
+			value1 = "Female");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
-			value1 = "QA"
-		);
+			value1 = "QA");
 
 		AssertTextEquals(
+			key_userSuffix = "Phd",
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED",
-			value1 = "Phd",
-			key_userSuffix = "Phd"
-		);
+			value1 = "Phd");
 	}
 
 	@description = "This is a use case for LPS-73381."
@@ -203,14 +180,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
 			configurationName = "Servers",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		SystemSettings.editSecurityCredential(securityCredential = "123456");
 	}
@@ -222,14 +197,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
 			configurationName = "Authentication",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
 
@@ -240,14 +213,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
 			configurationName = "Authentication",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
 	}

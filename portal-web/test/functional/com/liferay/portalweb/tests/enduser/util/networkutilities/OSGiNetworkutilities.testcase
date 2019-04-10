@@ -13,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Network Utilities Page");
 
@@ -35,6 +34,8 @@ definition {
 	test SearchDNSDomain {
 		Navigator.gotoPage(pageName = "Network Utilities Page");
 
-		NetworkUtilities.searchPG(dnsDomain = "", networkDomain = "localhost");
+		NetworkUtilities.searchPG(
+			dnsDomain = "",
+			networkDomain = "localhost");
 	}
 }

@@ -2,15 +2,13 @@ definition {
 	macro configureSelectionMethod {
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs Aggregator",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Select(
 			locator1 = "Configuration#SELECTION_METHOD_SELECT",
-			value1 = "${selectionMethod}"
-		);
+			value1 = "${selectionMethod}");
 
 		PortletEntry.save();
 
@@ -23,38 +21,34 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "BlogsAggregator#ENTRY_TITLE",
-				value1 = "${entryTitle}"
-			);
+				value1 = "${entryTitle}");
 		}
 	}
 
 	macro viewParentOrganizationPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(
-			locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME"
-		);
+		SelectFrame(locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME");
 
 		var key_orgName = "${orgName}";
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}"
-		);
+			value1 = "${orgName}");
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME_SECOND_COLUMN",
-			value1 = "${parentOrgName}"
-		);
+			value1 = "${parentOrgName}");
 
 		SelectFrame(value1 = "relative=top");
 	}

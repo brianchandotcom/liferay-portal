@@ -138,7 +138,12 @@ name = HtmlUtil.escapeJS(name);
 		getText: function() {
 			var value;
 
-			if (window['<%= name %>'].instanceReady) {
+			var textArea = document.getElementById('<%= name %>');
+
+			if (textArea.nodeName.toLowerCase() === 'textarea' && textArea.value) {
+				value = textArea.value;
+			}
+			else if (window['<%= name %>'].instanceReady) {
 				value = document.getElementById('<%= name %>').value;
 			}
 			else {

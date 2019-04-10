@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.model.impl.SegmentsEntryImpl;
+import com.liferay.segments.model.impl.SegmentsExperienceImpl;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;
@@ -50,7 +51,8 @@ public class SegmentsXStreamConfigurator implements XStreamConfigurator {
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
-			new XStreamAlias(SegmentsEntryImpl.class, "SegmentsEntry")
+			new XStreamAlias(SegmentsEntryImpl.class, "SegmentsEntry"),
+			new XStreamAlias(SegmentsExperienceImpl.class, "SegmentsExperience")
 		};
 	}
 

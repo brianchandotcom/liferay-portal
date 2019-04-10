@@ -64,13 +64,13 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		_setUpUserSearchFixture();
 
-		setUpBlogsEntryFixture();
+		_setUpBlogsEntryFixture();
 
-		setUpBlogsEntryIndexerFixture();
+		_setUpBlogsEntryIndexerFixture();
 
-		setUpIndexedFieldsFixture();
+		_setUpIndexedFieldsFixture();
 	}
 
 	@Test
@@ -94,22 +94,22 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			_expectedFieldValues(blogsEntry), document, searchTerm);
 	}
 
-	protected void setUpBlogsEntryFixture() throws Exception {
+	private void _setUpBlogsEntryFixture() {
 		blogsEntryFixture = new BlogsEntryFixture(_group);
 
 		_blogsEntries = blogsEntryFixture.getBlogsEntries();
 	}
 
-	protected void setUpBlogsEntryIndexerFixture() {
+	private void _setUpBlogsEntryIndexerFixture() {
 		blogsEntryIndexerFixture = new IndexerFixture<>(BlogsEntry.class);
 	}
 
-	protected void setUpIndexedFieldsFixture() {
+	private void _setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
 			resourcePermissionLocalService, searchEngineHelper);
 	}
 
-	protected void setUpUserSearchFixture() throws Exception {
+	private void _setUpUserSearchFixture() throws Exception {
 		userSearchFixture = new UserSearchFixture();
 
 		userSearchFixture.setUp();
@@ -162,10 +162,10 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populateViewCount(
 			BlogsEntry.class, blogsEntry.getEntryId(), map);
 
+		_populateContent(blogsEntry, map);
 		_populateDates(blogsEntry, map);
 		_populateRoles(blogsEntry, map);
 		_populateTitle(blogsEntry, map);
-		_populateContent(blogsEntry, map);
 
 		return map;
 	}
@@ -176,13 +176,9 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		for (Locale locale :
 				LanguageUtil.getAvailableLocales(blogsEntry.getGroupId())) {
 
-			String content = HtmlUtil.extractText(blogsEntry.getContent());
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			String key = "content_" + languageId;
-
-			map.put(key, content);
+			map.put(
+				"content_" + LocaleUtil.toLanguageId(locale),
+				HtmlUtil.extractText(blogsEntry.getContent()));
 		}
 	}
 

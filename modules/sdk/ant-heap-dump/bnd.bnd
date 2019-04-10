@@ -3,9 +3,5 @@ Bundle-SymbolicName: com.liferay.ant.heap.dump
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.ant.heap.dump
 -includeresource:\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/concurrent/*,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/process/*,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission*.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/*

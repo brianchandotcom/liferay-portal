@@ -194,17 +194,6 @@ public class LocalProcessLauncher {
 			return _attributes;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #writeProcessCallable(ProcessCallable) }
-		 */
-		@Deprecated
-		public static com.liferay.portal.kernel.process.log.ProcessOutputStream
-			getProcessOutputStream() {
-
-			return null;
-		}
-
 		public static boolean isAttached() {
 			HeartbeatThread heartbeatThread =
 				_heartbeatThreadAtomicReference.get();

@@ -16,14 +16,10 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.OutputProcessor;
-import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.concurrent.FutureConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.io.InputStream;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -47,78 +43,11 @@ public class HeapUtil {
 		return _PROCESS_ID;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #heapDump(boolean,
-	 *             boolean, String, OutputProcessor)
-	 */
-	@Deprecated
-	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(
-		boolean live, boolean binary, String file,
-		com.liferay.portal.kernel.process.OutputProcessor<O, E>
-			outputProcessor) {
-
-		return heapDump(_PROCESS_ID, live, binary, file, outputProcessor);
-	}
-
 	public static <O, E> Future<Map.Entry<O, E>> heapDump(
 		boolean live, boolean binary, String file,
 		OutputProcessor<O, E> outputProcessor) {
 
 		return heapDump(_PROCESS_ID, live, binary, file, outputProcessor);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #heapDump(int,
-	 *             boolean, boolean, String, OutputProcessor)
-	 */
-	@Deprecated
-	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(
-		int processId, boolean live, boolean binary, String file,
-		com.liferay.portal.kernel.process.OutputProcessor<O, E>
-			outputProcessor) {
-
-		OutputProcessor<O, E> petraOutputProcessor =
-			new OutputProcessor<O, E>() {
-
-				@Override
-				public E processStdErr(InputStream stdErrInputStream)
-					throws ProcessException {
-
-					try {
-						return outputProcessor.processStdErr(stdErrInputStream);
-					}
-					catch (com.liferay.portal.kernel.process.ProcessException
-								pe) {
-
-						throw new ProcessException(pe);
-					}
-				}
-
-				@Override
-				public O processStdOut(InputStream stdOutInputStream)
-					throws ProcessException {
-
-					try {
-						return outputProcessor.processStdOut(stdOutInputStream);
-					}
-					catch (com.liferay.portal.kernel.process.ProcessException
-								pe) {
-
-						throw new ProcessException(pe);
-					}
-				}
-
-			};
-
-		return new FutureConverter<ObjectValuePair<O, E>, Map.Entry<O, E>>(
-			heapDump(processId, live, binary, file, petraOutputProcessor)) {
-
-			@Override
-			protected ObjectValuePair<O, E> convert(Map.Entry<O, E> entry) {
-				return new ObjectValuePair<>(entry.getKey(), entry.getValue());
-			}
-
-		};
 	}
 
 	public static <O, E> Future<Map.Entry<O, E>> heapDump(

@@ -15,7 +15,6 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.petra.log4j.Log4JUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -126,8 +125,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 								DialectDetector.class.getName(),
 								Level.INFO.toString(), false);
 
-							ClassPathUtil.initializeClassPaths(
-								new MockServletContext());
 							PortalClassPathUtil.initializeClassPaths(
 								new MockServletContext());
 

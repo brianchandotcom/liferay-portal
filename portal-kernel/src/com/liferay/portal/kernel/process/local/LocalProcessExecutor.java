@@ -43,10 +43,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
@@ -54,14 +52,6 @@ import java.util.function.Consumer;
  * @author Shuyang Zhou
  */
 public class LocalProcessExecutor implements ProcessExecutor {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public Set<Process> destroy() {
-		return Collections.emptySet();
-	}
 
 	@Override
 	public <T extends Serializable> ProcessChannel<T> execute(

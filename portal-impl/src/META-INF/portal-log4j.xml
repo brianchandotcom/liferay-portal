@@ -324,10 +324,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.process.LoggingOutputProcessor">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.kernel.resiliency">
 		<priority value="INFO" />
 	</category>

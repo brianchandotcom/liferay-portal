@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.PathHolder;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -40,15 +39,6 @@ public class ProcessConfig implements Serializable {
 		return _merge(getBootstrapClassPathHolders());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getBootstrapClassPathHolders()}
-	 */
-	@Deprecated
-	public String[] getBootstrapClassPathElements() {
-		return ArrayUtil.toStringArray(_bootstrapClassPathHolders);
-	}
-
 	public PathHolder[] getBootstrapClassPathHolders() {
 		return _bootstrapClassPathHolders;
 	}
@@ -71,15 +61,6 @@ public class ProcessConfig implements Serializable {
 
 	public String getRuntimeClassPath() {
 		return _merge(getRuntimeClassPathHolders());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getRuntimeClassPathHolders()}
-	 */
-	@Deprecated
-	public String[] getRuntimeClassPathElements() {
-		return ArrayUtil.toStringArray(_runtimeClassPathHolders);
 	}
 
 	public PathHolder[] getRuntimeClassPathHolders() {

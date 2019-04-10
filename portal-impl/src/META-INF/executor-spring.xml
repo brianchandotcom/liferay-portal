@@ -168,12 +168,5 @@
 	<!-- Process executor -->
 
 	<bean class="com.liferay.petra.process.local.LocalProcessExecutor" id="com.liferay.petra.process.local.LocalProcessExecutor" />
-	<bean class="com.liferay.portal.kernel.process.ProcessExecutorUtil" id="com.liferay.portal.kernel.process.ProcessExecutorUtil">
-		<property name="processExecutor" ref="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.process.local.LocalProcessExecutor" id="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
-
-	<!-- Process util -->
-
-	<bean class="com.liferay.portal.kernel.process.ProcessUtil" id="com.liferay.portal.kernel.process.ProcessUtil" />
 </beans>

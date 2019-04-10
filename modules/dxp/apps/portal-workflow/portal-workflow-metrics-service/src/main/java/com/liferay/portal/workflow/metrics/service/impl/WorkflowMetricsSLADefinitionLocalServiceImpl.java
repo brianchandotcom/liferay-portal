@@ -38,6 +38,7 @@ import java.util.List;
 public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	extends WorkflowMetricsSLADefinitionLocalServiceBaseImpl {
 
+	@Override
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 			String name, String description, long duration, long processId,
 			String[] pauseNodeNames, String[] startNodeNames,
@@ -95,6 +96,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinition);
 	}
 
+	@Override
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId) {
 
@@ -102,6 +104,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			companyId, processId);
 	}
 
+	@Override
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
@@ -110,6 +113,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			companyId, processId, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
 		long companyId, long processId) {
 

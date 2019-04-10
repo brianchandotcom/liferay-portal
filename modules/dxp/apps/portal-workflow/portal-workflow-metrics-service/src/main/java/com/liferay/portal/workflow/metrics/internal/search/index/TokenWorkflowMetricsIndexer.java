@@ -63,8 +63,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		Date createDate = kaleoTaskInstanceToken.getCreateDate();
 
-		document.addDateSortable(
-			"createDate", kaleoTaskInstanceToken.getCreateDate());
+		document.addDateSortable("createDate", createDate);
 
 		document.addKeyword("deleted", false);
 

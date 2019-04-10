@@ -37,8 +37,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -68,7 +69,7 @@ public class DDMStructureManagerUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_classNameId = PortalUtil.getClassNameId(
+		_classNameId = _portal.getClassNameId(
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -383,6 +384,9 @@ public class DDMStructureManagerUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

@@ -118,7 +118,7 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 		AssetRenderer assetRenderer = null;
 
 		if (assetRendererFactory != null) {
-			assetRendererFactory.getAssetRenderer(
+			assetRenderer = assetRendererFactory.getAssetRenderer(
 				infoDisplayObjectProvider.getClassPK());
 		}
 

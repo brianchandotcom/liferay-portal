@@ -51,22 +51,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
-	protected Organization
-			testGetMyUserAccountOrganizationsPage_addOrganization(
-				Long userAccountId, Organization organization)
-		throws Exception {
-
-		return _addUserOrganization(userAccountId, organization);
-	}
-
-	@Override
-	protected Long testGetMyUserAccountOrganizationsPage_getUserAccountId()
-		throws Exception {
-
-		return _user.getUserId();
-	}
-
-	@Override
 	protected Organization testGetOrganization_addOrganization()
 		throws Exception {
 

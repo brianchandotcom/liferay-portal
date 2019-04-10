@@ -83,6 +83,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 		<div class="sidebar-body">
 			<liferay-frontend:form-navigator
+				fieldSetCssClass="panel-group-flush"
 				formModelBean="<%= ddmTemplate %>"
 				id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE %>"
 				showButtons="<%= false %>"

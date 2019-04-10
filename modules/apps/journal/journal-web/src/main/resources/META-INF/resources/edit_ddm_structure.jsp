@@ -83,6 +83,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 		<div class="sidebar-body">
 			<liferay-frontend:form-navigator
+				fieldSetCssClass="panel-group-flush"
 				formModelBean="<%= ddmStructure %>"
 				id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_STRUCTURE %>"
 				showButtons="<%= false %>"

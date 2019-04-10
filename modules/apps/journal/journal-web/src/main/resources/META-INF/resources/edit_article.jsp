@@ -123,6 +123,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			>
 				<liferay-ui:section>
 					<liferay-frontend:form-navigator
+						fieldSetCssClass="panel-group-flush"
 						formModelBean="<%= article %>"
 						id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
 						showButtons="<%= false %>"

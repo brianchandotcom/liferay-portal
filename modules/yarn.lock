@@ -8195,14 +8195,6 @@ gulp-match@^1.0.3:
   dependencies:
     minimatch "^3.0.3"
 
-gulp-plumber@^0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/gulp-plumber/-/gulp-plumber-0.6.6.tgz#9f9846a513c70d03216ce7a2a8ce6fd5a3fc3175"
-  integrity sha1-n5hGpRPHDQMhbOeiqM5v1aP8MXU=
-  dependencies:
-    gulp-util "~3"
-    through2 "~0.6"
-
 gulp-postcss@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/gulp-postcss/-/gulp-postcss-8.0.0.tgz#8d3772cd4d27bca55ec8cb4c8e576e3bde4dc550"
@@ -8269,7 +8261,7 @@ gulp-storage@^1.0.6:
     lodash "^2.4.1"
     through2 "*"
 
-gulp-util@*, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.4, gulp-util@^3.0.5, gulp-util@^3.0.7, gulp-util@~3:
+gulp-util@*, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.4, gulp-util@^3.0.5, gulp-util@^3.0.7:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   integrity sha1-AFTh50RQLifATBh8PsxQXdVLu08=
@@ -11260,10 +11252,10 @@ liferay-theme-es2015-hook@8.0.0-rc.2:
     metal-tools-soy "^4.1.2"
     run-sequence "^1.2.2"
 
-liferay-theme-tasks@9.0.0-alpha.1:
-  version "9.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.0.0-alpha.1.tgz#b23cf32fe708957121cf2fa6f402219d9692f5de"
-  integrity sha512-aH1S0AkUyqihUPkFw3WQJVuF6pRHfmAvwC66tcEgHVUdRYf01/UXEC7RyQs9u2IQTGQls5kVwbS2HsgIskKskw==
+liferay-theme-tasks@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.0.0.tgz#e89ad958c69ecbb2973643e53ffec2cfcbd03ac7"
+  integrity sha512-LuEIUmVif+PcT+2tepOgceFumok+squly55H8JENoFHNtGxOoUfq/KQA4JIDXnXFAOkwkyS0eaI/A/2nwESN9Q==
   dependencies:
     async "^2.6.1"
     autoprefixer "^9.1.5"
@@ -11284,7 +11276,6 @@ liferay-theme-tasks@9.0.0-alpha.1:
     gulp-liferay-r2-css "^0.0.2"
     gulp-livereload "^4.0.1"
     gulp-load-plugins "^1.5.0"
-    gulp-plumber "^0.6.6"
     gulp-postcss "^8.0.0"
     gulp-rename "^1.2.0"
     gulp-replace-task "^0.11.0"
@@ -11304,7 +11295,6 @@ liferay-theme-tasks@9.0.0-alpha.1:
     package-json "^5.0.0"
     plugin-error "^1.0.1"
     portfinder "^1.0.20"
-    resolve "^1.1.7"
     run-sequence "^2.2.1"
     tar-fs "^1.16.3"
     through2 "^2.0.0"
@@ -17404,7 +17394,7 @@ through2@^0.5.0:
     readable-stream "~1.0.17"
     xtend "~3.0.0"
 
-through2@^0.6.0, through2@^0.6.1, through2@^0.6.3, through2@^0.6.5, through2@~0.6:
+through2@^0.6.0, through2@^0.6.1, through2@^0.6.3, through2@^0.6.5:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
   integrity sha1-QaucZ7KdVyCQcUEOHXp6lozTrUg=

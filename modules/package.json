@@ -9,7 +9,7 @@
 		"liferay-npm-bundler-preset-standard": "2.7.1",
 		"liferay-npm-scripts": "1.4.13",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
-		"liferay-theme-tasks": "9.0.0-alpha.1"
+		"liferay-theme-tasks": "9.0.0"
 	},
 	"private": true,
 	"scripts": {

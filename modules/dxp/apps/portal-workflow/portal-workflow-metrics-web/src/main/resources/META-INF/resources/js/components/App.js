@@ -64,7 +64,7 @@ export default class AppComponent extends React.Component {
 								exact
 								from="/"
 								to={`/processes/${defaultDelta}/1/${encodeURIComponent(
-									'overdueInstanceCount:asc'
+									'overdueInstanceCount:desc'
 								)}`}
 							/>
 

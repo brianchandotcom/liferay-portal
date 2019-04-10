@@ -26,21 +26,25 @@ import java.util.concurrent.TimeoutException;
 public class BuildDatabaseUtil {
 
 	public static BuildDatabase getBuildDatabase() {
-		return getBuildDatabase(true);
+		return getBuildDatabase(null, true);
 	}
 
-	public static BuildDatabase getBuildDatabase(boolean download) {
+	public static BuildDatabase getBuildDatabase(
+		String baseDirPath, boolean download) {
+
 		if (_buildDatabase != null) {
 			return _buildDatabase;
 		}
 
-		String workspace = System.getenv("WORKSPACE");
+		if (baseDirPath == null) {
+			baseDirPath = System.getenv("WORKSPACE");
 
-		if (workspace == null) {
-			throw new RuntimeException("Please set WORKSPACE");
+			if (baseDirPath == null) {
+				throw new RuntimeException("Please set WORKSPACE");
+			}
 		}
 
-		File baseDir = new File(workspace);
+		File baseDir = new File(baseDirPath);
 
 		if (!baseDir.exists()) {
 			baseDir.mkdir();

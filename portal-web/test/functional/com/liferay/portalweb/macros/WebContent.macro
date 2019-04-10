@@ -867,6 +867,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		PortletEntry.save();
+
+		IFrame.closeFrame();
 	}
 
 	macro editNullCP {

@@ -16,6 +16,7 @@ package com.liferay.headless.foundation.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.foundation.dto.v1_0.Organization;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +36,21 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseOrganizationResourceTestCase.setUpClass();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			OrganizationLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod
+				<com.liferay.portal.kernel.model.Organization>)
+					OrganizationLocalServiceUtil::deleteOrganization);
+
+		actionableDynamicQuery.performActions();
+	}
 
 	@Before
 	@Override

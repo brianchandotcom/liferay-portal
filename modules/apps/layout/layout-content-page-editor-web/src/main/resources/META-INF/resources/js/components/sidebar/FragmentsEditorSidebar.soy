@@ -4,14 +4,14 @@
  * FragmentsEditorSidebar
  */
 {template .render}
-	{@param? fragmentsEditorSidebarVisible: bool}
+	{@param? selectedSidebarPanelId: string}
 	{@param? store: ?}
 
 	{let $sidebarClasses kind="text"}
 		fragments-editor-sidebar
 		{sp}sidebar
 
-		{if $fragmentsEditorSidebarVisible == false}
+		{if not $selectedSidebarPanelId}
 			{sp}fragments-editor-sidebar--collapsed
 		{/if}
 	{/let}

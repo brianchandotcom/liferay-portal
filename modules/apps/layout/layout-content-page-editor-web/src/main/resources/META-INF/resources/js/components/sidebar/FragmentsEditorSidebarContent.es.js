@@ -1,5 +1,4 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './fragments/SidebarElementsPanel.es';
@@ -9,15 +8,9 @@ import './mapping/SidebarMappingPanel.es';
 import './structure/SidebarStructurePanel.es';
 import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../../actions/actions.es';
+import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FragmentsEditorSidebarContent.soy';
-
-/**
- * @review
- * @type {string}
- */
-const DEFAULT_SIDEBAR_PANEL_ID = 'sections';
 
 /**
  * FragmentsEditorSidebarContent
@@ -33,9 +26,9 @@ class FragmentsEditorSidebarContent extends Component {
 	prepareStateForRender(state) {
 		let nextState = state;
 
-		if (state._selectedSidebarPanelId && state.sidebarPanels) {
+		if (state.selectedSidebarPanelId && state.sidebarPanels) {
 			const selectedSidebarPanel = state.sidebarPanels.find(
-				sidebarPanel => sidebarPanel.sidebarPanelId === state._selectedSidebarPanelId
+				sidebarPanel => sidebarPanel.sidebarPanelId === state.selectedSidebarPanelId
 			);
 
 			if (selectedSidebarPanel) {
@@ -58,17 +51,19 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @review
 	 */
 	_handlePanelButtonClick(event) {
-		const data = event.delegateTarget.dataset;
+		const {sidebarPanelId} = event.delegateTarget.dataset;
 
-		if (!this.fragmentsEditorSidebarVisible) {
-			this.store.dispatchAction(TOGGLE_SIDEBAR);
-			this._setActivePanel(data.sidebarPanelId);
-		}
-		else if (this._selectedSidebarPanelId === data.sidebarPanelId) {
-			this._hideSidebar();
+		if (this.selectedSidebarPanelId === sidebarPanelId) {
+			this.store.dispatchAction(
+				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+				{sidebarPanelId: ''}
+			);
 		}
 		else {
-			this._setActivePanel(data.sidebarPanelId);
+			this.store.dispatchAction(
+				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+				{sidebarPanelId}
+			);
 		}
 	}
 
@@ -78,48 +73,18 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @review
 	 */
 	_hideSidebar() {
-		this.store.dispatchAction(HIDE_SIDEBAR);
-		this._selectedSidebarPanelId = '';
-	}
-
-	/**
-	 * Set as active the panel with the given sidebarPanelId and also set sidebar title
-	 * @param {string} sidebarPanelId
-	 * @private
-	 * @review
-	 */
-	_setActivePanel(sidebarPanelId) {
-		this._selectedSidebarPanelId = sidebarPanelId;
+		this.store.dispatchAction(
+			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+			{sidebarPanelId: ''}
+		);
 	}
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-FragmentsEditorSidebarContent.STATE = {
-
-	/**
-	 * Sidebar active panel ID
-	 * @default sections
-	 * @memberof FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_selectedSidebarPanelId: Config
-		.string()
-		.internal()
-		.value(DEFAULT_SIDEBAR_PANEL_ID)
-};
-
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
 	[
-		'fragmentsEditorSidebarVisible',
+		'selectedSidebarPanelId',
 		'sidebarPanels',
 		'spritemap'
 	]

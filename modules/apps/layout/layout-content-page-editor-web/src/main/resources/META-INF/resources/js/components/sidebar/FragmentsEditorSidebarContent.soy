@@ -5,12 +5,12 @@
  */
 {template .render}
 	{@param? _handlePanelButtonClick: any}
-	{@param? _selectedSidebarPanelId: string}
 	{@param? _selectedSidebarPanel: [
 		icon: string,
 		label: string,
 		sidebarPanelId: string
 	]}
+	{@param? selectedSidebarPanelId: string}
 	{@param? sidebarPanels: list<[
 		icon: string,
 		label: string,
@@ -20,35 +20,35 @@
 	{@param? store: ?}
 
 	<div class="fragments-editor-sidebar-content">
-		{if $_selectedSidebarPanel}
-			<div class="fragments-editor-sidebar-section">
+		<div class="fragments-editor-sidebar-section">
+			{if $_selectedSidebarPanel}
 				<h1 class="fragments-editor-sidebar-section__title">
 					{$_selectedSidebarPanel.label ?: ''}
 				</h1>
+			{/if}
 
-				{if $_selectedSidebarPanelId == 'sections'}
-					{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
-						{param store: $store /}
-					{/call}
-				{elseif $_selectedSidebarPanelId == 'elements'}
-					{call com.liferay.layout.content.page.editor.web.SidebarElementsPanel.render}
-						{param store: $store /}
-					{/call}
-				{elseif $_selectedSidebarPanelId == 'mapping'}
-					{call com.liferay.layout.content.page.editor.web.SidebarMappingPanel.render}
-						{param store: $store /}
-					{/call}
-				{elseif $_selectedSidebarPanelId == 'structure'}
-					{call com.liferay.layout.content.page.editor.web.SidebarStructurePanel.render}
-						{param store: $store /}
-					{/call}
-				{elseif $_selectedSidebarPanelId == 'widgets'}
-					{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
-						{param store: $store /}
-					{/call}
-				{/if}
-			</div>
-		{/if}
+			{if $selectedSidebarPanelId == 'sections'}
+				{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
+					{param store: $store /}
+				{/call}
+			{elseif $selectedSidebarPanelId == 'elements'}
+				{call com.liferay.layout.content.page.editor.web.SidebarElementsPanel.render}
+					{param store: $store /}
+				{/call}
+			{elseif $selectedSidebarPanelId == 'mapping'}
+				{call com.liferay.layout.content.page.editor.web.SidebarMappingPanel.render}
+					{param store: $store /}
+				{/call}
+			{elseif $selectedSidebarPanelId == 'structure'}
+				{call com.liferay.layout.content.page.editor.web.SidebarStructurePanel.render}
+					{param store: $store /}
+				{/call}
+			{elseif $selectedSidebarPanelId == 'widgets'}
+				{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
+					{param store: $store /}
+				{/call}
+			{/if}
+		</div>
 
 		<div class="fragments-editor-sidebar-sections-buttons" role="group">
 			{if $sidebarPanels}
@@ -60,7 +60,7 @@
 						{sp}text-center
 						{sp}fragments-editor-sidebar-sections-buttons__btn
 
-						{if $_selectedSidebarPanel and ($sidebarPanel.sidebarPanelId == $_selectedSidebarPanelId)}
+						{if $_selectedSidebarPanel and ($sidebarPanel.sidebarPanelId == $selectedSidebarPanelId)}
 							{sp}fragments-editor-sidebar-sections-buttons__btn--active
 						{/if}
 					{/let}

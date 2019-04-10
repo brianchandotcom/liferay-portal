@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarContent.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {HIDE_SIDEBAR} from '../../actions/actions.es';
+import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**
@@ -38,7 +38,7 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	rendered() {
-		if (this.fragmentsEditorSidebarVisible) {
+		if (this.selectedSidebarPanelId) {
 			this._productMenuToggle.sideNavigation('hide');
 		}
 	}
@@ -48,7 +48,10 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	_handleHide() {
-		this.store.dispatchAction(HIDE_SIDEBAR);
+		this.store.dispatchAction(
+			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+			{sidebarPanelId: ''}
+		);
 	}
 
 }
@@ -84,7 +87,7 @@ FragmentsEditorSidebar.STATE = {
 
 const ConnectedFragmentsEditorSidebar = getConnectedComponent(
 	FragmentsEditorSidebar,
-	['fragmentsEditorSidebarVisible']
+	['selectedSidebarPanelId']
 );
 
 Soy.register(ConnectedFragmentsEditorSidebar, templates);

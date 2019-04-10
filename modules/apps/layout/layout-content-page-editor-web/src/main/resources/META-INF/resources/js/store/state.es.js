@@ -322,16 +322,6 @@ const INITIAL_STATE = {
 	fragmentEditorEnabled: Config.string().value(''),
 
 	/**
-	 * Allow opening/closing fragments editor sidebar
-	 * @default true
-	 * @review
-	 * @type {boolean}
-	 */
-	fragmentsEditorSidebarVisible: Config
-		.bool()
-		.value(true),
-
-	/**
 	 * List of fragment instances being used.
 	 * @default {}
 	 * @review
@@ -716,6 +706,17 @@ const INITIAL_STATE = {
 			}
 		)
 		.value({}),
+
+	/**
+	 * Selected sidebar panel ID to be shown (null or empty)
+	 * when sidebar is hidden.
+	 * @default 'sections'
+	 * @review
+	 * @type {string}
+	 */
+	selectedSidebarPanelId: Config
+		.string()
+		.value('sections'),
 
 	/**
 	 * List of sidebar panels

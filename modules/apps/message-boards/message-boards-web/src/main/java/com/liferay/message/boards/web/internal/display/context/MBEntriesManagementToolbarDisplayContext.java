@@ -94,7 +94,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 						boolean trashEnabled = _trashHelper.isTrashEnabled(
 							themeDisplay.getScopeGroupId());
 
-						dropdownItem.setIcon(trashEnabled ? "trash" : "times");
+						dropdownItem.setIcon(
+							trashEnabled ? "trash" : "times-circle");
 
 						String label = "delete";
 

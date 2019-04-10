@@ -90,7 +90,7 @@ else {
 								</c:if>
 							</span>
 							<span class="mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
-								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+								<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
 							</span>
 						</div>
 

@@ -50,7 +50,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	var="removeRoleIcon"
 >
 	<liferay-ui:icon
-		icon="times"
+		icon="times-circle"
 		markupView="lexicon"
 		message="remove"
 	/>

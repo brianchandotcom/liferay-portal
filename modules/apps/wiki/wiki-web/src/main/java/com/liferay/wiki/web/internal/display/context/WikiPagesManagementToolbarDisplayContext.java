@@ -96,7 +96,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 									_request, "move-to-recycle-bin"));
 						}
 						else {
-							dropdownItem.setIcon("times");
+							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));
 						}

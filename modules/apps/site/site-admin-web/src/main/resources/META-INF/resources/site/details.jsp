@@ -141,7 +141,7 @@ else {
 		var="removeGroupIcon"
 	>
 		<liferay-ui:icon
-			icon="times"
+			icon="times-circle"
 			markupView="lexicon"
 			message="remove"
 		/>

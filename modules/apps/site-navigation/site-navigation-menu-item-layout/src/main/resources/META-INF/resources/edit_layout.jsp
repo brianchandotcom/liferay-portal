@@ -42,7 +42,7 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNam
 
 <div class="form-group input-text-wrapper text-default">
 	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
-		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+		<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
 	</div>
 
 	<div class="d-inline-block">

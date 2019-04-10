@@ -75,7 +75,7 @@ public class SegmentsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteSegmentsEntries");
-						dropdownItem.setIcon("times");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

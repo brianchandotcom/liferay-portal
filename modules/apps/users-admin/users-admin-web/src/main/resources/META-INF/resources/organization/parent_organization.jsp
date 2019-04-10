@@ -88,7 +88,7 @@ if (parentOrganization != null) {
 	var="removeOrganizationIcon"
 >
 	<liferay-ui:icon
-		icon="times"
+		icon="times-circle"
 		markupView="lexicon"
 		message="remove"
 	/>

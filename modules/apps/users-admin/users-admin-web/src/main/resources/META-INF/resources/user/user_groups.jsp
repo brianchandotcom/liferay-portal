@@ -55,7 +55,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	var="removeUserGroupIcon"
 >
 	<liferay-ui:icon
-		icon="times"
+		icon="times-circle"
 		markupView="lexicon"
 		message="remove"
 	/>

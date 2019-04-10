@@ -34,7 +34,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 		</span>
 
 		<div class="d-inline-block <%= (assetListEntry == null) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />assetListRemove" role="button">
-			<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
 		</div>
 	</div>
 

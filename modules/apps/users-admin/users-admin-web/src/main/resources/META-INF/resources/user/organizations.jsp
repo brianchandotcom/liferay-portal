@@ -59,7 +59,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	var="removeOrganizationIcon"
 >
 	<liferay-ui:icon
-		icon="times"
+		icon="times-circle"
 		markupView="lexicon"
 		message="remove"
 	/>

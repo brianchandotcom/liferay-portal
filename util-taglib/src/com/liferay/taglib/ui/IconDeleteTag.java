@@ -87,7 +87,7 @@ public class IconDeleteTag extends IconTag {
 					icon = "trash";
 				}
 				else {
-					icon = "times";
+					icon = "times-circle";
 				}
 			}
 		}

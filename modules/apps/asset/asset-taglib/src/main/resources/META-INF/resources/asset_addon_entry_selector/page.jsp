@@ -41,7 +41,7 @@
 
 							<div class="autofit-col">
 								<a class="remove-button" href="javascript:;">
-									<aui:icon image="times" markupView="lexicon" />
+									<aui:icon image="times-circle" markupView="lexicon" />
 								</a>
 							</div>
 						</div>

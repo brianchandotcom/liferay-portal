@@ -59,7 +59,7 @@ if (assetCategoryId != 0) {
 
 			<span class="label-item label-item-after">
 				<a href="<%= viewURLWithoutCategory %>" title="<liferay-ui:message key="remove" />">
-					<aui:icon image="times" markupView="lexicon" />
+					<aui:icon image="times-circle" markupView="lexicon" />
 				</a>
 			</span>
 		</span>
@@ -79,7 +79,7 @@ if (assetCategoryId != 0) {
 
 			<span class="label-item label-item-after">
 				<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
-					<aui:icon image="times" markupView="lexicon" />
+					<aui:icon image="times-circle" markupView="lexicon" />
 				</a>
 			</span>
 		</span>

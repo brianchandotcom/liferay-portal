@@ -72,15 +72,6 @@ class Paragraph extends Component {
 		required: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Paragraph
-		 * @type {?(bool|undefined)}
-		 */
-
-		visible: Config.bool().value(true),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase

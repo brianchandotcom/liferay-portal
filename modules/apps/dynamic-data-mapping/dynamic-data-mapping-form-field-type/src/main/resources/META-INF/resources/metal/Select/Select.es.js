@@ -213,9 +213,7 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.oneOfType([Config.array(), Config.string()]),
-
-		visible: Config.bool().value(true)
+		value: Config.oneOfType([Config.array(), Config.string()])
 	};
 
 	attached() {
@@ -223,12 +221,6 @@ class Select extends Component {
 
 		this._eventHandler.add(
 			dom.on(document, 'click', this._handleDocumentClicked.bind(this))
-		);
-
-		this.setState(
-			{
-				visible: true
-			}
 		);
 	}
 

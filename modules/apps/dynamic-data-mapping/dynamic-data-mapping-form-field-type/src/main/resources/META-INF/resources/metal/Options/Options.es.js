@@ -180,16 +180,7 @@ class Options extends Component {
 		 * @type {?string}
 		 */
 
-		value: Config.object().value({}),
-
-		/**
-		 * @default true
-		 * @instance
-		 * @memberof Options
-		 * @type {?string}
-		 */
-
-		visible: Config.bool().value(true)
+		value: Config.object().value({})
 	};
 
 	attached() {

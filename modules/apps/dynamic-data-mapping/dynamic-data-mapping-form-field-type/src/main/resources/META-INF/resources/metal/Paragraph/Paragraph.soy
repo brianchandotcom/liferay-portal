@@ -5,7 +5,6 @@
 	{@param? id: string}
 	{@param? label: string}
 	{@param? text: html}
-	{@param? visible: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
@@ -17,7 +16,6 @@
 			{call .content}
 				{param name: $name /}
 				{param text: $text /}
-				{param visible: $visible /}
 			{/call}
 		{/param}
 		{param id: $id /}
@@ -33,9 +31,8 @@
 {template .content}
 	{@param? name: string}
 	{@param? text: html}
-	{@param? visible: bool}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
+	<div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
 		<div class="liferay-ddm-form-field-paragraph-text">{$text}</div>
 	</div>
 {/template}

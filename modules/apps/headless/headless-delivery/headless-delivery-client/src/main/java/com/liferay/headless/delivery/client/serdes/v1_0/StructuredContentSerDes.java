@@ -52,6 +52,13 @@ public class StructuredContentSerDes {
 		return structuredContentJSONParser.parseToDTOs(json);
 	}
 
+	private static String _format(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		return dateFormat.format(date);
+	}
+
 	public static String toJSON(StructuredContent structuredContent) {
 		if (structuredContent == null) {
 			return "null";
@@ -146,7 +153,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
-			sb.append(structuredContent.getDateCreated());
+			sb.append("\"");
+			sb.append(_format(structuredContent.getDateCreated()));
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -157,7 +166,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
-			sb.append(structuredContent.getDateModified());
+			sb.append("\"");
+			sb.append(_format(structuredContent.getDateModified()));
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -168,7 +179,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
-			sb.append(structuredContent.getDatePublished());
+			sb.append("\"");
+			sb.append(_format(structuredContent.getDatePublished()));
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -179,7 +192,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(structuredContent.getDescription());
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -190,7 +205,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(structuredContent.getFriendlyUrlPath());
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -246,7 +263,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
-			sb.append(structuredContent.getLastReviewed());
+			sb.append("\"");
+			sb.append(_format(structuredContent.getLastReviewed()));
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -354,7 +373,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(structuredContent.getTitle());
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -365,7 +386,9 @@ public class StructuredContentSerDes {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(structuredContent.getUuid());
+			sb.append("\"");
 		}
 
 		sb.append(", ");

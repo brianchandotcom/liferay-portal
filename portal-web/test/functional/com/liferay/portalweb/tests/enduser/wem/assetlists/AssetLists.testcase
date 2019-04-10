@@ -127,9 +127,13 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.deleteEntry();
+			AssetListsAdmin.deleteEntry(
+				assetListTitle = "Manual Asset List Test"
+			);
 
-			AssetListsAdmin.deleteEntry();
+			AssetListsAdmin.deleteEntry(
+				assetListTitle = "Dynamic Asset List Test"
+			);
 		}
 
 		task ("Assert the taglib that displays when there are no entries displays") {
@@ -158,8 +162,8 @@ definition {
 			);
 
 			AssetListsAdmin.renameAssetList(
-				assetListName = "Manual Asset List Test",
-				title = "Manual Asset List Edit"
+				newAssetListTitle = "Manual Asset List Edit",
+				oldAssetListTitle = "Manual Asset List Test"
 			);
 		}
 
@@ -210,7 +214,7 @@ definition {
 			);
 
 			AssetListsAdmin.viewContent(
-				assetListName = "Manual Asset List Test",
+				assetListTitle = "Manual Asset List Test",
 				assetTitle = "WC WebContent Title",
 				assetType = "Web Content Article"
 			);
@@ -263,7 +267,7 @@ definition {
 			);
 
 			AssetListsAdmin.viewUsages(
-				assetListName = "Manual Asset List Test",
+				assetListTitle = "Manual Asset List Test",
 				usageAmount = "1",
 				usageType = "All"
 			);

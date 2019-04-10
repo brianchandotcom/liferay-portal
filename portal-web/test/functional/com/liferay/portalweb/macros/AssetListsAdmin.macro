@@ -26,19 +26,17 @@ definition {
 	}
 
 	macro deleteEntry {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "Delete");
-
-		Confirm();
+		LexiconList.delete(
+			listEntry = "${assetListTitle}"
+		);
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro gotoEntryMenuItem {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
-
-		ClickNoError(
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			key_menuItem = "${menuItem}"
+		LexiconList.clickEllipsisItem(
+			item = "${item}",
+			listEntry = "${assetListTitle}"
 		);
 	}
 
@@ -49,11 +47,14 @@ definition {
 	}
 
 	macro renameAssetList {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "Rename");
+		AssetListsAdmin.gotoEntryMenuItem(
+			assetListTitle = "${oldAssetListTitle}",
+			item = "Rename"
+		);
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
+			text = "${newAssetListTitle}"
 		);
 
 		Button.clickSave();
@@ -96,7 +97,10 @@ definition {
 	}
 
 	macro viewContent {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "View Content");
+		AssetListsAdmin.gotoEntryMenuItem(
+			assetListTitle = "${assetListTitle}",
+			item = "View Content"
+		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -116,7 +120,10 @@ definition {
 	}
 
 	macro viewUsages {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "View Usages");
+		AssetListsAdmin.gotoEntryMenuItem(
+			assetListTitle = "${assetListTitle}",
+			item = "View Usages"
+		);
 
 		var usageAmount = "${usageAmount}";
 		var usageType = "${usageType}";

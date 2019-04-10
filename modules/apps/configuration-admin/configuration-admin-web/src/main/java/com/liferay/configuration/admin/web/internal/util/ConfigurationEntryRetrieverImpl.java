@@ -111,7 +111,9 @@ public class ConfigurationEntryRetrieverImpl
 		for (ConfigurationScreen configurationScreen :
 				_configurationScreenServiceTrackerMap.values()) {
 
-			if (!scope.equals(configurationScreen.getScope())) {
+			if (!scope.equals(configurationScreen.getScope()) ||
+				!configurationScreen.isVisible()) {
+
 				continue;
 			}
 
@@ -158,7 +160,9 @@ public class ConfigurationEntryRetrieverImpl
 			configurationCategory);
 
 		for (ConfigurationScreen configurationScreen : configurationScreens) {
-			if (!scope.equals(configurationScreen.getScope())) {
+			if (!scope.equals(configurationScreen.getScope()) ||
+				!configurationScreen.isVisible()) {
+
 				continue;
 			}
 

@@ -143,12 +143,14 @@
 		<div class="autofit-col sharing-autocomplete-sticker">
 			{if $data.data.portraitURL}
 				{call ClaySticker.render}
+					{param elementClasses: 'sticker-user-icon' /}
 					{param imageSrc: $data.data.portraitURL /}
 					{param shape: 'circle' /}
 					{param size: 'lg' /}
 				{/call}
 			{else}
 				{call ClaySticker.render}
+					{param elementClasses: 'sticker-user-icon' /}
 					{param icon: 'user' /}
 					{param shape: 'circle' /}
 					{param size: 'lg' /}

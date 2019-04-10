@@ -765,8 +765,6 @@ public class JournalPortlet extends MVCPortlet {
 
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
-		long assetDisplayPageId = ParamUtil.getLong(
-			uploadPortletRequest, "assetDisplayPageId");
 		int displayPageType = ParamUtil.getInteger(
 			uploadPortletRequest, "displayPageType");
 
@@ -793,12 +791,11 @@ public class JournalPortlet extends MVCPortlet {
 					layoutUuid = latestArticle.getLayoutUuid();
 				}
 			}
-			else if ((assetDisplayPageId != 0) || (targetLayout == null)) {
+			else if (targetLayout == null) {
 				layoutUuid = null;
 			}
 		}
 		else {
-			assetDisplayPageId = 0;
 			layoutUuid = null;
 		}
 

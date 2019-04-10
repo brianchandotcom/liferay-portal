@@ -87,6 +87,15 @@ public class LayoutPageTemplateStructureRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteLayoutPageTemplateStructureRels(
+		long layoutPageTemplateStructureId) {
+
+		layoutPageTemplateStructureRelPersistence.
+			removeByLayoutPageTemplateStructureId(
+				layoutPageTemplateStructureId);
+	}
+
+	@Override
 	public void deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 		long segmentsExperienceId) {
 

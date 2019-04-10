@@ -116,9 +116,9 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(), layout.getPlid(),
+					assetEntry.getEntryId(),
 					_portal.getClassNameId(Portlet.class),
-					contentSearch.getPortletId());
+					contentSearch.getPortletId(), layout.getPlid());
 
 			if (assetEntryUsage != null) {
 				continue;
@@ -126,8 +126,8 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				contentSearch.getGroupId(), assetEntry.getEntryId(),
-				layout.getPlid(), _portal.getClassNameId(Portlet.class),
-				contentSearch.getPortletId(), serviceContext);
+				_portal.getClassNameId(Portlet.class),
+				contentSearch.getPortletId(), layout.getPlid(), serviceContext);
 		}
 	}
 
@@ -171,9 +171,10 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(), portletPreferences.getPlid(),
+					assetEntry.getEntryId(),
 					_portal.getClassNameId(Portlet.class),
-					portletPreferences.getPortletId());
+					portletPreferences.getPortletId(),
+					portletPreferences.getPlid());
 
 			if (assetEntryUsage != null) {
 				continue;
@@ -181,9 +182,9 @@ public class JournalArticleAssetEntryUsageRecorder
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				assetEntry.getGroupId(), assetEntry.getEntryId(),
-				portletPreferences.getPlid(),
 				_portal.getClassNameId(Portlet.class),
-				portletPreferences.getPortletId(), serviceContext);
+				portletPreferences.getPortletId(), portletPreferences.getPlid(),
+				serviceContext);
 		}
 	}
 

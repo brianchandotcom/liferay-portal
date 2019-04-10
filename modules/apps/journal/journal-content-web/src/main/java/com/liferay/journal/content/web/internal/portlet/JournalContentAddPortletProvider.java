@@ -126,16 +126,16 @@ public class JournalContentAddPortletProvider
 
 		AssetEntryUsage assetEntryUsage =
 			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), layout.getPlid(),
-				_portal.getClassNameId(Portlet.class), portletId);
+				assetEntry.getEntryId(), _portal.getClassNameId(Portlet.class),
+				portletId, layout.getPlid());
 
 		if (assetEntryUsage != null) {
 			return;
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(), layout.getPlid(),
-			_portal.getClassNameId(Portlet.class), portletId,
+			layout.getGroupId(), assetEntry.getEntryId(),
+			_portal.getClassNameId(Portlet.class), portletId, layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

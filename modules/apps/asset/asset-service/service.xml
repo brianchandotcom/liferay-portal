@@ -21,9 +21,9 @@
 		<!-- Other fields -->
 
 		<column name="assetEntryId" type="long" />
-		<column name="plid" type="long" />
 		<column name="containerType" type="long" />
 		<column name="containerKey" type="String" />
+		<column name="plid" type="long" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
@@ -36,16 +36,16 @@
 			<finder-column name="assetEntryId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="P_C_C" return-type="Collection" where="containerKey IS NOT NULL">
-			<finder-column name="plid" />
+		<finder name="C_C_P" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="containerType" />
 			<finder-column name="containerKey" />
+			<finder-column name="plid" />
 		</finder>
-		<finder name="A_P_C_C" return-type="AssetEntryUsage" unique="true">
+		<finder name="A_C_C_P" return-type="AssetEntryUsage" unique="true">
 			<finder-column name="assetEntryId" />
-			<finder-column name="plid" />
 			<finder-column name="containerType" />
 			<finder-column name="containerKey" />
+			<finder-column name="plid" />
 		</finder>
 
 		<!-- References -->

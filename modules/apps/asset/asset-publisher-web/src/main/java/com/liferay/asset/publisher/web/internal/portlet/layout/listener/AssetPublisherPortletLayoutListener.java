@@ -191,7 +191,7 @@ public class AssetPublisherPortletLayoutListener
 			for (AssetEntry assetEntry : assetEntries) {
 				_assetEntryUsageLocalService.addAssetEntryUsage(
 					themeDisplay.getScopeGroupId(), assetEntry.getEntryId(),
-					plid, _portal.getClassNameId(Portlet.class), portletId,
+					_portal.getClassNameId(Portlet.class), portletId, plid,
 					serviceContext);
 			}
 		}
@@ -232,7 +232,7 @@ public class AssetPublisherPortletLayoutListener
 
 	private void _removeAssetEntryUsages(Layout layout, String portletId) {
 		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			layout.getPlid(), _portal.getClassNameId(Portlet.class), portletId);
+			_portal.getClassNameId(Portlet.class), portletId, layout.getPlid());
 	}
 
 	private void _removeAssetListEntryUsage(long plid, String portletId) {

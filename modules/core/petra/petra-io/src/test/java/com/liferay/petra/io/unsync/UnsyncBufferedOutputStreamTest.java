@@ -57,7 +57,7 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 
 		unsyncBufferedOutputStream.write(_BUFFER);
 
-		for (int i = _SIZE; i < _SIZE * 2; i++) {
+		for (int i = _SIZE; i < (_SIZE * 2); i++) {
 			Assert.assertEquals(i - _SIZE, buffer[i]);
 		}
 

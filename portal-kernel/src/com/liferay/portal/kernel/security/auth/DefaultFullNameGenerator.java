@@ -98,7 +98,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		lastName = name[name.length - 1];
 
 		if (name.length > 2) {
-			for (int i = 1; i < name.length - 1; i++) {
+			for (int i = 1; i < (name.length - 1); i++) {
 				if (Validator.isNull(name[i].trim())) {
 					continue;
 				}

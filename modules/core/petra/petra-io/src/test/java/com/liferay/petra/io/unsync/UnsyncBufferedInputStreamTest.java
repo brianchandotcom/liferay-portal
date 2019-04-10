@@ -65,7 +65,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 		Assert.assertEquals(buffer.length, read);
 
-		for (int i = 1; i < buffer.length + 1; i++) {
+		for (int i = 1; i < (buffer.length + 1); i++) {
 			Assert.assertEquals(i, buffer[i - 1]);
 		}
 
@@ -82,7 +82,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 		Assert.assertEquals(buffer.length, read);
 
-		for (int i = 10; i < buffer.length + 10; i++) {
+		for (int i = 10; i < (buffer.length + 10); i++) {
 			Assert.assertEquals(i, buffer[i - 10]);
 		}
 
@@ -97,7 +97,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 		Assert.assertEquals(buffer.length, read);
 
-		for (int i = 15; i < buffer.length + 15; i++) {
+		for (int i = 15; i < (buffer.length + 15); i++) {
 			Assert.assertEquals(i, buffer[i - 15]);
 		}
 
@@ -106,7 +106,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 		// Leave 5 bytes
 
-		for (int i = 25; i < _SIZE - 5; i++) {
+		for (int i = 25; i < (_SIZE - 5); i++) {
 			Assert.assertEquals(i & 0xff, unsyncBufferedInputStream.read());
 		}
 
@@ -280,7 +280,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 			markLimitIndex,
 			_markLimitIndexField.getInt(unsyncBufferedInputStream));
 
-		for (int i = 0; i < bufferSize * 2; i++) {
+		for (int i = 0; i < (bufferSize * 2); i++) {
 			Assert.assertEquals(i, unsyncBufferedInputStream.read());
 		}
 
@@ -370,7 +370,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		Assert.assertEquals(_SIZE - size, byteArrayInputStream.available());
 		Assert.assertEquals(_SIZE - 1, unsyncBufferedInputStream.available());
 
-		for (int i = 1; i < size + 1; i++) {
+		for (int i = 1; i < (size + 1); i++) {
 			Assert.assertEquals(i, unsyncBufferedInputStream.read());
 		}
 

@@ -349,7 +349,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < assetPrimaryKeys.length - 1; i++) {
+		for (int i = 0; i < (assetPrimaryKeys.length - 1); i++) {
 			sb.append("(KaleoTaskInstanceToken.classPK = ?) OR ");
 		}
 
@@ -421,7 +421,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
-		for (int i = 0; i < assetTypes.length - 1; i++) {
+		for (int i = 0; i < (assetTypes.length - 1); i++) {
 			sb.append("(LOWER(KaleoTaskInstanceToken.className) LIKE ?) OR ");
 		}
 

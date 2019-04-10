@@ -102,7 +102,7 @@ public class TaglibUtil {
 
 		String tldDirLocation = "portal-web/docroot/WEB-INF/tld/";
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+		for (int i = 0; i < (ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1); i++) {
 			File file = new File(baseDirName + tldDirLocation);
 
 			if (file.exists()) {

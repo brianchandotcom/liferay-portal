@@ -54,7 +54,7 @@ public class CodeownersWhitespaceCheck extends WhitespaceCheck {
 						sb.append(words[0]);
 						sb.append(StringPool.FOUR_SPACES);
 
-						for (int i = 1; i < words.length - 1; i++) {
+						for (int i = 1; i < (words.length - 1); i++) {
 							sb.append(words[i]);
 							sb.append(StringPool.SPACE);
 						}

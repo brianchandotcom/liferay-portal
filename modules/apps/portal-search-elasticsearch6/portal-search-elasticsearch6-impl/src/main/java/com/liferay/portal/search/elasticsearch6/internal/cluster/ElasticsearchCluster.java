@@ -96,7 +96,7 @@ public class ElasticsearchCluster {
 
 			String[] targetIndexNames = new String[companies.size() + 1];
 
-			for (int i = 0; i < targetIndexNames.length - 1; i++) {
+			for (int i = 0; i < (targetIndexNames.length - 1); i++) {
 				Company company = companies.get(i);
 
 				targetIndexNames[i] = indexNameBuilder.getIndexName(

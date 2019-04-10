@@ -265,7 +265,8 @@ public class ResourceActionLocalServiceImpl
 						actionIds &= ~bitwiseValue;
 
 						resourcePermission.setActionIds(actionIds);
-						resourcePermission.setViewActionId(actionIds % 2 == 1);
+						resourcePermission.setViewActionId(
+							(actionIds % 2) == 1);
 
 						resourcePermissionPersistence.update(
 							resourcePermission);

@@ -1652,7 +1652,7 @@ public class IntrabandProxyUtilTest {
 
 		List<Method> proxyMethods = _getProxyMethods(clazz);
 
-		for (int i = 0; i < proxyMethods.size() + 1; i++) {
+		for (int i = 0; i < (proxyMethods.size() + 1); i++) {
 			Serializer serializer = new Serializer();
 
 			serializer.writeString(targetId);

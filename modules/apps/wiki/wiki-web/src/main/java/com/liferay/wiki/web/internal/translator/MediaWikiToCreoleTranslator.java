@@ -188,7 +188,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 			level = 0;
 			prefixLength = matcher.end(2) - matcher.start(2);
 
-			for (int i = matcher.start(0) + offset; i < sb.length() - 1; i++) {
+			for (int i = matcher.start(0) + offset; i < (sb.length() - 1);
+				 i++) {
+
 				if ((sb.charAt(i) == '[') && (sb.charAt(i + 1) == '[')) {
 					level++;
 				}

@@ -85,7 +85,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 				resourcePermissionId1);
 
 		Assert.assertEquals(
-			actionIds1 % 2 == 1, resourcePermission1.isViewActionId());
+			(actionIds1 % 2) == 1, resourcePermission1.isViewActionId());
 		Assert.assertEquals(
 			resourcePermission1.getPrimKeyId(), GetterUtil.getLong(primKey1));
 
@@ -94,7 +94,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 				resourcePermissionId2);
 
 		Assert.assertEquals(
-			actionIds2 % 2 == 1, resourcePermission2.isViewActionId());
+			(actionIds2 % 2) == 1, resourcePermission2.isViewActionId());
 		Assert.assertEquals(0, resourcePermission2.getPrimKeyId());
 	}
 
@@ -114,7 +114,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		resourcePermission.setPrimKeyId(-1);
 		resourcePermission.setOwnerId(_user.getUserId());
 		resourcePermission.setActionIds(actionIds);
-		resourcePermission.setViewActionId(actionIds % 2 != 1);
+		resourcePermission.setViewActionId((actionIds % 2) != 1);
 
 		resourcePermission =
 			ResourcePermissionLocalServiceUtil.addResourcePermission(

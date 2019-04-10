@@ -247,7 +247,7 @@ public class URLCodec {
 
 		ByteBuffer byteBuffer = ByteBuffer.allocate(count);
 
-		for (int i = start; i < start + count * 3; i += 3) {
+		for (int i = start; i < (start + count * 3); i += 3) {
 			int high = _charToHex(encodedString.charAt(i + 1));
 			int low = _charToHex(encodedString.charAt(i + 2));
 

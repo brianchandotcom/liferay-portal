@@ -344,7 +344,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		StringBundler sb = new StringBundler(parts.length - 1);
 
-		for (int i = 0; i < parts.length - 1; i++) {
+		for (int i = 0; i < (parts.length - 1); i++) {
 			sb.append(parts[i]);
 		}
 

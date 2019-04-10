@@ -450,7 +450,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		String portalKernelLocation = "portal-kernel/";
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+		for (int i = 0; i < (ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1); i++) {
 			File file = new File(getBaseDirName() + portalKernelLocation);
 
 			if (!file.exists()) {

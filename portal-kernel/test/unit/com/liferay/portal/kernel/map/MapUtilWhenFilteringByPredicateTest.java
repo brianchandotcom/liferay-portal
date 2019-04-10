@@ -41,7 +41,7 @@ public class MapUtilWhenFilteringByPredicateTest {
 		inputMap.put("5", 5);
 
 		Map<String, Integer> outputMap = MapUtil.filterByValues(
-			inputMap, number -> number.intValue() % 2 == 0);
+			inputMap, number -> (number.intValue() % 2) == 0);
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals((Integer)2, outputMap.get("2"));
@@ -65,7 +65,7 @@ public class MapUtilWhenFilteringByPredicateTest {
 			entry -> {
 				Integer i = (Integer)entry.getValue();
 
-				if (i.intValue() % 2 == 0) {
+				if ((i.intValue() % 2) == 0) {
 					return true;
 				}
 
@@ -88,7 +88,8 @@ public class MapUtilWhenFilteringByPredicateTest {
 		inputMap.put("5", "five");
 
 		Map<String, String> outputMap = MapUtil.filter(
-			inputMap, entry -> GetterUtil.getInteger(entry.getKey()) % 2 == 0);
+			inputMap,
+			entry -> (GetterUtil.getInteger(entry.getKey()) % 2) == 0);
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals("two", outputMap.get("2"));

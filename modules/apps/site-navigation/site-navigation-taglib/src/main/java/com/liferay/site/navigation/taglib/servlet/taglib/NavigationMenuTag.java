@@ -342,7 +342,7 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 		else if (_rootItemType.equals("relative") && (_rootItemLevel >= 0) &&
-				 (_rootItemLevel < branchNavItems.size() + 1)) {
+				 (_rootItemLevel < (branchNavItems.size() + 1))) {
 
 			int absoluteLevel = branchNavItems.size() - 1 - _rootItemLevel;
 

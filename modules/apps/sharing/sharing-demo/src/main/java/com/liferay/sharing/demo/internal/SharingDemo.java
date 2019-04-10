@@ -79,7 +79,7 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 				_portal.getClassNameId(DLFileEntry.class),
 				fileEntry.getFileEntryId(), group.getGroupId(), (i % 3) == 0,
 				Arrays.asList(SharingEntryAction.VIEW),
-				(i % 2 == 0) ? _getExpirationDate(i + 1) : null,
+				((i % 2) == 0) ? _getExpirationDate(i + 1) : null,
 				serviceContext);
 		}
 

@@ -121,7 +121,7 @@ public class Atom {
 	}
 
 	public void patchAtom() {
-		for (int index = 4; index < _size - 4; index++) {
+		for (int index = 4; index < (_size - 4); index++) {
 			String type = new String(
 				ArrayUtil.clone(_buffer, index, index + 4));
 

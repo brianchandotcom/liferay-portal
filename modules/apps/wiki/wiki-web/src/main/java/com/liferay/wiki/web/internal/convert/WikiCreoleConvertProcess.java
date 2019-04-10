@@ -69,7 +69,7 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 				" Wiki pages from Classic Wiki to Creole format");
 
 		for (int i = 0; i < pages.size(); i++) {
-			if ((i > 0) && (i % (pages.size() / 4) == 0)) {
+			if ((i > 0) && ((i % (pages.size() / 4)) == 0)) {
 				MaintenanceUtil.appendStatus((i * 100. / pages.size()) + "%");
 			}
 

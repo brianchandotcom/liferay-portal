@@ -202,6 +202,12 @@ public class CTCollectionResource {
 			ctCollections = _ctEngineManager.getNonproductionCTCollections(
 				companyId, _getQueryDefinition(limit, sort));
 		}
+		else if (_TYPE_RECENT.equals(type)) {
+			CTJaxRsUtil.checkCompany(companyId);
+
+			ctCollections = _ctEngineManager.searchByKeywords(
+				companyId, _getQueryDefinition(limit, sort));
+		}
 		else {
 			throw new IllegalArgumentException(
 				"Invalid type parameter value: " + type +
@@ -302,6 +308,8 @@ public class CTCollectionResource {
 	private static final String _TYPE_ALL = "all";
 
 	private static final String _TYPE_PRODUCTION = "production";
+
+	private static final String _TYPE_RECENT = "recent";
 
 	private static final Set<String> _orderByColumnNames = new HashSet<>(
 		Arrays.asList("createDate", "modifiedDate", "name", "statusDate"));

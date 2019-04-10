@@ -14,12 +14,56 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys" %><%@
+page import="com.liferay.asset.info.display.contributor.AssetInfoDisplayObject" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
+page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
+page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
+page import="com.liferay.fragment.renderer.DefaultFragmentRendererContext" %><%@
+page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
+page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
+page import="com.liferay.info.display.contributor.InfoDisplayObject" %><%@
+page import="com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys" %><%@
+page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
+page import="com.liferay.layout.page.template.model.LayoutPageTemplateStructure" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil" %><%@
+page import="com.liferay.layout.type.controller.display.page.internal.display.context.DisplayPageLayoutTypeControllerDisplayContext" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONArray" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
+page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
+page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.segments.constants.SegmentsConstants" %><%@
+page import="com.liferay.segments.constants.SegmentsWebKeys" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
+DisplayPageLayoutTypeControllerDisplayContext displayPageLayoutTypeControllerDisplayContext = new DisplayPageLayoutTypeControllerDisplayContext(request);
 %>

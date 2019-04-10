@@ -16,7 +16,8 @@ package com.liferay.layout.type.controller.display.page.internal.display.context
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.info.display.contributor.InfoDisplayTemplate;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.display.contributor.InfoEditURLProvider;
 import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -44,8 +45,12 @@ public class EditDisplayPageMenuDisplayContext {
 	public EditDisplayPageMenuDisplayContext(HttpServletRequest request) {
 		_request = request;
 
-		_infoDisplayTemplate = (InfoDisplayTemplate)request.getAttribute(
-			DisplayPageLayoutTypeControllerWebKeys.INFO_DISPLAY_TEMPLATE);
+		_infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)request.getAttribute(
+				DisplayPageLayoutTypeControllerWebKeys.
+					INFO_DISPLAY_OBJECT_PROVIDER);
+		_infoEditURLProvider = (InfoEditURLProvider)request.getAttribute(
+			DisplayPageLayoutTypeControllerWebKeys.INFO_EDIT_URL_PROVIDER);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -53,18 +58,22 @@ public class EditDisplayPageMenuDisplayContext {
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				String editURL = _infoDisplayTemplate.getEditURL(_request);
+				if (_infoEditURLProvider != null) {
+					String editURL = _infoEditURLProvider.getURL(
+						_infoDisplayObjectProvider.getDisplayObject(),
+						_request);
 
-				if (Validator.isNotNull(editURL)) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(editURL);
-							dropdownItem.setLabel(
-								LanguageUtil.format(
-									_request, "edit-x",
-									_infoDisplayTemplate.getTitle(
-										_themeDisplay.getLocale())));
-						});
+					if (Validator.isNotNull(editURL)) {
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(editURL);
+								dropdownItem.setLabel(
+									LanguageUtil.format(
+										_request, "edit-x",
+										_infoDisplayObjectProvider.getTitle(
+											_themeDisplay.getLocale())));
+							});
+					}
 				}
 
 				if (LayoutPermissionUtil.contains(
@@ -105,7 +114,8 @@ public class EditDisplayPageMenuDisplayContext {
 		};
 	}
 
-	private final InfoDisplayTemplate _infoDisplayTemplate;
+	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
+	private final InfoEditURLProvider _infoEditURLProvider;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

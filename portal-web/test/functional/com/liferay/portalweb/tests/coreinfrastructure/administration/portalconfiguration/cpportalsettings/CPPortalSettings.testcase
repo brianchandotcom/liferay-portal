@@ -6,29 +6,40 @@ definition {
 	property testray.main.component.name = "Portal Settings";
 
 	setUp {
+		TestCase.setUpPortalInstance();
+
 		User.firstLoginPG();
 	}
 
 	tearDown {
-		PortalSettings.tearDownCP();
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		User.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PortalSettings.tearDownCP();
 
-		Role.tearDownCP();
+			User.tearDownCP();
 
-		Organization.tearDownCP();
+			Role.tearDownCP();
 
-		UserGroup.tearDownCP();
+			Organization.tearDownCP();
 
-		Site.tearDownCP();
+			UserGroup.tearDownCP();
 
-		WebContent.tearDownCP();
+			Site.tearDownCP();
 
-		Page.tearDownCP();
+			WebContent.tearDownCP();
+
+			Page.tearDownCP();
+		}
 	}
 
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
+		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsOrganizationSites";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -88,6 +99,8 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsRoles {
+		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsRoles";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -134,6 +147,8 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsSites {
+		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsSites";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -180,6 +195,8 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsUserGroups {
+		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsUserGroups";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -226,6 +243,8 @@ definition {
 
 	@priority = "5"
 	test EnterReservedEmailAddress {
+		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedEmailAddress";
+
 		property portal.acceptance = "true";
 
 		PortalSettings.gotoPortalSettings();
@@ -250,6 +269,8 @@ definition {
 
 	@priority = "5"
 	test EnterReservedScreenName {
+		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedScreenName";
+
 		property portal.acceptance = "true";
 
 		PortalSettings.gotoPortalSettings();
@@ -272,6 +293,8 @@ definition {
 
 	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "false");
@@ -480,6 +503,8 @@ definition {
 
 	@priority = "3"
 	test ViewDefaultUserAssociations {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewDefaultUserAssociations";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewDefaultUserAssociationsCP();
@@ -487,6 +512,8 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsAccountCreatedNotification {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
@@ -494,6 +521,8 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsPasswordChangedNotification {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
@@ -501,6 +530,8 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsSender {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsSender";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
@@ -508,6 +539,8 @@ definition {
 
 	@priority = "3"
 	test ViewReservedCredentialsScreenNames {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewReservedCredentialsScreenNames";
+
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();

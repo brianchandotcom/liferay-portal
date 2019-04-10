@@ -398,6 +398,9 @@
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PoshiSourceProcessor">
+		<check name="PoshiAnnotationsOrderCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PoshiIndentationCheck" />
 		<check name="PoshiStylingCheck" />
 		<check name="PoshiWhitespaceCheck" />

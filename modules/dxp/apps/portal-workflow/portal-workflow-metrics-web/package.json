@@ -59,7 +59,9 @@
 			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/openToast.js",
 			"react-text-mask": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/reactTextMask.js"
 		},
-		"setupTestFrameworkScriptFile": "<rootDir>src/main/resources/META-INF/resources/js/test/setup.js",
+		"setupFilesAfterEnv": [
+			"<rootDir>src/main/resources/META-INF/resources/js/test/setup.js"
+		],
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"
 		],

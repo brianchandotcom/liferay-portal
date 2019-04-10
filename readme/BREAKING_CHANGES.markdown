@@ -512,3 +512,26 @@ SSO). OpenID Connect is the recommended specification to use Google
 implementation for authentication.
 
 ---------------------------------------
+
+### Deprecated dl.tabs.visible property
+- **Date:** 2019-Apr-10
+- **JIRA Ticket:** [LPS-93948](https://issues.liferay.com/browse/LPS-93948)
+
+#### What changed?
+
+The `dl.tabs.visible` property let users toggle the visibility of the navigation
+tabs in Documents & Media when put on a widget page.  This configuration option
+has been removed, so that the navigation tab will never be shown in widget pages.
+
+#### Who is affected?
+
+This affects anyone with a value for `dl.tabs.visible` different than `false`.
+
+#### How should I update my code?
+
+No code changes are necessary.
+
+#### Why was this change made?
+
+Documents & Media has been reviewed from an UX perspective, and removing the
+navigation tabs in widget pages was part of a UI clean up process.

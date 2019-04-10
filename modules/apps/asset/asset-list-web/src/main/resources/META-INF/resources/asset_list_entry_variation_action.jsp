@@ -24,6 +24,19 @@
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="btn btn-unstyled text-secondary"
 >
+	<portlet:renderURL var="viewAssetListEntryVariationContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/view_content.jsp" />
+		<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="view-content"
+		method="get"
+		url="<%= viewAssetListEntryVariationContentURL %>"
+		useDialog="<%= true %>"
+	/>
+
 	<c:if test="<%= editAssetListDisplayContext.getSegmentsEntryId() != SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT %>">
 		<portlet:actionURL name="/asset_list/delete_asset_list_entry_variation" var="deleteAssetListEntryVariationURL">
 			<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />

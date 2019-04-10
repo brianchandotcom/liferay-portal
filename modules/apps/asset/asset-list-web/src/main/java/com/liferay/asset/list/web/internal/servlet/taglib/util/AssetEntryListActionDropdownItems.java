@@ -73,7 +73,6 @@ public class AssetEntryListActionDropdownItems {
 					add(_getPermissionsAssetListEntryActionUnsafeConsumer());
 				}
 
-				add(_getViewAssetListContentActionUnsafeConsumer());
 				add(_getViewAssetListEntryUsagesActionUnsafeConsumer());
 
 				if (AssetListEntryPermission.contains(
@@ -161,27 +160,6 @@ public class AssetEntryListActionDropdownItems {
 			dropdownItem.putData(
 				"renameAssetListEntryURL", renameAssetListEntryURL.toString());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "rename"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-			_getViewAssetListContentActionUnsafeConsumer()
-		throws Exception {
-
-		PortletURL viewAssetListContentURL =
-			_liferayPortletResponse.createRenderURL();
-
-		viewAssetListContentURL.setParameter("mvcPath", "/view_content.jsp");
-		viewAssetListContentURL.setParameter(
-			"assetListEntryId",
-			String.valueOf(_assetListEntry.getAssetListEntryId()));
-		viewAssetListContentURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "viewAssetListContent");
-			dropdownItem.putData(
-				"viewAssetListContentURL", viewAssetListContentURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "view-content"));
 		};
 	}
 

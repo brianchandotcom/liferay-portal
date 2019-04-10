@@ -95,21 +95,27 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						String subscriptionOnClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<div class="lfr-discussion-subscribe-button-container">
-							<c:if test="<%= canSubscribe %>">
-								<c:choose>
-									<c:when test="<%= subscribed %>">
-										<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-											<liferay-ui:message key="unsubscribe" />
-										</button>
-									</c:when>
-									<c:otherwise>
-										<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-											<liferay-ui:message key="subscribe" />
-										</button>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
+						<div class="autofit-row mb-4">
+							<span class="autofit-col autofit-col-expand text-secondary text-uppercase">
+								<strong><liferay-ui:message arguments="<%= discussion.getDiscussionCommentsCount() %>" key='<%= (discussion.getDiscussionCommentsCount() == 1) ? "x-comment" : "x-comments" %>' /></strong>
+							</span>
+
+							<div class="autofit-col autofit-col-end">
+								<c:if test="<%= canSubscribe %>">
+									<c:choose>
+										<c:when test="<%= subscribed %>">
+											<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+												<liferay-ui:message key="unsubscribe" />
+											</button>
+										</c:when>
+										<c:otherwise>
+											<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+												<liferay-ui:message key="subscribe" />
+											</button>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</div>
 						</div>
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">

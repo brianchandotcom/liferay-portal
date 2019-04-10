@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -61,6 +60,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -94,7 +94,7 @@ public class ProcessResourceImpl
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			Process process = _createProcess(searchHit);
+			Process process = _createProcess(searchHit.getDocument());
 
 			TermsAggregationResult instanceTermsAggregationResult =
 				_getInstanceTermsAggregationResult(
@@ -160,15 +160,12 @@ public class ProcessResourceImpl
 		};
 	}
 
-	private Process _createProcess(SearchHit searchHit) {
-		Document document = searchHit.getDocument();
-
+	private Process _createProcess(Document document) {
 		return new Process() {
 			{
-				id = GetterUtil.getLong(document.getFieldValue("processId"));
+				id = document.getLong("processId");
 				instanceCount = 0L;
-				title = GetterUtil.getString(
-					document.getFieldValue(_getTitleFieldName()));
+				title = document.getString(_getTitleFieldName());
 			}
 		};
 	}
@@ -255,13 +252,18 @@ public class ProcessResourceImpl
 
 		List<Process> processes = new LinkedList<>();
 
-		Map<Long, Process> processesMap = new LinkedHashMap<>();
-
-		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			Process process = _createProcess(searchHit);
-
-			processesMap.put(process.getId(), process);
-		}
+		Map<Long, Process> processesMap = Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).map(
+			this::_createProcess
+		).collect(
+			LinkedHashMap::new,
+			(map, process) -> map.put(process.getId(), process), Map::putAll
+		);
 
 		TermsAggregationResult instanceTermsAggregationResult =
 			_getInstanceTermsAggregationResult(

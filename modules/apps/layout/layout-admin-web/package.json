@@ -18,6 +18,7 @@
 		"clay-badge": "2.13.0",
 		"clay-checkbox": "2.13.0",
 		"clay-dropdown": "2.13.0",
+		"jsdoc": "3.5.5",
 		"metal": "^2.16.5",
 		"metal-component": "^2.16.3",
 		"metal-debounce": "^2.0.0",

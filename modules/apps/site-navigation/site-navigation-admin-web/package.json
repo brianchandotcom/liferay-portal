@@ -12,6 +12,7 @@
 		}
 	},
 	"dependencies": {
+		"jsdoc": "3.5.5",
 		"metal-dom": "^2.0.0",
 		"metal-drag-drop": "3.3.0",
 		"metal-position": "^2.1.0",

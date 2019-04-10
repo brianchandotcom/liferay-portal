@@ -13,6 +13,7 @@
 		}
 	},
 	"dependencies": {
+		"jsdoc": "3.5.5",
 		"metal": "^2.16.5",
 		"metal-component": "^2.16.3",
 		"metal-dom": "^2.5.18",

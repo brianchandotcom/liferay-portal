@@ -20,6 +20,7 @@
 		}
 	},
 	"dependencies": {
+		"jsdoc": "3.5.5",
 		"metal-dom": "^2.16.7",
 		"metal-events": "^2.16.7",
 		"metal-state": "^2.16.7"

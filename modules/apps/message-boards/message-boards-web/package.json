@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"jsdoc": "3.5.5",
 		"metal": "^2.16.7",
 		"metal-events": "^2.16.7"
 	},

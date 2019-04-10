@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"clay-multi-select": "2.13.0",
+		"jsdoc": "3.5.5",
 		"metal": "^2.5.18",
 		"metal-dom": "^2.5.18",
 		"metal-soy": "^2.4.5",

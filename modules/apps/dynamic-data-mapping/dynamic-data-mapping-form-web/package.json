@@ -77,6 +77,7 @@
 		"clay-management-toolbar": "2.13.0",
 		"clay-modal": "2.13.0",
 		"clay-radio": "2.13.0",
+		"jsdoc": "3.5.5",
 		"metal-clipboard": "^2.0.1",
 		"metal-debounce": "^2.0.0",
 		"metal-dom": "^2.16.5",

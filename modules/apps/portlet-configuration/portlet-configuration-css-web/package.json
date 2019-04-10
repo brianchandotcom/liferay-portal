@@ -5,5 +5,8 @@
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},
-	"version": "4.0.0"
+	"version": "4.0.0",
+	"dependencies": {
+		"jsdoc": "3.5.5"
+	}
 }

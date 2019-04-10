@@ -2,6 +2,7 @@
 	"dependencies": {
 		"clay-button": "2.13.0",
 		"clay-icon": "2.13.0",
+		"jsdoc": "3.5.5",
 		"metal-soy": "^2.5.11",
 		"metal-state": "^2.13.2"
 	},

@@ -71,12 +71,6 @@ definition {
 	@description = "With page versioning enabled, content pages only appear in live view after being published and should appear properly."
 	@priority = "5"
 	test PublishContentPage {
-		task ("Navigate to the content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-staging/test-content-page-name"
-			);
-		}
-
 		task ("Assert the Title fragment is present") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",

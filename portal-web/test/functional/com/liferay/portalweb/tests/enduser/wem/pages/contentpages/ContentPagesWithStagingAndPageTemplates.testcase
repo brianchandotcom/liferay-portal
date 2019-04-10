@@ -87,13 +87,6 @@ definition {
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
 		}
-
-		task ("Navigate to the content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-staging/test-content-page-name"
-			);
-		}
-
 		task ("Assert the Title fragment is present") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",

@@ -26,7 +26,7 @@ import org.talend.sdk.component.api.meta.Documentation;
  * @author Igor Beslic
  */
 @DataStore("BasicDataStore")
-@Documentation("TODO fill the documentation for this configuration")
+@Documentation("BasicDataStore configuration")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
@@ -65,16 +65,13 @@ public class BasicDataStore implements Serializable {
 		return this;
 	}
 
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private boolean _anonymous;
 
 	@Credential
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private String _password;
 
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private String _user;
 

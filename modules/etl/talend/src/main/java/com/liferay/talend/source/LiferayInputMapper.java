@@ -37,19 +37,19 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 /**
  * @author Zoltán Takács
  */
-@Documentation("TODO fill the documentation for this mapper")
+@Documentation("LiferayInputMapper")
 @Icon(Icon.IconType.STAR)
 @PartitionMapper(name = "tLiferayInput")
 @Version(1)
 public class LiferayInputMapper implements Serializable {
 
 	public LiferayInputMapper(
-		@Option("configuration") final
-			LiferayInputMapperConfiguration configuration,
+		@Option("liferayInputMapperConfiguration") final
+			LiferayInputMapperConfiguration liferayInputMapperConfiguration,
 		final TalendService talendService,
 		final RecordBuilderFactory recordBuilderFactory) {
 
-		_liferayInputMapperConfiguration = configuration;
+		_liferayInputMapperConfiguration = liferayInputMapperConfiguration;
 		_talendService = talendService;
 		_recordBuilderFactory = recordBuilderFactory;
 	}

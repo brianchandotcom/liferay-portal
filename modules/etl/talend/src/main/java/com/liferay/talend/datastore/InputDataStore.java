@@ -89,7 +89,7 @@ public class InputDataStore {
 	private AuthenticationMethod _authenticationMethod;
 
 	@ActiveIf(target = "_authenticationMethod", value = "BASIC")
-	@Documentation("TODO fill the documentation for this parameter")
+	@Documentation("Basic Data Store")
 	@Option
 	private BasicDataStore _basicDataStore;
 
@@ -98,7 +98,6 @@ public class InputDataStore {
 	@Option
 	private OAuthDataStore _oAuthDataStore;
 
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private URL _serverURL;
 

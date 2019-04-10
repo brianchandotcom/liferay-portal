@@ -14,11 +14,11 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.talend.client.BasicAuthenticationClient;
 import com.liferay.talend.datastore.AuthenticationMethod;
 import com.liferay.talend.datastore.BasicDataStore;
 import com.liferay.talend.datastore.InputDataStore;
 import com.liferay.talend.datastore.OAuthDataStore;
+import com.liferay.talend.http.client.BasicAuthenticationClient;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -103,12 +103,12 @@ public class UIActionService {
 		if (jsonObjectResponse.status() != 200) {
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
-				"Connection failed, received http response status " +
+				"Connection failed, received HTTP response status " +
 					jsonObjectResponse.status());
 		}
 
 		return new HealthCheckStatus(
-			HealthCheckStatus.Status.OK, "Connection success");
+			HealthCheckStatus.Status.OK, "Connection succeeded!");
 	}
 
 	@HealthCheck("checkInputDataStore")

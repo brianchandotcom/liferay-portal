@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.client;
+package com.liferay.talend.http.client;
 
 import javax.json.JsonObject;
 

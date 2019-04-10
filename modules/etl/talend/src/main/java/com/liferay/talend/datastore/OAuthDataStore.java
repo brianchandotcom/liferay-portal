@@ -25,7 +25,7 @@ import org.talend.sdk.component.api.meta.Documentation;
  * @author Igor Beslic
  */
 @DataStore("OAuthDataStore")
-@Documentation("TODO fill the documentation for this configuration")
+@Documentation("OAuthDataStore configuration")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {@GridLayout.Row({"_consumerKey", "_consumerSecret"})}
@@ -52,11 +52,9 @@ public class OAuthDataStore implements Serializable {
 		return this;
 	}
 
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private String _consumerKey;
 
-	@Documentation("TODO fill the documentation for this parameter")
 	@Option
 	private String _consumerSecret;
 

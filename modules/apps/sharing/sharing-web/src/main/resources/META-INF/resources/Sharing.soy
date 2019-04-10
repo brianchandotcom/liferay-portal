@@ -15,6 +15,7 @@
 	{@param? _handleDataChange: any}
 	{@param? _handleInputBlur: any}
 	{@param? _handleInputChange: any}
+	{@param? _handleItemRemoved: any}
 	{@param? _handleSubmit: any}
 	{@param? _inputValue: string}
 	{@param? _userEmailAddresses: list<?>}
@@ -38,7 +39,7 @@
 							'dataChange': $_handleDataChange,
 							'inputBlur': $_handleInputBlur,
 							'labelItemAdded': $_validateEmails,
-							'labelItemRemoved': $_validateEmails
+							'labelItemRemoved': $_handleItemRemoved
 						] /}
 						{param helpText kind="text"}{msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg}{/param}
 						{param inputValue: $_inputValue /}

@@ -70,15 +70,6 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Show error messages
-	 * @private
-	 * @review
-	 */
-	_handleInputBlur() {
-		this._validateRequiredEmail();
-	}
-
-	/**
 	 * Close the SharingDialog
 	 * @private
 	 * @review
@@ -89,6 +80,15 @@ class Sharing extends PortletBase {
 		if (sharingDialog && sharingDialog.hide) {
 			sharingDialog.hide();
 		}
+	}
+
+	/**
+	 * Show error messages
+	 * @private
+	 * @review
+	 */
+	_handleInputBlur() {
+		this._validateRequiredEmail();
 	}
 
 	/**
@@ -104,6 +104,18 @@ class Sharing extends PortletBase {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 
 		this[name] = value;
+	}
+
+	/**
+	 * Checks wether the input has emails or not.
+	 *
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleItemRemoved(event) {
+		this._userEmailAddresses = event.data.selectedItems;
+		this._validateRequiredEmail();
 	}
 
 	/**
@@ -209,12 +221,7 @@ class Sharing extends PortletBase {
 	_validateRequiredEmail() {
 		const valid = !!this._userEmailAddresses.length;
 
-		if (valid) {
-			this.emailErrorMessage = '';
-		}
-		else {
-			this.emailErrorMessage = Liferay.Language.get('this-field-is-required');
-		}
+		this.emailErrorMessage = valid ? '' : Liferay.Language.get('this-field-is-required');
 
 		return valid;
 	}

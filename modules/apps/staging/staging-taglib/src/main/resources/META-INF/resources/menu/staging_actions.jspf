@@ -34,7 +34,7 @@
 						Liferay.LayoutExporter.publishToLive(
 							{
 								title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-								url: publishGlobalLink.href
+								url: publishGlobalLink.getAttribute('href')
 							}
 						);
 					}
@@ -223,7 +223,7 @@
 							Liferay.LayoutExporter.publishToLive(
 								{
 									title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-									url: publishLink.href
+									url: publishLink.getAttribute('href')
 								}
 							);
 						}
@@ -253,7 +253,7 @@
 									},
 									id: '<portlet:namespace />publishLatestChangesDialog',
 									title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-									uri: publishToLiveLink.href
+									uri: publishToLiveLink.getAttribute('href')
 								}
 							);
 						}

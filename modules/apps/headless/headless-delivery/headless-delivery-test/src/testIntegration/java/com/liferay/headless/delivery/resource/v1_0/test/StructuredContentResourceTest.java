@@ -41,8 +41,6 @@ import com.liferay.registry.ServiceReference;
 
 import java.io.InputStream;
 
-import java.util.Locale;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,7 +88,7 @@ public class StructuredContentResourceTest
 	}
 
 	@Test
-	public void testGetContentSpaceStructuredContentWithDifferentLocale()
+	public void testGetSiteStructuredContentWithDifferentLocale()
 		throws Exception {
 
 		StructuredContent structuredContent = invokePostSiteStructuredContent(
@@ -98,7 +96,7 @@ public class StructuredContentResourceTest
 
 		String title = structuredContent.getTitle();
 
-		testLocale = Locale.FRANCE;
+		testLocale = LocaleUtil.FRANCE;
 
 		String frenchTitle = RandomTestUtil.randomString();
 

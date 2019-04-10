@@ -150,17 +150,17 @@ public class AssetEntryUsageLocalServiceImpl
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(plid);
 
-		if (layoutPageTemplateEntry != null) {
-			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
-
-				return AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
-			}
-
-			return AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE;
+		if (layoutPageTemplateEntry == null) {
+			return AssetEntryUsageConstants.TYPE_LAYOUT;
 		}
 
-		return AssetEntryUsageConstants.TYPE_LAYOUT;
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
+		}
+
+		return AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE;
 	}
 
 	@Reference

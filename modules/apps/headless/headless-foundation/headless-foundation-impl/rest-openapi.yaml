@@ -8,7 +8,6 @@ components:
                 subtype:
                     type: string
                 type:
-                    enum: [AllAssetTypes, BlogPosting, Document, KnowledgeBaseArticle, Organization, StructuredContent, UserAccount, WebPage, WebSite, WikiPage]
                     type: string
             type: object
         Creator:

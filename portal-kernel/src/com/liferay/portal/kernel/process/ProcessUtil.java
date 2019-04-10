@@ -66,6 +66,7 @@ public class ProcessUtil {
 	public static final LoggingOutputProcessor LOGGING_OUTPUT_PROCESSOR =
 		new LoggingOutputProcessor();
 
+	@Deprecated
 	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, List<String> arguments)
 		throws ProcessException {
@@ -101,6 +102,7 @@ public class ProcessUtil {
 		}
 	}
 
+	@Deprecated
 	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, String... arguments)
 		throws ProcessException {
@@ -115,6 +117,7 @@ public class ProcessUtil {
 	public void destroy() {
 	}
 
+	@Deprecated
 	private static String _buildThreadNamePrefix(List<String> arguments) {
 		StringBundler sb = new StringBundler(arguments.size() * 2 + 1);
 

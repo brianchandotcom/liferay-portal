@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
@@ -106,7 +108,10 @@ public class ProcessWorkflowMetricsIndexer
 				kaleoDefinition.getGroupId()),
 			false, true);
 		document.addKeyword("userId", kaleoDefinition.getUserId());
-		document.addKeyword("version", kaleoDefinition.getVersion());
+		document.addKeyword(
+			"version",
+			StringBundler.concat(
+				kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 
 		return document;
 	}

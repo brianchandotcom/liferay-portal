@@ -72,6 +72,10 @@
 			"userId": {
 				"store": true,
 				"type": "keyword"
+			},
+			"version": {
+				"store": true,
+				"type": "keyword"
 			}
 		}
 	},
@@ -141,6 +145,10 @@
 				"type": "keyword"
 			},
 			"userId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"version": {
 				"store": true,
 				"type": "keyword"
 			}
@@ -764,6 +772,10 @@
 				"type": "keyword"
 			},
 			"userId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"version": {
 				"store": true,
 				"type": "keyword"
 			}

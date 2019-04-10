@@ -10,13 +10,46 @@ import './structure/SidebarStructurePanel.es';
 import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../../actions/actions.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FragmentsEditorSidebarContent.soy';
+
+/**
+ * @review
+ * @type {string}
+ */
+const DEFAULT_SIDEBAR_PANEL_ID = 'sections';
 
 /**
  * FragmentsEditorSidebarContent
  * @review
  */
 class FragmentsEditorSidebarContent extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		if (state._selectedSidebarPanelId && state.sidebarPanels) {
+			const selectedSidebarPanel = state.sidebarPanels.find(
+				sidebarPanel => sidebarPanel.sidebarPanelId === state._selectedSidebarPanelId
+			);
+
+			if (selectedSidebarPanel) {
+				nextState = setIn(
+					nextState,
+					['_selectedSidebarPanel'],
+					selectedSidebarPanel
+				);
+			}
+
+		}
+
+		return nextState;
+	}
 
 	/**
 	 * Updates active panel
@@ -29,13 +62,13 @@ class FragmentsEditorSidebarContent extends Component {
 
 		if (!this.fragmentsEditorSidebarVisible) {
 			this.store.dispatchAction(TOGGLE_SIDEBAR);
-			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
+			this._setActivePanel(data.sidebarPanelId);
 		}
-		else if (this._sidebarPanelId === data.sidebarPanelId) {
+		else if (this._selectedSidebarPanelId === data.sidebarPanelId) {
 			this._hideSidebar();
 		}
 		else {
-			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
+			this._setActivePanel(data.sidebarPanelId);
 		}
 	}
 
@@ -46,20 +79,17 @@ class FragmentsEditorSidebarContent extends Component {
 	 */
 	_hideSidebar() {
 		this.store.dispatchAction(HIDE_SIDEBAR);
-		this._sidebarPanelId = '';
-		this._sidebarTitle = '';
+		this._selectedSidebarPanelId = '';
 	}
 
 	/**
 	 * Set as active the panel with the given sidebarPanelId and also set sidebar title
 	 * @param {string} sidebarPanelId
-	 * @param {string} title
 	 * @private
 	 * @review
 	 */
-	_setActivePanel(sidebarPanelId, title) {
-		this._sidebarPanelId = sidebarPanelId;
-		this._sidebarTitle = title;
+	_setActivePanel(sidebarPanelId) {
+		this._selectedSidebarPanelId = sidebarPanelId;
 	}
 
 }
@@ -80,23 +110,10 @@ FragmentsEditorSidebarContent.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	_sidebarPanelId: Config
+	_selectedSidebarPanelId: Config
 		.string()
 		.internal()
-		.value('sections'),
-
-	/**
-	 * Sidebar active panel title
-	 * @default Sections
-	 * @memberof FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_sidebarTitle: Config
-		.string()
-		.internal()
-		.value('Sections')
+		.value(DEFAULT_SIDEBAR_PANEL_ID)
 };
 
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(

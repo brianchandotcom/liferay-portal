@@ -67,16 +67,17 @@ public class UserPortraitTag extends IncludeTag {
 		if (Validator.isNull(portraitURL)) {
 			StringBundler sb = new StringBundler(10);
 
-			sb.append("<div class=\"sticker sticker-circle sticker-light ");
+			sb.append("<span class=\"sticker sticker-circle sticker-light ");
 			sb.append("user-icon-color-");
 			sb.append((user == null) ? 0 : (user.getUserId() % 10));
 			sb.append(CharPool.SPACE);
 			sb.append(cssClass);
-			sb.append("\"><svg class=\"lexicon-icon\">");
+			sb.append("\"><span class=\"inline-item\">");
+			sb.append("<svg class=\"lexicon-icon\">");
 			sb.append("<use href=\"");
 			sb.append(themeDisplay.getPathThemeImages());
 			sb.append("/lexicon/icons.svg#user\" /></svg>");
-			sb.append("</div>");
+			sb.append("</span></span>");
 
 			return sb.toString();
 		}
